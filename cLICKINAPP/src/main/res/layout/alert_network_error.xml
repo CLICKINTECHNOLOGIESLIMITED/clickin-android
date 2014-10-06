@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:geekui="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/white_border_alert">
+
+
+    <com.sourcefuse.clickinandroid.utils.ClickInTextView
+        android:id="@+id/alert_tittle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal"
+        android:paddingTop="15dp"
+        android:text="Error"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:visibility="gone"
+        geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
+
+
+    <com.sourcefuse.clickinandroid.utils.ClickInTextView
+        android:id="@+id/text"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/alert_tittle"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal"
+        android:padding="10dp"
+        android:text="Error>>Unable to perform requested action due to validation errors"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
+
+    <View
+        android:id="@+id/v_backdevider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/text"
+        android:background="@color/black" />
+
+    <Button
+        android:id="@+id/dialogButtonOK"
+        android:layout_width="100px"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/v_backdevider"
+        android:layout_centerHorizontal="true"
+        android:layout_marginRight="5dp"
+
+        android:background="@color/white"
+        android:text=" Ok " />
+
+</RelativeLayout>

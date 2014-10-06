@@ -1,0 +1,189 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <ImageView
+            android:id="@+id/feed_image"
+            android:layout_width="@dimen/feed_image_height"
+            android:layout_height="@dimen/feed_image_height"
+            android:layout_centerHorizontal="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/female_crt" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/feed_audio_button"
+            android:layout_centerHorizontal="true"
+            android:text="Audio PLay"/>
+
+        <RelativeLayout
+            android:id="@+id/layout_clickin"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:layout_below="@+id/feed_image"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/feed_clickin"
+            android:gravity="center_horizontal|center_vertical" >
+
+            <TextView
+                android:id="@+id/clickedIn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="-10"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/clickInWhiteImage"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_toRightOf="@+id/clickedIn"
+                android:paddingTop="7dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/female_crt" />
+
+            <TextView
+                android:id="@+id/clickedInMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/clickInWhiteImage"
+                android:padding="5dp"
+                android:text=""
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_stars"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout_clickin"
+            android:gravity="left"
+            android:orientation="horizontal"
+            android:paddingLeft="5dp" >
+
+            <ImageView
+                android:id="@+id/clickInstarImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="7dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/star_icon" />
+
+            <TextView
+                android:id="@+id/feed_star_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="6 stars"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:orientation="horizontal"
+            android:id="@+id/layout_comment"
+            android:layout_below="@+id/layout_stars"
+            android:paddingLeft="5dp" >
+
+            <ImageView
+                android:id="@+id/clickInCommentImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="7dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/comment_icon" />
+
+            <LinearLayout
+                android:id="@+id/feed_comments_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:orientation="horizontal"
+                android:paddingLeft="5dp" >
+            </LinearLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/feed_menu_layout"
+            android:layout_width="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_above="@+id/layout_all_button"
+            android:visibility="invisible"
+            android:layout_height="wrap_content" >
+
+            <ImageView
+                android:id="@+id/feed_remove_post"
+                android:layout_width="100dp"
+                android:layout_height="25dp"
+                android:paddingLeft="5dp"
+                android:paddingTop="7dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/female_crt" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left|center_horizontal|center_vertical"
+            android:layout_below="@+id/layout_comment"
+            android:id="@+id/layout_all_button"
+            android:paddingLeft="5dp"
+            android:paddingTop="7dp" >
+
+            <ImageView
+                android:id="@+id/feed_star_image_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:paddingTop="7dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/star_btn" />
+
+            <ImageView
+                android:id="@+id/feed_comment_image_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/feed_star_image_button"
+                android:paddingLeft="5dp"
+                android:paddingTop="7dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/comment_btn" />
+
+            <ImageView
+                android:id="@+id/feed_menu_image_button"
+                android:layout_width="50dp"
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="7dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/report_icon" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Yahoo"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+</LinearLayout>

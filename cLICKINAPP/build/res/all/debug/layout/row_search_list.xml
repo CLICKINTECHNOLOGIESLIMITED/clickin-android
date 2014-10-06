@@ -1,0 +1,39 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/chat_box">
+
+
+    <ImageView
+        android:id="@+id/userImage"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_centerVertical="true"
+        android:background="@drawable/default_profile" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/userImage"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/searchname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:text="hghghghvhg"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_user_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="hghghghvhg"
+            android:textSize="12sp" />
+    </LinearLayout>
+</RelativeLayout><!-- From: file:/home/mukesh/Andriod_En/Android_studio/Studio_WorksAdda/CLICKINAPP/cLICKINAPP/src/main/res/layout/row_search_list.xml -->

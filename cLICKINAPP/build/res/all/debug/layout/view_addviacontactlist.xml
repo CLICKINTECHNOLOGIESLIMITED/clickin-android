@@ -1,0 +1,138 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/white_pattern_bg" >
+
+    <ImageView
+        android:id="@+id/iv_topicon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/add_someone" />
+
+    <RelativeLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/iv_topicon"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/white_border"
+        android:padding="15dp" >
+
+        <RelativeLayout
+            android:id="@+id/rr_contact_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="10dp" >
+
+            <ImageView
+                android:id="@+id/iv_contact_icon"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentLeft="true"
+                android:background="@drawable/default_profile" />
+
+            <TextView
+                android:id="@+id/tv_contact_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginBottom="2dp"
+                android:layout_toRightOf="@+id/iv_contact_icon"
+                android:paddingLeft="10dp"
+                android:text="mahendra"
+                android:textColor="@color/dark_gray"
+                android:textSize="15sp"
+                android:textStyle="bold" >
+            </TextView>
+
+            <Button
+                android:id="@+id/btn_close"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/close_btn" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/edt_text_cntry_cd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rr_contact_iv"
+            android:layout_marginBottom="2dp"
+            android:text="@string/txt_cntrycode"
+            android:textColor="@color/dark_gray"
+            android:textSize="10sp" >
+        </TextView>
+
+        <LinearLayout
+            android:id="@+id/ll_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/edt_text_cntry_cd"
+            android:orientation="horizontal" >
+
+            <EditText
+                android:id="@+id/edt_cntry_cd"
+                android:layout_width="50dp"
+                android:layout_height="45dp"
+                android:background="@color/dark_gray"
+                android:ems="10"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" >
+            </EditText>
+
+            <EditText
+                android:id="@+id/edt_phone_no"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginLeft="4dp"
+                android:background="@color/dark_gray"
+                android:ems="10"
+                android:inputType="phone"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" >
+
+                <requestFocus />
+            </EditText>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/rr_con_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ll_search"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp" >
+
+            <Button
+                android:id="@+id/btn_get_clickIn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/get_click_in_dark" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_go_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/c_back_footer"
+        android:text="BACK"
+        android:textColor="@color/white"
+        android:textStyle="bold" />
+
+</RelativeLayout><!-- From: file:/home/mukesh/Andriod_En/Android_studio/Studio_WorksAdda/CLICKINAPP/cLICKINAPP/src/main/res/layout/view_addviacontactlist.xml -->

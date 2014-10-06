@@ -1,0 +1,28 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="60dp">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="20dp">
+
+        <ImageView
+            android:id="@+id/iv_shareing_icon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/com_facebook_button_blue" />
+
+        <TextView
+            android:id="@+id/tv_child_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/iv_shareing_icon"
+            android:textColor="@color/dark_gray"
+            android:textSize="18sp" />
+    </RelativeLayout>
+</RelativeLayout><!-- From: file:/home/mukesh/Andriod_En/Android_studio/Studio_WorksAdda/CLICKINAPP/cLICKINAPP/src/main/res/layout/setting_child_one.xml -->

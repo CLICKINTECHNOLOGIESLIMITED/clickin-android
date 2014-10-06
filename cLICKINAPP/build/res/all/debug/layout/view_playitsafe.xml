@@ -1,0 +1,75 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/white_pattern_bg">
+
+
+    <ImageView
+        android:id="@+id/iv_topicon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/play_it_safe" />
+
+
+    <RelativeLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/iv_topicon"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/white_border"
+        android:padding="15dp">
+
+        <EditText
+            android:id="@+id/edt_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/c_pro_edit_field"
+            android:ems="10"
+            android:hint="@string/hint_enterpwd"
+            android:inputType="textPassword"
+            android:textColorHint="@color/sign_hint"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:padding="10dp">
+            <requestFocus />
+        </EditText>
+    </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/rr_re_enterpassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/linearLayout1"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/white_border"
+            android:padding="15dp">
+
+            <EditText
+                android:id="@+id/edt_re_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/c_pro_edit_field"
+                android:hint="@string/hint_re_enterpwd"
+                android:inputType="textPassword"
+                android:textColorHint="@color/sign_hint"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:padding="10dp"></EditText>
+
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_done_play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rr_re_enterpassword"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/done_rounded_light" />
+</RelativeLayout><!-- From: file:/home/mukesh/Andriod_En/Android_studio/Studio_WorksAdda/CLICKINAPP/cLICKINAPP/src/main/res/layout/view_playitsafe.xml -->

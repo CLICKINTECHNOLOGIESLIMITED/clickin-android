@@ -1,0 +1,749 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:mySwitch="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/rr_header"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@color/appclr">
+
+            <ImageView
+                android:id="@+id/iv_back_noti"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="6dp"
+                android:paddingBottom="5dp"
+                android:paddingRight="30dp"
+                android:paddingTop="5dp"
+                android:src="@drawable/back_arrow" />
+
+
+            <ImageView
+                android:id="@+id/iv_notification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="6dp"
+                android:paddingLeft="50dp"
+                android:src="@drawable/chat" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/iv_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/blue_bg">
+
+            <TextView
+                android:id="@+id/tv_profile_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="@string/txt_setting"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:alwaysDrawnWithCache="false"
+        android:fadingEdgeLength="0dp"
+        android:overScrollMode="never"
+        android:scrollbarAlwaysDrawVerticalTrack="false"
+        android:background="@drawable/r_owner_profile_bg">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="60dp"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/push_notification_row"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:layout_weight="1"
+                    android:text="Push Notifications"
+                    android:textColor="@color/appclr"
+                    android:textSize="20sp" />
+
+
+                <com.sourcefuse.clickinandroid.utils.MySwitch
+                    android:id="@+id/toggle_notification_one"
+                    style="@style/mySwitchStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="4dp"
+                    android:visibility="gone"
+                    mySwitch:backgroundMask="@drawable/smask_background_copy"
+                    mySwitch:leftBackground="@drawable/sleft_background_copy"
+                    mySwitch:pushStyle="true"
+                    mySwitch:rightBackground="@drawable/sright_background_copy"
+                    mySwitch:textOff="    "
+                    mySwitch:textOn="    "
+                    mySwitch:textOnThumb="false"
+                    mySwitch:thumb="@drawable/stoggle_copy"
+                    mySwitch:thumbExtraMovement="23dp"
+                    mySwitch:track="@drawable/sgroove_copy"
+                    mySwitch:trackTextPadding="2dp" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="2dp"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/in_app_sound_row"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:layout_weight="1"
+                    android:text="In-App Sounds"
+                    android:textColor="@color/appclr"
+                    android:textSize="20sp" />
+
+
+                <com.sourcefuse.clickinandroid.utils.MySwitch
+                    android:id="@+id/toggle_notification_two"
+                    style="@style/mySwitchStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="4dp"
+                    android:visibility="gone"
+                    mySwitch:backgroundMask="@drawable/sgroove_copy"
+                    mySwitch:leftBackground="@drawable/sgroove_copy"
+                    mySwitch:pushStyle="true"
+                    mySwitch:rightBackground="@drawable/sgroove_copy"
+                    mySwitch:textOff="    "
+                    mySwitch:textOn="    "
+                    mySwitch:textOnThumb="false"
+                    mySwitch:thumb="@drawable/stoggle_copy"
+                    mySwitch:thumbExtraMovement="23dp"
+                    mySwitch:track="@drawable/sgroove_copy"
+                    mySwitch:trackTextPadding="2dp" />
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/sharing_text"
+                android:layout_width="fill_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="2dp"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:paddingLeft="20dp"
+                android:text="Sharing"
+                android:textColor="@color/appclr"
+                android:textSize="20sp"
+                 />
+
+
+            <LinearLayout
+                android:id="@+id/sharing_layout"
+                android:layout_width="fill_parent"
+                android:visibility="gone"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+                <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/fb_divider" />
+
+                <LinearLayout
+                    android:id="@+id/facebook_layout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="60dp"
+                    android:background="@color/white"
+                    android:paddingLeft="20dp">
+
+                    <ImageView
+                        android:id="@+id/iv_shareing_icon"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/inactive_fb" />
+
+                    <TextView
+                        android:id="@+id/tv_child_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_toRightOf="@+id/iv_shareing_icon"
+                        android:gravity="center_vertical"
+                        android:text="facebook"
+                        android:textColor="@color/dark_gray"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/clickin_user_name"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="20dp"
+                        android:gravity="center_vertical|right"
+                        android:textColor="@color/dark_gray"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+
+                <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/fb_divider" />
+
+                <LinearLayout
+                    android:id="@+id/twitter_layout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="60dp"
+                    android:visibility="gone"
+                    android:background="@color/white"
+                    android:paddingLeft="20dp">
+
+                    <ImageView
+                        android:id="@+id/twitter_icon"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/inactive_twitter" />
+
+                    <TextView
+                        android:id="@+id/twitter_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_toRightOf="@+id/iv_shareing_icon"
+                        android:gravity="center_vertical"
+                        android:text="Twitter"
+                        android:textColor="@color/dark_gray"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/twitter_user_name"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="20dp"
+                        android:gravity="center_vertical|right"
+                        android:textColor="@color/dark_gray"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+
+                <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/fb_divider" />
+
+                <LinearLayout
+                    android:id="@+id/google_plus_layout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="60dp"
+                    android:visibility="gone"
+                    android:background="@color/white"
+                    android:paddingLeft="20dp">
+
+                    <ImageView
+                        android:id="@+id/google_plus_icon"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/inactive_gmail" />
+
+                    <TextView
+                        android:id="@+id/google_plus_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center_vertical"
+                        android:layout_toRightOf="@+id/iv_shareing_icon"
+                        android:gravity="center_vertical"
+                        android:text="Google +"
+                        android:textColor="@color/dark_gray"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/google_plus_user_name"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="20dp"
+                        android:gravity="center_vertical|right"
+                        android:textColor="@color/dark_gray"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/account_text"
+                android:layout_width="fill_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="2dp"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:paddingLeft="20dp"
+                android:text="Account"
+                android:textColor="@color/appclr"
+                android:textSize="20sp" />
+
+            <LinearLayout
+                android:id="@+id/main_password_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/fb_divider" />
+
+                <TextView
+                    android:id="@+id/edit_profile"
+                    android:layout_width="fill_parent"
+                    android:layout_height="60dp"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="20dp"
+                    android:text="Edit Profile"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/fb_divider" />
+
+                <TextView
+                    android:id="@+id/change_password"
+                    android:layout_width="fill_parent"
+                    android:layout_height="60dp"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="20dp"
+                    android:text="Change Password"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="18sp" />
+
+                <LinearLayout
+                    android:id="@+id/password_layout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:visibility="gone"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/fb_divider" />
+
+                    <EditText
+                        android:id="@+id/old_password"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:background="@drawable/old_pass_field"
+                        android:hint="Old Password"
+                        style="@style/settingmargin"
+                        android:inputType="textPassword"
+                        android:paddingBottom="5dp"
+                        android:layout_marginTop="10dp"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="5dp"
+                        android:textColor="@color/dark_gray"
+                        android:textSize="18sp" />
+
+                    <EditText
+                        android:id="@+id/new_password"
+                        style="@style/settingmargin"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/old_pass_field"
+                        android:hint="New Password"
+                        android:inputType="textPassword"
+                        android:paddingLeft="10dp"
+                        android:textColor="@color/dark_gray"
+                        android:textSize="18sp" />
+
+                    <EditText
+                        android:id="@+id/confirm_password"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/old_pass_field"
+                        android:hint="Confirm Password"
+                        android:inputType="textPassword"
+                        android:paddingLeft="10dp"
+                        style="@style/settingmargin"
+                        android:textColor="@color/dark_gray"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/save_password"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/active_save_btn"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="SAVE"
+                        style="@style/settingmargin"
+                        android:textColor="@color/white"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/fb_divider" />
+
+                <TextView
+                    android:id="@+id/deactivate_account"
+                    android:layout_width="fill_parent"
+                    android:layout_height="60dp"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="20dp"
+                    android:text="Deactivate Account"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/privacy_policy_row"
+                android:layout_width="fill_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="2dp"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:paddingLeft="20dp"
+                android:text="Privacy Policy"
+                android:textColor="@color/appclr"
+                android:textSize="20sp" />
+
+
+            <TextView
+                android:id="@+id/term_use_row"
+                android:layout_width="fill_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="2dp"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:paddingLeft="20dp"
+                android:text="Terms of Use"
+                android:textColor="@color/appclr"
+                android:textSize="20sp" />
+
+
+            <TextView
+                android:id="@+id/report_text"
+                android:layout_width="fill_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="2dp"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:paddingLeft="20dp"
+                android:text="Report a Problem"
+                android:textColor="@color/appclr"
+                android:textSize="20sp" />
+
+
+            <LinearLayout
+                android:id="@+id/report_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/fb_divider" />
+
+                <TextView
+                    android:id="@+id/spam_text"
+                    android:layout_width="fill_parent"
+                    android:layout_height="50dp"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="20dp"
+                    android:text="Spam or Abuse"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/fb_divider" />
+
+                <TextView
+                    android:id="@+id/not_working_text"
+                    android:layout_width="fill_parent"
+                    android:layout_height="50dp"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="20dp"
+                    android:text="It's not working"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/fb_divider" />
+
+                <LinearLayout
+                    android:id="@+id/not_working_layout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:visibility="gone"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:id="@+id/problem_text"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/box"
+                        android:gravity="top"
+                        android:hint="Briefly explain what happened."
+                        android:paddingLeft="10dp"
+                        android:paddingRight="5dp"
+                        android:paddingTop="7dp"
+                        android:textColor="@color/dark_gray"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/btn_send_not_working"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/active_save_btn"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="SEND"
+                        android:textColor="@color/white"
+                        android:textSize="18sp" />
+                    <ImageView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/fb_divider" />
+                </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/general_feed_back_text"
+                    android:layout_width="fill_parent"
+                    android:layout_height="50dp"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="20dp"
+                    android:text="General feedbak"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="18sp" />
+
+                <LinearLayout
+                    android:id="@+id/general_feed_layout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/fb_divider" />
+
+                    <EditText
+                        android:id="@+id/general_problem_text"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/box"
+                        android:gravity="top"
+                        android:hint="Briefly Explain what you love,hate or want us to improve on"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="7dp"
+                        android:textColor="@color/dark_gray"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/btn_send_general_problem"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/active_save_btn"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="SEND"
+                        android:textColor="@color/white"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/logout_text"
+                android:layout_width="fill_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="2dp"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:paddingLeft="20dp"
+                android:text="Logout"
+                android:textColor="@color/appclr"
+                android:textSize="20sp" />
+
+
+            <LinearLayout
+                android:id="@+id/logout_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingBottom="10dp"
+                android:visibility="gone">
+
+
+                <TextView
+                    android:id="@+id/tv_logout_msg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/txt_logout"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="18sp" />
+
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_logout_msg"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginTop="20dp"
+                    android:paddingBottom="1dp">
+
+
+                    <TextView
+                        android:id="@+id/btn_logout_yes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/active_yes_btn"
+                        android:gravity="center"
+                        android:text="YES"
+                        android:textColor="@color/white" />
+
+                    <TextView
+                        android:id="@+id/btn_logout_no"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginLeft="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/active_yes_btn"
+                        android:gravity="center"
+                        android:text="No"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginTop="2dp"
+                android:background="@color/white"
+                android:paddingBottom="70dp"
+                android:paddingTop="10dp" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
+<!-- From: file:/home/mukesh/Andriod_En/Android_studio/Studio_WorksAdda/CLICKINAPP/cLICKINAPP/src/main/res/layout/view_setting.xml -->

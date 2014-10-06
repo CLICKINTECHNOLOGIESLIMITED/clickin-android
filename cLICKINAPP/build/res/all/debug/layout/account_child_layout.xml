@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/edit_profile"
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:gravity="center_vertical"
+        android:text="Edit Profile"
+        android:textColor="@color/dark_gray"
+        android:textSize="18sp" />
+
+
+    <TextView
+        android:id="@+id/change_password"
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:gravity="center_vertical"
+        android:text="Change Password"
+        android:textColor="@color/dark_gray"
+        android:textSize="18sp" />
+
+    <LinearLayout
+        android:id="@+id/password_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/old_password"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/inactive_yes_btn"
+            android:paddingLeft="10dp"
+            android:text="Old Password" />
+
+        <EditText
+            android:id="@+id/new_password"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/inactive_yes_btn"
+            android:paddingLeft="10dp"
+            android:text="New Password" />
+
+        <EditText
+            android:id="@+id/confirm_password"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/inactive_yes_btn"
+            android:paddingLeft="10dp"
+            android:text="Confirm Password" />
+
+        <TextView
+            android:id="@+id/save_password"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/active_save_btn"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="SAVE"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/deactivate_account"
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:gravity="center_vertical"
+        android:text="Deactivate Account"
+        android:textColor="@color/dark_gray"
+        android:textSize="18sp" />
+
+
+</LinearLayout><!-- From: file:/home/mukesh/Andriod_En/Android_studio/Studio_WorksAdda/CLICKINAPP/cLICKINAPP/src/main/res/layout/account_child_layout.xml -->

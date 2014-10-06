@@ -1,0 +1,265 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:geekui="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rl_usr_profile"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/white_pattern_bg" >
+
+    <RelativeLayout
+        android:id="@+id/rr_header"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/appclr" >
+
+        <ImageView
+            android:id="@+id/iv_menu_other"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/menu_icon"
+            android:padding="10dp" />
+
+        <ImageView
+            android:id="@+id/iv_notification_other"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/chat" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rr_header"
+        android:orientation="horizontal"
+        android:weightSum="2" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1" >
+
+            <RelativeLayout
+                android:id="@+id/rr_profile_pic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/white_border" >
+
+                <TextView
+                    android:id="@+id/tv_name_other"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:paddingBottom="2dp"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="5dp"
+                    android:text="Jacob smith"
+                    android:textColor="@color/profile_name_b"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/iv_usr_icon"
+                    android:layout_width="150dp"
+                    android:layout_height="120dp"
+                    android:layout_below="@+id/tv_name_other"
+                    android:layout_marginLeft="5dp"
+                    android:src="@drawable/female_crt" />
+
+                <TextView
+                    android:id="@+id/tv_user_details_other"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/iv_usr_icon"
+                    android:layout_marginLeft="5dp"
+                    android:padding="5dp"
+                    android:text="Jacob smith"
+                    android:textColor="@color/profile_details"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/edit_icon"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/btn_follower_other"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rr_profile_pic"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/light_grey_bg"
+                android:gravity="center"
+                android:text="@string/txt_follower"
+                android:textColor="@color/profile_parter_nmae_b"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/btn_following_other"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/btn_follower_other"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/light_grey_bg"
+                android:gravity="center"
+                android:text="@string/txt_following"
+                android:textColor="@color/profile_name_b"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/btn_follow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/btn_following_other"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/follow" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+
+
+            <RelativeLayout
+                android:id="@+id/rl_add_someone"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_gravity="right"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/clickwith_bg" >
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true" >
+
+                    <com.sourcefuse.clickinandroid.utils.ClickInTextView
+                        android:id="@+id/tv_click_with_head"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:paddingTop="5dp"
+                        geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
+
+                    <com.sourcefuse.clickinandroid.utils.ClickInTextView
+                        android:id="@+id/tv_clickwith_name_head"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tv_click_with_head"
+                        android:layout_centerHorizontal="true"
+                        android:gravity="center_horizontal"
+                        android:paddingBottom="2dp"
+                        geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"
+                        android:textSize="18sp" />
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/white_border"
+                android:orientation="vertical" >
+
+
+
+                <LinearLayout
+                    android:id="@+id/ll_clickin_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/tv_clickintx"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="2dp"
+                        android:paddingTop="5dp"
+                        android:text="@string/txt_clickINtxt"
+                        android:textColor="@color/profile_details"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/tv_with"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="2dp"
+                        android:paddingTop="5dp"
+                        android:text="@string/txt_with"
+                        android:textColor="@color/profile_details"
+                        android:textSize="20sp" />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/v_devider_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:visibility="gone"
+                    android:background="@color/sign_hint" />
+
+                <ListView
+                    android:id="@+id/list_click_with_other"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:scrollbars="none" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/iv_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/blue_bg" >
+
+        <TextView
+            android:id="@+id/tv_profile_other"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="@string/txt_profile"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+</RelativeLayout>

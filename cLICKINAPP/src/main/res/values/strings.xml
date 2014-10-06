@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Clickin\'</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="txt_signin">SIGN IN</string>
+    <string name="txt_signup">SIGN UP</string>
+    <string name="txt_cntrycode">COUNTRY CODE</string>
+    <string name="txt_checkmeout">CHECK ME OUT</string>
+    <string name="txt_wesentyoucode">WE SENT YOU THE CODE!</string>
+    <string name="txt_just_make_sure">Just make sure you didn\'t \nwrong number us</string>
+    <string name="txt_coolio">COOLIO!</string>
+    <string name="txt_usrname">ENTER YOUR USERNAME*</string>
+    <string name="txt_email">Email*</string>
+    <string name="txt_pwd">PASSWORD*</string>
+    <string name="txt_fname">First Name*</string>
+    <string name="txt_lname">Last Name*</string>
+    <string name="txt_mail">I AM  A GUY</string>
+    <string name="txt_femail">I AM A GIRL</string>
+    <string name="txt_city">City Name</string>
+    <string name="txt_cntry">Country Name</string>
+    <string name="btn_phb">PHONEBOOK</string>
+    <string name="btn_fb">facebook</string>
+    <string name="btn_tw">twitter</string>
+    <string name="btn_gp">Google+</string>
+    <string name="txt_already_on_click">FOLLOW YOUR FRIENDS</string>
+    <string name="txt_already_on_clickII">THAT ARE ALREADY ON CLICKIN\'</string>
+    <string name="txt_invite_friend">INVITE FRIENDS</string>
+    <string name="btn_followall">FALLOW ALL</string>
+    <string name="match">matchs</string>
+    <string name="from_phomebook">from Phonebook</string>
+    <string name="from_facebook">from Facebook</string>
+    <string name="from_twitter">from Twitter</string>
+    <string name="from_googlep">from Google+</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="btn_selectall">SELECT ALL</string>
+    <string name="txt_u_no">YOU KNOW WHAT TO DO</string>
+    <string name="txt_re_pwd">RETYPE PASSWORD</string>
+    <string name="txt_fb_login_msg_one">Clickin\'s even more kickass with your friend\'s!</string>
+    <string name="txt_fb_login_msg_two">Remember - We never post anything \nwithout asking you first.</string>
+    <string name="txt_dob">DATE OF BIRTH*</string>
+    <string name="txt_manda">*MANDATORY FIELD*</string>
+    <string name="hint_email_no">Phone / Email  </string>
+    <string name="hint_pwd">Password</string>
+    <string name="hint_enterpwd">Enter Password</string>
+    <string name="hint_re_enterpwd">Re-enter Password</string>
+    <string name="txt_forget_pwd">FORGOT PASSWORD</string>
+    <string name="txt_clickINtxt">CLICKIN\'</string>
+    <string name="txt_clickwith">CLICKIN\'WITH</string>
+    <string name="clickwith">CLICK WITH</string>
+    <string name="txt_with">WITH</string>
+    <string name="txt_follower">FOLLOWERS</string>
+    <string name="txt_following">FOLLOWING</string>
+    <string name="PREFS_NAME">UserInfo</string>
+    <string name="PREFS_USER_TOKEN">UserToken</string>
+    <string name="PREFS_USER_PHONE">Phone</string>
+    <string name="PREFS_USER_FB_TOKEN">FacebookToken</string>
+    <string name="PREFS_USER_EMAILID">UserEmail</string>
+    <string name="txt_profile">PROFILE</string>
+    <string name="txt_typing">Typing..</string>
+    <string name="txt_male">Male,</string>
+    <string name="txt_female">Female,</string>
+    <string name="txt_yold">years old</string>
+    <string name="txt_search_phonebook">SEARCH PHONEBOOK</string>
+    <string name="txt_search_clickin_name">SEARCH CLICKIN\' BY NAME</string>
+    <string name="txt_feed">THE FEED</string>
+    <string name="txt_invite">INVITE</string>
+    <string name="txt_find_friend">FIND FRIEND</string>
+    <string name="txt_setting">SETTINGS</string>
+    <string name="txt_privacy">PRIVACY POLICY</string>
+    <string name="txt_terms">TERMS OF USE</string>
+    <string name="fb_app_id">715102098501759</string>
+    <string name="add_your_photo">ADD YOUR PHOTO</string>
+    <string name="txt_hold_to_record">HOLD TO RECORD</string>
+    <string name="txt_dateofbirth">DATE OF BIRTH*</string>
+    <string name="txt_mandatory">*MANDATORY FIELD</string>
+    <string name="tv_follower_empty_msgone">LOOKS LIKE NO ONE IS \nFOLLOWING YOU!</string>
+    <string name="tv_follower_empty_msgtwo">SEARCH FOR FRIENDS ON ClICKIN\' OR \nINVITE SOME THROUGH THE MENU</string>
+    <string name="tv_followering_empty_msgI">LOOKS LIKE YOU ARE\'NT \nFOLLOWING ANYONE!</string>
+    <string name="tv_followering_empty_msgII">SEARCH FOR FRIENDS ON ClICKIN\' OR \nINVITE SOME THROUGH THE MENU</string>
+    <string name="search_message">Could not find the one you are loking for? invite them to join ClickIn\'.</string>
+    <string name="txt_notification">NOTIFICATIONS</string>
+    <string name="txt_phonenumber">Phone Number</string>
+    <string name="txt_logout">Are you sure you want to log out?</string>
+    <drawable name="red_drawable">#CCAA1883</drawable>
+    <drawable name="green_drawable">#CC123Bff</drawable>
+
+    <string name="header_profile_one">GOT YOUR NUMBER!</string>
+    <string name="header_profile_two">GIMME SOME\n MORE</string>
+
+    <string name="deactivate_radio_msg_one">This is temporary.I\'II be back.</string>
+    <string name="deactivate_radio_msg_two">I have a privacy concern.</string>
+    <string name="deactivate_radio_msg_three">I don\'t understand how to use Clickin\'.</string>
+    <string name="deactivate_radio_msg_four">I have another account.</string>
+    <string name="deactivate_radio_msg_five">I just don\'t like it.</string>
+    <string name="deactivate_radio_msg_six">I am addicated and now need rehab.</string>
+    <string name="deactivate_radio_msg_seven">Other</string>
+    <string name="opt_out_msg">Opt out of reciving future emails about cool new features :(</string>
+    <string name="deactivation_msg">Enter password to confirm deactivation</string>
+
+    <string name="spam_msg_one">Hacked accounts.</string>
+    <string name="spam_msg_two">Imprsonation accounts.</string>
+    <string name="spam_msg_three">Underage.</string>
+    <string name="spam_msg_four">Intellectual Property.</string>
+    <string name="spam_msg_five">Self-harm</string>
+    <string name="spam_msg_six">Spam</string>
+    <string name="spam_msg_seven">Abuse</string>
+    <string name="spam_msg_eight">Exploitation</string>
+    <string name="spam_msg_nine">Other</string>
+    <string name="spam_edit_hint">Please provide details.</string>
+
+    <!--Notification Type and string-->
+    <string name="txt_relationrequest">relationrequest</string>
+    <string name="txt_relationstatus">relationstatus</string>
+    <string name="txt_relationdelete">relationdelete</string>
+
+
+</resources>

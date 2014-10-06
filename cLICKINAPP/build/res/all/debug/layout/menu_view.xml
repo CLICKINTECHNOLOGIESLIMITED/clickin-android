@@ -1,0 +1,65 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/appclr"
+    android:paddingBottom="10dp">
+
+    <RelativeLayout
+        android:id="@+id/rr_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+        android:background="@color/appclr"
+        android:paddingBottom="5dp">
+
+        <ImageView
+            android:id="@+id/iv_hide_searchlist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="15dp"
+            android:visibility="gone"
+            android:background="@drawable/back_arrow"
+            android:padding="12dp" />
+
+        <EditText
+            android:id="@+id/edt_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_toRightOf="@+id/iv_hide_searchlist"
+            android:background="@drawable/search_bar"
+            android:imeOptions="actionSearch"
+            android:paddingLeft="5dp"
+            android:singleLine="true" />
+
+        <ListView
+            android:id="@+id/search_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/edt_search"
+            android:layout_marginLeft="10dp"
+            android:divider="@drawable/list_divider"
+            android:scrollbars="none"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rr_click_with_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rr_search"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/big_user_bg">
+
+        <dev.dworks.libs.astickyheader.ui.PinnedSectionListView
+            android:id="@+id/click_with_list_menu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@drawable/list_divider"
+            android:scrollbars="none" />
+    </RelativeLayout>
+
+</RelativeLayout><!-- From: file:/home/mukesh/Andriod_En/Android_studio/Studio_WorksAdda/CLICKINAPP/cLICKINAPP/src/main/res/layout/menu_view.xml -->

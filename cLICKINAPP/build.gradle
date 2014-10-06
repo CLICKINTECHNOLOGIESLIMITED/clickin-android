@@ -1,0 +1,38 @@
+apply plugin: 'android'
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion "19.0.3"
+
+    defaultConfig {
+        minSdkVersion 8
+        targetSdkVersion 19
+    }
+
+    buildTypes {
+        release {
+            runProguard false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+}
+
+dependencies {
+    compile project(':cropper')
+    compile project(':slider_library')
+    compile project(':facebookSDK')
+    compile project(':library_header')
+    compile project(':library')
+    compile 'com.android.support:support-v4:+'
+    compile 'com.android.support:appcompat-v7:+'
+    compile files('libs/quickblox-android-1.2.4.jar')
+    compile files('libs/picasso-2.2.0.jar')
+    compile files('libs/android-async-http-1.4.4.jar')
+    compile 'de.greenrobot:eventbus:2.2.0'
+    compile 'com.google.android.gms:play-services:3.1+'
+    compile 'com.viewpagerindicator:library:2.4.1@aar'
+    compile files('libs/quickblox-android-1.2.4.jar')
+    compile files('libs/java-json.jar')
+
+
+}
