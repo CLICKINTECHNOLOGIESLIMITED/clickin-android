@@ -113,7 +113,11 @@ public class NewsFeedManager extends Observable implements NewsFeedManagerI {
                                 /*
                                 chatDetail
                                  */
-                                if (!Utils.isEmptyString(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").toString())) {
+//                                if (!Utils.isEmptyString(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").toString())) {
+                                if(!newsfeedArray.getJSONObject(i).isNull("chatDetail")){
+JSONObject chatObj = newsfeedArray.getJSONObject(i).getJSONObject("chatDetail");
+                                    if(chatObj.has("QB_id"))
+                                        allNewsFeed.setNewsFeedArray_chatDetail_QB_id(chatObj.getString("QB_id"));
                                 if (newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").has("QB_id"))
                                     allNewsFeed.setNewsFeedArray_chatDetail_QB_id(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getString("QB_id"));
 
@@ -200,54 +204,56 @@ public class NewsFeedManager extends Observable implements NewsFeedManagerI {
                                 /*
                                 Reciever Details
                                  */
-
-                                allNewsFeed.setNewsFeedArray_receiverDetail_id(newsfeedArray.getJSONObject(i).getJSONObject("receiverDetail").getString("_id"));
-                                allNewsFeed.setNewsFeedArray_receiverDetail_name(newsfeedArray.getJSONObject(i).getJSONObject("receiverDetail").getString("name"));
-                                allNewsFeed.setNewsFeedArray_receiverDetail_user_pic(newsfeedArray.getJSONObject(i).getJSONObject("receiverDetail").getString("user_pic"));
-
+if(!newsfeedArray.getJSONObject(i).isNull("receiverDetail")) {
+    allNewsFeed.setNewsFeedArray_receiverDetail_id(newsfeedArray.getJSONObject(i).getJSONObject("receiverDetail").getString("_id"));
+    allNewsFeed.setNewsFeedArray_receiverDetail_name(newsfeedArray.getJSONObject(i).getJSONObject("receiverDetail").getString("name"));
+    allNewsFeed.setNewsFeedArray_receiverDetail_user_pic(newsfeedArray.getJSONObject(i).getJSONObject("receiverDetail").getString("user_pic"));
+}
                                 /*
                                 Comment Array
                                  */
-                                JSONArray commentArray = newsfeedArray.getJSONObject(i).getJSONArray("commentArray");
-                                ArrayList<NewsFeedBean> eachCommentArray = new ArrayList<NewsFeedBean>();
-                                Log.e("CommentArray", String.valueOf(commentArray.length()) + newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getString("_id"));
-                                for (int l = 0; l < commentArray.length(); l++) {
-                                    NewsFeedBean commentUserData = new NewsFeedBean();
-                                    Log.e("DataNumber", String.valueOf(i));
-                                    commentUserData.setNewsFeedArray_commentArray_id(commentArray.getJSONObject(l).getString("_id"));
-                                    commentUserData.setNewsFeedArray_commentArray_chat_id(commentArray.getJSONObject(l).getString("chat_id"));
-                                    commentUserData.setNewsFeedArray_commentArray_newsfeed_id(commentArray.getJSONObject(l).getString("newsfeed_id"));
-                                    commentUserData.setNewsFeedArray_commentArray_type(commentArray.getJSONObject(l).getString("type"));
-                                    commentUserData.setNewsFeedArray_commentArray_comment(commentArray.getJSONObject(l).getString("comment"));
-                                    commentUserData.setNewsFeedArray_commentArray_user_id(commentArray.getJSONObject(l).getString("user_id"));
-                                    commentUserData.setNewsFeedArray_commentArray_user_name(commentArray.getJSONObject(l).getString("user_name"));
-                                    commentUserData.setNewsFeedArray_commentArray_user_pic(commentArray.getJSONObject(l).getString("user_pic"));
-                                    commentUserData.setNewsFeedArray_commentArray_modified_sec(commentArray.getJSONObject(l).getJSONObject("modified").getString("sec"));
-                                    commentUserData.setNewsFeedArray_commentArray_modified_usec(commentArray.getJSONObject(l).getJSONObject("modified").getString("usec"));
-                                    commentUserData.setNewsFeedArray_commentArray_created_sec(commentArray.getJSONObject(l).getJSONObject("created").getString("sec"));
-                                    commentUserData.setNewsFeedArray_commentArray_created_usec(commentArray.getJSONObject(l).getJSONObject("created").getString("usec"));
+                                if(!newsfeedArray.getJSONObject(i).isNull("commentArray")) {
+                                    JSONArray commentArray = newsfeedArray.getJSONObject(i).getJSONArray("commentArray");
+                                    ArrayList<NewsFeedBean> eachCommentArray = new ArrayList<NewsFeedBean>();
+//                                    Log.e("CommentArray", String.valueOf(commentArray.length()) + newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getString("_id"));
+                                    for (int l = 0; l < commentArray.length(); l++) {
+                                        NewsFeedBean commentUserData = new NewsFeedBean();
+                                        Log.e("DataNumber", String.valueOf(i));
+                                        commentUserData.setNewsFeedArray_commentArray_id(commentArray.getJSONObject(l).getString("_id"));
+                                        commentUserData.setNewsFeedArray_commentArray_chat_id(commentArray.getJSONObject(l).getString("chat_id"));
+                                        commentUserData.setNewsFeedArray_commentArray_newsfeed_id(commentArray.getJSONObject(l).getString("newsfeed_id"));
+                                        commentUserData.setNewsFeedArray_commentArray_type(commentArray.getJSONObject(l).getString("type"));
+                                        commentUserData.setNewsFeedArray_commentArray_comment(commentArray.getJSONObject(l).getString("comment"));
+                                        commentUserData.setNewsFeedArray_commentArray_user_id(commentArray.getJSONObject(l).getString("user_id"));
+                                        commentUserData.setNewsFeedArray_commentArray_user_name(commentArray.getJSONObject(l).getString("user_name"));
+                                        commentUserData.setNewsFeedArray_commentArray_user_pic(commentArray.getJSONObject(l).getString("user_pic"));
+                                        commentUserData.setNewsFeedArray_commentArray_modified_sec(commentArray.getJSONObject(l).getJSONObject("modified").getString("sec"));
+                                        commentUserData.setNewsFeedArray_commentArray_modified_usec(commentArray.getJSONObject(l).getJSONObject("modified").getString("usec"));
+                                        commentUserData.setNewsFeedArray_commentArray_created_sec(commentArray.getJSONObject(l).getJSONObject("created").getString("sec"));
+                                        commentUserData.setNewsFeedArray_commentArray_created_usec(commentArray.getJSONObject(l).getJSONObject("created").getString("usec"));
 
-                                    eachCommentArray.add(commentUserData);
+                                        eachCommentArray.add(commentUserData);
+                                    }
+                                    allNewsFeed.setCommentArrayList(eachCommentArray);
                                 }
-                                allNewsFeed.setCommentArrayList(eachCommentArray);
-
                                 /*
                                 Starred Array
                                  */
+                                if(!newsfeedArray.getJSONObject(i).isNull("starredArray")) {
+                                    JSONArray starredArray = newsfeedArray.getJSONObject(i).getJSONArray("starredArray");
+                                    ArrayList<NewsFeedBean> eachStarredArray = new ArrayList<NewsFeedBean>();
+                                    for (int k = 0; k < starredArray.length(); k++) {
+                                        NewsFeedBean starredUserData = new NewsFeedBean();
+                                        starredUserData.setNewsFeedArray_starredArray_id(starredArray.getJSONObject(k).getString("_id"));
+                                        starredUserData.setNewsFeedArray_starredArray_user_name(starredArray.getJSONObject(k).getString("user_name"));
+                                        eachStarredArray.add(starredUserData);
+                                    }
+                                    allNewsFeed.setStarredArrayList(eachStarredArray);
 
-                                JSONArray starredArray = newsfeedArray.getJSONObject(i).getJSONArray("starredArray");
-                                ArrayList<NewsFeedBean> eachStarredArray = new ArrayList<NewsFeedBean>();
-                                for (int k = 0; k < starredArray.length(); k++) {
-                                    NewsFeedBean starredUserData = new NewsFeedBean();
-                                    starredUserData.setNewsFeedArray_starredArray_id(starredArray.getJSONObject(k).getString("_id"));
-                                    starredUserData.setNewsFeedArray_starredArray_user_name(starredArray.getJSONObject(k).getString("user_name"));
-                                    eachStarredArray.add(starredUserData);
+                                    allNewsFeed.setNewsfeedArray_created(newsfeedArray.getJSONObject(i).getString("created"));
+                                    allNewsFeed.setNewsfeedArray_modified(newsfeedArray.getJSONObject(i).getString("modified"));
+                                    userFeed.add(allNewsFeed);
                                 }
-                                allNewsFeed.setStarredArrayList(eachStarredArray);
-
-                                allNewsFeed.setNewsfeedArray_created(newsfeedArray.getJSONObject(i).getString("created"));
-                                allNewsFeed.setNewsfeedArray_modified(newsfeedArray.getJSONObject(i).getString("modified"));
-                                userFeed.add(allNewsFeed);
                             }
                             Log.e("FeedSize-InManager", String.valueOf(userFeed.size()));
                             if (state) {

@@ -1,0 +1,39 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:geekui="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/header_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/header_view">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:orientation="horizontal">
+
+        <com.sourcefuse.clickinandroid.utils.ClickInTextView
+            android:id="@+id/tv_clickintx"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="2dp"
+            android:paddingTop="5dp"
+            android:text="@string/txt_clickINtxt"
+            android:textColor="@color/dark_gray"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
+
+        <com.sourcefuse.clickinandroid.utils.ClickInTextView
+            android:id="@+id/tv_with"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="2dp"
+            android:paddingTop="5dp"
+            android:text="@string/txt_with"
+            android:textColor="@color/owner_relation_header_with_m"
+            android:textSize="16sp"
+            geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
+    </LinearLayout>
+
+</FrameLayout><!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/src/main/res/layout/list_item_header.xml -->

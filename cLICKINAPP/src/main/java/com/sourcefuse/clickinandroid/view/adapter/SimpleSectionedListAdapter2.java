@@ -210,21 +210,20 @@ public class SimpleSectionedListAdapter2 extends BaseAdapter implements PinnedSe
             doubleArrow = (TextView)convertView.findViewById(R.id.doubleArrow);
             imageview.setScaleType(ImageView.ScaleType.FIT_XY);
 
-
-
-            if((mSections.get(position).recieverName).toString().equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getUserName()))
-            {
-                view.setText(mSections.get(position).recieverName);
-                view1.setText(mSections.get(position).senderName);
-                Picasso.with(mContext).load(mSections.get(position).recieverImages).placeholder(R.drawable.ic_launcher).into(imageview);
-                doubleArrow.setText("<<");
-            }else {
-                doubleArrow.setText(">>");
-                view.setText(mSections.get(position).senderName);
-                view1.setText(mSections.get(position).recieverName);
-                Picasso.with(mContext).load(mSections.get(position).senderImages).placeholder(R.drawable.ic_launcher).into(imageview);
+if(mSections.get(position)!=null)
+if((mSections.get(position).recieverName)!=null){
+                if ((mSections.get(position).recieverName).toString().equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getUserName())) {
+                    view.setText(mSections.get(position).recieverName);
+                    view1.setText(mSections.get(position).senderName);
+                    Picasso.with(mContext).load(mSections.get(position).recieverImages).placeholder(R.drawable.ic_launcher).into(imageview);
+                    doubleArrow.setText("<<");
+                } else {
+                    doubleArrow.setText(">>");
+                    view.setText(mSections.get(position).senderName);
+                    view1.setText(mSections.get(position).recieverName);
+                    Picasso.with(mContext).load(mSections.get(position).senderImages).placeholder(R.drawable.ic_launcher).into(imageview);
+                }
             }
-
 
             feed_time.setText(mSections.get(position).timeOfFeed);
             return convertView;
@@ -232,6 +231,7 @@ public class SimpleSectionedListAdapter2 extends BaseAdapter implements PinnedSe
         } else {
             return mBaseAdapter.getView(sectionedPositionToPosition(position), convertView, parent);
         }
+//        return convertView;
     }
 
     @Override

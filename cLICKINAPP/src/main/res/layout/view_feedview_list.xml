@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:text="NEWSFEED"
+            android:text="THE FEED"
             android:textColor="@color/owner_profile_header_b"
             android:textSize="20sp"
             android:textStyle="bold" />

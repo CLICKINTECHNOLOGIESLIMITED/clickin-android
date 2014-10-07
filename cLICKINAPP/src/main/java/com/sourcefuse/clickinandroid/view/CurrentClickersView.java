@@ -110,12 +110,12 @@ public class CurrentClickersView extends Activity implements OnClickListener {
     }
 	@Override
 	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.btn_phb:
+        int i = v.getId();
+        if (i == R.id.btn_phb) {
             phonebook.setBackgroundResource(R.drawable.c_phonebook_pink);
             facebook.setBackgroundResource(R.drawable.c_fb_grey);
-			break;
-		case R.id.btn_fb:
+
+        } else if (i == R.id.btn_fb) {
             phonebook.setBackgroundResource(R.drawable.c_phonebook_grey);
             facebook.setBackgroundResource(R.drawable.c_fb_pink);
             Utils.launchBarDialog(CurrentClickersView.this);
@@ -129,25 +129,21 @@ public class CurrentClickersView extends Activity implements OnClickListener {
                     Session.setActiveSession(session);
                 }
                 if (!session.isOpened() && !session.isClosed()) {
-                    session.openForRead(new Session.OpenRequest(this).setCallback(callback).setPermissions("user_birthday","basic_info","email","user_location"));
+                    session.openForRead(new Session.OpenRequest(this).setCallback(callback).setPermissions("user_birthday", "basic_info", "email", "user_location"));
                 } else {
                     Session.openActiveSession(this, true, callback);
                 }
 
-            }
-            else{
+            } else {
                 Toast.makeText(getApplicationContext(), "Please Check Your Internet Connection", Toast.LENGTH_SHORT).show();
             }
-            break;
 
-		case R.id.btn_back:
-		//	finish();
-			break;
-        case R.id.btn_middle_back:
-             finish();
-            break;
-		case R.id.btn_next:
+        } else if (i == R.id.btn_back) {//	finish();
 
+        } else if (i == R.id.btn_middle_back) {
+            finish();
+
+        } else if (i == R.id.btn_next) {
             new AlertDialog.Builder(this)
                     .setMessage(AlertMessage.CURRENTCLICKERPAGE)
                     .setPositiveButton("Ok",
@@ -155,21 +151,21 @@ public class CurrentClickersView extends Activity implements OnClickListener {
                                 @Override
                                 public void onClick(DialogInterface dialog,
                                                     int which) {
-                                   dialog.dismiss();
+                                    dialog.dismiss();
                                 }
 
                             }).setNegativeButton("Skip", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog,
                                     int which) {
-                    Intent clickersView = new Intent(CurrentClickersView.this,SpreadWordView.class);
+                    Intent clickersView = new Intent(CurrentClickersView.this, SpreadWordView.class);
                     startActivity(clickersView);
 
                 }
 
             }).show();
-			break;
-		}
+
+        }
 	}
 
     @Override

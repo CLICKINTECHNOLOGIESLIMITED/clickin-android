@@ -39,7 +39,7 @@ import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.utils.VideoUtil;
 import com.sourcefuse.clickinandroid.view.adapter.ChatRecordAdapter;
-import com.sourcefuse.clickinapp.R;
+
 import com.squareup.picasso.Picasso;
 
 import org.jivesoftware.smack.ConnectionListener;
@@ -55,6 +55,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.TimeZone;
+import com.sourcefuse.clickinapp.R;
 
 import de.greenrobot.event.EventBus;
 
@@ -475,7 +476,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                     if (llAttachment.getVisibility() == View.GONE) {
                         Animation slideLeft = AnimationUtils.loadAnimation(ChatRecordView.this, R.anim.slide_attach_view);
                         llAttachment.startAnimation(slideLeft);
-                        llAttachment.setVisibility(0);
+                        llAttachment.setVisibility(View.VISIBLE);
                     }
 
                     llAttachment.setVisibility(View.VISIBLE);
@@ -492,7 +493,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         if (llAttachment.getVisibility() == View.VISIBLE) {
             Animation slideLeft = AnimationUtils.loadAnimation(ChatRecordView.this, R.anim.slide_right_to_left);
             llAttachment.startAnimation(slideLeft);
-            llAttachment.setVisibility(0);
+            llAttachment.setVisibility(View.GONE);
             llAttachment.setVisibility(View.GONE);
             showAttachmentView = true;
         }

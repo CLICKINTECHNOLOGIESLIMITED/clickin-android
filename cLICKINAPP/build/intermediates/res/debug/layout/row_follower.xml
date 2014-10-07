@@ -1,0 +1,98 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/tv_heading_rfollowers"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/transparent"
+        android:gravity="center_vertical"
+        android:textColor="@color/dark_gray"
+        android:textSize="20sp"
+        android:text="@string/txt_follower"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tv_heading_followers"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/tv_heading_rfollowers"
+        android:background="@color/transparent"
+        android:gravity="center_vertical"
+        android:text="@string/txt_follower"
+        android:textColor="@color/dark_gray"
+        android:textSize="20sp"
+        android:visibility="gone" />
+
+
+    <RelativeLayout
+        android:id="@+id/rl_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_heading_followers"
+        android:background="@color/white"
+        >
+
+        <ImageView
+            android:id="@+id/iv_usr"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/dcontact" />
+
+        <TextView
+            android:id="@+id/tv_clickers_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/iv_usr"
+            android:padding="5dp"
+            android:text="Bregenja"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+
+        <Button
+            android:id="@+id/btn_actions"
+            android:layout_width="100dp"
+            android:layout_height="35dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/follow_pink" />
+
+        <LinearLayout
+            android:id="@+id/rl_resect_accept"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <Button
+                android:id="@+id/btn_f_accept"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/check" />
+
+            <Button
+                android:id="@+id/btn_f_resect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/owner_side_icon_cross" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+</RelativeLayout><!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/src/main/res/layout/row_follower.xml -->

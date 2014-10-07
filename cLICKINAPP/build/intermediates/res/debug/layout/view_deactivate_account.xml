@@ -1,0 +1,362 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/rr_header"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@color/appclr">
+
+            <ImageView
+                android:id="@+id/iv_back_noti"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="6dp"
+                android:paddingBottom="5dp"
+                android:paddingRight="30dp"
+                android:paddingTop="5dp"
+                android:src="@drawable/back_arrow" />
+
+
+            <ImageView
+                android:id="@+id/iv_notification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="6dp"
+                android:paddingLeft="50dp"
+                android:src="@drawable/chat" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/iv_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/blue_bg">
+
+            <TextView
+                android:id="@+id/tv_profile_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="@string/txt_setting"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/deactivate_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Deactivate account"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/deactivate_msg"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:paddingBottom="5dp"
+        android:text="Deactivating your account will disable your profile and remove your name and picture from your friends' lists. Some information may still be visible to others, such as posts shared on The Feed."
+        android:textSize="15sp"
+         />
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:alwaysDrawnWithCache="false"
+        android:background="@drawable/r_owner_profile_bg"
+        android:fadingEdgeLength="0dp"
+        android:overScrollMode="never"
+        android:scrollbarAlwaysDrawVerticalTrack="false"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:paddingBottom="5dp"
+                android:paddingTop="30dp">
+
+                <TextView
+                    android:id="@+id/leaving_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Reason for leaving."
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/option_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Choose One"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+
+            <RadioGroup
+                android:id="@+id/rgOpinion"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                >
+
+                <RadioButton
+                    android:id="@+id/deactivate_radio_msg_one"
+                    android:layout_width="fill_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="2dp"
+                    android:background="@color/white"
+                    android:button="@drawable/radio_button_drawable"
+                    android:checked="true"
+                    android:padding="10dp"
+                    android:text="@string/deactivate_radio_msg_one"
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
+
+
+                <RadioButton
+                    android:id="@+id/deactivate_radio_msg_two"
+                    android:layout_width="fill_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="2dp"
+                    android:background="@color/white"
+                    android:button="@drawable/radio_button_drawable"
+                    android:padding="10dp"
+                    android:text="@string/deactivate_radio_msg_two"
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
+
+
+                <RadioButton
+                    android:id="@+id/deactivate_radio_msg_three"
+                    android:layout_width="fill_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="2dp"
+                    android:background="@color/white"
+                    android:button="@drawable/radio_button_drawable"
+                    android:padding="10dp"
+                    android:text="@string/deactivate_radio_msg_three"
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
+
+                <RadioButton
+                    android:id="@+id/deactivate_radio_msg_four"
+                    android:layout_width="fill_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="2dp"
+                    android:background="@color/white"
+                    android:button="@drawable/radio_button_drawable"
+                    android:padding="10dp"
+                    android:text="@string/deactivate_radio_msg_four"
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
+
+
+                <RadioButton
+                    android:id="@+id/deactivate_radio_msg_five"
+                    android:layout_width="fill_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="2dp"
+                    android:background="@color/white"
+                    android:button="@drawable/radio_button_drawable"
+                    android:padding="10dp"
+                    android:text="@string/deactivate_radio_msg_five"
+                    android:textColor="@color/black" />
+
+
+                <RadioButton
+                    android:id="@+id/deactivate_radio_msg_six"
+                    android:layout_width="fill_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="2dp"
+                    android:background="@color/white"
+                    android:button="@drawable/radio_button_drawable"
+                    android:padding="10dp"
+                    android:text="@string/deactivate_radio_msg_six"
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
+
+
+                <RadioButton
+                    android:id="@+id/deactivate_radio_msg_seven"
+                    android:layout_width="fill_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="2dp"
+                    android:background="@color/white"
+                    android:button="@drawable/radio_button_drawable"
+                    android:padding="10dp"
+                    android:layout_marginBottom="2dp"
+                    android:text="@string/deactivate_radio_msg_seven"
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
+
+
+            </RadioGroup>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                >
+
+                <EditText
+                    android:id="@+id/general_problem_text"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/box"
+                    android:gravity="top"
+                    android:hint="Please explain further"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="7dp"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/email_opt_out_text"
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="2dp"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:text="Email opt out"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+
+            <LinearLayout
+                android:id="@+id/mail_radio_button_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="2dp"
+                android:background="@color/white"
+                android:button="@drawable/radio_button_drawable"
+                android:text="@string/opt_out_msg"
+                >
+
+                <ImageView
+                    android:id="@+id/mail_radio_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/active_circle" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:text="@string/opt_out_msg"
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
+
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/password_text"
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="2dp"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:text="@string/deactivation_msg"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                 />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white">
+
+                <EditText
+                    android:id="@+id/old_password"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/old_pass_field"
+                    android:hint="Your Password"
+                    android:inputType="textPassword"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="5dp"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="20dp"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/btn_good_bye"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:background="@drawable/active_yes_btn"
+                    android:gravity="center"
+                    android:text="GOOD BYE :("
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/btn_stay"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/active_yes_btn"
+                    android:gravity="center"
+                    android:text="I WANNA STAY!"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
+<!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/src/main/res/layout/view_deactivate_account.xml -->

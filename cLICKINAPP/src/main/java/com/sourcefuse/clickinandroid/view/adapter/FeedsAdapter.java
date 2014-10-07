@@ -66,14 +66,15 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
         /*
         Condition for Clickin are there or not
          */
-        if(!(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_clicks().equalsIgnoreCase("null"))) {
+        if(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_clicks()!=null) {
+            if (!(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_clicks().equalsIgnoreCase("null"))) {
 
-            holder.clickedIn.setText(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_clicks());
-            holder.layout_clickin.setVisibility(View.VISIBLE);
-        }else{
-            holder.layout_clickin.setVisibility(View.GONE);
+                holder.clickedIn.setText(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_clicks());
+                holder.layout_clickin.setVisibility(View.VISIBLE);
+            } else {
+                holder.layout_clickin.setVisibility(View.GONE);
+            }
         }
-
         /*
         Condition for Audio Type 3
          */
