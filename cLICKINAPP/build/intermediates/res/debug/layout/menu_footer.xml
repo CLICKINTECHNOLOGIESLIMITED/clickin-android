@@ -33,13 +33,13 @@
                 android:id="@+id/btn_the_feed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/feed_icon"
                 android:layout_gravity="center_vertical"
+                android:layout_toRightOf="@+id/feed_icon"
                 android:paddingLeft="15dp"
-                geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"
-                android:textSize="20sp"
                 android:text="@string/txt_feed"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
         </LinearLayout>
 
         <View
@@ -78,11 +78,10 @@
                 android:layout_below="@+id/v_divider_feed"
                 android:layout_gravity="center_vertical"
                 android:paddingLeft="15dp"
-                geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"
-                android:textSize="20sp"
                 android:text="@string/txt_find_friend"
                 android:textColor="@color/white"
-                 />
+                android:textSize="20sp"
+                geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
         </LinearLayout>
 
         <View
@@ -121,10 +120,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:paddingLeft="15dp"
-                geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"
-                android:textSize="20sp"
                 android:text="@string/txt_invite"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
         </LinearLayout>
 
         <View
@@ -162,10 +161,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:paddingLeft="15dp"
-                geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"
-                android:textSize="20sp"
                 android:text="@string/txt_setting"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
         </LinearLayout>
     </RelativeLayout>
 

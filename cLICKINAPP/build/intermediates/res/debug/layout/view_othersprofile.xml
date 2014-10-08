@@ -3,13 +3,13 @@
     android:id="@+id/rl_usr_profile"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/white_pattern_bg" >
+    android:background="@drawable/white_pattern_bg">
 
     <RelativeLayout
         android:id="@+id/rr_header"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:background="@color/appclr" >
+        android:background="@color/appclr">
 
         <ImageView
             android:id="@+id/iv_menu_other"
@@ -36,21 +36,21 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/rr_header"
         android:orientation="horizontal"
-        android:weightSum="2" >
+        android:weightSum="2">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
             android:layout_marginTop="10dp"
-            android:layout_weight="1" >
+            android:layout_weight="1">
 
             <RelativeLayout
                 android:id="@+id/rr_profile_pic"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:background="@drawable/white_border" >
+                android:background="@drawable/white_border">
 
                 <TextView
                     android:id="@+id/tv_name_other"
@@ -135,8 +135,7 @@
             android:layout_marginLeft="2dp"
             android:layout_marginTop="10dp"
             android:layout_weight="1"
-            android:orientation="vertical" >
-
+            android:orientation="vertical">
 
 
             <RelativeLayout
@@ -144,16 +143,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:layout_gravity="right"
-                android:layout_marginTop="5dp"
                 android:layout_marginBottom="10dp"
                 android:layout_marginLeft="5dp"
-                android:background="@drawable/clickwith_bg" >
+                android:layout_marginTop="5dp"
+                android:background="@drawable/clickwith_bg">
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true" >
+                    android:layout_centerVertical="true">
 
                     <com.sourcefuse.clickinandroid.utils.ClickInTextView
                         android:id="@+id/tv_click_with_head"
@@ -161,9 +160,9 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:paddingTop="5dp"
-                        geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"
                         android:textColor="@color/white"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
 
                     <com.sourcefuse.clickinandroid.utils.ClickInTextView
                         android:id="@+id/tv_clickwith_name_head"
@@ -173,10 +172,10 @@
                         android:layout_centerHorizontal="true"
                         android:gravity="center_horizontal"
                         android:paddingBottom="2dp"
-                        geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
-                        android:textStyle="bold"
                         android:textColor="@color/white"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
                 </RelativeLayout>
             </RelativeLayout>
 
@@ -188,8 +187,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_weight="1"
                 android:background="@drawable/white_border"
-                android:orientation="vertical" >
-
+                android:orientation="vertical">
 
 
                 <LinearLayout
@@ -227,8 +225,8 @@
                     android:layout_height="1dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
-                    android:visibility="gone"
-                    android:background="@color/sign_hint" />
+                    android:background="@color/sign_hint"
+                    android:visibility="gone" />
 
                 <ListView
                     android:id="@+id/list_click_with_other"
@@ -248,7 +246,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/blue_bg" >
+        android:background="@drawable/blue_bg">
 
         <TextView
             android:id="@+id/tv_profile_other"

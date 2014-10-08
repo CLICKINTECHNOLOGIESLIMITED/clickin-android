@@ -1,12 +1,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" >
+    android:layout_height="wrap_content">
 
     <RelativeLayout
         android:id="@+id/rl_jk"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white" >
+        android:background="@color/white">
 
         <TextView
             android:id="@+id/tv_usr_name"
@@ -14,13 +14,13 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
+            android:ellipsize="end"
             android:gravity="center_vertical"
-            android:text="Bregenja"
             android:maxLines="1"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
             android:singleLine="true"
-            android:ellipsize="end"
+            android:text="Bregenja"
             android:textColor="@color/owner_relation_partner_name"
             android:textSize="18sp" />
 
@@ -32,14 +32,14 @@
             android:layout_marginBottom="2dp"
             android:layout_marginLeft="2dp"
             android:layout_marginRight="2dp"
-            android:layout_marginTop="2dp" >
+            android:layout_marginTop="2dp">
 
             <RelativeLayout
                 android:id="@+id/rl_m"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="-8dp"
-                android:paddingBottom="5dp" >
+                android:paddingBottom="5dp">
 
                 <ImageView
                     android:id="@+id/iv_usr_pic"
@@ -71,9 +71,8 @@
             android:layout_width="wrap_content"
             android:layout_height="5dp"
             android:layout_below="@+id/rl_kl"
-            android:visibility="gone"
             android:background="@color/white"
-            />
+            android:visibility="gone" />
     </RelativeLayout>
 
     <TextView
@@ -81,12 +80,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rl_jk"
-        android:text="Pending"
         android:background="@drawable/owner_list_roundedview"
         android:gravity="center_horizontal"
+        android:text="Pending"
         android:textColor="@color/profile_details"
-        android:visibility="gone"
-         />
+        android:visibility="gone" />
 
     <View
         android:id="@+id/v_devider"

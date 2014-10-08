@@ -192,7 +192,7 @@ public class SimpleSectionedListAdapter2 extends BaseAdapter implements PinnedSe
         if (isSectionHeaderPosition(position)) {
             TextView view,view1;
             TextView feed_time;
-            TextView doubleArrow;
+            ImageView doubleArrow;
             ImageView imageview;
             if(null == convertView){
                 convertView = mLayoutInflater.inflate(mSectionResourceId, parent, false);
@@ -207,7 +207,7 @@ public class SimpleSectionedListAdapter2 extends BaseAdapter implements PinnedSe
             view1 = (TextView)convertView.findViewById(mHeaderTextViewResId1);
             feed_time = (TextView)convertView.findViewById(feedTimeResId);
             imageview=(ImageView)convertView.findViewById(mHeaderImageViewResId);
-            doubleArrow = (TextView)convertView.findViewById(R.id.doubleArrow);
+            doubleArrow = (ImageView)convertView.findViewById(R.id.doubleArrow);
             imageview.setScaleType(ImageView.ScaleType.FIT_XY);
 
 if(mSections.get(position)!=null)
@@ -216,9 +216,9 @@ if((mSections.get(position).recieverName)!=null){
                     view.setText(mSections.get(position).recieverName);
                     view1.setText(mSections.get(position).senderName);
                     Picasso.with(mContext).load(mSections.get(position).recieverImages).placeholder(R.drawable.ic_launcher).into(imageview);
-                    doubleArrow.setText("<<");
+                    doubleArrow.setImageResource(R.drawable.arrow);
                 } else {
-                    doubleArrow.setText(">>");
+                    doubleArrow.setImageResource(R.drawable.flip_arow);
                     view.setText(mSections.get(position).senderName);
                     view1.setText(mSections.get(position).recieverName);
                     Picasso.with(mContext).load(mSections.get(position).senderImages).placeholder(R.drawable.ic_launcher).into(imageview);

@@ -20,22 +20,22 @@
         android:layout_marginLeft="18dp"
         android:layout_marginRight="18dp"
         android:layout_marginTop="5dp"
-        android:overScrollMode="never"
         android:background="@color/transparent"
+        android:overScrollMode="never"
         android:scrollbars="none">
 
         <RelativeLayout
             android:id="@+id/rl_container"
             android:layout_width="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true">
 
             <RelativeLayout
                 android:id="@+id/rl_container1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="-10dp"
                 android:layout_centerHorizontal="true"
+                android:layout_marginBottom="-10dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/white_border"
                 android:padding="10dp">
@@ -49,7 +49,6 @@
                     android:background="@drawable/c_grab_details" />
 
 
-
                 <com.sourcefuse.clickinandroid.utils.ClickInTextView
                     android:id="@+id/tv_fb_msg_t"
                     android:layout_width="wrap_content"
@@ -61,8 +60,8 @@
                     android:gravity="center"
                     android:text="@string/txt_fb_login_msg_two"
                     android:textColor="@color/dark_gray"
-                    geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -70,8 +69,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/iv_profile_img"
-                android:layout_marginTop="-30dp"
                 android:layout_centerHorizontal="true"
+                android:layout_marginTop="-30dp"
                 android:background="@drawable/rounded_profile_bg"
 
                 >
@@ -121,10 +120,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/edt_lname"
-                    android:layout_marginTop="5dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
+                    android:layout_marginTop="5dp"
                     android:background="@color/white"
                     android:orientation="horizontal"
                     android:weightSum="2">
@@ -133,16 +132,16 @@
                         android:id="@+id/btn_guy"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:layout_marginRight="4dp"
+                        android:layout_weight="1"
                         android:background="@drawable/c_grey_guy" />
 
                     <Button
                         android:id="@+id/btn_girl_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:layout_marginLeft="4dp"
+                        android:layout_weight="1"
                         android:background="@drawable/c_grey_girl" />
                 </LinearLayout>
 
@@ -221,11 +220,10 @@
                 android:id="@+id/ll_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
                 android:layout_below="@+id/rl_signupcontainer"
+                android:layout_gravity="center_horizontal"
                 android:background="@drawable/rounded_dob_bg"
-                android:orientation="vertical"
-                >
+                android:orientation="vertical">
 
                 <com.sourcefuse.clickinandroid.utils.ClickInTextView
                     android:id="@+id/tv_date_header"
@@ -237,16 +235,15 @@
                     android:paddingTop="5dp"
                     android:text="@string/txt_dateofbirth"
                     android:textColor="@color/white"
-                    geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
                     android:textSize="20sp"
-                     />
+                    geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
 
                 <LinearLayout
                     android:id="@+id/ll_date_picker"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:orientation="horizontal"
@@ -260,8 +257,8 @@
                         android:layout_weight="1"
                         android:background="@drawable/date"
                         android:gravity="center"
-                        android:textSize="20sp"
                         android:textColor="@color/black"
+                        android:textSize="20sp"
                         geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
 
                     <com.sourcefuse.clickinandroid.utils.ClickInTextView
@@ -272,9 +269,10 @@
                         android:layout_weight="1"
                         android:background="@drawable/date"
                         android:gravity="center"
-                        android:textSize="20sp"
                         android:textColor="@color/black"
-                        geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"/>
+                        android:textSize="20sp"
+                        geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
+
                     <com.sourcefuse.clickinandroid.utils.ClickInTextView
                         android:id="@+id/tv_year"
                         android:layout_width="wrap_content"
@@ -288,18 +286,18 @@
                 </LinearLayout>
             </LinearLayout>
 
-          <!--  <com.sourcefuse.clickin.utils.ClickInTextView
-                android:id="@+id/tv_mandatory"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_below="@+id/ll_date"
-                android:gravity="center"
-                android:padding="5dp"
-                android:text="@string/txt_mandatory"
-                android:textColor="@color/dark_gray"
-                android:textSize="18sp"
-                geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />-->
+            <!--  <com.sourcefuse.clickin.utils.ClickInTextView
+                  android:id="@+id/tv_mandatory"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_alignParentRight="true"
+                  android:layout_below="@+id/ll_date"
+                  android:gravity="center"
+                  android:padding="5dp"
+                  android:text="@string/txt_mandatory"
+                  android:textColor="@color/dark_gray"
+                  android:textSize="18sp"
+                  geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />-->
 
             <Button
                 android:id="@+id/btn_or"

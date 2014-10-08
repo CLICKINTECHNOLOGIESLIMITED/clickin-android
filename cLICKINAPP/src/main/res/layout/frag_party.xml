@@ -10,10 +10,10 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:horizontalSpacing="3dp"
         android:numColumns="3"
         android:padding="4dp"
-        android:verticalSpacing="3dip"
-        android:horizontalSpacing="3dp"
-        android:stretchMode="columnWidth"></GridView>
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="3dip"></GridView>
 </RelativeLayout>
 

@@ -10,8 +10,8 @@
         android:id="@+id/iv_notification_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
         android:background="@drawable/c_noti_comment" />
 
     <com.sourcefuse.clickinandroid.utils.ClickInTextView
@@ -19,14 +19,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/iv_notification_type"
         android:layout_marginLeft="10dp"
-        android:textColor="@color/white"
-        geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"
+        android:layout_toRightOf="@+id/iv_notification_type"
         android:text="Bregenja"
+        android:textColor="@color/white"
         android:textSize="15sp"
-         />
-
+        geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
 
 
 </RelativeLayout><!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/src/main/res/layout/row_notification.xml -->

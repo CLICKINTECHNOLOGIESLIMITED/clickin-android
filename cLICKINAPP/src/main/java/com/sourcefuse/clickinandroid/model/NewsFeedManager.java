@@ -115,6 +115,7 @@ public class NewsFeedManager extends Observable implements NewsFeedManagerI {
                                  */
 //                                if (!Utils.isEmptyString(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").toString())) {
                                 if(!newsfeedArray.getJSONObject(i).isNull("chatDetail")){
+                                    Log.e("parsing","inside chatdetail");
 JSONObject chatObj = newsfeedArray.getJSONObject(i).getJSONObject("chatDetail");
                                     if(chatObj.has("QB_id"))
                                         allNewsFeed.setNewsFeedArray_chatDetail_QB_id(chatObj.getString("QB_id"));
@@ -152,7 +153,7 @@ JSONObject chatObj = newsfeedArray.getJSONObject(i).getJSONObject("chatDetail");
                                 }
 
 
-                                newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").has("imageRatio") ;
+                                if(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").has("imageRatio"))
                                     allNewsFeed.setNewsFeedArray_chatDetail_imageRatio(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getString("imageRatio"));
 
                                     if (newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").has("isDelivered"))

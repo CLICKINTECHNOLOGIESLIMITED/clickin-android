@@ -8,7 +8,7 @@
         android:id="@+id/rl_laout"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-       android:layout_below="@+id/iv_toboard"
+        android:layout_below="@+id/iv_toboard"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
@@ -16,13 +16,12 @@
         android:background="@drawable/gray_border">
 
 
-
         <LinearLayout
             android:id="@+id/ll_tab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="60dp"
             android:orientation="horizontal"
             android:padding="5dp"
             android:weightSum="2">
@@ -71,8 +70,8 @@
             android:id="@+id/list_current_clickers"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/devider0"
             android:layout_above="@+id/rl_back"
+            android:layout_below="@+id/devider0"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
             android:layout_marginTop="10dp"
@@ -96,8 +95,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_marginTop="33dp"
                 android:layout_marginLeft="20dp"
+                android:layout_marginTop="33dp"
                 android:background="@drawable/c_back" />
 
             <TextView
@@ -105,8 +104,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="33dp"
                 android:layout_marginLeft="20dp"
+                android:layout_marginTop="33dp"
                 android:background="@drawable/invite_button" />
 
             <TextView
@@ -114,8 +113,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_marginTop="33dp"
                 android:layout_marginRight="20dp"
+                android:layout_marginTop="33dp"
                 android:background="@drawable/c_skip" />
         </RelativeLayout>
 

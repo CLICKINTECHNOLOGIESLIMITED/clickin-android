@@ -1,7 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@color/white"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical">
 
 
@@ -82,8 +82,7 @@
         android:layout_marginTop="10dp"
         android:paddingBottom="5dp"
         android:text="Deactivating your account will disable your profile and remove your name and picture from your friends' lists. Some information may still be visible to others, such as posts shared on The Feed."
-        android:textSize="15sp"
-         />
+        android:textSize="15sp" />
 
     <ScrollView
         android:layout_width="fill_parent"
@@ -132,8 +131,7 @@
             <RadioGroup
                 android:id="@+id/rgOpinion"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                >
+                android:layout_height="wrap_content">
 
                 <RadioButton
                     android:id="@+id/deactivate_radio_msg_one"
@@ -216,11 +214,11 @@
                     android:id="@+id/deactivate_radio_msg_seven"
                     android:layout_width="fill_parent"
                     android:layout_height="40dp"
+                    android:layout_marginBottom="2dp"
                     android:layout_marginTop="2dp"
                     android:background="@color/white"
                     android:button="@drawable/radio_button_drawable"
                     android:padding="10dp"
-                    android:layout_marginBottom="2dp"
                     android:text="@string/deactivate_radio_msg_seven"
                     android:textColor="@color/black"
                     android:textSize="15sp" />
@@ -231,8 +229,7 @@
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
-                >
+                android:background="@color/white">
 
                 <EditText
                     android:id="@+id/general_problem_text"
@@ -270,8 +267,7 @@
                 android:layout_marginTop="2dp"
                 android:background="@color/white"
                 android:button="@drawable/radio_button_drawable"
-                android:text="@string/opt_out_msg"
-                >
+                android:text="@string/opt_out_msg">
 
                 <ImageView
                     android:id="@+id/mail_radio_button"
@@ -301,8 +297,7 @@
                 android:gravity="center_vertical"
                 android:text="@string/deactivation_msg"
                 android:textSize="20sp"
-                android:textStyle="bold"
-                 />
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -327,9 +322,9 @@
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="20dp"
                 android:background="@color/white"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingBottom="20dp">
 
                 <TextView
                     android:id="@+id/btn_good_bye"

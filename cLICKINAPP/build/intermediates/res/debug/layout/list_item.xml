@@ -2,16 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
-    
+    android:orientation="vertical">
+
     <!-- Single ListItem -->
-    
+
     <!-- Product Name -->
-    <TextView android:id="@+id/product_name"
+    <TextView
+        android:id="@+id/product_name"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:padding="10dip"
         android:textSize="16dip"
-        android:textStyle="bold"/>    
+        android:textStyle="bold" />
 
 </LinearLayout><!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/src/main/res/layout/list_item.xml -->

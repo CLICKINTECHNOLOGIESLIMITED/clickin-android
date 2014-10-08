@@ -20,8 +20,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:gravity="center_horizontal"
             android:layout_marginTop="60dp"
+            android:gravity="center_horizontal"
             android:orientation="horizontal"
 
             android:weightSum="2">
@@ -53,8 +53,8 @@
             android:text="@string/txt_already_on_click"
             android:textColor="@color/dark_gray"
             android:textSize="18sp"
-            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
 
         <com.sourcefuse.clickinandroid.utils.ClickInTextView
             android:id="@+id/tv_clickersII"
@@ -65,18 +65,18 @@
             android:paddingBottom="10dp"
             android:text="@string/txt_already_on_clickII"
             android:textColor="@color/dark_gray"
-            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
             android:textSize="13sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
 
         <View
             android:id="@+id/devider0"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_below="@+id/tv_clickersII"
+            android:layout_marginBottom="8dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginBottom="8dp"
             android:background="@color/dark_gray" />
 
 
@@ -88,8 +88,8 @@
             android:layout_below="@+id/devider0"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="5dp"
-            android:divider="@null"
             android:layout_marginTop="5dp"
+            android:divider="@null"
             android:paddingBottom="5dp"
             android:scrollbars="none" />
 
@@ -107,10 +107,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_marginTop="33dp"
                 android:layout_marginLeft="20dp"
-                android:background="@drawable/c_back"
-                 />
+                android:layout_marginTop="33dp"
+                android:background="@drawable/c_back" />
 
             <TextView
                 android:id="@+id/btn_middle_back"
@@ -127,10 +126,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_marginTop="33dp"
                 android:layout_marginRight="20dp"
-                android:background="@drawable/c_next"
-                 />
+                android:layout_marginTop="33dp"
+                android:background="@drawable/c_next" />
 
         </RelativeLayout>
 

@@ -9,57 +9,57 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:background="@drawable/add_someone" />
- <!--   <LinearLayout
-        android:id="@+id/iv_topicon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/header_bg"
-        android:orientation="vertical">
+    <!--   <LinearLayout
+           android:id="@+id/iv_topicon"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_centerHorizontal="true"
+           android:background="@drawable/header_bg"
+           android:orientation="vertical">
 
-        <LinearLayout
+           <LinearLayout
 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/header_bg"
-            android:orientation="vertical">
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_gravity="center_horizontal"
+               android:background="@drawable/header_bg"
+               android:orientation="vertical">
 
-            <com.sourcefuse.clickin.utils.ClickInTextView
-                android:id="@+id/tv_fb_msg_t"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center_horizontal"
-                android:text="ADD SOMEONE"
-                android:textColor="@color/common_header_clr"
-                android:textSize="36sp"
-                android:textStyle="bold"
-                geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
+               <com.sourcefuse.clickin.utils.ClickInTextView
+                   android:id="@+id/tv_fb_msg_t"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_gravity="center_horizontal"
+                   android:gravity="center_horizontal"
+                   android:text="ADD SOMEONE"
+                   android:textColor="@color/common_header_clr"
+                   android:textSize="36sp"
+                   android:textStyle="bold"
+                   geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
 
-            <com.sourcefuse.clickin.utils.ClickInTextView
-                android:id="@+id/tv_fb_msg_two"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center_horizontal"
-                android:text="TO CLICK WITH"
-                android:textColor="@color/common_header_clr"
-                android:textSize="36sp"
-                android:textStyle="bold"
-                geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
-        </LinearLayout>
-    </LinearLayout>-->
+               <com.sourcefuse.clickin.utils.ClickInTextView
+                   android:id="@+id/tv_fb_msg_two"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_gravity="center_horizontal"
+                   android:gravity="center_horizontal"
+                   android:text="TO CLICK WITH"
+                   android:textColor="@color/common_header_clr"
+                   android:textSize="36sp"
+                   android:textStyle="bold"
+                   geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
+           </LinearLayout>
+       </LinearLayout>-->
     <RelativeLayout
         android:id="@+id/linearLayout1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/iv_topicon"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="20dp"
         android:background="@drawable/gray_border"
         android:padding="15dp">
 
@@ -78,8 +78,8 @@
                 android:ems="10"
                 android:hint="@string/txt_search_phonebook"
                 android:padding="10dp"
-                android:textColorHint="@color/sign_hint"
                 android:textColor="@color/phone_no_clr"
+                android:textColorHint="@color/sign_hint"
                 android:textSize="14sp">
 
                 <requestFocus />

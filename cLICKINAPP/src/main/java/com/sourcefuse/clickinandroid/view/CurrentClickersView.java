@@ -225,10 +225,23 @@ public class CurrentClickersView extends Activity implements OnClickListener {
         } else if(message.equalsIgnoreCase("FetchFbFriend Network Error")){
             Utils.dismissBarDialog();
             Utils.showAlert(CurrentClickersView.this, AlertMessage.connectionError);
+        } else if (message.equalsIgnoreCase("NewsFeed False")) {
+            Log.d("2", "message->" + message);
+
+            Utils.dismissBarDialog();
+            Intent intent = new Intent(CurrentClickersView.this, FeedView.class);
+
+            startActivity(intent);
         }
 
     }
 
-
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+    }
 
 }

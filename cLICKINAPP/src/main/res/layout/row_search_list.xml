@@ -23,17 +23,17 @@
             android:id="@+id/searchname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:textStyle="bold"
             android:text="hghghghvhg"
-            android:textSize="16sp" />
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tv_user_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
             android:text="hghghghvhg"
+            android:textColor="@color/white"
             android:textSize="12sp" />
     </LinearLayout>
 </RelativeLayout>

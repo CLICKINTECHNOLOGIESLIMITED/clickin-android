@@ -8,8 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        >
+        android:layout_marginRight="20dp">
 
         <RelativeLayout
             android:id="@+id/rl_topbar"
@@ -17,8 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:background="@drawable/get_ur_no_gimme_some_more"
-            android:gravity="center">
-        </RelativeLayout>
+            android:gravity="center"></RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/rl_signupcontainer"
@@ -27,8 +25,7 @@
             android:layout_below="@+id/iv_profile_img"
             android:layout_marginTop="-30dp"
             android:background="@drawable/white_border"
-            android:padding="8dp"
-            >
+            android:padding="8dp">
 
             <View
                 android:id="@+id/devider0"
@@ -79,7 +76,7 @@
                 android:imeOptions="actionNext"
                 android:inputType="textPassword"
                 android:padding="5dp"
-                android:textSize="16sp"/>
+                android:textSize="16sp" />
 
             <View
                 android:id="@+id/devider2"
@@ -104,35 +101,31 @@
                 android:imeOptions="actionGo"
                 android:inputType="textPassword"
                 android:padding="5dp"
-                android:textSize="16sp"/>
+                android:textSize="16sp" />
 
 
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/edt_re_pwd"
-                android:background="@color/dark_gray"
-                >
-            <TextView
-                android:id="@+id/dob"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:text="@string/txt_dob"/>
+                android:background="@color/dark_gray">
 
-
+                <TextView
+                    android:id="@+id/dob"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/txt_dob" />
 
 
                 <TextView
                     android:id="@+id/tv_reqf"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/date_picker"
                     android:layout_alignParentRight="true"
-                    android:text="@string/txt_manda"/>
-                </RelativeLayout>
-
-
+                    android:layout_below="@+id/date_picker"
+                    android:text="@string/txt_manda" />
+            </RelativeLayout>
 
 
         </RelativeLayout>
@@ -144,20 +137,17 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:background="@drawable/done_deactive"
-             />
+            android:background="@drawable/done_deactive" />
+
         <ImageView
             android:id="@+id/iv_profile_img"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/rl_topbar"
             android:layout_centerHorizontal="true"
-            android:background="@drawable/default_profile"/>
+            android:background="@drawable/default_profile" />
     </RelativeLayout>
 
 
-
-
-
-    </RelativeLayout>
+</RelativeLayout>
 <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/src/main/res/layout/view_getuserprofile.xml -->

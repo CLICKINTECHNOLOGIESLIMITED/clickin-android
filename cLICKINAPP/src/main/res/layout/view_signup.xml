@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/white_pattern_bg" >
+    android:background="@drawable/white_pattern_bg">
 
     <ImageView
         android:id="@+id/iv_topicon"
@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/iv_topicon"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp" >
+        android:layout_marginTop="50dp">
 
         <TextView
             android:id="@+id/tv_cntrycode"
@@ -35,13 +35,13 @@
             android:layout_marginRight="3dp"
             android:background="@drawable/s_country_code_textfield"
             android:inputType="number|numberSigned"
+            android:paddingBottom="8dp"
             android:paddingLeft="5dp"
             android:paddingTop="8dp"
-            android:paddingBottom="8dp"
             android:text="+91"
-            android:textColorHint="@color/defult_hint_clr"
             android:textColor="@color/phone_no_clr"
-            android:textSize="16sp" >
+            android:textColorHint="@color/defult_hint_clr"
+            android:textSize="16sp">
 
             <requestFocus />
         </EditText>
@@ -54,15 +54,15 @@
             android:layout_toRightOf="@+id/edt_code"
             android:background="@drawable/s_number_textfield"
             android:ems="10"
+            android:hint="@string/txt_phonenumber"
             android:inputType="number"
             android:maxLength="10"
+            android:paddingBottom="8dp"
             android:paddingLeft="10dp"
             android:paddingTop="8dp"
-            android:paddingBottom="8dp"
-            android:hint="@string/txt_phonenumber"
-            android:textColorHint="@color/sign_hint"
             android:textColor="@color/phone_no_clr"
-            android:textSize="16sp" >
+            android:textColorHint="@color/sign_hint"
+            android:textSize="16sp">
 
             <requestFocus />
         </EditText>

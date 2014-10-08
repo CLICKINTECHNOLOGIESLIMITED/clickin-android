@@ -39,8 +39,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
-           android:paddingLeft="50dp"
             android:layout_marginTop="6dp"
+            android:paddingLeft="50dp"
             android:src="@drawable/owner_profile_hedder_icon" />
     </RelativeLayout>
 

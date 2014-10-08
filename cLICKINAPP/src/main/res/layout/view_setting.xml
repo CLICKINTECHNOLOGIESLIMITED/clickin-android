@@ -69,10 +69,10 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:alwaysDrawnWithCache="false"
+        android:background="@drawable/r_owner_profile_bg"
         android:fadingEdgeLength="0dp"
         android:overScrollMode="never"
-        android:scrollbarAlwaysDrawVerticalTrack="false"
-        android:background="@drawable/r_owner_profile_bg">
+        android:scrollbarAlwaysDrawVerticalTrack="false">
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -178,16 +178,15 @@
                 android:paddingLeft="20dp"
                 android:text="Sharing"
                 android:textColor="@color/appclr"
-                android:textSize="20sp"
-                 />
+                android:textSize="20sp" />
 
 
             <LinearLayout
                 android:id="@+id/sharing_layout"
                 android:layout_width="fill_parent"
-                android:visibility="gone"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
 
                 <ImageView
@@ -244,9 +243,9 @@
                     android:id="@+id/twitter_layout"
                     android:layout_width="fill_parent"
                     android:layout_height="60dp"
-                    android:visibility="gone"
                     android:background="@color/white"
-                    android:paddingLeft="20dp">
+                    android:paddingLeft="20dp"
+                    android:visibility="gone">
 
                     <ImageView
                         android:id="@+id/twitter_icon"
@@ -290,9 +289,9 @@
                     android:id="@+id/google_plus_layout"
                     android:layout_width="fill_parent"
                     android:layout_height="60dp"
-                    android:visibility="gone"
                     android:background="@color/white"
-                    android:paddingLeft="20dp">
+                    android:paddingLeft="20dp"
+                    android:visibility="gone">
 
                     <ImageView
                         android:id="@+id/google_plus_icon"
@@ -345,8 +344,8 @@
                 android:id="@+id/main_password_layout"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <ImageView
                     android:layout_width="fill_parent"
@@ -385,8 +384,8 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
-                    android:visibility="gone"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <ImageView
                         android:layout_width="fill_parent"
@@ -395,15 +394,15 @@
 
                     <EditText
                         android:id="@+id/old_password"
+                        style="@style/settingmargin"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
+                        android:layout_marginTop="10dp"
                         android:background="@drawable/old_pass_field"
                         android:hint="Old Password"
-                        style="@style/settingmargin"
                         android:inputType="textPassword"
                         android:paddingBottom="5dp"
-                        android:layout_marginTop="10dp"
                         android:paddingLeft="10dp"
                         android:paddingTop="5dp"
                         android:textColor="@color/dark_gray"
@@ -425,6 +424,7 @@
 
                     <EditText
                         android:id="@+id/confirm_password"
+                        style="@style/settingmargin"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
@@ -433,12 +433,12 @@
                         android:hint="Confirm Password"
                         android:inputType="textPassword"
                         android:paddingLeft="10dp"
-                        style="@style/settingmargin"
                         android:textColor="@color/dark_gray"
                         android:textSize="18sp" />
 
                     <TextView
                         android:id="@+id/save_password"
+                        style="@style/settingmargin"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -448,7 +448,6 @@
                         android:background="@drawable/active_save_btn"
                         android:gravity="center_vertical|center_horizontal"
                         android:text="SAVE"
-                        style="@style/settingmargin"
                         android:textColor="@color/white"
                         android:textSize="18sp" />
                 </LinearLayout>
@@ -514,8 +513,8 @@
                 android:id="@+id/report_layout"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <ImageView
                     android:layout_width="fill_parent"
@@ -559,8 +558,8 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
-                    android:visibility="gone"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <EditText
                         android:id="@+id/problem_text"
@@ -594,6 +593,7 @@
                         android:text="SEND"
                         android:textColor="@color/white"
                         android:textSize="18sp" />
+
                     <ImageView
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"

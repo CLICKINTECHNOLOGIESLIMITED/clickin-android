@@ -3,13 +3,14 @@
     android:id="@+id/header_layout"
     android:layout_width="fill_parent"
     android:layout_height="@dimen/feed_sticky_header_height"
-    android:background="@color/transparent"
-    >
+    android:background="@color/transparent">
+
     <View
         android:id="@+id/transparentLayout"
         android:layout_width="match_parent"
         android:layout_height="10dp"
         android:background="@color/transparent"></View>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -32,7 +33,7 @@
             android:layout_marginRight="20dp"
             android:layout_toRightOf="@+id/imageView1"
             android:gravity="center_horizontal"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/senderUser"
@@ -46,16 +47,13 @@
                 android:textSize="@dimen/feed_sender_user_size"
                 android:textStyle="bold" />
 
-            <TextView
+            <ImageView
                 android:id="@+id/doubleArrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/feed_margin_bw_imagenname"
-                android:singleLine="true"
-                android:text=">>"
-                android:textIsSelectable="false"
-                android:textSize="@dimen/feed_sender_user_size"
-                android:textStyle="bold" />
+               android:src="@drawable/arrow"
+               />
 
             <TextView
                 android:id="@+id/recieverUser"
@@ -75,15 +73,15 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
 
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/feed_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:paddingTop="5dp"
                 android:paddingRight="5dp"
+                android:paddingTop="5dp"
+                android:singleLine="true"
                 android:text="3m"
                 android:textAllCaps="true"
                 android:textColor="@android:color/black"

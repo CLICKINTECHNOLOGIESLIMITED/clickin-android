@@ -1,11 +1,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" >
+    android:layout_height="wrap_content">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/feed_image"
@@ -16,12 +16,12 @@
             android:src="@drawable/female_crt" />
 
         <Button
+            android:id="@+id/feed_audio_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/feed_audio_button"
             android:layout_centerHorizontal="true"
             android:text="Audio PLay"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <RelativeLayout
             android:id="@+id/layout_clickin"
@@ -39,21 +39,23 @@
                 android:id="@+id/clickedIn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:paddingLeft="5dp"
-                android:text="-10"
+                android:text="0"
+                android:textStyle="bold"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/white"
-                android:textSize="16sp"  android:layout_centerVertical="true"/>
+                android:textSize="20sp" />
 
             <ImageView
                 android:id="@+id/clickInWhiteImage"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_toRightOf="@+id/clickedIn"
                 android:paddingLeft="5dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/female_crt"
-                android:layout_centerVertical="true"/>
+                android:src="@drawable/heart_icon" />
 
             <TextView
                 android:id="@+id/clickedInMessage"
@@ -74,7 +76,7 @@
             android:layout_below="@+id/layout_clickin"
             android:gravity="left"
             android:orientation="horizontal"
-            android:paddingLeft="5dp" >
+            android:paddingLeft="5dp">
 
             <ImageView
                 android:id="@+id/clickInstarImage"
@@ -96,14 +98,14 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/layout_comment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/layout_stars"
             android:gravity="left"
             android:orientation="horizontal"
-            android:id="@+id/layout_comment"
-            android:layout_below="@+id/layout_stars"
-            android:paddingLeft="5dp"
-           android:paddingBottom="10dp">
+            android:paddingBottom="10dp"
+            android:paddingLeft="5dp">
 
             <ImageView
                 android:id="@+id/clickInCommentImage"
@@ -111,50 +113,150 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="7dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/comment_icon" />
+                android:src="@drawable/comment_icon"
+                android:layout_gravity="top"/>
 
+        <LinearLayout
+            android:id="@+id/feed_comments_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:orientation="vertical"
+            android:paddingLeft="5dp"
+            android:visibility="gone">
             <LinearLayout
-                android:id="@+id/feed_comments_layout"
+                android:id="@+id/feed_comments_layout1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="left"
                 android:orientation="horizontal"
-                android:paddingLeft="5dp" >
-            </LinearLayout>
-        </LinearLayout>
-        <View android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:background="@color/dark_gray"
+                android:paddingLeft="5dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="View all 4 comments"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="16sp"/>
 
-            android:paddingTop="5dp"
-            android:layout_below="@+id/layout_comment"></View>
+                </LinearLayout>
+            <LinearLayout
+                android:id="@+id/feed_comments_layout2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:orientation="horizontal"
+                android:paddingLeft="5dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="charu"
+                    android:textColor="@color/feed_senderuser"
+                    android:textSize="16sp"
+                    android:id="@+id/name2"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="charu"
+                    android:paddingLeft="5dp"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:id="@+id/comment2"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/feed_comments_layout3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:orientation="horizontal"
+                android:paddingLeft="5dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="charu"
+                    android:textColor="@color/feed_senderuser"
+                    android:textSize="16sp"
+                    android:id="@+id/name3"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="charu"
+                    android:paddingLeft="5dp"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:id="@+id/comment3"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/feed_comments_layout4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:orientation="horizontal"
+                android:paddingLeft="5dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="charu"
+                    android:textColor="@color/feed_senderuser"
+                    android:textSize="16sp"
+                    android:id="@+id/name4"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="charu"
+                    android:paddingLeft="5dp"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:id="@+id/comment4"/>
+            </LinearLayout>
+         </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/layout_comment"
+
+            android:background="@color/dark_gray"
+            android:paddingTop="5dp"></View>
+
         <RelativeLayout
             android:id="@+id/feed_menu_layout"
             android:layout_width="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_height="wrap_content"
             android:layout_above="@+id/layout_all_button"
-            android:visibility="invisible"
-            android:layout_height="wrap_content" >
+            android:padding="5dp"
+            android:layout_alignParentRight="true"
+            android:visibility="gone">
 
             <ImageView
                 android:id="@+id/feed_remove_post"
-                android:layout_width="100dp"
-                android:layout_height="25dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:paddingLeft="5dp"
-                android:paddingTop="7dp"
+
                 android:scaleType="centerCrop"
-                android:src="@drawable/female_crt"
+                android:src="@drawable/remove"
                 tools:ignore="RtlSymmetry" />
+            <ImageView
+                android:id="@+id/feed_report_post"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+
+                android:scaleType="centerCrop"
+                android:src="@drawable/report"
+                tools:ignore="RtlSymmetry"
+                android:layout_below="@+id/feed_remove_post"/>
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/layout_all_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="left|center_horizontal|center_vertical"
             android:layout_below="@+id/layout_comment"
-            android:id="@+id/layout_all_button"
-            android:paddingLeft="5dp"
-            android:paddingTop="7dp" >
+            android:gravity="left|center_horizontal|center_vertical"
+            android:padding="5dp"
+          >
 
             <ImageView
                 android:id="@+id/feed_star_image_button"
@@ -177,14 +279,15 @@
 
             <ImageView
                 android:id="@+id/feed_menu_image_button"
-                android:layout_width="50dp"
-                android:layout_height="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
                 android:paddingTop="7dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/report_icon" />
+                android:src="@drawable/report_icon"
+                android:clickable="true"/>
         </RelativeLayout>
 
         <TextView

@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/white_pattern_bg" >
+    android:background="@drawable/white_pattern_bg">
 
     <ImageView
         android:id="@+id/linearLayout_top"
@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/e_enter_the_code"/>
+        android:background="@drawable/e_enter_the_code" />
 
 
     <LinearLayout
@@ -18,86 +18,82 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/linearLayout_top"
         android:layout_centerHorizontal="true"
-        android:weightSum="4"
         android:layout_marginBottom="45dp"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:weightSum="4">
 
         <EditText
             android:id="@+id/edt_one"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
+            android:layout_weight="1"
             android:background="@drawable/e_v_number_field_empty"
+            android:cursorVisible="false"
             android:gravity="center"
-            android:padding="10dp"
             android:inputType="number"
             android:maxLength="1"
-            android:cursorVisible="false"
+            android:padding="10dp"
             android:textColor="@color/white"
             android:textSize="45sp"
-            android:textStyle="bold"
-            android:layout_weight="1" >
-        </EditText>
+            android:textStyle="bold"></EditText>
 
         <EditText
             android:id="@+id/edt_two"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
+            android:layout_weight="1"
             android:background="@drawable/e_v_number_field_empty"
+            android:cursorVisible="false"
             android:gravity="center"
             android:inputType="number"
-            android:cursorVisible="false"
             android:maxLength="1"
             android:padding="10dp"
             android:textColor="@color/white"
             android:textSize="45sp"
-            android:textStyle="bold"
-            android:layout_weight="1" >
-        </EditText>
+            android:textStyle="bold"></EditText>
 
         <EditText
             android:id="@+id/edt_three"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
+            android:layout_weight="1"
             android:background="@drawable/e_v_number_field_empty"
+            android:cursorVisible="false"
             android:gravity="center"
             android:inputType="number"
-            android:cursorVisible="false"
             android:maxLength="1"
             android:padding="10dp"
             android:textColor="@color/white"
             android:textSize="45sp"
-            android:textStyle="bold"
-            android:layout_weight="1" >
-        </EditText>
+            android:textStyle="bold"></EditText>
 
         <EditText
             android:id="@+id/edt_four"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:background="@drawable/e_v_number_field_empty"
+            android:cursorVisible="false"
             android:ems="1"
             android:gravity="center"
             android:inputType="number"
             android:maxLength="1"
-            android:cursorVisible="false"
             android:padding="10dp"
             android:textColor="@color/white"
             android:textSize="45sp"
-            android:textStyle="bold"
-            android:layout_weight="1" >
-        </EditText>
+            android:textStyle="bold"></EditText>
     </LinearLayout>
 
     <Button
         android:id="@+id/btn_send"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:layout_below="@+id/linearLayout_top"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
         android:background="@drawable/hit_me_again" />
 
 </RelativeLayout>

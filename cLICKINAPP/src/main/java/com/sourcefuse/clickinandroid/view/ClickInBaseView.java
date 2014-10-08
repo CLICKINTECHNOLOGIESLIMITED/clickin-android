@@ -459,7 +459,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 
 
     public void onEventMainThread(String message) {
-
+        Log.d("onEventMainThread", "onEventMainThread->" );
         authManager = ModelManager.getInstance().getAuthorizationManager();
         if (message.equalsIgnoreCase("SearchResult True")) {
             stopSearch = true;
@@ -483,9 +483,13 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
             Intent intent = new Intent(ClickInBaseView.this, FeedView.class);
             startActivity(intent);
         } else if (message.equalsIgnoreCase("NewsFeed False")) {
+            Log.d("2", "message->" + message);
             stopSearch = true;
             Utils.dismissBarDialog();
-            Utils.showAlert(ClickInBaseView.this, authManager.getMessage());
+//            Utils.showAlert(ClickInBaseView.this, authManager.getMessage());
+            Intent intent = new Intent(ClickInBaseView.this, FeedView.class);
+
+            startActivity(intent);
             Log.d("2", "message->" + message);
         } else if (message.equalsIgnoreCase("NewsFeed Error")) {
             stopSearch = true;

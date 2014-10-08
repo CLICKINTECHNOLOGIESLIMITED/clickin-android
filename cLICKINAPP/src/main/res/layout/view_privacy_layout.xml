@@ -66,13 +66,12 @@
     </RelativeLayout>
 
 
-
     <WebView
         android:id="@+id/web_privacy_view"
         android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
         android:alwaysDrawnWithCache="false"
         android:fadingEdgeLength="0dp"
         android:overScrollMode="never"
-        android:scrollbarAlwaysDrawVerticalTrack="false"
-        android:layout_height="wrap_content"/>
+        android:scrollbarAlwaysDrawVerticalTrack="false" />
 </LinearLayout>

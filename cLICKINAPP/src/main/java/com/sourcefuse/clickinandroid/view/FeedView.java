@@ -2,8 +2,10 @@ package com.sourcefuse.clickinandroid.view;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.NewsFeedManager;
@@ -36,15 +38,26 @@ public class FeedView extends Activity {
     ArrayList<String> timeOfFeed = new ArrayList<String>();
     int headerPosition=0;
 
+    RelativeLayout no_feed_image;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+
         setContentView(R.layout.view_feedview_list);
         newsFeedManager = ModelManager.getInstance().getNewsFeedManager();
         newsFeedBeanArrayList = newsFeedManager.userFeed;
-        initData();
-        initControls();
+        if(newsFeedBeanArrayList.size()==0)
+        {
+            no_feed_image = (RelativeLayout)findViewById(R.id.no_feed_image);
+            no_feed_image.setVisibility(View.VISIBLE);
+        }
+        else {
+            initData();
+            initControls();
+        }
     }
 
     private void initData() {

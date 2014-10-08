@@ -1,8 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
+
     <RelativeLayout
         android:id="@+id/rr_header"
         android:layout_width="match_parent"
@@ -39,20 +39,37 @@
             android:background="@drawable/owner_profile_hedder_icon" />
     </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/no_feed_image"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/rr_header"
+        android:background="@drawable/r_owner_profile_bg"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:paddingTop="30dp"
+            android:src="@drawable/no_feeds_image" />
+    </RelativeLayout>
 
     <com.sourcefuse.clickinandroid.view.adapter.PinnedSecListViewForFeed
         android:id="@+id/list1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fadingEdgeLength="0dp"
         android:background="@color/transparent"
         android:choiceMode="singleChoice"
         android:drawSelectorOnTop="true"
-        android:paddingTop="59dp"
+        android:fadingEdgeLength="0dp"
         android:focusable="false"
         android:gravity="center"
-         />
-
+        android:paddingTop="59dp"
+        android:visibility="visible"
+        android:cacheColorHint="@color/white"
+        android:clickable="false"/>
 
 
 </RelativeLayout>
