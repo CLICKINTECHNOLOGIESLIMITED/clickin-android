@@ -39,19 +39,19 @@ public class NewsFeedBean {
         this.newsfeedArray_read = newsfeedArray_read;
     }
 
-    public String getNewsfeedArray_stars_count() {
+    public int getNewsfeedArray_stars_count() {
         return newsfeedArray_stars_count;
     }
 
-    public void setNewsfeedArray_stars_count(String newsfeedArray_stars_count) {
+    public void setNewsfeedArray_stars_count(int newsfeedArray_stars_count) {
         this.newsfeedArray_stars_count = newsfeedArray_stars_count;
     }
 
-    public String getNewsfeedArray_comments_count() {
+    public int getNewsfeedArray_comments_count() {
         return newsfeedArray_comments_count;
     }
 
-    public void setNewsfeedArray_comments_count(String getNewsfeedArray_comments_count) {
+    public void setNewsfeedArray_comments_count(int getNewsfeedArray_comments_count) {
         this.newsfeedArray_comments_count = getNewsfeedArray_comments_count;
     }
 
@@ -459,8 +459,8 @@ public class NewsFeedBean {
     private String newsfeedArray_user_id;
     private String newsfeedArray_newsfeed_msg;
     private String newsfeedArray_read;
-    private String newsfeedArray_stars_count;
-    private String newsfeedArray_comments_count;
+    private int newsfeedArray_stars_count;
+    private int newsfeedArray_comments_count;
     private String newsfeedArray_user_starred;
     private String newsfeedArray_user_commented;
     private String newsfeedArray_created;

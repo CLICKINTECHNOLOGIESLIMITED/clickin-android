@@ -41,15 +41,19 @@ public class SimpleSectionedListAdapter2 extends BaseAdapter implements PinnedSe
         CharSequence recieverName;
         String senderImages;
         String recieverImages;
+        CharSequence senderId;
+        CharSequence receiverId;
 
         String timeOfFeed;
-        public Section(int firstPosition, CharSequence title,CharSequence title2,String urlOfImage,String recieverImages,String timeOfFeed) {
+        public Section(int firstPosition, CharSequence title,CharSequence title2,String urlOfImage,String recieverImages,String timeOfFeed,String senderId, String receiverId) {
             this.firstPosition = firstPosition;
             this.senderName = title;
             this.recieverName =title2;
             this.senderImages = urlOfImage;
             this.timeOfFeed = timeOfFeed;
             this.recieverImages = recieverImages;
+            this.senderId = senderId;
+            this.receiverId=receiverId;
         }
 
 
@@ -210,20 +214,22 @@ public class SimpleSectionedListAdapter2 extends BaseAdapter implements PinnedSe
             doubleArrow = (ImageView)convertView.findViewById(R.id.doubleArrow);
             imageview.setScaleType(ImageView.ScaleType.FIT_XY);
 
-if(mSections.get(position)!=null)
-if((mSections.get(position).recieverName)!=null){
-                if ((mSections.get(position).recieverName).toString().equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getUserName())) {
-                    view.setText(mSections.get(position).recieverName);
-                    view1.setText(mSections.get(position).senderName);
-                    Picasso.with(mContext).load(mSections.get(position).recieverImages).placeholder(R.drawable.ic_launcher).into(imageview);
-                    doubleArrow.setImageResource(R.drawable.arrow);
-                } else {
-                    doubleArrow.setImageResource(R.drawable.flip_arow);
-                    view.setText(mSections.get(position).senderName);
-                    view1.setText(mSections.get(position).recieverName);
-                    Picasso.with(mContext).load(mSections.get(position).senderImages).placeholder(R.drawable.ic_launcher).into(imageview);
+
+
+            if(mSections.get(position)!=null)
+                if((mSections.get(position).senderId)!=null){
+                    if ((mSections.get(position).senderId).toString().equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getUserId())) {
+                        view.setText(mSections.get(position).senderName);
+                        view1.setText(mSections.get(position).recieverName);
+                        Picasso.with(mContext).load(mSections.get(position).senderImages).placeholder(R.drawable.ic_launcher).into(imageview);
+                        doubleArrow.setImageResource(R.drawable.arrow);
+                    } else {
+                        doubleArrow.setImageResource(R.drawable.flip_arow);
+                        view.setText(mSections.get(position).recieverName);
+                        view1.setText(mSections.get(position).senderName);
+                        Picasso.with(mContext).load(mSections.get(position).recieverImages).placeholder(R.drawable.ic_launcher).into(imageview);
+                    }
                 }
-            }
 
             feed_time.setText(mSections.get(position).timeOfFeed);
             return convertView;

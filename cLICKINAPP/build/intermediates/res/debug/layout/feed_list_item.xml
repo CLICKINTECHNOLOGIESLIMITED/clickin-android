@@ -66,7 +66,9 @@
                 android:text=""
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_centerVertical="true"/>
         </RelativeLayout>
 
         <LinearLayout
@@ -94,7 +96,8 @@
                 android:text="No Stars"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/black"
-                android:textSize="12sp" />
+                android:textSize="16sp"
+                android:textStyle="bold"/>
         </LinearLayout>
 
         <LinearLayout
@@ -123,7 +126,7 @@
             android:gravity="left"
             android:orientation="vertical"
             android:paddingLeft="5dp"
-            android:visibility="gone">
+            android:visibility="visible">
             <LinearLayout
                 android:id="@+id/feed_comments_layout1"
                 android:layout_width="wrap_content"
@@ -152,7 +155,8 @@
                     android:text="charu"
                     android:textColor="@color/feed_senderuser"
                     android:textSize="16sp"
-                    android:id="@+id/name2"/>
+                    android:id="@+id/name2"
+                    android:textStyle="bold"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -175,7 +179,8 @@
                     android:text="charu"
                     android:textColor="@color/feed_senderuser"
                     android:textSize="16sp"
-                    android:id="@+id/name3"/>
+                    android:id="@+id/name3"
+                    android:textStyle="bold"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -198,7 +203,8 @@
                     android:text="charu"
                     android:textColor="@color/feed_senderuser"
                     android:textSize="16sp"
-                    android:id="@+id/name4"/>
+                    android:id="@+id/name4"
+                    android:textStyle="bold"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

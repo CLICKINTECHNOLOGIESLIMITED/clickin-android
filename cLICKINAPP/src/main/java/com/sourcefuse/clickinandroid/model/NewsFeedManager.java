@@ -53,6 +53,7 @@ public class NewsFeedManager extends Observable implements NewsFeedManagerI {
                     public void onFailure(int statusCode, Throwable e,
                                           JSONObject errorResponse) {
                         super.onFailure(statusCode, e, errorResponse);
+                        userFeed.clear();
                         if (errorResponse != null) {
                             Log.e("errorResponse", "->" + errorResponse);
                             EventBus.getDefault().post("NewsFeed False");
@@ -78,6 +79,7 @@ public class NewsFeedManager extends Observable implements NewsFeedManagerI {
 
                             JSONArray newsfeedArray = response.getJSONArray("newsfeedArray");
                             userFeed.clear();
+                            Log.e("FeedSize-InManager before getting data", String.valueOf(userFeed.size()));
                             for (int i = 0; i < newsfeedArray.length(); i++) {
                                 NewsFeedBean allNewsFeed = new NewsFeedBean();
 
@@ -99,10 +101,10 @@ public class NewsFeedManager extends Observable implements NewsFeedManagerI {
                                 allNewsFeed.setFollowerList(followerArray);
 
                                 if (newsfeedArray.getJSONObject(i).has("stars_count"))
-                                    allNewsFeed.setNewsfeedArray_stars_count(newsfeedArray.getJSONObject(i).getString("stars_count"));
+                                    allNewsFeed.setNewsfeedArray_stars_count(newsfeedArray.getJSONObject(i).getInt("stars_count"));
 
                                 if (newsfeedArray.getJSONObject(i).has("comments_count"))
-                                    allNewsFeed.setNewsfeedArray_comments_count(newsfeedArray.getJSONObject(i).getString("comments_count"));
+                                    allNewsFeed.setNewsfeedArray_comments_count(newsfeedArray.getJSONObject(i).getInt("comments_count"));
 
                                 if (newsfeedArray.getJSONObject(i).has("user_starred"))
                                     allNewsFeed.setNewsfeedArray_user_starred(newsfeedArray.getJSONObject(i).getString("user_starred"));
@@ -216,10 +218,10 @@ if(!newsfeedArray.getJSONObject(i).isNull("receiverDetail")) {
                                 if(!newsfeedArray.getJSONObject(i).isNull("commentArray")) {
                                     JSONArray commentArray = newsfeedArray.getJSONObject(i).getJSONArray("commentArray");
                                     ArrayList<NewsFeedBean> eachCommentArray = new ArrayList<NewsFeedBean>();
-//                                    Log.e("CommentArray", String.valueOf(commentArray.length()) + newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getString("_id"));
+                                    Log.e("CommentArray", String.valueOf(commentArray.length()) + newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getString("_id"));
                                     for (int l = 0; l < commentArray.length(); l++) {
                                         NewsFeedBean commentUserData = new NewsFeedBean();
-                                        Log.e("DataNumber", String.valueOf(i));
+                                        Log.e("DataNumber", String.valueOf(l));
                                         commentUserData.setNewsFeedArray_commentArray_id(commentArray.getJSONObject(l).getString("_id"));
                                         commentUserData.setNewsFeedArray_commentArray_chat_id(commentArray.getJSONObject(l).getString("chat_id"));
                                         commentUserData.setNewsFeedArray_commentArray_newsfeed_id(commentArray.getJSONObject(l).getString("newsfeed_id"));
@@ -247,6 +249,7 @@ if(!newsfeedArray.getJSONObject(i).isNull("receiverDetail")) {
                                         NewsFeedBean starredUserData = new NewsFeedBean();
                                         starredUserData.setNewsFeedArray_starredArray_id(starredArray.getJSONObject(k).getString("_id"));
                                         starredUserData.setNewsFeedArray_starredArray_user_name(starredArray.getJSONObject(k).getString("user_name"));
+                                        Log.e("user_name",starredArray.getJSONObject(k).getString("user_name"));
                                         eachStarredArray.add(starredUserData);
                                     }
                                     allNewsFeed.setStarredArrayList(eachStarredArray);

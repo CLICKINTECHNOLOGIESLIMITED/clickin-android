@@ -3850,16 +3850,16 @@ bold
                     msgid="7999585836145154206" >"יש אפליקציה המחייבת התקנה של שירותי Google Play."
                 </string>
                 <string
+                    name="common_google_play_services_unknown_issue"
+                    msgid="4762332809710093730" >"בעיה לא ידועה בשירותי Google Play."
+                </string>
+                <string
                     name="common_google_play_services_unsupported_text"
                     msgid="3542578567569488671" >"שירותי Google Play, שחלק מהיישומים שלך מתבססים עליהם, אינם נתמכים על ידי המכשיר שברשותך. צור קשר עם היצרן לקבלת סיוע."
                 </string>
                 <string
                     name="common_signin_button_text"
                     msgid="9071884888741449141" >"היכנס"
-                </string>
-                <string
-                    name="common_google_play_services_unknown_issue"
-                    msgid="4762332809710093730" >"בעיה לא ידועה בשירותי Google Play."
                 </string>
                 <string
                     name="common_google_play_services_install_title"
@@ -3944,16 +3944,16 @@ bold
                     msgid="4762332809710093730" >"Error desconocido relacionado con los servicios de Google Play"
                 </string>
                 <string
+                    name="common_signin_button_text_long"
+                    msgid="2429381841831957106" >"Iniciar sesión con Google"
+                </string>
+                <string
                     name="common_google_play_services_enable_text"
                     msgid="7627896071867667758" >"Esta aplicación no funcionará si no habilitas los servicios de Google Play."
                 </string>
                 <string
                     name="auth_client_play_services_err_notification_msg"
                     msgid="3635065018897986478" >"Error de los servicios de Google Play"
-                </string>
-                <string
-                    name="common_signin_button_text_long"
-                    msgid="2429381841831957106" >"Iniciar sesión con Google"
                 </string>
                 <string
                     name="common_google_play_services_enable_button"
@@ -4945,16 +4945,16 @@ bold
                     msgid="4181637455539816337" >"Aktivera Google Play Tjänster"
                 </string>
                 <string
+                    name="common_signin_button_text"
+                    msgid="9071884888741449141" >"Logga in"
+                </string>
+                <string
                     name="common_google_play_services_enable_text"
                     msgid="7627896071867667758" >"Du måste aktivera Google Play Tjänster för att den här appen ska fungera."
                 </string>
                 <string
                     name="auth_client_using_bad_version_title"
                     msgid="2534454398764507874" >"En olämplig version av Google Play Tjänster anropades av en app."
-                </string>
-                <string
-                    name="common_signin_button_text"
-                    msgid="9071884888741449141" >"Logga in"
                 </string>
                 <string
                     name="common_google_play_services_unknown_issue"
@@ -5492,16 +5492,16 @@ bold
                     msgid="2031811694353399454" >"Επιλέξτε κάποια εφαρμογή"
                 </string>
                 <string
+                    name="abc_searchview_description_clear"
+                    msgid="3691816814315814921" >"Διαγραφή ερωτήματος"
+                </string>
+                <string
                     name="abc_searchview_description_voice"
                     msgid="893419373245838918" >"Φωνητική αναζήτηση"
                 </string>
                 <string
                     name="abc_action_menu_overflow_description"
                     msgid="3588849162933574182" >"Περισσότερες επιλογές"
-                </string>
-                <string
-                    name="abc_searchview_description_clear"
-                    msgid="3691816814315814921" >"Διαγραφή ερωτήματος"
                 </string>
             </file>
             <file
@@ -5982,16 +5982,16 @@ false
                     msgid="4076576682505996667" >"Atlikta"
                 </string>
                 <string
+                    name="abc_action_bar_home_description"
+                    msgid="4600421777120114993" >"Eiti į pagrindinį puslapį"
+                </string>
+                <string
                     name="abc_searchview_description_search"
                     msgid="8264924765203268293" >"Paieška"
                 </string>
                 <string
                     name="abc_shareactionprovider_share_with_application"
                     msgid="7165123711973476752" >"Bendrinti naudojant „%s“"
-                </string>
-                <string
-                    name="abc_action_bar_home_description"
-                    msgid="4600421777120114993" >"Eiti į pagrindinį puslapį"
                 </string>
             </file>
             <file
