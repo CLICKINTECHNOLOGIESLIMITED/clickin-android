@@ -2,4 +2,4 @@
     android:id="@+id/rl_usr_profile"
     android:layout_width="match_parent"
     android:layout_height="20dp"
-    android:background="@color/transparent"></RelativeLayout><!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/src/main/res/layout/list_divider.xml -->
+    android:background="@color/transparent"></RelativeLayout><!-- From: file:/home/mukesh/git/clickin-andoid/cLICKINAPP/src/main/res/layout/list_divider.xml -->

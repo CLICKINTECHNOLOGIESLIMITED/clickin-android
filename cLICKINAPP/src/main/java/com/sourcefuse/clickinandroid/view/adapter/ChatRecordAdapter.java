@@ -118,7 +118,10 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen> {
                     if(item.getClicks().equalsIgnoreCase(item.getChatText())){
                         holder.chatText.setText("");
                     }else{
-                        holder.chatText.setText(""+item.getChatText().substring(8));
+                        try {
+                            holder.chatText.setText(""+item.getChatText().substring(8));
+                        }catch (Exception e){}
+
                     }
                     holder.timeText.setText(""+getCurrentTime().toUpperCase());
                 }
@@ -221,7 +224,10 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen> {
                     if(item.getClicks().equalsIgnoreCase(item.getChatText())){
                         holder.chatText.setText("");
                     }else{
+                        try{
                         holder.chatText.setText(""+Utils.lineBreacker(item.getChatText().substring(8)));
+                    }catch (Exception e){}
+
                     }
                     holder.clicksText.setText(""+item.getClicks());
                     holder.chatText.setTextColor(context.getResources().getColor(R.color.white));
@@ -295,7 +301,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen> {
                     if(item.getClicks().equalsIgnoreCase(item.getChatText())){
                         holder.chatText.setText("");
                     }else{
+                        try {
                         holder.chatText.setText(""+Utils.lineBreacker(item.getChatText().substring(8)));
+                    }catch (Exception e){};
                     }
                     holder.clicksText.setText(""+item.getClicks());
                     holder.chatText.setTextColor(context.getResources().getColor(R.color.white));

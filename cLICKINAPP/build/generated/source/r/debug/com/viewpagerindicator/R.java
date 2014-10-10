@@ -84,13 +84,13 @@ public final class R {
 		public static final int default_title_indicator_top_padding = 0x7f08002b;
 	}
 	public static final class drawable {
-		public static final int vpi__tab_indicator = 0x7f0201b8;
-		public static final int vpi__tab_selected_focused_holo = 0x7f0201b9;
-		public static final int vpi__tab_selected_holo = 0x7f0201ba;
-		public static final int vpi__tab_selected_pressed_holo = 0x7f0201bb;
-		public static final int vpi__tab_unselected_focused_holo = 0x7f0201bc;
-		public static final int vpi__tab_unselected_holo = 0x7f0201bd;
-		public static final int vpi__tab_unselected_pressed_holo = 0x7f0201be;
+		public static final int vpi__tab_indicator = 0x7f0201c6;
+		public static final int vpi__tab_selected_focused_holo = 0x7f0201c7;
+		public static final int vpi__tab_selected_holo = 0x7f0201c8;
+		public static final int vpi__tab_selected_pressed_holo = 0x7f0201c9;
+		public static final int vpi__tab_unselected_focused_holo = 0x7f0201ca;
+		public static final int vpi__tab_unselected_holo = 0x7f0201cb;
+		public static final int vpi__tab_unselected_pressed_holo = 0x7f0201cc;
 	}
 	public static final class id {
 		public static final int bottom = 0x7f070022;
@@ -109,9 +109,9 @@ public final class R {
 	public static final class style {
 		public static final int TextAppearance_TabPageIndicator = 0x7f0b002a;
 		public static final int Theme_PageIndicatorDefaults = 0x7f0b003f;
-		public static final int Widget = 0x7f0b0040;
-		public static final int Widget_IconPageIndicator = 0x7f0b008f;
-		public static final int Widget_TabPageIndicator = 0x7f0b0090;
+		public static final int Widget = 0x7f0b0041;
+		public static final int Widget_IconPageIndicator = 0x7f0b0090;
+		public static final int Widget_TabPageIndicator = 0x7f0b0091;
 	}
 	public static final class styleable {
 		public static final int[] CirclePageIndicator = { 0x010100c4, 0x010100d4, 0x7f01001d, 0x7f01003a, 0x7f01005e, 0x7f01005f, 0x7f010060, 0x7f010061, 0x7f010062 };

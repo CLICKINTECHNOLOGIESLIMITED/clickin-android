@@ -29,9 +29,36 @@ public class ChatManager extends Observable implements ChatManagerI {
     public ArrayList<CardBean> tabArray = new ArrayList<CardBean>();
     private CardBean cardBean = null;
 
+    private int myTotalClick = 0;
+    private int partnerTotalClick =0 ;
+
+    public int getMyTotalClick() {
+        return myTotalClick;
+    }
+
+    public void setMyTotalClick(int myTotalClick) {
+
+        myTotalClick = getMyTotalClick() +myTotalClick;
+        this.myTotalClick = myTotalClick;
+    }
+
+    public int getPartnerTotalClick() {
+        return partnerTotalClick;
+    }
+
+    public void setPartnerTotalClick(int partnerTotalClick) {
+        partnerTotalClick = getPartnerTotalClick() +partnerTotalClick;
+        this.partnerTotalClick = partnerTotalClick;
+    }
+
+
+
+
+
 
     public HashMap<String, ArrayList<CardBean>> categories = new HashMap<String, ArrayList<CardBean>>();
     ArrayList<ArrayList<CardBean>> lists = new ArrayList<ArrayList<CardBean>>();
+    public ArrayList<CardBean> all = new ArrayList<CardBean>();
 
     @Override
     public void fetchChatRecord(String relationshipId, String phone,
@@ -46,7 +73,7 @@ public class ChatManager extends Observable implements ChatManagerI {
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            Log.e("", "userInputDetails-->" + se);
+            Log.e(TAG, "userInputDetails-->" + userInputDetails);
         } catch (Exception e1) {
             e1.printStackTrace();
         }
@@ -72,10 +99,10 @@ public class ChatManager extends Observable implements ChatManagerI {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            System.out.println("response FecthChat ->" + response);
+                            Log.e(TAG,"response FecthChat ->" + response);
                             state = response.getBoolean("success");
                             if (state) {
-
+Utils.clickCustomLog(response.toString());
                                 EventBus.getDefault().post("FecthChat True");
                             }
 
@@ -128,6 +155,8 @@ public class ChatManager extends Observable implements ChatManagerI {
                     Utils.clickCustomLog(response.toString());
                     success = response.getBoolean("success");
 
+                    tabArray.clear();
+
                     if (success) {
 
                         JSONArray list = response.getJSONArray("categories");
@@ -141,7 +170,10 @@ public class ChatManager extends Observable implements ChatManagerI {
 
                             //  lists.add(new ArrayList<CardBean>());
                             categories.put(categoryObj.getString("name"), new ArrayList<CardBean>());
+                            Log.e(TAG,"Catagories Values" +categories);
+
                         }
+
 
 
                         JSONArray cardList = response.getJSONArray("cards");

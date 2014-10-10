@@ -38,4 +38,4 @@
         android:id="@+id/stars_list"
         android:layout_below="@+id/rr_header"></ListView>
     </RelativeLayout>
-<!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/src/main/res/layout/view_feeds_stars.xml -->
+<!-- From: file:/home/mukesh/git/clickin-andoid/cLICKINAPP/src/main/res/layout/view_feeds_stars.xml -->

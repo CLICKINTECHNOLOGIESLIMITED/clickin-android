@@ -57,7 +57,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
     private LinearLayout theFeed, inviteF, findFriend, setting;
     public ListView clickWithlistView, searchList;
     public ClickInWithAdapter clickInadapter;
-    private String quickBlockId, partnerPic, partnerName,partnerId;
+    private String quickBlockId, partnerPic, partnerName,partnerId,myClicks,userClicks;
     public Boolean stopSearch = true;
     private EditText edt_search;
     private SearchAdapter searchListadapter;
@@ -106,6 +106,11 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         intent.putExtra("partnerName", partnerName);
         intent.putExtra("rId", rid);
         intent.putExtra("partnerId", partnerId);
+        intent.putExtra("myClicks", myClicks);
+        intent.putExtra("userClicks", userClicks);
+
+
+
 
         startActivity(intent);
 
@@ -208,6 +213,8 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
                         partnerPic = relationManager.acceptedList.get(position - 2).getPartnerPic();
                         quickBlockId = relationManager.acceptedList.get(position - 2).getPartnerQBId();
                         partnerId = relationManager.acceptedList.get(position - 2).getPartner_id();
+                        myClicks = relationManager.acceptedList.get(position - 2).getClicks();
+                        userClicks = relationManager.acceptedList.get(position - 2).getUserClicks();
                         Log.e("", "position--In..> " + rId);
                         switchView(rId);
 

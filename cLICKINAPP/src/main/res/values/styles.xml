@@ -10,6 +10,7 @@
             res/values-vXX/styles.xml, while customizations related to
             backward-compatibility can go here.
         -->
+        <item name="android:windowContentOverlay">@null</item>
     </style>
 
     <!-- Robo Theme. -->
@@ -57,4 +58,10 @@
         <item name="android:background">@color/white</item>
         <item name="android:layout_marginTop">2dp</item>
     </style>
+
+
+    <style name="Theme.Transparent" parent="android:Theme">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item></style>
 </resources>

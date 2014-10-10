@@ -49,7 +49,7 @@
     <string name="txt_clickINtxt">CLICKIN\'</string>
     <string name="txt_clickwith">CLICKIN\'WITH</string>
     <string name="clickwith">CLICK WITH</string>
-    <string name="txt_with"> WITH</string>
+    <string name="txt_with">WITH</string>
     <string name="txt_follower">FOLLOWERS</string>
     <string name="txt_following">FOLLOWING</string>
     <string name="PREFS_NAME">UserInfo</string>
@@ -83,6 +83,7 @@
     <string name="txt_notification">NOTIFICATIONS</string>
     <string name="txt_phonenumber">Phone Number</string>
     <string name="txt_logout">Are you sure you want to log out?</string>
+
     <drawable name="red_drawable">#CCAA1883</drawable>
     <drawable name="green_drawable">#CC123Bff</drawable>
 
@@ -108,12 +109,15 @@
     <string name="spam_msg_seven">Abuse</string>
     <string name="spam_msg_eight">Exploitation</string>
     <string name="spam_msg_nine">Other</string>
+    <string name="txt_share">SHARE</string>
+    <string name="txt_trade">TRADE</string>
     <string name="spam_edit_hint">Please provide details.</string>
 
     <!--Notification Type and string-->
     <string name="txt_relationrequest">relationrequest</string>
     <string name="txt_relationstatus">relationstatus</string>
     <string name="txt_relationdelete">relationdelete</string>
-
+    <string name="trade_hint">HOW MANY CLICKS ARE YOU WILLING TO OFFER?</string>
+    <string name="title_activity_card">Card</string>
 
 </resources>

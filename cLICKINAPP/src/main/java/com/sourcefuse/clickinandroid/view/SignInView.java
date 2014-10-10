@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.telephony.TelephonyManager;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -60,7 +61,7 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
 
     private Typeface typeface, typefaceBold;
     private Dialog mDialog;
-
+    public Thread myThread;
     boolean gotoProfile = true;
 
     @Override
@@ -302,13 +303,15 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
 
 
 
-    private void loginToQuickBlox() {
+    public void loginToQuickBlox() {
         SmackAndroid.init(this);
         com.sourcefuse.clickinandroid.utils.Log.e(TAG, "loginToQuickBlox --- getUserId=>" + authManager.getUserId() + ",--getUsrToken-=>" + authManager.getUsrToken());
         QBSettings.getInstance().fastConfigInit(Constants.CLICKIN_APP_ID, Constants.CLICKIN_AUTH_KEY, Constants.CLICKIN_AUTH_SECRET);
         final QBUser user = new QBUser(authManager.getUserId(), authManager.getUsrToken());
 
         QBAuth.createSession(user, new QBCallbackImpl() {
+
+
             @Override
             public void onComplete(Result result) {
                 if (result.isSuccess()) {
@@ -322,9 +325,16 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
                             QBChatService.getInstance().startAutoSendPresence(45);
 
 
-                           // authManager = ModelManager.getInstance().getAuthorizationManager();
                             chat = QBChatService.getInstance().createChat();
                             authManager.setqBPrivateChat(chat);
+
+
+                            myThread = new Thread(new UpdateThread());
+                            myThread.start();
+
+
+
+
                         }
 
                         @Override
@@ -345,7 +355,23 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
 
 
 
+    public class UpdateThread implements Runnable {
 
+        @Override
+        public void run() {
+            while(true)
+            {
+                System.out.print("M LIVE");
+
+                try {
+                    QBChatService.getInstance().startAutoSendPresence(45);
+                    myThread.sleep(30*1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 
 }
 

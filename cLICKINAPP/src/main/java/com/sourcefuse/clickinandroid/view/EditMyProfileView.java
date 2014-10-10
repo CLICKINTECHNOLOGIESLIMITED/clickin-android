@@ -156,6 +156,7 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
 
                 try {
                     imageBitmap = null;
+                    mImageCaptureUri = null;
                     mImageCaptureUri = data.getData();
                     imageBitmap = Utils.decodeUri(mImageCaptureUri, EditMyProfileView.this);
                     mySelfy.setImageBitmap(imageBitmap);

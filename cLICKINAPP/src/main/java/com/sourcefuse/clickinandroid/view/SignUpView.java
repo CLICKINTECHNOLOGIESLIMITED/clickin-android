@@ -23,6 +23,7 @@ import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.FetchContactFromPhone;
+import com.sourcefuse.clickinandroid.utils.MyPreference;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
 
@@ -56,7 +57,7 @@ public class SignUpView extends Activity implements TextWatcher,OnClickListener 
 		Utils.deviceId = Secure.getString(this.getContentResolver(),Secure.ANDROID_ID);
 
 
-
+        new MyPreference(getApplicationContext()).clearAllPreference();
 
 		checkmeout = (Button) findViewById(R.id.checkmeout);
 

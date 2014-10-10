@@ -1,4 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:geekui="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/white_pattern_bg">
@@ -44,14 +45,64 @@
             android:layout_below="@+id/rr_header_action_button"
             android:background="@drawable/r_middle_bg">
 
+
             <ImageView
                 android:id="@+id/iv_my_pix"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:layout_alignParentLeft="true"
                 android:layout_margin="2dp"
-                android:background="@drawable/female_crt"
-                android:scaleType="fitXY" />
+                android:scaleType="fitXY"
+                android:background="@drawable/female_crt" />
+
+
+
+            <com.sourcefuse.clickinandroid.utils.ClickInTextView
+                android:id="@+id/tv_myclick"
+                android:layout_width="wrap_content"
+                android:layout_toRightOf="@+id/iv_my_pix"
+                android:layout_centerVertical="true"
+                android:textColor="@color/usr_name"
+                android:layout_marginLeft="5dp"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
+                android:textSize="20dp"
+                android:text="12"/>
+
+            <ImageView
+                android:id="@+id/iv_heart_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/tv_myclick"
+                android:layout_marginLeft="5dp"
+                android:layout_centerVertical="true"
+                android:background="@drawable/r_click_icon"/>
+
+
+
+
+            <com.sourcefuse.clickinandroid.utils.ClickInTextView
+                android:id="@+id/tv_partner_click"
+                android:layout_width="wrap_content"
+                android:layout_toLeftOf="@+id/iv_heart_icon_partner"
+                android:layout_centerVertical="true"
+                android:textColor="@color/usr_name"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:layout_marginRight="5dp"
+                geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
+                android:textSize="20dp"
+                android:text="12"/>
+
+            <ImageView
+                android:id="@+id/iv_heart_icon_partner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/iv_partner_pix"
+                android:layout_marginRight="5dp"
+                android:layout_centerVertical="true"
+                android:background="@drawable/r_click_icon"/>
 
             <ImageView
                 android:id="@+id/iv_partner_pix"
@@ -59,8 +110,8 @@
                 android:layout_height="45dp"
                 android:layout_alignParentRight="true"
                 android:layout_margin="2dp"
-                android:background="@drawable/female_crt"
-                android:scaleType="fitXY" />
+                android:scaleType="fitXY"
+                android:background="@drawable/female_crt" />
         </RelativeLayout>
 
         <LinearLayout
@@ -88,9 +139,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal|center_vertical"
                 android:text="@string/txt_typing"
+                android:visibility="gone"
                 android:textColor="@color/owner_profile_header_b"
-                android:textSize="12sp"
-                android:visibility="gone" />
+                android:textSize="12sp" />
         </LinearLayout>
 
 
@@ -120,7 +171,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:divider="#00000000"
-
+            android:listSelector="@android:color/transparent"
             android:dividerHeight="3dp"
             android:scrollbars="none"
             android:stackFromBottom="true"
@@ -197,11 +248,12 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:background="@drawable/r_footer_middle_bg"
-                android:ellipsize="end"
+
                 android:lines="2"
                 android:maxLength="140"
-                android:paddingLeft="5dp"></EditText>
+                android:background="@drawable/r_footer_middle_bg"
+                android:paddingLeft="5dp"
+                ></EditText>
 
             <Button
                 android:id="@+id/btn_send"

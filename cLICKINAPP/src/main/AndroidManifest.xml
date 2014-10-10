@@ -165,10 +165,20 @@
             android:screenOrientation="portrait"></activity>
 
         <activity
+            android:name="com.sourcefuse.clickinandroid.view.Card"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name="com.sourcefuse.clickinandroid.view.CardView"
             android:launchMode="standard"
-            android:screenOrientation="portrait"></activity>
-
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.sourcefuse.clickinandroid.view.ViewTradeCart"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Transparent" >
+        </activity>
         <activity
             android:name="com.sourcefuse.clickinandroid.view.adapter.DeactivateAccountView"
             android:launchMode="standard"
