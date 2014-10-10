@@ -47,8 +47,10 @@ public class APIs {
     public static final String FETCHNEWSFEEDS = baseurl+"/newsfeed/fetchnewsfeeds/";
     public static final String FETCHFBFRIENDS = baseurl+"/newsfeed/fetchfbfriends/";
     public static final String DELETENEWSFEED = baseurl+"/newsfeed/delete/";
+    public static final String SAVESTARCOMMENT = baseurl+"/newsfeed/savecommentstar/";
 
-	//fetchprofile
+
+    //fetchprofile
 	public static final String FETCHOTHERPROFILEINFO = baseurl+"/users/fetchprofileinfo/profile_phone_no";
     public static final String GETUSERFOLLOWER = baseurl+"/users/fetchprofilefollow/profile_phone_no";
     public static final String FETCHPROFILEINFO = baseurl+"/users/fetchprofileinfo/profile_phone_no:";

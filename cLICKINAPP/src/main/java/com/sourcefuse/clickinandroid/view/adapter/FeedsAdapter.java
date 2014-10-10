@@ -19,8 +19,12 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.sourcefuse.clickinandroid.model.AuthManager;
+import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.bean.NewsFeedBean;
 import com.sourcefuse.clickinandroid.utils.Log;
+import com.sourcefuse.clickinandroid.view.FeedStarsView;
+import com.sourcefuse.clickinandroid.view.FeedView;
 import com.sourcefuse.clickinapp.R;
 import com.squareup.picasso.Picasso;
 
@@ -34,6 +38,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
     int layoutResourceId;
     ArrayList<NewsFeedBean> eachNewsFeed;
     MediaPlayer player;
+    AuthManager authMgr;
     public FeedsAdapter(Context context, int layoutResourceId,
                         ArrayList<NewsFeedBean> item) {
         super(context, layoutResourceId, item);
@@ -82,6 +87,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
             holder = (RecordHolder) row.getTag();
         }
         final RecordHolder rholder = (RecordHolder) row.getTag();
+        authMgr = ModelManager.getInstance().getAuthorizationManager();
 
 
         /*
@@ -106,7 +112,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
                 holder.clickedInMessage.setVisibility(View.GONE);
             }
         }
-        Log.e("FeedsAdapter++ChatDetailType",eachNewsFeed.get(position).getNewsFeedArray_chatDetail_type());
+//        Log.e("FeedsAdapter++ChatDetailType",eachNewsFeed.get(position).getNewsFeedArray_chatDetail_type());
         if(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_type()!=null) {
              /*
         Condition for Audio Type 3
@@ -124,7 +130,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
                 holder.feed_image.setVisibility(View.GONE);
             }else {
                 holder.feed_image.setVisibility(View.VISIBLE);
-                Log.e("FeedsAdapter++ChatDetailContent", eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content());
+//                Log.e("FeedsAdapter++ChatDetailContent", eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content());
                 Picasso.with(context).load(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content()).into(holder.feed_image);
             }
         }
@@ -142,7 +148,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
                 Intent intent = new Intent(android.content.Intent.ACTION_VIEW);
                 intent.setDataAndType(myUri, "audio/*");
                 context.startActivity(intent);
-                Log.e("FeedsAdapter++ChatDetailContent", eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content());
+//                Log.e("FeedsAdapter++ChatDetailContent", eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content());
             }
         });
 
@@ -158,6 +164,11 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
                     rholder.layout.startAnimation(slideLeft);
                     rholder.layout.setVisibility(View.VISIBLE);
                     holder.feed_menu.setImageResource(R.drawable.cross_icon);
+                    if (!(eachNewsFeed.get(position).getNewsFeedArray_senderDetail_id()).toString().equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getUserId())) {
+                        if (!(eachNewsFeed.get(position).getNewsFeedArray_receiverDetail_id()).toString().equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getUserId())) {
+                            holder.feed_remove_post.setVisibility(View.GONE);
+                        }
+                    }
                 }
                 else
                 {
@@ -176,11 +187,12 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
         holder.feed_report_post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+            ModelManager.getInstance().getNewsFeedManager().reportInAppropriate(authMgr.getPhoneNo(),authMgr.getUsrToken(),eachNewsFeed.get(position).getNewsfeedArray_id());
             }
         });
         if(eachNewsFeed.get(position).getCommentArrayList()!=null)
-        {Log.e("eachNewsFeed.get(position).getCommentArrayList().size()",""+eachNewsFeed.get(position).getCommentArrayList().size());
+        {
+//            Log.e("eachNewsFeed.get(position).getCommentArrayList().size()",""+eachNewsFeed.get(position).getCommentArrayList().size());
             holder.feed_comments_layout.setVisibility(View.VISIBLE);
             if(eachNewsFeed.get(position).getNewsfeedArray_comments_count()>3)
             {
@@ -208,13 +220,13 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
                     holder.comment4.setText(eachNewsFeed.get(position).getCommentArrayList().get(k).getNewsFeedArray_commentArray_comment());
                     break;
                 }
-                Log.e("cmnt4",eachNewsFeed.get(position).getCommentArrayList().get(2).getNewsFeedArray_commentArray_comment());
+//                Log.e("cmnt4",eachNewsFeed.get(position).getCommentArrayList().get(2).getNewsFeedArray_commentArray_comment());
             }
 
             }
             else
             {
-                Log.e("name1",""+eachNewsFeed.get(position).getCommentArrayList().size());
+//                Log.e("name1",""+eachNewsFeed.get(position).getCommentArrayList().size());
                 holder.feed_comments_layout1.setVisibility(View.GONE);
                 if(eachNewsFeed.get(position).getCommentArrayList().size()==1)
                 {
@@ -284,30 +296,89 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
         {
             holder.feed_star_image_button.setImageResource(R.drawable.pink_star_btn);
         }
-        Log.e("stars count",""+eachNewsFeed.get(position).getNewsfeedArray_stars_count());
+
+        holder.feed_star_image_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                    String stars = holder.feed_star_user.getText().toString().trim();
+                    if(stars.contains(authMgr.getUserName()))
+                    {
+                        holder.feed_star_image_button.setImageResource(R.drawable.star_btn);
+
+                        stars = stars.replace(authMgr.getUserName(),"").trim();
+                        if(stars.startsWith(","))
+                            stars = stars.replaceFirst(",","").trim();
+                        if(stars.endsWith(","))
+                            stars = stars.substring(0,stars.lastIndexOf(",")-1);
+                        if(stars.equalsIgnoreCase("")) {
+                            stars = "No Stars";
+                            holder.feed_star_user.setTextColor(Color.BLACK);
+                            holder.feed_star_user.setClickable(false);
+                        }
+                        holder.feed_star_user.setText(stars);
+                        ModelManager.getInstance().getNewsFeedManager().unStarredNewsFeed(authMgr.getPhoneNo(),authMgr.getUsrToken(),eachNewsFeed.get(position).getNewsfeedArray_id());
+                    }
+
+                else {
+                    holder.feed_star_image_button.setImageResource(R.drawable.pink_star_btn);
+                        if(stars.startsWith(","))
+                            stars = stars.replaceFirst(",","").trim();
+                        if(stars.endsWith(","))
+                            stars = stars.substring(0,stars.lastIndexOf(",")-1);
+                        if(stars.equalsIgnoreCase("No Stars"))
+                            stars = "";
+                        holder.feed_star_user.setTextColor(context.getResources().getColor(R.color.feed_senderuser));
+                        holder.feed_star_user.setClickable(true);
+                    holder.feed_star_user.setText(stars+", "+ModelManager.getInstance().getAuthorizationManager().getUserName());
+                    ModelManager.getInstance().getNewsFeedManager().saveStarComment(authMgr.getPhoneNo(), authMgr.getUsrToken(),eachNewsFeed.get(position).getNewsfeedArray_id(),"","star");
+                }
+            }
+        });
+        holder.feed_comment_image_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        holder.feed_star_user.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, FeedStarsView.class);
+                intent.putExtra("news_feed_id",eachNewsFeed.get(position).getNewsfeedArray_id());
+                context.startActivity(intent);
+            }
+        });
+//        Log.e("stars count",""+eachNewsFeed.get(position).getNewsfeedArray_stars_count());
         if(eachNewsFeed.get(position).getNewsfeedArray_stars_count()==0)
         {
             holder.feed_star_user.setText("No Stars");
             holder.feed_star_user.setTextColor(Color.BLACK);
+            holder.feed_star_user.setClickable(false);
         }
         else
         {
-            Log.e("stars count ar size",""+eachNewsFeed.get(position).getStarredArrayList().size());
-            String stars_text="";
-            for(int i =0;i<eachNewsFeed.get(position).getStarredArrayList().size();i++)
+//            Log.e("stars count ar size",""+eachNewsFeed.get(position).getStarredArrayList().size());
+            if(eachNewsFeed.get(position).getNewsfeedArray_stars_count()>5)
             {
-                if(i==eachNewsFeed.get(position).getStarredArrayList().size()-1)
-                {
-                    stars_text+=eachNewsFeed.get(position).getStarredArrayList().get(i).getNewsFeedArray_starredArray_user_name();
-                }
-                else
-                {
-                    stars_text+=eachNewsFeed.get(position).getStarredArrayList().get(i).getNewsFeedArray_starredArray_user_name()+", ";
-                }
+                holder.feed_star_user.setText(eachNewsFeed.get(position).getNewsfeedArray_stars_count()+" Stars");
+                holder.feed_star_user.setTextColor(Color.BLACK);
+                holder.feed_star_user.setClickable(false);
             }
-            Log.e("stars ",stars_text);
-            holder.feed_star_user.setTextColor(context.getResources().getColor(R.color.feed_senderuser));
-            holder.feed_star_user.setText(stars_text);
+            else {
+                String stars_text = "";
+                for (int i = 0; i < eachNewsFeed.get(position).getStarredArrayList().size(); i++) {
+                    if (i == eachNewsFeed.get(position).getStarredArrayList().size() - 1) {
+                        stars_text += eachNewsFeed.get(position).getStarredArrayList().get(i).getNewsFeedArray_starredArray_user_name();
+                    } else {
+                        stars_text += eachNewsFeed.get(position).getStarredArrayList().get(i).getNewsFeedArray_starredArray_user_name() + ", ";
+                    }
+                }
+//            Log.e("stars ",stars_text);
+                holder.feed_star_user.setTextColor(context.getResources().getColor(R.color.feed_senderuser));
+                holder.feed_star_user.setText(stars_text);
+                holder.feed_star_user.setClickable(true);
+            }
         }
         return row;
     }
@@ -337,7 +408,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
         Button feed_audio_button;
         LinearLayout feed_comments_layout4,feed_comments_layout1,feed_comments_layout2,feed_comments_layout3,feed_comments_layout;
         TextView name2,comment2, name3, comment3, name4, comment4;
-ImageView feed_star_image_button,feed_comment_image_button;
+        ImageView feed_star_image_button,feed_comment_image_button;
     }
 
 

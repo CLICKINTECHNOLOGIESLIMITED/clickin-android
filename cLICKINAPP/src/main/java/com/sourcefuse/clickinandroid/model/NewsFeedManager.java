@@ -3,6 +3,7 @@ package com.sourcefuse.clickinandroid.model;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.sourcefuse.clickinandroid.model.bean.CurrentClickerBean;
+import com.sourcefuse.clickinandroid.model.bean.FeedStarsBean;
 import com.sourcefuse.clickinandroid.model.bean.NewsFeedBean;
 import com.sourcefuse.clickinandroid.utils.APIs;
 import com.sourcefuse.clickinandroid.utils.Log;
@@ -148,10 +149,10 @@ JSONObject chatObj = newsfeedArray.getJSONObject(i).getJSONObject("chatDetail");
                                 if (newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getJSONObject("created").has("usec"))
                                     allNewsFeed.setNewsFeedArray_chatDetail_created_usec(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getJSONObject("created").getString("usec"));
 
-                                if (Utils.isEmptyString(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getString("deliveredChatID"))) {
-                                    allNewsFeed.setNewsFeedArray_chatDetail_delieveredChatId("");
-                                } else {
+                                if (!newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").isNull("deliveredChatID")) {
                                     allNewsFeed.setNewsFeedArray_chatDetail_delieveredChatId(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getString("delieveredChatId"));
+                                } else {
+                                    allNewsFeed.setNewsFeedArray_chatDetail_delieveredChatId("");
                                 }
 
 
@@ -197,28 +198,14 @@ JSONObject chatObj = newsfeedArray.getJSONObject(i).getJSONObject("chatDetail");
                                     if (newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").has("video_thumb"))
                                         allNewsFeed.setNewsFeedArray_chatDetail_video_thumb(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getString("video_thumb"));
                                 }
-                                /*
-                                Sender Details
-                                 */
-                                allNewsFeed.setNewsFeedArray_senderDetail_id(newsfeedArray.getJSONObject(i).getJSONObject("senderDetail").getString("_id"));
-                                allNewsFeed.setNewsFeedArray_senderDetail_name(newsfeedArray.getJSONObject(i).getJSONObject("senderDetail").getString("name"));
-                                allNewsFeed.setNewsFeedArray_senderDetail_user_pic(newsfeedArray.getJSONObject(i).getJSONObject("senderDetail").getString("user_pic"));
 
-                                /*
-                                Reciever Details
-                                 */
-if(!newsfeedArray.getJSONObject(i).isNull("receiverDetail")) {
-    allNewsFeed.setNewsFeedArray_receiverDetail_id(newsfeedArray.getJSONObject(i).getJSONObject("receiverDetail").getString("_id"));
-    allNewsFeed.setNewsFeedArray_receiverDetail_name(newsfeedArray.getJSONObject(i).getJSONObject("receiverDetail").getString("name"));
-    allNewsFeed.setNewsFeedArray_receiverDetail_user_pic(newsfeedArray.getJSONObject(i).getJSONObject("receiverDetail").getString("user_pic"));
-}
                                 /*
                                 Comment Array
                                  */
                                 if(!newsfeedArray.getJSONObject(i).isNull("commentArray")) {
                                     JSONArray commentArray = newsfeedArray.getJSONObject(i).getJSONArray("commentArray");
                                     ArrayList<NewsFeedBean> eachCommentArray = new ArrayList<NewsFeedBean>();
-                                    Log.e("CommentArray", String.valueOf(commentArray.length()) + newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getString("_id"));
+//                                    Log.e("CommentArray", String.valueOf(commentArray.length()) + newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getString("_id"));
                                     for (int l = 0; l < commentArray.length(); l++) {
                                         NewsFeedBean commentUserData = new NewsFeedBean();
                                         Log.e("DataNumber", String.valueOf(l));
@@ -249,15 +236,35 @@ if(!newsfeedArray.getJSONObject(i).isNull("receiverDetail")) {
                                         NewsFeedBean starredUserData = new NewsFeedBean();
                                         starredUserData.setNewsFeedArray_starredArray_id(starredArray.getJSONObject(k).getString("_id"));
                                         starredUserData.setNewsFeedArray_starredArray_user_name(starredArray.getJSONObject(k).getString("user_name"));
-                                        Log.e("user_name",starredArray.getJSONObject(k).getString("user_name"));
+                                        Log.e("user_name", starredArray.getJSONObject(k).getString("user_name"));
                                         eachStarredArray.add(starredUserData);
                                     }
                                     allNewsFeed.setStarredArrayList(eachStarredArray);
-
+                                }
                                     allNewsFeed.setNewsfeedArray_created(newsfeedArray.getJSONObject(i).getString("created"));
                                     allNewsFeed.setNewsfeedArray_modified(newsfeedArray.getJSONObject(i).getString("modified"));
+
+                                /*
+                                Reciever Details
+                                 */
+                                if(!newsfeedArray.getJSONObject(i).isNull("receiverDetail")) {
+                                    allNewsFeed.setNewsFeedArray_receiverDetail_id(newsfeedArray.getJSONObject(i).getJSONObject("receiverDetail").getString("_id"));
+                                    allNewsFeed.setNewsFeedArray_receiverDetail_name(newsfeedArray.getJSONObject(i).getJSONObject("receiverDetail").getString("name"));
+                                    allNewsFeed.setNewsFeedArray_receiverDetail_user_pic(newsfeedArray.getJSONObject(i).getJSONObject("receiverDetail").getString("user_pic"));
+                                }
+                                 /*
+                                Sender Details
+                                 */
+                                if(!newsfeedArray.getJSONObject(i).isNull("senderDetail")) {
+                                    allNewsFeed.setNewsFeedArray_senderDetail_id(newsfeedArray.getJSONObject(i).getJSONObject("senderDetail").getString("_id"));
+                                    allNewsFeed.setNewsFeedArray_senderDetail_name(newsfeedArray.getJSONObject(i).getJSONObject("senderDetail").getString("name"));
+                                    allNewsFeed.setNewsFeedArray_senderDetail_user_pic(newsfeedArray.getJSONObject(i).getJSONObject("senderDetail").getString("user_pic"));
+
+
                                     userFeed.add(allNewsFeed);
                                 }
+
+
                             }
                             Log.e("FeedSize-InManager", String.valueOf(userFeed.size()));
                             if (state) {
@@ -354,6 +361,65 @@ if(!newsfeedArray.getJSONObject(i).isNull("receiverDetail")) {
         );
     }
 
+    @Override
+    public void saveStarComment(String phone,String user_token, String newsfeedsId,  String comment, String type) {
+        JSONObject userInputDetails = new JSONObject();
+        try {
+            userInputDetails.put("phone_no", phone);
+            userInputDetails.put("user_token", user_token);
+            userInputDetails.put("newsfeed_id", newsfeedsId);
+            userInputDetails.put("comment", comment);
+            userInputDetails.put("type", type);
+
+
+            client = new AsyncHttpClient();
+            se = new StringEntity(userInputDetails.toString());
+            se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,
+                    "application/json"));
+
+            System.out.println(userInputDetails);
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        client.post(null, APIs.SAVESTARCOMMENT, se, "application/json",
+                new JsonHttpResponseHandler() {
+
+                    @Override
+                    public void onFailure(int statusCode, Throwable e,
+                                          JSONObject errorResponse) {
+                        super.onFailure(statusCode, e, errorResponse);
+
+                        if (errorResponse != null) {
+                            Log.e("errorResponse", "->" + errorResponse);
+                            EventBus.getDefault().post("SaveStarComment False");
+                        } else {
+                            EventBus.getDefault().post("SaveStarComment Network Error");
+                        }
+                    }
+
+                    @Override
+                    public void onSuccess(int statusCode,
+                                          org.apache.http.Header[] headers,
+                                          JSONObject response) {
+                        super.onSuccess(statusCode, headers, response);
+                        boolean state = false;
+                        try {
+                            Log.e(TAG, "response SaveStarComment ->" + response);
+                           state = response.getBoolean("success");
+                            if (state) {
+                                EventBus.getDefault().post("SaveStarComment True");
+                            }
+                            else
+                            {
+                                EventBus.getDefault().post("SaveStarComment False");
+                            }
+                        } catch (JSONException e) {
+                            EventBus.getDefault().post("SaveStarComment False");
+                            e.printStackTrace();
+                        }
+                    }
+                });
+    }
 
     public void fetchCommentStars(String phone_no, String user_token, String lastId, String newsfeedId,String type) {
         authManager = ModelManager.getInstance().getAuthorizationManager();
@@ -378,6 +444,7 @@ if(!newsfeedArray.getJSONObject(i).isNull("receiverDetail")) {
                     @Override
                     public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
                         super.onFailure(statusCode, e, errorResponse);
+                        feedStarsList.clear();
                         if (errorResponse != null) {
                             EventBus.getDefault().post("FetchCommentStatus False");
                         } else {
@@ -392,6 +459,21 @@ if(!newsfeedArray.getJSONObject(i).isNull("receiverDetail")) {
                         try {
                             Log.e(TAG, "response FetchCommentStatus ->" + response);
                             state = response.getBoolean("success");
+                            JSONArray recordsArray = response.getJSONArray("records");
+                            feedStarsList.clear();
+
+                            for (int i = 0; i < recordsArray.length(); i++) {
+                                FeedStarsBean feedStars = new FeedStarsBean();
+                                feedStars.setChatId(recordsArray.getJSONObject(i).getString("chat_id"));
+                                feedStars.setId(recordsArray.getJSONObject(i).getString("_id"));
+                                feedStars.setNewsId(recordsArray.getJSONObject(i).getString("newsfeed_id"));
+                                feedStars.setType(recordsArray.getJSONObject(i).getString("type"));
+                                feedStars.setUserId(recordsArray.getJSONObject(i).getString("user_id"));
+                                feedStars.setUserName(recordsArray.getJSONObject(i).getString("user_name"));
+                                feedStars.setUserPic(recordsArray.getJSONObject(i).getString("user_pic"));
+
+                                feedStarsList.add(feedStars);
+                            }
                             if (state) {
 
                                 EventBus.getDefault().post("FetchCommentStatus True");
@@ -460,7 +542,7 @@ if(!newsfeedArray.getJSONObject(i).isNull("receiverDetail")) {
 
 
 
-    public void reportInAppReporte(String phone_no, String user_token, String newsfeedId) {
+    public void reportInAppropriate(String phone_no, String user_token, String newsfeedId) {
         authManager = ModelManager.getInstance().getAuthorizationManager();
         JSONObject userInputDetails = new JSONObject();
         try {
@@ -560,6 +642,7 @@ if(!newsfeedArray.getJSONObject(i).isNull("receiverDetail")) {
                 }
         );
     }
+
 
 
     private void triggerObservers(String success) {

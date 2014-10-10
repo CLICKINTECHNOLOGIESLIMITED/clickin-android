@@ -68,8 +68,9 @@
         android:gravity="center"
         android:paddingTop="59dp"
         android:visibility="visible"
-        android:cacheColorHint="@color/white"
-        android:clickable="false"/>
+        android:listSelector="@color/transparent"
+        android:clickable="false"
+        android:cacheColorHint="@color/transparent"/>
 
 
 </RelativeLayout><!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/src/main/res/layout/view_feedview_list.xml -->

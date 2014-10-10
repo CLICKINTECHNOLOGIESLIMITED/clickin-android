@@ -201,6 +201,11 @@
             android:launchMode="standard"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name="com.sourcefuse.clickinandroid.view.FeedStarsView"
+            android:launchMode="standard"
+            android:screenOrientation="portrait" >
+        </activity>
 
         <meta-data
             android:name="com.crashlytics.ApiKey"

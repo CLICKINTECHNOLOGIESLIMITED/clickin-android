@@ -1,0 +1,80 @@
+package com.sourcefuse.clickinandroid.view;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.view.View;
+import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
+
+import com.sourcefuse.clickinandroid.model.AuthManager;
+import com.sourcefuse.clickinandroid.model.ModelManager;
+import com.sourcefuse.clickinandroid.model.NewsFeedManager;
+import com.sourcefuse.clickinandroid.model.bean.NewsFeedBean;
+import com.sourcefuse.clickinandroid.utils.AlertMessage;
+import com.sourcefuse.clickinandroid.utils.Log;
+import com.sourcefuse.clickinandroid.utils.Utils;
+import com.sourcefuse.clickinandroid.view.adapter.FeedsAdapter;
+import com.sourcefuse.clickinandroid.view.adapter.FeedsStarsAdapter;
+import com.sourcefuse.clickinandroid.view.adapter.SimpleSectionedListAdapter2;
+import com.sourcefuse.clickinandroid.view.adapter.SimpleSectionedListAdapter2.Section;
+import com.sourcefuse.clickinapp.R;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+
+/**
+ * Created by charunigam on 10/10/14.
+ */
+public class FeedStarsView extends Activity {
+    private ListView list;
+    private ArrayList<Section> sections = new ArrayList<Section>();
+    public static FeedsAdapter adapter;
+    private NewsFeedManager newsFeedManager;
+    private AuthManager authMgr;
+
+    ImageView menu;
+    String news_feedId;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        setContentView(R.layout.view_feeds_stars);
+        Bundle bundle = getIntent().getExtras();
+        if(bundle!=null)
+        {
+           news_feedId = bundle.getString("news_feed_id");
+        }
+        menu = (ImageView) findViewById(R.id.iv_menu);
+        list = (ListView) findViewById(R.id.stars_list);
+        newsFeedManager = ModelManager.getInstance().getNewsFeedManager();
+        authMgr = ModelManager.getInstance().getAuthorizationManager();
+
+        Utils.launchBarDialog(FeedStarsView.this);
+        newsFeedManager.fetchCommentStars(authMgr.getPhoneNo(),authMgr.getUsrToken(),"",news_feedId,"star");
+    }
+    public void onEventMainThread(String message) {
+        android.util.Log.d("Clickin", "onEventMainThread->" + message);
+
+        if (message.equalsIgnoreCase("FetchCommentStatus True")) {
+            FeedsStarsAdapter adapter = new FeedsStarsAdapter(this,R.layout.view_feeds_stars_row,newsFeedManager.feedStarsList);
+            list.setAdapter(adapter);
+            Utils.dismissBarDialog();
+            android.util.Log.d("1", "message->" + message);
+        } else if (message.equalsIgnoreCase("FetchCommentStatus False")) {
+            Utils.dismissBarDialog();
+            android.util.Log.d("2", "message->" + message);
+        } else if (message.equalsIgnoreCase("FetchCommentStatus Networkchat Error")) {
+            Utils.showAlert(FeedStarsView.this, AlertMessage.connectionError);
+            android.util.Log.d("3", "message->" + message);
+        }
+    }
+}

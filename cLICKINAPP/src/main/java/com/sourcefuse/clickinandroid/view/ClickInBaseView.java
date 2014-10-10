@@ -486,7 +486,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
             Log.d("2", "message->" + message);
             stopSearch = true;
             Utils.dismissBarDialog();
-//            newsFeedManager.userFeed.clear();
+            newsFeedManager.userFeed.clear();
 //            Utils.showAlert(ClickInBaseView.this, authManager.getMessage());
             Intent intent = new Intent(ClickInBaseView.this, FeedView.class);
 
