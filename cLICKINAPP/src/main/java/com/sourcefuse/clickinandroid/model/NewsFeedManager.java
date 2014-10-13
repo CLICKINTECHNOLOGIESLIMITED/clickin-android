@@ -137,6 +137,7 @@ JSONObject chatObj = newsfeedArray.getJSONObject(i).getJSONObject("chatDetail");
                                 if (newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").has("clicks"))
                                     allNewsFeed.setNewsFeedArray_chatDetail_clicks(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getString("clicks"));
 
+
                                 if (newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").has("comments_count"))
                                     allNewsFeed.setNewsFeedArray_chatDetail_comments_count(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getString("comments_count"));
 

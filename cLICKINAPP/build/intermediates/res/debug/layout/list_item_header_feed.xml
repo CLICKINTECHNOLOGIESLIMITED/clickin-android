@@ -24,7 +24,7 @@
             android:layout_height="30dp"
             android:layout_alignParentLeft="true"
 
-            android:src="@drawable/ic_launcher" />
+            android:src="@drawable/c_add_selfie" />
 
         <LinearLayout
             android:id="@+id/textLayout"
@@ -91,4 +91,4 @@
         </LinearLayout>
     </RelativeLayout>
 
-</FrameLayout><!-- From: file:/home/mukesh/git/clickin-andoid/cLICKINAPP/src/main/res/layout/list_item_header_feed.xml -->
+</FrameLayout><!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/src/main/res/layout/list_item_header_feed.xml -->

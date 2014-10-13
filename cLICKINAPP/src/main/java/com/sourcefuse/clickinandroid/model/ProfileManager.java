@@ -290,6 +290,7 @@ public class ProfileManager extends Observable implements ProfileManagerI {
                                 }
                                // followerArray.add(followerList);
                                 followRequesed.add(followerList);
+                                Log.e("followRequesed size in Mgr",""+followRequesed.size());
                             }
                         }
 							}

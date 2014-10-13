@@ -35,10 +35,13 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.TimeZone;
 
 public class Utils {
 
@@ -433,7 +436,31 @@ public class Utils {
 
         return Uri.parse(path);
     }
+    public static String getLocalDate(String serverDate)
+    {
+//        Log.e("serverDate",serverDate);
+//         serverDate = "2014-10-09 09:46:50";
+        SimpleDateFormat sdf =  new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
+        TimeZone tz = TimeZone.getDefault();
+//        Calendar cal = Calendar.getInstance();
+//        TimeZone tz = cal.getTimeZone();
+//        TimeZone tz = TimeZone.getTimeZone("Asia/Calcutta");
+//        Log.e("tz",tz.toString());
+        sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+        Date date = null;
+        try {
+            date = sdf.parse(serverDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
+        sdf = new SimpleDateFormat("HH:mm a");
+        sdf.setTimeZone(TimeZone.getDefault());
+        String newDateStr = sdf.format(date);
+
+
+       return newDateStr;
+    }
 
 
 

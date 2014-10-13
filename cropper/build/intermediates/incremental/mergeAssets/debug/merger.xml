@@ -2,10 +2,10 @@
 <merger version="2" >
 
     <dataSet config="main" >
-        <source path="/home/mukesh/git/clickin-andoid/cropper/src/main/assets" />
+        <source path="/home/dell/Github/Clickin/clickin-andoid/cropper/src/main/assets" />
     </dataSet>
     <dataSet config="debug" >
-        <source path="/home/mukesh/git/clickin-andoid/cropper/src/debug/assets" />
+        <source path="/home/dell/Github/Clickin/clickin-andoid/cropper/src/debug/assets" />
     </dataSet>
 
 </merger>

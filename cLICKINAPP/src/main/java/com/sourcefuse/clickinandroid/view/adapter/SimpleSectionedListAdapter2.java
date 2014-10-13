@@ -13,6 +13,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.sourcefuse.clickinandroid.model.ModelManager;
+import com.sourcefuse.clickinandroid.utils.Log;
+import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
 import com.squareup.picasso.Picasso;
 
@@ -215,10 +217,18 @@ public class SimpleSectionedListAdapter2 extends BaseAdapter implements PinnedSe
             imageview.setScaleType(ImageView.ScaleType.FIT_XY);
 
 
-
             if(mSections.get(position)!=null)
                 if((mSections.get(position).senderId)!=null){
+                    if(mSections.get(position).senderName.toString().equalsIgnoreCase("null"))
+                        mSections.get(position).senderName="";
+
+                    if((mSections.get(position).recieverName)!=null) {
+                        if (mSections.get(position).recieverName.toString().equalsIgnoreCase("null"))
+                            mSections.get(position).recieverName = "";
+                    }
+
                     if ((mSections.get(position).senderId).toString().equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getUserId())) {
+
                         view.setText(mSections.get(position).senderName);
                         view1.setText(mSections.get(position).recieverName);
                         Picasso.with(mContext).load(mSections.get(position).senderImages).placeholder(R.drawable.ic_launcher).into(imageview);
@@ -230,8 +240,10 @@ public class SimpleSectionedListAdapter2 extends BaseAdapter implements PinnedSe
                         Picasso.with(mContext).load(mSections.get(position).recieverImages).placeholder(R.drawable.ic_launcher).into(imageview);
                     }
                 }
-
-            feed_time.setText(mSections.get(position).timeOfFeed);
+            if(mSections.get(position).timeOfFeed!=null) {
+                Log.e("timeOfFeed=",mSections.get(position).timeOfFeed);
+                feed_time.setText(Utils.getLocalDate(mSections.get(position).timeOfFeed));
+            }
             return convertView;
 
         } else {

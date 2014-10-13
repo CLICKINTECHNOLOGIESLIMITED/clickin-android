@@ -12,4 +12,4 @@
         android:divider="@null"
         android:listSelector="@color/transparent"
         android:paddingBottom="5dp" />
-</RelativeLayout><!-- From: file:/home/mukesh/git/clickin-andoid/cLICKINAPP/src/main/res/layout/simple_list.xml -->
+</RelativeLayout><!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/src/main/res/layout/simple_list.xml -->

@@ -21,8 +21,10 @@ import android.widget.TextView;
 
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
+import com.sourcefuse.clickinandroid.model.ProfileManager;
 import com.sourcefuse.clickinandroid.model.bean.FeedStarsBean;
 import com.sourcefuse.clickinandroid.model.bean.NewsFeedBean;
+import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinapp.R;
 import com.squareup.picasso.Picasso;
 
@@ -58,10 +60,12 @@ public class FeedsStarsAdapter extends ArrayAdapter<FeedStarsBean> {
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
             row = inflater.inflate(layoutResourceId, parent, false);
             holder = new RecordHolder();
+            holder.usr_name = (TextView) row
+                    .findViewById(R.id.tv_clickers_name);
+            holder.usrimg = (ImageView) row.findViewById(R.id.iv_usr);
+            holder.usrimg.setScaleType(ImageView.ScaleType.FIT_XY);
+            holder.reqbtn = (Button) row.findViewById(R.id.btn_actions);
 
-            holder.feed_image = (ImageView)row.findViewById(R.id.star_img);
-            holder.follow_status = (ImageView)row.findViewById(R.id.follow_status_img);
-            holder.name = (TextView)row.findViewById(R.id.name);
 
             row.setTag(holder);
         } else {
@@ -70,14 +74,49 @@ public class FeedsStarsAdapter extends ArrayAdapter<FeedStarsBean> {
         final RecordHolder rholder = (RecordHolder) row.getTag();
         authMgr = ModelManager.getInstance().getAuthorizationManager();
 
+        holder.usr_name.setText(eachNewsFeed.get(position).getUserName());
+        Picasso.with(context).load(eachNewsFeed.get(position).getUserPic()).into(holder.usrimg);
+        ProfileManager prMgr = ModelManager.getInstance().getProfileManager();
+        if(prMgr.following!=null) {
+            Log.e("followRequesed", "" + prMgr.following.size());
+            for (int i = 0; i < prMgr.following.size();i++)
+            {
+                Log.e("getUserId",""+eachNewsFeed.get(position).getUserId());
+                Log.e("getFollowingId",""+prMgr.following.get(i).getFolloweeName());
+                if(eachNewsFeed.get(position).getUserId().equalsIgnoreCase(prMgr.following.get(i).getFolloweeId()))
+                {
+                    if(prMgr.following.get(i).getAccepted().equalsIgnoreCase("true"))
+                    {
+                        holder.reqbtn.setBackgroundResource(R.drawable.following);
+                    }
+                    else {
+                        holder.reqbtn.setBackgroundResource(R.drawable.requested_grey);
+                    }
+                    break;
+                }
+            }
+        }
+//        if(prMgr.pfollowerList!=null) {
+//            for (int i = 0; i < prMgr.pfollowerList.size();i++)
+//            {
+//                if(eachNewsFeed.get(position).getUserId().equalsIgnoreCase(prMgr.pfollowerList.get(i).getFollowingId()))
+//                {
+//                    holder.reqbtn.setBackgroundResource(R.drawable.following);
+//                    break;
+//                }
+//            }
+//        }
+
 
         return row;
     }
 
 
     static class RecordHolder {
-        ImageView feed_image,follow_status;
-        TextView name;
+        ImageView usrimg;
+//        ImageView reqbtn;
+        TextView usr_name;
+        Button reqbtn;
     }
 
 

@@ -471,7 +471,7 @@ public class NewsFeedBean {
     private String newsFeedArray_chatDetail_id;
     private String newsFeedArray_chatDetail_cards;
     private String newsFeedArray_chatDetail_chatId;
-    private String newsFeedArray_chatDetail_clicks;
+    private String newsFeedArray_chatDetail_clicks="0";
     private String newsFeedArray_chatDetail_comments_count;
     private String newsFeedArray_chatDetail_content;
     private String newsFeedArray_chatDetail_delieveredChatId;

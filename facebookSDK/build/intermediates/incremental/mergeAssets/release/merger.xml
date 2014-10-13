@@ -2,10 +2,10 @@
 <merger version="2" >
 
     <dataSet config="main" >
-        <source path="/home/mukesh/git/clickin-andoid/facebookSDK/src/main/assets" />
+        <source path="/home/dell/Github/Clickin/clickin-andoid/facebookSDK/src/main/assets" />
     </dataSet>
     <dataSet config="release" >
-        <source path="/home/mukesh/git/clickin-andoid/facebookSDK/src/release/assets" />
+        <source path="/home/dell/Github/Clickin/clickin-andoid/facebookSDK/src/release/assets" />
     </dataSet>
 
 </merger>

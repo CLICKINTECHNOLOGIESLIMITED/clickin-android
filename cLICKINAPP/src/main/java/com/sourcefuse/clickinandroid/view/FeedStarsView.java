@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
@@ -28,6 +29,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by charunigam on 10/10/14.
@@ -55,26 +58,64 @@ public class FeedStarsView extends Activity {
         }
         menu = (ImageView) findViewById(R.id.iv_menu);
         list = (ListView) findViewById(R.id.stars_list);
+
+
+        menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         newsFeedManager = ModelManager.getInstance().getNewsFeedManager();
         authMgr = ModelManager.getInstance().getAuthorizationManager();
 
         Utils.launchBarDialog(FeedStarsView.this);
-        newsFeedManager.fetchCommentStars(authMgr.getPhoneNo(),authMgr.getUsrToken(),"",news_feedId,"star");
+        if(ModelManager.getInstance().getProfileManager().following.size()==0)
+        {
+            ModelManager.getInstance().getProfileManager().getFollwer("", authMgr.getPhoneNo(), authMgr.getUsrToken());
+        }
+        else {
+            newsFeedManager.fetchCommentStars(authMgr.getPhoneNo(), authMgr.getUsrToken(), "", news_feedId, "star");
+        }
+    }
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
     }
     public void onEventMainThread(String message) {
-        android.util.Log.d("Clickin", "onEventMainThread->" + message);
+//        android.util.Log.d("Clickin", "onEventMainThread->" + message);
 
         if (message.equalsIgnoreCase("FetchCommentStatus True")) {
-            FeedsStarsAdapter adapter = new FeedsStarsAdapter(this,R.layout.view_feeds_stars_row,newsFeedManager.feedStarsList);
+            FeedsStarsAdapter adapter = new FeedsStarsAdapter(this, R.layout.row_follower, newsFeedManager.feedStarsList);
             list.setAdapter(adapter);
             Utils.dismissBarDialog();
-            android.util.Log.d("1", "message->" + message);
+//            android.util.Log.d("1", "message->" + message);
         } else if (message.equalsIgnoreCase("FetchCommentStatus False")) {
             Utils.dismissBarDialog();
-            android.util.Log.d("2", "message->" + message);
+//            android.util.Log.d("2", "message->" + message);
         } else if (message.equalsIgnoreCase("FetchCommentStatus Networkchat Error")) {
             Utils.showAlert(FeedStarsView.this, AlertMessage.connectionError);
-            android.util.Log.d("3", "message->" + message);
+//            android.util.Log.d("3", "message->" + message);
+        } else if (message.equalsIgnoreCase("GetFollower True")){
+            newsFeedManager.fetchCommentStars(authMgr.getPhoneNo(), authMgr.getUsrToken(), "", news_feedId, "star");
+        } else if (message.equalsIgnoreCase("GetFollower False")) {
+            Utils.dismissBarDialog();
+//            android.util.Log.d("2", "message->" + message);
+        } else if (message.equalsIgnoreCase("GetFollower Network Error")) {
+            Utils.showAlert(FeedStarsView.this, AlertMessage.connectionError);
+//            android.util.Log.d("3", "message->" + message);
         }
     }
 }

@@ -124,7 +124,7 @@ public class FollowingAdapter extends ArrayAdapter<FollowerFollowingBean> {
 	static class RecordHolder {
 		TextView usr_name;
 		ImageView usrimg;
-		Button reqbtn;
+        Button reqbtn;
 
 	}
 }

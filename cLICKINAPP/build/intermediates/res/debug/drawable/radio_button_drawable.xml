@@ -6,4 +6,4 @@
     <item android:drawable="@drawable/inactive_circle" android:state_checked="false" android:state_pressed="false" />
     <item android:drawable="@drawable/active_circle" android:state_checked="true" android:state_pressed="true" />
     <item android:drawable="@drawable/active_circle" android:state_checked="false" android:state_pressed="true" />
-</selector><!-- From: file:/home/mukesh/git/clickin-andoid/cLICKINAPP/src/main/res/drawable/radio_button_drawable.xml -->
+</selector><!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/src/main/res/drawable/radio_button_drawable.xml -->

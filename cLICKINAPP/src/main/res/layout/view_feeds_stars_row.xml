@@ -1,28 +1,70 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white">
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
 
-    <ImageView
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:id="@+id/star_img"
-        android:layout_alignParentLeft="true"/>
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/tv_heading_rfollowers"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/transparent"
+        android:gravity="center_vertical"
+        android:text="@string/txt_follower"
+        android:textColor="@color/dark_gray"
+        android:textSize="20sp"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tv_heading_followers"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/tv_heading_rfollowers"
+        android:background="@color/transparent"
+        android:gravity="center_vertical"
+        android:text="@string/txt_follower"
+        android:textColor="@color/dark_gray"
+        android:textSize="20sp"
+        android:visibility="gone" />
+
+
+    <RelativeLayout
+        android:id="@+id/rl_layout"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/star_img"
-        android:layout_marginLeft="5dp"
-        android:layout_centerVertical="true"
-        android:id="@+id/name"/>
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/follow_status_img"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="5dp"
-        android:src="@drawable/blue_btn"
-        android:layout_centerVertical="true"/>
+        android:layout_below="@+id/tv_heading_followers"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/iv_usr"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/dcontact" />
+
+        <TextView
+            android:id="@+id/tv_clickers_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/iv_usr"
+            android:padding="5dp"
+            android:text="Bregenja"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+
+        <ImageView
+            android:id="@+id/btn_actions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:padding="0dp"
+            android:src="@drawable/follow_pink" />
+
+
+
     </RelativeLayout>
+
+
+</RelativeLayout>

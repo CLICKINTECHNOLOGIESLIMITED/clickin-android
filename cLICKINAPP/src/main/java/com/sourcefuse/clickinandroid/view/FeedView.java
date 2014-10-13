@@ -28,7 +28,7 @@ import java.util.Date;
 /**
  * Created by gagansethi on 3/7/14.
  */
-public class FeedView extends ClickInBaseView {
+public class FeedView extends ClickInBaseView implements View.OnClickListener{
     private ListView list;
     private ArrayList<Section> sections = new ArrayList<Section>();
     public static FeedsAdapter adapter;
@@ -55,24 +55,13 @@ public class FeedView extends ClickInBaseView {
 
 
         setContentView(R.layout.view_feedview_list);
-        addMenu(false);
+        addMenu(true);
 
         menu = (ImageView) findViewById(R.id.iv_menu);
         notificationIcon = (ImageView) findViewById(R.id.iv_notification);
         llAttachment = (LinearLayout) findViewById(R.id.ll_attachment);
 
-        menu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               slidemenu.showMenu(true);
-            }
-        });
-        notificationIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               slidemenu.showSecondaryMenu(true);
-            }
-        });
+
         newsFeedManager = ModelManager.getInstance().getNewsFeedManager();
         newsFeedBeanArrayList = newsFeedManager.userFeed;
         if(newsFeedBeanArrayList.size()==0)
@@ -104,7 +93,8 @@ public class FeedView extends ClickInBaseView {
             senderImages.add(eachNewsFeed.getNewsFeedArray_senderDetail_user_pic());
             recieverImages.add(eachNewsFeed.getNewsFeedArray_receiverDetail_user_pic());
             Log.e("created time", String.valueOf(eachNewsFeed.getNewsfeedArray_created()));
-            timeOfFeed.add(getFeedTime(eachNewsFeed.getNewsfeedArray_created()));
+//            timeOfFeed.add(eachNewsFeed.getNewsfeedArray_created().substring(eachNewsFeed.getNewsfeedArray_created().indexOf(" ")+1));
+            timeOfFeed.add(eachNewsFeed.getNewsfeedArray_created());
             mHeaderPositions.add(headerPosition);
             headerPosition = headerPosition+1;
             Log.e("News Feed Time ",eachNewsFeed.getNewsfeedArray_created());
@@ -142,6 +132,7 @@ public class FeedView extends ClickInBaseView {
         list.setAdapter(null);
         adapter = new FeedsAdapter(FeedView.this, R.layout.feed_list_item, newsFeedManager.userFeed);
         for (int i = 0; i < senderName.size(); i++) {
+            Log.e("timeOfFeed=",timeOfFeed.get(i));
             sections.add(new Section(mHeaderPositions.get(i), senderName.get(i), receiverName.get(i), senderImages.get(i),recieverImages.get(i),timeOfFeed.get(i),senderId.get(i),receiverId.get(i)));
         }
         SimpleSectionedListAdapter2 simpleSectionedGridAdapter2 = new SimpleSectionedListAdapter2(this, adapter,
@@ -158,6 +149,18 @@ public class FeedView extends ClickInBaseView {
     };
 
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.iv_menu:
 
+                slidemenu.showMenu(true);
 
+                break;
+            case R.id.iv_notification:
+
+                slidemenu.showSecondaryMenu(true);
+                break;
+        }
+    }
 }

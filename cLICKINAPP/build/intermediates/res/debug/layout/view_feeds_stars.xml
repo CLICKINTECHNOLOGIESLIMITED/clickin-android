@@ -32,10 +32,24 @@
             android:textStyle="bold" />
 
    </RelativeLayout>
-    <ListView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/stars_list"
-        android:layout_below="@+id/rr_header"></ListView>
+    <uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/ptr_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rr_header"
+        android:padding="5dp">
+
+        <ListView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/stars_list"
+            android:layout_below="@+id/rr_header"
+            android:padding="5dp"></ListView>
+
+
+
+    </uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout>
+
     </RelativeLayout>
-<!-- From: file:/home/mukesh/git/clickin-andoid/cLICKINAPP/src/main/res/layout/view_feeds_stars.xml -->
+<!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/src/main/res/layout/view_feeds_stars.xml -->

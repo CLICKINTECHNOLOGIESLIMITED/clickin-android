@@ -82,6 +82,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
             holder.feed_star_image_button = (ImageView)row.findViewById(R.id.feed_star_image_button);
             holder.feed_star_user = (TextView)row.findViewById(R.id.feed_star_user);
             holder.clickedInMessage = (TextView)row.findViewById(R.id.clickedInMessage);
+            holder.no_comments = (TextView)row.findViewById(R.id.no_comments);
             row.setTag(holder);
         } else {
             holder = (RecordHolder) row.getTag();
@@ -95,9 +96,13 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
          */
         if(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_clicks()!=null) {
             if (!(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_clicks().equalsIgnoreCase("null"))) {
-
-                holder.clickedIn.setText(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_clicks().trim());
-                holder.layout_clickin.setVisibility(View.VISIBLE);
+                if (!(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_clicks().equalsIgnoreCase("0"))) {
+                    holder.clickedIn.setText(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_clicks().trim());
+                    holder.layout_clickin.setVisibility(View.VISIBLE);
+                }
+                else {
+                    holder.layout_clickin.setVisibility(View.GONE);
+                }
             } else {
                 holder.layout_clickin.setVisibility(View.GONE);
             }
@@ -165,9 +170,23 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
                     rholder.layout.setVisibility(View.VISIBLE);
                     holder.feed_menu.setImageResource(R.drawable.cross_icon);
                     if (!(eachNewsFeed.get(position).getNewsFeedArray_senderDetail_id()).toString().equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getUserId())) {
-                        if (!(eachNewsFeed.get(position).getNewsFeedArray_receiverDetail_id()).toString().equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getUserId())) {
+                        if (eachNewsFeed.get(position).getNewsFeedArray_receiverDetail_id()!=null) {
+                            if (!(eachNewsFeed.get(position).getNewsFeedArray_receiverDetail_id()).toString().equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getUserId())) {
+                                holder.feed_remove_post.setVisibility(View.GONE);
+                            }
+                            else
+                            {
+                                holder.feed_remove_post.setVisibility(View.VISIBLE);
+                            }
+                        }
+                        else
+                        {
                             holder.feed_remove_post.setVisibility(View.GONE);
                         }
+                    }
+                    else
+                    {
+                        holder.feed_remove_post.setVisibility(View.VISIBLE);
                     }
                 }
                 else
@@ -273,7 +292,14 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
                 }
                 else
                 {
-                    holder.feed_comments_layout.setVisibility(View.GONE);
+                    holder.name2.setVisibility(View.GONE);
+                    holder.comment2.setVisibility(View.GONE);
+                    holder.name3.setVisibility(View.GONE);
+                    holder.comment3.setVisibility(View.GONE);
+                    holder.name4.setVisibility(View.GONE);
+                    holder.comment4.setVisibility(View.GONE);
+                    holder.feed_comments_layout1.setVisibility(View.VISIBLE);
+                    holder.no_comments.setText("No Comments");
                 }
             }
 
@@ -313,7 +339,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
                             stars = stars.substring(0,stars.lastIndexOf(",")-1);
                         if(stars.equalsIgnoreCase("")) {
                             stars = "No Stars";
-                            holder.feed_star_user.setTextColor(Color.BLACK);
+                            holder.feed_star_user.setTextColor(context.getResources().getColor(R.color.dark_gray));
                             holder.feed_star_user.setClickable(false);
                         }
                         holder.feed_star_user.setText(stars);
@@ -353,7 +379,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
         if(eachNewsFeed.get(position).getNewsfeedArray_stars_count()==0)
         {
             holder.feed_star_user.setText("No Stars");
-            holder.feed_star_user.setTextColor(Color.BLACK);
+            holder.feed_star_user.setTextColor(context.getResources().getColor(R.color.dark_gray));
             holder.feed_star_user.setClickable(false);
         }
         else
@@ -407,7 +433,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
         TextView clickedIn,feed_star_user,clickedInMessage;
         Button feed_audio_button;
         LinearLayout feed_comments_layout4,feed_comments_layout1,feed_comments_layout2,feed_comments_layout3,feed_comments_layout;
-        TextView name2,comment2, name3, comment3, name4, comment4;
+        TextView name2,comment2, name3, comment3, name4, comment4,no_comments;
         ImageView feed_star_image_button,feed_comment_image_button;
     }
 

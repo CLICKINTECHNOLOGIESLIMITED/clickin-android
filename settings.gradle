@@ -4,6 +4,8 @@ include ':slider_library'
 include ':library'
 include ':cLICKINAPP'
 include ':cropper'
+include ':library_pull'
+
 
 
 

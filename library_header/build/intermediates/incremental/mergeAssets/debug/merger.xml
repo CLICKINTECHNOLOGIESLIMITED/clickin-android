@@ -2,10 +2,10 @@
 <merger version="2" >
 
     <dataSet config="main" >
-        <source path="/home/mukesh/git/clickin-andoid/library_header/src/main/assets" />
+        <source path="/home/dell/Github/Clickin/clickin-andoid/library_header/src/main/assets" />
     </dataSet>
     <dataSet config="debug" >
-        <source path="/home/mukesh/git/clickin-andoid/library_header/src/debug/assets" />
+        <source path="/home/dell/Github/Clickin/clickin-andoid/library_header/src/debug/assets" />
     </dataSet>
 
 </merger>
