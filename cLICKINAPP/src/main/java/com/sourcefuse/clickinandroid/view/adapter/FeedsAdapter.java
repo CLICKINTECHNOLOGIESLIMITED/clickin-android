@@ -144,6 +144,13 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
             holder.feed_image.setVisibility(View.GONE);
             holder.feed_audio_button.setVisibility(View.GONE);
         }
+        holder.feed_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i  = new Intent(context,feed_large_img.class);
+                context.startActivity(i);
+            }
+        });
         holder.feed_audio_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
