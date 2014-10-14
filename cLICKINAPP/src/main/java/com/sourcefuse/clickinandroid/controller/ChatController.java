@@ -25,7 +25,7 @@ public class ChatController implements Observer{
 			String usertoken, Activity context) {
 		this.context = context;
 		chatManager = ModelManager.getInstance().getChatManager();
-		chatManager.fetchChatRecord(relationshipId, phone, usertoken);
+		//chatManager.fetchChatRecord(relationshipId, phone, usertoken);
 	}
 	
 	

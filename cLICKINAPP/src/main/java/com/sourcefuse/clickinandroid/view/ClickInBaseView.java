@@ -57,7 +57,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
     private LinearLayout theFeed, inviteF, findFriend, setting;
     public ListView clickWithlistView, searchList;
     public ClickInWithAdapter clickInadapter;
-    private String quickBlockId, partnerPic, partnerName,partnerId,myClicks,userClicks;
+    private String quickBlockId, partnerPic, partnerName,partnerId,myClicks,userClicks,partnerPh;
     public Boolean stopSearch = true;
     private EditText edt_search;
     private SearchAdapter searchListadapter;
@@ -109,6 +109,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         intent.putExtra("partnerId", partnerId);
         intent.putExtra("myClicks", myClicks);
         intent.putExtra("userClicks", userClicks);
+        intent.putExtra("partnerPh", partnerPh);
 
 
 
@@ -534,6 +535,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
             authManager.setMenuUserInfoFlag(false);
         }else{
             Picasso.with(ClickInBaseView.this).load(authManager.getUserPic())
+                    .skipMemoryCache()
                     .placeholder(R.drawable.default_profile)
                     .error(R.drawable.default_profile)
                     .into(userPic);

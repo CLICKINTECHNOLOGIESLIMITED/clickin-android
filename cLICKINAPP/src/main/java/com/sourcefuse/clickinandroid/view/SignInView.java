@@ -32,12 +32,15 @@ import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
 import com.sourcefuse.clickinandroid.model.SettingManager;
+import com.sourcefuse.clickinandroid.services.QbChatService;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.ClickInAlertDialog;
 import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.MyPreference;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
+
+import org.jivesoftware.smack.ConnectionListener;
 
 import java.util.Locale;
 
@@ -189,9 +192,9 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
     }
 
 
+    
+
     private void switchView() {
-
-
         Intent intent = new Intent(SignInView.this, UserProfileView.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
@@ -322,15 +325,12 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
                         @Override
                         public void onLoginSuccess() {
                             com.sourcefuse.clickinandroid.utils.Log.e(TAG, "Login successfully");
-                            QBChatService.getInstance().startAutoSendPresence(45);
+                            QBChatService.getInstance().startAutoSendPresence(5);
 
 
                             chat = QBChatService.getInstance().createChat();
                             authManager.setqBPrivateChat(chat);
 
-
-                            myThread = new Thread(new UpdateThread());
-                            myThread.start();
 
 
 
@@ -355,23 +355,6 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
 
 
 
-    public class UpdateThread implements Runnable {
-
-        @Override
-        public void run() {
-            while(true)
-            {
-                System.out.print("M LIVE");
-
-                try {
-                    QBChatService.getInstance().startAutoSendPresence(45);
-                    myThread.sleep(30*1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
 
 }
 

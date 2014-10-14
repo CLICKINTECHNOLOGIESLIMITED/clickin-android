@@ -29,7 +29,14 @@ public class AuthManager extends Observable implements AuthManagerI {
         authManager = ModelManager.getInstance().getAuthorizationManager();
         JSONObject userInputDetails = new JSONObject();
         try {
-            userInputDetails.put("phone_no", username);
+
+            boolean retval = username.contains("@");
+            if(retval){
+                userInputDetails.put("email", username);
+            }else{
+                userInputDetails.put("phone_no", username);
+            }
+
             userInputDetails.put("device_token", deviceToken);
             userInputDetails.put("password", password);
             userInputDetails.put("device_type", deviceType);

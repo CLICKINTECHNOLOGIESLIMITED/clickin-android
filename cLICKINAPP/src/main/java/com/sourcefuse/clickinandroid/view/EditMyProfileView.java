@@ -115,6 +115,7 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
                                 profileManager.setProfile(myName.getText().toString(), myLast.getText().toString(), authManager.getPhoneNo(),
                                         authManager.getUsrToken(), "", "", myCity.getText().toString(), myCountry.getText().toString(), myEmail.getText().toString(), "", Utils.encodeTobase64(imageBitmap));
                             } else {
+                                Log.e(TAG, "btn_click_to_save2");
                                 try {
                                     // imageBitmap = Picasso.with(EditMyProfileView.this).load(authManager.getUserPic()).get();
                                     profileManager.setProfile(myName.getText().toString(), myLast.getText().toString(), authManager.getPhoneNo(),
@@ -155,21 +156,30 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
             case Constants.CAMERA_REQUEST:
 
                 try {
-                    imageBitmap = null;
+                   // imageBitmap = null;
                     mImageCaptureUri = null;
                     mImageCaptureUri = data.getData();
                     imageBitmap = Utils.decodeUri(mImageCaptureUri, EditMyProfileView.this);
                     mySelfy.setImageBitmap(imageBitmap);
+                    authManager.setUserPic(imageBitmap.toString());
+                    authManager.setMenuUserInfoFlag(true);
+                   // authManager.setUserimageuri(mImageCaptureUri);
+                        Log.e(TAG ,"EXception is <><><><><><><><><><><><><><><> " +"" +mImageCaptureUri);
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
                 break;
             case Constants.SELECT_PICTURE:
                 try {
-                    imageBitmap = null;
+                  //  imageBitmap = null;
                     mImageCaptureUri = data.getData();
                     imageBitmap = Utils.decodeUri(mImageCaptureUri, EditMyProfileView.this);
                     mySelfy.setImageBitmap(imageBitmap);
+                    authManager.setUserPic(imageBitmap.toString());
+                    authManager.setMenuUserInfoFlag(true);
+                   //authManager.setUserimageuri(mImageCaptureUri);
+                    //authManager.setUserPic(Utils.decodeUri(mImageCaptureUri,EditMyProfileView.this));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -202,6 +212,7 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
         if (getMsg.equalsIgnoreCase("UpdateProfile True")) {
             authManager.setEditProfileFlag(true);
             authManager.setMenuUserInfoFlag(true);
+            imageBitmap = null;
             finish();
         } else if (getMsg.equalsIgnoreCase("UpdateProfile False")) {
             Utils.dismissBarDialog();

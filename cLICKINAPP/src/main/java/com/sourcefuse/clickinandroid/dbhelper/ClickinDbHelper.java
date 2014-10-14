@@ -32,10 +32,43 @@
         public static final String COLUMN_TIMESTAMP = "timeStamp";
         public static final String COLUMN_FILEID = "fileId";
 
+        public static final String COLUMN_SHAREEDMESSAGE = "sharedMessage";
+        public static final String COLUMN_VIDEOTHAUMB = "video_thumb";
+        public static final String COLUMN_SENDERUSERTOKEN = "senderUserToken";
+        public static final String COLUMN_RELATIONSHIPID = "relationshipId";
+        public static final String COLUMN_USERID = "userId";
+        public static final String COLUMN_LOCATION = "location_coordinates";
+        public static final String COLUMN_ISDELIVERED = "isDelivered";
+        public static final String COLUMN_IMAGERATIO = "imageRatio";
+        public static final String COLUMN_CARDS = "cards";
+
+
+
         private static final String DATABASE_NAME = "ClickInChatRecords.sqlite";
         private static final int DATABASE_VERSION = 1;
 
         // Database creation sql statement
+       /* private static final String DATABASE_CREATE = " CREATE TABLE "
+                + TABLE_CHATRECORD + "(" + COLUMN_ID + " integer primary key autoincrement,"
+                + COLUMN_SID + " text, "
+                + COLUMN_RID + " text, "
+                + COLUMN_MSGID + " text, "
+                + COLUMN_MSG + " text, "
+                + COLUMN_MSG_TYPE + " text, "
+                + COLUMN_CLICKS + " text, "
+                + COLUMN_TIMESTAMP + " text, "
+                + COLUMN_SHAREEDMESSAGE + " text, "
+                + COLUMN_VIDEOTHAUMB + " text, "
+                + COLUMN_SENDERUSERTOKEN + " text, "
+                + COLUMN_RELATIONSHIPID + " text, "
+                + COLUMN_USERID + " text, "
+                + COLUMN_LOCATION + " text, "
+                + COLUMN_ISDELIVERED + " text, "
+                + COLUMN_IMAGERATIO + " text, "
+                + COLUMN_CARDS + " text, "
+                + COLUMN_FILEID + " text);";*/
+
+
         private static final String DATABASE_CREATE = " CREATE TABLE "
                 + TABLE_CHATRECORD + "(" + COLUMN_ID + " integer primary key autoincrement,"
                 + COLUMN_SID + " text, "
@@ -46,6 +79,7 @@
                 + COLUMN_CLICKS + " text, "
                 + COLUMN_TIMESTAMP + " text, "
                 + COLUMN_FILEID + " text);";
+
         private int i;
 
         public ClickinDbHelper(Context context) {
@@ -138,7 +172,7 @@
 
             ArrayList<ChatRecordBeen> chatList = new ArrayList<ChatRecordBeen>();
             ChatRecordBeen chat;
-
+          //  String selectUserChats = "SELECT  * FROM " + TABLE_CHATRECORD + " ORDER BY "+COLUMN_TIMESTAMP +" DESC  WHERE ("+ COLUMN_SID + " = "+sQbId+" AND " +COLUMN_RID +" = "+rQbId+" ) OR ( "+ COLUMN_SID + " = "+rQbId+" AND " +COLUMN_RID +" = "+sQbId +" )";
             String selectUserChats = "SELECT  * FROM " + TABLE_CHATRECORD +" WHERE ("+ COLUMN_SID + " = "+sQbId+" AND " +COLUMN_RID +" = "+rQbId+" ) OR ( "+ COLUMN_SID + " = "+rQbId+" AND " +COLUMN_RID +" = "+sQbId +" )";
             Log.e(TAG,"selectUserChats--> "+selectUserChats);
 

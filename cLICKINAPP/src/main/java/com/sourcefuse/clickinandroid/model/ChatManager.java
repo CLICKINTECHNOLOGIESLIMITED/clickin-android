@@ -3,6 +3,7 @@ package com.sourcefuse.clickinandroid.model;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.sourcefuse.clickinandroid.model.bean.CardBean;
+import com.sourcefuse.clickinandroid.model.bean.ChatRecordBeen;
 import com.sourcefuse.clickinandroid.utils.APIs;
 import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinandroid.utils.Utils;
@@ -26,8 +27,11 @@ public class ChatManager extends Observable implements ChatManagerI {
     StringEntity se = null;
     AsyncHttpClient client;
     private AuthManager authManager;
+    private ChatManager chatManager;
     public ArrayList<CardBean> tabArray = new ArrayList<CardBean>();
     private CardBean cardBean = null;
+
+    private ChatRecordBeen chatRecordBeen = null;
 
     private int myTotalClick = 0;
     private int partnerTotalClick =0 ;
@@ -61,14 +65,19 @@ public class ChatManager extends Observable implements ChatManagerI {
     public ArrayList<CardBean> all = new ArrayList<CardBean>();
 
     @Override
-    public void fetchChatRecord(String relationshipId, String phone,
-                                String usertoken) {
+    public void fetchChatRecord(String relationshipId, String phone,String usertoken,String chatId) {
+
+
+        chatManager = ModelManager.getInstance().getChatManager();
         // TODO Auto-generated method stub
         JSONObject userInputDetails = new JSONObject();
         try {
             userInputDetails.put("phone_no", phone);
             userInputDetails.put("user_token", usertoken);
             userInputDetails.put("relationship_id", relationshipId);
+            if(!Utils.isEmptyString(chatId)){
+                userInputDetails.put("last_chat_id", chatId);
+            }
 
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
@@ -102,8 +111,54 @@ public class ChatManager extends Observable implements ChatManagerI {
                             Log.e(TAG,"response FecthChat ->" + response);
                             state = response.getBoolean("success");
                             if (state) {
-Utils.clickCustomLog(response.toString());
+                                Utils.clickCustomLog(response.toString());
+                                JSONArray list = response.getJSONArray("chats");
+                                for (int i = 0; i < list.length(); i++) {
+                                    chatRecordBeen = new ChatRecordBeen();
+                                    JSONObject data = list.getJSONObject(i);
+                                    JSONObject chatObj = data.getJSONObject("Chat");
+
+                                    if (chatObj.has("receiverQB_id"))
+                                        chatRecordBeen.setRecieverQbId(chatObj.getString("receiverQB_id"));
+                                    if (chatObj.has("sharedMessage"))
+                                        chatRecordBeen.setSharedMessage(chatObj.getString("sharedMessage"));
+                                    if (chatObj.has("video_thumb"))
+                                        chatRecordBeen.setVideo_thumb(chatObj.getString("video_thumb"));
+                                    if (chatObj.has("QB_id"))
+                                        chatRecordBeen.setSenderQbId(chatObj.getString("QB_id"));
+                                    if (chatObj.has("senderUserToken"))
+                                        chatRecordBeen.setSenderUserToken(chatObj.getString("senderUserToken"));
+                                    if (chatObj.has("type"))
+                                        chatRecordBeen.setChatType(chatObj.getString("type"));
+                                    if (chatObj.has("message"))
+                                        chatRecordBeen.setChatText(chatObj.getString("message"));
+                                   // if (chatObj.has("content"))
+                                       // chatRecordBeen.setchatObj.getString("content");
+                                    if (chatObj.has("relationshipId"))
+                                        chatRecordBeen.setRelationshipId(chatObj.getString("relationshipId"));
+                                    if (chatObj.has("_id"))
+                                        chatRecordBeen.set_id(chatObj.getString("_id"));
+                                    if (chatObj.has("userId"))
+                                        chatRecordBeen.setUserId(chatObj.getString("userId"));
+                                    if (chatObj.has("location_coordinates"))
+                                        chatRecordBeen.setLocation_coordinates(chatObj.getString("location_coordinates"));
+                                    if (chatObj.has("clicks"))
+                                        chatRecordBeen.setClicks(chatObj.getString("clicks"));
+                                    if (chatObj.has("isDelivered"))
+                                        chatRecordBeen.setIsDelivered(chatObj.getString("isDelivered"));
+                                    if (chatObj.has("imageRatio"))
+                                        chatRecordBeen.setImageRatio(chatObj.getString("imageRatio"));
+                                    if (chatObj.has("chatId"))
+                                        chatRecordBeen.setChatId(chatObj.getString("chatId"));
+                                    if (chatObj.has("cards"))
+                                        chatRecordBeen.setCards(chatObj.getString("cards"));
+                                    if (chatObj.has("sentOn"))
+                                        chatRecordBeen.setTimeStamp(chatObj.getString("sentOn"));
+                                    chatManager.chatListFromServer.add(chatRecordBeen);
+                                }
                                 EventBus.getDefault().post("FecthChat True");
+                            }else{
+                                EventBus.getDefault().post("FecthChat False");
                             }
 
                         } catch (JSONException e) {

@@ -2,7 +2,9 @@ package com.sourcefuse.clickinandroid.view;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Html;
@@ -46,6 +48,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
 	private AuthManager authManager;
 	private RelationManager relationManager;
     private ProfileManager profileManager;
+    private Uri imageuri ;
 
 	
 
@@ -193,7 +196,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
 
     @Override
     protected void onResume() {
-        Log.e("onResume","onResume UserProfile");
+        Log.e("onResume","onResume UserProfileView");
         super.onResume();
         authManager = ModelManager.getInstance().getAuthorizationManager();
         if(authManager.isEditProfileFlag()) {

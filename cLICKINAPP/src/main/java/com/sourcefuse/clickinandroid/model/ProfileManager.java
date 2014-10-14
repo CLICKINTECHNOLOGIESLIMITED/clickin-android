@@ -49,7 +49,7 @@ public class ProfileManager extends Observable implements ProfileManagerI {
             if(!Utils.isEmptyString(userpic)){
                 userInputDetails.put("user_pic", userpic);
             }else{
-
+                userInputDetails.put("user_pic", "");
             }
 
 			userInputDetails.put("city", city);
