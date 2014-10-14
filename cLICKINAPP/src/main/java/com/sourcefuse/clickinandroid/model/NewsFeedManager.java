@@ -253,6 +253,11 @@ JSONObject chatObj = newsfeedArray.getJSONObject(i).getJSONObject("chatDetail");
                                     allNewsFeed.setNewsFeedArray_receiverDetail_name(newsfeedArray.getJSONObject(i).getJSONObject("receiverDetail").getString("name"));
                                     allNewsFeed.setNewsFeedArray_receiverDetail_user_pic(newsfeedArray.getJSONObject(i).getJSONObject("receiverDetail").getString("user_pic"));
                                 }
+                                else
+                                {
+                                    allNewsFeed.setNewsFeedArray_receiverDetail_id("");
+                                    allNewsFeed.setNewsFeedArray_receiverDetail_name("");
+                                }
                                  /*
                                 Sender Details
                                  */
@@ -261,10 +266,13 @@ JSONObject chatObj = newsfeedArray.getJSONObject(i).getJSONObject("chatDetail");
                                     allNewsFeed.setNewsFeedArray_senderDetail_name(newsfeedArray.getJSONObject(i).getJSONObject("senderDetail").getString("name"));
                                     allNewsFeed.setNewsFeedArray_senderDetail_user_pic(newsfeedArray.getJSONObject(i).getJSONObject("senderDetail").getString("user_pic"));
 
-
-                                    userFeed.add(allNewsFeed);
                                 }
-
+                                else
+                                {
+                                    allNewsFeed.setNewsFeedArray_senderDetail_id("");
+                                    allNewsFeed.setNewsFeedArray_senderDetail_name("");
+                                }
+                                userFeed.add(allNewsFeed);
 
                             }
                             Log.e("FeedSize-InManager", String.valueOf(userFeed.size()));
@@ -472,7 +480,26 @@ JSONObject chatObj = newsfeedArray.getJSONObject(i).getJSONObject("chatDetail");
                                 feedStars.setUserId(recordsArray.getJSONObject(i).getString("user_id"));
                                 feedStars.setUserName(recordsArray.getJSONObject(i).getString("user_name"));
                                 feedStars.setUserPic(recordsArray.getJSONObject(i).getString("user_pic"));
+                                if (recordsArray.getJSONObject(i).getJSONObject("modified").has("sec"))
+                                    Log.e("sec",recordsArray.getJSONObject(i).getJSONObject("modified").getString("sec"));
+                                    feedStars.setcreated_sec(recordsArray.getJSONObject(i).getJSONObject("modified").getString("sec"));
 
+                                if (recordsArray.getJSONObject(i).getJSONObject("modified").has("usec"))
+                                    feedStars.setcreated_usec(recordsArray.getJSONObject(i).getJSONObject("modified").getString("usec"));
+                                if(!recordsArray.getJSONObject(i).isNull("is_user_in_relation"))
+                                    feedStars.setIs_user_in_relation(recordsArray.getJSONObject(i).getInt("is_user_in_relation"));
+                                if(!recordsArray.getJSONObject(i).isNull("is_user_follower"))
+                                    feedStars.setIs_user_follower(recordsArray.getJSONObject(i).getInt("is_user_follower"));
+                                if(!recordsArray.getJSONObject(i).isNull("is_user_follower_acceptance"))
+                                    feedStars.setIs_user_follower_acceptance(recordsArray.getJSONObject(i).getString("is_user_follower_acceptance"));
+                                if(!recordsArray.getJSONObject(i).isNull("is_user_following_acceptance"))
+                                    feedStars.setIs_user_following_acceptance(recordsArray.getJSONObject(i).getString("is_user_following_acceptance"));
+                                if(!recordsArray.getJSONObject(i).isNull("is_user_following"))
+                                    feedStars.setIs_user_following(recordsArray.getJSONObject(i).getInt("is_user_following"));
+                                if(!recordsArray.getJSONObject(i).isNull("is_user_in_relation_acceptance"))
+                                    feedStars.setIs_user_in_relation_acceptance(recordsArray.getJSONObject(i).getString("is_user_in_relation_acceptance"));
+                                if(!recordsArray.getJSONObject(i).isNull("comment"))
+                                    feedStars.setComment(recordsArray.getJSONObject(i).getString("comment"));
                                 feedStarsList.add(feedStars);
                             }
                             if (state) {

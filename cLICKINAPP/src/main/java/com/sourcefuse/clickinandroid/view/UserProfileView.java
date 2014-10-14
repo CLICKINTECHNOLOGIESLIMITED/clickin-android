@@ -139,6 +139,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         Log.e(TAG,"vv"+authManager.getPhoneNo()+""+authManager.getUsrToken());
         authManager.getProfileInfo("", authManager.getPhoneNo(), authManager.getUsrToken());
         relationManager.getRelationShips(authManager.getPhoneNo(), authManager.getUsrToken());
+        ModelManager.getInstance().getProfileManager().getFollwer("", authManager.getPhoneNo(), authManager.getUsrToken());
 	    setProfileDataView();
         setlist();
 

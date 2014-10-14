@@ -5,16 +5,18 @@
     android:background="@color/black"
    >
 <ImageView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="@dimen/feed_image_height"
+    android:layout_height="@dimen/feed_image_height"
     android:id="@+id/feeds_large_img"
-    android:src="@drawable/female_crt"
-    android:layout_centerHorizontal="true"/>
+android:layout_centerInParent="true"
+    android:layout_centerHorizontal="true"
+    />
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:src="@drawable/back_arrow"
+        android:src="@drawable/back_arrow_img"
         android:id="@+id/back"
-        android:paddingLeft="5dp"/>
+        android:layout_margin="10dp"
+        />
 </RelativeLayout>

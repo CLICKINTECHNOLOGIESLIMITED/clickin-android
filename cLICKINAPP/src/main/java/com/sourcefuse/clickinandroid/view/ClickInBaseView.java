@@ -78,6 +78,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         setContentView(R.layout.view_baseview);
         Log.e("ClickInBaseView1", "onCreate");
 
+        authManager = ModelManager.getInstance().getAuthorizationManager();
 
     }
 
@@ -162,7 +163,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 
 
     public void leftMenuElements() {
-        authManager = ModelManager.getInstance().getAuthorizationManager();
+
         relationManager = ModelManager.getInstance().getRelationManager();
         typeface = Typeface.createFromAsset(ClickInBaseView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
         edt_search = (EditText) slidemenu.findViewById(R.id.edt_search);
@@ -260,10 +261,13 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
             @Override
             public void onClick(View arg0) {
 
-                newsFeedManager = ModelManager.getInstance().getNewsFeedManager();
-               // newsFeedManager.fetchNewsFeed(lastNewsfeedId, phone, usertoken);
-                newsFeedManager.fetchNewsFeed("",authManager.getPhoneNo(), authManager.getUsrToken());
-                Utils.launchBarDialog(ClickInBaseView.this);
+//                newsFeedManager = ModelManager.getInstance().getNewsFeedManager();
+//               // newsFeedManager.fetchNewsFeed(lastNewsfeedId, phone, usertoken);
+//                newsFeedManager.fetchNewsFeed("",authManager.getPhoneNo(), authManager.getUsrToken());
+//                Utils.launchBarDialog(ClickInBaseView.this);
+
+                Intent intent = new Intent(ClickInBaseView.this, FeedView.class);
+                startActivity(intent);
             }
         });
 
@@ -553,4 +557,6 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 
 
     }
+
+
 }

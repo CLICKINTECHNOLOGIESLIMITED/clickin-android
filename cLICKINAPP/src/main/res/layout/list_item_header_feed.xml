@@ -9,19 +9,22 @@
         android:id="@+id/transparentLayout"
         android:layout_width="match_parent"
         android:layout_height="10dp"
-        android:background="@color/transparent"></View>
+        android:background="@color/transparent"
+        ></View>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:orientation="horizontal"
-        android:padding="5dp">
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        >
 
         <ImageView
             android:id="@+id/imageView1"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_alignParentLeft="true"
 
             android:src="@drawable/c_add_selfie" />
@@ -41,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/feed_margin_bw_imagenname"
                 android:singleLine="true"
-                android:text="Emma Smith"
+
                 android:textColor="@color/feed_senderuser"
                 android:textIsSelectable="false"
                 android:textSize="@dimen/feed_sender_user_size"
@@ -61,8 +64,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/feed_margin_bw_imagenname"
                 android:singleLine="false"
-                android:text="Some More more more"
-                android:textColor="@android:color/black"
+
+                android:textColor="@android:color/darker_gray"
                 android:textIsSelectable="false"
                 android:textSize="@dimen/feed_sender_user_size"
                 android:textStyle="bold" />
@@ -84,10 +87,10 @@
                 android:singleLine="true"
                 android:text="3m"
                 android:textAllCaps="true"
-                android:textColor="@android:color/black"
+                android:textColor="@android:color/darker_gray"
                 android:textIsSelectable="false"
                 android:textSize="@dimen/feed_time__font_size"
-                android:textStyle="bold" />
+                android:textStyle="normal" />
         </LinearLayout>
     </RelativeLayout>
 

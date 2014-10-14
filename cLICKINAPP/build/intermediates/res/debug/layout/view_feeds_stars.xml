@@ -32,13 +32,6 @@
             android:textStyle="bold" />
 
    </RelativeLayout>
-    <uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/ptr_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/rr_header"
-        android:padding="5dp">
 
         <ListView
             android:layout_width="fill_parent"
@@ -49,7 +42,7 @@
 
 
 
-    </uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout>
+
 
     </RelativeLayout>
 <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/src/main/res/layout/view_feeds_stars.xml -->

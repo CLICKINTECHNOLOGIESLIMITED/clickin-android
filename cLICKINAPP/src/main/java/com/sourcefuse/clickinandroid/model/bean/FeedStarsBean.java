@@ -12,7 +12,13 @@ public class FeedStarsBean {
     private String type;
     private String user_id;
     private String user_name;
-    private String user_pic;
+    private String user_pic,comment;
+    private String newsFeedArray_created_sec;
+    private String newsFeedArray_created_usec;
+    private String is_user_follower_acceptance = null,is_user_following_acceptance = null,is_user_in_relation_acceptance = null;
+    private int is_user_following =0,is_user_in_relation =0,is_user_follower=0;
+//    private String newsFeedArray_chatDetail_modified_sec;
+//    private String newsFeedArray_chatDetail_modified_usec;
 
     public String getId() {
         return this._id;
@@ -26,6 +32,64 @@ public class FeedStarsBean {
     public String getType() {
         return this.type;
     }
+
+    public int getIs_user_follower() {
+        return is_user_follower;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public void setIs_user_follower(int is_user_follower) {
+        this.is_user_follower = is_user_follower;
+
+    }
+
+    public int getIs_user_in_relation() {
+        return is_user_in_relation;
+    }
+
+    public void setIs_user_in_relation(int is_user_in_relation) {
+        this.is_user_in_relation = is_user_in_relation;
+    }
+
+    public int getIs_user_following() {
+        return is_user_following;
+    }
+
+    public void setIs_user_following(int is_user_following) {
+        this.is_user_following = is_user_following;
+    }
+
+    public String getIs_user_in_relation_acceptance() {
+        return is_user_in_relation_acceptance;
+    }
+
+    public void setIs_user_in_relation_acceptance(String is_user_in_relation_acceptance) {
+        this.is_user_in_relation_acceptance = is_user_in_relation_acceptance;
+    }
+
+    public String getIs_user_following_acceptance() {
+        return is_user_following_acceptance;
+    }
+
+    public void setIs_user_following_acceptance(String is_user_following_acceptance) {
+        this.is_user_following_acceptance = is_user_following_acceptance;
+    }
+
+    public String getIs_user_follower_acceptance() {
+        return is_user_follower_acceptance;
+    }
+
+    public void setIs_user_follower_acceptance(String is_user_follower_acceptance) {
+        this.is_user_follower_acceptance = is_user_follower_acceptance;
+    }
+
     public String getUserId() {
         return this.user_id;
     }
@@ -58,5 +122,19 @@ public class FeedStarsBean {
         this.user_pic = user_pic;
     }
 
+    public String getcreated_sec() {
+        return newsFeedArray_created_sec;
+    }
 
+    public void setcreated_sec(String newsFeedArray_created_sec) {
+        this.newsFeedArray_created_sec = newsFeedArray_created_sec;
+    }
+
+    public String getcreated_usec() {
+        return newsFeedArray_created_usec;
+    }
+
+    public void setcreated_usec(String newsFeedArray_created_usec) {
+        this.newsFeedArray_created_usec = newsFeedArray_created_usec;
+    }
 }

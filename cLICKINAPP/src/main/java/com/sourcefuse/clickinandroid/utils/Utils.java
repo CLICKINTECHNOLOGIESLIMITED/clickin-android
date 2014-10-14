@@ -462,6 +462,12 @@ public class Utils {
        return newDateStr;
     }
 
-
+        public static String getLocalDatefromTimestamp(long timestamp)
+        {
+            Date date = new Date(timestamp);
+            DateFormat formatter = new SimpleDateFormat("HH:mm a");
+            String dateFormatted = formatter.format(date);
+            return dateFormatted;
+        }
 
 }

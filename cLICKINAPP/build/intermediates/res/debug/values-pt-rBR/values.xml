@@ -25,7 +25,7 @@
     <string name="common_google_play_services_update_title" msgid="6006316683626838685">"Atualize o Google Play Services"</string>
     <string name="common_signin_button_text" msgid="9071884888741449141">"Login"</string>
     <string name="common_signin_button_text_long" msgid="2429381841831957106">"Fazer login com o Google"</string>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/library_pull/unspecified/res/values-pt-rBR/values.xml -->
+    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.navercorp.pulltorefresh/library/3.2.0/res/values-pt-rBR/values.xml -->
     <eat-comment />
 
     <string name="pull_to_refresh_pull_label">Puxe para atualizar…</string>

@@ -64,7 +64,7 @@ public class FeedsStarsAdapter extends ArrayAdapter<FeedStarsBean> {
                     .findViewById(R.id.tv_clickers_name);
             holder.usrimg = (ImageView) row.findViewById(R.id.iv_usr);
             holder.usrimg.setScaleType(ImageView.ScaleType.FIT_XY);
-            holder.reqbtn = (Button) row.findViewById(R.id.btn_actions);
+            holder.reqbtn = (ImageView) row.findViewById(R.id.btn_actions);
 
 
             row.setTag(holder);
@@ -79,22 +79,41 @@ public class FeedsStarsAdapter extends ArrayAdapter<FeedStarsBean> {
         ProfileManager prMgr = ModelManager.getInstance().getProfileManager();
         if(prMgr.following!=null) {
             Log.e("followRequesed", "" + prMgr.following.size());
-            for (int i = 0; i < prMgr.following.size();i++)
-            {
-                Log.e("getUserId",""+eachNewsFeed.get(position).getUserId());
-                Log.e("getFollowingId",""+prMgr.following.get(i).getFolloweeName());
-                if(eachNewsFeed.get(position).getUserId().equalsIgnoreCase(prMgr.following.get(i).getFolloweeId()))
+//            for (int i = 0; i < prMgr.following.size();i++)
+//            {
+//                Log.e("getUserId",""+eachNewsFeed.get(position).getUserId());
+//                Log.e("getFollowingId",""+prMgr.following.get(i).getFolloweeName());
+//                if(eachNewsFeed.get(position).getUserId().equalsIgnoreCase(prMgr.following.get(i).getFolloweeId()))
+//                {
+//                    if(prMgr.following.get(i).getAccepted().equalsIgnoreCase("true"))
+//                    {
+//                        holder.reqbtn.setImageResource(R.drawable.following);
+//                    }
+//                    else {
+//                        holder.reqbtn.setImageResource(R.drawable.requested_grey);
+//                    }
+//                    break;
+//                }
+               if(eachNewsFeed.get(position).getUserId().equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getUserId()))
                 {
-                    if(prMgr.following.get(i).getAccepted().equalsIgnoreCase("true"))
-                    {
-                        holder.reqbtn.setBackgroundResource(R.drawable.following);
-                    }
-                    else {
-                        holder.reqbtn.setBackgroundResource(R.drawable.requested_grey);
-                    }
-                    break;
+                    holder.reqbtn.setVisibility(View.GONE);
                 }
-            }
+                else if(eachNewsFeed.get(position).getIs_user_in_relation()==1)
+                {
+                    holder.reqbtn.setVisibility(View.VISIBLE);
+                    if(eachNewsFeed.get(position).getIs_user_following()==1)
+                    {
+                        if(eachNewsFeed.get(position).getIs_user_following_acceptance()!=null)
+                        {
+                            holder.reqbtn.setImageResource(R.drawable.following);
+                        }
+                        else
+                        {
+                            holder.reqbtn.setImageResource(R.drawable.requested_grey);
+                        }
+                    }
+                }
+//            }
         }
 //        if(prMgr.pfollowerList!=null) {
 //            for (int i = 0; i < prMgr.pfollowerList.size();i++)
@@ -114,9 +133,9 @@ public class FeedsStarsAdapter extends ArrayAdapter<FeedStarsBean> {
 
     static class RecordHolder {
         ImageView usrimg;
-//        ImageView reqbtn;
+        ImageView reqbtn;
         TextView usr_name;
-        Button reqbtn;
+//        Button reqbtn;
     }
 
 

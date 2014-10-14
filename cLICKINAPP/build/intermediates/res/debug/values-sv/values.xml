@@ -41,11 +41,5 @@
     <string name="common_google_play_services_update_title" msgid="6006316683626838685">"Uppdatera Google Play Tjänster"</string>
     <string name="common_signin_button_text" msgid="9071884888741449141">"Logga in"</string>
     <string name="common_signin_button_text_long" msgid="2429381841831957106">"Logga in med Google"</string>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/library_pull/unspecified/res/values-sv/values.xml -->
-    <eat-comment />
-
-    <string name="pull_to_refresh_pull_label">Dra nedåt om du vill uppdatera</string>
-    <string name="pull_to_refresh_refreshing_label">Uppdaterar…</string>
-    <string name="pull_to_refresh_release_label">Släpp om du vill uppdatera</string>
 
 </resources>

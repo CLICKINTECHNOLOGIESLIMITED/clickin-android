@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="library-3.2.0">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/cLICKINAPP/build/intermediates/exploded-aar/com.navercorp.pulltorefresh/library/3.2.0/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/cLICKINAPP/build/intermediates/exploded-aar/com.navercorp.pulltorefresh/library/3.2.0/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

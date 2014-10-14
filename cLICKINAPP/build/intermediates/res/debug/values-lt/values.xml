@@ -41,11 +41,5 @@
     <string name="common_google_play_services_update_title" msgid="6006316683626838685">"Atnaujinti „Google Play“ paslaugas"</string>
     <string name="common_signin_button_text" msgid="9071884888741449141">"Prisij."</string>
     <string name="common_signin_button_text_long" msgid="2429381841831957106">"Prisij. naud. „Google“"</string>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/library_pull/unspecified/res/values-lt/values.xml -->
-    <eat-comment />
-
-    <string name="pull_to_refresh_pull_label">Traukite, kad atnaujinti…</string>
-    <string name="pull_to_refresh_refreshing_label">Kraunama…</string>
-    <string name="pull_to_refresh_release_label">Paleiskite, kad atnaujinti…</string>
 
 </resources>

@@ -216,6 +216,16 @@
             android:launchMode="standard"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name="com.sourcefuse.clickinandroid.view.Feed_large_img"
+            android:launchMode="standard"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.sourcefuse.clickinandroid.view.FeedCommentsView"
+            android:launchMode="standard"
+            android:screenOrientation="portrait" >
+        </activity>
 
         <meta-data
             android:name="com.crashlytics.ApiKey"

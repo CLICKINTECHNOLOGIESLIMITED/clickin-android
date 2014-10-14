@@ -41,9 +41,12 @@
     <string name="common_google_play_services_update_title" msgid="6006316683626838685">"Päivitä Google Play -palvelut"</string>
     <string name="common_signin_button_text" msgid="9071884888741449141">"Kirjaudu"</string>
     <string name="common_signin_button_text_long" msgid="2429381841831957106">"Kirjaudu Google-tiliin"</string>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/library_pull/unspecified/res/values-fi/values.xml -->
+    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.navercorp.pulltorefresh/library/3.2.0/res/values-fi/values.xml -->
     <eat-comment />
 
+    <string name="pull_to_refresh_from_bottom_pull_label">Päivitä vetämällä ylös…</string>
+    <string name="pull_to_refresh_from_bottom_refreshing_label">@string/pull_to_refresh_refreshing_label</string>
+    <string name="pull_to_refresh_from_bottom_release_label">@string/pull_to_refresh_release_label</string>
     <string name="pull_to_refresh_pull_label">Päivitä vetämällä alas…</string>
     <string name="pull_to_refresh_refreshing_label">Päivitetään…</string>
     <string name="pull_to_refresh_release_label">Päivitä vapauttamalla…</string>

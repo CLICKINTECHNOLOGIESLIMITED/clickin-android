@@ -32,13 +32,17 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_heading_followers"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp">
 
         <ImageView
             android:id="@+id/iv_usr"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:background="@drawable/dcontact" />
+            android:background="@drawable/dcontact"
+            />
 
         <TextView
             android:id="@+id/tv_clickers_name"
@@ -46,10 +50,11 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/iv_usr"
-            android:padding="5dp"
-            android:text="Bregenja"
+            android:paddingLeft="5dp"
+
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="normal"
+            android:textColor="@android:color/darker_gray"/>
 
 
         <ImageView
@@ -58,7 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="5dp"
+            android:layout_marginRight="10dp"
             android:padding="0dp"
             android:src="@drawable/follow_pink" />
 

@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.sourcefuse.clickinandroid.model.ModelManager;
+import com.sourcefuse.clickinandroid.model.ProfileManager;
 import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
@@ -216,29 +217,49 @@ public class SimpleSectionedListAdapter2 extends BaseAdapter implements PinnedSe
             doubleArrow = (ImageView)convertView.findViewById(R.id.doubleArrow);
             imageview.setScaleType(ImageView.ScaleType.FIT_XY);
 
-
+            ProfileManager prMgr = ModelManager.getInstance().getProfileManager();
             if(mSections.get(position)!=null)
                 if((mSections.get(position).senderId)!=null){
-                    if(mSections.get(position).senderName.toString().equalsIgnoreCase("null"))
-                        mSections.get(position).senderName="";
+//                    if((mSections.get(position).receiverId)!=null){
+                        if (mSections.get(position).senderName.toString().equalsIgnoreCase("null"))
+                            mSections.get(position).senderName = "";
 
-                    if((mSections.get(position).recieverName)!=null) {
-                        if (mSections.get(position).recieverName.toString().equalsIgnoreCase("null"))
-                            mSections.get(position).recieverName = "";
-                    }
-
-                    if ((mSections.get(position).senderId).toString().equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getUserId())) {
-
-                        view.setText(mSections.get(position).senderName);
-                        view1.setText(mSections.get(position).recieverName);
-                        Picasso.with(mContext).load(mSections.get(position).senderImages).placeholder(R.drawable.ic_launcher).into(imageview);
-                        doubleArrow.setImageResource(R.drawable.arrow);
-                    } else {
-                        doubleArrow.setImageResource(R.drawable.flip_arow);
-                        view.setText(mSections.get(position).recieverName);
-                        view1.setText(mSections.get(position).senderName);
-                        Picasso.with(mContext).load(mSections.get(position).recieverImages).placeholder(R.drawable.ic_launcher).into(imageview);
-                    }
+                        if ((mSections.get(position).recieverName) != null) {
+                            if (mSections.get(position).recieverName.toString().equalsIgnoreCase("null"))
+                                mSections.get(position).recieverName = "";
+                        }
+                        if (prMgr.following != null)
+                            for (int i = 0; i < prMgr.following.size(); i++) {
+                                if ((mSections.get(position).senderId).toString().equalsIgnoreCase(prMgr.following.get(i).getFolloweeId())) {
+                                    view.setText(mSections.get(position).senderName);
+                                    view1.setText(mSections.get(position).recieverName);
+                                    Picasso.with(mContext).load(mSections.get(position).senderImages).placeholder(R.drawable.dcontact).into(imageview);
+                                    doubleArrow.setImageResource(R.drawable.arrow);
+                                    break;
+                                } else{
+//                                if((mSections.get(position).receiverId)!=null) {
+//                                    if ((mSections.get(position).receiverId).toString().equalsIgnoreCase(prMgr.following.get(i).getFolloweeId())) {
+                                        doubleArrow.setImageResource(R.drawable.flip_arow);
+                                        view.setText(mSections.get(position).recieverName);
+                                        view1.setText(mSections.get(position).senderName);
+                                        Picasso.with(mContext).load(mSections.get(position).recieverImages).placeholder(R.drawable.dcontact).into(imageview);
+//                                        break;
+//                                    }
+                                }
+                            }
+//                    if ((mSections.get(position).senderId).toString().equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getUserId())) {
+//
+//                        view.setText(mSections.get(position).senderName);
+//                        view1.setText(mSections.get(position).recieverName);
+//                        Picasso.with(mContext).load(mSections.get(position).senderImages).placeholder(R.drawable.ic_launcher).into(imageview);
+//                        doubleArrow.setImageResource(R.drawable.arrow);
+//                    } else {
+//                        doubleArrow.setImageResource(R.drawable.flip_arow);
+//                        view.setText(mSections.get(position).recieverName);
+//                        view1.setText(mSections.get(position).senderName);
+//                        Picasso.with(mContext).load(mSections.get(position).recieverImages).placeholder(R.drawable.ic_launcher).into(imageview);
+//                    }
+//                    }
                 }
             if(mSections.get(position).timeOfFeed!=null) {
                 Log.e("timeOfFeed=",mSections.get(position).timeOfFeed);

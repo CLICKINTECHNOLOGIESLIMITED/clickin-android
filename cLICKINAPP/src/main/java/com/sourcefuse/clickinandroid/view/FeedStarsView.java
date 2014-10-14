@@ -70,13 +70,13 @@ public class FeedStarsView extends Activity {
         authMgr = ModelManager.getInstance().getAuthorizationManager();
 
         Utils.launchBarDialog(FeedStarsView.this);
-        if(ModelManager.getInstance().getProfileManager().following.size()==0)
-        {
-            ModelManager.getInstance().getProfileManager().getFollwer("", authMgr.getPhoneNo(), authMgr.getUsrToken());
-        }
-        else {
+//        if(ModelManager.getInstance().getProfileManager().following.size()==0)
+//        {
+//            ModelManager.getInstance().getProfileManager().getFollwer("", authMgr.getPhoneNo(), authMgr.getUsrToken());
+//        }
+//        else {
             newsFeedManager.fetchCommentStars(authMgr.getPhoneNo(), authMgr.getUsrToken(), "", news_feedId, "star");
-        }
+//        }
     }
     @Override
     public void onStart() {
@@ -98,7 +98,7 @@ public class FeedStarsView extends Activity {
 //        android.util.Log.d("Clickin", "onEventMainThread->" + message);
 
         if (message.equalsIgnoreCase("FetchCommentStatus True")) {
-            FeedsStarsAdapter adapter = new FeedsStarsAdapter(this, R.layout.row_follower, newsFeedManager.feedStarsList);
+            FeedsStarsAdapter adapter = new FeedsStarsAdapter(this, R.layout.view_feeds_stars_row, newsFeedManager.feedStarsList);
             list.setAdapter(adapter);
             Utils.dismissBarDialog();
 //            android.util.Log.d("1", "message->" + message);

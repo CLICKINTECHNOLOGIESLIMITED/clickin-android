@@ -41,7 +41,7 @@
     <string name="common_google_play_services_update_title" msgid="6006316683626838685">"Aggiorna Google Play Services"</string>
     <string name="common_signin_button_text" msgid="9071884888741449141">"Accedi"</string>
     <string name="common_signin_button_text_long" msgid="2429381841831957106">"Accedi con Google"</string>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/library_pull/unspecified/res/values-it/values.xml -->
+    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.navercorp.pulltorefresh/library/3.2.0/res/values-it/values.xml -->
     <eat-comment />
 
     <string name="pull_to_refresh_pull_label">Tira per aggiornare…</string>

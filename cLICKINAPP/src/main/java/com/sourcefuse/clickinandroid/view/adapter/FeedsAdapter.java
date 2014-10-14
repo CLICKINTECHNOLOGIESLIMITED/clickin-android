@@ -23,8 +23,10 @@ import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.bean.NewsFeedBean;
 import com.sourcefuse.clickinandroid.utils.Log;
+import com.sourcefuse.clickinandroid.view.FeedCommentsView;
 import com.sourcefuse.clickinandroid.view.FeedStarsView;
 import com.sourcefuse.clickinandroid.view.FeedView;
+import com.sourcefuse.clickinandroid.view.Feed_large_img;
 import com.sourcefuse.clickinapp.R;
 import com.squareup.picasso.Picasso;
 
@@ -147,7 +149,8 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
         holder.feed_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i  = new Intent(context,feed_large_img.class);
+                Intent i  = new Intent(context,Feed_large_img.class);
+                i.putExtra("url",eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content());
                 context.startActivity(i);
             }
         });
@@ -223,6 +226,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
             if(eachNewsFeed.get(position).getNewsfeedArray_comments_count()>3)
             {
                 holder.feed_comments_layout1.setVisibility(View.VISIBLE);
+                holder.no_comments.setText("View all "+eachNewsFeed.get(position).getNewsfeedArray_comments_count()+" comments");
             for(int k=0;k<eachNewsFeed.get(position).getCommentArrayList().size();k++)
             {
                 if(k==0)
@@ -315,10 +319,13 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
         {
             holder.feed_comments_layout.setVisibility(View.GONE);
         }
+
         holder.feed_comments_layout1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(context, FeedCommentsView.class);
+                intent.putExtra("news_feed_id",eachNewsFeed.get(position).getNewsfeedArray_id());
+                context.startActivity(intent);
             }
         });
         if(eachNewsFeed.get(position).getNewsfeedArray_user_commented().equalsIgnoreCase("1"))
@@ -355,12 +362,13 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
 
                 else {
                     holder.feed_star_image_button.setImageResource(R.drawable.pink_star_btn);
+                        if(stars.equalsIgnoreCase("No Stars"))
+                            stars = "";
                         if(stars.startsWith(","))
                             stars = stars.replaceFirst(",","").trim();
                         if(stars.endsWith(","))
                             stars = stars.substring(0,stars.lastIndexOf(",")-1);
-                        if(stars.equalsIgnoreCase("No Stars"))
-                            stars = "";
+
                         holder.feed_star_user.setTextColor(context.getResources().getColor(R.color.feed_senderuser));
                         holder.feed_star_user.setClickable(true);
                     holder.feed_star_user.setText(stars+", "+ModelManager.getInstance().getAuthorizationManager().getUserName());
@@ -371,7 +379,9 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
         holder.feed_comment_image_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(context, FeedCommentsView.class);
+                intent.putExtra("news_feed_id",eachNewsFeed.get(position).getNewsfeedArray_id());
+                context.startActivity(intent);
             }
         });
         holder.feed_star_user.setOnClickListener(new View.OnClickListener() {

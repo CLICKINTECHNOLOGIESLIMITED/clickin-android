@@ -1,6 +1,7 @@
 package com.sourcefuse.clickinandroid.view;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -11,10 +12,13 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
+import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.NewsFeedManager;
 import com.sourcefuse.clickinandroid.model.bean.NewsFeedBean;
+import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.Log;
+import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.adapter.FeedsAdapter;
 import com.sourcefuse.clickinandroid.view.adapter.SimpleSectionedListAdapter2;
 import com.sourcefuse.clickinandroid.view.adapter.SimpleSectionedListAdapter2.Section;
@@ -25,6 +29,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import de.greenrobot.event.EventBus;
+
 /**
  * Created by gagansethi on 3/7/14.
  */
@@ -33,6 +39,7 @@ public class FeedView extends ClickInBaseView implements View.OnClickListener{
     private ArrayList<Section> sections = new ArrayList<Section>();
     public static FeedsAdapter adapter;
     private NewsFeedManager newsFeedManager;
+    private AuthManager authManager;
     ArrayList<NewsFeedBean> newsFeedBeanArrayList;
     ArrayList<String> senderName = new ArrayList<String>();
     ArrayList<String> senderId = new ArrayList<String>();
@@ -46,7 +53,7 @@ public class FeedView extends ClickInBaseView implements View.OnClickListener{
 
     ImageView menu,notificationIcon;
     RelativeLayout no_feed_image;
-    private LinearLayout llAttachment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,28 +66,28 @@ public class FeedView extends ClickInBaseView implements View.OnClickListener{
 
         menu = (ImageView) findViewById(R.id.iv_menu);
         notificationIcon = (ImageView) findViewById(R.id.iv_notification);
-        llAttachment = (LinearLayout) findViewById(R.id.ll_attachment);
-
 
         newsFeedManager = ModelManager.getInstance().getNewsFeedManager();
-        newsFeedBeanArrayList = newsFeedManager.userFeed;
-        if(newsFeedBeanArrayList.size()==0)
-        {
-            no_feed_image = (RelativeLayout)findViewById(R.id.no_feed_image);
-            no_feed_image.setVisibility(View.VISIBLE);
-        }
-        else {
-            initData();
-            initControls();
-        }
+        authManager = ModelManager.getInstance().getAuthorizationManager();
+
+        Utils.launchBarDialog(FeedView.this);
+        newsFeedManager.fetchNewsFeed("",authManager.getPhoneNo(), authManager.getUsrToken());
+
     }
-    private void hideAttachView() {
-        if (llAttachment.getVisibility() == View.VISIBLE) {
-            Animation slideLeft = AnimationUtils.loadAnimation(FeedView.this, R.anim.slide_right_to_left);
-            llAttachment.startAnimation(slideLeft);
-            llAttachment.setVisibility(View.GONE);
-            llAttachment.setVisibility(View.GONE);
-//            showAttachmentView = true;
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
         }
     }
     private void initData() {
@@ -92,34 +99,14 @@ public class FeedView extends ClickInBaseView implements View.OnClickListener{
             receiverId.add(eachNewsFeed.getNewsFeedArray_receiverDetail_id());
             senderImages.add(eachNewsFeed.getNewsFeedArray_senderDetail_user_pic());
             recieverImages.add(eachNewsFeed.getNewsFeedArray_receiverDetail_user_pic());
-            Log.e("created time", String.valueOf(eachNewsFeed.getNewsfeedArray_created()));
+//            Log.e("created time", String.valueOf(eachNewsFeed.getNewsfeedArray_created()));
 //            timeOfFeed.add(eachNewsFeed.getNewsfeedArray_created().substring(eachNewsFeed.getNewsfeedArray_created().indexOf(" ")+1));
             timeOfFeed.add(eachNewsFeed.getNewsfeedArray_created());
             mHeaderPositions.add(headerPosition);
             headerPosition = headerPosition+1;
-            Log.e("News Feed Time ",eachNewsFeed.getNewsfeedArray_created());
+//            Log.e("News Feed Time ",eachNewsFeed.getNewsfeedArray_created());
         }
 
-    }
-
-    private String getFeedTime(String newsfeedArray_created) {
-
-
-
-
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-
-        try {
-
-            Date date = formatter.parse(newsfeedArray_created);
-            return (date.getHours()+":"+date.getMinutes());
-
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        return null;
     }
 
 
@@ -130,6 +117,9 @@ public class FeedView extends ClickInBaseView implements View.OnClickListener{
         list.setVerticalScrollBarEnabled(false);
         list.setVerticalFadingEdgeEnabled(false);
         list.setAdapter(null);
+        Log.e("sections=",""+sections.size());
+        sections.clear();
+
         adapter = new FeedsAdapter(FeedView.this, R.layout.feed_list_item, newsFeedManager.userFeed);
         for (int i = 0; i < senderName.size(); i++) {
             Log.e("timeOfFeed=",timeOfFeed.get(i));
@@ -141,13 +131,6 @@ public class FeedView extends ClickInBaseView implements View.OnClickListener{
         list.setAdapter(simpleSectionedGridAdapter2);
 
     }
-
-
-
-    private Integer[] mImageIds = {
-
-    };
-
 
     @Override
     public void onClick(View v) {
@@ -162,5 +145,33 @@ public class FeedView extends ClickInBaseView implements View.OnClickListener{
                 slidemenu.showSecondaryMenu(true);
                 break;
         }
+    }
+    public void onEventMainThread(String message) {
+        android.util.Log.d("onEventMainThread", "onEventMainThread->");
+        authManager = ModelManager.getInstance().getAuthorizationManager();
+
+       if (message.equalsIgnoreCase("NewsFeed True")) {
+           if(newsFeedBeanArrayList!=null)
+             newsFeedBeanArrayList.clear();
+           newsFeedBeanArrayList = newsFeedManager.userFeed;
+           initData();
+           initControls();
+           Utils.dismissBarDialog();
+        } else if (message.equalsIgnoreCase("NewsFeed False")) {
+           stopSearch = true;
+            Utils.dismissBarDialog();
+            newsFeedManager.userFeed.clear();
+//            Utils.showAlert(ClickInBaseView.this, authManager.getMessage());
+
+               no_feed_image = (RelativeLayout)findViewById(R.id.no_feed_image);
+               no_feed_image.setVisibility(View.VISIBLE);
+
+        } else if (message.equalsIgnoreCase("NewsFeed Error")) {
+            stopSearch = true;
+            Utils.dismissBarDialog();
+            Utils.showAlert(FeedView.this, AlertMessage.connectionError);
+            android.util.Log.d("3", "message->" + message);
+        }
+
     }
 }

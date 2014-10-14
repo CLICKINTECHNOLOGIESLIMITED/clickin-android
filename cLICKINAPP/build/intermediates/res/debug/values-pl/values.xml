@@ -41,11 +41,11 @@
     <string name="common_google_play_services_update_title" msgid="6006316683626838685">"Aktualizuj Usługi Google Play"</string>
     <string name="common_signin_button_text" msgid="9071884888741449141">"Zaloguj się"</string>
     <string name="common_signin_button_text_long" msgid="2429381841831957106">"Zaloguj się przez Google"</string>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/library_pull/unspecified/res/values-pl/values.xml -->
+    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.navercorp.pulltorefresh/library/3.2.0/res/values-pl/values.xml -->
     <eat-comment />
 
-    <string name="pull_to_refresh_pull_label">Przesuń w dół, by odświeżyć…</string>
+    <string name="pull_to_refresh_pull_label">Pociągnij, aby odświeżyć…</string>
     <string name="pull_to_refresh_refreshing_label">Wczytywanie…</string>
-    <string name="pull_to_refresh_release_label">Puść, by odświeżyć…</string>
+    <string name="pull_to_refresh_release_label">Puść, aby odświeżyć…</string>
 
 </resources>
