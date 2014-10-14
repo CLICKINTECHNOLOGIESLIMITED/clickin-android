@@ -80,7 +80,6 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         TextWatcher, ChatMessageListener,ConnectionListener {
     private SeekBar mybar;
     private TextView pos, neg, profileName, typingtext, myTotalclicks, partnerTotalclicks;
-
     int myvalue = 10, min = -10;
     String chatString = "";
     int seekValue = 0;
@@ -90,13 +89,13 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     private Button send, btnToCard;
 
     private QBPrivateChat chatObject;
-    private String qBId, rId, partnerPic, partnerName, partnerId,myClicks,userClicks;
+    private String qBId, rId, partnerPic, partnerName, partnerId,myClicks,userClicks,partnerPh;
     private ChatManager chatManager;
     private AuthManager authManager;
     private EditText chatText;
     private ImageView mypix, partnerPix, menu, attachBtn, notificationIcon;
-    //private ListView chatListView;
-    private PullToRefreshListView chatListView;
+    private ListView chatListView;
+    //private PullToRefreshListView chatListView;
     private ChatRecordAdapter adapter;
     public static ArrayList<ChatRecordBeen> chatData = new ArrayList<ChatRecordBeen>();
     public static ArrayList<ChatRecordBeen> databaseList = new ArrayList<ChatRecordBeen>();
@@ -140,10 +139,9 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         send = (Button) findViewById(R.id.btn_send);
         chatListView = (ListView) findViewById(R.id.chat_list);
 
-       // chatListView = (PullToRefreshListView) findViewById(R.id.chat_list);
+        // chatListView = (PullToRefreshListView) findViewById(R.id.chat_list);
 
         chatText = (EditText) findViewById(R.id.edit_chatBox);
-        //  chatText.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
         mybar = (SeekBar) findViewById(R.id.seekBar1);
         pos = (TextView) findViewById(R.id.tv_positive);
         neg = (TextView) findViewById(R.id.tv_negetive);
@@ -171,8 +169,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         typingtext.setTypeface(typeface);
         menu.setOnClickListener(this);
         notificationIcon.setOnClickListener(this);
-        pos.setText("-" + mybar.getMax());
-        neg.setText("+" + mybar.getMax());
+        pos.setText("+" + mybar.getMax());
+        neg.setText("-" + mybar.getMax());
 
         mybar.setMax(maxValue);
         mybar.setProgress(initialProgresss);
@@ -189,8 +187,6 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         partnerName = getIntent().getExtras().getString("partnerName");
         rId = getIntent().getExtras().getString("rId");
         partnerId = getIntent().getExtras().getString("partnerId");
-
-
         myClicks = getIntent().getExtras().getString("myClicks");
         userClicks = getIntent().getExtras().getString("userClicks");
         partnerPh =  getIntent().getExtras().getString("partnerPh");
@@ -215,6 +211,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         profileName.setText("" + partnerName);
         try {
             Picasso.with(ChatRecordView.this).load(authManager.getUserPic())
+                    .skipMemoryCache()
                     .placeholder(R.drawable.default_profile)
                     .error(R.drawable.default_profile).into(mypix);
             Picasso.with(ChatRecordView.this).load(partnerPic)
@@ -239,16 +236,16 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 myvalue = progress - 10;
                 Log.e("", "progress---->" + progress);
                 if (myvalue > 0) {
-                   // pos.setText("" + myvalue);
+                    // pos.setText("" + myvalue);
                     ((RelativeLayout) findViewById(R.id.rl_flipper)).setVisibility(View.VISIBLE);
                     ((RelativeLayout) findViewById(R.id.rl_flipper)).setBackgroundResource(R.color.white);
                     ((TextView) findViewById(R.id.tv_flipper_value)).setText(""+clickForFlipper(myvalue));
                     seekValue = myvalue;
-                   // neg.setText("-10");
+                    // neg.setText("-10");
                 }
                 if (myvalue < 0) {
                     //pos.setText("+10");
-                   // neg.setText("" + myvalue);
+                    // neg.setText("" + myvalue);
                     seekValue = myvalue;
                     ((RelativeLayout) findViewById(R.id.rl_flipper)).setVisibility(View.VISIBLE);
                     ((RelativeLayout) findViewById(R.id.rl_flipper)).setBackgroundResource(R.color.black_opacity);
@@ -258,9 +255,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                     seekValue = 0;
                     ((RelativeLayout) findViewById(R.id.rl_flipper)).setVisibility(View.GONE);
                     //pos.setText("+10");
-                  //  neg.setText("-10");
+                    //  neg.setText("-10");
                 }
-
             }
         });
 
@@ -270,7 +266,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             @Override
             public void onClick(View v) {
                 hideAttachView();
-             //   Utils.imageDialog(ChatRecordView.this);
+                //   Utils.imageDialog(ChatRecordView.this);
                 imageDialog();
             }
         });
@@ -301,7 +297,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         });
 
 
-        chatListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
+      /*  chatListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
             @Override
             public void onRefresh(PullToRefreshBase<ListView> refreshView) {
                 // Do work to refresh the list here.
@@ -311,7 +307,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 chatManager.fetchChatRecord(rId, authManager.getPhoneNo(), authManager.getUsrToken(),lastChatId);
             }
         });
-
+*/
 
 
         chatData.clear();
@@ -502,7 +498,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             Log.e(TAG, "Exception-> " + e.toString());
         }
 
-       // adapter = new ChatRecordAdapter(this, R.layout.view_chat_demo, chatManager.chatListFromServer);
+        // adapter = new ChatRecordAdapter(this, R.layout.view_chat_demo, chatManager.chatListFromServer);
         adapter = new ChatRecordAdapter(this, R.layout.view_chat_demo,chatData);
         chatListView.setAdapter(adapter);
     }
@@ -511,9 +507,9 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_send:
-
+                ((RelativeLayout) findViewById(R.id.rl_flipper)).setVisibility(View.GONE);
                 chatString = "" + chatText.getText().toString();
-             //   if(!Utils.isEmptyString(chatString) || mImageCaptureUri != null && audioFilePath!=null){
+                //   if(!Utils.isEmptyString(chatString) || mImageCaptureUri != null && audioFilePath!=null){
 
                 ChatRecordBeen addChat = new ChatRecordBeen();
                 long sentOn = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis();
@@ -753,10 +749,10 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             chatObject.sendMessage(Integer.parseInt(qBId), message);
         } catch (Exception e) {
 
-           try {
-            chatObject.removeChatMessageListener(this);
-            chatObject.addChatMessageListener(this);
-}catch (Exception e1){}
+            try {
+                chatObject.removeChatMessageListener(this);
+                chatObject.addChatMessageListener(this);
+            }catch (Exception e1){}
             e.printStackTrace();
         }
     }
@@ -800,10 +796,10 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
 
         try {
-        authManager = ModelManager.getInstance().getAuthorizationManager();
-        chatObject = authManager.getqBPrivateChat();
-        chatObject.removeChatMessageListener(this);
-        chatObject.addChatMessageListener(this);
+            authManager = ModelManager.getInstance().getAuthorizationManager();
+            chatObject = authManager.getqBPrivateChat();
+            chatObject.removeChatMessageListener(this);
+            chatObject.addChatMessageListener(this);
         } catch (Exception e) {
         }
 
@@ -835,7 +831,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         android.util.Log.d(TAG, "onEventMainThread->" + message);
         authManager = ModelManager.getInstance().getAuthorizationManager();
         if (message.equalsIgnoreCase("FecthChat True")) {
-           // chatListView.onRefreshComplete();
+            // chatListView.onRefreshComplete();
             setlist();
             android.util.Log.d("1", "message->" + message);
         } else if (message.equalsIgnoreCase("FecthChat False")) {
@@ -1237,10 +1233,10 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             message.addExtension(extension);
             chatObject.sendMessage(Integer.parseInt(qBId), message);
         } catch (Exception e) {
-try {
-            chatObject.removeChatMessageListener(this);
-            chatObject.addChatMessageListener(this);
-}catch (Exception e1){}
+            try {
+                chatObject.removeChatMessageListener(this);
+                chatObject.addChatMessageListener(this);
+            }catch (Exception e1){}
           /*  chatObject = null;
             authManager = ModelManager.getInstance().getAuthorizationManager();
             chatObject = authManager.getqBPrivateChat();
@@ -1506,9 +1502,6 @@ try {
         }
         return changeClicks;
 
-      
-
-       
     }
 
 
@@ -1560,7 +1553,7 @@ try {
 
     @Override
     public void connectionClosedOnError(Exception e) {
-       Log.e(TAG, "connection closed on error. It will be established soon");
+        Log.e(TAG, "connection closed on error. It will be established soon");
     }
 
     @Override
@@ -1577,7 +1570,7 @@ try {
 
     @Override
     public void reconnectionFailed(Exception e) {
-       Log.e(TAG, "reconnectionFailed");
+        Log.e(TAG, "reconnectionFailed");
     }
 
 
@@ -1587,7 +1580,7 @@ try {
     private void  createRecordOnQuickBlox(String messageText, String clicks, String content, String relationshipId, String userId, String senderUserToken,
                                           String sentOn, String chatId, String type, String video_thumb, String fileID, String fileIDContent, String imageRatio, String cards,
                                           String locationCoordinates, String sharedMessage, String deliveredChatID) {
-    HashMap<String, Object> fields = new HashMap<String, Object>();
+        HashMap<String, Object> fields = new HashMap<String, Object>();
 
         if (!Utils.isEmptyString(messageText)) {
             fields.put("message", messageText);
@@ -1625,23 +1618,23 @@ try {
             fields.put("deliveredChatID", deliveredChatID);
         }
 
-    QBCustomObject qbCustomObject = new QBCustomObject();
-    qbCustomObject.setClassName("chats");  // your Class name
-    qbCustomObject.setFields(fields);
-    QBCustomObjects.createObject(qbCustomObject, new QBCallbackImpl() {
-        @Override
-        public void onComplete(Result result) {
-            if (result.isSuccess()) {
-                QBCustomObjectResult qbCustomObjectResult = (QBCustomObjectResult) result;
-                QBCustomObject qbCustomObject = qbCustomObjectResult.getCustomObject();
-                Log.e("New record: ", qbCustomObject.toString());
-            } else {
-                Log.e("Errors", result.getErrors().toString());
+        QBCustomObject qbCustomObject = new QBCustomObject();
+        qbCustomObject.setClassName("chats");  // your Class name
+        qbCustomObject.setFields(fields);
+        QBCustomObjects.createObject(qbCustomObject, new QBCallbackImpl() {
+            @Override
+            public void onComplete(Result result) {
+                if (result.isSuccess()) {
+                    QBCustomObjectResult qbCustomObjectResult = (QBCustomObjectResult) result;
+                    QBCustomObject qbCustomObject = qbCustomObjectResult.getCustomObject();
+                    Log.e("New record: ", qbCustomObject.toString());
+                } else {
+                    Log.e("Errors", result.getErrors().toString());
+                }
             }
-        }
-    });
+        });
 
-}
+    }
 }
 
  /* extension.setValue("audioID", "https://qbprod.s3.amazonaws.com/bb19b8ba52764d39b4362299e93ebadf00");

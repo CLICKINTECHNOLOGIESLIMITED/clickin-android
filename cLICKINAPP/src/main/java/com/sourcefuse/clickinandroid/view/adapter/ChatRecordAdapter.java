@@ -3,6 +3,7 @@ package com.sourcefuse.clickinandroid.view.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.text.Html;
 import android.view.Gravity;
@@ -20,6 +21,8 @@ import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.bean.ChatRecordBeen;
 import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinandroid.utils.Utils;
+import com.sourcefuse.clickinandroid.view.AddSomeoneView;
+import com.sourcefuse.clickinandroid.view.ImageViewer;
 import com.sourcefuse.clickinapp.R;
 import com.squareup.picasso.Picasso;
 
@@ -28,12 +31,13 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
-public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen> {
+public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
 
     private static final String TAG = ChatRecordAdapter.class.getSimpleName();
     Context context;
     int layoutResourceId;
     private AuthManager authManager;
+    ChatRecordBeen item ;
 
     public ChatRecordAdapter(Context context, int layoutResourceId,
                              List<ChatRecordBeen> item) {
@@ -62,6 +66,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen> {
             holder.chatImage = (ImageView) row.findViewById(R.id.iv_chat_image);
             holder.chatImage.setScaleType(ImageView.ScaleType.FIT_XY);
 
+
             holder.shareIcon = (ImageView) row.findViewById(R.id.iv_type_two_share_icon_r);
             holder.sendStatus = (ImageView) row.findViewById(R.id.iv_send_status);
             holder.clicksHeart = (ImageView) row.findViewById(R.id.iv_clicks_heart);
@@ -82,7 +87,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen> {
 
         if (item.getChatType().equals("1")) {
             if (item.getRecieverQbId().equalsIgnoreCase(authManager.getQBId())) {
-               // Log.e(TAG,""+"RECIVER");//RECIVER
+                // Log.e(TAG,""+"RECIVER");//RECIVER
 
                 RelativeLayout.LayoutParams paramsrr = new RelativeLayout.LayoutParams(
                         RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
@@ -92,7 +97,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen> {
 
                 RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                         RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-                   params.addRule(RelativeLayout.RIGHT_OF, R.id.rl_time_sender);
+                params.addRule(RelativeLayout.RIGHT_OF, R.id.rl_time_sender);
                 holder.rrMainLayout.setLayoutParams(params);
                 holder.chatParentLayout.setGravity(Gravity.RIGHT);
 
@@ -126,7 +131,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen> {
                     holder.timeText.setText(""+getCurrentTime().toUpperCase());
                 }
             }else{
-               // Log.e(TAG,""+"SENDER");//SENDER
+                // Log.e(TAG,""+"SENDER");//SENDER
 
                 RelativeLayout.LayoutParams paramsr = new RelativeLayout.LayoutParams(
                         RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
@@ -192,7 +197,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen> {
                     holder.clicksHeart.setVisibility(View.GONE);
 
                     Picasso.with(context).load(item.getChatImageUrl())
-                           .into(holder.chatImage);
+                            .into(holder.chatImage);
 
                 }if(item.getClicks().equalsIgnoreCase("no") && !Utils.isEmptyString(item.getChatText())) {
                     holder.chatImage.setVisibility(View.VISIBLE);
@@ -225,8 +230,8 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen> {
                         holder.chatText.setText("");
                     }else{
                         try{
-                        holder.chatText.setText(""+Utils.lineBreacker(item.getChatText().substring(8)));
-                    }catch (Exception e){}
+                            holder.chatText.setText(""+Utils.lineBreacker(item.getChatText().substring(8)));
+                        }catch (Exception e){}
 
                     }
                     holder.clicksText.setText(""+item.getClicks());
@@ -302,8 +307,8 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen> {
                         holder.chatText.setText("");
                     }else{
                         try {
-                        holder.chatText.setText(""+Utils.lineBreacker(item.getChatText().substring(8)));
-                    }catch (Exception e){};
+                            holder.chatText.setText(""+Utils.lineBreacker(item.getChatText().substring(8)));
+                        }catch (Exception e){};
                     }
                     holder.clicksText.setText(""+item.getClicks());
                     holder.chatText.setTextColor(context.getResources().getColor(R.color.white));
@@ -315,11 +320,23 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen> {
 
             }
 
+            holder.chatImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View arg0) {
+                    Intent intent = new Intent(context, ImageViewer.class);
+                    intent.putExtra("Url" ,item.getChatImageUrl());
+                    context.startActivity(intent);
+                    ((Activity) context).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+                }
+            });
+
+
 
         }
 
         return row;
     }
+
 
     static class RecordHolder {
 
