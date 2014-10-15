@@ -60,7 +60,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
     private ClickInNotificationManager notificationMngr;
 	private Typeface typefaceBold,typefaceMedium;
 	private View footerView ;
-
+    private Bitmap imageBitmap;
 	
 	/*
 	 * 
@@ -73,6 +73,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.view_userprofile);
+
 		addMenu(true);
 		this.overridePendingTransition(R.anim.slide_in_right ,R.anim.slide_out_right);
 		authManager = ModelManager.getInstance().getAuthorizationManager();
@@ -184,11 +185,14 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
 		String textfollowing = "<font color=#f29691>"+getResources().getString(R.string.txt_following)+"</font> <font color=#cccccc>"+authManager.getFollowing()+"</font>";
 		following.setText(Html.fromHtml(textfollowing));
         try{
-			Picasso.with(UserProfileView.this).load(authManager.getUserPic())
+			Picasso.with(UserProfileView.this)
+            .load(authManager.getUserPic())
             .skipMemoryCache()
 		    .placeholder(R.drawable.female_crt)
 		    .error(R.drawable.female_crt)
 		    .into(userimage);
+//            imageBitmap = Utils.decodeUri(authManager.getUserimageuri(), UserProfileView.this);
+//            userimage.setImageBitmap(imageBitmap);
 		}catch(Exception e){}
 		
 	}
@@ -196,7 +200,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
 
     @Override
     protected void onResume() {
-        Log.e("onResume","onResume UserProfileView");
+        Log.e("onResume","onResume UserProfile");
         super.onResume();
         authManager = ModelManager.getInstance().getAuthorizationManager();
         if(authManager.isEditProfileFlag()) {
