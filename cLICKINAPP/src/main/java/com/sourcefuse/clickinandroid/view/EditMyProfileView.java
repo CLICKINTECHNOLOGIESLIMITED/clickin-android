@@ -118,6 +118,7 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
                                 Log.e(TAG, "btn_click_to_save2");
                                 try {
                                     // imageBitmap = Picasso.with(EditMyProfileView.this).load(authManager.getUserPic()).get();
+                                    //Utils.encodeTobase64(imageBitmap)
                                     profileManager.setProfile(myName.getText().toString(), myLast.getText().toString(), authManager.getPhoneNo(),
                                             authManager.getUsrToken(), "", "", myCity.getText().toString(), myCountry.getText().toString(), myEmail.getText().toString(), "", "");
                                 } catch (Exception e) {
@@ -156,10 +157,10 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
             case Constants.CAMERA_REQUEST:
 
                 try {
-                   // imageBitmap = null;
-                    mImageCaptureUri = null;
-                    mImageCaptureUri = data.getData();
-                    imageBitmap = Utils.decodeUri(mImageCaptureUri, EditMyProfileView.this);
+                   imageBitmap = null;
+                   mImageCaptureUri = null;
+                   mImageCaptureUri = data.getData();
+                   imageBitmap = Utils.decodeUri(mImageCaptureUri, EditMyProfileView.this);
                     mySelfy.setImageBitmap(imageBitmap);
                     authManager.setUserPic(imageBitmap.toString());
                     authManager.setMenuUserInfoFlag(true);
@@ -169,10 +170,11 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+
                 break;
             case Constants.SELECT_PICTURE:
                 try {
-                  //  imageBitmap = null;
+                    imageBitmap = null;
                     mImageCaptureUri = data.getData();
                     imageBitmap = Utils.decodeUri(mImageCaptureUri, EditMyProfileView.this);
                     mySelfy.setImageBitmap(imageBitmap);

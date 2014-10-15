@@ -164,7 +164,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 
 
     public void leftMenuElements() {
-
+        authManager = ModelManager.getInstance().getAuthorizationManager();
         relationManager = ModelManager.getInstance().getRelationManager();
         typeface = Typeface.createFromAsset(ClickInBaseView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
         edt_search = (EditText) slidemenu.findViewById(R.id.edt_search);
@@ -217,6 +217,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
                         partnerId = relationManager.acceptedList.get(position - 2).getPartner_id();
                         myClicks = relationManager.acceptedList.get(position - 2).getClicks();
                         userClicks = relationManager.acceptedList.get(position - 2).getUserClicks();
+                        partnerPh = relationManager.acceptedList.get(position - 2).getPhoneNo();
                         Log.e("", "position--In..> " + rId);
                         switchView(rId);
 
@@ -525,6 +526,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         Log.e("y", "if onOpen");
         authManager = ModelManager.getInstance().getAuthorizationManager();
         if(authManager.isMenuUserInfoFlag()) {
+            Log.e("Inside if" ,"THis time Control is in If <><><><><><><><><");
             userName.setText(authManager.getUserName());
             userPic.setScaleType(ScaleType.FIT_XY);
             Picasso.with(ClickInBaseView.this).load(authManager.getUserPic())
@@ -534,6 +536,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
                     .into(userPic);
             authManager.setMenuUserInfoFlag(false);
         }else{
+            Log.e("Inside Else " ,"THis time control is in Else <><><><><><><><><><>");
             Picasso.with(ClickInBaseView.this).load(authManager.getUserPic())
                     .skipMemoryCache()
                     .placeholder(R.drawable.default_profile)
