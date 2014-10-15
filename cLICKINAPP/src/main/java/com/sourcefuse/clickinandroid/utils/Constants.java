@@ -52,6 +52,6 @@ public class Constants {
 	public static final String TERMS_LINK_URL="https://api.clickinapp.com/pages/term-of-use";
     public static final String APP_LINK_URL="http://www.clickinapp.com/";
 
-	
+	public static boolean comments = false;
 	
 }

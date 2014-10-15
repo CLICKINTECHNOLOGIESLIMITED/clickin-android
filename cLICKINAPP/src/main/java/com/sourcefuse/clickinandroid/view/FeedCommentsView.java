@@ -16,6 +16,7 @@ import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.NewsFeedManager;
 import com.sourcefuse.clickinandroid.model.bean.FeedStarsBean;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
+import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.adapter.FeedsAdapter;
 import com.sourcefuse.clickinandroid.view.adapter.FeedsCommentsAdapter;
@@ -48,6 +49,7 @@ public class FeedCommentsView extends Activity {
     ArrayList<FeedStarsBean> feedList;
     EditText comment;
     InputMethodManager imm;
+    int comment_count;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +60,7 @@ public class FeedCommentsView extends Activity {
         if(bundle!=null)
         {
            news_feedId = bundle.getString("news_feed_id");
+           comment_count = bundle.getInt("comment_count");
         }
         imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
 
@@ -76,8 +79,10 @@ public class FeedCommentsView extends Activity {
             public void onClick(View v) {
                 finish();
                 imm.hideSoftInputFromWindow(comment.getWindowToken(), 0);
-//                if(send)
-//                    newsFeedManager.fetchNewsFeed("",ModelManager.getInstance().getAuthorizationManager().getPhoneNo(), ModelManager.getInstance().getAuthorizationManager().getUsrToken());
+                if(send) {
+                    Constants.comments = true;
+                    newsFeedManager.fetchNewsFeed("", ModelManager.getInstance().getAuthorizationManager().getPhoneNo(), ModelManager.getInstance().getAuthorizationManager().getUsrToken());
+                }
             }
         });
         send_btn.setOnClickListener(new View.OnClickListener() {
@@ -127,6 +132,8 @@ public class FeedCommentsView extends Activity {
 //        android.util.Log.d("Clickin", "onEventMainThread->" + message);
 
         if (message.equalsIgnoreCase("FetchCommentStatus True")) {
+            if(feedList.size()>comment_count)
+                Constants.comments=true;
             adapter = new FeedsCommentsAdapter(this, R.layout.view_feeds_comments_row, feedList);
             list.setAdapter(adapter);
             Utils.dismissBarDialog();

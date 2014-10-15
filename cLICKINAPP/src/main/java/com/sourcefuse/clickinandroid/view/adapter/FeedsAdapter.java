@@ -67,6 +67,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
             holder.clickedIn = (TextView)row.findViewById(R.id.clickedIn);
             holder.layout_clickin = (RelativeLayout)row.findViewById(R.id.layout_clickin);
             holder.feed_audio_button = (Button)row.findViewById(R.id.feed_audio_button);
+            holder.feed_video_button = (Button)row.findViewById(R.id.feed_video_button);
             holder.feed_report_post = (ImageView)row.findViewById(R.id.feed_report_post);
             holder.feed_remove_post = (ImageView)row.findViewById(R.id.feed_remove_post);
             holder.feed_comments_layout1 = (LinearLayout)row.findViewById(R.id.feed_comments_layout1);
@@ -85,6 +86,9 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
             holder.feed_star_user = (TextView)row.findViewById(R.id.feed_star_user);
             holder.clickedInMessage = (TextView)row.findViewById(R.id.clickedInMessage);
             holder.no_comments = (TextView)row.findViewById(R.id.no_comments);
+            holder.audio_layout = (LinearLayout)row.findViewById(R.id.audio_layout);
+            holder.video_layout = (RelativeLayout)row.findViewById(R.id.video_layout);
+            holder.video_thumb = (ImageView)row.findViewById(R.id.video_thumb);
             row.setTag(holder);
         } else {
             holder = (RecordHolder) row.getTag();
@@ -125,9 +129,9 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
         Condition for Audio Type 3
          */
             if (!(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_type().equalsIgnoreCase("3"))) {
-                holder.feed_audio_button.setVisibility(View.GONE);
+                holder.audio_layout.setVisibility(View.GONE);
             } else {
-                holder.feed_audio_button.setVisibility(View.VISIBLE);
+                holder.audio_layout.setVisibility(View.VISIBLE);
             }
              /*
         Condition for Image - Type 2
@@ -140,11 +144,25 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
 //                Log.e("FeedsAdapter++ChatDetailContent", eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content());
                 Picasso.with(context).load(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content()).into(holder.feed_image);
             }
+
+             /*
+        Condition for Audio Type 4
+         */
+                if (!(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_type().equalsIgnoreCase("3"))) {
+                    holder.video_layout.setVisibility(View.GONE);
+                } else {
+                    holder.video_layout.setVisibility(View.VISIBLE);
+                }
         }
         else
         {
             holder.feed_image.setVisibility(View.GONE);
-            holder.feed_audio_button.setVisibility(View.GONE);
+            holder.audio_layout.setVisibility(View.GONE);
+            holder.video_layout.setVisibility(View.GONE);
+        }
+        if(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_video_thumb()!=null)
+        {
+            Picasso.with(context).load(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_video_thumb()).into(holder.video_thumb);
         }
         holder.feed_image.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,7 +184,18 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
 //                Log.e("FeedsAdapter++ChatDetailContent", eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content());
             }
         });
+        holder.feed_video_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //initializeMediaPlayer(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content());
 
+                Uri myUri = Uri.parse(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content());
+                Intent intent = new Intent(android.content.Intent.ACTION_VIEW);
+                intent.setDataAndType(myUri, "video/*");
+                context.startActivity(intent);
+//                Log.e("FeedsAdapter++ChatDetailContent", eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content());
+            }
+        });
         holder.feed_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -210,12 +239,16 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
         holder.feed_remove_post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                rholder.layout.setVisibility(View.GONE);
+                holder.feed_menu.setImageResource(report_icon);
+                ModelManager.getInstance().getNewsFeedManager().newFeedDelete(authMgr.getPhoneNo(),authMgr.getUsrToken(),eachNewsFeed.get(position).getNewsfeedArray_id());
             }
         });
         holder.feed_report_post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                rholder.layout.setVisibility(View.GONE);
+                holder.feed_menu.setImageResource(report_icon);
             ModelManager.getInstance().getNewsFeedManager().reportInAppropriate(authMgr.getPhoneNo(),authMgr.getUsrToken(),eachNewsFeed.get(position).getNewsfeedArray_id());
             }
         });
@@ -325,6 +358,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
             public void onClick(View v) {
                 Intent intent = new Intent(context, FeedCommentsView.class);
                 intent.putExtra("news_feed_id",eachNewsFeed.get(position).getNewsfeedArray_id());
+                intent.putExtra("comment_count",eachNewsFeed.get(position).getNewsfeedArray_comments_count());
                 context.startActivity(intent);
             }
         });
@@ -371,7 +405,10 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
 
                         holder.feed_star_user.setTextColor(context.getResources().getColor(R.color.feed_senderuser));
                         holder.feed_star_user.setClickable(true);
-                    holder.feed_star_user.setText(stars+", "+ModelManager.getInstance().getAuthorizationManager().getUserName());
+                        if(stars.equalsIgnoreCase(""))
+                            holder.feed_star_user.setText(ModelManager.getInstance().getAuthorizationManager().getUserName());
+                        else
+                            holder.feed_star_user.setText(stars+", "+ModelManager.getInstance().getAuthorizationManager().getUserName());
                     ModelManager.getInstance().getNewsFeedManager().saveStarComment(authMgr.getPhoneNo(), authMgr.getUsrToken(),eachNewsFeed.get(position).getNewsfeedArray_id(),"","star");
                 }
             }
@@ -381,6 +418,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
             public void onClick(View v) {
                 Intent intent = new Intent(context, FeedCommentsView.class);
                 intent.putExtra("news_feed_id",eachNewsFeed.get(position).getNewsfeedArray_id());
+                intent.putExtra("comment_count",eachNewsFeed.get(position).getNewsfeedArray_comments_count());
                 context.startActivity(intent);
             }
         });
@@ -448,10 +486,13 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
         ImageView feed_menu;
         RelativeLayout layout,layout_clickin;
         TextView clickedIn,feed_star_user,clickedInMessage;
-        Button feed_audio_button;
+        Button feed_audio_button,feed_video_button;
         LinearLayout feed_comments_layout4,feed_comments_layout1,feed_comments_layout2,feed_comments_layout3,feed_comments_layout;
         TextView name2,comment2, name3, comment3, name4, comment4,no_comments;
         ImageView feed_star_image_button,feed_comment_image_button;
+        LinearLayout audio_layout;
+        RelativeLayout video_layout;
+        ImageView video_thumb;
     }
 
 

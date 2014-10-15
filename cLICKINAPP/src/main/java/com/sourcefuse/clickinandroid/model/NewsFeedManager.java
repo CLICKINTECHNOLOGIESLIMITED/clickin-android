@@ -559,6 +559,7 @@ JSONObject chatObj = newsfeedArray.getJSONObject(i).getJSONObject("chatDetail");
                             }
 
                         } catch (JSONException e) {
+                            EventBus.getDefault().post("NewsFeedDelete False");
                             e.printStackTrace();
                         }
 
@@ -611,6 +612,7 @@ JSONObject chatObj = newsfeedArray.getJSONObject(i).getJSONObject("chatDetail");
                             }
 
                         } catch (JSONException e) {
+                            EventBus.getDefault().post("ReportInAppReporte False");
                             e.printStackTrace();
                         }
 
