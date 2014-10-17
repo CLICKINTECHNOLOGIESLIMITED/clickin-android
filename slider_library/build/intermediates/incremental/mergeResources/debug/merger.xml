@@ -2,12 +2,12 @@
 <merger version="2" >
 
     <dataSet config="20.0.0" >
-        <source path="/home/dell/Github/Clickin/clickin-andoid/slider_library/build/intermediates/exploded-aar/com.android.support/support-v4/20.0.0/res" />
+        <source path="/home/dell/Github/Git_Clickin/clickin-andoid/slider_library/build/intermediates/exploded-aar/com.android.support/support-v4/20.0.0/res" />
     </dataSet>
     <dataSet config="main" >
-        <source path="/home/dell/Github/Clickin/clickin-andoid/slider_library/src/main/res" >
+        <source path="/home/dell/Github/Git_Clickin/clickin-andoid/slider_library/src/main/res" >
             <file
-                path="/home/dell/Github/Clickin/clickin-andoid/slider_library/src/main/res/values/attrs.xml"
+                path="/home/dell/Github/Git_Clickin/clickin-andoid/slider_library/src/main/res/values/attrs.xml"
                 qualifiers="" >
                 <declare-styleable name="SlidingMenu" >
                     <attr name="mode" >
@@ -76,7 +76,7 @@
                 </declare-styleable>
             </file>
             <file
-                path="/home/dell/Github/Clickin/clickin-andoid/slider_library/src/main/res/values/ids.xml"
+                path="/home/dell/Github/Git_Clickin/clickin-andoid/slider_library/src/main/res/values/ids.xml"
                 qualifiers="" >
                 <item
                     name="selected_view"
@@ -84,15 +84,15 @@
             </file>
             <file
                 name="slidingmenumain"
-                path="/home/dell/Github/Clickin/clickin-andoid/slider_library/src/main/res/layout/slidingmenumain.xml"
+                path="/home/dell/Github/Git_Clickin/clickin-andoid/slider_library/src/main/res/layout/slidingmenumain.xml"
                 qualifiers=""
                 type="layout" />
         </source>
-        <source path="/home/dell/Github/Clickin/clickin-andoid/slider_library/build/generated/res/rs/debug" />
-        <source path="/home/dell/Github/Clickin/clickin-andoid/slider_library/build/generated/res/generated/debug" />
+        <source path="/home/dell/Github/Git_Clickin/clickin-andoid/slider_library/build/generated/res/rs/debug" />
+        <source path="/home/dell/Github/Git_Clickin/clickin-andoid/slider_library/build/generated/res/generated/debug" />
     </dataSet>
     <dataSet config="debug" >
-        <source path="/home/dell/Github/Clickin/clickin-andoid/slider_library/src/debug/res" />
+        <source path="/home/dell/Github/Git_Clickin/clickin-andoid/slider_library/src/debug/res" />
     </dataSet>
 
 </merger>

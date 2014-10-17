@@ -37,6 +37,7 @@
     <permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <permission
@@ -126,8 +127,7 @@
         <activity
             android:name="com.sourcefuse.clickinandroid.view.ChatRecordView"
             android:launchMode="standard"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" />
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.sourcefuse.clickinandroid.view.ClickInBaseView"
             android:launchMode="standard"
@@ -144,6 +144,10 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.sourcefuse.clickinandroid.view.MapView"
+            android:launchMode="standard"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.sourcefuse.clickinandroid.view.ImageViewer"
             android:launchMode="standard"
             android:screenOrientation="portrait" />
         <activity
@@ -165,8 +169,7 @@
         <activity
             android:name="com.sourcefuse.clickinandroid.view.ViewTradeCart"
             android:launchMode="standard"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.Transparent" >
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.sourcefuse.clickinandroid.view.adapter.DeactivateAccountView"
@@ -216,6 +219,11 @@
             android:launchMode="standard"
             android:screenOrientation="portrait" >
         </activity>
+
+        <service
+            android:name="com.sourcefuse.clickinandroid.services.QbChatService"
+            android:enabled="true" />
+
         <activity
             android:name="com.sourcefuse.clickinandroid.view.Feed_large_img"
             android:launchMode="standard"

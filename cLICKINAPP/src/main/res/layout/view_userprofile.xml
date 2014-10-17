@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="7dp"
             android:paddingBottom="5dp"
             android:paddingRight="50dp"
             android:paddingTop="5dp"
@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="1dp"
             android:paddingLeft="50dp"
             android:src="@drawable/owner_profile_hedder_icon" />
     </RelativeLayout>

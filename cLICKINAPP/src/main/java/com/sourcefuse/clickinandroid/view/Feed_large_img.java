@@ -24,7 +24,7 @@ public class Feed_large_img extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         setContentView(R.layout.feeds_image);
-
+        this.overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_right);
         Bundle bundle = getIntent().getExtras();
         if(bundle!=null)
         {

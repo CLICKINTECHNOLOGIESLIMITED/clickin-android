@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="12dp"
             android:background="@drawable/owner_profile_top_icon" />
 
         <TextView
@@ -30,14 +30,27 @@
             android:textSize="20sp"
             android:textStyle="bold" />
 
-        <ImageView
+        <RelativeLayout
             android:id="@+id/right_notification"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/owner_profile_hedder_icon" />
+            android:layout_marginTop="1dp"
+            android:background="@drawable/owner_profile_hedder_icon">
+        <TextView
+            android:id="@+id/notification_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+           android:layout_centerInParent="true"
+
+            android:text="0"
+            android:textColor="@color/signup_contry_code"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            />
+        </RelativeLayout>
+
     </RelativeLayout>
 
     <RelativeLayout
@@ -74,4 +87,4 @@
         android:cacheColorHint="@color/transparent"/>
 
 
-</RelativeLayout><!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/src/main/res/layout/view_feedview_list.xml -->
+</RelativeLayout><!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/layout/view_feedview_list.xml -->

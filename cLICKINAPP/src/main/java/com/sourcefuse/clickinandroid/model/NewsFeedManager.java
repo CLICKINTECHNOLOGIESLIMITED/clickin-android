@@ -252,11 +252,13 @@ JSONObject chatObj = newsfeedArray.getJSONObject(i).getJSONObject("chatDetail");
                                     allNewsFeed.setNewsFeedArray_receiverDetail_id(newsfeedArray.getJSONObject(i).getJSONObject("receiverDetail").getString("_id"));
                                     allNewsFeed.setNewsFeedArray_receiverDetail_name(newsfeedArray.getJSONObject(i).getJSONObject("receiverDetail").getString("name"));
                                     allNewsFeed.setNewsFeedArray_receiverDetail_user_pic(newsfeedArray.getJSONObject(i).getJSONObject("receiverDetail").getString("user_pic"));
+                                    allNewsFeed.setNewsFeedArray_receiverDetail_phno(newsfeedArray.getJSONObject(i).getJSONObject("receiverDetail").getString("phone_no"));
                                 }
                                 else
                                 {
                                     allNewsFeed.setNewsFeedArray_receiverDetail_id("");
                                     allNewsFeed.setNewsFeedArray_receiverDetail_name("");
+                                    allNewsFeed.setNewsFeedArray_receiverDetail_phno("");
                                 }
                                  /*
                                 Sender Details
@@ -265,12 +267,14 @@ JSONObject chatObj = newsfeedArray.getJSONObject(i).getJSONObject("chatDetail");
                                     allNewsFeed.setNewsFeedArray_senderDetail_id(newsfeedArray.getJSONObject(i).getJSONObject("senderDetail").getString("_id"));
                                     allNewsFeed.setNewsFeedArray_senderDetail_name(newsfeedArray.getJSONObject(i).getJSONObject("senderDetail").getString("name"));
                                     allNewsFeed.setNewsFeedArray_senderDetail_user_pic(newsfeedArray.getJSONObject(i).getJSONObject("senderDetail").getString("user_pic"));
+                                    allNewsFeed.setNewsFeedArray_senderDetail_phno(newsfeedArray.getJSONObject(i).getJSONObject("senderDetail").getString("phone_no"));
 
                                 }
                                 else
                                 {
                                     allNewsFeed.setNewsFeedArray_senderDetail_id("");
                                     allNewsFeed.setNewsFeedArray_senderDetail_name("");
+                                    allNewsFeed.setNewsFeedArray_senderDetail_phno("");
                                 }
                                 userFeed.add(allNewsFeed);
 

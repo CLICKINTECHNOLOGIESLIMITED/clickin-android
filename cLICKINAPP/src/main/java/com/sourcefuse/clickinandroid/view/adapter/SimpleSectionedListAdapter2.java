@@ -1,6 +1,8 @@
 package com.sourcefuse.clickinandroid.view.adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.database.DataSetObserver;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -16,6 +18,8 @@ import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.ProfileManager;
 import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinandroid.utils.Utils;
+import com.sourcefuse.clickinandroid.view.JumpOtherProfileView;
+import com.sourcefuse.clickinandroid.view.UserProfileView;
 import com.sourcefuse.clickinapp.R;
 import com.squareup.picasso.Picasso;
 
@@ -36,6 +40,7 @@ public class SimpleSectionedListAdapter2 extends BaseAdapter implements PinnedSe
     private int mHeaderImageViewResId;
     private int feedTimeResId;
     Context mContext;
+    Activity activity;
 
     public static class Section {
         int firstPosition;
@@ -46,9 +51,10 @@ public class SimpleSectionedListAdapter2 extends BaseAdapter implements PinnedSe
         String recieverImages;
         CharSequence senderId;
         CharSequence receiverId;
+        String senderPhNo,rcvrPhNo;
 
         String timeOfFeed;
-        public Section(int firstPosition, CharSequence title,CharSequence title2,String urlOfImage,String recieverImages,String timeOfFeed,String senderId, String receiverId) {
+        public Section(int firstPosition, CharSequence title,CharSequence title2,String urlOfImage,String recieverImages,String timeOfFeed,String senderId, String receiverId,String senderPhNo,String rcvrPhNo) {
             this.firstPosition = firstPosition;
             this.senderName = title;
             this.recieverName =title2;
@@ -57,12 +63,14 @@ public class SimpleSectionedListAdapter2 extends BaseAdapter implements PinnedSe
             this.recieverImages = recieverImages;
             this.senderId = senderId;
             this.receiverId=receiverId;
+            this.senderPhNo=senderPhNo;
+            this.rcvrPhNo=rcvrPhNo;
         }
 
 
     }
 
-    public SimpleSectionedListAdapter2(Context context, BaseAdapter baseAdapter, int sectionResourceId, int headerTextViewResId, int headerImageViewResId, int header1,int feedId) {
+    public SimpleSectionedListAdapter2(Activity context, BaseAdapter baseAdapter, int sectionResourceId, int headerTextViewResId, int headerImageViewResId, int header1,int feedId) {
         mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mContext =context;
         mSectionResourceId = sectionResourceId;
@@ -71,6 +79,8 @@ public class SimpleSectionedListAdapter2 extends BaseAdapter implements PinnedSe
         mHeaderTextViewResId1 = header1;
         mBaseAdapter = baseAdapter;
         feedTimeResId=feedId;
+
+
         mBaseAdapter.registerDataSetObserver(new DataSetObserver() {
             @Override
             public void onChanged() {
@@ -195,9 +205,9 @@ public class SimpleSectionedListAdapter2 extends BaseAdapter implements PinnedSe
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         if (isSectionHeaderPosition(position)) {
-            TextView view,view1;
+            final TextView view,view1;
             TextView feed_time;
             ImageView doubleArrow;
             ImageView imageview;
@@ -228,7 +238,7 @@ public class SimpleSectionedListAdapter2 extends BaseAdapter implements PinnedSe
                             if (mSections.get(position).recieverName.toString().equalsIgnoreCase("null"))
                                 mSections.get(position).recieverName = "";
                         }
-                        if (prMgr.following != null)
+                        if (prMgr.following != null) {
                             for (int i = 0; i < prMgr.following.size(); i++) {
                                 if ((mSections.get(position).senderId).toString().equalsIgnoreCase(prMgr.following.get(i).getFolloweeId())) {
                                     view.setText(mSections.get(position).senderName);
@@ -236,17 +246,25 @@ public class SimpleSectionedListAdapter2 extends BaseAdapter implements PinnedSe
                                     Picasso.with(mContext).load(mSections.get(position).senderImages).placeholder(R.drawable.dcontact).into(imageview);
                                     doubleArrow.setImageResource(R.drawable.arrow);
                                     break;
-                                } else{
+                                } else {
 //                                if((mSections.get(position).receiverId)!=null) {
 //                                    if ((mSections.get(position).receiverId).toString().equalsIgnoreCase(prMgr.following.get(i).getFolloweeId())) {
-                                        doubleArrow.setImageResource(R.drawable.flip_arow);
-                                        view.setText(mSections.get(position).recieverName);
-                                        view1.setText(mSections.get(position).senderName);
-                                        Picasso.with(mContext).load(mSections.get(position).recieverImages).placeholder(R.drawable.dcontact).into(imageview);
+                                    doubleArrow.setImageResource(R.drawable.flip_arow);
+                                    view.setText(mSections.get(position).recieverName);
+                                    view1.setText(mSections.get(position).senderName);
+                                    Picasso.with(mContext).load(mSections.get(position).recieverImages).placeholder(R.drawable.dcontact).into(imageview);
 //                                        break;
 //                                    }
                                 }
                             }
+                        }
+                    else
+                        {
+                            view.setText(mSections.get(position).senderName);
+                            view1.setText(mSections.get(position).recieverName);
+                            Picasso.with(mContext).load(mSections.get(position).senderImages).placeholder(R.drawable.dcontact).into(imageview);
+                            doubleArrow.setImageResource(R.drawable.arrow);
+                        }
 //                    if ((mSections.get(position).senderId).toString().equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getUserId())) {
 //
 //                        view.setText(mSections.get(position).senderName);
@@ -261,8 +279,46 @@ public class SimpleSectionedListAdapter2 extends BaseAdapter implements PinnedSe
 //                    }
 //                    }
                 }
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String phNo;
+                    if(view.getText().toString().trim().equalsIgnoreCase(mSections.get(position).senderName.toString()))
+                    {
+                        phNo = mSections.get(position).senderPhNo;
+                    }
+                    else
+                    {
+                        phNo = mSections.get(position).rcvrPhNo;
+                    }
+                    Intent viewProfile = new Intent(mContext, JumpOtherProfileView.class);
+                    viewProfile.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    viewProfile.putExtra("FromOwnProfile", true);
+                    viewProfile.putExtra("phNumber",phNo);
+
+                    mContext.startActivity(viewProfile);
+                }
+            });
+            view1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String phNo;
+                    if(view.getText().toString().trim().equalsIgnoreCase(mSections.get(position).senderName.toString()))
+                    {
+                        phNo = mSections.get(position).senderPhNo;
+                    }
+                    else
+                    {
+                        phNo = mSections.get(position).rcvrPhNo;
+                    }
+                    Intent viewProfile = new Intent(mContext, JumpOtherProfileView.class);
+                    viewProfile.putExtra("FromOwnProfile", true);
+                    viewProfile.putExtra("phNumber",phNo);
+                    mContext.startActivity(viewProfile);
+                }
+            });
             if(mSections.get(position).timeOfFeed!=null) {
-                Log.e("timeOfFeed=",mSections.get(position).timeOfFeed);
+                Log.e("timeOfFeed=", mSections.get(position).timeOfFeed);
                 feed_time.setText(Utils.getLocalDate(mSections.get(position).timeOfFeed));
             }
             return convertView;

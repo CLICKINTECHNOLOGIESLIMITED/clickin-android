@@ -2,9 +2,9 @@
 <merger version="2" >
 
     <dataSet config="0.4.0" >
-        <source path="/home/dell/Github/Clickin/clickin-andoid/library_pull/build/intermediates/exploded-aar/com.github.castorflex.smoothprogressbar/library/0.4.0/res" >
+        <source path="/home/dell/Github/Git_Clickin/clickin-andoid/library_pull/build/intermediates/exploded-aar/com.github.castorflex.smoothprogressbar/library/0.4.0/res" >
             <file
-                path="/home/dell/Github/Clickin/clickin-andoid/library_pull/build/intermediates/exploded-aar/com.github.castorflex.smoothprogressbar/library/0.4.0/res/values/values.xml"
+                path="/home/dell/Github/Git_Clickin/clickin-andoid/library_pull/build/intermediates/exploded-aar/com.github.castorflex.smoothprogressbar/library/0.4.0/res/values/values.xml"
                 qualifiers="" >
                 <integer name="spb_default_interpolator" >
 0
@@ -147,7 +147,7 @@ false
                 </declare-styleable>
             </file>
             <file
-                path="/home/dell/Github/Clickin/clickin-andoid/library_pull/build/intermediates/exploded-aar/com.github.castorflex.smoothprogressbar/library/0.4.0/res/values-v14/values.xml"
+                path="/home/dell/Github/Git_Clickin/clickin-andoid/library_pull/build/intermediates/exploded-aar/com.github.castorflex.smoothprogressbar/library/0.4.0/res/values-v14/values.xml"
                 qualifiers="v14" >
 
                 <style
@@ -179,9 +179,9 @@ false
         </source>
     </dataSet>
     <dataSet config="main" >
-        <source path="/home/dell/Github/Clickin/clickin-andoid/library_pull/src/main/res" >
+        <source path="/home/dell/Github/Git_Clickin/clickin-andoid/library_pull/src/main/res" >
             <file
-                path="/home/dell/Github/Clickin/clickin-andoid/library_pull/src/main/res/values-el/pull_refresh_strings.xml"
+                path="/home/dell/Github/Git_Clickin/clickin-andoid/library_pull/src/main/res/values-el/pull_refresh_strings.xml"
                 qualifiers="el" >
                 <string name="pull_to_refresh_release_label" >Αφήστε για ανανέωση…
                 </string>
@@ -191,7 +191,7 @@ false
                 </string>
             </file>
             <file
-                path="/home/dell/Github/Clickin/clickin-andoid/library_pull/src/main/res/values-ru/pull_refresh_strings.xml"
+                path="/home/dell/Github/Git_Clickin/clickin-andoid/library_pull/src/main/res/values-ru/pull_refresh_strings.xml"
                 qualifiers="ru" >
                 <string name="pull_to_refresh_release_label" >отпустите
                 </string>
@@ -201,7 +201,7 @@ false
                 </string>
             </file>
             <file
-                path="/home/dell/Github/Clickin/clickin-andoid/library_pull/src/main/res/values-pt-rBR/pull_refresh_strings.xml"
+                path="/home/dell/Github/Git_Clickin/clickin-andoid/library_pull/src/main/res/values-pt-rBR/pull_refresh_strings.xml"
                 qualifiers="pt-rBR" >
                 <string name="pull_to_refresh_release_label" >Libere para atualizar…
                 </string>
@@ -211,7 +211,7 @@ false
                 </string>
             </file>
             <file
-                path="/home/dell/Github/Clickin/clickin-andoid/library_pull/src/main/res/values-lt/pull_refresh_strings.xml"
+                path="/home/dell/Github/Git_Clickin/clickin-andoid/library_pull/src/main/res/values-lt/pull_refresh_strings.xml"
                 qualifiers="lt" >
                 <string name="pull_to_refresh_refreshing_label" >Kraunama…
                 </string>
@@ -221,7 +221,7 @@ false
                 </string>
             </file>
             <file
-                path="/home/dell/Github/Clickin/clickin-andoid/library_pull/src/main/res/values-ro/pull_refresh_strings.xml"
+                path="/home/dell/Github/Git_Clickin/clickin-andoid/library_pull/src/main/res/values-ro/pull_refresh_strings.xml"
                 qualifiers="ro" >
                 <string name="pull_to_refresh_refreshing_label" >Încărcare…
                 </string>
@@ -231,7 +231,7 @@ false
                 </string>
             </file>
             <file
-                path="/home/dell/Github/Clickin/clickin-andoid/library_pull/src/main/res/values-it/pull_refresh_strings.xml"
+                path="/home/dell/Github/Git_Clickin/clickin-andoid/library_pull/src/main/res/values-it/pull_refresh_strings.xml"
                 qualifiers="it" >
                 <string name="pull_to_refresh_refreshing_label" >Caricamento…
                 </string>
@@ -241,7 +241,7 @@ false
                 </string>
             </file>
             <file
-                path="/home/dell/Github/Clickin/clickin-andoid/library_pull/src/main/res/values/pull_refresh_strings.xml"
+                path="/home/dell/Github/Git_Clickin/clickin-andoid/library_pull/src/main/res/values/pull_refresh_strings.xml"
                 qualifiers="" >
                 <string name="pull_to_refresh_pull_label" >Pull to refresh…
                 </string>
@@ -251,19 +251,19 @@ false
                 </string>
             </file>
             <file
-                path="/home/dell/Github/Clickin/clickin-andoid/library_pull/src/main/res/values/dimens.xml"
+                path="/home/dell/Github/Git_Clickin/clickin-andoid/library_pull/src/main/res/values/dimens.xml"
                 qualifiers="" >
                 <dimen name="ptr_progress_bar_stroke_width" >4dp
                 </dimen>
             </file>
             <file
-                path="/home/dell/Github/Clickin/clickin-andoid/library_pull/src/main/res/values/colors.xml"
+                path="/home/dell/Github/Git_Clickin/clickin-andoid/library_pull/src/main/res/values/colors.xml"
                 qualifiers="" >
                 <color name="default_progress_bar_color" >#FF33B5E5
                 </color>
             </file>
             <file
-                path="/home/dell/Github/Clickin/clickin-andoid/library_pull/src/main/res/values/attrs.xml"
+                path="/home/dell/Github/Git_Clickin/clickin-andoid/library_pull/src/main/res/values/attrs.xml"
                 qualifiers="" >
                 <declare-styleable name="PullToRefreshHeader" >
 
@@ -335,7 +335,7 @@ false
                     format="reference" />
             </file>
             <file
-                path="/home/dell/Github/Clickin/clickin-andoid/library_pull/src/main/res/values/ids.xml"
+                path="/home/dell/Github/Git_Clickin/clickin-andoid/library_pull/src/main/res/values/ids.xml"
                 qualifiers="" >
                 <item
                     name="ptr_text"
@@ -348,7 +348,7 @@ false
                     type="id"/>
             </file>
             <file
-                path="/home/dell/Github/Clickin/clickin-andoid/library_pull/src/main/res/values-zh/pull_refresh_strings.xml"
+                path="/home/dell/Github/Git_Clickin/clickin-andoid/library_pull/src/main/res/values-zh/pull_refresh_strings.xml"
                 qualifiers="zh" >
                 <string name="pull_to_refresh_release_label" >放开以刷新…
                 </string>
@@ -358,7 +358,7 @@ false
                 </string>
             </file>
             <file
-                path="/home/dell/Github/Clickin/clickin-andoid/library_pull/src/main/res/values-ja/pull_refresh_strings.xml"
+                path="/home/dell/Github/Git_Clickin/clickin-andoid/library_pull/src/main/res/values-ja/pull_refresh_strings.xml"
                 qualifiers="ja" >
                 <string name="pull_to_refresh_pull_label" >画面を引っ張って…
                 </string>
@@ -368,7 +368,7 @@ false
                 </string>
             </file>
             <file
-                path="/home/dell/Github/Clickin/clickin-andoid/library_pull/src/main/res/values-fi/pull_refresh_strings.xml"
+                path="/home/dell/Github/Git_Clickin/clickin-andoid/library_pull/src/main/res/values-fi/pull_refresh_strings.xml"
                 qualifiers="fi" >
                 <string name="pull_to_refresh_refreshing_label" >Päivitetään…
                 </string>
@@ -378,7 +378,7 @@ false
                 </string>
             </file>
             <file
-                path="/home/dell/Github/Clickin/clickin-andoid/library_pull/src/main/res/values-de/pull_refresh_strings.xml"
+                path="/home/dell/Github/Git_Clickin/clickin-andoid/library_pull/src/main/res/values-de/pull_refresh_strings.xml"
                 qualifiers="de" >
                 <string name="pull_to_refresh_pull_label" >Ziehen zum Aktualisieren…
                 </string>
@@ -388,7 +388,7 @@ false
                 </string>
             </file>
             <file
-                path="/home/dell/Github/Clickin/clickin-andoid/library_pull/src/main/res/values-he/pull_refresh_strings.xml"
+                path="/home/dell/Github/Git_Clickin/clickin-andoid/library_pull/src/main/res/values-he/pull_refresh_strings.xml"
                 qualifiers="he" >
                 <string name="pull_to_refresh_release_label" >שחרר לרענון…
                 </string>
@@ -398,7 +398,7 @@ false
                 </string>
             </file>
             <file
-                path="/home/dell/Github/Clickin/clickin-andoid/library_pull/src/main/res/values-nl/pull_refresh_strings.xml"
+                path="/home/dell/Github/Git_Clickin/clickin-andoid/library_pull/src/main/res/values-nl/pull_refresh_strings.xml"
                 qualifiers="nl" >
                 <string name="pull_to_refresh_release_label" >Loslaten om te vernieuwen…
                 </string>
@@ -408,7 +408,7 @@ false
                 </string>
             </file>
             <file
-                path="/home/dell/Github/Clickin/clickin-andoid/library_pull/src/main/res/values-cs/pull_refresh_strings.xml"
+                path="/home/dell/Github/Git_Clickin/clickin-andoid/library_pull/src/main/res/values-cs/pull_refresh_strings.xml"
                 qualifiers="cs" >
                 <string name="pull_to_refresh_refreshing_label" >Načítání…
                 </string>
@@ -418,7 +418,7 @@ false
                 </string>
             </file>
             <file
-                path="/home/dell/Github/Clickin/clickin-andoid/library_pull/src/main/res/values-ar/pull_refresh_strings.xml"
+                path="/home/dell/Github/Git_Clickin/clickin-andoid/library_pull/src/main/res/values-ar/pull_refresh_strings.xml"
                 qualifiers="ar" >
                 <string name="pull_to_refresh_release_label" >اترك للتحديث…
                 </string>
@@ -428,7 +428,7 @@ false
                 </string>
             </file>
             <file
-                path="/home/dell/Github/Clickin/clickin-andoid/library_pull/src/main/res/values-iw/pull_refresh_strings.xml"
+                path="/home/dell/Github/Git_Clickin/clickin-andoid/library_pull/src/main/res/values-iw/pull_refresh_strings.xml"
                 qualifiers="iw" >
                 <string name="pull_to_refresh_pull_label" >משוך לרענון…
                 </string>
@@ -439,11 +439,11 @@ false
             </file>
             <file
                 name="default_header"
-                path="/home/dell/Github/Clickin/clickin-andoid/library_pull/src/main/res/layout/default_header.xml"
+                path="/home/dell/Github/Git_Clickin/clickin-andoid/library_pull/src/main/res/layout/default_header.xml"
                 qualifiers=""
                 type="layout" />
             <file
-                path="/home/dell/Github/Clickin/clickin-andoid/library_pull/src/main/res/values-es/pull_refresh_strings.xml"
+                path="/home/dell/Github/Git_Clickin/clickin-andoid/library_pull/src/main/res/values-es/pull_refresh_strings.xml"
                 qualifiers="es" >
                 <string name="pull_to_refresh_pull_label" >Desliza el dedo hacia abajo para actualizar.
                 </string>
@@ -453,7 +453,7 @@ false
                 </string>
             </file>
             <file
-                path="/home/dell/Github/Clickin/clickin-andoid/library_pull/src/main/res/values-pl/pull_refresh_strings.xml"
+                path="/home/dell/Github/Git_Clickin/clickin-andoid/library_pull/src/main/res/values-pl/pull_refresh_strings.xml"
                 qualifiers="pl" >
                 <string name="pull_to_refresh_refreshing_label" >Wczytywanie…
                 </string>
@@ -463,7 +463,7 @@ false
                 </string>
             </file>
             <file
-                path="/home/dell/Github/Clickin/clickin-andoid/library_pull/src/main/res/values-pt/pull_refresh_strings.xml"
+                path="/home/dell/Github/Git_Clickin/clickin-andoid/library_pull/src/main/res/values-pt/pull_refresh_strings.xml"
                 qualifiers="pt" >
                 <string name="pull_to_refresh_refreshing_label" >A carregar…
                 </string>
@@ -473,7 +473,7 @@ false
                 </string>
             </file>
             <file
-                path="/home/dell/Github/Clickin/clickin-andoid/library_pull/src/main/res/values-ko/pull_refresh_strings.xml"
+                path="/home/dell/Github/Git_Clickin/clickin-andoid/library_pull/src/main/res/values-ko/pull_refresh_strings.xml"
                 qualifiers="ko" >
                 <string name="pull_to_refresh_refreshing_label" >로드 중…
                 </string>
@@ -483,7 +483,7 @@ false
                 </string>
             </file>
             <file
-                path="/home/dell/Github/Clickin/clickin-andoid/library_pull/src/main/res/values-sk/pull_refresh_strings.xml"
+                path="/home/dell/Github/Git_Clickin/clickin-andoid/library_pull/src/main/res/values-sk/pull_refresh_strings.xml"
                 qualifiers="sk" >
                 <string name="pull_to_refresh_refreshing_label" >Načítavanie...
                 </string>
@@ -493,7 +493,7 @@ false
                 </string>
             </file>
             <file
-                path="/home/dell/Github/Clickin/clickin-andoid/library_pull/src/main/res/values-sv/pull_refresh_strings.xml"
+                path="/home/dell/Github/Git_Clickin/clickin-andoid/library_pull/src/main/res/values-sv/pull_refresh_strings.xml"
                 qualifiers="sv" >
                 <string name="pull_to_refresh_release_label" >Släpp om du vill uppdatera
                 </string>
@@ -503,7 +503,7 @@ false
                 </string>
             </file>
             <file
-                path="/home/dell/Github/Clickin/clickin-andoid/library_pull/src/main/res/values-tr/pull_refresh_strings.xml"
+                path="/home/dell/Github/Git_Clickin/clickin-andoid/library_pull/src/main/res/values-tr/pull_refresh_strings.xml"
                 qualifiers="tr" >
                 <string name="pull_to_refresh_release_label" >Yenilemek için bırakın…
                 </string>
@@ -513,7 +513,7 @@ false
                 </string>
             </file>
             <file
-                path="/home/dell/Github/Clickin/clickin-andoid/library_pull/src/main/res/values-fr/pull_refresh_strings.xml"
+                path="/home/dell/Github/Git_Clickin/clickin-andoid/library_pull/src/main/res/values-fr/pull_refresh_strings.xml"
                 qualifiers="fr" >
                 <string name="pull_to_refresh_pull_label" >Tirez pour rafraîchir…
                 </string>
@@ -523,11 +523,11 @@ false
                 </string>
             </file>
         </source>
-        <source path="/home/dell/Github/Clickin/clickin-andoid/library_pull/build/generated/res/rs/debug" />
-        <source path="/home/dell/Github/Clickin/clickin-andoid/library_pull/build/generated/res/generated/debug" />
+        <source path="/home/dell/Github/Git_Clickin/clickin-andoid/library_pull/build/generated/res/rs/debug" />
+        <source path="/home/dell/Github/Git_Clickin/clickin-andoid/library_pull/build/generated/res/generated/debug" />
     </dataSet>
     <dataSet config="debug" >
-        <source path="/home/dell/Github/Clickin/clickin-andoid/library_pull/src/debug/res" />
+        <source path="/home/dell/Github/Git_Clickin/clickin-andoid/library_pull/src/debug/res" />
     </dataSet>
 
 </merger>

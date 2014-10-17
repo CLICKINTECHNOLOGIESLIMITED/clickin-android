@@ -2,9 +2,9 @@
 <merger version="2" >
 
     <dataSet config="main" >
-        <source path="/home/dell/Github/Clickin/clickin-andoid/cropper/src/main/res" >
+        <source path="/home/dell/Github/Git_Clickin/clickin-andoid/cropper/src/main/res" >
             <file
-                path="/home/dell/Github/Clickin/clickin-andoid/cropper/src/main/res/values-v11/styles.xml"
+                path="/home/dell/Github/Git_Clickin/clickin-andoid/cropper/src/main/res/values-v11/styles.xml"
                 qualifiers="v11" >
 
                 <style
@@ -15,13 +15,13 @@
                 </style>
             </file>
             <file
-                path="/home/dell/Github/Clickin/clickin-andoid/cropper/src/main/res/values/colors.xml"
+                path="/home/dell/Github/Git_Clickin/clickin-andoid/cropper/src/main/res/values/colors.xml"
                 qualifiers="" >
                 <color name="black_translucent" >#50000000
                 </color>
             </file>
             <file
-                path="/home/dell/Github/Clickin/clickin-andoid/cropper/src/main/res/values/styles.xml"
+                path="/home/dell/Github/Git_Clickin/clickin-andoid/cropper/src/main/res/values/styles.xml"
                 qualifiers="" >
 
                 <style
@@ -43,7 +43,7 @@
                 </style>
             </file>
             <file
-                path="/home/dell/Github/Clickin/clickin-andoid/cropper/src/main/res/values/attrs.xml"
+                path="/home/dell/Github/Git_Clickin/clickin-andoid/cropper/src/main/res/values/attrs.xml"
                 qualifiers="" >
                 <declare-styleable name="CropImageView" >
                     <attr name="guidelines" >
@@ -72,13 +72,13 @@
                 </declare-styleable>
             </file>
             <file
-                path="/home/dell/Github/Clickin/clickin-andoid/cropper/src/main/res/values/strings.xml"
+                path="/home/dell/Github/Git_Clickin/clickin-andoid/cropper/src/main/res/values/strings.xml"
                 qualifiers="" >
                 <string name="app_name" >Cropper
                 </string>
             </file>
             <file
-                path="/home/dell/Github/Clickin/clickin-andoid/cropper/src/main/res/values-v14/styles.xml"
+                path="/home/dell/Github/Git_Clickin/clickin-andoid/cropper/src/main/res/values-v14/styles.xml"
                 qualifiers="v14" >
 
                 <style
@@ -90,15 +90,15 @@
             </file>
             <file
                 name="crop_image_view"
-                path="/home/dell/Github/Clickin/clickin-andoid/cropper/src/main/res/layout/crop_image_view.xml"
+                path="/home/dell/Github/Git_Clickin/clickin-andoid/cropper/src/main/res/layout/crop_image_view.xml"
                 qualifiers=""
                 type="layout" />
         </source>
-        <source path="/home/dell/Github/Clickin/clickin-andoid/cropper/build/generated/res/rs/release" />
-        <source path="/home/dell/Github/Clickin/clickin-andoid/cropper/build/generated/res/generated/release" />
+        <source path="/home/dell/Github/Git_Clickin/clickin-andoid/cropper/build/generated/res/rs/release" />
+        <source path="/home/dell/Github/Git_Clickin/clickin-andoid/cropper/build/generated/res/generated/release" />
     </dataSet>
     <dataSet config="release" >
-        <source path="/home/dell/Github/Clickin/clickin-andoid/cropper/src/release/res" />
+        <source path="/home/dell/Github/Git_Clickin/clickin-andoid/cropper/src/release/res" />
     </dataSet>
 
 </merger>

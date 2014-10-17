@@ -56,6 +56,7 @@ public class FeedCommentsView extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         setContentView(R.layout.view_feeds_comments);
+        this.overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_right);
         Bundle bundle = getIntent().getExtras();
         if(bundle!=null)
         {
@@ -97,7 +98,13 @@ public class FeedCommentsView extends Activity {
                 feedStarsBean.setUserPic(authMgr.getUserPic());
                 feedStarsBean.setComment(comment.getText().toString());
                 feedList.add(feedStarsBean);
-                adapter.notifyDataSetChanged();
+                if(adapter==null)
+                {
+                    adapter = new FeedsCommentsAdapter(FeedCommentsView.this, R.layout.view_feeds_comments_row, feedList);
+                    list.setAdapter(adapter);
+                }
+                else
+                    adapter.notifyDataSetChanged();
 
                 imm.hideSoftInputFromWindow(comment.getWindowToken(), 0);
 

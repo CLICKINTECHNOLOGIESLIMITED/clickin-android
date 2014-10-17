@@ -494,16 +494,36 @@ public class NewsFeedBean {
     private String newsFeedArray_senderDetail_id;
     private String newsFeedArray_senderDetail_name;
     private String newsFeedArray_senderDetail_user_pic;
+    private String newsFeedArray_senderDetail_phno;
     private String newsFeedArray_receiverDetail_id;
     private String newsFeedArray_receiverDetail_name;
     private String newsFeedArray_receiverDetail_user_pic;
+    private String newsFeedArray_receiverDetail_phno;
     private String newsFeedArray_commentArray_id;
     private String newsFeedArray_commentArray_chat_id;
     private String newsFeedArray_commentArray_newsfeed_id;
+
+    public String getNewsFeedArray_senderDetail_phno() {
+        return newsFeedArray_senderDetail_phno;
+    }
+
+    public void setNewsFeedArray_senderDetail_phno(String newsFeedArray_senderDetail_phno) {
+        this.newsFeedArray_senderDetail_phno = newsFeedArray_senderDetail_phno;
+    }
+    public String getNewsFeedArray_receiverDetail_phno() {
+        return newsFeedArray_receiverDetail_phno;
+    }
+
+    public void setNewsFeedArray_receiverDetail_phno(String newsFeedArray_receiverDetail_phno) {
+        this.newsFeedArray_receiverDetail_phno = newsFeedArray_receiverDetail_phno;
+    }
+
     private String newsFeedArray_commentArray_type;
     private String newsFeedArray_commentArray_comment;
     private String newsFeedArray_commentArray_user_id;
     private String newsFeedArray_commentArray_user_name;
+
+
     private String newsFeedArray_commentArray_user_pic;
     private String newsFeedArray_commentArray_modified_sec;
     private String newsFeedArray_commentArray_modified_usec;

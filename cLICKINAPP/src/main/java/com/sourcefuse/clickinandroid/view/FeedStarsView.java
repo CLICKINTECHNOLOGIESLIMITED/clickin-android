@@ -51,6 +51,7 @@ public class FeedStarsView extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         setContentView(R.layout.view_feeds_stars);
+        this.overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_right);
         Bundle bundle = getIntent().getExtras();
         if(bundle!=null)
         {

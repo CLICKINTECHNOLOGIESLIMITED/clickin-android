@@ -82,14 +82,14 @@
                 android:id="@+id/feed_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingRight="5dp"
+                android:paddingRight="2dp"
                 android:paddingTop="5dp"
                 android:singleLine="true"
                 android:text="3m"
                 android:textAllCaps="true"
                 android:textColor="@android:color/darker_gray"
                 android:textIsSelectable="false"
-                android:textSize="@dimen/feed_time__font_size"
+                android:textSize="9sp"
                 android:textStyle="normal" />
         </LinearLayout>
     </RelativeLayout>

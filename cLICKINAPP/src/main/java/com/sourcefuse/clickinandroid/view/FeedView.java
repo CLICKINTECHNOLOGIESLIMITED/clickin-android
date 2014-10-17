@@ -50,10 +50,13 @@ public class FeedView extends ClickInBaseView implements View.OnClickListener{
     ArrayList<Integer> mHeaderPositions = new ArrayList<Integer>();
     ArrayList<String> recieverImages = new ArrayList<String>();
     ArrayList<String> senderImages = new ArrayList<String>();
+    ArrayList<String> senderPhNo = new ArrayList<String>();
+    ArrayList<String> recieverPhNo = new ArrayList<String>();
     ArrayList<String> timeOfFeed = new ArrayList<String>();
     int headerPosition=0;
 
-    ImageView menu,notificationIcon;
+    ImageView menu;
+    RelativeLayout notificationIcon;
     RelativeLayout no_feed_image;
     SimpleSectionedListAdapter2 simpleSectionedGridAdapter2;
 
@@ -67,7 +70,7 @@ public class FeedView extends ClickInBaseView implements View.OnClickListener{
         addMenu(true);
 
         menu = (ImageView) findViewById(R.id.left_menu);
-        notificationIcon = (ImageView) findViewById(R.id.right_notification);
+        notificationIcon = (RelativeLayout) findViewById(R.id.right_notification);
 
         newsFeedManager = ModelManager.getInstance().getNewsFeedManager();
         authManager = ModelManager.getInstance().getAuthorizationManager();
@@ -105,6 +108,8 @@ public class FeedView extends ClickInBaseView implements View.OnClickListener{
         recieverImages.clear();
         timeOfFeed.clear();
         mHeaderPositions.clear();
+        senderPhNo.clear();
+        recieverPhNo.clear();
         headerPosition=0;
 
         for(NewsFeedBean eachNewsFeed : newsFeedBeanArrayList){
@@ -115,6 +120,8 @@ public class FeedView extends ClickInBaseView implements View.OnClickListener{
             receiverId.add(eachNewsFeed.getNewsFeedArray_receiverDetail_id());
             senderImages.add(eachNewsFeed.getNewsFeedArray_senderDetail_user_pic());
             recieverImages.add(eachNewsFeed.getNewsFeedArray_receiverDetail_user_pic());
+            senderPhNo.add(eachNewsFeed.getNewsFeedArray_senderDetail_phno());
+            recieverPhNo.add(eachNewsFeed.getNewsFeedArray_receiverDetail_phno());
             Log.e("created time", String.valueOf(eachNewsFeed.getNewsfeedArray_created()));
 //            timeOfFeed.add(eachNewsFeed.getNewsfeedArray_created().substring(eachNewsFeed.getNewsfeedArray_created().indexOf(" ")+1));
             timeOfFeed.add(eachNewsFeed.getNewsfeedArray_created());
@@ -140,7 +147,7 @@ public class FeedView extends ClickInBaseView implements View.OnClickListener{
         adapter = new FeedsAdapter(FeedView.this, R.layout.feed_list_item, newsFeedManager.userFeed);
         for (int i = 0; i < senderName.size(); i++) {
             Log.e("timeOfFeed=",timeOfFeed.get(i));
-            sections.add(new Section(mHeaderPositions.get(i), senderName.get(i), receiverName.get(i), senderImages.get(i),recieverImages.get(i),timeOfFeed.get(i),senderId.get(i),receiverId.get(i)));
+            sections.add(new Section(mHeaderPositions.get(i), senderName.get(i), receiverName.get(i), senderImages.get(i),recieverImages.get(i),timeOfFeed.get(i),senderId.get(i),receiverId.get(i),senderPhNo.get(i),recieverPhNo.get(i)));
         }
         Log.e("sections=", "" + sections.size());
         simpleSectionedGridAdapter2 = new SimpleSectionedListAdapter2(this, adapter,
@@ -186,7 +193,7 @@ public class FeedView extends ClickInBaseView implements View.OnClickListener{
             no_feed_image = (RelativeLayout) findViewById(R.id.no_feed_image);
             no_feed_image.setVisibility(View.VISIBLE);
 
-        } else if (message.equalsIgnoreCase("NewsFeed Error")) {
+        } else if (message.equalsIgnoreCase("NewsFeed Network Error")) {
             stopSearch = true;
             Utils.dismissBarDialog();
             Utils.showAlert(FeedView.this, AlertMessage.connectionError);
@@ -194,6 +201,7 @@ public class FeedView extends ClickInBaseView implements View.OnClickListener{
         } else if (message.equalsIgnoreCase("NewsFeedDelete False")){
 //            Toast.makeText(this,"There was error in processing your request.",Toast.LENGTH_SHORT).show();
         } else if(message.equalsIgnoreCase("NewsFeedDelete True")){
+//            Constants.comments = true;
             newsFeedManager.fetchNewsFeed("", ModelManager.getInstance().getAuthorizationManager().getPhoneNo(), ModelManager.getInstance().getAuthorizationManager().getUsrToken());
         }else if(message.equalsIgnoreCase("NewsFeedDelete Network Error"))
         {

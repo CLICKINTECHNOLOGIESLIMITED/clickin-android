@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
 
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values/values.xml -->
     <eat-comment />
 
     <attr name="actionBarDivider" format="reference" />
@@ -33,11 +33,11 @@
     <attr name="activityChooserViewStyle" format="reference" />
     <attr name="buttonBarButtonStyle" format="reference" />
     <attr name="buttonBarStyle" format="reference" />
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.viewpagerindicator/library/2.4.1/res/values/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.viewpagerindicator/library/2.4.1/res/values/values.xml -->
     <eat-comment />
 
     <attr name="centered" format="boolean" />
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values/values.xml -->
     <eat-comment />
 
     <attr name="dividerHorizontal" format="reference" />
@@ -52,11 +52,11 @@
     <attr name="listPreferredItemHeightSmall" format="dimension" />
     <attr name="listPreferredItemPaddingLeft" format="dimension" />
     <attr name="listPreferredItemPaddingRight" format="dimension" />
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/src/main/res/values/attrs.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/values/attrs.xml -->
     <eat-comment />
 
     <attr name="mySwitchStyleAttr" format="reference" />
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values/values.xml -->
     <eat-comment />
 
     <attr name="searchDropdownBackground" format="reference" />
@@ -71,20 +71,20 @@
     <attr name="searchViewTextFieldRight" format="reference" />
     <attr name="searchViewVoiceIcon" format="reference" />
     <attr name="selectableItemBackground" format="reference" />
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.viewpagerindicator/library/2.4.1/res/values/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.viewpagerindicator/library/2.4.1/res/values/values.xml -->
     <eat-comment />
 
     <attr name="selectedColor" format="color" />
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values/values.xml -->
     <eat-comment />
 
     <attr name="spinnerDropDownItemStyle" format="reference" />
     <attr name="spinnerStyle" format="reference" />
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.viewpagerindicator/library/2.4.1/res/values/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.viewpagerindicator/library/2.4.1/res/values/values.xml -->
     <eat-comment />
 
     <attr name="strokeWidth" format="dimension" />
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values/values.xml -->
     <eat-comment />
 
     <attr name="textAppearanceLargePopupMenu" format="reference" />
@@ -95,11 +95,11 @@
     <attr name="textAppearanceSmallPopupMenu" format="reference" />
     <attr name="textColorSearchUrl" format="reference|color" />
     <attr name="title" format="string" />
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.viewpagerindicator/library/2.4.1/res/values/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.viewpagerindicator/library/2.4.1/res/values/values.xml -->
     <eat-comment />
 
     <attr name="unselectedColor" format="color" />
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values/values.xml -->
     <eat-comment />
 
     <bool name="abc_action_bar_embed_tabs_pre_jb">false</bool>
@@ -108,7 +108,7 @@
     <bool name="abc_config_allowActionMenuItemTextWithIcon">false</bool>
     <bool name="abc_config_showMenuShortcutsWhenKeyboardPresent">false</bool>
     <bool name="abc_split_action_bar_is_narrow">true</bool>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.viewpagerindicator/library/2.4.1/res/values/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.viewpagerindicator/library/2.4.1/res/values/values.xml -->
     <eat-comment />
 
     <bool name="default_circle_indicator_centered">true</bool>
@@ -116,33 +116,33 @@
     <bool name="default_line_indicator_centered">true</bool>
     <bool name="default_title_indicator_selected_bold">true</bool>
     <bool name="default_underline_indicator_fades">true</bool>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/src/main/res/values/colors.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/values/colors.xml -->
     <eat-comment />
 
     <color name="User_text_on_look">#a2a2a2</color>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values/values.xml -->
     <eat-comment />
 
     <color name="abc_search_url_text_normal">#7fa87f</color>
     <color name="abc_search_url_text_pressed">@android:color/black</color>
     <color name="abc_search_url_text_selected">@android:color/black</color>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/src/main/res/values/colors.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/values/colors.xml -->
     <eat-comment />
 
     <color name="add_your_photo">#B3B3B3</color>
     <color name="appclr">#06163A</color>
     <color name="black">#000000</color>
     <color name="black_opacity">#D8000000</color>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/cropper/unspecified/res/values/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/cropper/unspecified/res/values/values.xml -->
     <eat-comment />
 
     <color name="black_translucent">#50000000</color>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/src/main/res/values/colors.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/values/colors.xml -->
     <eat-comment />
 
     <color name="clickin_with_list">#E0ECF8</color>
     <color name="clrbartittle">#E42217</color>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/facebookSDK/unspecified/res/values/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/facebookSDK/unspecified/res/values/values.xml -->
     <eat-comment />
 
     <color name="com_facebook_blue">#3B5998</color>
@@ -152,15 +152,15 @@
     <color name="com_facebook_usersettingsfragment_connected_shadow_color">#000000</color>
     <color name="com_facebook_usersettingsfragment_connected_text_color">#FFFFFF</color>
     <color name="com_facebook_usersettingsfragment_not_connected_text_color">#A6AED7</color>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.google.android.gms/play-services/3.1.59/res/values/colors.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.google.android.gms/play-services/3.1.59/res/values/colors.xml -->
     <eat-comment />
 
     <color name="common_action_bar_splitter">#d2d2d2</color>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/src/main/res/values/colors.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/values/colors.xml -->
     <eat-comment />
 
     <color name="common_header_clr">#00b0c7</color>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.google.android.gms/play-services/3.1.59/res/values/colors.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.google.android.gms/play-services/3.1.59/res/values/colors.xml -->
     <eat-comment />
 
     <color name="common_signin_btn_dark_text_default">@android:color/white</color>
@@ -172,11 +172,11 @@
     <color name="common_signin_btn_light_text_disabled">#FFAAAAAA</color>
     <color name="common_signin_btn_light_text_focused">#FF737373</color>
     <color name="common_signin_btn_light_text_pressed">@android:color/white</color>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/src/main/res/values/colors.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/values/colors.xml -->
     <eat-comment />
 
     <color name="dark_gray">#A4A4A4</color>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.viewpagerindicator/library/2.4.1/res/values/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.viewpagerindicator/library/2.4.1/res/values/values.xml -->
     <eat-comment />
 
     <color name="default_circle_indicator_fill_color">#FFFFFFFF</color>
@@ -188,7 +188,7 @@
     <color name="default_title_indicator_selected_color">#FFFFFFFF</color>
     <color name="default_title_indicator_text_color">#BBFFFFFF</color>
     <color name="default_underline_indicator_selected_color">#FF33B5E5</color>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/src/main/res/values/colors.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/values/colors.xml -->
     <eat-comment />
 
     <color name="defult_hint_clr">#808080</color>
@@ -238,7 +238,7 @@
     <color name="transparent">#00000000</color>
     <color name="updatingtxtclr">#959595</color>
     <color name="usr_name">#F5A9D0</color>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.viewpagerindicator/library/2.4.1/res/values/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.viewpagerindicator/library/2.4.1/res/values/values.xml -->
     <eat-comment />
 
     <color name="vpi__background_holo_dark">#ff000000</color>
@@ -249,12 +249,12 @@
     <color name="vpi__bright_foreground_holo_light">@color/vpi__background_holo_dark</color>
     <color name="vpi__bright_foreground_inverse_holo_dark">@color/vpi__bright_foreground_holo_light</color>
     <color name="vpi__bright_foreground_inverse_holo_light">@color/vpi__bright_foreground_holo_dark</color>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/src/main/res/values/colors.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/values/colors.xml -->
     <eat-comment />
 
     <color name="white">#ffffff</color>
     <color name="white_with_transparent">#CCFFFFFF</color>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values/values.xml -->
     <eat-comment />
 
     <declare-styleable name="ActionBar">
@@ -382,7 +382,7 @@
         -->
         <attr name="expandActivityOverflowButtonDrawable" format="reference" />
     </declare-styleable>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.viewpagerindicator/library/2.4.1/res/values/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.viewpagerindicator/library/2.4.1/res/values/values.xml -->
     <eat-comment />
 
     <declare-styleable name="CirclePageIndicator">
@@ -406,13 +406,13 @@
         <!-- View background -->
         <attr name="android:background" />
     </declare-styleable>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/src/main/res/values/attrs.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/values/attrs.xml -->
     <eat-comment />
 
     <declare-styleable name="ClickInTextView">
         <attr name="customFont" format="string" />
     </declare-styleable>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values/values.xml -->
     <eat-comment />
 
     <declare-styleable name="CompatTextView">
@@ -420,7 +420,7 @@
         <!-- Present the text in ALL CAPS. This may use a small-caps form when available. -->
         <attr name="textAllCaps" format="reference|boolean" />
     </declare-styleable>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/cropper/unspecified/res/values/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/cropper/unspecified/res/values/values.xml -->
     <eat-comment />
 
     <declare-styleable name="CropImageView">
@@ -434,7 +434,7 @@
         <attr name="aspectRatioY" format="integer" />
         <attr name="imageResource" format="reference" />
     </declare-styleable>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.viewpagerindicator/library/2.4.1/res/values/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.viewpagerindicator/library/2.4.1/res/values/values.xml -->
     <eat-comment />
 
     <declare-styleable name="LinePageIndicator">
@@ -454,7 +454,7 @@
         <!-- View background -->
         <attr name="android:background" />
     </declare-styleable>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values/values.xml -->
     <eat-comment />
 
     <declare-styleable name="LinearLayoutICS">
@@ -471,7 +471,7 @@
         <!-- Size of padding on either end of a divider. -->
         <attr name="dividerPadding" format="dimension" />
     </declare-styleable>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.google.android.gms/play-services/3.1.59/res/values/maps_attrs.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.google.android.gms/play-services/3.1.59/res/values/maps_attrs.xml -->
     <eat-comment />
 
     <declare-styleable name="MapAttrs">
@@ -496,7 +496,7 @@
         <attr name="useViewLifecycle" format="boolean" />
         <attr name="zOrderOnTop" format="boolean" />
     </declare-styleable>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values/values.xml -->
     <eat-comment />
 
     <declare-styleable name="MenuGroup">
@@ -665,7 +665,7 @@
         <!-- Whether space should be reserved in layout when an icon is missing. -->
         <attr name="android:preserveIconSpacing" />
     </declare-styleable>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/src/main/res/values/attrs.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/values/attrs.xml -->
     <eat-comment />
 
     <declare-styleable name="MySwitch">
@@ -723,7 +723,7 @@
         <!-- We need a mask drawable to mask the background, then draw the track -->
         <attr name="backgroundMask" format="reference" />
     </declare-styleable>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.navercorp.pulltorefresh/library/3.2.0/res/values/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.navercorp.pulltorefresh/library/3.2.0/res/values/values.xml -->
     <eat-comment />
 
     <declare-styleable name="PullToRefresh">
@@ -837,7 +837,7 @@
         <attr name="ptrDrawableTop" format="reference" />
         <attr name="ptrDrawableBottom" format="reference" />
     </declare-styleable>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values/values.xml -->
     <eat-comment />
 
     <declare-styleable name="SearchView">
@@ -856,7 +856,7 @@
         <!-- The input type to set on the query text field. -->
         <attr name="android:inputType" />
     </declare-styleable>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/slider_library/unspecified/res/values/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/slider_library/unspecified/res/values/values.xml -->
     <eat-comment />
 
     <declare-styleable name="SlidingMenu">
@@ -886,7 +886,7 @@
         <attr name="selectorEnabled" format="boolean" />
         <attr name="selectorDrawable" format="reference" />
     </declare-styleable>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values/values.xml -->
     <eat-comment />
 
     <declare-styleable name="Spinner">
@@ -934,7 +934,7 @@
         -->
         <attr name="disableChildrenWhenDisabled" format="boolean" />
     </declare-styleable>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/library/unspecified/res/values/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/library/unspecified/res/values/values.xml -->
     <eat-comment />
 
     <declare-styleable name="StickyListHeadersListView">
@@ -968,7 +968,7 @@
         <attr name="hasStickyHeaders" format="boolean" />
         <attr name="isDrawingListUnderStickyHeader" format="boolean" />
     </declare-styleable>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values/values.xml -->
     <eat-comment />
 
     <declare-styleable name="Theme">
@@ -994,7 +994,7 @@
         <!-- Drawable used as a background for selected list items. -->
         <attr name="listChoiceBackgroundIndicator" format="reference" />
     </declare-styleable>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.viewpagerindicator/library/2.4.1/res/values/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.viewpagerindicator/library/2.4.1/res/values/values.xml -->
     <eat-comment />
 
     <declare-styleable name="TitlePageIndicator">
@@ -1050,7 +1050,7 @@
         <!-- View background -->
         <attr name="android:background" />
     </declare-styleable>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values/values.xml -->
     <eat-comment />
 
     <declare-styleable name="View">
@@ -1070,7 +1070,7 @@
         -->
         <attr name="android:focusable" />
     </declare-styleable>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.viewpagerindicator/library/2.4.1/res/values/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.viewpagerindicator/library/2.4.1/res/values/values.xml -->
     <eat-comment />
 
     <declare-styleable name="ViewPagerIndicator">
@@ -1088,7 +1088,7 @@
         <!-- Style of the underline indicator. -->
         <attr name="vpiUnderlinePageIndicatorStyle" format="reference" />
     </declare-styleable>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/facebookSDK/unspecified/res/values/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/facebookSDK/unspecified/res/values/values.xml -->
     <eat-comment />
 
     <declare-styleable name="com_facebook_friend_picker_fragment">
@@ -1125,7 +1125,7 @@
         </attr>
         <attr name="is_cropped" format="boolean" />
     </declare-styleable>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/src/main/res/values/attrs.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/values/attrs.xml -->
     <eat-comment />
 
     <declare-styleable name="mySwitchTextAppearanceAttrib">
@@ -1157,7 +1157,7 @@
         <!-- Present the text in ALL CAPS. This may use a small-caps form when available. -->
 
     </declare-styleable>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values/values.xml -->
     <eat-comment />
 
     <dimen name="abc_action_bar_default_height">48dip</dimen>
@@ -1177,12 +1177,12 @@
     <dimen name="abc_panel_menu_list_width">296dp</dimen>
     <dimen name="abc_search_view_preferred_width">320dip</dimen>
     <dimen name="abc_search_view_text_min_width">160dip</dimen>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/src/main/res/values/dimens.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/values/dimens.xml -->
     <eat-comment />
 
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/facebookSDK/unspecified/res/values/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/facebookSDK/unspecified/res/values/values.xml -->
     <eat-comment />
 
     <dimen name="com_facebook_loginview_compound_drawable_padding">12dp</dimen>
@@ -1197,11 +1197,11 @@
     <dimen name="com_facebook_profilepictureview_preset_size_small">50dp</dimen>
     <dimen name="com_facebook_usersettingsfragment_profile_picture_height">64dp</dimen>
     <dimen name="com_facebook_usersettingsfragment_profile_picture_width">64dp</dimen>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/src/main/res/values/dimens.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/values/dimens.xml -->
     <eat-comment />
 
     <dimen name="default_circle_indicator_radius">4dp</dimen>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.viewpagerindicator/library/2.4.1/res/values/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.viewpagerindicator/library/2.4.1/res/values/values.xml -->
     <eat-comment />
 
     <dimen name="default_circle_indicator_stroke_width">1dp</dimen>
@@ -1216,14 +1216,14 @@
     <dimen name="default_title_indicator_text_size">15dp</dimen>
     <dimen name="default_title_indicator_title_padding">5dp</dimen>
     <dimen name="default_title_indicator_top_padding">7dp</dimen>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values/values.xml -->
     <eat-comment />
 
     <item name="dialog_fixed_height_major" type="dimen">80%</item>
     <item name="dialog_fixed_height_minor" type="dimen">100%</item>
     <item name="dialog_fixed_width_major" type="dimen">320dp</item>
     <item name="dialog_fixed_width_minor" type="dimen">320dp</item>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/src/main/res/values/dimens.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/values/dimens.xml -->
     <eat-comment />
 
     <dimen name="feed_image_height">278dp</dimen>
@@ -1231,7 +1231,7 @@
     <dimen name="feed_sender_user_size">16sp</dimen>
     <dimen name="feed_sticky_header_height">67dp</dimen>
     <dimen name="feed_time__font_size">12sp</dimen>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.navercorp.pulltorefresh/library/3.2.0/res/values/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.navercorp.pulltorefresh/library/3.2.0/res/values/values.xml -->
     <eat-comment />
 
     <dimen name="header_footer_left_right_padding">24dp</dimen>
@@ -1239,7 +1239,7 @@
     <dimen name="indicator_corner_radius">12dp</dimen>
     <dimen name="indicator_internal_padding">4dp</dimen>
     <dimen name="indicator_right_padding">10dp</dimen>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/src/main/res/values/dimens.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/values/dimens.xml -->
     <eat-comment />
 
     <dimen name="list_padding">10dp</dimen>
@@ -1251,48 +1251,48 @@
     <dimen name="owner_relation_partner_name_font">5sp</dimen>
     <dimen name="shadow_width">15dp</dimen>
     <dimen name="slidingmenu_offset">60dp</dimen>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/facebookSDK/unspecified/res/values/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/facebookSDK/unspecified/res/values/values.xml -->
     <eat-comment />
 
     <drawable name="com_facebook_picker_default_separator_color">#33464c59</drawable>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/src/main/res/values/strings.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/values/strings.xml -->
     <eat-comment />
 
     <drawable name="green_drawable">#CC123Bff</drawable>
     <drawable name="red_drawable">#CCAA1883</drawable>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values/values.xml -->
     <eat-comment />
 
     <item name="action_bar_activity_content" type="id"/>
     <item name="action_menu_divider" type="id"/>
     <item name="action_menu_presenter" type="id"/>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.navercorp.pulltorefresh/library/3.2.0/res/values/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.navercorp.pulltorefresh/library/3.2.0/res/values/values.xml -->
     <eat-comment />
 
     <item name="gridview" type="id"/>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values/values.xml -->
     <eat-comment />
 
     <item name="home" type="id"/>
     <item name="progress_circular" type="id"/>
     <item name="progress_horizontal" type="id"/>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.navercorp.pulltorefresh/library/3.2.0/res/values/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.navercorp.pulltorefresh/library/3.2.0/res/values/values.xml -->
     <eat-comment />
 
     <item name="scrollview" type="id"/>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/slider_library/unspecified/res/values/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/slider_library/unspecified/res/values/values.xml -->
     <eat-comment />
 
     <item name="selected_view" type="id"/>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.navercorp.pulltorefresh/library/3.2.0/res/values/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.navercorp.pulltorefresh/library/3.2.0/res/values/values.xml -->
     <eat-comment />
 
     <item name="webview" type="id"/>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values/values.xml -->
     <eat-comment />
 
     <integer name="abc_max_action_buttons">2</integer>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.viewpagerindicator/library/2.4.1/res/values/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.viewpagerindicator/library/2.4.1/res/values/values.xml -->
     <eat-comment />
 
     <integer name="default_circle_indicator_orientation">0</integer>
@@ -1300,11 +1300,11 @@
     <integer name="default_title_indicator_line_position">0</integer>
     <integer name="default_underline_indicator_fade_delay">300</integer>
     <integer name="default_underline_indicator_fade_length">400</integer>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/src/main/res/values/dimens.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/values/dimens.xml -->
     <eat-comment />
 
     <integer name="num_cols">1</integer>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/src/main/res/values/strings.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/values/strings.xml -->
     <eat-comment />
 
     <string name="PREFS_NAME">UserInfo</string>
@@ -1312,7 +1312,7 @@
     <string name="PREFS_USER_FB_TOKEN">FacebookToken</string>
     <string name="PREFS_USER_PHONE">Phone</string>
     <string name="PREFS_USER_TOKEN">UserToken</string>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values/values.xml -->
     <eat-comment />
 
     <string name="abc_action_bar_home_description">Navigate home</string>
@@ -1328,13 +1328,13 @@
     <string name="abc_searchview_description_voice">Voice search</string>
     <string name="abc_shareactionprovider_share_with">Share with</string>
     <string name="abc_shareactionprovider_share_with_application">Share with %s</string>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/src/main/res/values/strings.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/values/strings.xml -->
     <eat-comment />
 
     <string name="action_settings">Settings</string>
     <string name="add_your_photo">ADD YOUR PHOTO</string>
     <string name="app_name">Clickin\'</string>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.google.android.gms/play-services/3.1.59/res/values/strings.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.google.android.gms/play-services/3.1.59/res/values/strings.xml -->
     <eat-comment />
 
     <string name="auth_client_needs_enabling_title">      An application requires Google Play Services to be enabled.</string>
@@ -1343,7 +1343,7 @@
     <string name="auth_client_play_services_err_notification_msg">Google Play services error</string>
     <string name="auth_client_requested_by_msg">Requested by <ns1:g id="app_name">%1$s</ns1:g></string>
     <string name="auth_client_using_bad_version_title">      An application attempted to use a bad version of Google Play Services.</string>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/src/main/res/values/strings.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/values/strings.xml -->
     <eat-comment />
 
     <string name="btn_fb">facebook</string>
@@ -1353,7 +1353,7 @@
     <string name="btn_selectall">SELECT ALL</string>
     <string name="btn_tw">twitter</string>
     <string name="clickwith">CLICK WITH</string>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/facebookSDK/unspecified/res/values/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/facebookSDK/unspecified/res/values/values.xml -->
     <eat-comment />
 
     <string name="com_facebook_choose_friends">Choose Friends</string>
@@ -1381,7 +1381,7 @@
     <string name="com_facebook_usersettingsfragment_log_in_button">Log in…</string>
     <string name="com_facebook_usersettingsfragment_logged_in">Logged in</string>
     <string name="com_facebook_usersettingsfragment_not_logged_in">Not logged in</string>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.google.android.gms/play-services/3.1.59/res/values/strings.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.google.android.gms/play-services/3.1.59/res/values/strings.xml -->
     <eat-comment />
 
     <string name="common_google_play_services_enable_button" msgid="2523291102206661146">Enable Google Play services</string>
@@ -1399,7 +1399,7 @@
     <string name="common_google_play_services_update_title" msgid="1788179980625863495">Update Google Play services</string>
     <string name="common_signin_button_text">Sign in</string>
     <string name="common_signin_button_text_long">Sign in with Google</string>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/src/main/res/values/strings.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/values/strings.xml -->
     <eat-comment />
 
     <string name="deactivate_radio_msg_five">I just don\'t like it.</string>
@@ -1425,7 +1425,7 @@
     <string name="hint_re_enterpwd">Re-enter Password</string>
     <string name="match">matchs</string>
     <string name="opt_out_msg">Opt out of reciving future emails about cool new features :(</string>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.navercorp.pulltorefresh/library/3.2.0/res/values/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.navercorp.pulltorefresh/library/3.2.0/res/values/values.xml -->
     <eat-comment />
 
     <string name="pull_to_refresh_from_bottom_pull_label">@string/pull_to_refresh_pull_label</string>
@@ -1434,7 +1434,7 @@
     <string name="pull_to_refresh_pull_label">Pull to refresh…</string>
     <string name="pull_to_refresh_refreshing_label">Loading…</string>
     <string name="pull_to_refresh_release_label">Release to refresh…</string>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/src/main/res/values/strings.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/values/strings.xml -->
     <eat-comment />
 
     <string name="search_message">Could not find the one you are loking for? invite them to join ClickIn\'.</string>
@@ -1509,7 +1509,7 @@
     <string name="txt_wesentyoucode">WE SENT YOU THE CODE!</string>
     <string name="txt_with">WITH</string>
     <string name="txt_yold">years old</string>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/src/main/res/values/styles.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/values/styles.xml -->
     <eat-comment />
 
     <style name="AppBaseTheme" parent="Theme.AppCompat.Light">
@@ -1521,13 +1521,13 @@
         -->
         <item name="android:windowContentOverlay">@null</item>
     </style>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/cropper/unspecified/res/values/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/cropper/unspecified/res/values/values.xml -->
     <eat-comment />
 
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/src/main/res/values/styles.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/values/styles.xml -->
     <eat-comment />
 
     <style name="RoboTheme" parent="Theme.AppCompat.Light">
@@ -1537,7 +1537,7 @@
         <item name="android:gravity">center</item>
         <item name="android:layout_marginTop">10dp</item>
     </style>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values/values.xml -->
     <eat-comment />
 
     <style name="TextAppearance.AppCompat.Base.CompactMenu.Dialog" parent="android:TextAppearance.Medium">
@@ -1660,14 +1660,14 @@
     <style name="TextAppearance.AppCompat.Widget.PopupMenu.Large" parent="TextAppearance.AppCompat.Base.Widget.PopupMenu.Large" />
 
     <style name="TextAppearance.AppCompat.Widget.PopupMenu.Small" parent="TextAppearance.AppCompat.Base.Widget.PopupMenu.Small" />
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.viewpagerindicator/library/2.4.1/res/values/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.viewpagerindicator/library/2.4.1/res/values/values.xml -->
     <eat-comment />
 
     <style name="TextAppearance.TabPageIndicator" parent="Widget">
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/vpi__dark_theme</item>
     </style>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values/values.xml -->
     <eat-comment />
 
     <style name="TextAppearance.Widget.AppCompat.Base.ExpandedMenu.Item" parent="android:TextAppearance.Medium">
@@ -1968,14 +1968,14 @@
     <style name="Theme.Base.AppCompat.Light.DialogWhenLarge" parent="Theme.Base.AppCompat.Light" />
 
     <style name="Theme.Base.Light" parent="android:Theme.Light" />
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.viewpagerindicator/library/2.4.1/res/values/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.viewpagerindicator/library/2.4.1/res/values/values.xml -->
     <eat-comment />
 
     <style name="Theme.PageIndicatorDefaults" parent="android:Theme">
         <item name="vpiIconPageIndicatorStyle">@style/Widget.IconPageIndicator</item>
         <item name="vpiTabPageIndicatorStyle">@style/Widget.TabPageIndicator</item>
     </style>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/src/main/res/values/styles.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/values/styles.xml -->
     <eat-comment />
 
     <style name="Theme.Transparent" parent="android:Theme">
@@ -1983,11 +1983,11 @@
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowNoTitle">true</item>
     </style>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.viewpagerindicator/library/2.4.1/res/values/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.viewpagerindicator/library/2.4.1/res/values/values.xml -->
     <eat-comment />
 
     <style name="Widget" />
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values/values.xml -->
     <eat-comment />
 
     <style name="Widget.AppCompat.ActionBar" parent="Widget.AppCompat.Base.ActionBar" />
@@ -2281,7 +2281,7 @@
     <style name="Widget.AppCompat.ProgressBar.Horizontal" parent="Widget.AppCompat.Base.ProgressBar.Horizontal" />
 
     <style name="Widget.AppCompat.Spinner.DropDown.ActionBar" parent="Widget.AppCompat.Base.Spinner" />
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.viewpagerindicator/library/2.4.1/res/values/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.viewpagerindicator/library/2.4.1/res/values/values.xml -->
     <eat-comment />
 
     <style name="Widget.IconPageIndicator" parent="Widget">
@@ -2300,7 +2300,7 @@
         <item name="android:textSize">12sp</item>
         <item name="android:maxLines">1</item>
     </style>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/facebookSDK/unspecified/res/values/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/facebookSDK/unspecified/res/values/values.xml -->
     <eat-comment />
 
     <style name="com_facebook_loginview_default_style" parent="@android:style/Widget.Button">
@@ -2323,7 +2323,7 @@
         <item name="android:textColor">#4B5164</item>
         <item name="android:gravity">center</item>
     </style>
-    <!-- From: file:/home/dell/Github/Clickin/clickin-andoid/cLICKINAPP/src/main/res/values/styles.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/values/styles.xml -->
     <eat-comment />
 
     <style name="mySwitchStyle">
