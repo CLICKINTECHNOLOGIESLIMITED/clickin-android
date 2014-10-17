@@ -62,11 +62,7 @@ public class ViewTradeCart extends Activity implements View.OnClickListener
             }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(card_text.length()==14){
-                    ((Editable)s).append("\n");
-
-                }
+            public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
 
 
             }
@@ -74,9 +70,10 @@ public class ViewTradeCart extends Activity implements View.OnClickListener
             @Override
             public void afterTextChanged(Editable editable) {
 
-
             }
         });
+
+
         trd_clicks_top=(TextView)findViewById(R.id.trd_clicks_top);
         trd_clicks_bottom=(TextView)findViewById(R.id.trd_clicks_bottom);
     }
@@ -87,22 +84,47 @@ public class ViewTradeCart extends Activity implements View.OnClickListener
         {
 
             case R.id.btn_one:
+                trone.setSelected(true);
+                trtwo.setSelected(false);
+                trthree.setSelected(false);
+                trfour.setSelected(false);
+                trfive.setSelected(false);
                 trd_clicks_bottom.setText("05");
                 trd_clicks_top.setText("05");
                 break;
             case R.id.btn_two:
+                trone.setSelected(false);
+                trtwo.setSelected(true);
+                trthree.setSelected(false);
+                trfour.setSelected(false);
+                trfive.setSelected(false);
                 trd_clicks_bottom.setText("10");
                 trd_clicks_top.setText("10");
                 break;
             case R.id.btn_three:
+                trone.setSelected(false);
+                trtwo.setSelected(false);
+                trthree.setSelected(true);
+                trfour.setSelected(false);
+                trfive.setSelected(false);
                 trd_clicks_bottom.setText("15");
                 trd_clicks_top.setText("15");
                 break;
             case R.id.btn_four:
+                trone.setSelected(false);
+                trtwo.setSelected(false);
+                trthree.setSelected(false);
+                trfour.setSelected(true);
+                trfive.setSelected(false);
                 trd_clicks_bottom.setText("20");
                 trd_clicks_top.setText("20");
                 break;
             case R.id.btn_five:
+                trone.setSelected(false);
+                trtwo.setSelected(false);
+                trthree.setSelected(false);
+                trfour.setSelected(false);
+                trfive.setSelected(true);
                 trd_clicks_bottom.setText("25");
                 trd_clicks_top.setText("25");
                 break;

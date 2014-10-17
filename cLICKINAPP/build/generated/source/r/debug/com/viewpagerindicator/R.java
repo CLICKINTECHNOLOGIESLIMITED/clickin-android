@@ -48,25 +48,25 @@ public final class R {
 		public static final int default_underline_indicator_fades = 0x7f06000a;
 	}
 	public static final class color {
-		public static final int default_circle_indicator_fill_color = 0x7f07001e;
-		public static final int default_circle_indicator_page_color = 0x7f07001f;
-		public static final int default_circle_indicator_stroke_color = 0x7f070020;
-		public static final int default_line_indicator_selected_color = 0x7f070021;
-		public static final int default_line_indicator_unselected_color = 0x7f070022;
-		public static final int default_title_indicator_footer_color = 0x7f070023;
-		public static final int default_title_indicator_selected_color = 0x7f070024;
-		public static final int default_title_indicator_text_color = 0x7f070025;
-		public static final int default_underline_indicator_selected_color = 0x7f070026;
-		public static final int vpi__background_holo_dark = 0x7f070056;
-		public static final int vpi__background_holo_light = 0x7f070057;
-		public static final int vpi__bright_foreground_disabled_holo_dark = 0x7f070058;
-		public static final int vpi__bright_foreground_disabled_holo_light = 0x7f070059;
-		public static final int vpi__bright_foreground_holo_dark = 0x7f07005a;
-		public static final int vpi__bright_foreground_holo_light = 0x7f07005b;
-		public static final int vpi__bright_foreground_inverse_holo_dark = 0x7f07005c;
-		public static final int vpi__bright_foreground_inverse_holo_light = 0x7f07005d;
-		public static final int vpi__dark_theme = 0x7f070063;
-		public static final int vpi__light_theme = 0x7f070064;
+		public static final int default_circle_indicator_fill_color = 0x7f070021;
+		public static final int default_circle_indicator_page_color = 0x7f070022;
+		public static final int default_circle_indicator_stroke_color = 0x7f070023;
+		public static final int default_line_indicator_selected_color = 0x7f070024;
+		public static final int default_line_indicator_unselected_color = 0x7f070025;
+		public static final int default_title_indicator_footer_color = 0x7f070026;
+		public static final int default_title_indicator_selected_color = 0x7f070027;
+		public static final int default_title_indicator_text_color = 0x7f070028;
+		public static final int default_underline_indicator_selected_color = 0x7f070029;
+		public static final int vpi__background_holo_dark = 0x7f070059;
+		public static final int vpi__background_holo_light = 0x7f07005a;
+		public static final int vpi__bright_foreground_disabled_holo_dark = 0x7f07005b;
+		public static final int vpi__bright_foreground_disabled_holo_light = 0x7f07005c;
+		public static final int vpi__bright_foreground_holo_dark = 0x7f07005d;
+		public static final int vpi__bright_foreground_holo_light = 0x7f07005e;
+		public static final int vpi__bright_foreground_inverse_holo_dark = 0x7f07005f;
+		public static final int vpi__bright_foreground_inverse_holo_light = 0x7f070060;
+		public static final int vpi__dark_theme = 0x7f070066;
+		public static final int vpi__light_theme = 0x7f070067;
 	}
 	public static final class dimen {
 		public static final int default_circle_indicator_radius = 0x7f09001f;
@@ -84,13 +84,13 @@ public final class R {
 		public static final int default_title_indicator_top_padding = 0x7f09002b;
 	}
 	public static final class drawable {
-		public static final int vpi__tab_indicator = 0x7f0201df;
-		public static final int vpi__tab_selected_focused_holo = 0x7f0201e0;
-		public static final int vpi__tab_selected_holo = 0x7f0201e1;
-		public static final int vpi__tab_selected_pressed_holo = 0x7f0201e2;
-		public static final int vpi__tab_unselected_focused_holo = 0x7f0201e3;
-		public static final int vpi__tab_unselected_holo = 0x7f0201e4;
-		public static final int vpi__tab_unselected_pressed_holo = 0x7f0201e5;
+		public static final int vpi__tab_indicator = 0x7f0201e3;
+		public static final int vpi__tab_selected_focused_holo = 0x7f0201e4;
+		public static final int vpi__tab_selected_holo = 0x7f0201e5;
+		public static final int vpi__tab_selected_pressed_holo = 0x7f0201e6;
+		public static final int vpi__tab_unselected_focused_holo = 0x7f0201e7;
+		public static final int vpi__tab_unselected_holo = 0x7f0201e8;
+		public static final int vpi__tab_unselected_pressed_holo = 0x7f0201e9;
 	}
 	public static final class id {
 		public static final int bottom = 0x7f08002a;

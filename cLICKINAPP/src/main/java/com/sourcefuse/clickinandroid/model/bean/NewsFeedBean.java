@@ -503,6 +503,7 @@ public class NewsFeedBean {
     private String newsFeedArray_commentArray_chat_id;
     private String newsFeedArray_commentArray_newsfeed_id;
 
+
     public String getNewsFeedArray_senderDetail_phno() {
         return newsFeedArray_senderDetail_phno;
     }

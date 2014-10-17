@@ -3,19 +3,15 @@ package com.sourcefuse.clickinandroid.view;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.sourcefuse.clickinandroid.utils.Log;
-import com.sourcefuse.clickinandroid.view.adapter.CardGridViewAdapter;
 import com.sourcefuse.clickinapp.R;
 import com.squareup.picasso.Picasso;
 
@@ -91,22 +87,48 @@ public class Card extends Activity implements View.OnClickListener,TextWatcher {
         switch (view.getId()) {
 
             case R.id.btn_one:
+                trone.setSelected(true);
+                trtwo.setSelected(false);
+                trthree.setSelected(false);
+                trfour.setSelected(false);
+                trfive.setSelected(false);
                 trd_clicks_bottom.setText("05");
-                trd_clicks_top.setText("05");
+                trd_clicks_top.setText("05")
+                ;
                 break;
             case R.id.btn_two:
+                trone.setSelected(false);
+                trtwo.setSelected(true);
+                trthree.setSelected(false);
+                trfour.setSelected(false);
+                trfive.setSelected(false);
                 trd_clicks_bottom.setText("10");
                 trd_clicks_top.setText("10");
                 break;
             case R.id.btn_three:
+                trone.setSelected(false);
+                trtwo.setSelected(false);
+                trthree.setSelected(true);
+                trfour.setSelected(false);
+                trfive.setSelected(false);
                 trd_clicks_bottom.setText("15");
                 trd_clicks_top.setText("15");
                 break;
             case R.id.btn_four:
+                trone.setSelected(false);
+                trtwo.setSelected(false);
+                trthree.setSelected(false);
+                trfour.setSelected(true);
+                trfive.setSelected(false);
                 trd_clicks_bottom.setText("20");
                 trd_clicks_top.setText("20");
                 break;
             case R.id.btn_five:
+                trone.setSelected(false);
+                trtwo.setSelected(false);
+                trthree.setSelected(false);
+                trfour.setSelected(false);
+                trfive.setSelected(true);
                 trd_clicks_bottom.setText("25");
                 trd_clicks_top.setText("25");
                 break;

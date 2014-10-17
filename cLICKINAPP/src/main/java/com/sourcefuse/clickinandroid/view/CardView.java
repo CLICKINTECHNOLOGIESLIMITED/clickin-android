@@ -1,51 +1,31 @@
 package com.sourcefuse.clickinandroid.view;
 
 import android.annotation.TargetApi;
-import android.app.ActionBar;
-import android.app.Activity;
-import android.app.FragmentTransaction;
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
-import android.widget.FrameLayout;
-import android.widget.GridView;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TabHost;
 import android.widget.TabWidget;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.sourcefuse.clickinandroid.fragment.FragmentCustomTab;
 import com.sourcefuse.clickinandroid.fragment.PartyCardFragment;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ChatManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
-import com.sourcefuse.clickinandroid.model.bean.CardBean;
 import com.sourcefuse.clickinandroid.model.bean.TabBean;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.Utils;
-import com.sourcefuse.clickinandroid.view.adapter.CardGridViewAdapter;
-
-import com.sourcefuse.clickinandroid.view.adapter.TabsPagerAdapter;
-
 import com.sourcefuse.clickinapp.R;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.locks.LockSupport;
 
 import de.greenrobot.event.EventBus;
 
@@ -66,7 +46,6 @@ public class CardView extends FragmentActivity{
     public TextView text ;
     private ChatManager chatManager;
     private AuthManager authManager;
-
     private TabBean bean;
     String card ;
 
@@ -141,8 +120,14 @@ public class CardView extends FragmentActivity{
             tabHost.addTab(spec1);
             tabHost.setCurrentTab(0);
             tabHost.getTabWidget().setStripEnabled(false);
+//            Typeface localTypeface1 = Typeface.createFromAsset(getAssets(),
+//                    "fonts/AvenirNextLTPro-BoldCn_0.otf");
             settabStartup();
-            //setabColor();
+            //setTbWidth();
+           // setTabTextSize();
+
+
+           setabColor();
         }
 
 
@@ -157,7 +142,8 @@ public class CardView extends FragmentActivity{
                 bean.setTab_content(chatManager.tabArray.get(pos).getCategoriesName());
                 card = bean.getTab_content();
                 tabHost.getTabWidget().getChildAt(pos);
-
+                //tabHost.getCurrentTabView().setBackgroundResource();
+               // tabdrawable();
                  setTabTextColor();
                if(card.equals("Custom")){
 
@@ -222,9 +208,24 @@ public class CardView extends FragmentActivity{
         });
     }
 
+
+//    private void setTbWidth() {
+//        for(int i=0;i<tabHost.getTabWidget().getChildCount();i++)
+//        {
+//            tabHost.getTabWidget().getChildAt(i).getLayoutParams().width = 145 ;
+//
+//        }
+//    }
+
     private void tabdrawable(){
 
+        for (int i = 0; i < tabHost.getTabWidget().getChildCount(); i++) {
+            TextView tv = (TextView) tabHost.getTabWidget().getChildAt(i).findViewById(android.R.id.title);
 
+        }
+
+        TextView tv = (TextView) tabHost.getCurrentTabView().findViewById(android.R.id.title);
+        tv.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.tab_underline_selector);
 
 
     }
@@ -233,11 +234,14 @@ public class CardView extends FragmentActivity{
 
         for (int i = 0; i < tabHost.getTabWidget().getChildCount(); i++) {
                     TextView tv = (TextView) tabHost.getTabWidget().getChildAt(i).findViewById(android.R.id.title);
-                    tv.setTextColor(Color.parseColor("#000000"));
+                    tv.setTextColor(Color.parseColor("#999999"));
                 }
 
                     TextView tv = (TextView) tabHost.getCurrentTabView().findViewById(android.R.id.title);
-                    tv.setTextColor(Color.parseColor("#40e0d0"));
+                    tv.setTextColor(Color.parseColor("#39cad4"));
+
+                   // tv.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.tabbottomline);
+
 
 
         }
@@ -245,15 +249,15 @@ public class CardView extends FragmentActivity{
 
         for(int i=0;i<tabHost.getTabWidget().getChildCount();i++)
         {
-            tabHost.getTabWidget().getChildAt(i).setBackgroundColor(Color.parseColor("#f8f8ff"));
+            tabHost.getTabWidget().getChildAt(i).setBackgroundColor(Color.parseColor("#f4f4f4"));
         }
 
 
     }
 
     private void settabStartup() {
-
-
+        //tabHost.getTabWidget().setBackgroundDrawable( getResources().getDrawable(R.drawable.underline));
+        setTabTextColor();
         TextView tv = (TextView) tabHost.getCurrentTabView().findViewById(android.R.id.title); //for Selected Tab
         tv.setTextColor(Color.parseColor("#40e0d0"));
         bean.setTab_content(chatManager.tabArray.get(0).getCategoriesName());

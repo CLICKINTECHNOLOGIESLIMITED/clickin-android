@@ -140,6 +140,9 @@
     <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/values/colors.xml -->
     <eat-comment />
 
+    <color name="card_click_color">#fafafa</color>
+    <color name="card_click_color_pressed">#333333</color>
+    <color name="chat_notification">#f29691</color>
     <color name="clickin_with_list">#E0ECF8</color>
     <color name="clrbartittle">#E42217</color>
     <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/facebookSDK/unspecified/res/values/values.xml -->
