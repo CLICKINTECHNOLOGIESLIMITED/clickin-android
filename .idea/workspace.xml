@@ -36,12 +36,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1b1e4e35-a6a6-446f-963c-15cc88993b9a" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/res/drawable-xhdpi/play_btn.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/res/drawable-xxhdpi/play_btn.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/res/drawable-xhdpi/tabbottomline.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/res/drawable-xxhdpi/tabbottomline.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/res/drawable/card_text_color_state.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/res/drawable/tab_underline_selector.xml" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/apk/cLICKINAPP-debug-unaligned.apk" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/assets/debug/fonts/AvenirNextLTPro-BoldCn_0.otf" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/assets/debug/fonts/AvenirNextLTPro-MediumCn_0.otf" afterPath="" />
@@ -1073,6 +1067,8 @@
       <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/incremental/aidl/debug/dependency.store" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/incremental/mergeAssets/debug/merger.xml" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/incremental/mergeResources/debug/merger.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/dex/debug/classes.dex" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/dex/test/debug/classes.dex" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/cropper/unspecified/release.iml" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/facebookSDK/unspecified/release.iml" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/library_header/unspecified/release.iml" afterPath="" />
@@ -1566,9 +1562,62 @@
       <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/exploded-aar/com.github.chrisbanes.actionbarpulltorefresh/library/0.9.9/res/values-tr/values.xml" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/exploded-aar/com.github.chrisbanes.actionbarpulltorefresh/library/0.9.9/res/values-zh/values.xml" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/exploded-aar/com.github.chrisbanes.actionbarpulltorefresh/library/0.9.9/res/values/values.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/pre-dexed/debug/android-async-http-1.4.4-3a7857e3dd9b25feb896f1b99e0802af086cf0a5.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/pre-dexed/debug/android-async-http-1.4.4-4fb90eae3d3d1cd0dbc46bc32e16477bf534a819.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/pre-dexed/debug/android-async-http-1.4.4-bf840044002049ff7459fe63f479ec1086ef2034.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-0402deb440e65dd0f9562b9117e2cc8934a0d75b.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-320730ca2cfcd2ed283d54e98ed97aa9ce2041fb.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-377f65d6a0e419147a917f450e59fa3f49235ee2.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-3f0ce17b7ed26db02df60cc28ea079a5aed114d2.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-457c8a8c956d7e066b2fab73bc9f84fd06b45336.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-45af193caaf3bee5d2040c1c7415bb2071494143.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-47918d50d811c7e3c52e532c574a3ef2a63b050d.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-54a39404a0d1626494c32d77550cd39d365262c2.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-60233181216fcca34194c3f7ce17b4f7d00721d2.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-616125c532ecd78f9d5e68f4ad33cc6454e9af73.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-6362f71026cb24b03f6db6032514f92cd0a106ff.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-6e189bb8021c4e490ff963f88e448ebcfd553ed6.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-7246f528ebd008f2b2bc717763e09bb22cf36e5d.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-7b0f7d6df441ac532f67adf05e12c681f6e811ce.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-7ed2f6679b3519857e117108e474ed1dccbb3326.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-84197e21a53a9bef1ee7ee0e8954851aa76dd2d7.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-9bae1e3baf54a49aaded0df804e0f115a616440d.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-9f3b664ddd687fda35d36517be17b7fce3e0065f.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-a4ad4779abac4f08119c84c480ae1924c14a3305.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-a838b35cbd3887fc6351f70fed011b2de87a053c.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-aa0901fc24dfba8fc450106df3e00e438da52412.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-b7751eb4f6ab5760998ff90a03b3d60b0b4c58f0.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-c2b0a30d313ef9a6ba3e3af1d9e8cfc5fbaacdb1.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-c727e6b43732c01e346baabb213abf7817551f7e.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-db36b0d5f7022ee5aca4ee0a5025192ab95624e7.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-ea5c78a9b60f85d42c198b469d528392c5c6d13f.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-ef6fa5415c4b8cb820d77f39e9c3e3b2fc5b1316.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-f0f2da42d48d08cf7acff78de3507eb145ff0ec1.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-f270a59b4dc41dafb09d34c7bcc67295d7d9c3e0.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-fc011655a5a532c409fb316a04bf0520abbbda21.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-fdd0dfa0b29ad5181623d2e83c7e8735542fde81.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/pre-dexed/debug/eventbus-2.2.0-10ccc2d96eb59a4ebebcaa38daa7018f0c8384d8.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/pre-dexed/debug/eventbus-2.2.0-8b90ac80ac3943490e5a968c686793d7a34d796e.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/pre-dexed/debug/internal_impl-20.0.0-15a7c4a03e08bd465d0eb0a9db8373e0ef1a8df6.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/pre-dexed/debug/internal_impl-20.0.0-6443e6dcac5a111936573afbe9599c46c3c6b3da.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/pre-dexed/debug/internal_impl-20.0.0-70f2e7f68bfb103c3511516f16eb5bea18bb1439.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/pre-dexed/debug/java-json-90dcb2652ba00c2b893e47241ff4f17dc7d1e9bf.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/pre-dexed/debug/java-json-d3e1f27d5fde46002f104ce08fa6ffe7aeb59ce6.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/pre-dexed/debug/java-json-f4f2bef61aa3029dcdce04937a89fe6a4ba89cc7.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/pre-dexed/debug/picasso-2.2.0-b017d3ac1a2c83a4ed5d80812714295e538ec065.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/pre-dexed/debug/picasso-2.2.0-b10dd8d2757a593731d9cc835dbfb1ff3b654192.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/pre-dexed/debug/picasso-2.2.0-b4ac7254de45ea76b6569e799dc0451fc78648cd.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/pre-dexed/debug/quickblox-android-1.2.4-1d62ba7a1dc2b5f2bf6703628ba4fcea0c0c230c.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/pre-dexed/debug/quickblox-android-1.2.4-5ac130fd932ac04684864dfff1db17cdb3a11471.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/pre-dexed/debug/quickblox-android-1.2.4-fb03900df0fa61532054f9a6acd424f8b03d9c05.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/pre-dexed/debug/support-annotations-20.0.0-ac635b6c48cbf7f19066d35bd94cad1c46d96494.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/pre-dexed/debug/support-annotations-20.0.0-ff6949487c0c32102e0f7a78e0cb7f41e374361f.jar" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/libs/cLICKINAPP-debug.ap_" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/manifests/debug/AndroidManifest.xml" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/manifests/debug/debug.iml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/outputs/apk/cLICKINAPP-debug-test-unaligned.apk" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/outputs/apk/cLICKINAPP-debug-unaligned.apk" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/outputs/apk/cLICKINAPP-debug.apk" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/pre-dexed/debug/android-async-http-1.4.4-48767b66831723fa493ff792dd0af337103df74b.jar" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/pre-dexed/debug/classes-034b29451c4a804f4c073330a7f7f017679108f5.jar" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/build/pre-dexed/debug/classes-3512ca004b3f4fcc81f2e2d876844f67642161e7.jar" afterPath="" />
@@ -3427,46 +3476,6 @@
       <change type="DELETED" beforePath="$PROJECT_DIR$/library_pull/build/generated/source/buildConfig/release/uk/co/senab/actionbarpulltorefresh/library/BuildConfig.java" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/library_pull/build/generated/source/r/r3.iml" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/library_pull/build/generated/source/r/release/uk/co/senab/actionbarpulltorefresh/library/R.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/library_pull/build/intermediates/classes/release/uk/co/senab/actionbarpulltorefresh/library/ActionBarPullToRefresh$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/library_pull/build/intermediates/classes/release/uk/co/senab/actionbarpulltorefresh/library/ActionBarPullToRefresh$SetupWizard.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/library_pull/build/intermediates/classes/release/uk/co/senab/actionbarpulltorefresh/library/ActionBarPullToRefresh.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/library_pull/build/intermediates/classes/release/uk/co/senab/actionbarpulltorefresh/library/BuildConfig.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/library_pull/build/intermediates/classes/release/uk/co/senab/actionbarpulltorefresh/library/DefaultHeaderTransformer$HideAnimationCallback.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/library_pull/build/intermediates/classes/release/uk/co/senab/actionbarpulltorefresh/library/DefaultHeaderTransformer.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/library_pull/build/intermediates/classes/release/uk/co/senab/actionbarpulltorefresh/library/EnvironmentDelegate.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/library_pull/build/intermediates/classes/release/uk/co/senab/actionbarpulltorefresh/library/HeaderTransformer.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/library_pull/build/intermediates/classes/release/uk/co/senab/actionbarpulltorefresh/library/InstanceCreationUtils.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/library_pull/build/intermediates/classes/release/uk/co/senab/actionbarpulltorefresh/library/Options$Builder.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/library_pull/build/intermediates/classes/release/uk/co/senab/actionbarpulltorefresh/library/Options.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/library_pull/build/intermediates/classes/release/uk/co/senab/actionbarpulltorefresh/library/PullToRefreshAttacher$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/library_pull/build/intermediates/classes/release/uk/co/senab/actionbarpulltorefresh/library/PullToRefreshAttacher$2.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/library_pull/build/intermediates/classes/release/uk/co/senab/actionbarpulltorefresh/library/PullToRefreshAttacher$AddHeaderViewRunnable.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/library_pull/build/intermediates/classes/release/uk/co/senab/actionbarpulltorefresh/library/PullToRefreshAttacher.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/library_pull/build/intermediates/classes/release/uk/co/senab/actionbarpulltorefresh/library/PullToRefreshLayout$LayoutParams.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/library_pull/build/intermediates/classes/release/uk/co/senab/actionbarpulltorefresh/library/PullToRefreshLayout.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/library_pull/build/intermediates/classes/release/uk/co/senab/actionbarpulltorefresh/library/R$attr.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/library_pull/build/intermediates/classes/release/uk/co/senab/actionbarpulltorefresh/library/R$bool.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/library_pull/build/intermediates/classes/release/uk/co/senab/actionbarpulltorefresh/library/R$color.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/library_pull/build/intermediates/classes/release/uk/co/senab/actionbarpulltorefresh/library/R$dimen.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/library_pull/build/intermediates/classes/release/uk/co/senab/actionbarpulltorefresh/library/R$id.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/library_pull/build/intermediates/classes/release/uk/co/senab/actionbarpulltorefresh/library/R$integer.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/library_pull/build/intermediates/classes/release/uk/co/senab/actionbarpulltorefresh/library/R$layout.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/library_pull/build/intermediates/classes/release/uk/co/senab/actionbarpulltorefresh/library/R$string.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/library_pull/build/intermediates/classes/release/uk/co/senab/actionbarpulltorefresh/library/R$style.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/library_pull/build/intermediates/classes/release/uk/co/senab/actionbarpulltorefresh/library/R$styleable.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/library_pull/build/intermediates/classes/release/uk/co/senab/actionbarpulltorefresh/library/R.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/library_pull/build/intermediates/classes/release/uk/co/senab/actionbarpulltorefresh/library/listeners/HeaderViewListener.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/library_pull/build/intermediates/classes/release/uk/co/senab/actionbarpulltorefresh/library/listeners/OnRefreshListener.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/library_pull/build/intermediates/classes/release/uk/co/senab/actionbarpulltorefresh/library/sdk/Compat.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/library_pull/build/intermediates/classes/release/uk/co/senab/actionbarpulltorefresh/library/sdk/CompatBase.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/library_pull/build/intermediates/classes/release/uk/co/senab/actionbarpulltorefresh/library/sdk/CompatV11.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/library_pull/build/intermediates/classes/release/uk/co/senab/actionbarpulltorefresh/library/sdk/CompatV16.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/library_pull/build/intermediates/classes/release/uk/co/senab/actionbarpulltorefresh/library/viewdelegates/AbsListViewDelegate$Compat.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/library_pull/build/intermediates/classes/release/uk/co/senab/actionbarpulltorefresh/library/viewdelegates/AbsListViewDelegate$CompatV11.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/library_pull/build/intermediates/classes/release/uk/co/senab/actionbarpulltorefresh/library/viewdelegates/AbsListViewDelegate.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/library_pull/build/intermediates/classes/release/uk/co/senab/actionbarpulltorefresh/library/viewdelegates/ScrollYDelegate.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/library_pull/build/intermediates/classes/release/uk/co/senab/actionbarpulltorefresh/library/viewdelegates/ViewDelegate.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/library_pull/build/intermediates/classes/release/uk/co/senab/actionbarpulltorefresh/library/viewdelegates/WebViewDelegate.class" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/library_pull/build/outputs/aar/library_pull.aar" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/library_pull/build/tmp/packageReleaseJar/MANIFEST.MF" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/slider_library/build/bundles/debug/AndroidManifest.xml" afterPath="" />
@@ -3546,25 +3555,6 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/library/unspecified/classes.jar" afterPath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/library/unspecified/classes.jar" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/library_header/unspecified/classes.jar" afterPath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/library_header/unspecified/classes.jar" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/slider_library/unspecified/classes.jar" afterPath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/slider_library/unspecified/classes.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/Card.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/Card.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/CardView.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/CardView.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/model/bean/NewsFeedBean.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/model/bean/NewsFeedBean.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/build/generated/source/r/debug/android/support/v7/appcompat/R.java" afterPath="$PROJECT_DIR$/cLICKINAPP/build/generated/source/r/debug/android/support/v7/appcompat/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/build/generated/source/r/debug/com/edmodo/cropper/R.java" afterPath="$PROJECT_DIR$/cLICKINAPP/build/generated/source/r/debug/com/edmodo/cropper/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/build/generated/source/r/debug/com/facebook/android/R.java" afterPath="$PROJECT_DIR$/cLICKINAPP/build/generated/source/r/debug/com/facebook/android/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/build/generated/source/r/debug/com/google/android/gms/R.java" afterPath="$PROJECT_DIR$/cLICKINAPP/build/generated/source/r/debug/com/google/android/gms/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/build/generated/source/r/debug/com/handmark/pulltorefresh/library/R.java" afterPath="$PROJECT_DIR$/cLICKINAPP/build/generated/source/r/debug/com/handmark/pulltorefresh/library/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/build/generated/source/r/debug/com/jeremyfeinstein/slidingmenu/lib/R.java" afterPath="$PROJECT_DIR$/cLICKINAPP/build/generated/source/r/debug/com/jeremyfeinstein/slidingmenu/lib/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/build/generated/source/r/debug/com/sourcefuse/clickinapp/R.java" afterPath="$PROJECT_DIR$/cLICKINAPP/build/generated/source/r/debug/com/sourcefuse/clickinapp/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/build/generated/source/r/debug/com/viewpagerindicator/R.java" afterPath="$PROJECT_DIR$/cLICKINAPP/build/generated/source/r/debug/com/viewpagerindicator/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/ViewTradeCart.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/ViewTradeCart.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" afterPath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/card_click.xml" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/card_click.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/res/values/colors.xml" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/res/values/colors.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/row_card_grid.xml" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/row_card_grid.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_feeds_comments.xml" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_feeds_comments.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_tabhost2.xml" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_tabhost2.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_tradecart.xml" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_tradecart.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="clickin-andoid.iws" />
@@ -3675,7 +3665,7 @@
       <file leaf-file-name="tab_underline_selector.xml" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/drawable/tab_underline_selector.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.15873016" vertical-offset="0" max-vertical-offset="378">
+            <state vertical-scroll-proportion="0.10273973" vertical-offset="0" max-vertical-offset="584">
               <caret line="4" column="11" selection-start-line="4" selection-start-column="11" selection-end-line="4" selection-end-column="11" />
               <folding />
             </state>
@@ -8302,7 +8292,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="24" width="1301" height="744" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32954547" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290938" sideWeight="0.49960285" order="14" side_tool="false" content_ui="tabs" />
@@ -8316,7 +8306,7 @@
       <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32960895" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" x="171" y="292" width="1101" height="544" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32960895" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.33441558" sideWeight="0.49960285" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33441558" sideWeight="0.49960285" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32792208" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.98214287" sideWeight="0.49960285" order="6" side_tool="false" content_ui="tabs" />
@@ -8779,7 +8769,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/drawable/tab_underline_selector.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.15873016" vertical-offset="0" max-vertical-offset="378">
+        <state vertical-scroll-proportion="0.10273973" vertical-offset="0" max-vertical-offset="584">
           <caret line="4" column="11" selection-start-line="4" selection-start-column="11" selection-end-line="4" selection-end-column="11" />
           <folding />
         </state>
