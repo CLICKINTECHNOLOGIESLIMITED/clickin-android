@@ -124,7 +124,36 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
         }
 //        Log.e("FeedsAdapter++ChatDetailType",eachNewsFeed.get(position).getNewsFeedArray_chatDetail_type());
         if(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_type()!=null) {
-             /*
+
+       /* Condition for Image - Type 2
+         */
+            if (eachNewsFeed.get(position).getNewsFeedArray_chatDetail_type().equalsIgnoreCase("2"))
+            {
+                holder.feed_image.setVisibility(View.VISIBLE);
+                Picasso.with(context).load(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content()).into(holder.feed_image);
+            }
+            else  if (eachNewsFeed.get(position).getNewsFeedArray_chatDetail_type().equalsIgnoreCase("5"))
+            {
+                holder.feed_image.setVisibility(View.VISIBLE);
+                Picasso.with(context).load(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content()).into(holder.feed_image);
+            }
+            else  if (eachNewsFeed.get(position).getNewsFeedArray_chatDetail_type().equalsIgnoreCase("6"))
+            {
+                holder.feed_image.setVisibility(View.VISIBLE);
+                Picasso.with(context).load(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content()).into(holder.feed_image);
+            }
+            else
+            {
+                holder.feed_image.setVisibility(View.GONE);
+            }
+//                if(!(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_type().equalsIgnoreCase("2"))){
+//                holder.feed_image.setVisibility(View.GONE);
+//            }else {
+//                holder.feed_image.setVisibility(View.VISIBLE);
+////                Log.e("FeedsAdapter++ChatDetailContent", eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content());
+//                Picasso.with(context).load(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content()).into(holder.feed_image);
+//            }
+  /*
         Condition for Audio Type 3
          */
             if (!(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_type().equalsIgnoreCase("3"))) {
@@ -133,25 +162,30 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
                 holder.audio_layout.setVisibility(View.VISIBLE);
             }
              /*
-        Condition for Image - Type 2
-         */
-
-            if(!(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_type().equalsIgnoreCase("2"))){
-                holder.feed_image.setVisibility(View.GONE);
-            }else {
-                holder.feed_image.setVisibility(View.VISIBLE);
-//                Log.e("FeedsAdapter++ChatDetailContent", eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content());
-                Picasso.with(context).load(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content()).into(holder.feed_image);
-            }
-
              /*
-        Condition for Audio Type 4
+        Condition for Video Type 4
          */
                 if (!(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_type().equalsIgnoreCase("4"))) {
                     holder.video_layout.setVisibility(View.GONE);
                 } else {
                     holder.video_layout.setVisibility(View.VISIBLE);
                 }
+            /*Condition for Trade Cards Type 5
+                    */
+//            if (!(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_type().equalsIgnoreCase("5"))) {
+//                holder.feed_image.setVisibility(View.GONE);
+//            } else {
+//                holder.feed_image.setVisibility(View.VISIBLE);
+//                Picasso.with(context).load(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content()).into(holder.feed_image);
+//            }
+           /* Condition for Location Type 6
+                    */
+//            if (!(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_type().equalsIgnoreCase("6"))) {
+//                holder.feed_image.setVisibility(View.GONE);
+//            } else {
+//                holder.feed_image.setVisibility(View.VISIBLE);
+//              Picasso.with(context).load(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content()).into(holder.feed_image);
+//            }
         }
         else
         {
@@ -167,10 +201,17 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
         holder.feed_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i  = new Intent(context,Feed_large_img.class);
-                i.putExtra("url",eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content());
+                if (eachNewsFeed.get(position).getNewsFeedArray_chatDetail_type().equalsIgnoreCase("2")) {
+                    Intent i = new Intent(context, Feed_large_img.class);
+                    i.putExtra("url", eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content());
+                    context.startActivity(i);
+                }
+                else  if (eachNewsFeed.get(position).getNewsFeedArray_chatDetail_type().equalsIgnoreCase("5")){
 
-                context.startActivity(i);
+                }
+                else  if (eachNewsFeed.get(position).getNewsFeedArray_chatDetail_type().equalsIgnoreCase("6")){
+
+                }
             }
         });
         holder.feed_audio_button.setOnClickListener(new View.OnClickListener() {
@@ -190,10 +231,13 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
             public void onClick(View view) {
                 //initializeMediaPlayer(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content());
 
-                Uri myUri = Uri.parse(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content());
+                Uri myUri = Uri.parse(
+//                        "http://download.wavetlan.com/SVV/Media/HTTP/H264/Talkinghead_Media/H264_test1_Talkinghead_mp4_480x360.mp4");
+//                        "http://www.androidbegin.com/tutorial/AndroidCommercial.3gp");
+                        eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content());
                 Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_VIEW);
-                intent.setDataAndType(myUri, "video/mp4");
+                intent.setDataAndType(myUri, "video/*");
                 context.startActivity(intent);
 
 

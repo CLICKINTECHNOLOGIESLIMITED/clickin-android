@@ -303,7 +303,7 @@ public class SimpleSectionedListAdapter2 extends BaseAdapter implements PinnedSe
                 @Override
                 public void onClick(View v) {
                     String phNo;
-                    if(view.getText().toString().trim().equalsIgnoreCase(mSections.get(position).senderName.toString()))
+                    if(view1.getText().toString().trim().equalsIgnoreCase(mSections.get(position).senderName.toString()))
                     {
                         phNo = mSections.get(position).senderPhNo;
                     }
