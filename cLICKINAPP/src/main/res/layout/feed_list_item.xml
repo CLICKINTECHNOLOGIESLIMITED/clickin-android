@@ -18,7 +18,7 @@
             android:layout_centerHorizontal="true"
             android:scaleType="centerCrop"
             android:src="@drawable/female_crt"
-            android:visibility="visible"/>
+            android:visibility="gone"/>
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -55,6 +55,68 @@
                 android:background="@drawable/play"
                 android:layout_centerInParent="true"
               />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+
+            android:background="@color/light_gray"
+            android:visibility="visible"
+            android:id="@+id/card_layout">
+            <RelativeLayout
+                android:layout_width="150dp"
+                android:layout_height="200dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/card"
+                android:visibility="visible"
+                android:id="@+id/cards_relative">
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_margin="10dp"
+                    >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:text="10"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:id="@+id/card_count_1"
+                    android:layout_centerVertical="true"/>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/c_clicks_heart"
+                        android:layout_toRightOf="@+id/card_count_1"
+                        android:layout_marginLeft="2dp"/>
+                    </RelativeLayout>
+<
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_margin="5dp"
+                    android:layout_alignParentRight="true">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:text="10"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:id="@+id/card_count_2"
+                        />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/c_clicks_heart"
+                        android:layout_toRightOf="@+id/card_count_2"
+                        android:layout_marginLeft="2dp"/>
+                </RelativeLayout>
+                </RelativeLayout>
+
         </RelativeLayout>
         </RelativeLayout>
         <RelativeLayout

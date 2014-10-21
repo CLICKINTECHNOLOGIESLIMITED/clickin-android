@@ -321,6 +321,9 @@ public class SimpleSectionedListAdapter2 extends BaseAdapter implements PinnedSe
                 Log.e("timeOfFeed=", mSections.get(position).timeOfFeed);
                 feed_time.setText(Utils.getLocalDate(mSections.get(position).timeOfFeed));
             }
+            if((mSections.get(position).senderId)==null)
+                return null;
+            else
             return convertView;
 
         } else {

@@ -113,21 +113,23 @@ public class FeedView extends ClickInBaseView implements View.OnClickListener{
         headerPosition=0;
 
         for(NewsFeedBean eachNewsFeed : newsFeedBeanArrayList){
-            senderName.add(eachNewsFeed.getNewsFeedArray_senderDetail_name());
-            Log.e("senderName",eachNewsFeed.getNewsFeedArray_senderDetail_name());
-            senderId.add(eachNewsFeed.getNewsFeedArray_senderDetail_id());
-            receiverName.add(eachNewsFeed.getNewsFeedArray_receiverDetail_name());
-            receiverId.add(eachNewsFeed.getNewsFeedArray_receiverDetail_id());
-            senderImages.add(eachNewsFeed.getNewsFeedArray_senderDetail_user_pic());
-            recieverImages.add(eachNewsFeed.getNewsFeedArray_receiverDetail_user_pic());
-            senderPhNo.add(eachNewsFeed.getNewsFeedArray_senderDetail_phno());
-            recieverPhNo.add(eachNewsFeed.getNewsFeedArray_receiverDetail_phno());
-            Log.e("created time", String.valueOf(eachNewsFeed.getNewsfeedArray_created()));
+//            if(!eachNewsFeed.getNewsFeedArray_senderDetail_name().equalsIgnoreCase("null")) {
+                senderName.add(eachNewsFeed.getNewsFeedArray_senderDetail_name());
+                Log.e("senderName", eachNewsFeed.getNewsFeedArray_senderDetail_name());
+                senderId.add(eachNewsFeed.getNewsFeedArray_senderDetail_id());
+                receiverName.add(eachNewsFeed.getNewsFeedArray_receiverDetail_name());
+                receiverId.add(eachNewsFeed.getNewsFeedArray_receiverDetail_id());
+                senderImages.add(eachNewsFeed.getNewsFeedArray_senderDetail_user_pic());
+                recieverImages.add(eachNewsFeed.getNewsFeedArray_receiverDetail_user_pic());
+                senderPhNo.add(eachNewsFeed.getNewsFeedArray_senderDetail_phno());
+                recieverPhNo.add(eachNewsFeed.getNewsFeedArray_receiverDetail_phno());
+                Log.e("created time", String.valueOf(eachNewsFeed.getNewsfeedArray_created()));
 //            timeOfFeed.add(eachNewsFeed.getNewsfeedArray_created().substring(eachNewsFeed.getNewsfeedArray_created().indexOf(" ")+1));
-            timeOfFeed.add(eachNewsFeed.getNewsfeedArray_created());
-            Log.e("headerPosition ",""+headerPosition);
-            mHeaderPositions.add(headerPosition);
-            headerPosition = headerPosition+1;
+                timeOfFeed.add(eachNewsFeed.getNewsfeedArray_created());
+                Log.e("headerPosition ", "" + headerPosition);
+                mHeaderPositions.add(headerPosition);
+                headerPosition = headerPosition + 1;
+//            }
 
         }
 

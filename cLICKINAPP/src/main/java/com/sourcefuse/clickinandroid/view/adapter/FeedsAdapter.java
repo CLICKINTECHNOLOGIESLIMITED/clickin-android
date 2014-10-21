@@ -515,7 +515,8 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
                 holder.feed_star_user.setClickable(true);
             }
         }
-        return row;
+
+            return row;
     }
 
     private void initializeMediaPlayer(String audioContent) {
