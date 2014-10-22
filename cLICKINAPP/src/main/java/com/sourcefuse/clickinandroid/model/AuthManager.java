@@ -48,6 +48,7 @@ public class AuthManager extends Observable implements AuthManagerI {
         } catch (Exception e1) {
             e1.printStackTrace();
         }
+        Log.e("SIGNIN url",APIs.SIGNIN);
         client.post(null, APIs.SIGNIN, se, "application/json",
                 new JsonHttpResponseHandler() {
 

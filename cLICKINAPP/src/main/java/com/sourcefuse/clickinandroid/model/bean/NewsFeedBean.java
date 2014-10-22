@@ -1,5 +1,7 @@
 package com.sourcefuse.clickinandroid.model.bean;
 
+import org.json.JSONArray;
+
 import java.util.ArrayList;
 
 /**
@@ -119,11 +121,11 @@ public class NewsFeedBean {
         this.newsFeedArray_chatDetail_id = newsFeedArray_chatDetail_id;
     }
 
-    public String getNewsFeedArray_chatDetail_cards() {
+    public JSONArray getNewsFeedArray_chatDetail_cards() {
         return newsFeedArray_chatDetail_cards;
     }
 
-    public void setNewsFeedArray_chatDetail_cards(String newsFeedArray_chatDetail_cards) {
+    public void setNewsFeedArray_chatDetail_cards(JSONArray newsFeedArray_chatDetail_cards) {
         this.newsFeedArray_chatDetail_cards = newsFeedArray_chatDetail_cards;
     }
 
@@ -469,7 +471,7 @@ public class NewsFeedBean {
     private String newsFeedArray_follower_user_id_user_id;
     private String newsFeedArray_chatDetail_QB_id;
     private String newsFeedArray_chatDetail_id;
-    private String newsFeedArray_chatDetail_cards;
+    private JSONArray newsFeedArray_chatDetail_cards;
     private String newsFeedArray_chatDetail_chatId;
     private String newsFeedArray_chatDetail_clicks="0";
     private String newsFeedArray_chatDetail_comments_count;

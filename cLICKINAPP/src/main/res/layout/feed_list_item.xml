@@ -59,9 +59,9 @@
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-
+android:layout_centerHorizontal="true"
             android:background="@color/light_gray"
-            android:visibility="visible"
+            android:visibility="gone"
             android:id="@+id/card_layout">
             <RelativeLayout
                 android:layout_width="150dp"
@@ -80,7 +80,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
-                    android:text="10"
+                    android:text="0"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:id="@+id/card_count_1"
@@ -92,7 +92,7 @@
                         android:layout_toRightOf="@+id/card_count_1"
                         android:layout_marginLeft="2dp"/>
                     </RelativeLayout>
-<
+
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -103,7 +103,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/white"
-                        android:text="10"
+                        android:text="0"
                         android:textSize="20sp"
                         android:textStyle="bold"
                         android:id="@+id/card_count_2"
@@ -116,7 +116,31 @@
                         android:layout_marginLeft="2dp"/>
                 </RelativeLayout>
                 </RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
 
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:id="@+id/card_status"
+                android:layout_toRightOf="@+id/cards_relative"
+                android:padding="20dp"/>
+            <View
+                android:layout_width="200dp"
+                android:layout_height="2dp"
+                android:background="@color/dark_gray"
+                android:layout_below="@+id/card_status"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@+id/cards_relative"></View>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/accepted_btn"
+                android:layout_below="@+id/card_status"
+                android:padding="10dp"
+                android:layout_toRightOf="@+id/cards_relative"/>
         </RelativeLayout>
         </RelativeLayout>
         <RelativeLayout
@@ -250,7 +274,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="charu"
+
                     android:textColor="@color/feed_senderuser"
                     android:textSize="16sp"
                     android:id="@+id/name2"
@@ -258,7 +282,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="charu"
+
                     android:paddingLeft="5dp"
                     android:textColor="@color/black"
                     android:textSize="16sp"
@@ -274,7 +298,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="charu"
+
                     android:textColor="@color/feed_senderuser"
                     android:textSize="16sp"
                     android:id="@+id/name3"
@@ -282,7 +306,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="charu"
+
                     android:paddingLeft="5dp"
                     android:textColor="@color/black"
                     android:textSize="16sp"
@@ -298,7 +322,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="charu"
+
                     android:textColor="@color/feed_senderuser"
                     android:textSize="16sp"
                     android:id="@+id/name4"
@@ -306,7 +330,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="charu"
+
                     android:paddingLeft="5dp"
                     android:textColor="@color/black"
                     android:textSize="16sp"

@@ -128,8 +128,8 @@ JSONObject chatObj = newsfeedArray.getJSONObject(i).getJSONObject("chatDetail");
                                 if (newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").has("_id"))
                                     allNewsFeed.setNewsFeedArray_chatDetail_id(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getString("_id"));
 
-                                if (newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").has("cards"))
-                                    allNewsFeed.setNewsFeedArray_chatDetail_cards(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getString("cards"));
+//                                if (newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").has("cards"))
+//                                    allNewsFeed.setNewsFeedArray_chatDetail_cards(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getJSONArray("cards"));
 
                                 if (newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").has("chatId"))
                                     allNewsFeed.setNewsFeedArray_chatDetail_chatId(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getString("chatId"));

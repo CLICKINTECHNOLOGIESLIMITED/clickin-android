@@ -29,6 +29,9 @@ import com.sourcefuse.clickinandroid.view.Feed_large_img;
 import com.sourcefuse.clickinapp.R;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -88,6 +91,10 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
             holder.audio_layout = (LinearLayout)row.findViewById(R.id.audio_layout);
             holder.video_layout = (RelativeLayout)row.findViewById(R.id.video_layout);
             holder.video_thumb = (ImageView)row.findViewById(R.id.video_thumb);
+            holder.card_layout = (RelativeLayout)row.findViewById(R.id.card_layout);
+            holder.card_count1 = (TextView)row.findViewById(R.id.card_count_1);
+            holder.card_count2 = (TextView)row.findViewById(R.id.card_count_2);
+            holder.card_status = (TextView)row.findViewById(R.id.card_status);
             row.setTag(holder);
         } else {
             holder = (RecordHolder) row.getTag();
@@ -125,18 +132,14 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
 //        Log.e("FeedsAdapter++ChatDetailType",eachNewsFeed.get(position).getNewsFeedArray_chatDetail_type());
         if(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_type()!=null) {
 
-       /* Condition for Image - Type 2
+       /* Condition for Image - Type 2 & 6
          */
             if (eachNewsFeed.get(position).getNewsFeedArray_chatDetail_type().equalsIgnoreCase("2"))
             {
                 holder.feed_image.setVisibility(View.VISIBLE);
                 Picasso.with(context).load(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content()).into(holder.feed_image);
             }
-            else  if (eachNewsFeed.get(position).getNewsFeedArray_chatDetail_type().equalsIgnoreCase("5"))
-            {
-                holder.feed_image.setVisibility(View.VISIBLE);
-                Picasso.with(context).load(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content()).into(holder.feed_image);
-            }
+
             else  if (eachNewsFeed.get(position).getNewsFeedArray_chatDetail_type().equalsIgnoreCase("6"))
             {
                 holder.feed_image.setVisibility(View.VISIBLE);
@@ -172,20 +175,23 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
                 }
             /*Condition for Trade Cards Type 5
                     */
-//            if (!(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_type().equalsIgnoreCase("5"))) {
-//                holder.feed_image.setVisibility(View.GONE);
-//            } else {
-//                holder.feed_image.setVisibility(View.VISIBLE);
-//                Picasso.with(context).load(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content()).into(holder.feed_image);
-//            }
-           /* Condition for Location Type 6
-                    */
-//            if (!(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_type().equalsIgnoreCase("6"))) {
-//                holder.feed_image.setVisibility(View.GONE);
-//            } else {
-//                holder.feed_image.setVisibility(View.VISIBLE);
-//              Picasso.with(context).load(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content()).into(holder.feed_image);
-//            }
+            if (!(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_type().equalsIgnoreCase("5"))) {
+                holder.card_layout.setVisibility(View.GONE);
+            } else {
+                holder.card_layout.setVisibility(View.VISIBLE);
+                JSONArray cards = eachNewsFeed.get(position).getNewsFeedArray_chatDetail_cards();
+                if(cards.length()>=10)
+                {
+                    try {
+                        holder.card_count1.setText(cards.get(4).toString());
+                        holder.card_count2.setText(cards.get(4).toString());
+                        holder.card_status.setText(cards.get(5).toString());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
         }
         else
         {
@@ -539,8 +545,8 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
     static class RecordHolder {
         ImageView feed_image,feed_remove_post,feed_report_post;
         ImageView feed_menu;
-        RelativeLayout layout,layout_clickin;
-        TextView clickedIn,feed_star_user,clickedInMessage;
+        RelativeLayout layout,layout_clickin,card_layout;
+        TextView clickedIn,feed_star_user,clickedInMessage,card_count1,card_count2,card_status;
         Button feed_audio_button,feed_video_button;
         LinearLayout feed_comments_layout4,feed_comments_layout1,feed_comments_layout2,feed_comments_layout3,feed_comments_layout;
         TextView name2,comment2, name3, comment3, name4, comment4,no_comments;
