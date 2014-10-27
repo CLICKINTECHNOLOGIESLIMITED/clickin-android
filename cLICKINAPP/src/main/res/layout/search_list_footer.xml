@@ -20,6 +20,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_search_message"
         android:layout_marginLeft="5dp"
-        android:background="@drawable/follow" />
+        android:background="@drawable/invite_btn" />
 
 </RelativeLayout>
