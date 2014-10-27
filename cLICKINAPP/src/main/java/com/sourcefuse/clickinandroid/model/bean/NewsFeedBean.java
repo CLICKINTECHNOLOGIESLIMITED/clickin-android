@@ -480,7 +480,7 @@ public class NewsFeedBean {
     private String newsFeedArray_chatDetail_imageRatio;
     private String newsFeedArray_chatDetail_isDelievered;
     private String newsFeedArray_chatDetail_location_coordinates;
-    private String newsFeedArray_chatDetail_message;
+    private String newsFeedArray_chatDetail_message="";
     private String newsFeedArray_chatDetail_relationshipId;
     private String newsFeedArray_chatDetail_senderUserToken;
     private String newsFeedArray_chatDetail_sentOn;

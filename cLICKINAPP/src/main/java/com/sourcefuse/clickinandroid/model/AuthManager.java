@@ -41,6 +41,7 @@ public class AuthManager extends Observable implements AuthManagerI {
             userInputDetails.put("password", password);
             userInputDetails.put("device_type", deviceType);
 
+            Log.e("SIGNIN json",userInputDetails.toString());
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,

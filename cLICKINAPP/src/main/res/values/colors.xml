@@ -49,7 +49,7 @@
     <color name="defult_hint_clr">#808080</color>
     <color name="phone_no_clr">#364566</color>
     <color name="chat_notification">#f29691</color>
-
+<color name="lightest_gray">#F6F6F6</color>
     <color name="edit_profile_clr">#E6E6E6</color>
 
     <color name="feed_senderuser">#01DFD7</color>

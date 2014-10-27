@@ -238,6 +238,14 @@ public class SimpleSectionedListAdapter2 extends BaseAdapter implements PinnedSe
                             if (mSections.get(position).recieverName.toString().equalsIgnoreCase("null"))
                                 mSections.get(position).recieverName = "";
                         }
+                    if(mSections.get(position).senderId.toString().equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getUserId()))
+                    {
+                        view.setText(mSections.get(position).senderName);
+                        view1.setText(mSections.get(position).recieverName);
+                        Picasso.with(mContext).load(mSections.get(position).senderImages).placeholder(R.drawable.dcontact).into(imageview);
+                        doubleArrow.setImageResource(R.drawable.arrow);
+                    }
+                    else {
                         if (prMgr.following != null) {
                             for (int i = 0; i < prMgr.following.size(); i++) {
                                 if ((mSections.get(position).senderId).toString().equalsIgnoreCase(prMgr.following.get(i).getFolloweeId())) {
@@ -257,14 +265,13 @@ public class SimpleSectionedListAdapter2 extends BaseAdapter implements PinnedSe
 //                                    }
                                 }
                             }
-                        }
-                    else
-                        {
+                        } else {
                             view.setText(mSections.get(position).senderName);
                             view1.setText(mSections.get(position).recieverName);
                             Picasso.with(mContext).load(mSections.get(position).senderImages).placeholder(R.drawable.dcontact).into(imageview);
                             doubleArrow.setImageResource(R.drawable.arrow);
                         }
+                    }
 //                    if ((mSections.get(position).senderId).toString().equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getUserId())) {
 //
 //                        view.setText(mSections.get(position).senderName);

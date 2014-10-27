@@ -3575,26 +3575,22 @@
       <change type="DELETED" beforePath="$PROJECT_DIR$/slider_library/build/source/r/debug/com/jeremyfeinstein/slidingmenu/lib/R.java" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/slider_library/build/source/r/r8.iml" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/slider_library/build/source/r/release/com/jeremyfeinstein/slidingmenu/lib/R.java" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/cropper/unspecified/classes.jar" afterPath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/cropper/unspecified/classes.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/facebookSDK/unspecified/classes.jar" afterPath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/facebookSDK/unspecified/classes.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/library/unspecified/classes.jar" afterPath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/library/unspecified/classes.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/library_header/unspecified/classes.jar" afterPath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/library_header/unspecified/classes.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/slider_library/unspecified/classes.jar" afterPath="$PROJECT_DIR$/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/slider_library/unspecified/classes.jar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/model_data.bin" afterPath="$PROJECT_DIR$/build/intermediates/model_data.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/utils/APIs.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/utils/APIs.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/model/AuthManager.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/model/AuthManager.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/adapter/FeedsAdapter.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/adapter/FeedsAdapter.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/model/bean/NewsFeedBean.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/model/bean/NewsFeedBean.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/model/NewsFeedManager.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/model/NewsFeedManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/build/generated/source/r/debug/com/facebook/android/R.java" afterPath="$PROJECT_DIR$/cLICKINAPP/build/generated/source/r/debug/com/facebook/android/R.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/build/generated/source/r/debug/android/support/v7/appcompat/R.java" afterPath="$PROJECT_DIR$/cLICKINAPP/build/generated/source/r/debug/android/support/v7/appcompat/R.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/build/generated/source/r/debug/com/google/android/gms/R.java" afterPath="$PROJECT_DIR$/cLICKINAPP/build/generated/source/r/debug/com/google/android/gms/R.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/build/generated/source/r/debug/com/handmark/pulltorefresh/library/R.java" afterPath="$PROJECT_DIR$/cLICKINAPP/build/generated/source/r/debug/com/handmark/pulltorefresh/library/R.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/build/generated/source/r/debug/com/jeremyfeinstein/slidingmenu/lib/R.java" afterPath="$PROJECT_DIR$/cLICKINAPP/build/generated/source/r/debug/com/jeremyfeinstein/slidingmenu/lib/R.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/build/generated/source/r/debug/com/sourcefuse/clickinapp/R.java" afterPath="$PROJECT_DIR$/cLICKINAPP/build/generated/source/r/debug/com/sourcefuse/clickinapp/R.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/build/generated/source/r/debug/com/viewpagerindicator/R.java" afterPath="$PROJECT_DIR$/cLICKINAPP/build/generated/source/r/debug/com/viewpagerindicator/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/appcompat_v7_20_0_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/appcompat_v7_20_0_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" afterPath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/adapter/SimpleSectionedListAdapter2.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/adapter/SimpleSectionedListAdapter2.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/res/values/colors.xml" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/res/values/colors.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/feed_list_item.xml" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/feed_list_item.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/support_v4_20_0_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/support_v4_20_0_0.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_feedview_list.xml" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_feedview_list.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="clickin-andoid.iws" />
@@ -3618,21 +3614,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="FeedsCommentsAdapter.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/adapter/FeedsCommentsAdapter.java">
+      <file leaf-file-name="FeedsAdapter.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/adapter/FeedsAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1050" max-vertical-offset="1455">
-              <caret line="70" column="96" selection-start-line="70" selection-start-column="8" selection-end-line="70" selection-end-column="96" />
+            <state vertical-scroll-proportion="22.117647" vertical-offset="974" max-vertical-offset="8250">
+              <caret line="127" column="89" selection-start-line="127" selection-start-column="89" selection-end-line="127" selection-end-column="89" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FeedsAdapter.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/adapter/FeedsAdapter.java">
+      <file leaf-file-name="APIs.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/utils/APIs.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1915" max-vertical-offset="7515">
-              <caret line="192" column="13" selection-start-line="192" selection-start-column="13" selection-end-line="192" selection-end-column="13" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1095">
+              <caret line="8" column="12" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
               <folding />
             </state>
           </provider>
@@ -3644,23 +3640,18 @@
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="10.412699" vertical-offset="1931" max-vertical-offset="6525">
-              <caret line="85" column="49" selection-start-line="85" selection-start-column="37" selection-end-line="85" selection-end-column="49" />
-              <folding>
-                <element signature="e#565#591#0" expanded="true" />
-                <element signature="e#626#652#0" expanded="true" />
-                <element signature="e#1765#1791#0" expanded="true" />
-                <element signature="e#1830#1856#0" expanded="true" />
-              </folding>
+            <state vertical-scroll-proportion="-15.967742" vertical-offset="2040" max-vertical-offset="6660">
+              <caret line="169" column="12" selection-start-line="169" selection-start-column="12" selection-end-line="169" selection-end-column="12" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="NewsFeedManager.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/model/NewsFeedManager.java">
+      <file leaf-file-name="colors.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/values/colors.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.36602452" vertical-offset="1486" max-vertical-offset="10200">
-              <caret line="132" column="0" selection-start-line="132" selection-start-column="0" selection-end-line="132" selection-end-column="0" />
+            <state vertical-scroll-proportion="-12.59375" vertical-offset="302" max-vertical-offset="1215">
+              <caret line="47" column="58" selection-start-line="47" selection-start-column="58" selection-end-line="47" selection-end-column="58" />
               <folding />
             </state>
           </provider>
@@ -7857,21 +7848,22 @@
         <option value="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/UserProfileView.java" />
         <option value="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_signin.xml" />
         <option value="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/utils/Constants.java" />
-        <option value="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_feedview_list.xml" />
         <option value="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_userprofile.xml" />
         <option value="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/FeedStarsView.java" />
         <option value="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/FeedCommentsView.java" />
         <option value="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/Feed_large_img.java" />
         <option value="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_getuserprofile.xml" />
-        <option value="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/adapter/SimpleSectionedListAdapter2.java" />
         <option value="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/FeedView.java" />
         <option value="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_feeds_comments.xml" />
         <option value="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/model/AuthManager.java" />
-        <option value="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/feed_list_item.xml" />
-        <option value="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/model/bean/NewsFeedBean.java" />
-        <option value="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/adapter/FeedsAdapter.java" />
-        <option value="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/utils/APIs.java" />
         <option value="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/model/NewsFeedManager.java" />
+        <option value="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/utils/APIs.java" />
+        <option value="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/adapter/SimpleSectionedListAdapter2.java" />
+        <option value="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_feedview_list.xml" />
+        <option value="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/model/bean/NewsFeedBean.java" />
+        <option value="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/feed_list_item.xml" />
+        <option value="$PROJECT_DIR$/cLICKINAPP/src/main/res/values/colors.xml" />
+        <option value="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/adapter/FeedsAdapter.java" />
       </list>
     </option>
   </component>
@@ -7880,6 +7872,25 @@
     <option name="y" value="24" />
     <option name="width" value="1301" />
     <option name="height" value="744" />
+  </component>
+  <component name="ProjectInspectionProfilesVisibleTreeState">
+    <entry key="Project Default">
+      <profile-state>
+        <expanded-state>
+          <State>
+            <id />
+          </State>
+          <State>
+            <id>Android Lint</id>
+          </State>
+        </expanded-state>
+        <selected-state>
+          <State>
+            <id>AndroidLintResourceAsColor</id>
+          </State>
+        </selected-state>
+      </profile-state>
+    </entry>
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -7907,9 +7918,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="AndroidView" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -7986,6 +7994,198 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="clickin-andoid" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="clickin-andoid" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cLICKINAPP" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="values" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="clickin-andoid" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="clickin-andoid" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cLICKINAPP" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="layout" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="clickin-andoid" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="clickin-andoid" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cLICKINAPP" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="clickinandroid" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="view" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="clickin-andoid" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="clickin-andoid" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cLICKINAPP" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="clickinandroid" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="view" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="adapter" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="clickin-andoid" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="clickin-andoid" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cLICKINAPP" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="clickinandroid" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="utils" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="clickin-andoid" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="clickin-andoid" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cLICKINAPP" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="java" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -8030,6 +8230,9 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="AndroidView" />
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -8040,7 +8243,7 @@
     <property name="MemberChooser.showClasses" value="true" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="recentsLimit" value="5" />
-    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="015d483bd53bf80e" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="MedfieldE2977CEE" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="test" />
     <property name="FullScreen" value="false" />
   </component>
@@ -8298,7 +8501,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="24" width="1301" height="744" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32954547" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290938" sideWeight="0.49960285" order="14" side_tool="false" content_ui="tabs" />
@@ -8309,13 +8512,13 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.66883117" sideWeight="0.50039905" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32881084" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" x="171" y="292" width="1101" height="544" />
+      <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32801276" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" x="171" y="292" width="1101" height="544" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32801276" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33279222" sideWeight="0.49960095" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32792208" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.66883117" sideWeight="0.49960095" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.89935064" sideWeight="0.49960095" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.66883117" sideWeight="0.50039905" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25379092" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
@@ -8354,20 +8557,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/CurrentClickersView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="2609" max-vertical-offset="3180">
-          <caret line="245" column="0" selection-start-line="238" selection-start-column="4" selection-end-line="245" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/model/ProfileManagerI.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="360">
-          <caret line="16" column="60" selection-start-line="16" selection-start-column="51" selection-end-line="16" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/model/bean/FeedStarsBean.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.73555166" vertical-offset="15" max-vertical-offset="1530">
@@ -8399,16 +8588,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.0277778" vertical-offset="360" max-vertical-offset="1200">
           <caret line="61" column="47" selection-start-line="61" selection-start-column="47" selection-end-line="61" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/list_item_header.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.30555555" vertical-offset="120" max-vertical-offset="660">
-          <caret line="19" column="5" selection-start-line="19" selection-start-column="5" selection-end-line="19" selection-end-column="5" />
         </state>
       </provider>
     </entry>
@@ -8492,16 +8671,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.41155866" vertical-offset="275" max-vertical-offset="7425">
           <caret line="74" column="56" selection-start-line="74" selection-start-column="56" selection-end-line="74" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_feedview_list.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1425">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -8608,13 +8777,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/values/colors.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="631" max-vertical-offset="1215">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/drawable/card_text_color_state.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="584">
@@ -8656,13 +8818,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/adapter/SimpleSectionedListAdapter2.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="3860" max-vertical-offset="4530">
-          <caret line="323" column="50" selection-start-line="323" selection-start-column="50" selection-end-line="323" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/FeedView.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.44341373" vertical-offset="1516" max-vertical-offset="2850">
@@ -8678,14 +8833,6 @@
           <folding>
             <element signature="e#482#496#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/adapter/FeedsCommentsAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="496" max-vertical-offset="1080">
-          <caret line="70" column="96" selection-start-line="70" selection-start-column="8" selection-end-line="70" selection-end-column="96" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -8708,36 +8855,105 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/model/bean/NewsFeedBean.java">
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/model/AuthManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3321918" vertical-offset="1291" max-vertical-offset="7680">
-          <caret line="123" column="20" selection-start-line="123" selection-start-column="20" selection-end-line="123" selection-end-column="20" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
+        <state vertical-scroll-proportion="0.6232877" vertical-offset="176" max-vertical-offset="13320">
+          <caret line="51" column="40" selection-start-line="51" selection-start-column="40" selection-end-line="51" selection-end-column="40" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/adapter/FeedsAdapter.java">
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/adapter/FeedsCommentsAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1915" max-vertical-offset="7515">
-          <caret line="192" column="13" selection-start-line="192" selection-start-column="13" selection-end-line="192" selection-end-column="13" />
+        <state vertical-scroll-proportion="0.94863015" vertical-offset="121" max-vertical-offset="1080">
+          <caret line="70" column="96" selection-start-line="70" selection-start-column="8" selection-end-line="70" selection-end-column="96" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/adapter/SimpleSectionedListAdapter2.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-14.03125" vertical-offset="3001" max-vertical-offset="4635">
+          <caret line="267" column="25" selection-start-line="267" selection-start-column="25" selection-end-line="267" selection-end-column="25" />
+          <folding>
+            <element signature="e#14520#14521#0" expanded="true" />
+            <element signature="e#14576#14577#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/utils/APIs.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.025684932" vertical-offset="0" max-vertical-offset="1095">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1095">
+          <caret line="8" column="12" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/model/AuthManager.java">
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/list_item.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6322464" vertical-offset="176" max-vertical-offset="13305">
-          <caret line="50" column="38" selection-start-line="50" selection-start-column="38" selection-end-line="50" selection-end-column="38" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="540">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/list_item_header.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.322581" vertical-offset="120" max-vertical-offset="660">
+          <caret line="19" column="5" selection-start-line="19" selection-start-column="5" selection-end-line="19" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/list_item_header_feed.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1530">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_feedview_list.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.108499095" vertical-offset="0" max-vertical-offset="1425">
+          <caret line="4" column="36" selection-start-line="4" selection-start-column="36" selection-end-line="4" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/model/NewsFeedManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3320965" vertical-offset="2086" max-vertical-offset="10215">
+          <caret line="170" column="87" selection-start-line="170" selection-start-column="52" selection-end-line="170" selection-end-column="87" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/model/bean/NewsFeedBean.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="6226" max-vertical-offset="7650">
+          <caret line="482" column="54" selection-start-line="482" selection-start-column="54" selection-end-line="482" selection-end-column="54" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/values/colors.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-12.59375" vertical-offset="302" max-vertical-offset="1215">
+          <caret line="47" column="58" selection-start-line="47" selection-start-column="58" selection-end-line="47" selection-end-column="58" />
           <folding />
         </state>
       </provider>
@@ -8747,21 +8963,16 @@
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="10.412699" vertical-offset="1931" max-vertical-offset="6525">
-          <caret line="85" column="49" selection-start-line="85" selection-start-column="37" selection-end-line="85" selection-end-column="49" />
-          <folding>
-            <element signature="e#565#591#0" expanded="true" />
-            <element signature="e#626#652#0" expanded="true" />
-            <element signature="e#1765#1791#0" expanded="true" />
-            <element signature="e#1830#1856#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="-15.967742" vertical-offset="2040" max-vertical-offset="6660">
+          <caret line="169" column="12" selection-start-line="169" selection-start-column="12" selection-end-line="169" selection-end-column="12" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/model/NewsFeedManager.java">
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/adapter/FeedsAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.36602452" vertical-offset="1486" max-vertical-offset="10200">
-          <caret line="132" column="0" selection-start-line="132" selection-start-column="0" selection-end-line="132" selection-end-column="0" />
+        <state vertical-scroll-proportion="22.117647" vertical-offset="974" max-vertical-offset="8250">
+          <caret line="127" column="89" selection-start-line="127" selection-start-column="89" selection-end-line="127" selection-end-column="89" />
           <folding />
         </state>
       </provider>
