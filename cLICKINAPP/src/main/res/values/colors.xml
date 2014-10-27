@@ -16,6 +16,7 @@
     <color name="optionbar">#303030</color>
     <color name="stylepage">#21048320</color>
     <color name="transparent">#00000000</color>
+    <color name="dialog_text">#328dd0</color>
     <color name="red">#F11111</color>
     <color name="devider_invitef">#ebebeb</color>
     <color name="updatingtxtclr">#959595</color>
@@ -49,6 +50,7 @@
     <color name="defult_hint_clr">#808080</color>
     <color name="phone_no_clr">#364566</color>
     <color name="chat_notification">#f29691</color>
+    <color name="strip_color_tab">#ffffff</color>
 
     <color name="edit_profile_clr">#E6E6E6</color>
 
@@ -58,7 +60,7 @@
     <color name="common_header_clr">#00b0c7</color>
     <color name="dob_clr">#E6E6E6</color>
     <color name="add_your_photo">#B3B3B3</color>
-
+    <color name="search_friend_color">#898989</color>
     <!--Owner Profile-->
 
     <color name="row_select_notification_bg">#39cad4</color>

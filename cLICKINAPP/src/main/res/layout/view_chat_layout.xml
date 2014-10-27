@@ -67,7 +67,7 @@ android:layout_height="fill_parent">
             android:layout_width="wrap_content"
             android:layout_toRightOf="@+id/iv_my_pix"
             android:layout_centerVertical="true"
-            android:textColor="@color/usr_name"
+            android:textColor="@color/chat_notification"
             android:layout_marginLeft="5dp"
             android:layout_height="wrap_content"
             android:textStyle="bold"
@@ -92,7 +92,7 @@ android:layout_height="fill_parent">
             android:layout_width="wrap_content"
             android:layout_toLeftOf="@+id/iv_heart_icon_partner"
             android:layout_centerVertical="true"
-            android:textColor="@color/usr_name"
+            android:textColor="@color/chat_notification"
             android:layout_height="wrap_content"
             android:textStyle="bold"
             android:layout_marginRight="5dp"
@@ -163,8 +163,8 @@ android:layout_height="fill_parent">
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="5dp"
                 android:textColor="@color/profile_name_b"
-                android:textSize="15sp"
-                />
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
             <SeekBar
                 android:id="@+id/seekBar1"
@@ -173,7 +173,7 @@ android:layout_height="fill_parent">
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="35dp"
-                android:layout_marginRight="25dp"
+                android:layout_marginRight="34dp"
                 android:indeterminate="false"
                 android:max="10"
                 android:progressDrawable="@drawable/styled_progress"
@@ -188,8 +188,8 @@ android:layout_height="fill_parent">
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:textColor="@color/profile_name_b"
-                android:textSize="15sp"
-                 />
+                android:textSize="20sp"
+                android:textStyle="bold" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -245,30 +245,32 @@ android:layout_height="fill_parent">
 
             <ImageView
                 android:id="@+id/iv_photo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_marginRight="5dp"
+                android:layout_marginBottom="2dp"
                 android:background="@drawable/r_img_icon" />
 
             <ImageView
-                android:id="@+id/iv_adiuo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
-                android:background="@drawable/r_mic_icon" />
+                android:id="@+id/iv_video"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/r_video_icon" />
 
             <ImageView
                 android:id="@+id/iv_location"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_marginRight="5dp"
                 android:background="@drawable/r_pin_icon" />
 
+
             <ImageView
-                android:id="@+id/iv_video"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/r_video_icon" />
+                android:id="@+id/iv_adiuo"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/r_mic_icon" />
         </LinearLayout>
 
     </RelativeLayout>
@@ -283,7 +285,7 @@ android:layout_height="fill_parent">
     android:background="@drawable/r_middle_header"
     android:orientation="vertical">
 
-    <TextView
+    <com.sourcefuse.clickinandroid.utils.ClickInTextView
         android:id="@+id/tv_profiler"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -292,7 +294,10 @@ android:layout_height="fill_parent">
         android:text="@string/txt_profile"
         android:textColor="@color/owner_profile_header_b"
         android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textAllCaps="true"
+        geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"
+        />
 
     <TextView
         android:id="@+id/tv_typing"
@@ -322,6 +327,7 @@ android:layout_height="fill_parent">
          android:layout_marginBottom="100dp"
         android:visibility="gone"
          android:background="@color/black_opacity">
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

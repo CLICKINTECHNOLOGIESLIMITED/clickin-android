@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.sourcefuse.clickinapp.R;
@@ -15,7 +16,7 @@ import com.squareup.picasso.Picasso;
  */
 public class ImageViewer extends Activity {
 
-    ImageView imageView ,mback ;
+    ImageView imageView  ;
 
     String image ;
     @Override
@@ -23,14 +24,17 @@ public class ImageViewer extends Activity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.chat_image_viewer);
-        mback = (ImageView)findViewById(R.id.iv_back_noti);
-        mback.setOnClickListener(new View.OnClickListener() {
+        final ImageButton butoon = (ImageButton)findViewById(R.id.imageButton);
+
+        butoon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 finish();
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
             }
         });
+
 
         imageView = (ImageView)findViewById(R.id.chat_image);
 

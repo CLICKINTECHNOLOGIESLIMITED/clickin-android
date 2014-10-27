@@ -22,7 +22,7 @@
             android:paddingTop="5dp"
             android:src="@drawable/back_arrow" />
 
-        <TextView
+        <com.sourcefuse.clickinandroid.utils.ClickInTextView
             android:id="@+id/tv_profile_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -30,6 +30,7 @@
             android:layout_marginTop="10dp"
             android:text="EDIT PROFILE"
             android:textColor="@color/owner_profile_header_b"
+            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -42,7 +43,7 @@
             android:layout_marginTop="6dp"
             android:paddingLeft="50dp"
             android:src="@drawable/owner_profile_hedder_icon"
-            android:visibility="gone" />
+            />
     </RelativeLayout>
 
     <LinearLayout
@@ -139,11 +140,15 @@
         android:background="@drawable/c_editprofile_box"
         android:ems="10"
         android:hint="@string/txt_fname"
-        android:inputType="text"
+        android:inputType="textCapWords"
         android:padding="10dp"
         android:textColor="@color/black"
         android:textColorHint="@color/sign_hint"
-        android:textSize="16sp"></EditText>
+        android:textSize="16sp"
+        >
+
+
+        </EditText>
 
     <EditText
         android:id="@+id/edt_my_last"
@@ -155,7 +160,7 @@
         android:background="@drawable/c_editprofile_box"
         android:ems="10"
         android:hint="@string/txt_lname"
-        android:inputType="text"
+        android:inputType="textCapWords"
         android:padding="10dp"
         android:textColor="@color/black"
         android:textColorHint="@color/sign_hint"
@@ -187,7 +192,7 @@
         android:background="@drawable/c_editprofile_box"
         android:ems="10"
         android:hint="@string/txt_city"
-        android:inputType="text"
+        android:inputType="textCapWords"
         android:padding="10dp"
         android:textColor="@color/black"
         android:textColorHint="@color/sign_hint"
@@ -203,7 +208,7 @@
         android:background="@drawable/c_editprofile_box"
         android:ems="10"
         android:hint="@string/txt_cntry"
-        android:inputType="text"
+        android:inputType="textCapWords"
         android:padding="10dp"
         android:textColor="@color/black"
         android:textColorHint="@color/sign_hint"

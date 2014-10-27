@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.Handler;
 import android.telephony.TelephonyManager;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -32,15 +31,12 @@ import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
 import com.sourcefuse.clickinandroid.model.SettingManager;
-import com.sourcefuse.clickinandroid.services.QbChatService;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.ClickInAlertDialog;
 import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.MyPreference;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
-
-import org.jivesoftware.smack.ConnectionListener;
 
 import java.util.Locale;
 
@@ -230,7 +226,8 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
             authManager.getProfileInfo("", authManager.getPhoneNo(), authManager.getUsrToken());
         } else if (getMsg.equalsIgnoreCase("SignIn False")) {
             Utils.dismissBarDialog();
-            Utils.showAlert(SignInView.this, authManager.getMessage());
+            Utils.showAlert(this,AlertMessage.wrong_signIn_details);
+           // Utils.showAlert(SignInView.this, authManager.getMessage());
         } else if (getMsg.equalsIgnoreCase("SignIn Network Error")) {
             Utils.dismissBarDialog();
             Utils.showAlert(act, AlertMessage.connectionError);
