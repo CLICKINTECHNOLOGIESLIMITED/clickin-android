@@ -53,7 +53,7 @@ public class Card extends Activity implements View.OnClickListener,TextWatcher {
 
 
         imageView = (ImageView) findViewById(R.id.trade_image);
-        mBackButton = (ImageView) findViewById(R.id.iv_back_noti);
+        mBackButton = (ImageView) findViewById(R.id.m_back);
         mBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -3,6 +3,7 @@ package com.sourcefuse.clickinandroid.view;
 import android.app.Activity;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.Window;
@@ -18,6 +19,7 @@ import com.sourcefuse.clickinapp.R;
  */
 public class ViewTradeCart extends Activity implements View.OnClickListener
 {
+    TextWatcher textWatcher ;
     ImageView mback ;
     EditText card_text;
     TextView trd_clicks_top,trd_clicks_bottom;
@@ -29,7 +31,7 @@ public class ViewTradeCart extends Activity implements View.OnClickListener
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.view_tradecart);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        mback = (ImageView)findViewById(R.id.iv_back_noti);
+        mback = (ImageView)findViewById(R.id.m_back);
         mback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -55,6 +57,7 @@ public class ViewTradeCart extends Activity implements View.OnClickListener
 
 
         card_text=(EditText)findViewById(R.id.card_text12);
+        card_text.setMaxLines(5);
         card_text.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
@@ -64,12 +67,33 @@ public class ViewTradeCart extends Activity implements View.OnClickListener
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
 
-
+                InputFilter[] FilterArray = new InputFilter[1];
+                FilterArray[0] = new InputFilter.LengthFilter(50);
+                card_text.setFilters(FilterArray);
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
 
+
+//                TextWatcher textWatcher1 = null;
+//               try {
+//                   String s = card_text.getText().toString();
+//
+//                   if (s.length() % 14 == 0 && s.length() > 0) {
+//
+//                       s = s + "\n";
+//
+//                       card_text.removeTextChangedListener(textWatcher1);
+//
+//                       card_text.setText(s);
+//
+//                       card_text.addTextChangedListener(textWatcher1);
+//                   }
+//
+//               }catch (Exception e){
+//                   e.printStackTrace();
+//               }
             }
         });
 

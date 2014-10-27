@@ -41,7 +41,8 @@ public class SettingView extends Activity implements View.OnClickListener {
     private static final String TAG = ChatRecordView.class.getSimpleName();
     boolean checkboolean = false, checkboolean1 = false, checkboolean2 = false, checkboolean3 = false, checkboolean4 = false, checkboolean5 = false, checkboolean6 = false;
 
-    LinearLayout sharing_layout, main_password_layout, password_layout, report_layout, not_working_layout, general_feed_layout, logout_layout;
+    LinearLayout sharing_layout, main_password_layout, password_layout, report_layout, not_working_layout,
+            general_feed_layout, logout_layout;
     int height;
     private Typeface typefacemedium;
     private Typeface typefaceBold;
@@ -303,21 +304,24 @@ public class SettingView extends Activity implements View.OnClickListener {
             case R.id.save_password:
 
                 String old_password, new_password, confirm_password, phone_no, user_token;
-// get value of all passwords
+                // get value of all passwords
                 old_password = ((EditText) findViewById(R.id.old_password)).getText().toString();
                 new_password = ((EditText) findViewById(R.id.new_password)).getText().toString();
                 confirm_password = ((EditText) findViewById(R.id.confirm_password)).getText().toString();
                 phone_no = authManager.getPhoneNo();
                 user_token = authManager.getUsrToken();
 
-                if (!Utils.isEmptyString(old_password) && !Utils.isEmptyString(new_password) && !Utils.isEmptyString(confirm_password) && new_password.equalsIgnoreCase(confirm_password)) {
-                    Utils.launchBarDialog(SettingView.this);
-                    settingManager.changePassword(phone_no, user_token, old_password, new_password, confirm_password);
-                } else if (!new_password.equalsIgnoreCase(confirm_password)) {
-                    Utils.showAlert(this, AlertMessage.CHANGE_PASSWORD_NOT_MATCH);
-                } else if (Utils.isEmptyString(old_password) || Utils.isEmptyString(new_password) || Utils.isEmptyString(confirm_password)) {
-                    Utils.showAlert(this, AlertMessage.CHANGE_PASSWORD);
-                }
+                    if (!Utils.isEmptyString(old_password) && !Utils.isEmptyString(new_password) && !Utils.isEmptyString(confirm_password) && new_password.equalsIgnoreCase(confirm_password)&&old_password.length()>=8 && new_password.length()>=8 && confirm_password.length()>=8) {
+                        Utils.launchBarDialog(SettingView.this);
+                        settingManager.changePassword(phone_no, user_token, old_password, new_password, confirm_password);
+                    } else if (!new_password.equalsIgnoreCase(confirm_password)) {
+                        Utils.showAlert(this, AlertMessage.CHANGE_PASSWORD_NOT_MATCH);
+                    } else if (Utils.isEmptyString(old_password) || Utils.isEmptyString(new_password) || Utils.isEmptyString(confirm_password)) {
+                        Utils.showAlert(this, AlertMessage.CHANGE_PASSWORD);
+                    } else if (old_password.length()<8 || new_password.length()<8 || confirm_password.length()<8){
+
+                        Utils.showAlert(this, AlertMessage.CHANGE_PASSWORD_CHARACTER);
+                    }
 
                 break;
 

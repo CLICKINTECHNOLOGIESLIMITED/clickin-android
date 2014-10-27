@@ -3,6 +3,8 @@ package com.sourcefuse.clickinandroid.utils;
 public class AlertMessage {
 	
 	public static final String connectionError = "Check your network connection";
+    public static final String wrong_signIn_details = "The Username/Password \n combination entered is incorrect";
+
 	
 	public static final String phone = "Please enter a correct mobile number";
 	public static final String dob = "Date of Birth can't be blank";
@@ -27,7 +29,7 @@ public class AlertMessage {
 
     public static final String PASSWORDLENGHT = "Your password should be at least 8 characters long.";
     public static final String MATCHPASSWORD = "Password doesn't match. Please try again";
-    public static final String UNFOLLOWUSER = "Do you wnat to unfollow the selected \nuser?";
+    public static final String UNFOLLOWUSER = "Do you wnat to unfollow the selected user?";
     public static final String GROUPSMSMSG = "You need to select at least one contact";
 
     public static final String CURRENTCLICKERPAGE = "You Haven't Followed Anyone, Your friends are sharing clicks and cards on Clickin'. Follow them to see what they are sharing.";
@@ -43,7 +45,7 @@ public class AlertMessage {
     public static final String DEACTIVATE_ON_FALIURE="Please enter correct password";
     public static final String DEACTIVATE_ON_SUCCESS="Account has been deactivated successfully";
 
-
+    public static final String CHANGE_PASSWORD_CHARACTER = "Your password should be at least 8 characters long." ;
     public static final String CHANGE_PASSWORD="Please enter values in all the fields";
     public static final String CHANGE_PASSWORD_NOT_MATCH="New password doesn't match. Try again";
     public static final String CHANGE_PASSWORD_SUCESS="Password has been changed successfully";

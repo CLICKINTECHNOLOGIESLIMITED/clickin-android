@@ -1,9 +1,5 @@
 package com.sourcefuse.clickinandroid.view.adapter;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -19,6 +15,10 @@ import android.widget.TextView;
 import com.sourcefuse.clickinandroid.model.bean.ContactBean;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 public class ContactAdapter extends ArrayAdapter<ContactBean> {
 	Context context;
@@ -50,6 +50,7 @@ public class ContactAdapter extends ArrayAdapter<ContactBean> {
 			holder = new RecordHolder();
 			holder.contactName = (TextView) row.findViewById(R.id.tv_contact_name);
 			holder.contactImage = (ImageView) row.findViewById(R.id.iv_contactImage);
+            holder.contactnumber=(TextView) row.findViewById(R.id.tv_contact_number);
 			row.setTag(holder);
 		} else {
 			holder = (RecordHolder) row.getTag();
@@ -66,6 +67,7 @@ public class ContactAdapter extends ArrayAdapter<ContactBean> {
 			e.printStackTrace();
 		}
 		rholder.contactName.setText(item.getConName());
+        rholder.contactnumber.setText(item.getConNumber());
 		
 		
 		
@@ -97,7 +99,7 @@ public class ContactAdapter extends ArrayAdapter<ContactBean> {
 	static class RecordHolder {
 		TextView contactName;
 		ImageView contactImage;
-		
+		TextView contactnumber ;
 
 	}
 }

@@ -1,10 +1,6 @@
 package com.sourcefuse.clickinandroid.view;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.ActivityNotFoundException;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -17,6 +13,7 @@ import android.text.TextWatcher;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -29,8 +26,6 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.quickblox.core.QBCallbackImpl;
 import com.quickblox.core.result.Result;
 import com.quickblox.module.chat.listeners.ChatMessageListener;
@@ -87,6 +82,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     int initialProgresss = maxValue / 2;
     private static final String TAG = ChatRecordView.class.getSimpleName();
     private Button send, btnToCard;
+    String[] splitted ;
+    Dialog mdialog ;
 
     private QBPrivateChat chatObject;
     private String qBId, rId, partnerPic, partnerName, partnerId,myClicks,userClicks,partnerPh;
@@ -185,6 +182,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         qBId = getIntent().getExtras().getString("quickId");
         partnerPic = getIntent().getExtras().getString("partnerPic");
         partnerName = getIntent().getExtras().getString("partnerName");
+        splitted = partnerName.split("\\s+");
         rId = getIntent().getExtras().getString("rId");
         partnerId = getIntent().getExtras().getString("partnerId");
         myClicks = getIntent().getExtras().getString("myClicks");
@@ -208,7 +206,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             partnerTotalclicks.setText("" + chatManager.getPartnerTotalClick());
         }
 
-        profileName.setText("" + partnerName);
+        profileName.setText("" + splitted[0]);
         try {
             Picasso.with(ChatRecordView.this).load(authManager.getUserPic())
                     .skipMemoryCache()
@@ -323,18 +321,24 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
 
     public void imageDialog() {
-        String[] addPhoto;
-        addPhoto = new String[]{"Camera", "Gallery"};
-        AlertDialog.Builder dialog = new AlertDialog.Builder(ChatRecordView.this);
-        dialog.setTitle("Select Option");
+        mdialog = new Dialog(ChatRecordView.this);
+        mdialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        mdialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        mdialog.getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        mdialog.setContentView(R.layout.alert_take_picture);
+        mdialog.setCancelable(false);
 
-        dialog.setItems(addPhoto, new DialogInterface.OnClickListener() {
+        TextView takepicture = (TextView)mdialog.findViewById(R.id.take_picture);
+        TextView gallery = (TextView)mdialog.findViewById(R.id.from_gallery);
+        Button cancel = (Button)mdialog.findViewById(R.id.dialog_cancel);
+        takepicture.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int id) {
-                if (id == 0) {
+            public void onClick(View view) {
 
-                    Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(cameraIntent,Constants.CAMERA_REQUEST);
+
+                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(cameraIntent,Constants.CAMERA_REQUEST);
 
 
                   /*  Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
@@ -344,26 +348,66 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                         startActivityForResult(cameraIntent, Constants.CAMERA_REQUEST);
                     } catch (ActivityNotFoundException e) {
                     }*/
-                    dialog.dismiss();
-                } else if (id == 1) {
-
-                    Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(pickPhoto, Constants.SELECT_PICTURE);
-                    dialog.dismiss();
-                }
+                mdialog.dismiss();
+            }
+        });
+        gallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(pickPhoto, Constants.SELECT_PICTURE);
+                mdialog.dismiss();
             }
         });
 
-        dialog.setNeutralButton("Cancel",
-                new android.content.DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mdialog.dismiss();
+            }
+        });
 
-                        dialog.dismiss();
-                    }
-                }
-        );
-        dialog.show();
+//        String[] addPhoto;
+//        addPhoto = new String[]{"                TAKE A PICTURE", "        FROM YOUR GALLERY"};
+//        AlertDialog.Builder dialog = new AlertDialog.Builder(ChatRecordView.this);
+//        dialog.setTitle("             Add your photo");
+//
+//        dialog.setItems(addPhoto, new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int id) {
+//                if (id == 0) {
+//
+//                    Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+//                    startActivityForResult(cameraIntent,Constants.CAMERA_REQUEST);
+//
+//
+//                  /*  Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+//                    cameraIntent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
+//                    try {
+//                        cameraIntent.putExtra("return-data", true);
+//                        startActivityForResult(cameraIntent, Constants.CAMERA_REQUEST);
+//                    } catch (ActivityNotFoundException e) {
+//                    }*/
+//                    dialog.dismiss();
+//                } else if (id == 1) {
+//
+//                    Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//                    startActivityForResult(pickPhoto, Constants.SELECT_PICTURE);
+//                    dialog.dismiss();
+//                }
+//            }
+//        });
+//
+//        dialog.setNeutralButton("Cancel",
+//                new android.content.DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//
+//                        dialog.dismiss();
+//                    }
+//                }
+//        );
+        mdialog.show();
     }
 
 

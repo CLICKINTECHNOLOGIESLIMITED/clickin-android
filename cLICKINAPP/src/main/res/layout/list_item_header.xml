@@ -22,7 +22,7 @@
             android:textColor="@color/dark_gray"
             android:textSize="18sp"
             android:textStyle="bold"
-            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
+            geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"/>
 
         <com.sourcefuse.clickinandroid.utils.ClickInTextView
             android:id="@+id/tv_with"

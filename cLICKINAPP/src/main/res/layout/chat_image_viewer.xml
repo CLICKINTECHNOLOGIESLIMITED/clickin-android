@@ -5,71 +5,38 @@
     android:background="@drawable/c_trans"
     android:orientation="vertical">
 
-
     <RelativeLayout
-        android:id="@+id/rr_header"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:background="@color/appclr">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/iv_profile"
+        android:orientation="vertical">
+
 
         <ImageView
-            android:id="@+id/iv_back_noti"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/chat_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+
+        <ImageButton
+            android:layout_width="63dp"
+            android:layout_height="78dp"
+            android:id="@+id/imageButton"
+            android:layout_gravity="bottom"
+            android:src="@drawable/back_arrow"
+            android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="6dp"
-            android:paddingBottom="5dp"
-            android:paddingRight="30dp"
-            android:paddingTop="5dp"
-            android:src="@drawable/back_arrow" />
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="25dp"
+            android:layout_marginBottom="30dp"
+            android:background="@android:color/transparent"
+            />
 
-
-        <ImageView
-            android:id="@+id/iv_notification"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="6dp"
-            android:paddingLeft="50dp"
-            android:src="@drawable/chat" />
-
+        <!--<ImageButton-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:src="@drawable/back_arrow"-->
+        <!--/>-->
     </RelativeLayout>
 
-
-    <RelativeLayout
-        android:id="@+id/iv_profile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/blue_bg">
-
-        <TextView
-            android:id="@+id/tv_profile_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="@string/txt_trade"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-    </RelativeLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/iv_profile">
-
-        <ImageView
-        android:id="@+id/chat_image"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
-        </LinearLayout>
-
-
-    </RelativeLayout>
+</RelativeLayout>
