@@ -1,4 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:geekui="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="10dp"
@@ -14,7 +15,7 @@
         android:background="@drawable/dcontact"
         android:scaleType="fitXY" />
 
-    <TextView
+    <com.sourcefuse.clickinandroid.utils.ClickInTextView
         android:id="@+id/tv_clickInUsr_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -24,7 +25,10 @@
         android:text="Bregenja"
         android:textColor="@color/white"
         android:textSize="18sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textAllCaps="true"
+        geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"
+        />
 
     <TextView
         android:id="@+id/tv_unread"
@@ -39,4 +43,4 @@
         android:textSize="13sp"
         android:visibility="gone" />
 
-</RelativeLayout><!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/layout/row_clickin_with.xml -->
+</RelativeLayout><!-- From: file:/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/src/main/res/layout/row_clickin_with.xml -->

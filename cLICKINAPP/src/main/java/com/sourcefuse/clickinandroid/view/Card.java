@@ -76,8 +76,9 @@ public class Card extends Activity implements View.OnClickListener,TextWatcher {
 
         Picasso.with(this)
                 .load(url)
-                .into(imageView);
+               .into(imageView);
 
+      //imageView.setImageDrawable(getResources().getDrawable(R.drawable.tocheck));
 
     }
 

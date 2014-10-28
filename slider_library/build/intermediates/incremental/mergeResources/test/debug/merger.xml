@@ -2,12 +2,17 @@
 <merger version="2" >
 
     <dataSet config="20.0.0" >
-        <source path="/home/mukesh/git/clickin-andoid/slider_library/build/intermediates/exploded-aar/com.android.support/support-v4/20.0.0/res" />
+        <source path="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/slider_library/build/intermediates/exploded-aar/com.android.support/support-v4/20.0.0/res" />
     </dataSet>
     <dataSet config="debug" >
-        <source path="/home/mukesh/git/clickin-andoid/slider_library/build/intermediates/bundles/debug/res" >
+        <source path="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/slider_library/build/intermediates/bundles/debug/res" >
             <file
-                path="/home/mukesh/git/clickin-andoid/slider_library/build/intermediates/bundles/debug/res/values/values.xml"
+                name="slidingmenumain"
+                path="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/slider_library/build/intermediates/bundles/debug/res/layout/slidingmenumain.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                path="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/slider_library/build/intermediates/bundles/debug/res/values/values.xml"
                 qualifiers="" >
                 <item
                     name="selected_view"
@@ -79,17 +84,12 @@
                         format="reference" />
                 </declare-styleable>
             </file>
-            <file
-                name="slidingmenumain"
-                path="/home/mukesh/git/clickin-andoid/slider_library/build/intermediates/bundles/debug/res/layout/slidingmenumain.xml"
-                qualifiers=""
-                type="layout" />
         </source>
     </dataSet>
     <dataSet config="main" >
-        <source path="/home/mukesh/git/clickin-andoid/slider_library/src/androidTest/res" />
-        <source path="/home/mukesh/git/clickin-andoid/slider_library/build/generated/res/rs/test/debug" />
-        <source path="/home/mukesh/git/clickin-andoid/slider_library/build/generated/res/generated/test/debug" />
+        <source path="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/slider_library/src/androidTest/res" />
+        <source path="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/slider_library/build/generated/res/rs/test/debug" />
+        <source path="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/slider_library/build/generated/res/generated/test/debug" />
     </dataSet>
 
 </merger>

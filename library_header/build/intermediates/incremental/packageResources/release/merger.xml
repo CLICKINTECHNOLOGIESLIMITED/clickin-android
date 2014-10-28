@@ -2,12 +2,12 @@
 <merger version="2" >
 
     <dataSet config="main" >
-        <source path="/home/dell/Github/Git_Clickin/clickin-andoid/library_header/src/main/res" />
-        <source path="/home/dell/Github/Git_Clickin/clickin-andoid/library_header/build/generated/res/rs/release" />
-        <source path="/home/dell/Github/Git_Clickin/clickin-andoid/library_header/build/generated/res/generated/release" />
+        <source path="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/library_header/src/main/res" />
+        <source path="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/library_header/build/generated/res/rs/release" />
+        <source path="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/library_header/build/generated/res/generated/release" />
     </dataSet>
     <dataSet config="release" >
-        <source path="/home/dell/Github/Git_Clickin/clickin-andoid/library_header/src/release/res" />
+        <source path="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/library_header/src/release/res" />
     </dataSet>
 
 </merger>

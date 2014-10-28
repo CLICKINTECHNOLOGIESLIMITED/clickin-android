@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- From: file:/home/mukesh/git/clickin-andoid/cropper/build/intermediates/bundles/debug/res/values-v14/values.xml -->
+    <!-- From: file:/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cropper/build/intermediates/bundles/debug/res/values-v14/values.xml -->
     <eat-comment />
 
     <style name="AppBaseTheme" parent="android:Theme.Holo.Light.DarkActionBar">

@@ -86,12 +86,13 @@
             android:layout_centerHorizontal="true"
             android:background="@drawable/blue_bg">
 
-            <TextView
+            <com.sourcefuse.clickinandroid.utils.ClickInTextView
                 android:id="@+id/tv_profile_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
+                geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
                 android:text="TRADE"
                 android:textColor="@color/white"
                 android:textSize="20sp"
@@ -134,10 +135,8 @@
                         android:id="@android:id/tabs"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:tabStripEnabled="false"
-                        android:baselineAligned="false"
-                        android:fadingEdge="none"
-                       >
+
+                        >
                     </TabWidget>
 
                     <FrameLayout
@@ -148,18 +147,25 @@
 
                         >
 
-                            <com.sourcefuse.clickinandroid.utils.ClickInTextView
+                        <com.sourcefuse.clickinandroid.utils.ClickInTextView
                             android:id="@+id/Layout_Tab_2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textStyle="bold"
-                            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
-                     <!--<com.sourcefuse.clickinandroid.utils.ClickInTextView-->
-                            <!--android:id="@+id/Layout_Tab_2"-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:textStyle="bold"-->
-                            <!--geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />-->
+                            android:gravity="bottom"
+
+                            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
+
+
+                            />
+
+
+                        <!--<com.sourcefuse.clickinandroid.utils.ClickInTextView-->
+                        <!--android:id="@+id/Layout_Tab_2"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:textStyle="bold"-->
+                        <!--geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />-->
                         <!---->
 
 
@@ -170,7 +176,7 @@
         </LinearLayout>
     </HorizontalScrollView>
 
-    <FrameLayout
+        <FrameLayout
         android:id="@+id/framelayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -180,4 +186,4 @@
 
       </FrameLayout>
 </LinearLayout>
-<!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/layout/view_tabhost2.xml -->
+<!-- From: file:/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/src/main/res/layout/view_tabhost2.xml -->

@@ -22,7 +22,7 @@
             android:textColor="@color/dark_gray"
             android:textSize="18sp"
             android:textStyle="bold"
-            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
+            geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"/>
 
         <com.sourcefuse.clickinandroid.utils.ClickInTextView
             android:id="@+id/tv_with"
@@ -36,4 +36,4 @@
             geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
     </LinearLayout>
 
-</FrameLayout><!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/layout/list_item_header.xml -->
+</FrameLayout><!-- From: file:/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/src/main/res/layout/list_item_header.xml -->

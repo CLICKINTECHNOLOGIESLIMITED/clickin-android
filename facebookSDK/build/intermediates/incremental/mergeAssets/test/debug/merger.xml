@@ -2,13 +2,13 @@
 <merger version="2" >
 
     <dataSet config="20.0.0" >
-        <source path="/home/mukesh/git/clickin-andoid/facebookSDK/build/intermediates/exploded-aar/com.android.support/support-v4/20.0.0/assets" />
+        <source path="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/facebookSDK/build/intermediates/exploded-aar/com.android.support/support-v4/20.0.0/assets" />
     </dataSet>
     <dataSet config="debug" >
-        <source path="/home/mukesh/git/clickin-andoid/facebookSDK/build/intermediates/bundles/debug/assets" />
+        <source path="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/facebookSDK/build/intermediates/bundles/debug/assets" />
     </dataSet>
     <dataSet config="main" >
-        <source path="/home/mukesh/git/clickin-andoid/facebookSDK/src/androidTest/assets" />
+        <source path="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/facebookSDK/src/androidTest/assets" />
     </dataSet>
 
 </merger>

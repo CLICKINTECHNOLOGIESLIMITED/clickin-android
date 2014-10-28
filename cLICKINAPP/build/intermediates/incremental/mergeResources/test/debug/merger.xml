@@ -2,9 +2,9 @@
 <merger version="2" >
 
     <dataSet config="main" >
-        <source path="/home/mukesh/git/clickin-andoid/cLICKINAPP/src/androidTest/res" />
-        <source path="/home/mukesh/git/clickin-andoid/cLICKINAPP/build/generated/res/rs/test/debug" />
-        <source path="/home/mukesh/git/clickin-andoid/cLICKINAPP/build/generated/res/generated/test/debug" />
+        <source path="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/src/androidTest/res" />
+        <source path="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/generated/res/rs/test/debug" />
+        <source path="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/generated/res/generated/test/debug" />
     </dataSet>
 
 </merger>

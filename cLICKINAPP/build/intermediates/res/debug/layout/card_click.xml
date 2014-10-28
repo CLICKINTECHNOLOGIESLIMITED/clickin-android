@@ -15,18 +15,39 @@
             android:layout_height="45dp"
             android:background="@color/appclr">
 
-            <ImageView
-                android:id="@+id/iv_back_noti"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="6dp"
-                android:paddingBottom="5dp"
-                android:paddingRight="30dp"
-                android:paddingTop="5dp"
-                android:src="@drawable/back_arrow" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="73dp"
+                android:layout_height="fill_parent"
+                android:layout_alignParentLeft="true">
 
+                <ImageView
+                    android:id="@+id/m_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="3dp"
+
+                    android:src="@drawable/back_arrow" />
+
+                <com.sourcefuse.clickinandroid.utils.ClickInTextView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+
+                    android:id="@+id/textView1"
+                    android:gravity="center"
+
+                    android:layout_marginRight="2dp"
+                    android:textStyle="bold"
+                    geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
+                    android:layout_gravity="center"
+                    android:textColor="#E0E0E0"
+                    android:text="BACK"
+                    android:textSize="10sp">
+
+                </com.sourcefuse.clickinandroid.utils.ClickInTextView>
+
+            </LinearLayout>
 
 
             <LinearLayout
@@ -77,12 +98,13 @@
                 android:layout_centerHorizontal="true"
                 android:background="@drawable/blue_bg">
 
-                <TextView
+                <com.sourcefuse.clickinandroid.utils.ClickInTextView
                     android:id="@+id/tv_profile_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
+                    geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
                     android:text="TRADE"
                     android:textColor="@color/white"
                     android:textSize="20sp"
@@ -302,4 +324,4 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-</LinearLayout><!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/layout/card_click.xml -->
+</LinearLayout><!-- From: file:/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/src/main/res/layout/card_click.xml -->
