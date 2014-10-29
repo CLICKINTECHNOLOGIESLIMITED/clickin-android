@@ -25,6 +25,7 @@ import android.widget.TextView;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.bean.NewsFeedBean;
+import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.FeedCommentsView;
 import com.sourcefuse.clickinandroid.view.FeedStarsView;
 import com.sourcefuse.clickinandroid.view.Feed_large_img;
@@ -40,12 +41,13 @@ import java.util.ArrayList;
 import static com.sourcefuse.clickinapp.R.drawable.report_icon;
 
 public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
-    Context context;
+    Activity context;
     int layoutResourceId;
     ArrayList<NewsFeedBean> eachNewsFeed;
     MediaPlayer player;
     AuthManager authMgr;
-    public FeedsAdapter(Context context, int layoutResourceId,
+
+    public FeedsAdapter(Activity context, int layoutResourceId,
                         ArrayList<NewsFeedBean> item) {
         super(context, layoutResourceId, item);
         this.layoutResourceId = layoutResourceId;
@@ -125,6 +127,11 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
                     holder.clickInWhiteImage.setVisibility(View.VISIBLE);
                     holder.clickedIn.setVisibility(View.VISIBLE);
                     holder.layout_clickin.setVisibility(View.VISIBLE);
+                    if (!(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().equalsIgnoreCase("null"))) {
+                        if (!eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().equalsIgnoreCase("")) {
+                            holder.clickedInMessage.setText(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message());
+                        }
+                    }
                 }
                 else {
                     if (!(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().equalsIgnoreCase("null"))) {
@@ -135,7 +142,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
                             holder.clickedIn.setText(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message());
                             holder.layout_clickin.setBackgroundResource(R.color.lightest_gray);
                             holder.layout_clickin.setVisibility(View.VISIBLE);
-                            holder.clickedInMessage.setVisibility(View.GONE);
+//                            holder.clickedInMessage.setVisibility(View.GONE);
                             holder.clickInWhiteImage.setVisibility(View.GONE);
                         }
                         else
@@ -160,7 +167,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
                         holder.clickedIn.setTypeface(null, Typeface.NORMAL);
                         holder.clickedIn.setText(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message());
                         holder.layout_clickin.setBackgroundResource(R.color.lightest_gray);
-                        holder.clickedInMessage.setVisibility(View.GONE);
+//                        holder.clickedInMessage.setVisibility(View.GONE);
                         holder.clickInWhiteImage.setVisibility(View.GONE);
                     } else {
                         holder.layout_clickin.setVisibility(View.GONE);
@@ -353,6 +360,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
         holder.feed_remove_post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Utils.launchBarDialog(context);
                 rholder.layout.setVisibility(View.GONE);
                 holder.feed_menu.setImageResource(report_icon);
                 ModelManager.getInstance().getNewsFeedManager().newFeedDelete(authMgr.getPhoneNo(),authMgr.getUsrToken(),eachNewsFeed.get(position).getNewsfeedArray_id());

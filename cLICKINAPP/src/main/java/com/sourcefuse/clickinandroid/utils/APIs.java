@@ -18,13 +18,13 @@ public class APIs {
 	public static final String SIGNIN = baseurl+"/users/signin/";
 
 	//Relationships
-    public static final String FETCHPROFILERELATIONSHIPS = baseurl+"users/fetchprofilerelationships/profile_phone_no:%2B";
+    public static final String FETCHPROFILERELATIONSHIPS = baseurl+"/users/fetchprofilerelationships/profile_phone_no:%2B/";
     public static final String INVITEANDFOLLOWUSERS = baseurl+"/relationships/inviteandfollowusers/";
     public static final String DELETERELATIONSHIP = baseurl+"/relationships/deleterelationship/";
-    public static final String FETCHUSERSBYNAME = baseurl+"/relationships/fetchusersbyname";
+    public static final String FETCHUSERSBYNAME = baseurl+"/relationships/fetchusersbyname/";
     public static final String GETRELATIONSHIPS = baseurl+"/relationships/getrelationships/";
-    public static final String CHANGEVISIBILITY = baseurl+"/relationships/changevisibility";
-    public static final String FOLLOWUPDATESTATUS = baseurl+"/users/followupdatestatus";//REJECT FOLLOW REQUEST
+    public static final String CHANGEVISIBILITY = baseurl+"/relationships/changevisibility/";
+    public static final String FOLLOWUPDATESTATUS = baseurl+"/users/followupdatestatus/";//REJECT FOLLOW REQUEST
     public static final String NEWREQUEST = baseurl+"/relationships/newrequest/";
 	public static final String FOLLOWUSER = baseurl+"/relationships/followuser/";
 	public static final String UPDATESTATUS = baseurl+"/relationships/updatestatus/";
@@ -53,15 +53,15 @@ public class APIs {
 
 
     //fetchprofile
-	public static final String FETCHOTHERPROFILEINFO = baseurl+"/users/fetchprofileinfo/profile_phone_no";
-    public static final String GETUSERFOLLOWER = baseurl+"/users/fetchprofilefollow/profile_phone_no";
-    public static final String FETCHPROFILEINFO = baseurl+"/users/fetchprofileinfo/profile_phone_no:";
+	public static final String FETCHOTHERPROFILEINFO = baseurl+"/users/fetchprofileinfo/profile_phone_no/";
+    public static final String GETUSERFOLLOWER = baseurl+"/users/fetchprofilefollow/profile_phone_no/";
+    public static final String FETCHPROFILEINFO = baseurl+"/users/fetchprofileinfo/profile_phone_no:/";
 
     //Setting..
-    public static final String SETTINGCHANGELASTSEENTIME = baseurl+"/settings/changelastseentime";
-    public static final String SETTINGCHANGEDEACTIVATE = baseurl+"/settings/deactivateaccount";
-    public static final String SETTINGCHANGEPASSWORD = baseurl+"/settings/changepassword";
-    public static final String SETTINGREPORTPROBLEM = baseurl+"/settings/reportaproblem";
-    public static final String SETTINGFORGOTPASSWORD = baseurl+"/settings/forgotpassword";
-    public static final String SETTINGCHANGE = baseurl+"/settings/change";
+    public static final String SETTINGCHANGELASTSEENTIME = baseurl+"/settings/changelastseentime/";
+    public static final String SETTINGCHANGEDEACTIVATE = baseurl+"/settings/deactivateaccount/";
+    public static final String SETTINGCHANGEPASSWORD = baseurl+"/settings/changepassword/";
+    public static final String SETTINGREPORTPROBLEM = baseurl+"/settings/reportaproblem/";
+    public static final String SETTINGFORGOTPASSWORD = baseurl+"/settings/forgotpassword/";
+    public static final String SETTINGCHANGE = baseurl+"/settings/change/";
 }

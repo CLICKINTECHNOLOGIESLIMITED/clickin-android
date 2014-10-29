@@ -566,6 +566,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
             Log.d("1", "message aya->" + message);
             Intent intent = new Intent(ClickInBaseView.this, FeedView.class);
             startActivity(intent);
+            this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
         } else if (message.equalsIgnoreCase("NewsFeed False")) {
             Log.d("2", "message->" + message);
             stopSearch = true;
