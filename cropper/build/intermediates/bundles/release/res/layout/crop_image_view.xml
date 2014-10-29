@@ -15,4 +15,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+<<<<<<< HEAD
 </merge><!-- From: file:/home/mukesh/clickAMaster/cropper/src/main/res/layout/crop_image_view.xml -->
+=======
+</merge><!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cropper/src/main/res/layout/crop_image_view.xml -->
+>>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961

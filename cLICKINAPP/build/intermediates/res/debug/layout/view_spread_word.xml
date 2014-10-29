@@ -127,4 +127,8 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:background="@drawable/c_spread_word" />
+<<<<<<< HEAD
 </RelativeLayout><!-- From: file:/home/mukesh/clickAMaster/cLICKINAPP/src/main/res/layout/view_spread_word.xml -->
+=======
+</RelativeLayout><!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/layout/view_spread_word.xml -->
+>>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961

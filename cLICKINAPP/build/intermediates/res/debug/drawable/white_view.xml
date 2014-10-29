@@ -21,4 +21,8 @@
         android:width="6dp"
         android:color="@color/white" />
 
+<<<<<<< HEAD
 </shape><!-- From: file:/home/mukesh/clickAMaster/cLICKINAPP/src/main/res/drawable/white_view.xml -->
+=======
+</shape><!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/drawable/white_view.xml -->
+>>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961

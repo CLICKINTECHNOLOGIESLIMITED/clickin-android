@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+<<<<<<< HEAD
     <!-- From: file:/home/mukesh/clickAMaster/library_pull/build/intermediates/exploded-aar/com.github.castorflex.smoothprogressbar/library/0.4.0/res/values-v14/values.xml -->
+=======
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/library_pull/build/intermediates/exploded-aar/com.github.castorflex.smoothprogressbar/library/0.4.0/res/values-v14/values.xml -->
+>>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961
     <eat-comment />
 
     <style name="SmoothProgressBar" parent="android:Widget.Holo.ProgressBar.Horizontal">

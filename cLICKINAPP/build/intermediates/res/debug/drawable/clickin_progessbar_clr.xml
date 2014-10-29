@@ -22,4 +22,8 @@
             android:useLevel="false" />
     </shape>
 
+<<<<<<< HEAD
 </rotate><!-- From: file:/home/mukesh/clickAMaster/cLICKINAPP/src/main/res/drawable/clickin_progessbar_clr.xml -->
+=======
+</rotate><!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/drawable/clickin_progessbar_clr.xml -->
+>>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961

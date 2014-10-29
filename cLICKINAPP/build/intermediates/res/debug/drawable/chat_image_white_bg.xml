@@ -9,4 +9,8 @@
         android:left="1dp"
         android:right="1dp"
         android:top="1dp" />
+<<<<<<< HEAD
 </shape><!-- From: file:/home/mukesh/clickAMaster/cLICKINAPP/src/main/res/drawable/chat_image_white_bg.xml -->
+=======
+</shape><!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/drawable/chat_image_white_bg.xml -->
+>>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961

@@ -52,7 +52,7 @@
                 android:hint="@string/hint_email_no"
                 android:inputType="text"
                 android:paddingLeft="10dp"
-                android:text="+919878492556"
+                android:text="+91012345"
                 android:textColor="@color/signup_contry_code"
                 android:textColorHint="@color/singn_forg"
                 android:textSize="16sp"
@@ -68,7 +68,7 @@
                 android:hint="@string/hint_pwd"
                 android:inputType="textPassword"
                 android:paddingLeft="10dp"
-                android:text="aaaaaaaa"
+                android:text="12345678"
                 android:textColor="@color/signup_contry_code"
                 android:textColorHint="@color/singn_forg"
                 android:textSize="16sp"
@@ -116,4 +116,8 @@
         </RelativeLayout>
     </RelativeLayout>
 
+<<<<<<< HEAD
 </RelativeLayout><!-- From: file:/home/mukesh/clickAMaster/cLICKINAPP/src/main/res/layout/view_signin.xml -->
+=======
+</RelativeLayout><!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/layout/view_signin.xml -->
+>>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961

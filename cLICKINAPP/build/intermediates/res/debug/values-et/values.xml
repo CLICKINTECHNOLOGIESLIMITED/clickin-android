@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
 
+<<<<<<< HEAD
     <!-- From: file:/home/mukesh/clickAMaster/cLICKINAPP/build/intermediates/exploded-aar/com.google.android.gms/play-services/3.1.59/res/values-et/strings.xml -->
+=======
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.google.android.gms/play-services/3.1.59/res/values-et/strings.xml -->
+>>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961
     <eat-comment />
 
     <string name="auth_client_needs_enabling_title" msgid="3983201110833868073">"Rakenduse kasutamiseks peavad olema lubatud Google Play teenused."</string>

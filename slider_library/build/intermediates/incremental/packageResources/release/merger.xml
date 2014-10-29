@@ -2,9 +2,15 @@
 <merger version="2" >
 
     <dataSet config="main" >
+<<<<<<< HEAD
         <source path="/home/mukesh/clickAMaster/slider_library/src/main/res" >
             <file
                 path="/home/mukesh/clickAMaster/slider_library/src/main/res/values/attrs.xml"
+=======
+        <source path="/home/dell/Github/Git_Clickin/clickin-andoid/slider_library/src/main/res" >
+            <file
+                path="/home/dell/Github/Git_Clickin/clickin-andoid/slider_library/src/main/res/values/attrs.xml"
+>>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961
                 qualifiers="" >
                 <declare-styleable name="SlidingMenu" >
                     <attr name="mode" >
@@ -73,7 +79,11 @@
                 </declare-styleable>
             </file>
             <file
+<<<<<<< HEAD
                 path="/home/mukesh/clickAMaster/slider_library/src/main/res/values/ids.xml"
+=======
+                path="/home/dell/Github/Git_Clickin/clickin-andoid/slider_library/src/main/res/values/ids.xml"
+>>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961
                 qualifiers="" >
                 <item
                     name="selected_view"
@@ -81,6 +91,7 @@
             </file>
             <file
                 name="slidingmenumain"
+<<<<<<< HEAD
                 path="/home/mukesh/clickAMaster/slider_library/src/main/res/layout/slidingmenumain.xml"
                 qualifiers=""
                 type="layout" />
@@ -90,6 +101,17 @@
     </dataSet>
     <dataSet config="release" >
         <source path="/home/mukesh/clickAMaster/slider_library/src/release/res" />
+=======
+                path="/home/dell/Github/Git_Clickin/clickin-andoid/slider_library/src/main/res/layout/slidingmenumain.xml"
+                qualifiers=""
+                type="layout" />
+        </source>
+        <source path="/home/dell/Github/Git_Clickin/clickin-andoid/slider_library/build/generated/res/rs/release" />
+        <source path="/home/dell/Github/Git_Clickin/clickin-andoid/slider_library/build/generated/res/generated/release" />
+    </dataSet>
+    <dataSet config="release" >
+        <source path="/home/dell/Github/Git_Clickin/clickin-andoid/slider_library/src/release/res" />
+>>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961
     </dataSet>
 
 </merger>

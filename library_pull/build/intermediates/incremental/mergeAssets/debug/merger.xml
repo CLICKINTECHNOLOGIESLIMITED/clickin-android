@@ -2,10 +2,17 @@
 <merger version="2" >
 
     <dataSet config="main" >
+<<<<<<< HEAD
         <source path="/home/mukesh/clickAMaster/library_pull/src/main/assets" />
     </dataSet>
     <dataSet config="debug" >
         <source path="/home/mukesh/clickAMaster/library_pull/src/debug/assets" />
+=======
+        <source path="/home/dell/Github/Git_Clickin/clickin-andoid/library_pull/src/main/assets" />
+    </dataSet>
+    <dataSet config="debug" >
+        <source path="/home/dell/Github/Git_Clickin/clickin-andoid/library_pull/src/debug/assets" />
+>>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961
     </dataSet>
 
 </merger>

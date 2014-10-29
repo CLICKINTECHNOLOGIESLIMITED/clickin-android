@@ -21,4 +21,8 @@
         android:visibility="gone" 
         />
 </FrameLayout>
+<<<<<<< HEAD
 <!-- From: file:/Users/NBP/git/Android-PullToRefresh/library/res/layout/pull_to_refresh_progress_google_style.xml --><!-- From: file:/home/mukesh/clickAMaster/cLICKINAPP/build/intermediates/exploded-aar/com.navercorp.pulltorefresh/library/3.2.0/res/layout/pull_to_refresh_progress_google_style.xml -->
+=======
+<!-- From: file:/Users/NBP/git/Android-PullToRefresh/library/res/layout/pull_to_refresh_progress_google_style.xml --><!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.navercorp.pulltorefresh/library/3.2.0/res/layout/pull_to_refresh_progress_google_style.xml -->
+>>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961

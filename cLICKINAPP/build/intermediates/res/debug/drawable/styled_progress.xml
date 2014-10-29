@@ -8,4 +8,8 @@
         android:id="@+android:id/progress"
         android:drawable="@drawable/seek_bar"/>
 
+<<<<<<< HEAD
 </layer-list><!-- From: file:/home/mukesh/clickAMaster/cLICKINAPP/src/main/res/drawable/styled_progress.xml -->
+=======
+</layer-list><!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/drawable/styled_progress.xml -->
+>>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961

@@ -3,4 +3,8 @@
     android:layout_height="match_parent"
     android:paddingBottom="10dp">
 
+<<<<<<< HEAD
 </RelativeLayout><!-- From: file:/home/mukesh/clickAMaster/cLICKINAPP/src/main/res/layout/view_baseview.xml -->
+=======
+</RelativeLayout><!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/layout/view_baseview.xml -->
+>>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961

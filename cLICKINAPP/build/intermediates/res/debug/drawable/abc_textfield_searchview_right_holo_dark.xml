@@ -20,4 +20,8 @@
     <item android:drawable="@drawable/abc_textfield_search_right_default_holo_dark" />
 </selector>
 
+<<<<<<< HEAD
 <!-- From: file:/home/mukesh/clickAMaster/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/drawable/abc_textfield_searchview_right_holo_dark.xml -->
+=======
+<!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/drawable/abc_textfield_searchview_right_holo_dark.xml -->
+>>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961

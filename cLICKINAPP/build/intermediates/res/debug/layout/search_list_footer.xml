@@ -22,4 +22,8 @@
         android:layout_marginLeft="5dp"
         android:background="@drawable/invite_btn" />
 
+<<<<<<< HEAD
 </RelativeLayout><!-- From: file:/home/mukesh/clickAMaster/cLICKINAPP/src/main/res/layout/search_list_footer.xml -->
+=======
+</RelativeLayout><!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/layout/search_list_footer.xml -->
+>>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961

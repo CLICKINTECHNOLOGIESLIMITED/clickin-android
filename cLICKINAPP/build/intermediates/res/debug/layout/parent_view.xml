@@ -11,4 +11,8 @@
     android:textColor="#FFFFFF"
     android:textSelectHandleLeft="@string/hello_world"
     android:textSize="18dp"
+<<<<<<< HEAD
     android:textStyle="bold" /><!-- From: file:/home/mukesh/clickAMaster/cLICKINAPP/src/main/res/layout/parent_view.xml -->
+=======
+    android:textStyle="bold" /><!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/layout/parent_view.xml -->
+>>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961

@@ -5,4 +5,8 @@
         android:fromXDelta="0%"
         android:toXDelta="-100%" >
     </translate>
+<<<<<<< HEAD
 </set><!-- From: file:/home/mukesh/clickAMaster/cLICKINAPP/src/main/res/anim/slide_right_to_left.xml -->
+=======
+</set><!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/anim/slide_right_to_left.xml -->
+>>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961

@@ -2,7 +2,7 @@
     xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@drawable/r_owner_profile_bg">
 
     <RelativeLayout
         android:id="@+id/rr_header"
@@ -74,7 +74,7 @@
         android:id="@+id/list1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/transparent"
+        android:background="@color/white"
         android:choiceMode="singleChoice"
         android:drawSelectorOnTop="true"
         android:fadingEdgeLength="0dp"
@@ -84,7 +84,12 @@
         android:visibility="visible"
         android:listSelector="@color/transparent"
         android:clickable="false"
-        android:cacheColorHint="@color/transparent"/>
+        android:cacheColorHint="@color/transparent"
+        />
 
 
+<<<<<<< HEAD
 </RelativeLayout><!-- From: file:/home/mukesh/clickAMaster/cLICKINAPP/src/main/res/layout/view_feedview_list.xml -->
+=======
+</RelativeLayout><!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/layout/view_feedview_list.xml -->
+>>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961

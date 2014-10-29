@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+<<<<<<< HEAD
     <!-- From: file:/home/mukesh/clickAMaster/library_pull/src/main/res/values-tr/pull_refresh_strings.xml -->
+=======
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/library_pull/src/main/res/values-tr/pull_refresh_strings.xml -->
+>>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961
     <eat-comment />
 
     <string name="pull_to_refresh_pull_label">Yenilemek için kaydırın…</string>

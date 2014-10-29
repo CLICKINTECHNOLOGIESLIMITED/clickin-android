@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
 
+<<<<<<< HEAD
     <!-- From: file:/home/mukesh/clickAMaster/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values-el/values.xml -->
+=======
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values-el/values.xml -->
+>>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961
     <eat-comment />
 
     <string name="abc_action_bar_home_description" msgid="4600421777120114993">"Πλοήγηση στην αρχική σελίδα"</string>
@@ -17,7 +21,11 @@
     <string name="abc_searchview_description_voice" msgid="893419373245838918">"Φωνητική αναζήτηση"</string>
     <string name="abc_shareactionprovider_share_with" msgid="3421042268587513524">"Κοινοποίηση με"</string>
     <string name="abc_shareactionprovider_share_with_application" msgid="7165123711973476752">"Κοινοποίηση με %s"</string>
+<<<<<<< HEAD
     <!-- From: file:/home/mukesh/clickAMaster/cLICKINAPP/build/intermediates/exploded-aar/com.google.android.gms/play-services/3.1.59/res/values-el/strings.xml -->
+=======
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.google.android.gms/play-services/3.1.59/res/values-el/strings.xml -->
+>>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961
     <eat-comment />
 
     <string name="auth_client_needs_enabling_title" msgid="3983201110833868073">"Μια εφαρμογή απαιτεί τις Υπηρεσίες Google Play για ενεργοποίηση."</string>

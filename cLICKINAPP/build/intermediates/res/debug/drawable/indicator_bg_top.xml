@@ -15,4 +15,8 @@
         android:topLeftRadius="0dp"
         android:topRightRadius="0dp" />
 
+<<<<<<< HEAD
 </shape><!-- From: file:/Users/NBP/git/Android-PullToRefresh/library/res/drawable/indicator_bg_top.xml --><!-- From: file:/home/mukesh/clickAMaster/cLICKINAPP/build/intermediates/exploded-aar/com.navercorp.pulltorefresh/library/3.2.0/res/drawable/indicator_bg_top.xml -->
+=======
+</shape><!-- From: file:/Users/NBP/git/Android-PullToRefresh/library/res/drawable/indicator_bg_top.xml --><!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.navercorp.pulltorefresh/library/3.2.0/res/drawable/indicator_bg_top.xml -->
+>>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961

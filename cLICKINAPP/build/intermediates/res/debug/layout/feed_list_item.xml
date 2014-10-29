@@ -56,26 +56,29 @@
                 android:layout_centerInParent="true"
               />
         </RelativeLayout>
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-android:layout_centerHorizontal="true"
             android:background="@color/light_gray"
-            android:visibility="visible"
+            android:visibility="gone"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
             android:id="@+id/card_layout">
             <RelativeLayout
                 android:layout_width="150dp"
                 android:layout_height="200dp"
-                android:layout_marginLeft="10dp"
+                android:layout_margin="10dp"
                 android:background="@drawable/card"
                 android:visibility="visible"
-                android:id="@+id/cards_relative">
-                <RelativeLayout
+                android:id="@+id/cards_relative"
+                android:gravity="center">
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_margin="10dp"
-                    >
+
+                    android:layout_margin="5dp"
+                    android:gravity="center_vertical"
+                    android:id="@+id/upper_relative">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -83,65 +86,102 @@ android:layout_centerHorizontal="true"
                     android:text="0"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    android:id="@+id/card_count_1"
-                    android:layout_centerVertical="true"/>
+                    android:id="@+id/card_count_1"/>
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/c_clicks_heart"
-                        android:layout_toRightOf="@+id/card_count_1"
-                        android:layout_marginLeft="2dp"/>
-                    </RelativeLayout>
 
-                <RelativeLayout
+                        android:layout_marginLeft="2dp"/>
+                    </LinearLayout>
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
+                    android:textColor="@color/feed_senderuser"
+                    android:layout_below="@+id/upper_relative"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="25dp"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:id="@+id/card_title"
+                    android:textAllCaps="true"
+
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_horizontal"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:layout_above="@+id/lower_relative"
+                    android:layout_centerHorizontal="true"
+                    android:text="bbbbbbb"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:id="@+id/card_msg"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center_horizontal"
+                   />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                   android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
                     android:layout_margin="5dp"
-                    android:layout_alignParentRight="true">
+                    android:gravity="center_vertical"
+                    android:id="@+id/lower_relative">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/white"
                         android:text="0"
-                        android:textSize="20sp"
+                        android:textSize="18sp"
                         android:textStyle="bold"
-                        android:id="@+id/card_count_2"
-                        />
+                        android:id="@+id/card_count_2"/>
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/c_clicks_heart"
-                        android:layout_toRightOf="@+id/card_count_2"
+
                         android:layout_marginLeft="2dp"/>
+                </LinearLayout>
+
                 </RelativeLayout>
-                </RelativeLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:orientation="vertical"
+                android:layout_gravity="center_vertical">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
+                android:textAllCaps="true"
 
-                android:textSize="20sp"
+                android:textSize="15sp"
                 android:textStyle="bold"
                 android:id="@+id/card_status"
-                android:layout_toRightOf="@+id/cards_relative"
-                android:padding="20dp"/>
+                android:layout_marginTop="20dp"
+
+                android:layout_marginBottom="5dp"/>
             <View
-                android:layout_width="200dp"
+                android:layout_width="130dp"
                 android:layout_height="2dp"
                 android:background="@color/dark_gray"
-                android:layout_below="@+id/card_status"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_toRightOf="@+id/cards_relative"></View>
+
+                android:layout_marginRight="10dp"></View>
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/accepted_btn"
-                android:layout_below="@+id/card_status"
-                android:padding="10dp"
-                android:layout_toRightOf="@+id/cards_relative"/>
-        </RelativeLayout>
+
+                android:layout_marginTop="5dp"
+                android:id="@+id/card_status_img"/>
+            </LinearLayout>
+        </LinearLayout>
         </RelativeLayout>
         <RelativeLayout
             android:id="@+id/layout_clickin"
@@ -436,4 +476,8 @@ android:layout_centerHorizontal="true"
             android:visibility="gone" />
     </RelativeLayout>
 
+<<<<<<< HEAD
 </LinearLayout><!-- From: file:/home/mukesh/clickAMaster/cLICKINAPP/src/main/res/layout/feed_list_item.xml -->
+=======
+</LinearLayout><!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/layout/feed_list_item.xml -->
+>>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961

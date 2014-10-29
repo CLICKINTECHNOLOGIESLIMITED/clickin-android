@@ -22,4 +22,8 @@
     android:layout_height="50dip"
     android:layout_gravity="center_vertical"
     android:src="@drawable/com_facebook_profile_default_icon" />
+<<<<<<< HEAD
 <!-- From: file:/home/mukesh/clickAMaster/facebookSDK/src/main/res/layout/com_facebook_picker_image.xml --><!-- From: file:/home/mukesh/clickAMaster/cLICKINAPP/build/intermediates/exploded-aar/clickAMaster/facebookSDK/unspecified/res/layout/com_facebook_picker_image.xml -->
+=======
+<!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/facebookSDK/src/main/res/layout/com_facebook_picker_image.xml --><!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/facebookSDK/unspecified/res/layout/com_facebook_picker_image.xml -->
+>>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961

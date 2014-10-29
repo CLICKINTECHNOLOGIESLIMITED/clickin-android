@@ -21,4 +21,8 @@
       android:gradientRadius="495"
       android:type="radial"/>
 </shape>    
+<<<<<<< HEAD
 <!-- From: file:/home/mukesh/clickAMaster/facebookSDK/src/main/res/drawable/com_facebook_usersettingsfragment_background_gradient.xml -->
+=======
+<!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/facebookSDK/src/main/res/drawable/com_facebook_usersettingsfragment_background_gradient.xml -->
+>>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961

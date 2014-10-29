@@ -32,4 +32,8 @@
             android:textColor="@color/white" />
     </RelativeLayout>
 
+<<<<<<< HEAD
 </RelativeLayout><!-- From: file:/home/mukesh/clickAMaster/cLICKINAPP/src/main/res/layout/clickin_progressbar.xml -->
+=======
+</RelativeLayout><!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/layout/clickin_progressbar.xml -->
+>>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961

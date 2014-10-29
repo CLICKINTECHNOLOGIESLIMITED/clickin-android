@@ -25,4 +25,8 @@
             android:textColor="@color/dark_gray"
             android:textSize="18sp" />
     </RelativeLayout>
+<<<<<<< HEAD
 </RelativeLayout><!-- From: file:/home/mukesh/clickAMaster/cLICKINAPP/src/main/res/layout/setting_child_one.xml -->
+=======
+</RelativeLayout><!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/layout/setting_child_one.xml -->
+>>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961

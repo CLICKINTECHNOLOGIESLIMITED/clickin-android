@@ -27,4 +27,8 @@
     <item android:drawable="@drawable/progressbar_indeterminate_holo6" android:duration="50" />
     <item android:drawable="@drawable/progressbar_indeterminate_holo7" android:duration="50" />
     <item android:drawable="@drawable/progressbar_indeterminate_holo8" android:duration="50" />
+<<<<<<< HEAD
 </animation-list><!-- From: file:/Users/NBP/git/Android-PullToRefresh/library/res/drawable/progress_indeterminate_horizontal_holo.xml --><!-- From: file:/home/mukesh/clickAMaster/cLICKINAPP/build/intermediates/exploded-aar/com.navercorp.pulltorefresh/library/3.2.0/res/drawable/progress_indeterminate_horizontal_holo.xml -->
+=======
+</animation-list><!-- From: file:/Users/NBP/git/Android-PullToRefresh/library/res/drawable/progress_indeterminate_horizontal_holo.xml --><!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.navercorp.pulltorefresh/library/3.2.0/res/drawable/progress_indeterminate_horizontal_holo.xml -->
+>>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961

@@ -17,4 +17,8 @@
         android:verticalSpacing="3dip"></GridView>
 </RelativeLayout>
 
+<<<<<<< HEAD
 <!-- From: file:/home/mukesh/clickAMaster/cLICKINAPP/src/main/res/layout/frag_party.xml -->
+=======
+<!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/layout/frag_party.xml -->
+>>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961

@@ -23,4 +23,8 @@
     android:focusable="false"
     android:clickable="false"
     android:button="@drawable/com_facebook_button_check" />
+<<<<<<< HEAD
 <!-- From: file:/home/mukesh/clickAMaster/facebookSDK/src/main/res/layout/com_facebook_picker_checkbox.xml -->
+=======
+<!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/facebookSDK/src/main/res/layout/com_facebook_picker_checkbox.xml -->
+>>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961
