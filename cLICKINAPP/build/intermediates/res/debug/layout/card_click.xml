@@ -16,10 +16,12 @@
             android:background="@color/appclr">
 
             <LinearLayout
+                android:id="@+id/linear_layout_back"
                 android:orientation="horizontal"
                 android:layout_width="73dp"
                 android:layout_height="fill_parent"
-                android:layout_alignParentLeft="true">
+                android:layout_alignParentLeft="true"
+                android:onClick="true">
 
                 <ImageView
                     android:id="@+id/m_back"
@@ -324,4 +326,4 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-</LinearLayout><!-- From: file:/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/src/main/res/layout/card_click.xml -->
+</LinearLayout><!-- From: file:/home/monika/gitcodeClickin/cLICKINAPP/src/main/res/layout/card_click.xml -->

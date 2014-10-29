@@ -1,5 +1,7 @@
 package com.sourcefuse.clickinandroid.model;
 
+import android.net.Uri;
+
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.quickblox.module.chat.xmpp.QBPrivateChat;
@@ -23,6 +25,8 @@ public class AuthManager extends Observable implements AuthManagerI {
     private static final String TAG = AuthManager.class.getSimpleName();
     private AuthManager authManager;
 
+
+
     @Override
     public void signIn(String username, String password, String deviceToken,
                        String deviceType) {
@@ -41,7 +45,6 @@ public class AuthManager extends Observable implements AuthManagerI {
             userInputDetails.put("password", password);
             userInputDetails.put("device_type", deviceType);
 
-            Log.e("SIGNIN json",userInputDetails.toString());
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,
@@ -435,8 +438,13 @@ public class AuthManager extends Observable implements AuthManagerI {
         String str = null;
         try {
             client = new AsyncHttpClient();
+            //for development
             client.addHeader("user_token", usertoken);
             client.addHeader("phone_no", phone);
+
+            //for prod
+          //  client.addHeader("User-Token", usertoken);
+            //client.addHeader("Phone-No", phone);
             Log.e("usertoken-phone_no-othersphone-->", "" + usertoken + "-" + phone + "-" + othersphone);
 
 
@@ -483,6 +491,8 @@ public class AuthManager extends Observable implements AuthManagerI {
                             JSONObject jobj = new JSONObject(response.getString("user"));
                             if (jobj.has("gender"))
                                 authManager.setTmpGender(jobj.getString("gender"));
+                            else
+                                authManager.setTmpGender("guy");
                             if (jobj.has("follower"))
                                 authManager.setTmpFollower(jobj.getString("follower"));
                             if (jobj.has("following"))
@@ -503,7 +513,7 @@ public class AuthManager extends Observable implements AuthManagerI {
                             if (jobj.has("gender")) {
                                 authManager.setGender(jobj.getString("gender"));
                             } else {
-                                authManager.setGender("");
+                                authManager.setGender("guy");
                             }
                             if (jobj.has("follower"))
                                 authManager.setFollower(jobj.getString("follower"));
@@ -570,6 +580,7 @@ public class AuthManager extends Observable implements AuthManagerI {
     private String deviceRegistereId;
     private String userCity;
     private String userCountry;
+    private Uri userImageUri=null;
 
 
     public void setUserCity(String userCity) {
@@ -1012,4 +1023,11 @@ public class AuthManager extends Observable implements AuthManagerI {
         this.qBPrivateChat = qBPrivateChat;
     }
 
+    public void setUserImageUri(Uri uri){
+        this.userImageUri=uri;
+    }
+
+    public Uri getUserImageUri(){
+        return this.userImageUri;
+    }
 }

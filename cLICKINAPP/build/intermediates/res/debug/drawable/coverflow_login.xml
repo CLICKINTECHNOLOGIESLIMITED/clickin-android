@@ -2,4 +2,4 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_pressed="true" android:drawable="@drawable/login_btn_touch_state" />
      <item android:drawable="@drawable/login_btn" />
-</selector><!-- From: file:/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/src/main/res/drawable/coverflow_login.xml -->
+</selector><!-- From: file:/home/monika/gitcodeClickin/cLICKINAPP/src/main/res/drawable/coverflow_login.xml -->

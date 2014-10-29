@@ -4,8 +4,16 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.graphics.Typeface;
+import android.media.MediaScannerConnection;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.telephony.TelephonyManager;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -31,6 +39,7 @@ import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
 import com.sourcefuse.clickinandroid.model.SettingManager;
+import com.sourcefuse.clickinandroid.services.QbChatService;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.ClickInAlertDialog;
 import com.sourcefuse.clickinandroid.utils.Constants;
@@ -38,6 +47,15 @@ import com.sourcefuse.clickinandroid.utils.MyPreference;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
 
+import org.jivesoftware.smack.ConnectionListener;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.Locale;
 
 import de.greenrobot.event.EventBus;
@@ -201,38 +219,57 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
     @Override
     public void onStart() {
         super.onStart();
-        if (EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().unregister(this);
-        }
+
         EventBus.getDefault().register(this);
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        if (EventBus.getDefault().isRegistered(this)) {
+
             EventBus.getDefault().unregister(this);
-        }
+
     }
 
     public void onEventMainThread(String getMsg) {
         Log.d(TAG, "onEventMainThread->" + getMsg);
         authManager = ModelManager.getInstance().getAuthorizationManager();
         if (getMsg.equalsIgnoreCase("SignIn True")) {
-            new MyPreference(SignInView.this).setToken(authManager.getUsrToken());
-            new MyPreference(SignInView.this).setmyPhoneNo(authManager.getPhoneNo());
+            //save all user values in shared prefrence
+            SharedPreferences preferences= PreferenceManager.getDefaultSharedPreferences(this);
+            SharedPreferences.Editor editor=preferences.edit();
+            editor.putString("token",authManager.getUsrToken());
+            editor.putString("myPhoneNo",authManager.getPhoneNo());
+            editor.commit();
+
+          //  new MyPreference(SignInView.this).setToken(authManager.getUsrToken());
+            //new MyPreference(SignInView.this).setmyPhoneNo(authManager.getPhoneNo());
 
             loginToQuickBlox();
             authManager.getProfileInfo("", authManager.getPhoneNo(), authManager.getUsrToken());
         } else if (getMsg.equalsIgnoreCase("SignIn False")) {
             Utils.dismissBarDialog();
-            Utils.showAlert(this,AlertMessage.wrong_signIn_details);
-           // Utils.showAlert(SignInView.this, authManager.getMessage());
+            Utils.showAlert(SignInView.this, authManager.getMessage());
         } else if (getMsg.equalsIgnoreCase("SignIn Network Error")) {
             Utils.dismissBarDialog();
             Utils.showAlert(act, AlertMessage.connectionError);
         } else if (getMsg.equalsIgnoreCase("ProfileInfo True")) {
-            switchView();
+            //save values of user in shared prefrence for later use
+            SharedPreferences preferences=PreferenceManager.getDefaultSharedPreferences(this);
+            SharedPreferences.Editor editor=preferences.edit();
+            editor.putString("gender",authManager.getGender());
+            editor.putString("follower",authManager.getFollower());
+            editor.putString("following",authManager.getFollowing());
+            editor.putString("is_following",authManager.getIsFollowing());
+            editor.putString("name",authManager.getUserName());
+            editor.putString("user_pic",authManager.getUserPic());
+            editor.putString("dob",authManager.getdOB());
+            editor.putString("city",authManager.getUserCity());
+            editor.putString("country",authManager.getUserCountry());
+            editor.putString("email",authManager.getEmailId());
+            editor.commit();
+            new ImageDownloadTask().execute();
+
         } else if (getMsg.equalsIgnoreCase("ProfileInfo False")) {
             Utils.dismissBarDialog();
             Utils.showAlert(SignInView.this, authManager.getMessage());
@@ -324,25 +361,22 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
                             com.sourcefuse.clickinandroid.utils.Log.e(TAG, "Login successfully");
                             QBChatService.getInstance().startAutoSendPresence(5);
 
-
                             chat = QBChatService.getInstance().createChat();
                             authManager.setqBPrivateChat(chat);
-
-
-
-
-
                         }
 
                         @Override
                         public void onLoginError(String s) {
                             com.sourcefuse.clickinandroid.utils.Log.e(TAG, "onLoginError");
+                            loginToQuickBlox();
                         }
+
+
                     });
                     Log.e(TAG, "Session was successfully created");
 
                 } else {
-                   Log.e(TAG, "Errors " + result.getErrors().toString() + "result" + result);
+                    Log.e(TAG, "Errors " + result.getErrors().toString() + "result" + result);
                 }
             }
         });
@@ -350,8 +384,61 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
 
     }
 
+    private  class ImageDownloadTask extends AsyncTask<Void,Void,File> {
+        File file;
+        @Override
+        protected File doInBackground( Void... params ) {
+            InputStream is = null;
 
+           file = new File(context.getFilesDir().getAbsolutePath() + "/userpic1.jpg");
+            try { 
+                URL url = new URL(authManager.getUserPic());
+            /* Open a connection to that URL. */
+                URLConnection ucon = url.openConnection();
 
+            /*
+             * Define InputStreams to read from the URLConnection.
+             */
+                is = ucon.getInputStream();
+              //  FileOutputStream fOut = openFileOutput("uerpic.jpg",MODE_WORLD_READABLE);
+                OutputStream os = new FileOutputStream(file) ;
+                byte [ ] data = new byte [ is.available ( ) ] ;
+                is.read ( data ) ; os.write (data );is.close ( ) ; os.close ( ) ;
+                return file;
+            }
+            catch (Exception e){
+                Log .d ( "ImageManager " , " Error: " + e ) ;
+            }
+
+            return null;
+        }
+        protected void onPostExecute (File file) {
+         /*   try{
+                MediaScannerConnection.scanFile(null, new String[]{file.toString()}, null, new MediaScannerConnection.OnScanCompletedListener() {
+                    public void onScanCompleted(String path, Uri uri) {
+                        Log.i(" External Storage", " Scanned " + path + " : ");
+                        Log.i(" E x t e r n a l S t o r a g e ", " - > u r i = " + uri);
+                        authManager.setUserImageUri(uri);
+                    }
+                }) ;
+            }catch (Exception e) {
+                e.printStackTrace();
+                // TODO: handle exception
+            }*/
+            Uri uri=Uri.fromFile(file);
+            try {
+                Bitmap imageBitmap = Utils.decodeUri(uri, SignInView.this);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            authManager.setUserImageUri(uri);
+            SharedPreferences preferences=PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            SharedPreferences.Editor editor=preferences.edit();
+            String uriStr=uri.toString();
+            editor.putString("userimageuri",uriStr);
+            editor.commit();
+            switchView();
+        }}
 
 }
 

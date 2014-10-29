@@ -11,14 +11,10 @@ import android.widget.TextView;
 
 import com.sourcefuse.clickinandroid.model.bean.CardBean;
 import com.sourcefuse.clickinandroid.utils.Log;
-
 import com.sourcefuse.clickinandroid.view.Card;
 import com.sourcefuse.clickinandroid.view.ViewTradeCart;
 import com.sourcefuse.clickinapp.R;
 
-import org.simpleframework.xml.stream.Position;
-
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,11 +22,11 @@ import java.util.List;
  */
 public class AdapterAll extends ArrayAdapter<CardBean> {
 
-     Context context ;
-     int layoutresourceid ;
-     int LayoutCard;
-     TextView tv , tv2;
-     //List<ArrayList> mlist ;
+    Context context ;
+    int layoutresourceid ;
+    int LayoutCard;
+    TextView tv , tv2;
+    //List<ArrayList> mlist ;
     public AdapterAll(Context context, int layoutresourceid , int LayoutCard , List<CardBean> item ) {
         super(context, layoutresourceid , LayoutCard ,item);
         this.context = context;
@@ -42,7 +38,7 @@ public class AdapterAll extends ArrayAdapter<CardBean> {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
-      // mlist = new ArrayList<ArrayList>();
+        // mlist = new ArrayList<ArrayList>();
         View view = convertView;
 
         LayoutInflater inflater = ((Activity) context).getLayoutInflater();
@@ -71,29 +67,25 @@ public class AdapterAll extends ArrayAdapter<CardBean> {
             public void onClick(View view) {
                 if(position==0){
 
-                 Intent intent = new Intent(getContext(), ViewTradeCart.class);
-                   context.startActivity(intent);
+                    Intent intent = new Intent(getContext(), ViewTradeCart.class);
+                    context.startActivity(intent);
                     ((Activity) context).overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
 
                 }
                 else{
 
                     CardBean bean = getItem(position-1);
+                    String url;
+                    String url1 = bean.getCardUrl() ;
+                    String add = "/a/1080" ;
 
-                    String url = bean.getCardUrl();
+                    url=url1.replaceFirst("cards\\/(\\d+)\\.jpg","cards\\/a\\/1080\\/$1\\.jpg");
+                    Log.e("All Adapter " , "This Modified URL::>>>>>>>>" +url);
 
-                     //String Title = bean.getCardTitle();
-                    //String Discription = bean.getCardDescription();
-
-//                Log.e(TAG,"Value in Bean Tit" +Title);
-//                Log.e(TAG,"Value in Bean Dis " +Discription);
                     Intent intent = new Intent(getContext(), Card.class);
-                    // intent.putExtra("Title", Title);
-                    //  intent.putExtra("D", Discription);
                     intent.putExtra("Url", url);
-                    //Log.e(TAG,"Value in Bean Tit" +url);
-
                     context.startActivity(intent);
+
                     ((Activity) context).overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
 
                 }

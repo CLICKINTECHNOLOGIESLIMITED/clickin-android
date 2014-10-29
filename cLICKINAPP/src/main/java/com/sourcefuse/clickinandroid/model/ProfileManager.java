@@ -58,7 +58,7 @@ public class ProfileManager extends Observable implements ProfileManagerI {
 			userInputDetails.put("first_name", fname);
 			userInputDetails.put("last_name", lname);
 			// userInputDetails.put("fb_access_token", "jh");
-			Log.d("", "userInputDetails---> " + userInputDetails);
+//			Log.d("", "userInputDetails---> " + userInputDetails);
 			client = new AsyncHttpClient();
 			se = new StringEntity(userInputDetails.toString());
 			se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,

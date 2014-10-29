@@ -9,6 +9,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.sourcefuse.clickinandroid.utils.Log;
@@ -30,6 +31,7 @@ public class Card extends Activity implements View.OnClickListener,TextWatcher {
     Context context;
     ImageView imageView;
     TextView trd_clicks_top, trd_clicks_bottom ,trone,trtwo,trthree,trfour,trfive;
+    // String xyz_url = "https://s3.amazonaws.com/clickin-dev/cards/a/1080/39.jpg";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,14 @@ public class Card extends Activity implements View.OnClickListener,TextWatcher {
         trfive = (TextView)findViewById(R.id.btn_five);
         trfive.setOnClickListener(this);
 
+        LinearLayout back = (LinearLayout)findViewById(R.id.linear_layout_back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+                overridePendingTransition(R.anim.slide_in_finish_up, R.anim.slide_out_finish_up);
+            }
+        });
 
         imageView = (ImageView) findViewById(R.id.trade_image);
         mBackButton = (ImageView) findViewById(R.id.m_back);
@@ -66,21 +76,23 @@ public class Card extends Activity implements View.OnClickListener,TextWatcher {
         Intent intent = getIntent();
         if (null != intent) {
 
-
+            // Utils.launchBarDialog(Card.this);
             url = intent.getStringExtra("Url");
             Log.e(TAG, "Url for the fetched Card is" + url);
 
         } else {
             Log.e(TAG, "Value in intent in null");
         }
-
-        Picasso.with(this)
-                .load(url)
-               .into(imageView);
-
-      //imageView.setImageDrawable(getResources().getDrawable(R.drawable.tocheck));
-
+        try {
+            Picasso.with(this)
+                    .load(url)
+                    .into(imageView);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
+
+
 
 
     @Override
@@ -153,5 +165,4 @@ public class Card extends Activity implements View.OnClickListener,TextWatcher {
 
     }
 }
-
 

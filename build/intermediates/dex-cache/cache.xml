@@ -2,106 +2,106 @@
 <pre-dex-items>
 
     <item
-        dex="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-87ec36604c6cae0713c7a38b40fd3408a7aaf477.jar"
-        jar="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/library_header/unspecified/classes.jar"
+        dex="/home/monika/gitcodeClickin/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-655cb6e34f89fcf40eaae91f8f4c0ff7ab7b73ea.jar"
+        jar="/home/monika/gitcodeClickin/cLICKINAPP/build/intermediates/exploded-aar/gitcodeClickin/library/unspecified/classes.jar"
         jumboMode="false"
         revision="19.1.0"
-        sha1="2e74add4ef01067cfb1eeae43c695c1f030a629c"/>
+        sha1="b545d443e341adab10de07ea9914b781e714591b"/>
     <item
-        dex="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-59c49e349218b32573757fee2611dac13e43bb15.jar"
-        jar="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/support-v4/20.0.0/classes.jar"
+        dex="/home/monika/gitcodeClickin/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-506de6ab27761990127aaa02da71d943a1814c32.jar"
+        jar="/home/monika/gitcodeClickin/cLICKINAPP/build/intermediates/exploded-aar/gitcodeClickin/library_header/unspecified/classes.jar"
         jumboMode="false"
         revision="19.1.0"
-        sha1="8694693636ab36910c8100ce527c258ff3ebece0"/>
+        sha1="c7224c59cdf5b9b08005590a5a816e5019f4282b"/>
     <item
-        dex="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/pre-dexed/debug/quickblox-android-1.2.4-b053b6356031f7f5162f85fbefc9e5b2a3c05d1a.jar"
-        jar="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/libs/quickblox-android-1.2.4.jar"
+        dex="/home/monika/gitcodeClickin/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-9516bd4210181f9291cb08ba9eafa27c6185473f.jar"
+        jar="/home/monika/gitcodeClickin/cLICKINAPP/build/intermediates/exploded-aar/gitcodeClickin/facebookSDK/unspecified/classes.jar"
         jumboMode="false"
         revision="19.1.0"
-        sha1="0980419c50643c4e3ce10cf39fb25b283e8a3ca9"/>
+        sha1="066cf493930851527c255bb79c14d4bf67a4c6be"/>
     <item
-        dex="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-a839d5045e82856825bf27313c0e251104266673.jar"
-        jar="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/classes.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="f21927d22fe31889ecce94dd697a2e75b137e0ef"/>
-    <item
-        dex="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/pre-dexed/debug/eventbus-2.2.0-048cc96297e4b7fd02664ecfc7711ac5aed57835.jar"
-        jar="/home/akshit/.gradle/caches/modules-2/files-2.1/de.greenrobot/eventbus/2.2.0/8957e80562a7e6ac5d9421e46e0898336c06c307/eventbus-2.2.0.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="8957e80562a7e6ac5d9421e46e0898336c06c307"/>
-    <item
-        dex="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-22380b89c88f53b387d28629c8a59fb612686a05.jar"
-        jar="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/cropper/unspecified/classes.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="fd99f5f07a5105c63a115d479657eefa0503aa52"/>
-    <item
-        dex="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/pre-dexed/debug/picasso-2.2.0-f019737b6a4e75514178ed8c6a2b05cadb95dd04.jar"
-        jar="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/libs/picasso-2.2.0.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="74137f8d9aac26dd9463efe32271f2be8d41cda9"/>
-    <item
-        dex="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-51d2971e2018bd5d2972d002bf53bd96e3243a9b.jar"
-        jar="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.viewpagerindicator/library/2.4.1/classes.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="88e8e18d365173ad04a543d76c157e0b644f0b3f"/>
-    <item
-        dex="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-f3211c00cf771e3aaa38ee4e9033f20df2f7fb3c.jar"
-        jar="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.google.android.gms/play-services/3.1.59/classes.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="2dd7b1a9ea65bb03d9cd16df777eeaf537a1fc81"/>
-    <item
-        dex="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/pre-dexed/debug/support-annotations-20.0.0-cb5382fe8f107b0530bcd335f7f7a30b8ea194de.jar"
-        jar="/home/akshit/Downloads/android-studio/sdk/extras/android/m2repository/com/android/support/support-annotations/20.0.0/support-annotations-20.0.0.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="9d9013e9ff35fc3756411e62873c363c70c638fa"/>
-    <item
-        dex="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-2182c7b8f863fcf35ad99503e8ceb3e634b526c6.jar"
-        jar="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.navercorp.pulltorefresh/library/3.2.0/classes.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="e81a90331089d2f9018e493b0fdd6bab92fae40c"/>
-    <item
-        dex="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-976d4c81a80fdfa67a3a9e557358e13afedde13d.jar"
-        jar="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/library/unspecified/classes.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="1deb3179f230d61c6975ec2d5809230be822342d"/>
-    <item
-        dex="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-a45dcdb4089165678fc22acf435be49750922eba.jar"
-        jar="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/facebookSDK/unspecified/classes.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="5f107aa82e7fa810ba0d4a824222682cefdaf29c"/>
-    <item
-        dex="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/pre-dexed/debug/java-json-47b9f30f6df1a9e2042e55c7b107ea7c02b0d358.jar"
-        jar="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/libs/java-json.jar"
+        dex="/home/monika/gitcodeClickin/cLICKINAPP/build/intermediates/pre-dexed/debug/java-json-2f543be6c8e3460b898e08e27c0ba5c8d78b8eec.jar"
+        jar="/home/monika/gitcodeClickin/cLICKINAPP/libs/java-json.jar"
         jumboMode="false"
         revision="19.1.0"
         sha1="edad9c5de6fb8df07c535a47045956026011ffa3"/>
     <item
-        dex="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/pre-dexed/debug/internal_impl-20.0.0-037736a22cec10f93c97842a23abc949a455307e.jar"
-        jar="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/support-v4/20.0.0/libs/internal_impl-20.0.0.jar"
+        dex="/home/monika/gitcodeClickin/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-74ce970ceacb43df83d558c0d9f831b14c245e1f.jar"
+        jar="/home/monika/gitcodeClickin/cLICKINAPP/build/intermediates/exploded-aar/com.google.android.gms/play-services/3.1.59/classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="2dd7b1a9ea65bb03d9cd16df777eeaf537a1fc81"/>
+    <item
+        dex="/home/monika/gitcodeClickin/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-1bccbb593a9ab4fa17381aff0f0dc4d4da0611ce.jar"
+        jar="/home/monika/gitcodeClickin/cLICKINAPP/build/intermediates/exploded-aar/gitcodeClickin/cropper/unspecified/classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="8f3bb04129a91de9e119effa3e2052742391c7d1"/>
+    <item
+        dex="/home/monika/gitcodeClickin/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-b1bd60cf8ee0f19d2b9c8c7e5928e6ff404f82ff.jar"
+        jar="/home/monika/gitcodeClickin/cLICKINAPP/build/intermediates/exploded-aar/gitcodeClickin/slider_library/unspecified/classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="0d0b06e7952aeb5a2a4b90056b70f3241f642c99"/>
+    <item
+        dex="/home/monika/gitcodeClickin/cLICKINAPP/build/intermediates/pre-dexed/debug/quickblox-android-1.2.4-78d6ae7afa93544211ce25c7d8cfe3ba377a224d.jar"
+        jar="/home/monika/gitcodeClickin/cLICKINAPP/libs/quickblox-android-1.2.4.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="0980419c50643c4e3ce10cf39fb25b283e8a3ca9"/>
+    <item
+        dex="/home/monika/gitcodeClickin/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-7e0d39a4bf8af1368b5fa7864626d65a2f8664de.jar"
+        jar="/home/monika/gitcodeClickin/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/support-v4/20.0.0/classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="8694693636ab36910c8100ce527c258ff3ebece0"/>
+    <item
+        dex="/home/monika/gitcodeClickin/cLICKINAPP/build/intermediates/pre-dexed/debug/android-async-http-1.4.4-61dbe2c8c8c4ed692c9551b2825ee3a3e88e6382.jar"
+        jar="/home/monika/gitcodeClickin/cLICKINAPP/libs/android-async-http-1.4.4.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="3bae85a076241828810bf8fbcc12e5891d5fc34c"/>
+    <item
+        dex="/home/monika/gitcodeClickin/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-b7d615f8dca32f2df9a9cd319bc4b1c32f2e7bec.jar"
+        jar="/home/monika/gitcodeClickin/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="f21927d22fe31889ecce94dd697a2e75b137e0ef"/>
+    <item
+        dex="/home/monika/gitcodeClickin/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-8c94e6b8e3f5314f86b6dfb1c9ec7be78fd0d919.jar"
+        jar="/home/monika/gitcodeClickin/cLICKINAPP/build/intermediates/exploded-aar/com.navercorp.pulltorefresh/library/3.2.0/classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="e81a90331089d2f9018e493b0fdd6bab92fae40c"/>
+    <item
+        dex="/home/monika/gitcodeClickin/cLICKINAPP/build/intermediates/pre-dexed/debug/picasso-2.2.0-eab41954c305afbe6e823c3b21d158be342aa29b.jar"
+        jar="/home/monika/gitcodeClickin/cLICKINAPP/libs/picasso-2.2.0.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="74137f8d9aac26dd9463efe32271f2be8d41cda9"/>
+    <item
+        dex="/home/monika/gitcodeClickin/cLICKINAPP/build/intermediates/pre-dexed/debug/support-annotations-20.0.0-21ef4a588027166e48d77ac059df5162dbffaf4d.jar"
+        jar="/home/monika/Code/android-studio/sdk/extras/android/m2repository/com/android/support/support-annotations/20.0.0/support-annotations-20.0.0.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="9d9013e9ff35fc3756411e62873c363c70c638fa"/>
+    <item
+        dex="/home/monika/gitcodeClickin/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-e5ffd4848ec0946faaa007157cd92aa5e139c608.jar"
+        jar="/home/monika/gitcodeClickin/cLICKINAPP/build/intermediates/exploded-aar/com.viewpagerindicator/library/2.4.1/classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="88e8e18d365173ad04a543d76c157e0b644f0b3f"/>
+    <item
+        dex="/home/monika/gitcodeClickin/cLICKINAPP/build/intermediates/pre-dexed/debug/internal_impl-20.0.0-93b1e3b98b2f2ccb072d5f7f346e6ec325c869f4.jar"
+        jar="/home/monika/gitcodeClickin/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/support-v4/20.0.0/libs/internal_impl-20.0.0.jar"
         jumboMode="false"
         revision="19.1.0"
         sha1="e40b3078e3fbd353c9f44da8df25a8fc0078209d"/>
     <item
-        dex="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-954c95d3813b29686252c9b862fcc94c9f8db7e7.jar"
-        jar="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/slider_library/unspecified/classes.jar"
+        dex="/home/monika/gitcodeClickin/cLICKINAPP/build/intermediates/pre-dexed/debug/eventbus-2.2.0-7be1aa39289ee46d6463cc4e72dfc925fe999c0b.jar"
+        jar="/home/monika/.gradle/caches/modules-2/files-2.1/de.greenrobot/eventbus/2.2.0/8957e80562a7e6ac5d9421e46e0898336c06c307/eventbus-2.2.0.jar"
         jumboMode="false"
         revision="19.1.0"
-        sha1="57b8305b5abf7ee5d8431e3351527f8e2520afa1"/>
-    <item
-        dex="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/pre-dexed/debug/android-async-http-1.4.4-920cdf574c79ff81524ebe4c7d7dc759eec82d63.jar"
-        jar="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/libs/android-async-http-1.4.4.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="3bae85a076241828810bf8fbcc12e5891d5fc34c"/>
+        sha1="8957e80562a7e6ac5d9421e46e0898336c06c307"/>
 
 </pre-dex-items>

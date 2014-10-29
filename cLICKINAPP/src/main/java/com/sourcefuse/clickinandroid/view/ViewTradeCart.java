@@ -10,6 +10,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.sourcefuse.clickinapp.R;
@@ -31,6 +32,16 @@ public class ViewTradeCart extends Activity implements View.OnClickListener
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.view_tradecart);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
+        LinearLayout back = (LinearLayout)findViewById(R.id.linear_layout_back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+                overridePendingTransition(R.anim.slide_in_finish_up, R.anim.slide_out_finish_up);
+            }
+        });
+
         mback = (ImageView)findViewById(R.id.m_back);
         mback.setOnClickListener(new View.OnClickListener() {
             @Override

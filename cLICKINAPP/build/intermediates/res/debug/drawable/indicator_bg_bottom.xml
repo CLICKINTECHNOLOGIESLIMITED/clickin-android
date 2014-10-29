@@ -15,4 +15,4 @@
         android:topLeftRadius="@dimen/indicator_corner_radius"
         android:topRightRadius="@dimen/indicator_corner_radius" />
 
-</shape><!-- From: file:/Users/NBP/git/Android-PullToRefresh/library/res/drawable/indicator_bg_bottom.xml --><!-- From: file:/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.navercorp.pulltorefresh/library/3.2.0/res/drawable/indicator_bg_bottom.xml -->
+</shape><!-- From: file:/Users/NBP/git/Android-PullToRefresh/library/res/drawable/indicator_bg_bottom.xml --><!-- From: file:/home/monika/gitcodeClickin/cLICKINAPP/build/intermediates/exploded-aar/com.navercorp.pulltorefresh/library/3.2.0/res/drawable/indicator_bg_bottom.xml -->
