@@ -85,6 +85,11 @@ public class CardGridViewAdapter extends ArrayAdapter<CardBean> {
                     Intent intent = new Intent(getContext(), Card.class);
 
                     intent.putExtra("Url", url);
+                	intent.putExtra("Title", Title);
+                	intent.putExtra("Discription", Discription);
+                	intent.putExtra("Url", url);
+                	intent.putExtra("card_id", bean.getCard_Id());
+
                     // Log.e(TAG, "Value in Bean Tit" + url);
                     context.startActivity(intent);
                     ((Activity) context).overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);

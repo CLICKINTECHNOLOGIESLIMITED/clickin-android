@@ -2,10 +2,10 @@
 <merger version="2" >
 
     <dataSet config="main" >
-        <source path="/home/monika/gitcodeClickin/cropper/src/main/assets" />
+        <source path="/home/mukesh/clickAMaster/cropper/src/main/assets" />
     </dataSet>
     <dataSet config="debug" >
-        <source path="/home/monika/gitcodeClickin/cropper/src/debug/assets" />
+        <source path="/home/mukesh/clickAMaster/cropper/src/debug/assets" />
     </dataSet>
 
 </merger>

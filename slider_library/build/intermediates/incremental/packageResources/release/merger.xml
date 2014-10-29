@@ -2,9 +2,9 @@
 <merger version="2" >
 
     <dataSet config="main" >
-        <source path="/home/monika/gitcodeClickin/slider_library/src/main/res" >
+        <source path="/home/mukesh/clickAMaster/slider_library/src/main/res" >
             <file
-                path="/home/monika/gitcodeClickin/slider_library/src/main/res/values/attrs.xml"
+                path="/home/mukesh/clickAMaster/slider_library/src/main/res/values/attrs.xml"
                 qualifiers="" >
                 <declare-styleable name="SlidingMenu" >
                     <attr name="mode" >
@@ -73,7 +73,7 @@
                 </declare-styleable>
             </file>
             <file
-                path="/home/monika/gitcodeClickin/slider_library/src/main/res/values/ids.xml"
+                path="/home/mukesh/clickAMaster/slider_library/src/main/res/values/ids.xml"
                 qualifiers="" >
                 <item
                     name="selected_view"
@@ -81,15 +81,15 @@
             </file>
             <file
                 name="slidingmenumain"
-                path="/home/monika/gitcodeClickin/slider_library/src/main/res/layout/slidingmenumain.xml"
+                path="/home/mukesh/clickAMaster/slider_library/src/main/res/layout/slidingmenumain.xml"
                 qualifiers=""
                 type="layout" />
         </source>
-        <source path="/home/monika/gitcodeClickin/slider_library/build/generated/res/rs/release" />
-        <source path="/home/monika/gitcodeClickin/slider_library/build/generated/res/generated/release" />
+        <source path="/home/mukesh/clickAMaster/slider_library/build/generated/res/rs/release" />
+        <source path="/home/mukesh/clickAMaster/slider_library/build/generated/res/generated/release" />
     </dataSet>
     <dataSet config="release" >
-        <source path="/home/monika/gitcodeClickin/slider_library/src/release/res" />
+        <source path="/home/mukesh/clickAMaster/slider_library/src/release/res" />
     </dataSet>
 
 </merger>

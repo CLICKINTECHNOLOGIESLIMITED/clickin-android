@@ -111,6 +111,7 @@ public class ChatManager extends Observable implements ChatManagerI {
                             Log.e(TAG,"response FecthChat ->" + response);
                             state = response.getBoolean("success");
                             if (state) {
+                                chatManager.refreshivechatList.clear();
                                 Utils.clickCustomLog(response.toString());
                                 JSONArray list = response.getJSONArray("chats");
                                 for (int i = 0; i < list.length(); i++) {
@@ -132,8 +133,8 @@ public class ChatManager extends Observable implements ChatManagerI {
                                         chatRecordBeen.setChatType(chatObj.getString("type"));
                                     if (chatObj.has("message"))
                                         chatRecordBeen.setChatText(chatObj.getString("message"));
-                                   // if (chatObj.has("content"))
-                                       // chatRecordBeen.setchatObj.getString("content");
+                                    if (chatObj.has("content"))
+                                       chatRecordBeen.setChatImageUrl(chatObj.getString("content"));
                                     if (chatObj.has("relationshipId"))
                                         chatRecordBeen.setRelationshipId(chatObj.getString("relationshipId"));
                                     if (chatObj.has("_id"))
@@ -154,8 +155,11 @@ public class ChatManager extends Observable implements ChatManagerI {
                                         chatRecordBeen.setCards(chatObj.getString("cards"));
                                     if (chatObj.has("sentOn"))
                                         chatRecordBeen.setTimeStamp(chatObj.getString("sentOn"));
-                                    chatManager.chatListFromServer.add(chatRecordBeen);
+                                    chatManager.refreshivechatList.add(chatRecordBeen);
                                 }
+
+                                chatManager.chatListFromServer.addAll(0,chatManager.refreshivechatList);
+
                                 EventBus.getDefault().post("FecthChat True");
                             }else{
                                 EventBus.getDefault().post("FecthChat False");
@@ -245,6 +249,7 @@ public class ChatManager extends Observable implements ChatManagerI {
 
                                 cardBean = new CardBean();
                                 cardBean.setCardUrl(cardObject.getString("image"));
+                                cardBean.setCard_Id(cardObject.getString("_id"));
                                 cardBean.setCardActive(cardObject.getString("active"));
                                 cardBean.setCardDescription(cardObject.getString("description"));
                                 cardBean.setCardTitle(cardObject.getString("title"));

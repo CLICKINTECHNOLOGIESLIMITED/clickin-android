@@ -10,6 +10,7 @@ public interface ChatManagerI {
 	public abstract void fetchChatRecord(String relationshipId,String phone,String usertoken,String chatId);
     public abstract void fetchCards(String phone,String usertoken);
     public ArrayList<ChatRecordBeen> chatListFromServer = new ArrayList<ChatRecordBeen>();
+    public ArrayList<ChatRecordBeen> refreshivechatList = new ArrayList<ChatRecordBeen>();
 
 
 

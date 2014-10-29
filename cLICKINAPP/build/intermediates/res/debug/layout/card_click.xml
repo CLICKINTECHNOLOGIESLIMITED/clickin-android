@@ -210,6 +210,7 @@
             android:orientation="vertical">
 
             <com.sourcefuse.clickinandroid.utils.ClickInTextView
+                android:id="@+id/tv_about_message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/btn_layout"
@@ -326,4 +327,4 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-</LinearLayout><!-- From: file:/home/monika/gitcodeClickin/cLICKINAPP/src/main/res/layout/card_click.xml -->
+</LinearLayout><!-- From: file:/home/mukesh/clickAMaster/cLICKINAPP/src/main/res/layout/card_click.xml -->

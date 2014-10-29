@@ -2,66 +2,227 @@
 <merger version="2" >
 
     <dataSet config="20.0.0" >
-        <source path="/home/monika/gitcodeClickin/facebookSDK/build/intermediates/exploded-aar/com.android.support/support-v4/20.0.0/res" />
+        <source path="/home/mukesh/clickAMaster/facebookSDK/build/intermediates/exploded-aar/com.android.support/support-v4/20.0.0/res" />
     </dataSet>
     <dataSet config="main" >
-        <source path="/home/monika/gitcodeClickin/facebookSDK/src/main/res" >
+        <source path="/home/mukesh/clickAMaster/facebookSDK/src/main/res" >
             <file
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/values-es/strings.xml"
-                qualifiers="es" >
-                <string name="com_facebook_nearby" >Cercano
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/values-he/strings.xml"
+                qualifiers="he" >
+                <string name="com_facebook_requesterror_password_changed" >.הסיסמה שלך בפייסבוק השתנתה, אנא חבר מחדש את האפליקציה עם פייסבוק
                 </string>
-                <string name="com_facebook_requesterror_password_changed" >Su contraseña de Facebook ha cambiado, por favor vuelva a conectar la aplicación con Facebook.
+                <string name="com_facebook_requesterror_web_login" >.כדי לאפשר מחדש לאפליקציה להתחבר עם פייסבוק https://www.facebook.com או https://m.facebook.com אנא היכנס דרך
                 </string>
-                <string name="com_facebook_requesterror_reconnect" >Se produjo un error al conectar con Facebook, por favor vuelva a conectar la aplicación con Facebook.
+                <string name="com_facebook_usersettingsfragment_logged_in" >מחובר
                 </string>
-                <string name="com_facebook_placepicker_subtitle_format" >%1$s • %2$,d estuvieron aquí
+                <string name="com_facebook_requesterror_reconnect" >.ארעה שגיאה בעת החיבור עם פייסבוק, חבר בבקשה מחדש את האפליקציה עם פייסבוק
                 </string>
-                <string name="com_facebook_loading" >Cargando
+                <string name="com_facebook_logo_content_description" >פייסבוק לוגו
                 </string>
-                <string name="com_facebook_requesterror_web_login" >Por favor, iniciar sesión a través https://www.facebook.com o https://m.facebook.com para volver a activar la aplicación para conectar con Facebook.
+                <string name="com_facebook_picker_done_button_text" >בצע
                 </string>
-                <string name="com_facebook_loginview_cancel_action" >Cancelar
+                <string name="com_facebook_loginview_log_in_button" >התחבר לפייסבוק
                 </string>
-                <string name="com_facebook_choose_friends" >Elige Amigos
+                <string name="com_facebook_loginview_logged_in_as" >מחובר בשם: %1$s
                 </string>
-                <string name="com_facebook_dialogloginactivity_ok_button" >Aceptar
+                <string name="com_facebook_placepicker_subtitle_were_here_only_format" >%1$,d היו פה
                 </string>
-                <string name="com_facebook_loginview_log_in_button" >Iniciar sesión con Facebook
+                <string name="com_facebook_requesterror_relogin" >.האפליקציה אינה מחוברת לפייסבוק, אנא היכנס וחבר מחדש את האפליקציה
                 </string>
-                <string name="com_facebook_loginview_logged_in_as" >Sesión iniciada como: %1$s
+                <string name="com_facebook_usersettingsfragment_log_in_button" >התחבר…
                 </string>
-                <string name="com_facebook_loginview_log_out_action" >Cerrar sesión
+                <string name="com_facebook_internet_permission_error_title" >AndroidManifest שגיאת
                 </string>
-                <string name="com_facebook_requesterror_permissions" >Una conexión de aplicación con Facebook falló debido a permisos insuficientes, por favor, conceda los permisos de aplicaciones para realizar la operación.
+                <string name="com_facebook_internet_permission_error_message" >ההתחברות לתצוגת אתר דורשת אישור אינטרנט
                 </string>
-                <string name="com_facebook_usersettingsfragment_logged_in" >Sesión iniciada
+                <string name="com_facebook_loginview_cancel_action" >בטל
                 </string>
-                <string name="com_facebook_internet_permission_error_title" >Error de AndroidManifest
+                <string name="com_facebook_choose_friends" >בחר חברים
                 </string>
-                <string name="com_facebook_usersettingsfragment_not_logged_in" >No has iniciado sesión
-                </string>
-                <string name="com_facebook_loginview_logged_in_using_facebook" >Sesión iniciada con Facebook
-                </string>
-                <string name="com_facebook_picker_done_button_text" >Aceptar
+                <string name="com_facebook_loginview_log_out_button" >התנתק
                 </string>
                 <string name="com_facebook_placepicker_subtitle_catetory_only_format" >%1$s
                 </string>
-                <string name="com_facebook_internet_permission_error_message" >WebView inicio de sesión requiere permiso INTERNET
+                <string name="com_facebook_placepicker_subtitle_format" >%1$s • %2$,d היו פה
                 </string>
-                <string name="com_facebook_placepicker_subtitle_were_here_only_format" >es:%1$,d estuvieron aquí
+                <string name="com_facebook_usersettingsfragment_not_logged_in" >לא מחובר
                 </string>
-                <string name="com_facebook_requesterror_relogin" >La aplicación no se conecta con Facebook, inicie sesión y volver a conectar esta aplicación.
+                <string name="com_facebook_loading" >..מעלה
                 </string>
-                <string name="com_facebook_usersettingsfragment_log_in_button" >Iniciar sesión…
+                <string name="com_facebook_nearby" >קרוב אליי
                 </string>
-                <string name="com_facebook_logo_content_description" >Logo de Facebook
+                <string name="com_facebook_loginview_logged_in_using_facebook" >מחובר באמצעות פייסבוק
                 </string>
-                <string name="com_facebook_loginview_log_out_button" >Cerrar sesión
+                <string name="com_facebook_dialogloginactivity_ok_button" >אישור
+                </string>
+                <string name="com_facebook_requesterror_permissions" >.חיבור האפליקציה עם פייסבוק נכשל בשל הרשאות לא מספקות, אנא הענק הרשאות לאפליקציה בכדי שהפעולה תוכל להתבצע
+                </string>
+                <string name="com_facebook_loginview_log_out_action" >התנתק
                 </string>
             </file>
             <file
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/values/attrs.xml"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/values-ldpi/dimens.xml"
+                qualifiers="ldpi-v4" >
+                <dimen name="com_facebook_picker_divider_width" >1px
+                </dimen>
+            </file>
+            <file
+                name="com_facebook_picker_top_button"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/drawable/com_facebook_picker_top_button.xml"
+                qualifiers=""
+                type="drawable" />
+            <file
+                name="com_facebook_list_divider"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/drawable/com_facebook_list_divider.9.png"
+                qualifiers=""
+                type="drawable" />
+            <file
+                name="com_facebook_picker_item_background"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/drawable/com_facebook_picker_item_background.xml"
+                qualifiers=""
+                type="drawable" />
+            <file
+                name="com_facebook_button_grey_pressed"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/drawable/com_facebook_button_grey_pressed.9.png"
+                qualifiers=""
+                type="drawable" />
+            <file
+                name="com_facebook_button_blue_pressed"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/drawable/com_facebook_button_blue_pressed.9.png"
+                qualifiers=""
+                type="drawable" />
+            <file
+                name="com_facebook_top_button"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/drawable/com_facebook_top_button.xml"
+                qualifiers=""
+                type="drawable" />
+            <file
+                name="com_facebook_place_default_icon"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/drawable/com_facebook_place_default_icon.png"
+                qualifiers=""
+                type="drawable" />
+            <file
+                name="com_facebook_profile_picture_blank_portrait"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/drawable/com_facebook_profile_picture_blank_portrait.png"
+                qualifiers=""
+                type="drawable" />
+            <file
+                name="com_facebook_loginbutton_silver"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/drawable/com_facebook_loginbutton_silver.xml"
+                qualifiers=""
+                type="drawable" />
+            <file
+                name="com_facebook_inverse_icon"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/drawable/com_facebook_inverse_icon.png"
+                qualifiers=""
+                type="drawable" />
+            <file
+                name="com_facebook_button_blue_focused"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/drawable/com_facebook_button_blue_focused.9.png"
+                qualifiers=""
+                type="drawable" />
+            <file
+                name="com_facebook_button_check"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/drawable/com_facebook_button_check.xml"
+                qualifiers=""
+                type="drawable" />
+            <file
+                name="com_facebook_button_check_on"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/drawable/com_facebook_button_check_on.png"
+                qualifiers=""
+                type="drawable" />
+            <file
+                name="com_facebook_usersettingsfragment_background_gradient"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/drawable/com_facebook_usersettingsfragment_background_gradient.xml"
+                qualifiers=""
+                type="drawable" />
+            <file
+                name="com_facebook_button_check_off"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/drawable/com_facebook_button_check_off.png"
+                qualifiers=""
+                type="drawable" />
+            <file
+                name="com_facebook_profile_picture_blank_square"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/drawable/com_facebook_profile_picture_blank_square.png"
+                qualifiers=""
+                type="drawable" />
+            <file
+                name="com_facebook_picker_list_selector_disabled"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/drawable/com_facebook_picker_list_selector_disabled.9.png"
+                qualifiers=""
+                type="drawable" />
+            <file
+                name="com_facebook_list_section_header_background"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/drawable/com_facebook_list_section_header_background.9.png"
+                qualifiers=""
+                type="drawable" />
+            <file
+                name="com_facebook_button_grey_focused"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/drawable/com_facebook_button_grey_focused.9.png"
+                qualifiers=""
+                type="drawable" />
+            <file
+                name="com_facebook_profile_default_icon"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/drawable/com_facebook_profile_default_icon.png"
+                qualifiers=""
+                type="drawable" />
+            <file
+                name="com_facebook_picker_list_focused"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/drawable/com_facebook_picker_list_focused.9.png"
+                qualifiers=""
+                type="drawable" />
+            <file
+                name="com_facebook_button_blue_normal"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/drawable/com_facebook_button_blue_normal.9.png"
+                qualifiers=""
+                type="drawable" />
+            <file
+                name="com_facebook_picker_list_pressed"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/drawable/com_facebook_picker_list_pressed.9.png"
+                qualifiers=""
+                type="drawable" />
+            <file
+                name="com_facebook_button_grey_normal"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/drawable/com_facebook_button_grey_normal.9.png"
+                qualifiers=""
+                type="drawable" />
+            <file
+                name="com_facebook_picker_list_longpressed"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/drawable/com_facebook_picker_list_longpressed.9.png"
+                qualifiers=""
+                type="drawable" />
+            <file
+                name="com_facebook_logo"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/drawable/com_facebook_logo.png"
+                qualifiers=""
+                type="drawable" />
+            <file
+                name="com_facebook_close"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/drawable/com_facebook_close.png"
+                qualifiers=""
+                type="drawable" />
+            <file
+                name="com_facebook_top_background"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/drawable/com_facebook_top_background.xml"
+                qualifiers=""
+                type="drawable" />
+            <file
+                name="com_facebook_picker_list_selector"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/drawable/com_facebook_picker_list_selector.xml"
+                qualifiers=""
+                type="drawable" />
+            <file
+                name="com_facebook_picker_list_selector_background_transition"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/drawable/com_facebook_picker_list_selector_background_transition.xml"
+                qualifiers=""
+                type="drawable" />
+            <file
+                name="com_facebook_button_blue"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/drawable/com_facebook_button_blue.xml"
+                qualifiers=""
+                type="drawable" />
+            <file
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/values/attrs.xml"
                 qualifiers="" >
                 <declare-styleable name="com_facebook_profile_picture_view" >
                     <attr name="preset_size" >
@@ -139,18 +300,14 @@
                 </declare-styleable>
             </file>
             <file
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/values/colors.xml"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/values/drawables.xml"
                 qualifiers="" >
-                <color name="com_facebook_picker_search_bar_background" >#f5f5f7
-                </color>
-                <color name="com_facebook_picker_search_bar_text" >#bcbdc2
-                </color>
-
-                <dimen name="com_facebook_picker_place_image_size" >64dp
-                </dimen>
+                <drawable name="com_facebook_picker_default_separator_color" >
+#33464c59
+                </drawable>
             </file>
             <file
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/values/styles.xml"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/values/styles.xml"
                 qualifiers="" >
                 <color name="com_facebook_usersettingsfragment_connected_text_color" >#FFFFFF
                 </color>
@@ -248,14 +405,7 @@ center
                 </dimen>
             </file>
             <file
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/values/drawables.xml"
-                qualifiers="" >
-                <drawable name="com_facebook_picker_default_separator_color" >
-#33464c59
-                </drawable>
-            </file>
-            <file
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/values/strings.xml"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/values/strings.xml"
                 qualifiers="" >
                 <string name="com_facebook_usersettingsfragment_logged_in" >Logged in
                 </string>
@@ -309,217 +459,43 @@ center
                 </string>
             </file>
             <file
-                name="com_facebook_close"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/drawable-ldpi/com_facebook_close.png"
-                qualifiers="ldpi-v4"
-                type="drawable" />
-            <file
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/values-he/strings.xml"
-                qualifiers="he" >
-                <string name="com_facebook_requesterror_password_changed" >.הסיסמה שלך בפייסבוק השתנתה, אנא חבר מחדש את האפליקציה עם פייסבוק
-                </string>
-                <string name="com_facebook_requesterror_web_login" >.כדי לאפשר מחדש לאפליקציה להתחבר עם פייסבוק https://www.facebook.com או https://m.facebook.com אנא היכנס דרך
-                </string>
-                <string name="com_facebook_usersettingsfragment_logged_in" >מחובר
-                </string>
-                <string name="com_facebook_requesterror_reconnect" >.ארעה שגיאה בעת החיבור עם פייסבוק, חבר בבקשה מחדש את האפליקציה עם פייסבוק
-                </string>
-                <string name="com_facebook_logo_content_description" >פייסבוק לוגו
-                </string>
-                <string name="com_facebook_picker_done_button_text" >בצע
-                </string>
-                <string name="com_facebook_loginview_log_in_button" >התחבר לפייסבוק
-                </string>
-                <string name="com_facebook_loginview_logged_in_as" >מחובר בשם: %1$s
-                </string>
-                <string name="com_facebook_placepicker_subtitle_were_here_only_format" >%1$,d היו פה
-                </string>
-                <string name="com_facebook_requesterror_relogin" >.האפליקציה אינה מחוברת לפייסבוק, אנא היכנס וחבר מחדש את האפליקציה
-                </string>
-                <string name="com_facebook_usersettingsfragment_log_in_button" >התחבר…
-                </string>
-                <string name="com_facebook_internet_permission_error_title" >AndroidManifest שגיאת
-                </string>
-                <string name="com_facebook_internet_permission_error_message" >ההתחברות לתצוגת אתר דורשת אישור אינטרנט
-                </string>
-                <string name="com_facebook_loginview_cancel_action" >בטל
-                </string>
-                <string name="com_facebook_choose_friends" >בחר חברים
-                </string>
-                <string name="com_facebook_loginview_log_out_button" >התנתק
-                </string>
-                <string name="com_facebook_placepicker_subtitle_catetory_only_format" >%1$s
-                </string>
-                <string name="com_facebook_placepicker_subtitle_format" >%1$s • %2$,d היו פה
-                </string>
-                <string name="com_facebook_usersettingsfragment_not_logged_in" >לא מחובר
-                </string>
-                <string name="com_facebook_loading" >..מעלה
-                </string>
-                <string name="com_facebook_nearby" >קרוב אליי
-                </string>
-                <string name="com_facebook_loginview_logged_in_using_facebook" >מחובר באמצעות פייסבוק
-                </string>
-                <string name="com_facebook_dialogloginactivity_ok_button" >אישור
-                </string>
-                <string name="com_facebook_requesterror_permissions" >.חיבור האפליקציה עם פייסבוק נכשל בשל הרשאות לא מספקות, אנא הענק הרשאות לאפליקציה בכדי שהפעולה תוכל להתבצע
-                </string>
-                <string name="com_facebook_loginview_log_out_action" >התנתק
-                </string>
-            </file>
-            <file
-                name="com_facebook_usersettingsfragment"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/layout/com_facebook_usersettingsfragment.xml"
-                qualifiers=""
-                type="layout" />
-            <file
-                name="com_facebook_friendpickerfragment"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/layout/com_facebook_friendpickerfragment.xml"
-                qualifiers=""
-                type="layout" />
-            <file
-                name="com_facebook_placepickerfragment"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/layout/com_facebook_placepickerfragment.xml"
-                qualifiers=""
-                type="layout" />
-            <file
-                name="com_facebook_picker_title_bar_stub"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/layout/com_facebook_picker_title_bar_stub.xml"
-                qualifiers=""
-                type="layout" />
-            <file
-                name="com_facebook_picker_list_row"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/layout/com_facebook_picker_list_row.xml"
-                qualifiers=""
-                type="layout" />
-            <file
-                name="com_facebook_picker_checkbox"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/layout/com_facebook_picker_checkbox.xml"
-                qualifiers=""
-                type="layout" />
-            <file
-                name="com_facebook_picker_title_bar"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/layout/com_facebook_picker_title_bar.xml"
-                qualifiers=""
-                type="layout" />
-            <file
-                name="com_facebook_search_bar_layout"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/layout/com_facebook_search_bar_layout.xml"
-                qualifiers=""
-                type="layout" />
-            <file
-                name="com_facebook_picker_activity_circle_row"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/layout/com_facebook_picker_activity_circle_row.xml"
-                qualifiers=""
-                type="layout" />
-            <file
-                name="com_facebook_picker_image"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/layout/com_facebook_picker_image.xml"
-                qualifiers=""
-                type="layout" />
-            <file
-                name="com_facebook_picker_search_box"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/layout/com_facebook_picker_search_box.xml"
-                qualifiers=""
-                type="layout" />
-            <file
-                name="com_facebook_picker_list_section_header"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/layout/com_facebook_picker_list_section_header.xml"
-                qualifiers=""
-                type="layout" />
-            <file
-                name="com_facebook_placepickerfragment_list_row"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/layout/com_facebook_placepickerfragment_list_row.xml"
-                qualifiers=""
-                type="layout" />
-            <file
-                name="com_facebook_login_activity_layout"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/layout/com_facebook_login_activity_layout.xml"
-                qualifiers=""
-                type="layout" />
-            <file
-                name="com_facebook_button_blue_focused"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/drawable-mdpi/com_facebook_button_blue_focused.9.png"
-                qualifiers="mdpi-v4"
-                type="drawable" />
-            <file
-                name="com_facebook_inverse_icon"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/drawable-mdpi/com_facebook_inverse_icon.png"
-                qualifiers="mdpi-v4"
-                type="drawable" />
-            <file
-                name="com_facebook_button_blue_pressed"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/drawable-mdpi/com_facebook_button_blue_pressed.9.png"
-                qualifiers="mdpi-v4"
-                type="drawable" />
-            <file
-                name="com_facebook_picker_magnifier"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/drawable-mdpi/com_facebook_picker_magnifier.png"
-                qualifiers="mdpi-v4"
-                type="drawable" />
-            <file
-                name="com_facebook_button_blue_normal"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/drawable-mdpi/com_facebook_button_blue_normal.9.png"
-                qualifiers="mdpi-v4"
-                type="drawable" />
-            <file
-                name="com_facebook_logo"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/drawable-xhdpi/com_facebook_logo.png"
-                qualifiers="xhdpi-v4"
-                type="drawable" />
-            <file
-                name="com_facebook_button_blue_focused"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/drawable-xhdpi/com_facebook_button_blue_focused.9.png"
-                qualifiers="xhdpi-v4"
-                type="drawable" />
-            <file
-                name="com_facebook_inverse_icon"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/drawable-xhdpi/com_facebook_inverse_icon.png"
-                qualifiers="xhdpi-v4"
-                type="drawable" />
-            <file
-                name="com_facebook_button_blue_pressed"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/drawable-xhdpi/com_facebook_button_blue_pressed.9.png"
-                qualifiers="xhdpi-v4"
-                type="drawable" />
-            <file
-                name="com_facebook_picker_magnifier"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/drawable-xhdpi/com_facebook_picker_magnifier.png"
-                qualifiers="xhdpi-v4"
-                type="drawable" />
-            <file
-                name="com_facebook_close"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/drawable-xhdpi/com_facebook_close.png"
-                qualifiers="xhdpi-v4"
-                type="drawable" />
-            <file
-                name="com_facebook_button_grey_normal"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/drawable-xhdpi/com_facebook_button_grey_normal.9.png"
-                qualifiers="xhdpi-v4"
-                type="drawable" />
-            <file
-                name="com_facebook_button_grey_pressed"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/drawable-xhdpi/com_facebook_button_grey_pressed.9.png"
-                qualifiers="xhdpi-v4"
-                type="drawable" />
-            <file
-                name="com_facebook_button_grey_focused"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/drawable-xhdpi/com_facebook_button_grey_focused.9.png"
-                qualifiers="xhdpi-v4"
-                type="drawable" />
-            <file
-                name="com_facebook_button_blue_normal"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/drawable-xhdpi/com_facebook_button_blue_normal.9.png"
-                qualifiers="xhdpi-v4"
-                type="drawable" />
-            <file
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/values-hdpi/dimens.xml"
-                qualifiers="hdpi-v4" >
-                <dimen name="com_facebook_picker_divider_width" >1px
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/values/colors.xml"
+                qualifiers="" >
+                <color name="com_facebook_picker_search_bar_background" >#f5f5f7
+                </color>
+                <color name="com_facebook_picker_search_bar_text" >#bcbdc2
+                </color>
+
+                <dimen name="com_facebook_picker_place_image_size" >64dp
                 </dimen>
             </file>
             <file
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/values-iw/strings.xml"
+                name="com_facebook_button_blue_pressed"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/drawable-mdpi/com_facebook_button_blue_pressed.9.png"
+                qualifiers="mdpi-v4"
+                type="drawable" />
+            <file
+                name="com_facebook_inverse_icon"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/drawable-mdpi/com_facebook_inverse_icon.png"
+                qualifiers="mdpi-v4"
+                type="drawable" />
+            <file
+                name="com_facebook_button_blue_focused"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/drawable-mdpi/com_facebook_button_blue_focused.9.png"
+                qualifiers="mdpi-v4"
+                type="drawable" />
+            <file
+                name="com_facebook_button_blue_normal"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/drawable-mdpi/com_facebook_button_blue_normal.9.png"
+                qualifiers="mdpi-v4"
+                type="drawable" />
+            <file
+                name="com_facebook_picker_magnifier"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/drawable-mdpi/com_facebook_picker_magnifier.png"
+                qualifiers="mdpi-v4"
+                type="drawable" />
+            <file
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/values-iw/strings.xml"
                 qualifiers="iw" >
                 <string name="com_facebook_usersettingsfragment_log_in_button" >התחבר…
                 </string>
@@ -573,234 +549,258 @@ center
                 </string>
             </file>
             <file
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/values-ldpi/dimens.xml"
-                qualifiers="ldpi-v4" >
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/values-hdpi/dimens.xml"
+                qualifiers="hdpi-v4" >
                 <dimen name="com_facebook_picker_divider_width" >1px
                 </dimen>
             </file>
             <file
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/values-xhdpi/dimens.xml"
-                qualifiers="xhdpi-v4" >
-                <dimen name="com_facebook_picker_divider_width" >2px
-                </dimen>
+                name="com_facebook_button_grey_pressed"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/drawable-hdpi/com_facebook_button_grey_pressed.9.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="com_facebook_button_blue_pressed"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/drawable-hdpi/com_facebook_button_blue_pressed.9.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="com_facebook_inverse_icon"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/drawable-hdpi/com_facebook_inverse_icon.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="com_facebook_button_blue_focused"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/drawable-hdpi/com_facebook_button_blue_focused.9.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="com_facebook_button_grey_focused"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/drawable-hdpi/com_facebook_button_grey_focused.9.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="com_facebook_button_blue_normal"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/drawable-hdpi/com_facebook_button_blue_normal.9.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="com_facebook_picker_magnifier"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/drawable-hdpi/com_facebook_picker_magnifier.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="com_facebook_button_grey_normal"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/drawable-hdpi/com_facebook_button_grey_normal.9.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="com_facebook_logo"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/drawable-hdpi/com_facebook_logo.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                name="com_facebook_close"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/drawable-hdpi/com_facebook_close.png"
+                qualifiers="hdpi-v4"
+                type="drawable" />
+            <file
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/values-es/strings.xml"
+                qualifiers="es" >
+                <string name="com_facebook_nearby" >Cercano
+                </string>
+                <string name="com_facebook_requesterror_password_changed" >Su contraseña de Facebook ha cambiado, por favor vuelva a conectar la aplicación con Facebook.
+                </string>
+                <string name="com_facebook_requesterror_reconnect" >Se produjo un error al conectar con Facebook, por favor vuelva a conectar la aplicación con Facebook.
+                </string>
+                <string name="com_facebook_placepicker_subtitle_format" >%1$s • %2$,d estuvieron aquí
+                </string>
+                <string name="com_facebook_loading" >Cargando
+                </string>
+                <string name="com_facebook_requesterror_web_login" >Por favor, iniciar sesión a través https://www.facebook.com o https://m.facebook.com para volver a activar la aplicación para conectar con Facebook.
+                </string>
+                <string name="com_facebook_loginview_cancel_action" >Cancelar
+                </string>
+                <string name="com_facebook_choose_friends" >Elige Amigos
+                </string>
+                <string name="com_facebook_dialogloginactivity_ok_button" >Aceptar
+                </string>
+                <string name="com_facebook_loginview_log_in_button" >Iniciar sesión con Facebook
+                </string>
+                <string name="com_facebook_loginview_logged_in_as" >Sesión iniciada como: %1$s
+                </string>
+                <string name="com_facebook_loginview_log_out_action" >Cerrar sesión
+                </string>
+                <string name="com_facebook_requesterror_permissions" >Una conexión de aplicación con Facebook falló debido a permisos insuficientes, por favor, conceda los permisos de aplicaciones para realizar la operación.
+                </string>
+                <string name="com_facebook_usersettingsfragment_logged_in" >Sesión iniciada
+                </string>
+                <string name="com_facebook_internet_permission_error_title" >Error de AndroidManifest
+                </string>
+                <string name="com_facebook_usersettingsfragment_not_logged_in" >No has iniciado sesión
+                </string>
+                <string name="com_facebook_loginview_logged_in_using_facebook" >Sesión iniciada con Facebook
+                </string>
+                <string name="com_facebook_picker_done_button_text" >Aceptar
+                </string>
+                <string name="com_facebook_placepicker_subtitle_catetory_only_format" >%1$s
+                </string>
+                <string name="com_facebook_internet_permission_error_message" >WebView inicio de sesión requiere permiso INTERNET
+                </string>
+                <string name="com_facebook_placepicker_subtitle_were_here_only_format" >es:%1$,d estuvieron aquí
+                </string>
+                <string name="com_facebook_requesterror_relogin" >La aplicación no se conecta con Facebook, inicie sesión y volver a conectar esta aplicación.
+                </string>
+                <string name="com_facebook_usersettingsfragment_log_in_button" >Iniciar sesión…
+                </string>
+                <string name="com_facebook_logo_content_description" >Logo de Facebook
+                </string>
+                <string name="com_facebook_loginview_log_out_button" >Cerrar sesión
+                </string>
             </file>
             <file
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/values-mdpi/dimens.xml"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/values-mdpi/dimens.xml"
                 qualifiers="mdpi-v4" >
                 <dimen name="com_facebook_picker_divider_width" >1px
                 </dimen>
             </file>
             <file
-                name="com_facebook_logo"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/drawable-hdpi/com_facebook_logo.png"
-                qualifiers="hdpi-v4"
-                type="drawable" />
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/values-xhdpi/dimens.xml"
+                qualifiers="xhdpi-v4" >
+                <dimen name="com_facebook_picker_divider_width" >2px
+                </dimen>
+            </file>
             <file
-                name="com_facebook_button_blue_focused"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/drawable-hdpi/com_facebook_button_blue_focused.9.png"
-                qualifiers="hdpi-v4"
-                type="drawable" />
-            <file
-                name="com_facebook_inverse_icon"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/drawable-hdpi/com_facebook_inverse_icon.png"
-                qualifiers="hdpi-v4"
+                name="com_facebook_button_grey_pressed"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/drawable-xhdpi/com_facebook_button_grey_pressed.9.png"
+                qualifiers="xhdpi-v4"
                 type="drawable" />
             <file
                 name="com_facebook_button_blue_pressed"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/drawable-hdpi/com_facebook_button_blue_pressed.9.png"
-                qualifiers="hdpi-v4"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/drawable-xhdpi/com_facebook_button_blue_pressed.9.png"
+                qualifiers="xhdpi-v4"
+                type="drawable" />
+            <file
+                name="com_facebook_inverse_icon"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/drawable-xhdpi/com_facebook_inverse_icon.png"
+                qualifiers="xhdpi-v4"
+                type="drawable" />
+            <file
+                name="com_facebook_button_blue_focused"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/drawable-xhdpi/com_facebook_button_blue_focused.9.png"
+                qualifiers="xhdpi-v4"
+                type="drawable" />
+            <file
+                name="com_facebook_button_grey_focused"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/drawable-xhdpi/com_facebook_button_grey_focused.9.png"
+                qualifiers="xhdpi-v4"
+                type="drawable" />
+            <file
+                name="com_facebook_button_blue_normal"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/drawable-xhdpi/com_facebook_button_blue_normal.9.png"
+                qualifiers="xhdpi-v4"
                 type="drawable" />
             <file
                 name="com_facebook_picker_magnifier"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/drawable-hdpi/com_facebook_picker_magnifier.png"
-                qualifiers="hdpi-v4"
-                type="drawable" />
-            <file
-                name="com_facebook_close"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/drawable-hdpi/com_facebook_close.png"
-                qualifiers="hdpi-v4"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/drawable-xhdpi/com_facebook_picker_magnifier.png"
+                qualifiers="xhdpi-v4"
                 type="drawable" />
             <file
                 name="com_facebook_button_grey_normal"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/drawable-hdpi/com_facebook_button_grey_normal.9.png"
-                qualifiers="hdpi-v4"
-                type="drawable" />
-            <file
-                name="com_facebook_button_grey_pressed"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/drawable-hdpi/com_facebook_button_grey_pressed.9.png"
-                qualifiers="hdpi-v4"
-                type="drawable" />
-            <file
-                name="com_facebook_button_grey_focused"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/drawable-hdpi/com_facebook_button_grey_focused.9.png"
-                qualifiers="hdpi-v4"
-                type="drawable" />
-            <file
-                name="com_facebook_button_blue_normal"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/drawable-hdpi/com_facebook_button_blue_normal.9.png"
-                qualifiers="hdpi-v4"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/drawable-xhdpi/com_facebook_button_grey_normal.9.png"
+                qualifiers="xhdpi-v4"
                 type="drawable" />
             <file
                 name="com_facebook_logo"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/drawable/com_facebook_logo.png"
-                qualifiers=""
-                type="drawable" />
-            <file
-                name="com_facebook_profile_default_icon"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/drawable/com_facebook_profile_default_icon.png"
-                qualifiers=""
-                type="drawable" />
-            <file
-                name="com_facebook_top_background"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/drawable/com_facebook_top_background.xml"
-                qualifiers=""
-                type="drawable" />
-            <file
-                name="com_facebook_picker_item_background"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/drawable/com_facebook_picker_item_background.xml"
-                qualifiers=""
-                type="drawable" />
-            <file
-                name="com_facebook_list_section_header_background"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/drawable/com_facebook_list_section_header_background.9.png"
-                qualifiers=""
-                type="drawable" />
-            <file
-                name="com_facebook_button_check_off"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/drawable/com_facebook_button_check_off.png"
-                qualifiers=""
-                type="drawable" />
-            <file
-                name="com_facebook_picker_list_pressed"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/drawable/com_facebook_picker_list_pressed.9.png"
-                qualifiers=""
-                type="drawable" />
-            <file
-                name="com_facebook_top_button"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/drawable/com_facebook_top_button.xml"
-                qualifiers=""
-                type="drawable" />
-            <file
-                name="com_facebook_button_blue_focused"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/drawable/com_facebook_button_blue_focused.9.png"
-                qualifiers=""
-                type="drawable" />
-            <file
-                name="com_facebook_profile_picture_blank_square"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/drawable/com_facebook_profile_picture_blank_square.png"
-                qualifiers=""
-                type="drawable" />
-            <file
-                name="com_facebook_inverse_icon"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/drawable/com_facebook_inverse_icon.png"
-                qualifiers=""
-                type="drawable" />
-            <file
-                name="com_facebook_list_divider"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/drawable/com_facebook_list_divider.9.png"
-                qualifiers=""
-                type="drawable" />
-            <file
-                name="com_facebook_usersettingsfragment_background_gradient"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/drawable/com_facebook_usersettingsfragment_background_gradient.xml"
-                qualifiers=""
-                type="drawable" />
-            <file
-                name="com_facebook_button_check_on"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/drawable/com_facebook_button_check_on.png"
-                qualifiers=""
-                type="drawable" />
-            <file
-                name="com_facebook_place_default_icon"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/drawable/com_facebook_place_default_icon.png"
-                qualifiers=""
-                type="drawable" />
-            <file
-                name="com_facebook_button_blue_pressed"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/drawable/com_facebook_button_blue_pressed.9.png"
-                qualifiers=""
-                type="drawable" />
-            <file
-                name="com_facebook_button_blue"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/drawable/com_facebook_button_blue.xml"
-                qualifiers=""
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/drawable-xhdpi/com_facebook_logo.png"
+                qualifiers="xhdpi-v4"
                 type="drawable" />
             <file
                 name="com_facebook_close"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/drawable/com_facebook_close.png"
-                qualifiers=""
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/drawable-xhdpi/com_facebook_close.png"
+                qualifiers="xhdpi-v4"
                 type="drawable" />
             <file
-                name="com_facebook_button_grey_normal"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/drawable/com_facebook_button_grey_normal.9.png"
-                qualifiers=""
+                name="com_facebook_close"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/drawable-ldpi/com_facebook_close.png"
+                qualifiers="ldpi-v4"
                 type="drawable" />
             <file
-                name="com_facebook_button_grey_pressed"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/drawable/com_facebook_button_grey_pressed.9.png"
+                name="com_facebook_picker_activity_circle_row"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/layout/com_facebook_picker_activity_circle_row.xml"
                 qualifiers=""
-                type="drawable" />
+                type="layout" />
             <file
-                name="com_facebook_button_check"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/drawable/com_facebook_button_check.xml"
+                name="com_facebook_picker_checkbox"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/layout/com_facebook_picker_checkbox.xml"
                 qualifiers=""
-                type="drawable" />
+                type="layout" />
             <file
-                name="com_facebook_picker_list_longpressed"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/drawable/com_facebook_picker_list_longpressed.9.png"
+                name="com_facebook_picker_image"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/layout/com_facebook_picker_image.xml"
                 qualifiers=""
-                type="drawable" />
+                type="layout" />
             <file
-                name="com_facebook_button_grey_focused"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/drawable/com_facebook_button_grey_focused.9.png"
+                name="com_facebook_placepickerfragment"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/layout/com_facebook_placepickerfragment.xml"
                 qualifiers=""
-                type="drawable" />
+                type="layout" />
             <file
-                name="com_facebook_picker_list_selector_disabled"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/drawable/com_facebook_picker_list_selector_disabled.9.png"
+                name="com_facebook_search_bar_layout"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/layout/com_facebook_search_bar_layout.xml"
                 qualifiers=""
-                type="drawable" />
+                type="layout" />
             <file
-                name="com_facebook_picker_list_focused"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/drawable/com_facebook_picker_list_focused.9.png"
+                name="com_facebook_usersettingsfragment"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/layout/com_facebook_usersettingsfragment.xml"
                 qualifiers=""
-                type="drawable" />
+                type="layout" />
             <file
-                name="com_facebook_loginbutton_silver"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/drawable/com_facebook_loginbutton_silver.xml"
+                name="com_facebook_picker_list_section_header"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/layout/com_facebook_picker_list_section_header.xml"
                 qualifiers=""
-                type="drawable" />
+                type="layout" />
             <file
-                name="com_facebook_profile_picture_blank_portrait"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/drawable/com_facebook_profile_picture_blank_portrait.png"
+                name="com_facebook_picker_search_box"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/layout/com_facebook_picker_search_box.xml"
                 qualifiers=""
-                type="drawable" />
+                type="layout" />
             <file
-                name="com_facebook_picker_list_selector_background_transition"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/drawable/com_facebook_picker_list_selector_background_transition.xml"
+                name="com_facebook_picker_list_row"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/layout/com_facebook_picker_list_row.xml"
                 qualifiers=""
-                type="drawable" />
+                type="layout" />
             <file
-                name="com_facebook_button_blue_normal"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/drawable/com_facebook_button_blue_normal.9.png"
+                name="com_facebook_placepickerfragment_list_row"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/layout/com_facebook_placepickerfragment_list_row.xml"
                 qualifiers=""
-                type="drawable" />
+                type="layout" />
             <file
-                name="com_facebook_picker_top_button"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/drawable/com_facebook_picker_top_button.xml"
+                name="com_facebook_picker_title_bar_stub"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/layout/com_facebook_picker_title_bar_stub.xml"
                 qualifiers=""
-                type="drawable" />
+                type="layout" />
             <file
-                name="com_facebook_picker_list_selector"
-                path="/home/monika/gitcodeClickin/facebookSDK/src/main/res/drawable/com_facebook_picker_list_selector.xml"
+                name="com_facebook_picker_title_bar"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/layout/com_facebook_picker_title_bar.xml"
                 qualifiers=""
-                type="drawable" />
+                type="layout" />
+            <file
+                name="com_facebook_friendpickerfragment"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/layout/com_facebook_friendpickerfragment.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="com_facebook_login_activity_layout"
+                path="/home/mukesh/clickAMaster/facebookSDK/src/main/res/layout/com_facebook_login_activity_layout.xml"
+                qualifiers=""
+                type="layout" />
         </source>
-        <source path="/home/monika/gitcodeClickin/facebookSDK/build/generated/res/rs/debug" />
-        <source path="/home/monika/gitcodeClickin/facebookSDK/build/generated/res/generated/debug" />
+        <source path="/home/mukesh/clickAMaster/facebookSDK/build/generated/res/rs/debug" />
+        <source path="/home/mukesh/clickAMaster/facebookSDK/build/generated/res/generated/debug" />
     </dataSet>
     <dataSet config="debug" >
-        <source path="/home/monika/gitcodeClickin/facebookSDK/src/debug/res" />
+        <source path="/home/mukesh/clickAMaster/facebookSDK/src/debug/res" />
     </dataSet>
 
 </merger>

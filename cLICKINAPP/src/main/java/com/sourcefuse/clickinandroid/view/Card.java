@@ -3,6 +3,7 @@ package com.sourcefuse.clickinandroid.view;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.sourcefuse.clickinandroid.utils.Log;
@@ -24,12 +26,15 @@ public class Card extends Activity implements View.OnClickListener,TextWatcher {
 //    String stringData ;
 //    String stringdiscription ;
 
-    private TextView card_title, card_desription;
+    private TextView card_title, card_desription,tv_about_message;
     private static final String TAG = "CardViewAdapter";
     ImageView mBackButton;
-    String url;
+    String url,clicks,cardTitle,cardDiscription,card_id;
+
+
     Context context;
-    ImageView imageView;
+    ImageView imageView,btnPlay;
+    boolean forCounter = false;
     TextView trd_clicks_top, trd_clicks_bottom ,trone,trtwo,trthree,trfour,trfive;
     // String xyz_url = "https://s3.amazonaws.com/clickin-dev/cards/a/1080/39.jpg";
 
@@ -41,6 +46,7 @@ public class Card extends Activity implements View.OnClickListener,TextWatcher {
 
         trd_clicks_bottom = (TextView)findViewById(R.id.trd_clicks_bottom);
         trd_clicks_top = (TextView)findViewById(R.id.trd_clicks_top);
+        tv_about_message = (TextView)findViewById(R.id.tv_about_message);
 
         trone = (TextView)findViewById(R.id.btn_one);
         trone.setOnClickListener(this);
@@ -52,6 +58,8 @@ public class Card extends Activity implements View.OnClickListener,TextWatcher {
         trfour.setOnClickListener(this);
         trfive = (TextView)findViewById(R.id.btn_five);
         trfive.setOnClickListener(this);
+        btnPlay = (ImageView)findViewById(R.id.btn_play);
+        btnPlay.setOnClickListener(this);
 
         LinearLayout back = (LinearLayout)findViewById(R.id.linear_layout_back);
         back.setOnClickListener(new View.OnClickListener() {
@@ -76,9 +84,17 @@ public class Card extends Activity implements View.OnClickListener,TextWatcher {
         Intent intent = getIntent();
         if (null != intent) {
 
-            // Utils.launchBarDialog(Card.this);
+            forCounter = intent.getExtras().getBoolean("ForCounter");
+            if(forCounter){
+                trd_clicks_bottom.setText(intent.getStringExtra("cardClicks"));
+                trd_clicks_top.setText(intent.getStringExtra("cardClicks"));
+                tv_about_message.setText("HOW MANY CLICKS DO YOU WANT FOR IT?");
+            }
             url = intent.getStringExtra("Url");
-            Log.e(TAG, "Url for the fetched Card is" + url);
+            cardTitle = intent.getStringExtra("Title");
+            cardDiscription = intent.getStringExtra("Discription");
+            card_id = intent.getStringExtra("card_id");
+            Log.e(TAG, "Url for the fetched Card is" + url+","+cardTitle+","+cardDiscription+","+card_id);
 
         } else {
             Log.e(TAG, "Value in intent in null");
@@ -100,6 +116,7 @@ public class Card extends Activity implements View.OnClickListener,TextWatcher {
         switch (view.getId()) {
 
             case R.id.btn_one:
+  				clicks = "05";
                 trone.setSelected(true);
                 trtwo.setSelected(false);
                 trthree.setSelected(false);
@@ -110,6 +127,7 @@ public class Card extends Activity implements View.OnClickListener,TextWatcher {
                 ;
                 break;
             case R.id.btn_two:
+				clicks = "10";
                 trone.setSelected(false);
                 trtwo.setSelected(true);
                 trthree.setSelected(false);
@@ -119,6 +137,7 @@ public class Card extends Activity implements View.OnClickListener,TextWatcher {
                 trd_clicks_top.setText("10");
                 break;
             case R.id.btn_three:
+ 				clicks = "15";
                 trone.setSelected(false);
                 trtwo.setSelected(false);
                 trthree.setSelected(true);
@@ -137,6 +156,7 @@ public class Card extends Activity implements View.OnClickListener,TextWatcher {
                 trd_clicks_top.setText("20");
                 break;
             case R.id.btn_five:
+                clicks = "20";
                 trone.setSelected(false);
                 trtwo.setSelected(false);
                 trthree.setSelected(false);
@@ -146,6 +166,24 @@ public class Card extends Activity implements View.OnClickListener,TextWatcher {
                 trd_clicks_top.setText("25");
                 break;
             case R.id.btn_play:
+                Intent i=new Intent();
+                i.putExtra("FromCard",true);
+                if(forCounter){
+                 i.putExtra("isCounter",true);
+                }else{
+                  i.putExtra("isCounter",false);
+                }
+                i.putExtra("card_url",url);
+                i.putExtra("card_clicks",clicks);
+                i.putExtra("Title",cardTitle);
+                i.putExtra("Discription",cardDiscription);
+                i.putExtra("card_id",card_id);
+
+                i.setClass(this,ChatRecordView.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
+              //  finish();
                 break;
         }
     }

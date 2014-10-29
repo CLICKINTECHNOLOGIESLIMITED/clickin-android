@@ -49,4 +49,4 @@
         android:divider="@drawable/c_noti_line"
         android:dividerHeight="1dp"
         android:scrollbars="none" />
-</RelativeLayout><!-- From: file:/home/monika/gitcodeClickin/cLICKINAPP/src/main/res/layout/view_notification.xml -->
+</RelativeLayout><!-- From: file:/home/mukesh/clickAMaster/cLICKINAPP/src/main/res/layout/view_notification.xml -->
