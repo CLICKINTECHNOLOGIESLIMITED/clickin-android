@@ -32,7 +32,11 @@
             android:background="@drawable/search_bar"
             android:imeOptions="actionSearch"
             android:paddingLeft="5dp"
-            android:singleLine="true" />
+            android:singleLine="true"
+
+            android:textColor="@color/search_friend_color"
+            android:textSize="15sp"
+            android:hint="SEARCH CLICKIN"/>
 
         <ListView
             android:id="@+id/search_list"

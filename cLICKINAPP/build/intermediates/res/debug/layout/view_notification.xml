@@ -20,7 +20,7 @@
             android:text="@string/txt_notification"
             android:textColor="@color/white"
             android:textSize="20sp"
-            android:textStyle="bold" />
+            />
 
         <ImageView
             android:id="@+id/iv_back_right"
@@ -30,8 +30,14 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="15dp"
             android:background="@drawable/back_arrow"
-            android:padding="5dp"
-            android:visibility="gone" />
+
+            android:paddingLeft="0dp"
+            android:layout_marginBottom="2dp"
+            android:layout_marginLeft="20dp"
+            android:layout_alignBottom="@+id/tv_notification_txt"
+            android:clickable="true"
+
+            />
 
     </RelativeLayout>
 

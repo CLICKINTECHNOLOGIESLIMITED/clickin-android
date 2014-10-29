@@ -197,6 +197,7 @@
     <color name="defult_hint_clr">#808080</color>
     <color name="devider">#D1D0CE</color>
     <color name="devider_invitef">#ebebeb</color>
+    <color name="dialog_text">#328dd0</color>
     <color name="dob_clr">#E6E6E6</color>
     <color name="edit_profile_clr">#E6E6E6</color>
     <color name="empt_edt">#f0f0f0</color>
@@ -228,12 +229,14 @@
     <color name="profile_usr_name">#01DFD7</color>
     <color name="red">#F11111</color>
     <color name="row_select_notification_bg">#39cad4</color>
+    <color name="search_friend_color">#898989</color>
     <color name="search_txt">#999999</color>
     <color name="send_green">#8da656</color>
     <color name="sign_hint">#cccccc</color>
     <color name="signup_contry_code">#364566</color>
     <color name="signup_contry_code_txt">#808080</color>
     <color name="singn_forg">#808080</color>
+    <color name="strip_color_tab">#ffffff</color>
     <color name="stylepage">#21048320</color>
     <color name="tab_color_black_background">#50000000</color>
     <color name="text_color">#323233</color>
@@ -1475,7 +1478,7 @@
     <string name="txt_feed">THE FEED</string>
     <string name="txt_femail">I AM A GIRL</string>
     <string name="txt_female">Female,</string>
-    <string name="txt_find_friend">FIND FRIEND</string>
+    <string name="txt_find_friend">FIND FRIENDS</string>
     <string name="txt_fname">First Name*</string>
     <string name="txt_follower">FOLLOWERS</string>
     <string name="txt_following">FOLLOWING</string>
@@ -1979,16 +1982,6 @@
         <item name="vpiIconPageIndicatorStyle">@style/Widget.IconPageIndicator</item>
         <item name="vpiTabPageIndicatorStyle">@style/Widget.TabPageIndicator</item>
     </style>
-    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/values/styles.xml -->
-    <eat-comment />
-
-    <style name="Theme.Transparent" parent="android:Theme">
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowNoTitle">true</item>
-    </style>
-    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.viewpagerindicator/library/2.4.1/res/values/values.xml -->
-    <eat-comment />
 
     <style name="Widget" />
     <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values/values.xml -->
@@ -2304,6 +2297,12 @@
         <item name="android:textSize">12sp</item>
         <item name="android:maxLines">1</item>
     </style>
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/values/styles.xml -->
+    <eat-comment />
+
+    <style name="Widget.TabWidget" parent="android:Theme">
+        <item name="android:tabStripEnabled">false</item>
+    </style>
     <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/facebookSDK/unspecified/res/values/values.xml -->
     <eat-comment />
 
@@ -2358,6 +2357,10 @@
     <style name="settingmargin">
         <item name="android:layout_marginLeft">20dp</item>
         <item name="android:layout_marginRight">20dp</item>
+    </style>
+
+    <style name="tabTheme" parent="android:style/Theme">
+        <item name="android:tabWidgetStyle">@style/Widget.TabWidget</item>
     </style>
 
     <style name="whitebackground">

@@ -435,8 +435,14 @@ public class AuthManager extends Observable implements AuthManagerI {
         String str = null;
         try {
             client = new AsyncHttpClient();
-            client.addHeader("user_token", usertoken);
-            client.addHeader("phone_no", phone);
+
+            //for development
+            // client.addHeader("user_token", usertoken);
+            //client.addHeader("phone_no", phone);
+
+            //for prod
+            client.addHeader("User-Token", usertoken);
+            client.addHeader("Phone-No", phone);
             Log.e("usertoken-phone_no-othersphone-->", "" + usertoken + "-" + phone + "-" + othersphone);
 
 

@@ -106,7 +106,7 @@ public class FeedStarsView extends Activity {
         } else if (message.equalsIgnoreCase("FetchCommentStatus False")) {
             Utils.dismissBarDialog();
 //            android.util.Log.d("2", "message->" + message);
-        } else if (message.equalsIgnoreCase("FetchCommentStatus Networkchat Error")) {
+        } else if (message.equalsIgnoreCase("FetchCommentStatus Network Error")) {
             Utils.showAlert(FeedStarsView.this, AlertMessage.connectionError);
 //            android.util.Log.d("3", "message->" + message);
         } else if (message.equalsIgnoreCase("GetFollower True")){

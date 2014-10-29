@@ -94,11 +94,14 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
             holder.audio_layout = (LinearLayout)row.findViewById(R.id.audio_layout);
             holder.video_layout = (RelativeLayout)row.findViewById(R.id.video_layout);
             holder.video_thumb = (ImageView)row.findViewById(R.id.video_thumb);
-            holder.card_layout = (RelativeLayout)row.findViewById(R.id.card_layout);
+            holder.card_layout = (LinearLayout)row.findViewById(R.id.card_layout);
             holder.card_count1 = (TextView)row.findViewById(R.id.card_count_1);
             holder.card_count2 = (TextView)row.findViewById(R.id.card_count_2);
             holder.card_status = (TextView)row.findViewById(R.id.card_status);
             holder.clickInWhiteImage = (ImageView)row.findViewById(R.id.clickInWhiteImage);
+            holder.card_msg = (TextView)row.findViewById(R.id.card_msg);
+            holder.card_title = (TextView)row.findViewById(R.id.card_title);
+            holder.card_status_img = (ImageView)row.findViewById(R.id.card_status_img);
             row.setTag(holder);
         } else {
             holder = (RecordHolder) row.getTag();
@@ -114,18 +117,32 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
             if (!(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_clicks().equalsIgnoreCase("null"))) {
                 if (!(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_clicks().equalsIgnoreCase("0"))) {
                     holder.clickedIn.setText(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_clicks().trim());
-                    holder.clickedIn.setTextColor(context.getResources().getColor(R.color.feed_clickin));
+                    holder.clickedIn.setTextColor(Color.WHITE);
                     holder.clickedIn.setTypeface(null,Typeface.BOLD);
+                    holder.layout_clickin.setVisibility(View.VISIBLE);
+                    holder.layout_clickin.setBackgroundResource(R.color.feed_clickin);
+                    holder.clickedInMessage.setVisibility(View.VISIBLE);
+                    holder.clickInWhiteImage.setVisibility(View.VISIBLE);
+                    holder.clickedIn.setVisibility(View.VISIBLE);
                     holder.layout_clickin.setVisibility(View.VISIBLE);
                 }
                 else {
-                    if(!eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().equalsIgnoreCase(""))
-                    {
-                        holder.clickedIn.setVisibility(View.VISIBLE);
-                        holder.clickedIn.setTextColor(Color.BLACK);
-                        holder.clickedIn.setTypeface(null,Typeface.NORMAL);
-                        holder.clickedIn.setText(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message());
-                        holder.layout_clickin.setBackgroundResource(R.color.lightest_gray);
+                    if (!(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().equalsIgnoreCase("null"))) {
+                        if (!eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().equalsIgnoreCase("")) {
+                            holder.clickedIn.setVisibility(View.VISIBLE);
+                            holder.clickedIn.setTextColor(Color.BLACK);
+                            holder.clickedIn.setTypeface(null, Typeface.NORMAL);
+                            holder.clickedIn.setText(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message());
+                            holder.layout_clickin.setBackgroundResource(R.color.lightest_gray);
+                            holder.layout_clickin.setVisibility(View.VISIBLE);
+                            holder.clickedInMessage.setVisibility(View.GONE);
+                            holder.clickInWhiteImage.setVisibility(View.GONE);
+                        }
+                        else
+                        {
+                            holder.layout_clickin.setVisibility(View.GONE);
+                        }
+
                     }
                     else
                     {
@@ -134,15 +151,21 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
 
                 }
             } else {
-                if(!eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().equalsIgnoreCase(""))
-                {
-                    holder.clickedIn.setVisibility(View.VISIBLE);
-                    holder.clickedIn.setTextColor(Color.BLACK);
-                    holder.clickedIn.setTypeface(null,Typeface.NORMAL);
-                    holder.clickedIn.setText(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message());
-                    holder.layout_clickin.setBackgroundResource(R.color.lightest_gray);
-                }
-                else
+                if (!(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().equalsIgnoreCase("null"))) {
+                    if (!eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().trim().equalsIgnoreCase("")) {
+                        Log.e("msg",eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message());
+                        holder.clickedIn.setVisibility(View.VISIBLE);
+                        holder.layout_clickin.setVisibility(View.VISIBLE);
+                        holder.clickedIn.setTextColor(Color.BLACK);
+                        holder.clickedIn.setTypeface(null, Typeface.NORMAL);
+                        holder.clickedIn.setText(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message());
+                        holder.layout_clickin.setBackgroundResource(R.color.lightest_gray);
+                        holder.clickedInMessage.setVisibility(View.GONE);
+                        holder.clickInWhiteImage.setVisibility(View.GONE);
+                    } else {
+                        holder.layout_clickin.setVisibility(View.GONE);
+                    }
+                } else
                 {
                     holder.layout_clickin.setVisibility(View.GONE);
                 }
@@ -152,18 +175,22 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
 //                holder.layout_clickin.setBackgroundResource(R.color.light_gray);
             }
         }
-        if(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message()!=null) {
-            if (!(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().equalsIgnoreCase("null"))) {
-
-                holder.clickedInMessage.setText(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().trim());
-              }
-            else
-            {
-                holder.clickInWhiteImage.setVisibility(View.GONE);
-                holder.clickedIn.setVisibility(View.GONE);
-                holder.clickedInMessage.setVisibility(View.GONE);
-            }
+        else
+        {
+            holder.layout_clickin.setVisibility(View.GONE);
         }
+//        if(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message()!=null) {
+//            if (!(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().equalsIgnoreCase("null"))) {
+//
+//                holder.clickedInMessage.setText(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().trim());
+//              }
+//            else
+//            {
+//                holder.clickInWhiteImage.setVisibility(View.GONE);
+//                holder.clickedIn.setVisibility(View.GONE);
+//                holder.clickedInMessage.setVisibility(View.GONE);
+//            }
+//        }
 //        Log.e("FeedsAdapter++ChatDetailType",eachNewsFeed.get(position).getNewsFeedArray_chatDetail_type());
         if(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_type()!=null) {
 
@@ -214,7 +241,13 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
                     try {
                         holder.card_count1.setText(cards.get(4).toString());
                         holder.card_count2.setText(cards.get(4).toString());
-                        holder.card_status.setText(cards.get(5).toString());
+                        holder.card_status.setText(cards.get(5).toString()+"!");
+                        holder.card_title.setText(cards.get(1).toString());
+                        holder.card_msg.setText(cards.get(2).toString());
+                        if(cards.get(5).toString().equalsIgnoreCase("accepted"))
+                            holder.card_status_img.setImageResource(R.drawable.accepted_btn);
+                        else
+                            holder.card_status_img.setImageResource(R.drawable.rejected_btn);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -241,9 +274,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
                     i.putExtra("url", eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content());
                     context.startActivity(i);
                 }
-                else  if (eachNewsFeed.get(position).getNewsFeedArray_chatDetail_type().equalsIgnoreCase("5")){
 
-                }
                 else  if (eachNewsFeed.get(position).getNewsFeedArray_chatDetail_type().equalsIgnoreCase("6")){
 
                 }
@@ -553,7 +584,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
             {
                 holder.feed_star_user.setText(eachNewsFeed.get(position).getNewsfeedArray_stars_count()+" Stars");
                 holder.feed_star_user.setTextColor(Color.BLACK);
-                holder.feed_star_user.setClickable(false);
+                holder.feed_star_user.setClickable(true);
             }
             else {
                 String stars_text = "";
@@ -594,8 +625,9 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
     static class RecordHolder {
         ImageView feed_image,feed_remove_post,feed_report_post;
         ImageView feed_menu;
-        RelativeLayout layout,layout_clickin,card_layout;
-        TextView clickedIn,feed_star_user,clickedInMessage,card_count1,card_count2,card_status;
+        RelativeLayout layout,layout_clickin;
+        LinearLayout card_layout;
+        TextView clickedIn,feed_star_user,clickedInMessage,card_count1,card_count2,card_status,card_title,card_msg;
         Button feed_audio_button,feed_video_button;
         LinearLayout feed_comments_layout1,feed_comments_layout;
         LinearLayout feed_comments_layout2,feed_comments_layout3,feed_comments_layout4;
@@ -604,7 +636,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
         ImageView feed_star_image_button,feed_comment_image_button,clickInWhiteImage;
         LinearLayout audio_layout;
         RelativeLayout video_layout;
-        ImageView video_thumb;
+        ImageView video_thumb,card_status_img;
     }
 
 
