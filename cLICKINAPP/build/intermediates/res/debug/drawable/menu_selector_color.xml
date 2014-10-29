@@ -4,8 +4,4 @@
     <item android:drawable="@color/appclr"
         android:state_focused="true" />
     <item android:drawable="@color/appclr" />
-<<<<<<< HEAD
 </selector><!-- From: file:/home/mukesh/clickAMaster/cLICKINAPP/src/main/res/drawable/menu_selector_color.xml -->
-=======
-</selector><!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/drawable/menu_selector_color.xml -->
->>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961

@@ -74,8 +74,4 @@
         android:fadingEdgeLength="0dp"
         android:overScrollMode="never"
         android:scrollbarAlwaysDrawVerticalTrack="false" />
-<<<<<<< HEAD
 </LinearLayout><!-- From: file:/home/mukesh/clickAMaster/cLICKINAPP/src/main/res/layout/view_privacy_layout.xml -->
-=======
-</LinearLayout><!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/layout/view_privacy_layout.xml -->
->>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961

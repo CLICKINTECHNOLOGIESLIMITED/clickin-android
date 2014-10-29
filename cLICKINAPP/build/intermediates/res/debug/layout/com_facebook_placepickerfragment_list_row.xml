@@ -88,8 +88,4 @@
             android:background="@drawable/com_facebook_picker_default_separator_color"
             />
 </RelativeLayout>
-<<<<<<< HEAD
 <!-- From: file:/home/mukesh/clickAMaster/facebookSDK/src/main/res/layout/com_facebook_placepickerfragment_list_row.xml --><!-- From: file:/home/mukesh/clickAMaster/cLICKINAPP/build/intermediates/exploded-aar/clickAMaster/facebookSDK/unspecified/res/layout/com_facebook_placepickerfragment_list_row.xml -->
-=======
-<!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/facebookSDK/src/main/res/layout/com_facebook_placepickerfragment_list_row.xml --><!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/facebookSDK/unspecified/res/layout/com_facebook_placepickerfragment_list_row.xml -->
->>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961

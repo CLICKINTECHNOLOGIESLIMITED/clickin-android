@@ -7,8 +7,4 @@
     <item android:state_long_pressable="true" android:color="@color/card_click_color_pressed"/>
 
         <item android:color="@color/profile_usr_name"/> <!-- default -->
-<<<<<<< HEAD
 </selector><!-- From: file:/home/mukesh/clickAMaster/cLICKINAPP/src/main/res/drawable/card_text_color_state.xml -->
-=======
-</selector><!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/drawable/card_text_color_state.xml -->
->>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961

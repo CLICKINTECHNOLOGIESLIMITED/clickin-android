@@ -330,8 +330,4 @@
         android:layout_marginRight="20dp"
         android:background="@drawable/c_next_inactive" />
 
-<<<<<<< HEAD
 </RelativeLayout><!-- From: file:/home/mukesh/clickAMaster/cLICKINAPP/src/main/res/layout/view_profile.xml -->
-=======
-</RelativeLayout><!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/layout/view_profile.xml -->
->>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961

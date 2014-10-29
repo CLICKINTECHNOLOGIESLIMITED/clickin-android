@@ -16,8 +16,4 @@
     <item
         android:drawable="@drawable/common_signin_btn_text_normal_light" />
 </selector>
-<<<<<<< HEAD
 <!-- From: file:/home/mukesh/clickAMaster/cLICKINAPP/build/intermediates/exploded-aar/com.google.android.gms/play-services/3.1.59/res/drawable/common_signin_btn_text_light.xml -->
-=======
-<!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.google.android.gms/play-services/3.1.59/res/drawable/common_signin_btn_text_light.xml -->
->>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961

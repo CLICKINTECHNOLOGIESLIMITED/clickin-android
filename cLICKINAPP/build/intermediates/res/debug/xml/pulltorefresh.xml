@@ -13,8 +13,4 @@
     <GoogleStyleProgressLayouts>
        <layout name="default">com.handmark.pulltorefresh.library.internal.DefaultGoogleStyleProgressLayout</layout> 
     </GoogleStyleProgressLayouts>    
-<<<<<<< HEAD
 </PullToRefresh><!-- From: file:/Users/NBP/git/Android-PullToRefresh/library/res/xml/pulltorefresh.xml --><!-- From: file:/home/mukesh/clickAMaster/cLICKINAPP/build/intermediates/exploded-aar/com.navercorp.pulltorefresh/library/3.2.0/res/xml/pulltorefresh.xml -->
-=======
-</PullToRefresh><!-- From: file:/Users/NBP/git/Android-PullToRefresh/library/res/xml/pulltorefresh.xml --><!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.navercorp.pulltorefresh/library/3.2.0/res/xml/pulltorefresh.xml -->
->>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961

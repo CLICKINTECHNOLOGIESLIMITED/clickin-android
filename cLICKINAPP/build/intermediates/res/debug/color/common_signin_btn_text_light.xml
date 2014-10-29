@@ -16,8 +16,4 @@
     <item
         android:color="@color/common_signin_btn_light_text_default" />
 </selector>
-<<<<<<< HEAD
 <!-- From: file:/home/mukesh/clickAMaster/cLICKINAPP/build/intermediates/exploded-aar/com.google.android.gms/play-services/3.1.59/res/color/common_signin_btn_text_light.xml -->
-=======
-<!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.google.android.gms/play-services/3.1.59/res/color/common_signin_btn_text_light.xml -->
->>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961

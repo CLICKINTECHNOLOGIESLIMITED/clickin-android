@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-<<<<<<< HEAD
     <!-- From: file:/home/mukesh/clickAMaster/facebookSDK/src/main/res/values-mdpi/dimens.xml -->
-=======
-    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/facebookSDK/src/main/res/values-mdpi/dimens.xml -->
->>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961
     <eat-comment />
 
     <dimen name="com_facebook_picker_divider_width">1px</dimen>

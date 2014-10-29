@@ -42,8 +42,4 @@
                  android:visibility="invisible"
             />
 </RelativeLayout>
-<<<<<<< HEAD
 <!-- From: file:/home/mukesh/clickAMaster/facebookSDK/src/main/res/layout/com_facebook_friendpickerfragment.xml --><!-- From: file:/home/mukesh/clickAMaster/cLICKINAPP/build/intermediates/exploded-aar/clickAMaster/facebookSDK/unspecified/res/layout/com_facebook_friendpickerfragment.xml -->
-=======
-<!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/facebookSDK/src/main/res/layout/com_facebook_friendpickerfragment.xml --><!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/facebookSDK/unspecified/res/layout/com_facebook_friendpickerfragment.xml -->
->>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961

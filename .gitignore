@@ -1,5 +1,12 @@
 build/*
+cLICKINAPP/build/*
+
 CLICKINAPP.iml
 clickin-andoid.iml
 gitcodeClickin.iml
-
+facebookSDK
+cropper
+library
+library_header
+library_pull
+slider_library

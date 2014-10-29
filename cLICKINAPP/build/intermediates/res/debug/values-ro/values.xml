@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
 
-<<<<<<< HEAD
     <!-- From: file:/home/mukesh/clickAMaster/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values-ro/values.xml -->
-=======
-    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values-ro/values.xml -->
->>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961
     <eat-comment />
 
     <string name="abc_action_bar_home_description" msgid="4600421777120114993">"Navigați la ecranul de pornire"</string>
@@ -21,11 +17,7 @@
     <string name="abc_searchview_description_voice" msgid="893419373245838918">"Căutare vocală"</string>
     <string name="abc_shareactionprovider_share_with" msgid="3421042268587513524">"Trimiteți la"</string>
     <string name="abc_shareactionprovider_share_with_application" msgid="7165123711973476752">"Trimiteți la %s"</string>
-<<<<<<< HEAD
     <!-- From: file:/home/mukesh/clickAMaster/cLICKINAPP/build/intermediates/exploded-aar/com.google.android.gms/play-services/3.1.59/res/values-ro/strings.xml -->
-=======
-    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.google.android.gms/play-services/3.1.59/res/values-ro/strings.xml -->
->>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961
     <eat-comment />
 
     <string name="auth_client_needs_enabling_title" msgid="3983201110833868073">"O aplicație necesită activarea Serviciilor Google Play."</string>
@@ -49,11 +41,7 @@
     <string name="common_google_play_services_update_title" msgid="6006316683626838685">"Actualizaţi Servicii Google Play"</string>
     <string name="common_signin_button_text" msgid="9071884888741449141">"Conectați"</string>
     <string name="common_signin_button_text_long" msgid="2429381841831957106">"Conectați-vă cu Google"</string>
-<<<<<<< HEAD
     <!-- From: file:/home/mukesh/clickAMaster/cLICKINAPP/build/intermediates/exploded-aar/com.navercorp.pulltorefresh/library/3.2.0/res/values-ro/values.xml -->
-=======
-    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.navercorp.pulltorefresh/library/3.2.0/res/values-ro/values.xml -->
->>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961
     <eat-comment />
 
     <string name="pull_to_refresh_pull_label">Trage pentru a reîmprospăta…</string>

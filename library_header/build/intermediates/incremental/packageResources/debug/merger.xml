@@ -2,21 +2,12 @@
 <merger version="2" >
 
     <dataSet config="main" >
-<<<<<<< HEAD
         <source path="/home/mukesh/clickAMaster/library_header/src/main/res" />
         <source path="/home/mukesh/clickAMaster/library_header/build/generated/res/rs/debug" />
         <source path="/home/mukesh/clickAMaster/library_header/build/generated/res/generated/debug" />
     </dataSet>
     <dataSet config="debug" >
         <source path="/home/mukesh/clickAMaster/library_header/src/debug/res" />
-=======
-        <source path="/home/dell/Github/Git_Clickin/clickin-andoid/library_header/src/main/res" />
-        <source path="/home/dell/Github/Git_Clickin/clickin-andoid/library_header/build/generated/res/rs/debug" />
-        <source path="/home/dell/Github/Git_Clickin/clickin-andoid/library_header/build/generated/res/generated/debug" />
-    </dataSet>
-    <dataSet config="debug" >
-        <source path="/home/dell/Github/Git_Clickin/clickin-andoid/library_header/src/debug/res" />
->>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961
     </dataSet>
 
 </merger>

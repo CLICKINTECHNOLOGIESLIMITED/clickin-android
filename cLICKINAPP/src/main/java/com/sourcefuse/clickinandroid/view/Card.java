@@ -15,7 +15,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.sourcefuse.clickinandroid.utils.Log;
+import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -43,7 +45,7 @@ public class Card extends Activity implements View.OnClickListener,TextWatcher {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.card_click);
-
+        Utils.launchBarDialog(Card.this);
         trd_clicks_bottom = (TextView)findViewById(R.id.trd_clicks_bottom);
         trd_clicks_top = (TextView)findViewById(R.id.trd_clicks_top);
         tv_about_message = (TextView)findViewById(R.id.tv_about_message);
@@ -99,13 +101,26 @@ public class Card extends Activity implements View.OnClickListener,TextWatcher {
         } else {
             Log.e(TAG, "Value in intent in null");
         }
-        try {
-            Picasso.with(this)
-                    .load(url)
-                    .into(imageView);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+        Picasso.with(this)
+                .load(url)
+                .into(imageView , new Callback() {
+                    @Override
+                    public void onSuccess() {
+
+                        trd_clicks_top.setVisibility(View.VISIBLE);
+                        trd_clicks_bottom.setVisibility(View.VISIBLE);
+                        Utils.dismissBarDialog();
+
+                    }
+
+                    @Override
+                    public void onError() {
+
+                    }
+                });
+
+
+
     }
 
 

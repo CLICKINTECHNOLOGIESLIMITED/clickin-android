@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-<<<<<<< HEAD
     <!-- From: file:/home/mukesh/clickAMaster/cLICKINAPP/src/main/res/values-w820dp/dimens.xml -->
-=======
-    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/values-w820dp/dimens.xml -->
->>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961
     <eat-comment />
 
     <dimen name="activity_horizontal_margin">64dp</dimen>

@@ -1,25 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-<<<<<<< HEAD
     <!-- From: file:/home/mukesh/clickAMaster/library_pull/src/main/res/values/attrs.xml -->
     <eat-comment />
 
     <attr name="ptrHeaderStyle" format="reference" />
     <!-- From: file:/home/mukesh/clickAMaster/library_pull/build/intermediates/exploded-aar/com.github.castorflex.smoothprogressbar/library/0.4.0/res/values/values.xml -->
-=======
-    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/library_pull/src/main/res/values/attrs.xml -->
-    <eat-comment />
-
-    <attr name="ptrHeaderStyle" format="reference" />
-    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/library_pull/build/intermediates/exploded-aar/com.github.castorflex.smoothprogressbar/library/0.4.0/res/values/values.xml -->
->>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961
     <eat-comment />
 
     <bool name="spb_default_mirror_mode">false</bool>
     <bool name="spb_default_progressiveStart_activated">false</bool>
     <bool name="spb_default_reversed">false</bool>
-<<<<<<< HEAD
     <!-- From: file:/home/mukesh/clickAMaster/library_pull/src/main/res/values/colors.xml -->
     <eat-comment />
 
@@ -29,17 +20,6 @@
 
     <color name="spb_default_color">#33b5e5</color>
     <!-- From: file:/home/mukesh/clickAMaster/library_pull/src/main/res/values/attrs.xml -->
-=======
-    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/library_pull/src/main/res/values/colors.xml -->
-    <eat-comment />
-
-    <color name="default_progress_bar_color">#FF33B5E5</color>
-    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/library_pull/build/intermediates/exploded-aar/com.github.castorflex.smoothprogressbar/library/0.4.0/res/values/values.xml -->
-    <eat-comment />
-
-    <color name="spb_default_color">#33b5e5</color>
-    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/library_pull/src/main/res/values/attrs.xml -->
->>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961
     <eat-comment />
 
     <declare-styleable name="PullToRefreshHeader">
@@ -82,11 +62,7 @@
         <!-- The class to use as a View's View Delegate. Can be relative path from app's package name -->
         <attr name="ptrViewDelegateClass" format="reference|string" />
     </declare-styleable>
-<<<<<<< HEAD
     <!-- From: file:/home/mukesh/clickAMaster/library_pull/build/intermediates/exploded-aar/com.github.castorflex.smoothprogressbar/library/0.4.0/res/values/values.xml -->
-=======
-    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/library_pull/build/intermediates/exploded-aar/com.github.castorflex.smoothprogressbar/library/0.4.0/res/values/values.xml -->
->>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961
     <eat-comment />
 
     <declare-styleable name="SmoothProgressBar">
@@ -111,57 +87,33 @@
         <attr name="spb_background" format="reference" />
         <attr name="spb_generate_background_with_colors" format="boolean" />
     </declare-styleable>
-<<<<<<< HEAD
     <!-- From: file:/home/mukesh/clickAMaster/library_pull/src/main/res/values/dimens.xml -->
     <eat-comment />
 
     <dimen name="ptr_progress_bar_stroke_width">4dp</dimen>
     <!-- From: file:/home/mukesh/clickAMaster/library_pull/build/intermediates/exploded-aar/com.github.castorflex.smoothprogressbar/library/0.4.0/res/values/values.xml -->
-=======
-    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/library_pull/src/main/res/values/dimens.xml -->
-    <eat-comment />
-
-    <dimen name="ptr_progress_bar_stroke_width">4dp</dimen>
-    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/library_pull/build/intermediates/exploded-aar/com.github.castorflex.smoothprogressbar/library/0.4.0/res/values/values.xml -->
->>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961
     <eat-comment />
 
     <dimen name="spb_default_stroke_separator_length">4dp</dimen>
     <dimen name="spb_default_stroke_width">4dp</dimen>
-<<<<<<< HEAD
     <!-- From: file:/home/mukesh/clickAMaster/library_pull/src/main/res/values/ids.xml -->
-=======
-    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/library_pull/src/main/res/values/ids.xml -->
->>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961
     <eat-comment />
 
     <item name="ptr_content" type="id"/>
     <item name="ptr_progress" type="id"/>
     <item name="ptr_text" type="id"/>
-<<<<<<< HEAD
     <!-- From: file:/home/mukesh/clickAMaster/library_pull/build/intermediates/exploded-aar/com.github.castorflex.smoothprogressbar/library/0.4.0/res/values/values.xml -->
-=======
-    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/library_pull/build/intermediates/exploded-aar/com.github.castorflex.smoothprogressbar/library/0.4.0/res/values/values.xml -->
->>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961
     <eat-comment />
 
     <integer name="spb_default_interpolator">0</integer>
     <integer name="spb_default_sections_count">4</integer>
-<<<<<<< HEAD
     <!-- From: file:/home/mukesh/clickAMaster/library_pull/src/main/res/values/pull_refresh_strings.xml -->
-=======
-    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/library_pull/src/main/res/values/pull_refresh_strings.xml -->
->>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961
     <eat-comment />
 
     <string name="pull_to_refresh_pull_label">Pull to refresh…</string>
     <string name="pull_to_refresh_refreshing_label">Loading…</string>
     <string name="pull_to_refresh_release_label">Release to refresh…</string>
-<<<<<<< HEAD
     <!-- From: file:/home/mukesh/clickAMaster/library_pull/build/intermediates/exploded-aar/com.github.castorflex.smoothprogressbar/library/0.4.0/res/values/values.xml -->
-=======
-    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/library_pull/build/intermediates/exploded-aar/com.github.castorflex.smoothprogressbar/library/0.4.0/res/values/values.xml -->
->>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961
     <eat-comment />
 
     <item name="spb_default_speed" format="float" type="string">1.0</item>

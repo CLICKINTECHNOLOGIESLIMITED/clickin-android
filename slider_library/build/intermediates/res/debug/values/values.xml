@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-<<<<<<< HEAD
     <!-- From: file:/home/mukesh/clickAMaster/slider_library/src/main/res/values/attrs.xml -->
-=======
-    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/slider_library/src/main/res/values/attrs.xml -->
->>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961
     <eat-comment />
 
     <declare-styleable name="SlidingMenu">
@@ -35,11 +31,7 @@
         <attr name="selectorEnabled" format="boolean" />
         <attr name="selectorDrawable" format="reference" />
     </declare-styleable>
-<<<<<<< HEAD
     <!-- From: file:/home/mukesh/clickAMaster/slider_library/src/main/res/values/ids.xml -->
-=======
-    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/slider_library/src/main/res/values/ids.xml -->
->>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961
     <eat-comment />
 
     <item name="selected_view" type="id"/>

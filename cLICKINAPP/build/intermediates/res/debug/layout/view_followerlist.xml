@@ -103,8 +103,4 @@
             android:textSize="20sp"
             android:textStyle="bold" />
     </RelativeLayout>
-<<<<<<< HEAD
 </RelativeLayout><!-- From: file:/home/mukesh/clickAMaster/cLICKINAPP/src/main/res/layout/view_followerlist.xml -->
-=======
-</RelativeLayout><!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/layout/view_followerlist.xml -->
->>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961
