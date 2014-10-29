@@ -44,7 +44,7 @@ public class AuthManager extends Observable implements AuthManagerI {
             userInputDetails.put("device_token", deviceToken);
             userInputDetails.put("password", password);
             userInputDetails.put("device_type", deviceType);
-
+            Log.e(TAG,"userInputDetails-> "+userInputDetails);
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,
@@ -78,7 +78,7 @@ public class AuthManager extends Observable implements AuthManagerI {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            System.out.println("response  SIGNIN->" + response);
+                           Log.e(TAG,"response  SIGNIN->" + response);
                             state = response.getBoolean("success");
                             if (state) {
 
@@ -439,14 +439,10 @@ public class AuthManager extends Observable implements AuthManagerI {
         try {
             client = new AsyncHttpClient();
 
-
-            //for development
-            // client.addHeader("user_token", usertoken);
-            //client.addHeader("phone_no", phone);
-
             //for prod
             client.addHeader("User-Token", usertoken);
             client.addHeader("Phone-No", phone);
+
 
             //for development
             client.addHeader("user_token", usertoken);

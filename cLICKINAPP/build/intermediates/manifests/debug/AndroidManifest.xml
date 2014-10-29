@@ -126,8 +126,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.sourcefuse.clickinandroid.view.ChatRecordView"
-            android:launchMode="standard"
-            android:screenOrientation="portrait" />
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name="com.sourcefuse.clickinandroid.view.ClickInBaseView"
             android:launchMode="standard"

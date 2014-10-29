@@ -6,7 +6,7 @@
         jar="/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/cropper/unspecified/classes.jar"
         jumboMode="false"
         revision="19.1.0"
-        sha1="7ff3d638df01ab080c05411710e6d61dc19b554f"/>
+        sha1="26c5d9d347fceef6998c1e2c4d9f61a8b771eee1"/>
     <item
         dex="/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/pre-dexed/debug/support-annotations-20.0.0-ff6949487c0c32102e0f7a78e0cb7f41e374361f.jar"
         jar="/home/dell/Downloads/Android_Tools/adt-bundle-linux-x86_64-20140702/sdk/extras/android/m2repository/com/android/support/support-annotations/20.0.0/support-annotations-20.0.0.jar"
@@ -24,7 +24,7 @@
         jar="/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/library_header/unspecified/classes.jar"
         jumboMode="false"
         revision="19.1.0"
-        sha1="4aca67397c91fbcf44eed6297223c0244e0663a3"/>
+        sha1="668843be00f27765ee3016131183d441589fa5ac"/>
     <item
         dex="/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-6e189bb8021c4e490ff963f88e448ebcfd553ed6.jar"
         jar="/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.viewpagerindicator/library/2.4.1/classes.jar"
@@ -48,7 +48,7 @@
         jar="/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/facebookSDK/unspecified/classes.jar"
         jumboMode="false"
         revision="19.1.0"
-        sha1="5c1d6dd3c1d3c273a297385e2629e442af6c6e0f"/>
+        sha1="7509aa57844c930719bfc546634ab6d79c86a30b"/>
     <item
         dex="/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/pre-dexed/debug/java-json-f4f2bef61aa3029dcdce04937a89fe6a4ba89cc7.jar"
         jar="/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/libs/java-json.jar"
@@ -84,13 +84,13 @@
         jar="/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/slider_library/unspecified/classes.jar"
         jumboMode="false"
         revision="19.1.0"
-        sha1="ab98c459d8fb4ccf667334cb6bb59ea98c1793a8"/>
+        sha1="4c28c014e2588f8100d2bd6e7bfcdf39cdb520d9"/>
     <item
         dex="/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-a4ad4779abac4f08119c84c480ae1924c14a3305.jar"
         jar="/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/library/unspecified/classes.jar"
         jumboMode="false"
         revision="19.1.0"
-        sha1="6e10388c0e166fdca9deeb8a423a1276bf362f2c"/>
+        sha1="55e54bf28d39ca0a85455c9852d98467557c3442"/>
     <item
         dex="/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-6362f71026cb24b03f6db6032514f92cd0a106ff.jar"
         jar="/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/support-v4/20.0.0/classes.jar"

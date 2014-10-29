@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.quickblox.module.chat.QBChatService;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 
 public class MyPreference {
@@ -59,6 +60,8 @@ public class MyPreference {
     // execute at signup time.
     public void clearAllPreference() {
         setToken("");
+        setmyPhoneNo("");
+        QBChatService.getInstance().logout();
     }
 
 

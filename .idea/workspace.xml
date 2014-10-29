@@ -46,6 +46,16 @@
   <component name="ChangeListManager">
     <list default="true" id="1b1e4e35-a6a6-446f-963c-15cc88993b9a" name="Default" comment="">
 <<<<<<< HEAD
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/cLICKINAPP.iml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cropper/cropper.iml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/facebookSDK/facebookSDK.iml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/library/library.iml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/library_header/library_header.iml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/library_pull/library_pull.iml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/slider_library/slider_library.iml" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/.name" afterPath="$PROJECT_DIR$/.idea/.name" />
+=======
+<<<<<<< HEAD
 =======
       <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/android_async_http_1_4_4.xml" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/appcompat_v7_20_0_0.xml" afterPath="" />
@@ -3021,15 +3031,26 @@
 =======
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/model_data.bin" afterPath="$PROJECT_DIR$/build/intermediates/model_data.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/utils/APIs.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/utils/APIs.java" />
+>>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/adapter/AdapterAll.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/adapter/AdapterAll.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/utils/AlertMessage.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/utils/AlertMessage.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/AndroidManifest.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/model/AuthManager.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/model/AuthManager.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/Card.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/Card.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/model/bean/CardBean.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/model/bean/CardBean.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/adapter/CardGridViewAdapter.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/adapter/CardGridViewAdapter.java" />
+<<<<<<< HEAD
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/model/ChatManager.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/model/ChatManager.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/model/ChatManagerI.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/model/ChatManagerI.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/adapter/ChatRecordAdapter.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/adapter/ChatRecordAdapter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/model/bean/ChatRecordBeen.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/model/bean/ChatRecordBeen.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/ChatRecordView.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/ChatRecordView.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/utils/MyPreference.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/utils/MyPreference.java" />
+=======
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/ClickInBaseView.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/ClickInBaseView.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/EditMyProfileView.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/EditMyProfileView.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/model/ProfileManager.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/model/ProfileManager.java" />
 >>>>>>> f5c472b1fa8c6bb44d600ef151ecf257eca9dee2
+>>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/build/generated/source/r/debug/com/edmodo/cropper/R.java" afterPath="$PROJECT_DIR$/cLICKINAPP/build/generated/source/r/debug/com/edmodo/cropper/R.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/build/generated/source/r/debug/com/facebook/android/R.java" afterPath="$PROJECT_DIR$/cLICKINAPP/build/generated/source/r/debug/com/facebook/android/R.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/build/generated/source/r/debug/com/google/android/gms/R.java" afterPath="$PROJECT_DIR$/cLICKINAPP/build/generated/source/r/debug/com/google/android/gms/R.java" />
@@ -3037,6 +3058,8 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/build/generated/source/r/debug/com/jeremyfeinstein/slidingmenu/lib/R.java" afterPath="$PROJECT_DIR$/cLICKINAPP/build/generated/source/r/debug/com/jeremyfeinstein/slidingmenu/lib/R.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/build/generated/source/r/debug/com/sourcefuse/clickinapp/R.java" afterPath="$PROJECT_DIR$/cLICKINAPP/build/generated/source/r/debug/com/sourcefuse/clickinapp/R.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/build/generated/source/r/debug/com/viewpagerindicator/R.java" afterPath="$PROJECT_DIR$/cLICKINAPP/build/generated/source/r/debug/com/viewpagerindicator/R.java" />
+<<<<<<< HEAD
+=======
 <<<<<<< HEAD
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/feed_list_item.xml" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/feed_list_item.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_feedview_list.xml" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_feedview_list.xml" />
@@ -3048,20 +3071,25 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/UserProfileView.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/UserProfileView.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/ViewTradeCart.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/ViewTradeCart.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/cLICKINAPP.iml" afterPath="$PROJECT_DIR$/cLICKINAPP/cLICKINAPP.iml" />
+>>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" afterPath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/card_click.xml" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/card_click.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/res/values/com_crashlytics_export_strings.xml" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/res/values/com_crashlytics_export_strings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/assets/crashlytics-build.properties" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/assets/crashlytics-build.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cropper/cropper.iml" afterPath="$PROJECT_DIR$/cropper/cropper.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/facebookSDK/facebookSDK.iml" afterPath="$PROJECT_DIR$/facebookSDK/facebookSDK.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/library/library.iml" afterPath="$PROJECT_DIR$/library/library.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/library_header/library_header.iml" afterPath="$PROJECT_DIR$/library_header/library_header.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/library_pull/library_pull.iml" afterPath="$PROJECT_DIR$/library_pull/library_pull.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/library_0_4_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/library_0_4_0.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/library_3_2_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/library_3_2_0.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local.properties" afterPath="$PROJECT_DIR$/local.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
+<<<<<<< HEAD
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_3_1_59.xml" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_3_1_59.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/support_annotations_20_0_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/support_annotations_20_0_0.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/support_v4_20_0_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/support_v4_20_0_0.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_chat_demo.xml" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_chat_demo.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_chat_layout.xml" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_chat_layout.xml" />
+=======
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/slider_library/slider_library.iml" afterPath="$PROJECT_DIR$/slider_library/slider_library.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_tradecart.xml" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_tradecart.xml" />
 >>>>>>> f5c472b1fa8c6bb44d600ef151ecf257eca9dee2
+>>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="clickin-andoid.iws" />
@@ -3117,7 +3145,7 @@
       <file leaf-file-name="EditMyProfileView.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/EditMyProfileView.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.0" vertical-offset="2457" max-vertical-offset="4680">
+            <state vertical-scroll-proportion="0.0" vertical-offset="2910" max-vertical-offset="5025">
               <caret line="194" column="0" selection-start-line="194" selection-start-column="0" selection-end-line="194" selection-end-column="0" />
               <folding />
             </state>
@@ -3127,13 +3155,19 @@
       <file leaf-file-name="ProfileManager.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/model/ProfileManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="558" max-vertical-offset="6345">
+            <state vertical-scroll-proportion="0.0" vertical-offset="1020" max-vertical-offset="6615">
               <caret line="68" column="36" selection-start-line="68" selection-start-column="36" selection-end-line="68" selection-end-column="36" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
+      <file leaf-file-name="APIs.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/utils/APIs.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="180" max-vertical-offset="1095">
+=======
       <file leaf-file-name="Constants.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/utils/Constants.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -3153,6 +3187,7 @@
               <caret line="108" column="77" selection-start-line="108" selection-start-column="77" selection-end-line="108" selection-end-column="77" />
 =======
             <state vertical-scroll-proportion="0.0" vertical-offset="78" max-vertical-offset="1095">
+>>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961
               <caret line="12" column="57" selection-start-line="12" selection-start-column="57" selection-end-line="12" selection-end-column="57" />
 >>>>>>> f5c472b1fa8c6bb44d600ef151ecf257eca9dee2
               <folding />
@@ -3170,39 +3205,33 @@
       <file leaf-file-name="AdapterAll.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/adapter/AdapterAll.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="677" max-vertical-offset="1305">
+            <state vertical-scroll-proportion="0.0" vertical-offset="598" max-vertical-offset="1455">
               <caret line="69" column="68" selection-start-line="69" selection-start-column="68" selection-end-line="69" selection-end-column="68" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ViewTradeCart.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="ViewTradeCart.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/ViewTradeCart.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.4827586" vertical-offset="197" max-vertical-offset="2415">
-              <caret line="47" column="44" selection-start-line="47" selection-start-column="44" selection-end-line="47" selection-end-column="44" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="215" max-vertical-offset="2415">
+              <caret line="32" column="42" selection-start-line="32" selection-start-column="42" selection-end-line="32" selection-end-column="42" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="view_tradecart.xml" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="view_tradecart.xml" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_tradecart.xml">
-          <provider selected="true" editor-type-id="android-designer">
+          <provider editor-type-id="android-designer">
             <state />
           </provider>
-          <provider editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1515" max-vertical-offset="5160">
-              <caret line="101" column="0" selection-start-line="101" selection-start-column="0" selection-end-line="101" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CardGridViewAdapter.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/adapter/CardGridViewAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
+            <state vertical-scroll-proportion="0.18703242" vertical-offset="1290" max-vertical-offset="5160">
+              <caret line="91" column="0" selection-start-line="91" selection-start-column="0" selection-end-line="91" selection-end-column="0" />
+=======
             <state vertical-scroll-proportion="0.0" vertical-offset="1236" max-vertical-offset="1695">
               <caret line="126" column="1" selection-start-line="126" selection-start-column="1" selection-end-line="126" selection-end-column="1" />
 >>>>>>> f5c472b1fa8c6bb44d600ef151ecf257eca9dee2
@@ -3239,6 +3268,7 @@
             <state vertical-scroll-proportion="-7.4814816" vertical-offset="6143" max-vertical-offset="13500">
               <caret line="440" column="29" selection-start-line="440" selection-start-column="29" selection-end-line="440" selection-end-column="29" />
 >>>>>>> f5c472b1fa8c6bb44d600ef151ecf257eca9dee2
+>>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961
               <folding />
             </state>
           </provider>
@@ -3301,7 +3331,7 @@
         <entry>
           <key>
             <ExternalProjectPojo>
-              <option name="name" value="gitcodeClickin" />
+              <option name="name" value="clickAMaster" />
               <option name="path" value="$PROJECT_DIR$" />
             </ExternalProjectPojo>
           </key>
@@ -3320,7 +3350,7 @@
                 <option name="path" value="$PROJECT_DIR$/cropper" />
               </ExternalProjectPojo>
               <ExternalProjectPojo>
-                <option name="name" value="gitcodeClickin" />
+                <option name="name" value="clickAMaster" />
                 <option name="path" value="$PROJECT_DIR$" />
               </ExternalProjectPojo>
               <ExternalProjectPojo>
@@ -3641,6 +3671,31 @@
                 <option name="name" value="preReleaseBuild" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
+                <option name="description" value="Prepare clickAMaster:cropper:unspecified" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/cLICKINAPP" />
+                <option name="name" value="prepareClickAMasterCropperUnspecifiedLibrary" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Prepare clickAMaster:facebookSDK:unspecified" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/cLICKINAPP" />
+                <option name="name" value="prepareClickAMasterFacebookSDKUnspecifiedLibrary" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Prepare clickAMaster:library:unspecified" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/cLICKINAPP" />
+                <option name="name" value="prepareClickAMasterLibraryUnspecifiedLibrary" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Prepare clickAMaster:library_header:unspecified" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/cLICKINAPP" />
+                <option name="name" value="prepareClickAMasterLibrary_headerUnspecifiedLibrary" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Prepare clickAMaster:slider_library:unspecified" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/cLICKINAPP" />
+                <option name="name" value="prepareClickAMasterSlider_libraryUnspecifiedLibrary" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
                 <option name="description" value="Prepare com.android.support:appcompat-v7:20.0.0" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/cLICKINAPP" />
                 <option name="name" value="prepareComAndroidSupportAppcompatV72000Library" />
@@ -3672,31 +3727,6 @@
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/cLICKINAPP" />
                 <option name="name" value="prepareDebugTestDependencies" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Prepare gitcodeClickin:cropper:unspecified" />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/cLICKINAPP" />
-                <option name="name" value="prepareGitcodeClickinCropperUnspecifiedLibrary" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Prepare gitcodeClickin:facebookSDK:unspecified" />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/cLICKINAPP" />
-                <option name="name" value="prepareGitcodeClickinFacebookSDKUnspecifiedLibrary" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Prepare gitcodeClickin:library:unspecified" />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/cLICKINAPP" />
-                <option name="name" value="prepareGitcodeClickinLibraryUnspecifiedLibrary" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Prepare gitcodeClickin:library_header:unspecified" />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/cLICKINAPP" />
-                <option name="name" value="prepareGitcodeClickinLibrary_headerUnspecifiedLibrary" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Prepare gitcodeClickin:slider_library:unspecified" />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/cLICKINAPP" />
-                <option name="name" value="prepareGitcodeClickinSlider_libraryUnspecifiedLibrary" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/cLICKINAPP" />
@@ -6340,16 +6370,16 @@
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.build/builder/0.12.2/3673e1c415b054caccc3231dcdff959cfcb315f6/builder-0.12.2.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.navercorp.pulltorefresh/library/3.2.0/cebde58207de94ac3d436b9de827e96aecef2f17/library-3.2.0-sources.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.navercorp.pulltorefresh/library/3.2.0/8bcd10ca73523c3e295338627ee4352aec4037b3/library-3.2.0.aar" />
-                            <option value="$USER_HOME$/Code/android-studio/sdk/extras/android/m2repository/com/android/support/support-v4/20.0.0/support-v4-20.0.0-sources.jar" />
-                            <option value="$USER_HOME$/Code/android-studio/sdk/extras/android/m2repository/com/android/support/support-v4/20.0.0/support-v4-20.0.0.aar" />
-                            <option value="$USER_HOME$/Code/android-studio/sdk/extras/android/m2repository/com/android/support/appcompat-v7/20.0.0/appcompat-v7-20.0.0.aar" />
+                            <option value="$USER_HOME$/Andriod_En/Android_studio/Studio_En/android-studio/sdk/extras/android/m2repository/com/android/support/support-v4/20.0.0/support-v4-20.0.0-sources.jar" />
+                            <option value="$USER_HOME$/Andriod_En/Android_studio/Studio_En/android-studio/sdk/extras/android/m2repository/com/android/support/support-v4/20.0.0/support-v4-20.0.0.aar" />
+                            <option value="$USER_HOME$/Andriod_En/Android_studio/Studio_En/android-studio/sdk/extras/android/m2repository/com/android/support/appcompat-v7/20.0.0/appcompat-v7-20.0.0.aar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/de.greenrobot/eventbus/2.2.0/e0de3748c9b840d854c8b110400cdb15f22c2f72/eventbus-2.2.0-sources.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/de.greenrobot/eventbus/2.2.0/8957e80562a7e6ac5d9421e46e0898336c06c307/eventbus-2.2.0.jar" />
-                            <option value="$USER_HOME$/Code/android-studio/sdk/extras/google/m2repository/com/google/android/gms/play-services/3.1.59/play-services-3.1.59.aar" />
+                            <option value="$USER_HOME$/Andriod_En/Android_studio/Studio_En/android-studio/sdk/extras/google/m2repository/com/google/android/gms/play-services/3.1.59/play-services-3.1.59.aar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.viewpagerindicator/library/2.4.1/ab321e0404ef4dc2f994f1b4ea037dbd0ed7d81/library-2.4.1-sources.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.viewpagerindicator/library/2.4.1/6dfa2706e7b5f9f5e235fb05522e28da44103bd8/library-2.4.1.aar" />
-                            <option value="$USER_HOME$/Code/android-studio/sdk/extras/android/m2repository/com/android/support/support-annotations/20.0.0/support-annotations-20.0.0-sources.jar" />
-                            <option value="$USER_HOME$/Code/android-studio/sdk/extras/android/m2repository/com/android/support/support-annotations/20.0.0/support-annotations-20.0.0.jar" />
+                            <option value="$USER_HOME$/Andriod_En/Android_studio/Studio_En/android-studio/sdk/extras/android/m2repository/com/android/support/support-annotations/20.0.0/support-annotations-20.0.0-sources.jar" />
+                            <option value="$USER_HOME$/Andriod_En/Android_studio/Studio_En/android-studio/sdk/extras/android/m2repository/com/android/support/support-annotations/20.0.0/support-annotations-20.0.0.jar" />
                             <option value="$MODULE_DIR$/libs/quickblox-android-1.2.4.jar" />
                             <option value="$MODULE_DIR$/libs/picasso-2.2.0.jar" />
                             <option value="$MODULE_DIR$/libs/android-async-http-1.4.4.jar" />
@@ -6504,10 +6534,10 @@
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.bouncycastle/bcpkix-jdk15on/1.48/28b7614b908a47844bb27e3c94b45b6893656265/bcpkix-jdk15on-1.48.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.build/builder/0.12.2/cbbbe556e0103ceb734ac7a269ecb9a9e2f33d4c/builder-0.12.2-sources.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.build/builder/0.12.2/3673e1c415b054caccc3231dcdff959cfcb315f6/builder-0.12.2.jar" />
-                            <option value="$USER_HOME$/Code/android-studio/sdk/extras/android/m2repository/com/android/support/support-v4/20.0.0/support-v4-20.0.0-sources.jar" />
-                            <option value="$USER_HOME$/Code/android-studio/sdk/extras/android/m2repository/com/android/support/support-v4/20.0.0/support-v4-20.0.0.aar" />
-                            <option value="$USER_HOME$/Code/android-studio/sdk/extras/android/m2repository/com/android/support/support-annotations/20.0.0/support-annotations-20.0.0-sources.jar" />
-                            <option value="$USER_HOME$/Code/android-studio/sdk/extras/android/m2repository/com/android/support/support-annotations/20.0.0/support-annotations-20.0.0.jar" />
+                            <option value="$USER_HOME$/Andriod_En/Android_studio/Studio_En/android-studio/sdk/extras/android/m2repository/com/android/support/support-v4/20.0.0/support-v4-20.0.0-sources.jar" />
+                            <option value="$USER_HOME$/Andriod_En/Android_studio/Studio_En/android-studio/sdk/extras/android/m2repository/com/android/support/support-v4/20.0.0/support-v4-20.0.0.aar" />
+                            <option value="$USER_HOME$/Andriod_En/Android_studio/Studio_En/android-studio/sdk/extras/android/m2repository/com/android/support/support-annotations/20.0.0/support-annotations-20.0.0-sources.jar" />
+                            <option value="$USER_HOME$/Andriod_En/Android_studio/Studio_En/android-studio/sdk/extras/android/m2repository/com/android/support/support-annotations/20.0.0/support-annotations-20.0.0.jar" />
                           </list>
                         </option>
                         <option name="path" value="$PROJECT_DIR$/facebookSDK" />
@@ -6810,10 +6840,10 @@
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.bouncycastle/bcpkix-jdk15on/1.48/28b7614b908a47844bb27e3c94b45b6893656265/bcpkix-jdk15on-1.48.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.build/builder/0.12.2/cbbbe556e0103ceb734ac7a269ecb9a9e2f33d4c/builder-0.12.2-sources.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.tools.build/builder/0.12.2/3673e1c415b054caccc3231dcdff959cfcb315f6/builder-0.12.2.jar" />
-                            <option value="$USER_HOME$/Code/android-studio/sdk/extras/android/m2repository/com/android/support/support-v4/20.0.0/support-v4-20.0.0-sources.jar" />
-                            <option value="$USER_HOME$/Code/android-studio/sdk/extras/android/m2repository/com/android/support/support-v4/20.0.0/support-v4-20.0.0.aar" />
-                            <option value="$USER_HOME$/Code/android-studio/sdk/extras/android/m2repository/com/android/support/support-annotations/20.0.0/support-annotations-20.0.0-sources.jar" />
-                            <option value="$USER_HOME$/Code/android-studio/sdk/extras/android/m2repository/com/android/support/support-annotations/20.0.0/support-annotations-20.0.0.jar" />
+                            <option value="$USER_HOME$/Andriod_En/Android_studio/Studio_En/android-studio/sdk/extras/android/m2repository/com/android/support/support-v4/20.0.0/support-v4-20.0.0-sources.jar" />
+                            <option value="$USER_HOME$/Andriod_En/Android_studio/Studio_En/android-studio/sdk/extras/android/m2repository/com/android/support/support-v4/20.0.0/support-v4-20.0.0.aar" />
+                            <option value="$USER_HOME$/Andriod_En/Android_studio/Studio_En/android-studio/sdk/extras/android/m2repository/com/android/support/support-annotations/20.0.0/support-annotations-20.0.0-sources.jar" />
+                            <option value="$USER_HOME$/Andriod_En/Android_studio/Studio_En/android-studio/sdk/extras/android/m2repository/com/android/support/support-annotations/20.0.0/support-annotations-20.0.0.jar" />
                           </list>
                         </option>
                         <option name="path" value="$PROJECT_DIR$/slider_library" />
@@ -6825,86 +6855,86 @@
               <option name="name" value="library_pull" />
               <option name="projectBuildClasspath">
                 <list>
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/sonar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/signing" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/scala" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/launcher" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/javascript" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/internal-integ-testing" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/ui" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/wrapper" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/build-comparison" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/language-base" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/cli" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/resources" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/code-quality" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/osgi" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/core" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/publish" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/maven" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/tooling-api" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/diagnostics" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/announce" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/jacoco" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/base-services" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/language-jvm" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/open-api" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/reporting" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/jetty" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/ide" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/ear" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/plugins" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/antlr" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/core-impl" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/internal-testing" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/base-services-groovy" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/build-init" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/native" />
                   <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/messaging" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/cpp" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/wrapper" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/tooling-api" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/jacoco" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/resources" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/open-api" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/internal-testing" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/code-quality" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/cli" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/base-services" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/build-comparison" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/plugins" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/publish" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/jetty" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/language-base" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/launcher" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/sonar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/ear" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/antlr" />
                   <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/ivy" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/gradle-base-services-groovy-1.12.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/core" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/javascript" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/core-impl" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/announce" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/base-services-groovy" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/maven" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/language-jvm" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/scala" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/native" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/ide" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/osgi" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/signing" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/diagnostics" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/cpp" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/build-init" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/internal-integ-testing" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/reporting" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/src/ui" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/ant-launcher-1.9.3.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/ant-1.9.3.jar" />
                   <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/gradle-cli-1.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/gradle-wrapper-1.12.jar" />
                   <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/gradle-base-services-1.12.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/gradle-native-1.12.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/ivy-2.2.0.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/gradle-base-services-groovy-1.12.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/groovy-all-1.8.6.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/gradle-docs-1.12.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/gradle-wrapper-1.12.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/gradle-tooling-api-1.12.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/gradle-ui-1.12.jar" />
                   <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/gradle-launcher-1.12.jar" />
                   <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/gradle-core-1.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/ivy-2.2.0.jar" />
                   <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/gradle-messaging-1.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/gradle-native-1.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/ant-launcher-1.9.3.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/gradle-tooling-api-1.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/ant-1.9.3.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/gradle-resources-1.12.jar" />
                   <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/gradle-open-api-1.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/gradle-docs-1.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/groovy-all-1.8.6.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/gradle-ui-1.12.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/gradle-resources-1.12.jar" />
                   <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/plugins/gradle-ivy-1.12.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/plugins/gradle-publish-1.12.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/plugins/gradle-signing-1.12.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/plugins/ant-antlr-1.9.3.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/plugins/gradle-core-impl-1.12.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/plugins/gradle-code-quality-1.12.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/plugins/gradle-antlr-1.12.jar" />
                   <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/plugins/gradle-plugins-1.12.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/plugins/gradle-language-jvm-1.12.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/plugins/gradle-build-comparison-1.12.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/plugins/gradle-ide-1.12.jar" />
                   <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/plugins/gradle-cpp-1.12.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/plugins/gradle-build-init-1.12.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/plugins/gradle-diagnostics-1.12.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/plugins/gradle-ear-1.12.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/plugins/gradle-announce-1.12.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/plugins/gradle-jetty-1.12.jar" />
                   <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/plugins/gradle-jacoco-1.12.jar" />
                   <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/plugins/gradle-sonar-1.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/plugins/gradle-ide-1.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/plugins/gradle-language-base-1.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/plugins/gradle-publish-1.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/plugins/gradle-javascript-1.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/plugins/gradle-jetty-1.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/plugins/gradle-language-jvm-1.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/plugins/gradle-osgi-1.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/plugins/gradle-build-comparison-1.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/plugins/gradle-ear-1.12.jar" />
                   <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/plugins/gradle-maven-1.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/plugins/gradle-core-impl-1.12.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/plugins/gradle-osgi-1.12.jar" />
                   <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/plugins/gradle-scala-1.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/plugins/gradle-antlr-1.12.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/plugins/gradle-language-base-1.12.jar" />
                   <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/plugins/gradle-reporting-1.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/plugins/ant-antlr-1.9.3.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/plugins/gradle-code-quality-1.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/plugins/gradle-build-init-1.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/plugins/gradle-signing-1.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/plugins/gradle-announce-1.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/plugins/gradle-diagnostics-1.12.jar" />
+                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-1.12-all/2apkk7d25miauqf1pdjp1bm0uo/gradle-1.12/lib/plugins/gradle-javascript-1.12.jar" />
                   <option value="$PROJECT_DIR$/buildSrc/src/main/java" />
                   <option value="$PROJECT_DIR$/buildSrc/src/main/groovy" />
                 </list>
@@ -6918,7 +6948,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/library_header/build.gradle" />
         <option value="$PROJECT_DIR$/cropper/build.gradle" />
         <option value="$PROJECT_DIR$/facebookSDK/build.gradle" />
         <option value="$PROJECT_DIR$/slider_library/build.gradle" />
@@ -6981,6 +7010,8 @@
         <option value="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/utils/APIs.java" />
         <option value="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/adapter/AdapterAll.java" />
         <option value="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/adapter/CardGridViewAdapter.java" />
+        <option value="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/model/bean/CardBean.java" />
+        <option value="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/card_click.xml" />
         <option value="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/Card.java" />
 >>>>>>> f5c472b1fa8c6bb44d600ef151ecf257eca9dee2
       </list>
@@ -6988,9 +7019,9 @@
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="65" />
-    <option name="y" value="-4" />
+    <option name="y" value="24" />
     <option name="width" value="1301" />
-    <option name="height" value="772" />
+    <option name="height" value="744" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -7037,17 +7068,27 @@
       <sortByType />
     </navigator>
     <panes>
+<<<<<<< HEAD
+      <pane id="PackagesPane" />
+=======
       <pane id="AndroidView" />
       <pane id="PackagesPane" />
       <pane id="Scope" />
+>>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961
       <pane id="ProjectPane">
         <subPane>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="clickin-andoid" />
+              <option name="myItemId" value="clickAMaster" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
+<<<<<<< HEAD
+        </subPane>
+      </pane>
+      <pane id="AndroidView" />
+      <pane id="Scope" />
+=======
           <PATH>
             <PATH_ELEMENT>
               <option name="myItemId" value="clickin-andoid" />
@@ -7424,6 +7465,7 @@
       <pane id="Scope" />
       <pane id="AndroidView" />
 >>>>>>> f5c472b1fa8c6bb44d600ef151ecf257eca9dee2
+>>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -7435,12 +7477,7 @@
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="recentsLimit" value="5" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="0e06d978" />
-    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="jellybean" />
-    <property name="FullScreen" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="DEBUGGABLE_DEVICE" value="samsung-gt_i9505-0e06d978" />
-    <property name="DEBUGGABLE_PROCESS" value="com.sourcefuse.clickinapp" />
-    <property name="SHOW_ALL_PROCESSES" value="false" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="Studio" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -7698,8 +7735,12 @@
 <<<<<<< HEAD
     <frame x="65" y="24" width="1301" height="744" extended-state="6" />
 =======
+<<<<<<< HEAD
+    <frame x="65" y="24" width="1301" height="744" extended-state="6" />
+=======
     <frame x="65" y="-4" width="1301" height="772" extended-state="6" />
 >>>>>>> f5c472b1fa8c6bb44d600ef151ecf257eca9dee2
+>>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961
     <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -7728,24 +7769,28 @@
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4674086" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.66883117" sideWeight="0.50039905" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.66883117" sideWeight="0.50039905" order="5" side_tool="true" content_ui="tabs" />
-      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3227345" sideWeight="0.49961567" order="2" side_tool="false" content_ui="tabs" />
+<<<<<<< HEAD
+      <window_info id="Android" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2782194" sideWeight="0.49960095" order="6" side_tool="false" content_ui="tabs" />
+=======
       <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17329094" sideWeight="0.49960095" order="6" side_tool="false" content_ui="tabs" />
 >>>>>>> f5c472b1fa8c6bb44d600ef151ecf257eca9dee2
+>>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32962668" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290938" sideWeight="0.49960285" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2533757" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33227345" sideWeight="0.49960095" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Memory Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="15" side_tool="true" content_ui="tabs" />
       <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32801276" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" x="171" y="292" width="1101" height="544" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="8" side_tool="false" content_ui="combo" />
-      <window_info id="Memory Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="15" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
 <<<<<<< HEAD
@@ -7807,6 +7852,9 @@
   </component>
   <component name="editorHistoryManager">
 <<<<<<< HEAD
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/SignInView.java">
+=======
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/adapter/FeedsStarsAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.8686515" vertical-offset="509" max-vertical-offset="1725">
@@ -7815,6 +7863,7 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_feeds_comments_row.xml">
+>>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.1388889" vertical-offset="585" max-vertical-offset="1530">
           <caret line="44" column="39" selection-start-line="42" selection-start-column="8" selection-end-line="44" selection-end-column="39" />
@@ -8001,6 +8050,8 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
+=======
     <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/card_click.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="3630" max-vertical-offset="4650">
@@ -8011,6 +8062,7 @@
         <state />
       </provider>
     </entry>
+>>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961
     <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/CardView.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="2708" max-vertical-offset="4110">
@@ -8289,8 +8341,11 @@
       <provider editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="5415">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+<<<<<<< HEAD
+=======
 >>>>>>> f5c472b1fa8c6bb44d600ef151ecf257eca9dee2
           <folding />
+>>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961
         </state>
       </provider>
     </entry>
@@ -8304,7 +8359,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="1155" max-vertical-offset="24225">
           <caret line="163" column="0" selection-start-line="163" selection-start-column="0" selection-end-line="163" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -8312,11 +8366,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="663" max-vertical-offset="10725">
           <caret line="89" column="0" selection-start-line="89" selection-start-column="0" selection-end-line="89" selection-end-column="0" />
-          <folding>
-            <element signature="e#16194#16228#0" expanded="false" />
-            <element signature="e#18264#18265#0" expanded="true" />
-            <element signature="e#18330#18331#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -8324,7 +8373,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="5360" max-vertical-offset="8235">
           <caret line="409" column="23" selection-start-line="409" selection-start-column="23" selection-end-line="409" selection-end-column="23" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -8332,7 +8380,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-9.48" vertical-offset="48" max-vertical-offset="375">
           <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -8346,7 +8393,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/model/AuthManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.4814816" vertical-offset="6143" max-vertical-offset="13500">
+        <state vertical-scroll-proportion="0.0" vertical-offset="6600" max-vertical-offset="15585">
           <caret line="440" column="29" selection-start-line="440" selection-start-column="29" selection-end-line="440" selection-end-column="29" />
           <folding />
         </state>
@@ -8354,7 +8401,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/EditMyProfileView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.0" vertical-offset="2457" max-vertical-offset="4680">
+        <state vertical-scroll-proportion="0.0" vertical-offset="2910" max-vertical-offset="5025">
           <caret line="194" column="0" selection-start-line="194" selection-start-column="0" selection-end-line="194" selection-end-column="0" />
           <folding />
         </state>
@@ -8376,51 +8423,70 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/Card.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2707641" vertical-offset="542" max-vertical-offset="2850">
+          <caret line="63" column="16" selection-start-line="63" selection-start-column="16" selection-end-line="63" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/adapter/CardGridViewAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1236" max-vertical-offset="1695">
+        <state vertical-scroll-proportion="1.1993356" vertical-offset="883" max-vertical-offset="1770">
           <caret line="126" column="1" selection-start-line="126" selection-start-column="1" selection-end-line="126" selection-end-column="1" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/Card.java">
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/model/bean/CardBean.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1798" max-vertical-offset="2400">
-          <caret line="168" column="0" selection-start-line="168" selection-start-column="0" selection-end-line="168" selection-end-column="0" />
-          <folding>
-            <element signature="e#2010#2253#0" expanded="true" />
-            <element signature="e#2242#2243#0" expanded="true" />
-            <element signature="e#2421#2664#0" expanded="true" />
-            <element signature="e#2653#2654#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.07475083" vertical-offset="45" max-vertical-offset="885">
+          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/adapter/AdapterAll.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="677" max-vertical-offset="1305">
+        <state vertical-scroll-proportion="0.0" vertical-offset="598" max-vertical-offset="1455">
           <caret line="69" column="68" selection-start-line="69" selection-start-column="68" selection-end-line="69" selection-end-column="68" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_tradecart.xml">
-      <provider selected="true" editor-type-id="android-designer">
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/card_click.xml">
+      <provider editor-type-id="android-designer">
         <state />
       </provider>
-      <provider editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1515" max-vertical-offset="5160">
-          <caret line="101" column="0" selection-start-line="101" selection-start-column="0" selection-end-line="101" selection-end-column="0" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.65405405" vertical-offset="209" max-vertical-offset="5025">
+          <caret line="22" column="53" selection-start-line="22" selection-start-column="53" selection-end-line="22" selection-end-column="53" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/ViewTradeCart.java">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
+        <state vertical-scroll-proportion="0.0" vertical-offset="215" max-vertical-offset="2415">
+          <caret line="32" column="42" selection-start-line="32" selection-start-column="42" selection-end-line="32" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_tradecart.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.18703242" vertical-offset="1290" max-vertical-offset="5160">
+          <caret line="91" column="0" selection-start-line="91" selection-start-column="0" selection-end-line="91" selection-end-column="0" />
+=======
         <state vertical-scroll-proportion="0.4827586" vertical-offset="197" max-vertical-offset="2415">
           <caret line="47" column="44" selection-start-line="47" selection-start-column="44" selection-end-line="47" selection-end-column="44" />
 >>>>>>> f5c472b1fa8c6bb44d600ef151ecf257eca9dee2
+>>>>>>> 3c228c89f6214dcb5fcb5e5ade15367bde79f961
           <folding />
         </state>
       </provider>

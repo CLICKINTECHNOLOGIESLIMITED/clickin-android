@@ -9,6 +9,18 @@ public class CardBean {
     private String categoriesName;
     private String categoriesActive;
 
+
+    public String getCard_Id() {
+        return card_Id;
+    }
+
+    public void setCard_Id(String card_Id) {
+        this.card_Id = card_Id;
+    }
+
+
+    private String card_Id;
+
     public String getCategoriesName() {
         return categoriesName;
     }
