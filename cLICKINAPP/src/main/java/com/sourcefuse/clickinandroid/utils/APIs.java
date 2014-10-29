@@ -10,7 +10,7 @@ public class APIs {
 
     public static final String CHECKREGISTEREDFRIENDS = baseurl+"/users/checkregisteredfriends/";
     public static final String RESENDVERIFYCODE = baseurl+"/users/resendvcode/";
-    public static final String UPDATEPROFILE = baseurl+"users/updateprofile/";
+    public static final String UPDATEPROFILE = baseurl+"/users/updateprofile/";
     public static final String UNFOLLOWUSER = baseurl+"/users/unfollowuser/";
     public static final String INSERTEMAIL = baseurl+"/users/insertemail/";
 	public static final String CREATEUSER = baseurl+"/users/createuser/";

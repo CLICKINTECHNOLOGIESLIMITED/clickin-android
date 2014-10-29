@@ -29,7 +29,7 @@ public class AlertMessage {
 
     public static final String PASSWORDLENGHT = "Your password should be at least 8 characters long.";
     public static final String MATCHPASSWORD = "Password doesn't match. Please try again";
-    public static final String UNFOLLOWUSER = "Do you wnat to unfollow the selected user?";
+    public static final String UNFOLLOWUSER = "Do you want to unfollow the selected \nuser?";
     public static final String GROUPSMSMSG = "You need to select at least one contact";
 
     public static final String CURRENTCLICKERPAGE = "You Haven't Followed Anyone, Your friends are sharing clicks and cards on Clickin'. Follow them to see what they are sharing.";

@@ -4,8 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.text.Html;
 import android.util.Log;
@@ -32,6 +35,11 @@ import com.sourcefuse.clickinandroid.view.adapter.UserRelationAdapter;
 import com.sourcefuse.clickinapp.R;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 
 import de.greenrobot.event.EventBus;
@@ -72,7 +80,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.view_userprofile);
+	/*	setContentView(R.layout.view_userprofile);
 
 		addMenu(true);
 		this.overridePendingTransition(R.anim.slide_in_right ,R.anim.slide_out_right);
@@ -91,23 +99,23 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
 		notification = (ImageView) findViewById(R.id.iv_notification);
 		userimage = (ImageView) findViewById(R.id.iv_usr_icon);
 		userimage.setScaleType(ScaleType.FIT_XY);
-		
+
 		name = (TextView) findViewById(R.id.tv_name);
 		userdetails = (TextView) findViewById(R.id.tv_user_details);
 		profileHeader = (TextView) findViewById(R.id.tv_profile_txt);
-		
+
 
 		following.setOnClickListener(this);
 		follower.setOnClickListener(this);
 		menu.setOnClickListener(this);
 		notification.setOnClickListener(this);
         EditProfile.setOnClickListener(this);
-		
+
 		name.setTypeface(typefaceBold);
 		userdetails.setTypeface(typefaceMedium);
 		profileHeader.setTypeface(typefaceBold);
-		
-		
+
+
 		following.setTypeface(typefaceBold);
 		follower.setTypeface(typefaceBold);
 
@@ -116,11 +124,13 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
 
 		//code to set adapter to populate list
 		footerView =  ((LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.footer_pro_list, null, false);
-        mUserRelationlistView.addFooterView(footerView);
+        mUserRelationlistView.addFooterView(footerView);*/
 
 
-
-          if (new MyPreference(UserProfileView.this).isLogin()) {
+/*not required to check whether it is logged in or not.
+    ** Because on this page it always come after loggin in either manual or through auto login
+ */
+        /*  if (new MyPreference(UserProfileView.this).isLogin()) {
 
             Log.e("ClickInBaseView1", "MyPreference");
 
@@ -129,23 +139,29 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
                 authManager.setUsrToken(new MyPreference(UserProfileView.this).getToken());
                 authManager.setPhoneNo(new MyPreference(UserProfileView.this).getmyPhoneNo());
 
-              notificationMngr = ModelManager.getInstance().getNotificationManagerManager();
-              notificationMngr.getNotification("", authManager.getPhoneNo(), authManager.getUsrToken());
 
 
 
-        }
+
+        }*/
 
 
-
+        Utils.launchBarDialog(this);
 		authManager = ModelManager.getInstance().getAuthorizationManager();
+        notificationMngr = ModelManager.getInstance().getNotificationManagerManager();
+      //  notificationMngr.getNotification("", authManager.getPhoneNo(), authManager.getUsrToken());
+
+        //make next webservice request after current is finished
+
         relationManager = ModelManager.getInstance().getRelationManager();
-        Log.e(TAG,"vv"+authManager.getPhoneNo()+""+authManager.getUsrToken());
-        authManager.getProfileInfo("", authManager.getPhoneNo(), authManager.getUsrToken());
         relationManager.getRelationShips(authManager.getPhoneNo(), authManager.getUsrToken());
-        ModelManager.getInstance().getProfileManager().getFollwer("", authManager.getPhoneNo(), authManager.getUsrToken());
-	    setProfileDataView();
-        setlist();
+        Log.e(TAG,"vv"+authManager.getPhoneNo()+""+authManager.getUsrToken());
+        //profile information is already set in signIn view or in splash screen for auto login
+      //  authManager.getProfileInfo("", authManager.getPhoneNo(), authManager.getUsrToken());
+      //  relationManager.getRelationShips(authManager.getPhoneNo(), authManager.getUsrToken());
+      //  ModelManager.getInstance().getProfileManager().getFollwer("", authManager.getPhoneNo(), authManager.getUsrToken());
+	   // setProfileDataView();
+        //setlist();
 
 
 
@@ -157,13 +173,16 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
 		authManager = ModelManager.getInstance().getAuthorizationManager();
 		name.setText(authManager.getUserName());
 		String dtails = "";
+        String gender="";
         try {
             try {
                 Log.e(TAG,"Gender -->"+authManager.getGender());
                 if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().matches("girl")) {
                     dtails = "Female, ";
+                    gender="Female";
                 } else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().matches("guy")) {
                     dtails = "Male, ";
+                    gender="Male";
                 }
             }catch (Exception e){}
            dtails =  dtails+Utils.getCurrentYear(authManager.getdOB()) + " " + getResources().getString(R.string.txt_yold);
@@ -184,16 +203,79 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
 		follower.setText(Html.fromHtml(text));
 		String textfollowing = "<font color=#f29691>"+getResources().getString(R.string.txt_following)+"</font> <font color=#cccccc>"+authManager.getFollowing()+"</font>";
 		following.setText(Html.fromHtml(textfollowing));
-        try{
-			Picasso.with(UserProfileView.this)
-            .load(authManager.getUserPic())
-            .skipMemoryCache()
-		    .placeholder(R.drawable.female_crt)
-		    .error(R.drawable.female_crt)
-		    .into(userimage);
-//            imageBitmap = Utils.decodeUri(authManager.getUserimageuri(), UserProfileView.this);
-//            userimage.setImageBitmap(imageBitmap);
-		}catch(Exception e){}
+     /*   try{
+            if(dtails.equalsIgnoreCase("Male")){
+                Picasso.with(UserProfileView.this)
+                        .load(authManager.getUserPic())
+                        .skipMemoryCache()
+                        .error(R.drawable.female_crt)
+                        .into(userimage);
+            }else if(dtails.equalsIgnoreCase("Female")) {
+                Picasso.with(UserProfileView.this)
+                        .load(authManager.getUserPic())
+                        .skipMemoryCache()
+                        .error(R.drawable.female_crt)
+                        .into(userimage);
+            }
+
+		}catch(Exception e){}*/
+        try {
+            Uri tempUri=authManager.getUserImageUri();
+            if(tempUri!=null){
+                imageBitmap = Utils.decodeUri(tempUri, UserProfileView.this);
+                if(imageBitmap!=null)
+                    userimage.setImageBitmap(imageBitmap);
+                else{
+                    try{
+                        if(gender.equalsIgnoreCase("Male")){
+                            Picasso.with(UserProfileView.this)
+                                    .load(authManager.getUserPic())
+                                    .skipMemoryCache()
+                                    .placeholder(R.drawable.default_profile)
+                                    .error(R.drawable.male_user)
+                                    .into(userimage);
+                        }else if(gender.equalsIgnoreCase("Female")) {
+                            Picasso.with(UserProfileView.this)
+                                    .load(authManager.getUserPic())
+                                    .skipMemoryCache()
+                                    .placeholder(R.drawable.default_profile)
+                                    .error(R.drawable.female_user)
+                                    .into(userimage);
+                        }
+
+                    }catch(Exception e){
+                        e.printStackTrace();
+                    }
+                }
+
+            }else{
+                try{
+                    if(gender.equalsIgnoreCase("Male")){
+                        Picasso.with(UserProfileView.this)
+                                .load(authManager.getUserPic())
+                                .skipMemoryCache()
+                                .placeholder(R.drawable.default_profile)
+                                .error(R.drawable.male_user)
+                                .into(userimage);
+                    }else if(gender.equalsIgnoreCase("Female")) {
+                        Picasso.with(UserProfileView.this)
+                                .load(authManager.getUserPic())
+                                .skipMemoryCache()
+                                .placeholder(R.drawable.default_profile)
+                                .error(R.drawable.female_user)
+                                .into(userimage);
+                    }
+
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+//
 		
 	}
 
@@ -204,7 +286,9 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         super.onResume();
         authManager = ModelManager.getInstance().getAuthorizationManager();
         if(authManager.isEditProfileFlag()) {
-            authManager.getProfileInfo("", authManager.getPhoneNo(), authManager.getUsrToken());
+            //data is already updated in authmanager, so no need to make a webservice call
+          //  authManager.getProfileInfo("", authManager.getPhoneNo(), authManager.getUsrToken());
+            setProfileDataView();
             authManager.setEditProfileFlag(false);
         }
     }
@@ -288,12 +372,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
     public void onStart() {
           super.onStart();
 
-        if(EventBus.getDefault().isRegistered(this)){
 
-            EventBus.getDefault().unregister(this);
-        }
-
-        EventBus.getDefault().register(this);
     }
 
     public void onPause(){
@@ -303,10 +382,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
     @Override
     public void onStop() {
         super.onStop();
-        if(EventBus.getDefault().isRegistered(this)){
 
-            EventBus.getDefault().unregister(this);
-        }
 
     }
     public void onEventMainThread(String message){
@@ -321,14 +397,10 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         } else if(message.equalsIgnoreCase("deleteRelationship Error")){
             Utils.dismissBarDialog();
             Utils.showAlert(UserProfileView.this, AlertMessage.connectionError);
-        }else if (message.equalsIgnoreCase("GetRelationShips True")) {
+        }else if (message.equalsIgnoreCase("GetRelationShips False")) {
            Utils.dismissBarDialog();
-           setLeftMenuList();
-           setlist();
-       } else if (message.equalsIgnoreCase("GetRelationShips False")) {
-           Utils.dismissBarDialog();
-           setLeftMenuList();
-           setlist();
+//           setLeftMenuList();
+  //         setlist();
        } else if(message.equalsIgnoreCase("GetRelationShips Network Error")){
            Utils.dismissBarDialog();
            Utils.showAlert(UserProfileView.this, AlertMessage.connectionError);
@@ -343,16 +415,21 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
             adapter.notifyDataSetChanged();
             Log.d("3", "message->" + message);
         }else if(message.equalsIgnoreCase("Notification true")){
-            Utils.dismissBarDialog();
-            new Handler().postDelayed(new Runnable() {
+      //     relationManager.getRelationShips(authManager.getPhoneNo(), authManager.getUsrToken());
+           // Utils.dismissBarDialog();
+          /*  new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
 
                     setNotificationList();
                 }
-            }, 2000);
+            }, 2000);*/
+
         }else if(message.equalsIgnoreCase("GetrelationShips True")){
-            setLeftMenuList();
+           Utils.dismissBarDialog();
+           // setLeftMenuList();
+         //  ModelManager.getInstance().getProfileManager().getFollwer("", authManager.getPhoneNo(), authManager.getUsrToken());
+           doRestInitialization();
         }else if (message.equalsIgnoreCase("NewsFeed True")) {
            Utils.dismissBarDialog();
            Log.d("1", "message aya->" + message);
@@ -403,10 +480,10 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
            stopSearch = true;
            Utils.dismissBarDialog();
            Utils.showAlert(UserProfileView.this, AlertMessage.connectionError);
-       }else if (message.equalsIgnoreCase("GetRelationShips True")) {
+       }/*else if (message.equalsIgnoreCase("GetRelationShips True")) {
            Utils.dismissBarDialog();
            switchView();
-       } else if (message.equalsIgnoreCase("GetRelationShips False")) {
+       } */else if (message.equalsIgnoreCase("GetRelationShips False")) {
            Utils.dismissBarDialog();
            switchView();
            // Utils.showAlert(SignInView.this, authManager.getMessage());
@@ -421,7 +498,10 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
        } else if (message.equalsIgnoreCase("ProfileInfo Network Error")) {
            Utils.dismissBarDialog();
            Utils.showAlert(UserProfileView.this, AlertMessage.connectionError);
-       }
+       }else if(message.equalsIgnoreCase("GetFollower True")){
+           Utils.dismissBarDialog();
+           doRestInitialization();
+        }
 
 
 
@@ -450,6 +530,57 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
 		//this.finish();
 	}
 
+    private void doRestInitialization(){
+        setContentView(R.layout.view_userprofile);
+
+        addMenu(true);
+        this.overridePendingTransition(R.anim.slide_in_right ,R.anim.slide_out_right);
+        authManager = ModelManager.getInstance().getAuthorizationManager();
+        typefaceMedium = Typeface.createFromAsset(UserProfileView.this.getAssets(),Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
+        typefaceBold = Typeface.createFromAsset(UserProfileView.this.getAssets(),Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_BOLD);
+
+        following = (Button) findViewById(R.id.btn_following);
+        follower = (Button) findViewById(R.id.btn_follower);
+        EditProfile = (Button) findViewById(R.id.btn_edit_profile);
+
+        mUserRelationlistView = (ListView) findViewById(R.id.list_click_with_profile);
+        mUserRelationlistView.setDivider(getResources().getDrawable(R.drawable.owner_profile_side_line));
+
+        menu = (ImageView) findViewById(R.id.iv_menu);
+        notification = (ImageView) findViewById(R.id.iv_notification);
+        userimage = (ImageView) findViewById(R.id.iv_usr_icon);
+        userimage.setScaleType(ScaleType.FIT_XY);
+
+        name = (TextView) findViewById(R.id.tv_name);
+        userdetails = (TextView) findViewById(R.id.tv_user_details);
+        profileHeader = (TextView) findViewById(R.id.tv_profile_txt);
+
+
+        following.setOnClickListener(this);
+        follower.setOnClickListener(this);
+        menu.setOnClickListener(this);
+        notification.setOnClickListener(this);
+        EditProfile.setOnClickListener(this);
+
+        name.setTypeface(typefaceBold);
+        userdetails.setTypeface(typefaceMedium);
+        profileHeader.setTypeface(typefaceBold);
+
+
+        following.setTypeface(typefaceBold);
+        follower.setTypeface(typefaceBold);
+
+
+
+
+        //code to set adapter to populate list
+        footerView =  ((LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.footer_pro_list, null, false);
+        mUserRelationlistView.addFooterView(footerView);
+        setNotificationList();
+        setLeftMenuList();
+        setProfileDataView();
+        setlist();
+    }
 
 
 	

@@ -2,8 +2,10 @@ package com.sourcefuse.clickinandroid.view;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
@@ -15,6 +17,7 @@ import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
 import com.facebook.widget.FacebookDialog;
+import com.quickblox.module.chat.QBChatService;
 import com.sourcefuse.clickinandroid.controller.MyCustomAnimation;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
@@ -265,7 +268,12 @@ public class SettingView extends Activity implements View.OnClickListener {
                 startActivity(intent4);
                 break;
             case R.id.btn_logout_yes:
-                new MyPreference(getApplicationContext()).clearAllPreference();
+             //   new MyPreference(getApplicationContext()).clearAllPreference();
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.clear();
+                editor.apply();
+                QBChatService.getInstance().logout();
                 Log.e("", "holder.logoutYes");
                 Intent intent5 = new Intent(SettingView.this, SplashView.class);
                 intent5.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

@@ -4,7 +4,9 @@ package com.sourcefuse.clickinandroid.view;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -39,6 +41,7 @@ import com.sourcefuse.clickinandroid.view.adapter.SimpleSectionedListAdapter1;
 import com.sourcefuse.clickinapp.R;
 import com.squareup.picasso.Picasso;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import de.greenrobot.event.EventBus;
@@ -68,7 +71,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
     private ImageView backArrowRightSide;
     public NotificationAdapter notificationAdapter;
     public NewsFeedManager newsFeedManager;
-
+    private Bitmap imageBitmap = null;
     SlidingMenu slidemenu;
 
     @Override
@@ -198,11 +201,79 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 
         userName.setText(authManager.getUserName());
         userPic.setScaleType(ScaleType.FIT_XY);
-        Picasso.with(ClickInBaseView.this).load(authManager.getUserPic())
+     /*   Picasso.with(ClickInBaseView.this).load(authManager.getUserPic())
                 .placeholder(R.drawable.default_profile)
                 .error(R.drawable.default_profile)
-                .into(userPic);
+                .into(userPic);*/
+        String dtails = "";
+        try {
+            try {
 
+                if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().matches("girl")) {
+                    dtails = "Female";
+                } else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().matches("guy")) {
+                    dtails = "Male";
+                }
+            }catch (Exception e){}
+
+        }catch (Exception e){}
+
+        try {
+            Uri tempUri=authManager.getUserImageUri();
+            if(tempUri!=null){
+                imageBitmap = Utils.decodeUri(tempUri, this);
+                if(imageBitmap!=null)
+                    userPic.setImageBitmap(imageBitmap);
+                else{
+                    try{
+                        if(dtails.equalsIgnoreCase("Male")){
+                            Picasso.with(this)
+                                    .load(authManager.getUserPic())
+                                    .skipMemoryCache()
+                                    .placeholder(R.drawable.default_profile)
+                                    .error(R.drawable.male_user)
+                                    .into(userPic);
+                        }else if(dtails.equalsIgnoreCase("Female")) {
+                            Picasso.with(this)
+                                    .load(authManager.getUserPic())
+                                    .skipMemoryCache()
+                                    .placeholder(R.drawable.default_profile)
+                                    .error(R.drawable.female_user)
+                                    .into(userPic);
+                        }
+
+                    }catch(Exception e){
+                        e.printStackTrace();
+                    }
+                }
+
+            }else{
+                try{
+                    if(dtails.equalsIgnoreCase("Male")){
+                        Picasso.with(this)
+                                .load(authManager.getUserPic())
+                                .skipMemoryCache()
+                                .placeholder(R.drawable.default_profile)
+                                .error(R.drawable.male_user)
+                                .into(userPic);
+                    }else if(dtails.equalsIgnoreCase("Female")) {
+                        Picasso.with(this)
+                                .load(authManager.getUserPic())
+                                .skipMemoryCache()
+                                .placeholder(R.drawable.default_profile)
+                                .error(R.drawable.female_user)
+                                .into(userPic);
+                    }
+
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         edt_search.addTextChangedListener(this);
 
         clickWithlistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -525,23 +596,139 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
     public void onOpen() {
         Log.e("y", "if onOpen");
         authManager = ModelManager.getInstance().getAuthorizationManager();
+        String dtails = "";
+        try {
+            try {
+
+                if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().matches("girl")) {
+                    dtails = "Female";
+                } else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().matches("guy")) {
+                    dtails = "Male";
+                }
+            }catch (Exception e){}
+
+        }catch (Exception e){}
+
         if(authManager.isMenuUserInfoFlag()) {
             Log.e("Inside if" ,"THis time Control is in If <><><><><><><><><");
             userName.setText(authManager.getUserName());
             userPic.setScaleType(ScaleType.FIT_XY);
-            Picasso.with(ClickInBaseView.this).load(authManager.getUserPic())
-                    .skipMemoryCache()
-                    .placeholder(R.drawable.default_profile)
-                    .error(R.drawable.default_profile)
-                    .into(userPic);
+
+            try {
+                Uri tempUri=authManager.getUserImageUri();
+                if(tempUri!=null){
+                    imageBitmap = Utils.decodeUri(tempUri, this);
+                    if(imageBitmap!=null)
+                        userPic.setImageBitmap(imageBitmap);
+                    else{
+                        try{
+                            if(dtails.equalsIgnoreCase("Male")){
+                                Picasso.with(this)
+                                        .load(authManager.getUserPic())
+                                        .skipMemoryCache()
+                                        .placeholder(R.drawable.default_profile)
+                                        .error(R.drawable.male_user)
+                                        .into(userPic);
+                            }else if(dtails.equalsIgnoreCase("Female")) {
+                                Picasso.with(this)
+                                        .load(authManager.getUserPic())
+                                        .skipMemoryCache()
+                                        .placeholder(R.drawable.default_profile)
+                                        .error(R.drawable.female_user)
+                                        .into(userPic);
+                            }
+
+                        }catch(Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+
+                }else{
+                    try{
+                        if(dtails.equalsIgnoreCase("Male")){
+                            Picasso.with(this)
+                                    .load(authManager.getUserPic())
+                                    .skipMemoryCache()
+                                    .placeholder(R.drawable.default_profile)
+                                    .error(R.drawable.male_user)
+                                    .into(userPic);
+                        }else if(dtails.equalsIgnoreCase("Female")) {
+                            Picasso.with(this)
+                                    .load(authManager.getUserPic())
+                                    .skipMemoryCache()
+                                    .placeholder(R.drawable.default_profile)
+                                    .error(R.drawable.female_user)
+                                    .into(userPic);
+                        }
+
+                    }catch(Exception e){
+                        e.printStackTrace();
+                    }
+
+                }
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
             authManager.setMenuUserInfoFlag(false);
         }else{
             Log.e("Inside Else " ,"THis time control is in Else <><><><><><><><><><>");
-            Picasso.with(ClickInBaseView.this).load(authManager.getUserPic())
-                    .skipMemoryCache()
-                    .placeholder(R.drawable.default_profile)
-                    .error(R.drawable.default_profile)
-                    .into(userPic);
+            try {
+                Uri tempUri=authManager.getUserImageUri();
+                if(tempUri!=null){
+                    imageBitmap = Utils.decodeUri(tempUri, this);
+                    if(imageBitmap!=null)
+                        userPic.setImageBitmap(imageBitmap);
+                    else{
+                        try{
+                            if(dtails.equalsIgnoreCase("Male")){
+                                Picasso.with(this)
+                                        .load(authManager.getUserPic())
+                                        .skipMemoryCache()
+                                        .placeholder(R.drawable.default_profile)
+                                        .error(R.drawable.male_user)
+                                        .into(userPic);
+                            }else if(dtails.equalsIgnoreCase("Female")) {
+                                Picasso.with(this)
+                                        .load(authManager.getUserPic())
+                                        .skipMemoryCache()
+                                        .placeholder(R.drawable.default_profile)
+                                        .error(R.drawable.female_user)
+                                        .into(userPic);
+                            }
+
+                        }catch(Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+
+                }else{
+                    try{
+                        if(dtails.equalsIgnoreCase("Male")){
+                            Picasso.with(this)
+                                    .load(authManager.getUserPic())
+                                    .skipMemoryCache()
+                                    .placeholder(R.drawable.default_profile)
+                                    .error(R.drawable.male_user)
+                                    .into(userPic);
+                        }else if(dtails.equalsIgnoreCase("Female")) {
+                            Picasso.with(this)
+                                    .load(authManager.getUserPic())
+                                    .skipMemoryCache()
+                                    .placeholder(R.drawable.default_profile)
+                                    .error(R.drawable.female_user)
+                                    .into(userPic);
+                        }
+
+                    }catch(Exception e){
+                        e.printStackTrace();
+                    }
+
+                }
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
         }
         try {
         edt_search.setText("");

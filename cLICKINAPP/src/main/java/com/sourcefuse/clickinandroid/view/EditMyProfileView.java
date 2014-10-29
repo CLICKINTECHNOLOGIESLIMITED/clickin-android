@@ -21,6 +21,8 @@ import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
 import com.squareup.picasso.Picasso;
 
+import java.io.FileNotFoundException;
+
 import de.greenrobot.event.EventBus;
 
 /**
@@ -37,6 +39,10 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
     private ProfileManager profileManager;
     private Uri mImageCaptureUri;
     private Bitmap imageBitmap = null;
+
+    //variables use to maintain current values of user so we can set values later on in auth manager
+    private String userName, userLastName, userEmail, userCity, userCountry;
+    private Uri userImageUri;
 
 
     @Override
@@ -66,23 +72,99 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
         authManager = ModelManager.getInstance().getAuthorizationManager();
         try {
             String[] names = (authManager.getUserName().split("\\s+", 2));
+            userName=names[0];
             myName.setText("" + names[0]);
+            userLastName=names[1];
             myLast.setText("" + names[1]);
-            myEmail.setText(authManager.getEmailId());
-            myCity.setText(authManager.getUserCity());
-            myCountry.setText(authManager.getUserCountry());
+            userEmail=authManager.getEmailId();
+            myEmail.setText(userEmail);
+            userCity=authManager.getUserCity();
+            myCity.setText(userCity);
+            userCountry=authManager.getUserCountry();
+            myCountry.setText(userCountry);
         } catch (Exception e) {
         }
 
-        try {
+     /*   try {
             Picasso.with(EditMyProfileView.this).load(authManager.getUserPic())
                     .skipMemoryCache()
                     .placeholder(R.drawable.default_profile)
                     .error(R.drawable.default_profile)
                     .into(mySelfy);
         } catch (Exception e) {
-        }
+        }*/
 
+        //set image from uri directly
+        String dtails = "";
+        try {
+            try {
+                Log.e(TAG,"Gender -->"+authManager.getGender());
+                if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().matches("girl")) {
+                    dtails = "Female";
+                } else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().matches("guy")) {
+                    dtails = "Male";
+                }
+            }catch (Exception e){}
+          //  dtails =  dtails+Utils.getCurrentYear(authManager.getdOB()) + " " + getResources().getString(R.string.txt_yold);
+        }catch (Exception e){}
+
+        try {
+            Uri tempUri=authManager.getUserImageUri();
+            if(tempUri!=null){
+                imageBitmap = Utils.decodeUri(tempUri, this);
+                if(imageBitmap!=null)
+                    mySelfy.setImageBitmap(imageBitmap);
+                else{
+                    try{
+                        if(dtails.equalsIgnoreCase("Male")){
+                            Picasso.with(this)
+                                    .load(authManager.getUserPic())
+                                    .skipMemoryCache()
+                                    .placeholder(R.drawable.default_profile)
+                                    .error(R.drawable.male_user)
+                                    .into(mySelfy);
+                        }else if(dtails.equalsIgnoreCase("Female")) {
+                            Picasso.with(this)
+                                    .load(authManager.getUserPic())
+                                    .skipMemoryCache()
+                                    .placeholder(R.drawable.default_profile)
+                                    .error(R.drawable.female_user)
+                                    .into(mySelfy);
+                        }
+
+                    }catch(Exception e){
+                        e.printStackTrace();
+                    }
+                }
+
+            }else{
+                try{
+                    if(dtails.equalsIgnoreCase("Male")){
+                        Picasso.with(this)
+                                .load(authManager.getUserPic())
+                                .skipMemoryCache()
+                                .placeholder(R.drawable.default_profile)
+                                .error(R.drawable.male_user)
+                                .into(mySelfy);
+                    }else if(dtails.equalsIgnoreCase("Female")) {
+                        Picasso.with(this)
+                                .load(authManager.getUserPic())
+                                .skipMemoryCache()
+                                .placeholder(R.drawable.default_profile)
+                                .error(R.drawable.female_user)
+                                .into(mySelfy);
+                    }
+
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+//
     }
 
     @Override
@@ -108,19 +190,25 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
                 if (updateProfileValidation()) {
                     if (Utils.isEmailValid(myEmail.getText().toString())) {
                         Log.e(TAG, "btn_click_to_save");
+                        Utils.launchBarDialog(EditMyProfileView.this);
                         try {
                             authManager = ModelManager.getInstance().getAuthorizationManager();
                             profileManager = ModelManager.getInstance().getProfileManager();
+                            userName=myName.getText().toString();
+                            userLastName=myLast.getText().toString();
+                            userEmail=myEmail.getText().toString();
+                            userCity=myCity.getText().toString();
+                            userCountry=myCountry.getText().toString();
                             if (imageBitmap != null) {
-                                profileManager.setProfile(myName.getText().toString(), myLast.getText().toString(), authManager.getPhoneNo(),
-                                        authManager.getUsrToken(), "", "", myCity.getText().toString(), myCountry.getText().toString(), myEmail.getText().toString(), "", Utils.encodeTobase64(imageBitmap));
+                                profileManager.setProfile(userName, userLastName, authManager.getPhoneNo(),
+                                        authManager.getUsrToken(), "", "", userCity,userCountry ,userEmail , "", Utils.encodeTobase64(imageBitmap));
                             } else {
                                 Log.e(TAG, "btn_click_to_save2");
                                 try {
                                     // imageBitmap = Picasso.with(EditMyProfileView.this).load(authManager.getUserPic()).get();
                                     //Utils.encodeTobase64(imageBitmap)
-                                    profileManager.setProfile(myName.getText().toString(), myLast.getText().toString(), authManager.getPhoneNo(),
-                                            authManager.getUsrToken(), "", "", myCity.getText().toString(), myCountry.getText().toString(), myEmail.getText().toString(), "", "");
+                                    profileManager.setProfile(userName, userLastName, authManager.getPhoneNo(),
+                                            authManager.getUsrToken(), "", "", userCity, userCountry, userEmail, "", "");
                                 } catch (Exception e) {
                                     Log.e(TAG, "1" + e.toString());
                                 }
@@ -129,6 +217,8 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
                         } catch (Exception e) {
                             Log.e(TAG, "2" + e.toString());
                         }
+                    }else {
+                        Utils.showAlert(EditMyProfileView.this, AlertMessage.vEmailid);
                     }
                 }
 
@@ -162,7 +252,9 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
                    mImageCaptureUri = data.getData();
                    imageBitmap = Utils.decodeUri(mImageCaptureUri, EditMyProfileView.this);
                     mySelfy.setImageBitmap(imageBitmap);
-                    authManager.setUserPic(imageBitmap.toString());
+                    userImageUri=mImageCaptureUri;
+                 //   authManager.setUserPic(imageBitmap.toString());
+                   // authManager.setUserImageUri(mImageCaptureUri);
                     authManager.setMenuUserInfoFlag(true);
                    // authManager.setUserimageuri(mImageCaptureUri);
                         Log.e(TAG ,"EXception is <><><><><><><><><><><><><><><> " +"" +mImageCaptureUri);
@@ -178,8 +270,11 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
                     mImageCaptureUri = data.getData();
                     imageBitmap = Utils.decodeUri(mImageCaptureUri, EditMyProfileView.this);
                     mySelfy.setImageBitmap(imageBitmap);
-                    authManager.setUserPic(imageBitmap.toString());
+                    userImageUri=mImageCaptureUri;
+                   // authManager.setUserPic(imageBitmap.toString());
+
                     authManager.setMenuUserInfoFlag(true);
+                   // authManager.setUserImageUri(mImageCaptureUri);
                    //authManager.setUserimageuri(mImageCaptureUri);
                     //authManager.setUserPic(Utils.decodeUri(mImageCaptureUri,EditMyProfileView.this));
                 } catch (Exception e) {
@@ -194,24 +289,29 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
     @Override
     public void onStart() {
         super.onStart();
-        if (EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().unregister(this);
-        }
+
         EventBus.getDefault().register(this);
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        if (EventBus.getDefault().isRegistered(this)) {
+
             EventBus.getDefault().unregister(this);
-        }
+
     }
 
     public void onEventMainThread(String getMsg) {
         Log.d(TAG, "onEventMainThread->" + getMsg);
         authManager = ModelManager.getInstance().getAuthorizationManager();
         if (getMsg.equalsIgnoreCase("UpdateProfile True")) {
+            Utils.dismissBarDialog();
+            //update user profile information in auth manager now
+            authManager.setUserName(userName+" "+userLastName);
+            authManager.setEmailId(userEmail);
+            authManager.setUserCity(userCity);
+            authManager.setUserCountry(userCountry);
+            authManager.setUserImageUri(userImageUri);
             authManager.setEditProfileFlag(true);
             authManager.setMenuUserInfoFlag(true);
             imageBitmap = null;

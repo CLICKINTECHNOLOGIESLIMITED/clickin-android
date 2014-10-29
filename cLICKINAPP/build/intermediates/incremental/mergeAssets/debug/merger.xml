@@ -31,6 +31,9 @@
     <dataSet config="main" >
         <source path="/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/assets" >
             <file
+                name="crashlytics-build.properties"
+                path="/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/assets/crashlytics-build.properties" />
+            <file
                 name="fonts/AvenirNextLTPro-BoldCn_0.otf"
                 path="/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/assets/fonts/AvenirNextLTPro-BoldCn_0.otf" />
             <file

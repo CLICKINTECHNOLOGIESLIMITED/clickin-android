@@ -3,26 +3,18 @@ package com.sourcefuse.clickinandroid.view.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.nfc.Tag;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.sourcefuse.clickinandroid.model.ChatManager;
 import com.sourcefuse.clickinandroid.model.bean.CardBean;
 import com.sourcefuse.clickinandroid.utils.Log;
-
 import com.sourcefuse.clickinandroid.view.Card;
-import com.sourcefuse.clickinandroid.view.ViewTradeCart;
 import com.sourcefuse.clickinapp.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CardGridViewAdapter extends ArrayAdapter<CardBean> {
@@ -33,6 +25,8 @@ public class CardGridViewAdapter extends ArrayAdapter<CardBean> {
     private List item;
     int pos;
     View row;
+    boolean debug = false ;
+    // String url = "https://s3.amazonaws.com/clickin-dev/cards/a/1080/39.jpg" ;
 
     private static final String TAG = "CardViewAdapter";
 
@@ -60,11 +54,11 @@ public class CardGridViewAdapter extends ArrayAdapter<CardBean> {
 
             holder = new RecordHolder();
 
-            //holder.imageItem = (ImageView) row.findViewById(R.id.card_image_url);
+
             holder.cardTittle = (TextView) row.findViewById(R.id.card_tittle);
             holder.cardDescription = (TextView) row.findViewById(R.id.card_description);
 
-//                holder.layout = (LinearLayout) row.findViewById(R.id.ll_layout);
+
             row.setTag(holder);
 
         } else {
@@ -74,7 +68,6 @@ public class CardGridViewAdapter extends ArrayAdapter<CardBean> {
         holder.cardTittle.setText(item.getCardTitle());
         holder.cardDescription.setText(item.getCardDescription());
 
-        //  holder.imageItem.setImageBitmap(item.getCardUrl());
 
 
         row.setOnClickListener(new View.OnClickListener() {
@@ -84,26 +77,43 @@ public class CardGridViewAdapter extends ArrayAdapter<CardBean> {
                 Log.e(TAG, "View is Clicked" + pos);
                 CardBean bean = getItem(position);
 
-                String url = bean.getCardUrl();
 
+                if(debug) {
+                    String url = bean.getCardUrl();
+                    String Title = bean.getCardTitle();
+                    String Discription = bean.getCardDescription();
+                    Intent intent = new Intent(getContext(), Card.class);
 
-                String Title = bean.getCardTitle();
-                String Discription = bean.getCardDescription();
+                    intent.putExtra("Url", url);
+                    // Log.e(TAG, "Value in Bean Tit" + url);
+                    context.startActivity(intent);
+                    ((Activity) context).overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+                }
 
-//                Log.e(TAG,"Value in Bean Tit" +Title);
-//                Log.e(TAG,"Value in Bean Dis " +Discription);
-                Intent intent = new Intent(getContext(), Card.class);
-                // intent.putExtra("Title", Title);
-                //  intent.putExtra("D", Discription);
-                intent.putExtra("Url", url);
-                Log.e(TAG, "Value in Bean Tit" + url);
+                else {
+                    String url ;
+                    String url1 = bean.getCardUrl() ;
+                    String add = "/a/1080" ;
 
-                context.startActivity(intent);
-                ((Activity) context).overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+                    url=url1.replaceFirst("cards\\/(\\d+)\\.jpg","cards\\/a\\/1080\\/$1\\.jpg");
 
+                    Log.e(TAG , "This is new url " +url);
+                    String Title = bean.getCardTitle();
+                    String Discription = bean.getCardDescription();
+                    Intent intent = new Intent(getContext(), Card.class);
+
+                    // Utils.launchBarDialog(((Activity)context));
+                    intent.putExtra("Url", url);
+                    Log.e(TAG, "Value in Bean Tit" + url);
+                    context.startActivity(intent);
+                    ((Activity) context).overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+
+                }
 
             }
+
         });
+
         return row;
 
     }

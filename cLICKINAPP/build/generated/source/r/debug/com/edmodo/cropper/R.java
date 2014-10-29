@@ -18,8 +18,8 @@ public final class R {
 		public static final int black_translucent = 0x7f070008;
 	}
 	public static final class id {
-		public static final int CropOverlayView = 0x7f0800a9;
-		public static final int ImageView_image = 0x7f0800a8;
+		public static final int CropOverlayView = 0x7f0800aa;
+		public static final int ImageView_image = 0x7f0800a9;
 		public static final int off = 0x7f08000b;
 		public static final int on = 0x7f080009;
 		public static final int onTouch = 0x7f08000a;
