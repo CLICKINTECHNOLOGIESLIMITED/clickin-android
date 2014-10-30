@@ -92,7 +92,8 @@ public class AdapterAll extends ArrayAdapter<CardBean> {
                     intent.putExtra("Title", Title);
                     intent.putExtra("Discription", Discription);
                     intent.putExtra("Url", url);
-                    intent.putExtra("card_id", bean.getCard_Id());
+                    intent.putExtra("card_Db_id", bean.getCard_Id());
+                   // intent.putExtra("card_id", bean.getCard_Id());
                     Log.e("CARD DETAILS","----->"+Title+","+Discription+","+bean.getCard_Id());
 
                     context.startActivity(intent);

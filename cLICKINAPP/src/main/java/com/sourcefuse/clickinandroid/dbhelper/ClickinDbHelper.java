@@ -33,6 +33,22 @@
         public static final String COLUMN_FILEID = "fileId";
         public static final String COLUMN_USERID = "userId";
 
+
+        private static final String COLUMN_card_clicks = "card_clicks";
+        private static final String COLUMN_card_owner = "card_owner";
+        private static final String COLUMN_card_content = "card_content";
+        private static final String COLUMN_is_CustomCard = "is_CustomCard";
+        private static final String COLUMN_card_DB_ID = "card_DB_ID";
+        private static final String COLUMN_card_heading = "card_heading";
+        private static final String COLUMN_card_Accepted_Rejected  = "card_Accepted_Rejected";
+        private static final String COLUMN_card_url = "card_url";
+        private static final String COLUMN_card_id  = "card_id";
+        private static final String COLUMN_card_Played_Countered = "card_Played_Countered";
+        private static final String COLUMN_card_originator = "card_originator";
+        private static final String COLUMN_cardPartnerName = "cardPartnerName";
+
+
+
         public static final String COLUMN_SHAREEDMESSAGE = "sharedMessage";
         public static final String COLUMN_VIDEOTHAUMB = "video_thumb";
         public static final String COLUMN_SENDERUSERTOKEN = "senderUserToken";
@@ -70,6 +86,31 @@
                 + COLUMN_FILEID + " text);";*/
 
 
+        private String card_clicks;
+        private String card_owner;
+        private String card_content;
+        private String is_CustomCard;
+        private String card_DB_ID;
+        private String card_heading;
+        private String card_Accepted_Rejected ;
+        private String card_url;
+        private String card_id ;
+        private String card_Played_Countered ;
+        private String card_originator;
+        private String cardPartnerName;
+
+       /* + TABLE_CHATRECORD + "(" + COLUMN_ID + " integer primary key autoincrement,"
+                + COLUMN_SID + " text, "
+                + COLUMN_RID + " text, "
+                + COLUMN_MSGID + " text, "
+                + COLUMN_MSG + " text, "
+                + COLUMN_MSG_TYPE + " text, "
+                + COLUMN_CLICKS + " text, "
+                + COLUMN_TIMESTAMP + " text, "
+                + COLUMN_USERID + " text, "
+                + COLUMN_FILEID + " text);";*/
+
+
         private static final String DATABASE_CREATE = " CREATE TABLE "
                 + TABLE_CHATRECORD + "(" + COLUMN_ID + " integer primary key autoincrement,"
                 + COLUMN_SID + " text, "
@@ -80,7 +121,21 @@
                 + COLUMN_CLICKS + " text, "
                 + COLUMN_TIMESTAMP + " text, "
                 + COLUMN_USERID + " text, "
-                + COLUMN_FILEID + " text);";
+                + COLUMN_FILEID + " text, "
+
+                + COLUMN_card_clicks + " text, "
+                + COLUMN_card_owner + " text, "
+                + COLUMN_card_content + " text, "
+                + COLUMN_is_CustomCard + " text, "
+                + COLUMN_card_DB_ID + " text, "
+                + COLUMN_card_heading + " text, "
+                + COLUMN_card_Accepted_Rejected + " text, "
+                + COLUMN_card_url + " text, "
+                + COLUMN_card_id + " text, "
+                + COLUMN_card_Played_Countered + " text, "
+                + COLUMN_card_Accepted_Rejected + " text, "
+                + COLUMN_card_originator + " text, "
+                + COLUMN_cardPartnerName + " text);";
 
         private int i;
 
@@ -138,6 +193,20 @@
                     contentValues.put(COLUMN_CLICKS, chat.getClicks());
                     contentValues.put(COLUMN_TIMESTAMP, chat.getTimeStamp());
                     contentValues.put(COLUMN_FILEID, chat.getChatImageUrl());
+
+                    contentValues.put(COLUMN_card_clicks, chat.getCard_clicks());
+                    contentValues.put(COLUMN_card_owner, chat.getCard_owner());
+                    contentValues.put(COLUMN_card_content, chat.getCard_content());
+                    contentValues.put(COLUMN_is_CustomCard, chat.getIs_CustomCard());
+                    contentValues.put(COLUMN_card_DB_ID, chat.getCard_DB_ID());
+                    contentValues.put(COLUMN_card_heading, chat.getCard_heading());
+                    contentValues.put(COLUMN_card_Accepted_Rejected, chat.getCard_Accepted_Rejected());
+                    contentValues.put(COLUMN_card_url, chat.getCard_url());
+                    contentValues.put(COLUMN_card_id, chat.getCard_id());
+                    contentValues.put(COLUMN_card_Played_Countered, chat.getCard_Played_Countered());
+                    contentValues.put(COLUMN_card_originator, chat.getCard_originator());
+                    contentValues.put(COLUMN_cardPartnerName, chat.getCardPartnerName());
+
                     dbObj.insert(TABLE_CHATRECORD, null, contentValues);
                 }
             }else{
@@ -155,6 +224,21 @@
                     contentValues.put(COLUMN_CLICKS, chat.getClicks());
                     contentValues.put(COLUMN_TIMESTAMP, chat.getTimeStamp());
                     contentValues.put(COLUMN_FILEID, chat.getChatImageUrl());
+
+
+                    contentValues.put(COLUMN_card_clicks, chat.getCard_clicks());
+                    contentValues.put(COLUMN_card_owner, chat.getCard_owner());
+                    contentValues.put(COLUMN_card_content, chat.getCard_content());
+                    contentValues.put(COLUMN_is_CustomCard, chat.getIs_CustomCard());
+                    contentValues.put(COLUMN_card_DB_ID, chat.getCard_DB_ID());
+                    contentValues.put(COLUMN_card_heading, chat.getCard_heading());
+                    contentValues.put(COLUMN_card_Accepted_Rejected, chat.getCard_Accepted_Rejected());
+                    contentValues.put(COLUMN_card_url, chat.getCard_url());
+                    contentValues.put(COLUMN_card_id, chat.getCard_id());
+                    contentValues.put(COLUMN_card_Played_Countered, chat.getCard_Played_Countered());
+                    contentValues.put(COLUMN_card_originator, chat.getCard_originator());
+                    contentValues.put(COLUMN_cardPartnerName, chat.getCardPartnerName());
+
                     naa=dbObj.insert(TABLE_CHATRECORD, null, contentValues);
                 }
             }
@@ -165,7 +249,7 @@
                 }
 
             return 1;
-        } 
+        }
 
 
 
@@ -197,6 +281,21 @@
                     chat.setClicks(chatCursor.getString(chatCursor.getColumnIndex(COLUMN_CLICKS)));
                     chat.setTimeStamp(chatCursor.getString(chatCursor.getColumnIndex(COLUMN_TIMESTAMP)));
                     chat.setChatImageUrl(chatCursor.getString(chatCursor.getColumnIndex(COLUMN_FILEID)));
+
+
+                    chat.setCard_clicks(chatCursor.getString(chatCursor.getColumnIndex(COLUMN_card_clicks)));
+                    chat.setCard_owner(chatCursor.getString(chatCursor.getColumnIndex(COLUMN_card_owner)));
+                    chat.setCard_content(chatCursor.getString(chatCursor.getColumnIndex(COLUMN_card_content)));
+                    chat.setIs_CustomCard(chatCursor.getString(chatCursor.getColumnIndex(COLUMN_is_CustomCard)));
+                    chat.setCard_DB_ID(chatCursor.getString(chatCursor.getColumnIndex(COLUMN_card_DB_ID)));
+                    chat.setCard_heading(chatCursor.getString(chatCursor.getColumnIndex(COLUMN_card_heading)));
+                    chat.setCard_Accepted_Rejected(chatCursor.getString(chatCursor.getColumnIndex(COLUMN_card_Accepted_Rejected)));
+                    chat.setCard_url(chatCursor.getString(chatCursor.getColumnIndex(COLUMN_card_url)));
+                    chat.setCard_id(chatCursor.getString(chatCursor.getColumnIndex(COLUMN_card_id)));
+                    chat.setCard_Played_Countered(chatCursor.getString(chatCursor.getColumnIndex(COLUMN_card_Played_Countered)));
+                    chat.setCard_originator(chatCursor.getString(chatCursor.getColumnIndex(COLUMN_card_originator)));
+                    chat.setCardPartnerName(chatCursor.getString(chatCursor.getColumnIndex(COLUMN_cardPartnerName)));
+
 
                     Log.e(TAG,""+chat.getChatType()+"--"+chat.getSenderQbId()+"--"+chat.getRecieverQbId()+"--"+chat.getMessageId()+"--"+chat.getChatText()+"--"+chat.getClicks()+chat.getTimeStamp()+"--"+chat.getChatImageUrl());
 

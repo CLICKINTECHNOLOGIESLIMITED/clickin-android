@@ -770,8 +770,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
             if (!item.getUserId().equalsIgnoreCase(authManager.getUserId())) {
 
                 Log.e(TAG, "" + "Type 55 -Card RECIVER");//RECIVER
+            try {
 
-                if(item.getCard_Accepted_Rejected().equalsIgnoreCase("accepted")){
+                if (item.getCard_Accepted_Rejected().equalsIgnoreCase("accepted")) {
                     holder.cardViewCc.setVisibility(View.VISIBLE);
                     holder.ll_cc_action.setVisibility(View.GONE);
                     holder.cardView.setVisibility(View.GONE);
@@ -784,7 +785,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                             .into(holder.iv_card_counter);
                     holder.iv_acc_rec.setBackgroundResource(R.drawable.c_card_accept);
                     holder.rl_acc_res_bg.setBackgroundResource(R.drawable.whitechatbg);
-                }else if(item.getCard_Accepted_Rejected().equalsIgnoreCase("rejected")){
+                } else if (item.getCard_Accepted_Rejected().equalsIgnoreCase("rejected")) {
                     holder.cardViewCc.setVisibility(View.VISIBLE);
                     holder.ll_cc_action.setVisibility(View.GONE);
                     holder.cardView.setVisibility(View.GONE);
@@ -798,12 +799,12 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.rl_acc_res_bg.setBackgroundResource(R.drawable.whitechatbg);
                     holder.iv_acc_rec.setBackgroundResource(R.drawable.c_card_rejected);
 
-                }else if(item.getCard_Accepted_Rejected().equalsIgnoreCase("countered")) {
+                } else if (item.getCard_Accepted_Rejected().equalsIgnoreCase("countered")) {
                     holder.ll_cc_action.setVisibility(View.VISIBLE);
                     holder.cardViewCc.setVisibility(View.VISIBLE);
                     holder.cardView.setVisibility(View.GONE);
                     holder.cardViewCc.setGravity(Gravity.RIGHT);
-                    holder.tv_acc_res_name.setText(item.getCardPartnerName()+ "made a");
+                    holder.tv_acc_res_name.setText(item.getCardPartnerName() + "made a");
                     holder.tv_acc_res_status.setText("COUNTER OFFER");
                     holder.trd_clicks_top_ar.setText(item.getCard_clicks());
                     holder.trd_clicks_bottom_ar.setText(item.getCard_clicks());
@@ -811,10 +812,10 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                             .into(holder.iv_card_counter);
                     holder.rl_acc_res_bg.setBackgroundResource(R.drawable.whitechatbg);
                     holder.iv_acc_rec.setVisibility(View.GONE);
-                }else {
+                } else {
                     holder.cardViewCards.setVisibility(View.VISIBLE);
                     holder.cardViewCards.setGravity(Gravity.RIGHT);
-                   // holder.cardViewCc.setVisibility(View.VISIBLE);
+                    // holder.cardViewCc.setVisibility(View.VISIBLE);
                     //holder.cardViewCc.setGravity(Gravity.RIGHT);
                     Picasso.with(context).load(item.getCard_url())
                             .into(holder.tradeImage);
@@ -832,13 +833,15 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.card_partner_name.setText(item.getCardPartnerName().toUpperCase());
                     holder.cardViewCards.setBackgroundResource(R.drawable.whitechatbg);
                 }
-            }else{
+            }catch (Exception e){}
+            }else {
                 Log.e(TAG, "" + "Type 55 -Card SENDER");
 
                 holder.cardViewCards.setGravity(Gravity.LEFT);
                 holder.cardAction.setVisibility(View.GONE);
+                try {
 
-                if(item.getCard_Accepted_Rejected().equalsIgnoreCase("accepted")){
+                if (item.getCard_Accepted_Rejected().equalsIgnoreCase("accepted")) {
                     holder.cardViewCc.setVisibility(View.VISIBLE);
                     holder.ll_cc_action.setVisibility(View.GONE);
                     holder.cardView.setVisibility(View.GONE);
@@ -852,7 +855,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     Picasso.with(context).load(item.getCard_url())
                             .into(holder.iv_card_counter);
                     holder.rl_acc_res_bg.setBackgroundResource(R.drawable.newbg);
-                }else if(item.getCard_Accepted_Rejected().equalsIgnoreCase("rejected")){
+                } else if (item.getCard_Accepted_Rejected().equalsIgnoreCase("rejected")) {
                     holder.cardViewCc.setVisibility(View.VISIBLE);
                     holder.ll_cc_action.setVisibility(View.GONE);
                     holder.cardView.setVisibility(View.GONE);
@@ -867,7 +870,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.rl_acc_res_bg.setBackgroundResource(R.drawable.newbg);
                     holder.iv_acc_rec.setVisibility(View.VISIBLE);
                     holder.iv_acc_rec.setBackgroundResource(R.drawable.c_card_rejected);
-                }else if(item.getCard_Accepted_Rejected().equalsIgnoreCase("countered")) {
+                } else if (item.getCard_Accepted_Rejected().equalsIgnoreCase("countered")) {
                     holder.ll_cc_action.setVisibility(View.VISIBLE);
                     holder.cardViewCc.setVisibility(View.VISIBLE);
                     holder.ll_cc_action.setVisibility(View.GONE);
@@ -883,7 +886,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.rl_acc_res_bg.setBackgroundResource(R.drawable.newbg);
                     holder.iv_acc_rec.setVisibility(View.GONE);
 
-                }else{
+                } else {
                     holder.cardViewCards.setGravity(Gravity.RIGHT);
                     Picasso.with(context).load(item.getCard_url())
                             .into(holder.tradeImage);
@@ -905,7 +908,11 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
 
                     }
                 }
+            }catch (Exception e){
+
+                }
             }
+
         }
         holder.chatImage.setOnClickListener(new View.OnClickListener() {
             @Override

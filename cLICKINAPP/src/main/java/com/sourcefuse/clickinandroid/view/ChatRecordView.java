@@ -736,12 +736,10 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         String card_owner = null;
         String edittext = null;
 
-        String cardId = null;
+        String card_Id = null;
         boolean from = true;
 
-
         from = intent.getExtras().getBoolean("FromCard");
-       
 
         if(from) {
             boolean isCounter = intent.getExtras().getBoolean("isCounter");
@@ -749,42 +747,59 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             cardClicks = intent.getExtras().getString("card_clicks");
             cardTittle = intent.getExtras().getString("Title");
             cardDiscription = intent.getExtras().getString("Discription");
-            cardId = intent.getExtras().getString("card_id");
+            card_DB_ID = intent.getExtras().getString("card_Db_id");
             card_owner = authManager.getQBId();
             if(isCounter){
-                sendCardToPartner(cardUrl, cardTittle, cardDiscription, cardId, cardClicks,"false",cardId,"countered","COUNTERED CARD",authManager.getUserId(),card_owner);
+                card_Id = intent.getExtras().getString("card_id");
+                sendCardToPartner(cardUrl, cardTittle, cardDiscription, card_Id, cardClicks,"false",card_DB_ID,"countered","COUNTERED CARD",authManager.getUserId(),card_owner);
             }else{
-                sendCardToPartner(cardUrl, cardTittle, cardDiscription, cardId, cardClicks,"false",cardId,"nil","PLAYED A CARD",authManager.getUserId(),card_owner);
+                sentOn = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis();
+                String chat_Id = authManager.getQBId()+qBId + sentOn;
+                sendCardToPartner(cardUrl, cardTittle, cardDiscription, chat_Id, cardClicks,"false",card_DB_ID,"nil","PLAYED A CARD",authManager.getUserId(),card_owner);
             }
-
-
-        }
-
-        else{
+        }else{
             cardUrl = intent.getExtras().getString("card_url");
             cardClicks = intent.getExtras().getString("card_clicks");
             cardTittle = intent.getExtras().getString("Title");
             cardDiscription = intent.getExtras().getString("Discription");
-            cardId = intent.getExtras().getString("card_id");
+            card_Id = intent.getExtras().getString("card_id");
             is_CustomCard = intent.getExtras().getString("is_CustomCard");
             card_DB_ID = intent.getExtras().getString("card_DB_ID");
             accepted_Rejected = intent.getExtras().getString("accepted_Rejected");
             played_Countered = intent.getExtras().getString("played_Countered");
             card_originator = intent.getExtras().getString("card_originator");
-            sendCardToPartner(cardUrl, cardTittle, cardDiscription, cardId, cardClicks,is_CustomCard,card_DB_ID,accepted_Rejected,played_Countered,card_originator,card_owner);
+            sendCardToPartner(cardUrl, cardTittle, cardDiscription, card_Id, cardClicks,is_CustomCard,card_DB_ID,accepted_Rejected,played_Countered,card_originator,card_owner);
         }
 
     }
 
 
 
-    private void sendCardToPartner(String card_url, String cardTittle,String cardDiscription,String cardId, String clicks,String is_CustomCard,String card_DB_ID,String accepted_Rejected,String played_Countered,String card_originator,String card_owner) {
+    private void sendCardToPartner(String card_url, String cardTittle,String cardDiscription,String card_Id, String clicks,String is_CustomCard,String card_DB_ID,String accepted_Rejected,String played_Countered,String card_originator,String card_owner) {
 
         try {
             DefaultPacketExtension extension = new DefaultPacketExtension("extraParams", "jabber:client");
 
             sentOn = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis();
             String card_id = authManager.getQBId()+qBId + sentOn;
+
+            ArrayList al = new ArrayList();
+
+            al.add(card_Id);
+            al.add(cardTittle);
+            al.add(cardDiscription);
+            al.add(card_url);
+            al.add(clicks);
+            al.add(accepted_Rejected);
+            Log.e(TAG,"card_originator-->"+card_originator);
+            al.add(is_CustomCard);
+            al.add(card_originator);
+            al.add(card_DB_ID);
+
+
+            sentOn = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis();
+            String chid = authManager.getQBId()+qBId + sentOn;
+            createRfecordOnQuickBlox(null, null, null, rId, authManager.getUserId(), authManager.getUsrToken(), "" + sentOn, chid, "5", null, null, al.toString(), null, null, null);
 
             extension.setValue("card_clicks", clicks);
             extension.setValue("card_owner", card_owner);
@@ -796,7 +811,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             extension.setValue("card_url", card_url);
             extension.setValue("card_id", card_id);
             extension.setValue("card_Played_Countered",played_Countered);
-            extension.setValue("card_originator",card_originator );
+            extension.setValue("card_originator",card_originator);
 
             Message message = new Message();
             message.setType(Message.Type.chat); // 1-1 chat message
@@ -813,13 +828,13 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             addChat.setCard_owner(authManager.getQBId());
             addChat.setCard_content(cardDiscription);
             addChat.setIs_CustomCard(is_CustomCard);
-            addChat.setCard_DB_ID(cardId);
+            addChat.setCard_DB_ID(card_DB_ID);
             addChat.setCard_heading(cardTittle);
             addChat.setCard_Accepted_Rejected(accepted_Rejected);
             addChat.setCard_url(card_url);
             addChat.setCard_id(card_id);
             addChat.setCard_Played_Countered(played_Countered);
-            addChat.setCard_originator(card_owner);
+            addChat.setCard_originator(card_originator);
             addChat.setCardPartnerName(partnerName);
 
             addChat.setTimeStamp(String.valueOf(sentOn));

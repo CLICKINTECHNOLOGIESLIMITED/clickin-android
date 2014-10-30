@@ -31,7 +31,7 @@ public class Card extends Activity implements View.OnClickListener,TextWatcher {
     private TextView card_title, card_desription,tv_about_message;
     private static final String TAG = "CardViewAdapter";
     ImageView mBackButton;
-    String url,clicks,cardTitle,cardDiscription,card_id;
+    String url,clicks,cardTitle,cardDiscription,card_Db_id,card_id;
 
 
     Context context;
@@ -85,7 +85,6 @@ public class Card extends Activity implements View.OnClickListener,TextWatcher {
 
         Intent intent = getIntent();
         if (null != intent) {
-
             forCounter = intent.getExtras().getBoolean("ForCounter");
             if(forCounter){
                 trd_clicks_bottom.setText(intent.getStringExtra("cardClicks"));
@@ -95,8 +94,13 @@ public class Card extends Activity implements View.OnClickListener,TextWatcher {
             url = intent.getStringExtra("Url");
             cardTitle = intent.getStringExtra("Title");
             cardDiscription = intent.getStringExtra("Discription");
-            card_id = intent.getStringExtra("card_id");
-            Log.e(TAG, "Url for the fetched Card is" + url+","+cardTitle+","+cardDiscription+","+card_id);
+            card_Db_id = intent.getStringExtra("card_Db_id");
+            try {
+                card_id = intent.getStringExtra("card_id");
+            }catch (Exception e){
+
+            }
+            Log.e(TAG, "Url for the fetched Card is" + url+","+cardTitle+","+cardDiscription+","+card_Db_id);
 
         } else {
             Log.e(TAG, "Value in intent in null");
@@ -185,6 +189,7 @@ public class Card extends Activity implements View.OnClickListener,TextWatcher {
                 i.putExtra("FromCard",true);
                 if(forCounter){
                  i.putExtra("isCounter",true);
+                 i.putExtra("card_id",card_id);
                 }else{
                   i.putExtra("isCounter",false);
                 }
@@ -192,7 +197,7 @@ public class Card extends Activity implements View.OnClickListener,TextWatcher {
                 i.putExtra("card_clicks",clicks);
                 i.putExtra("Title",cardTitle);
                 i.putExtra("Discription",cardDiscription);
-                i.putExtra("card_id",card_id);
+                i.putExtra("card_Db_id",card_Db_id);
 
                 i.setClass(this,ChatRecordView.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
