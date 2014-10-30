@@ -35,10 +35,10 @@ android:layout_height="fill_parent">
             android:id="@+id/iv_notification_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-          android:layout_alignParentRight="true"
+            android:layout_alignParentRight="true"
 
             android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
+
             android:background="@drawable/owner_profile_hedder_icon" />
     </RelativeLayout>
 
@@ -67,7 +67,7 @@ android:layout_height="fill_parent">
             android:layout_width="wrap_content"
             android:layout_toRightOf="@+id/iv_my_pix"
             android:layout_centerVertical="true"
-            android:textColor="@color/usr_name"
+            android:textColor="@color/chat_notification"
             android:layout_marginLeft="5dp"
             android:layout_height="wrap_content"
             android:textStyle="bold"
@@ -92,7 +92,7 @@ android:layout_height="fill_parent">
             android:layout_width="wrap_content"
             android:layout_toLeftOf="@+id/iv_heart_icon_partner"
             android:layout_centerVertical="true"
-            android:textColor="@color/usr_name"
+            android:textColor="@color/chat_notification"
             android:layout_height="wrap_content"
             android:textStyle="bold"
             android:layout_marginRight="5dp"
@@ -180,6 +180,19 @@ android:layout_height="fill_parent">
                 android:textSize="15sp"
                 />
 
+            <!--<SeekBar-->
+                <!--android:id="@+id/seekBar1"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_centerHorizontal="true"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:layout_marginLeft="35dp"-->
+                <!--android:layout_marginRight="25dp"-->
+                <!--android:indeterminate="false"-->
+                <!--android:max="10"-->
+                <!--android:progressDrawable="@drawable/styled_progress"-->
+                <!--android:thumb="@drawable/seek" />-->
+
             <SeekBar
                 android:id="@+id/seekBar1"
                 android:layout_width="match_parent"
@@ -187,7 +200,7 @@ android:layout_height="fill_parent">
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="35dp"
-                android:layout_marginRight="25dp"
+                android:layout_marginRight="34dp"
                 android:indeterminate="false"
                 android:max="10"
                 android:progressDrawable="@drawable/styled_progress"
@@ -304,6 +317,7 @@ android:layout_height="fill_parent">
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|center_vertical"
         android:layout_marginTop="10dp"
+        android:textAllCaps="true"
         android:text="@string/txt_profile"
         android:textColor="@color/owner_profile_header_b"
         android:textSize="20sp"
@@ -362,4 +376,4 @@ android:layout_height="fill_parent">
     </RelativeLayout>
 
 </RelativeLayout>
-<!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/layout/view_chat_layout.xml -->
+<!-- From: file:/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/src/main/res/layout/view_chat_layout.xml -->

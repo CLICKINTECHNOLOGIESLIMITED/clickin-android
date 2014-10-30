@@ -1,9 +1,7 @@
 package com.sourcefuse.clickinandroid.view;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -75,9 +73,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -114,7 +109,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     private long sentOn;
     private String chatId;
 
-
+    String[] splitted ;
 
     private boolean showAttachmentView = true;
     private LinearLayout llAttachment;
@@ -199,6 +194,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         qBId = getIntent().getExtras().getString("quickId");
         partnerPic = getIntent().getExtras().getString("partnerPic");
         partnerName = getIntent().getExtras().getString("partnerName");
+        splitted = partnerName.split("\\s+");
         rId = getIntent().getExtras().getString("rId");
         partnerId = getIntent().getExtras().getString("partnerId");
         myClicks = getIntent().getExtras().getString("myClicks");
@@ -221,7 +217,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             partnerTotalclicks.setText("" + chatManager.getPartnerTotalClick());
         }
 
-        profileName.setText("" + partnerName);
+        profileName.setText("" + splitted[0]);
         try {
             Picasso.with(ChatRecordView.this).load(authManager.getUserPic())
                     .skipMemoryCache()

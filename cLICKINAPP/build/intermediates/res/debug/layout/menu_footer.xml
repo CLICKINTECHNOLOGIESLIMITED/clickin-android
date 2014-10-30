@@ -38,7 +38,7 @@
                 android:paddingLeft="15dp"
                 android:layout_marginLeft="5dp"
                 android:text="@string/txt_feed"
-                android:textColor="@color/white"
+                android:textColor="@color/menu_footer"
                 android:textSize="20sp"
                 geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
         </LinearLayout>
@@ -80,7 +80,7 @@
                 android:layout_gravity="center_vertical"
                 android:paddingLeft="15dp"
                 android:text="@string/txt_find_friend"
-                android:textColor="@color/white"
+                android:textColor="@color/menu_footer"
                 android:textSize="20sp"
                 android:layout_marginLeft="5dp"
                 geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
@@ -123,7 +123,7 @@
                 android:layout_gravity="center_vertical"
                 android:paddingLeft="15dp"
                 android:text="@string/txt_invite"
-                android:textColor="@color/white"
+                android:textColor="@color/menu_footer"
                 android:textSize="20sp"
                 geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
         </LinearLayout>
@@ -164,11 +164,11 @@
                 android:layout_gravity="center_vertical"
                 android:paddingLeft="15dp"
                 android:text="@string/txt_setting"
-                android:textColor="@color/white"
+                android:textColor="@color/menu_footer"
                 android:textSize="20sp"
                 android:layout_marginLeft="5dp"
                 geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
         </LinearLayout>
     </RelativeLayout>
 
-</RelativeLayout><!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/layout/menu_footer.xml -->
+</RelativeLayout><!-- From: file:/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/src/main/res/layout/menu_footer.xml -->

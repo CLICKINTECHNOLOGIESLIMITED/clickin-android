@@ -19,4 +19,4 @@
     android:duration="@android:integer/config_longAnimTime"
     android:fromYDelta="0"
     android:toYDelta="100%p" />
-<!-- From: file:/Users/NBP/git/Android-PullToRefresh/library/res/anim/slide_out_to_bottom.xml --><!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.navercorp.pulltorefresh/library/3.2.0/res/anim/slide_out_to_bottom.xml -->
+<!-- From: file:/Users/NBP/git/Android-PullToRefresh/library/res/anim/slide_out_to_bottom.xml --><!-- From: file:/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.navercorp.pulltorefresh/library/3.2.0/res/anim/slide_out_to_bottom.xml -->
