@@ -300,6 +300,7 @@ public class SimpleSectionedListAdapter2 extends BaseAdapter implements PinnedSe
                     }
                     Intent viewProfile = null;
 //                    if(ModelManager.getInstance().getAuthorizationManager().getUserId().toString().equalsIgnoreCase(mSections.get(position).senderId.toString()))
+//                    if(view.getText().toString().trim().equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getUserName()))
 //                        viewProfile = new Intent(mContext, UserProfileView.class);
 //                    else {
                         viewProfile = new Intent(mContext, JumpOtherProfileView.class);
@@ -326,6 +327,7 @@ public class SimpleSectionedListAdapter2 extends BaseAdapter implements PinnedSe
                     }
                     Intent viewProfile = null;
 //                    if(ModelManager.getInstance().getAuthorizationManager().getUserId().toString().equalsIgnoreCase(mSections.get(position).senderId.toString()))
+//                    if(view1.getText().toString().trim().equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getUserName()))
 //                        viewProfile = new Intent(mContext, UserProfileView.class);
 //                    else {
                         viewProfile = new Intent(mContext, JumpOtherProfileView.class);

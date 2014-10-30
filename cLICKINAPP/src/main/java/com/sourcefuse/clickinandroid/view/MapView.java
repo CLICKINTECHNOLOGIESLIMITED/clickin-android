@@ -106,7 +106,6 @@ Bundle bundle = getIntent().getExtras();
                     Log.e("lat/long",""+latitude+"/"+longitude);
                     // Creating a LatLng object for the current location
                     LatLng latLng = new LatLng(latitude, longitude);
-//                 
 
                     // Showing the current location in Google Map
                     googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));

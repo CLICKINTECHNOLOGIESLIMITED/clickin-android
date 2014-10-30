@@ -189,8 +189,10 @@ public class RelationManager extends Observable implements RelationManagerI {
 			userInputDetails.put("user_token", usertoken);
 
 			client = new AsyncHttpClient();
-			client.addHeader("user_token", usertoken);
-			client.addHeader("phone_no", phone);
+//			client.addHeader("user_token", usertoken);
+//			client.addHeader("phone_no", phone);
+            client.addHeader("User-Token", usertoken);
+            client.addHeader("Phone-No", phone);
 			Log.e("INPUT_DATA-> ", "" + userInputDetails);
 			strService = APIs.FETCHPROFILERELATIONSHIPS
 					+ othersPhone.substring(1);
