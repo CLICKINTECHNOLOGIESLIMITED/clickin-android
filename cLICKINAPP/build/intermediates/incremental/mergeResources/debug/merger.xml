@@ -1089,16 +1089,16 @@ bold
                     msgid="7999585836145154206" >"יש אפליקציה המחייבת התקנה של שירותי Google Play."
                 </string>
                 <string
-                    name="common_google_play_services_unknown_issue"
-                    msgid="4762332809710093730" >"בעיה לא ידועה בשירותי Google Play."
-                </string>
-                <string
                     name="common_google_play_services_unsupported_text"
                     msgid="3542578567569488671" >"שירותי Google Play, שחלק מהיישומים שלך מתבססים עליהם, אינם נתמכים על ידי המכשיר שברשותך. צור קשר עם היצרן לקבלת סיוע."
                 </string>
                 <string
                     name="common_signin_button_text"
                     msgid="9071884888741449141" >"היכנס"
+                </string>
+                <string
+                    name="common_google_play_services_unknown_issue"
+                    msgid="4762332809710093730" >"בעיה לא ידועה בשירותי Google Play."
                 </string>
                 <string
                     name="common_google_play_services_install_title"
@@ -2103,20 +2103,20 @@ bold
                     msgid="4762332809710093730" >"Ukendt problem med Google Play-tjenester."
                 </string>
                 <string
-                    name="common_google_play_services_unsupported_text"
-                    msgid="3542578567569488671" >"Google Play-tjenester, som nogle af dine applikationer er afhængige af, understøttes ikke af din enhed. Kontakt producenten for at få hjælp."
-                </string>
-                <string
                     name="common_google_play_services_enable_button"
                     msgid="4181637455539816337" >"Aktivér Google Play-tjenester"
                 </string>
                 <string
-                    name="auth_client_needs_update_title"
-                    msgid="6488605506794595966" >"En applikation kræver en opdatering af Google Play."
+                    name="common_google_play_services_unsupported_text"
+                    msgid="3542578567569488671" >"Google Play-tjenester, som nogle af dine applikationer er afhængige af, understøttes ikke af din enhed. Kontakt producenten for at få hjælp."
                 </string>
                 <string
                     name="common_signin_button_text_long"
                     msgid="2429381841831957106" >"Log ind med Google"
+                </string>
+                <string
+                    name="auth_client_needs_update_title"
+                    msgid="6488605506794595966" >"En applikation kræver en opdatering af Google Play."
                 </string>
                 <string
                     name="common_google_play_services_install_button"
@@ -2646,12 +2646,16 @@ bold
                     msgid="6006316683626838685" >"Play開発者サービスの更新"
                 </string>
                 <string
+                    name="common_google_play_services_enable_title"
+                    msgid="529078775174559253" >"Play開発者サービスの有効化"
+                </string>
+                <string
                     name="common_google_play_services_unknown_issue"
                     msgid="4762332809710093730" >"Google Play開発者サービスで原因不明の問題が発生しました。"
                 </string>
                 <string
-                    name="common_google_play_services_enable_title"
-                    msgid="529078775174559253" >"Play開発者サービスの有効化"
+                    name="common_google_play_services_install_title"
+                    msgid="26645092511305524" >"Play開発者サービスの入手"
                 </string>
                 <string
                     name="auth_client_requested_by_msg"
@@ -2659,10 +2663,6 @@ bold
 <ns1:g id="APP_NAME" >
 %1$s
                     </ns1:g>によるリクエスト"
-                </string>
-                <string
-                    name="common_google_play_services_install_title"
-                    msgid="26645092511305524" >"Play開発者サービスの入手"
                 </string>
                 <string
                     name="auth_client_needs_update_title"
@@ -4825,16 +4825,16 @@ bold
                     msgid="4762332809710093730" >"Error desconocido relacionado con los servicios de Google Play"
                 </string>
                 <string
-                    name="common_signin_button_text_long"
-                    msgid="2429381841831957106" >"Iniciar sesión con Google"
-                </string>
-                <string
                     name="common_google_play_services_enable_text"
                     msgid="7627896071867667758" >"Esta aplicación no funcionará si no habilitas los servicios de Google Play."
                 </string>
                 <string
                     name="auth_client_play_services_err_notification_msg"
                     msgid="3635065018897986478" >"Error de los servicios de Google Play"
+                </string>
+                <string
+                    name="common_signin_button_text_long"
+                    msgid="2429381841831957106" >"Iniciar sesión con Google"
                 </string>
                 <string
                     name="common_google_play_services_enable_button"
@@ -5400,16 +5400,16 @@ bold
                     msgid="4181637455539816337" >"Aktivera Google Play Tjänster"
                 </string>
                 <string
-                    name="common_signin_button_text"
-                    msgid="9071884888741449141" >"Logga in"
-                </string>
-                <string
                     name="common_google_play_services_enable_text"
                     msgid="7627896071867667758" >"Du måste aktivera Google Play Tjänster för att den här appen ska fungera."
                 </string>
                 <string
                     name="auth_client_using_bad_version_title"
                     msgid="2534454398764507874" >"En olämplig version av Google Play Tjänster anropades av en app."
+                </string>
+                <string
+                    name="common_signin_button_text"
+                    msgid="9071884888741449141" >"Logga in"
                 </string>
                 <string
                     name="common_google_play_services_unknown_issue"
@@ -5492,16 +5492,16 @@ bold
                     msgid="2031811694353399454" >"Επιλέξτε κάποια εφαρμογή"
                 </string>
                 <string
-                    name="abc_searchview_description_clear"
-                    msgid="3691816814315814921" >"Διαγραφή ερωτήματος"
-                </string>
-                <string
                     name="abc_searchview_description_voice"
                     msgid="893419373245838918" >"Φωνητική αναζήτηση"
                 </string>
                 <string
                     name="abc_action_menu_overflow_description"
                     msgid="3588849162933574182" >"Περισσότερες επιλογές"
+                </string>
+                <string
+                    name="abc_searchview_description_clear"
+                    msgid="3691816814315814921" >"Διαγραφή ερωτήματος"
                 </string>
             </file>
             <file
@@ -8241,16 +8241,16 @@ true
                     msgid="3588849162933574182" >"Več možnosti"
                 </string>
                 <string
-                    name="abc_shareactionprovider_share_with"
-                    msgid="3421042268587513524" >"Deljenje z"
+                    name="abc_action_mode_done"
+                    msgid="4076576682505996667" >"Končano"
                 </string>
                 <string
                     name="abc_activity_chooser_view_see_all"
                     msgid="7468859129482906941" >"Pokaži vse"
                 </string>
                 <string
-                    name="abc_action_mode_done"
-                    msgid="4076576682505996667" >"Končano"
+                    name="abc_shareactionprovider_share_with"
+                    msgid="3421042268587513524" >"Deljenje z"
                 </string>
                 <string
                     name="abc_action_bar_home_description"
@@ -8269,12 +8269,12 @@ true
                     msgid="8264924765203268293" >"Iskanje"
                 </string>
                 <string
-                    name="abc_searchview_description_submit"
-                    msgid="8928215447528550784" >"Pošiljanje poizvedbe"
-                </string>
-                <string
                     name="abc_searchview_description_query"
                     msgid="2550479030709304392" >"Iskalna poizvedba"
+                </string>
+                <string
+                    name="abc_searchview_description_submit"
+                    msgid="8928215447528550784" >"Pošiljanje poizvedbe"
                 </string>
                 <string
                     name="abc_searchview_description_voice"
@@ -12028,16 +12028,16 @@ true
                     msgid="4076576682505996667" >"Atlikta"
                 </string>
                 <string
-                    name="abc_action_bar_home_description"
-                    msgid="4600421777120114993" >"Eiti į pagrindinį puslapį"
-                </string>
-                <string
                     name="abc_searchview_description_search"
                     msgid="8264924765203268293" >"Paieška"
                 </string>
                 <string
                     name="abc_shareactionprovider_share_with_application"
                     msgid="7165123711973476752" >"Bendrinti naudojant „%s“"
+                </string>
+                <string
+                    name="abc_action_bar_home_description"
+                    msgid="4600421777120114993" >"Eiti į pagrindinį puslapį"
                 </string>
             </file>
             <file

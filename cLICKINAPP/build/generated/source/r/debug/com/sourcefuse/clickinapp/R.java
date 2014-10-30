@@ -2772,7 +2772,7 @@ containing a value of this type.
         public static final int CropOverlayView=0x7f0800ab;
         public static final int H_view=0x7f08025b;
         public static final int ImageView_image=0x7f0800aa;
-        public static final int Layout_Tab_1=0x7f08026e;
+        public static final int Layout_Tab_1=0x7f08026f;
         public static final int Layout_Tab_2=0x7f08025d;
         public static final int Linear_layout=0x7f08007b;
         public static final int Linear_layout1=0x7f08025a;
@@ -2789,7 +2789,7 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f080034;
         public static final int action_menu_presenter=0x7f080035;
         public static final int action_mode_close_button=0x7f080047;
-        public static final int action_settings=0x7f08026f;
+        public static final int action_settings=0x7f080270;
         public static final int activity_chooser_view_content=0x7f080048;
         public static final int alert_msgI=0x7f080071;
         public static final int alert_msgII=0x7f080072;
@@ -2812,7 +2812,7 @@ containing a value of this type.
         public static final int btn_do_itlatter=0x7f08014b;
         public static final int btn_done=0x7f0801f3;
         public static final int btn_done_play=0x7f08020b;
-        public static final int btn_edit_profile=0x7f080264;
+        public static final int btn_edit_profile=0x7f080265;
         public static final int btn_f_accept=0x7f080127;
         public static final int btn_f_resect=0x7f080128;
         public static final int btn_fb=0x7f0801a2;
@@ -2820,9 +2820,9 @@ containing a value of this type.
         public static final int btn_find_invite=0x7f0800fd;
         public static final int btn_five=0x7f080089;
         public static final int btn_follow=0x7f080120;
-        public static final int btn_follower=0x7f080265;
+        public static final int btn_follower=0x7f080266;
         public static final int btn_follower_other=0x7f080202;
-        public static final int btn_following=0x7f080266;
+        public static final int btn_following=0x7f080267;
         public static final int btn_following_other=0x7f080203;
         public static final int btn_four=0x7f080088;
         public static final int btn_get_clickIn=0x7f080152;
@@ -2863,8 +2863,8 @@ containing a value of this type.
         public static final int card_partner_name=0x7f08016a;
         public static final int card_status=0x7f0800bf;
         public static final int card_status_img=0x7f0800c0;
-        public static final int card_text=0x7f080260;
-        public static final int card_text12=0x7f08025f;
+        public static final int card_text=0x7f080261;
+        public static final int card_text12=0x7f080260;
         public static final int card_title=0x7f0800bb;
         public static final int card_tittle=0x7f0800e2;
         public static final int card_view=0x7f080166;
@@ -2947,7 +2947,7 @@ containing a value of this type.
         public static final int edt_code=0x7f080248;
         public static final int edt_email_phoneno=0x7f080242;
         public static final int edt_emailid=0x7f080218;
-        public static final int edt_four=0x7f08026d;
+        public static final int edt_four=0x7f08026e;
         public static final int edt_get_ph_no=0x7f080154;
         public static final int edt_getemailid=0x7f08006a;
         public static final int edt_lname=0x7f080212;
@@ -2957,7 +2957,7 @@ containing a value of this type.
         public static final int edt_my_email=0x7f0801c8;
         public static final int edt_my_last=0x7f0801c7;
         public static final int edt_my_name=0x7f0801c6;
-        public static final int edt_one=0x7f08026a;
+        public static final int edt_one=0x7f08026b;
         public static final int edt_passwd=0x7f080243;
         public static final int edt_password=0x7f080208;
         public static final int edt_phone_no=0x7f080151;
@@ -2968,8 +2968,8 @@ containing a value of this type.
         public static final int edt_search=0x7f080107;
         public static final int edt_search_ph=0x7f080147;
         public static final int edt_text_cntry_cd=0x7f08014f;
-        public static final int edt_three=0x7f08026c;
-        public static final int edt_two=0x7f08026b;
+        public static final int edt_three=0x7f08026d;
+        public static final int edt_two=0x7f08026c;
         public static final int email_opt_out_text=0x7f0801b8;
         public static final int end=0x7f08000f;
         public static final int etd_email=0x7f0801ec;
@@ -3095,14 +3095,14 @@ containing a value of this type.
         public static final int line=0x7f0801c2;
         public static final int linearLayout=0x7f080241;
         public static final int linearLayout1=0x7f080145;
-        public static final int linearLayout_top=0x7f080268;
+        public static final int linearLayout_top=0x7f080269;
         public static final int linear_layout_back=0x7f080078;
         public static final int list=0x7f0800e0;
         public static final int list1=0x7f0801d6;
         public static final int listMode=0x7f080001;
         public static final int list_click_notification=0x7f0801fb;
         public static final int list_click_with_other=0x7f080206;
-        public static final int list_click_with_profile=0x7f080267;
+        public static final int list_click_with_profile=0x7f080268;
         public static final int list_contact=0x7f08014a;
         public static final int list_current_clickers=0x7f0801a5;
         public static final int list_follower=0x7f0801da;
@@ -3112,7 +3112,7 @@ containing a value of this type.
         public static final int ll=0x7f08011a;
         public static final int ll_again_counter=0x7f080177;
         public static final int ll_attachment=0x7f080191;
-        public static final int ll_boxs=0x7f080269;
+        public static final int ll_boxs=0x7f08026a;
         public static final int ll_cc_action=0x7f080176;
         public static final int ll_clickin_header=0x7f080204;
         public static final int ll_date=0x7f08021a;
@@ -3213,7 +3213,7 @@ containing a value of this type.
         public static final int rl_signupcontainer=0x7f0801ea;
         public static final int rl_time_sender=0x7f080161;
         public static final int rl_topbar=0x7f0801e9;
-        public static final int rl_uig=0x7f080261;
+        public static final int rl_uig=0x7f080262;
         public static final int rl_usr_profile=0x7f0800dd;
         public static final int rr=0x7f0801bf;
         public static final int rr_Other_options=0x7f0800f2;
@@ -3228,6 +3228,7 @@ containing a value of this type.
         public static final int rr_profile_pic=0x7f0801fe;
         public static final int rr_re_enterpassword=0x7f080209;
         public static final int rr_search=0x7f080105;
+        public static final int rr_send=0x7f08025f;
         public static final int rr_user_detail=0x7f080102;
         public static final int sans=0x7f080030;
         public static final int satellite=0x7f080010;
@@ -3336,7 +3337,7 @@ containing a value of this type.
         public static final int tv_logout_msg=0x7f08013d;
         public static final int tv_month=0x7f08021e;
         public static final int tv_myclick=0x7f080182;
-        public static final int tv_name=0x7f080262;
+        public static final int tv_name=0x7f080263;
         public static final int tv_name_other=0x7f0801ff;
         public static final int tv_negetive=0x7f08018a;
         public static final int tv_notification_msg=0x7f08012b;
@@ -3358,7 +3359,7 @@ containing a value of this type.
         public static final int tv_typing=0x7f080198;
         public static final int tv_unread=0x7f080118;
         public static final int tv_user_address=0x7f080130;
-        public static final int tv_user_details=0x7f080263;
+        public static final int tv_user_details=0x7f080264;
         public static final int tv_user_details_other=0x7f080201;
         public static final int tv_usr_name=0x7f08012c;
         public static final int tv_via=0x7f080129;

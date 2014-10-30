@@ -723,11 +723,15 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         String played_Countered = null;
         String  card_originator = null;
         String card_owner = null;
+        String edittext = null;
 
         String cardId = null;
         boolean from = true;
 
+
         from = intent.getExtras().getBoolean("FromCard");
+       
+
         if(from) {
             boolean isCounter = intent.getExtras().getBoolean("isCounter");
             cardUrl = intent.getExtras().getString("card_url");
@@ -743,7 +747,9 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             }
 
 
-        }else{
+        }
+
+        else{
             cardUrl = intent.getExtras().getString("card_url");
             cardClicks = intent.getExtras().getString("card_clicks");
             cardTittle = intent.getExtras().getString("Title");
@@ -758,6 +764,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         }
 
     }
+
+
 
     private void sendCardToPartner(String card_url, String cardTittle,String cardDiscription,String cardId, String clicks,String is_CustomCard,String card_DB_ID,String accepted_Rejected,String played_Countered,String card_originator,String card_owner) {
 

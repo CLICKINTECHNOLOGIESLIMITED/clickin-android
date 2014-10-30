@@ -989,7 +989,7 @@ int drawable you_know_what_to_do 0x7f020204
 int id CropOverlayView 0x7f0800ab
 int id H_view 0x7f08025b
 int id ImageView_image 0x7f0800aa
-int id Layout_Tab_1 0x7f08026e
+int id Layout_Tab_1 0x7f08026f
 int id Layout_Tab_2 0x7f08025d
 int id Linear_layout 0x7f08007b
 int id Linear_layout1 0x7f08025a
@@ -1006,7 +1006,7 @@ int id action_context_bar 0x7f080040
 int id action_menu_divider 0x7f080034
 int id action_menu_presenter 0x7f080035
 int id action_mode_close_button 0x7f080047
-int id action_settings 0x7f08026f
+int id action_settings 0x7f080270
 int id activity_chooser_view_content 0x7f080048
 int id alert_msgI 0x7f080071
 int id alert_msgII 0x7f080072
@@ -1029,7 +1029,7 @@ int id btn_delete_item 0x7f080135
 int id btn_do_itlatter 0x7f08014b
 int id btn_done 0x7f0801f3
 int id btn_done_play 0x7f08020b
-int id btn_edit_profile 0x7f080264
+int id btn_edit_profile 0x7f080265
 int id btn_f_accept 0x7f080127
 int id btn_f_resect 0x7f080128
 int id btn_fb 0x7f0801a2
@@ -1037,9 +1037,9 @@ int id btn_find_friend 0x7f0800f9
 int id btn_find_invite 0x7f0800fd
 int id btn_five 0x7f080089
 int id btn_follow 0x7f080120
-int id btn_follower 0x7f080265
+int id btn_follower 0x7f080266
 int id btn_follower_other 0x7f080202
-int id btn_following 0x7f080266
+int id btn_following 0x7f080267
 int id btn_following_other 0x7f080203
 int id btn_four 0x7f080088
 int id btn_get_clickIn 0x7f080152
@@ -1080,8 +1080,8 @@ int id card_msg 0x7f0800bd
 int id card_partner_name 0x7f08016a
 int id card_status 0x7f0800bf
 int id card_status_img 0x7f0800c0
-int id card_text 0x7f080260
-int id card_text12 0x7f08025f
+int id card_text 0x7f080261
+int id card_text12 0x7f080260
 int id card_title 0x7f0800bb
 int id card_tittle 0x7f0800e2
 int id card_view 0x7f080166
@@ -1164,7 +1164,7 @@ int id edt_cntry_cd 0x7f080150
 int id edt_code 0x7f080248
 int id edt_email_phoneno 0x7f080242
 int id edt_emailid 0x7f080218
-int id edt_four 0x7f08026d
+int id edt_four 0x7f08026e
 int id edt_get_ph_no 0x7f080154
 int id edt_getemailid 0x7f08006a
 int id edt_lname 0x7f080212
@@ -1174,7 +1174,7 @@ int id edt_my_country 0x7f0801ca
 int id edt_my_email 0x7f0801c8
 int id edt_my_last 0x7f0801c7
 int id edt_my_name 0x7f0801c6
-int id edt_one 0x7f08026a
+int id edt_one 0x7f08026b
 int id edt_passwd 0x7f080243
 int id edt_password 0x7f080208
 int id edt_phone_no 0x7f080151
@@ -1185,8 +1185,8 @@ int id edt_re_pwd 0x7f0801f0
 int id edt_search 0x7f080107
 int id edt_search_ph 0x7f080147
 int id edt_text_cntry_cd 0x7f08014f
-int id edt_three 0x7f08026c
-int id edt_two 0x7f08026b
+int id edt_three 0x7f08026d
+int id edt_two 0x7f08026c
 int id email_opt_out_text 0x7f0801b8
 int id end 0x7f08000f
 int id etd_email 0x7f0801ec
@@ -1312,14 +1312,14 @@ int id left_menu 0x7f0801d2
 int id line 0x7f0801c2
 int id linearLayout 0x7f080241
 int id linearLayout1 0x7f080145
-int id linearLayout_top 0x7f080268
+int id linearLayout_top 0x7f080269
 int id linear_layout_back 0x7f080078
 int id list 0x7f0800e0
 int id list1 0x7f0801d6
 int id listMode 0x7f080001
 int id list_click_notification 0x7f0801fb
 int id list_click_with_other 0x7f080206
-int id list_click_with_profile 0x7f080267
+int id list_click_with_profile 0x7f080268
 int id list_contact 0x7f08014a
 int id list_current_clickers 0x7f0801a5
 int id list_follower 0x7f0801da
@@ -1329,7 +1329,7 @@ int id list_layout 0x7f08017c
 int id ll 0x7f08011a
 int id ll_again_counter 0x7f080177
 int id ll_attachment 0x7f080191
-int id ll_boxs 0x7f080269
+int id ll_boxs 0x7f08026a
 int id ll_cc_action 0x7f080176
 int id ll_clickin_header 0x7f080204
 int id ll_date 0x7f08021a
@@ -1430,7 +1430,7 @@ int id rl_resect_accept 0x7f080126
 int id rl_signupcontainer 0x7f0801ea
 int id rl_time_sender 0x7f080161
 int id rl_topbar 0x7f0801e9
-int id rl_uig 0x7f080261
+int id rl_uig 0x7f080262
 int id rl_usr_profile 0x7f0800dd
 int id rr 0x7f0801bf
 int id rr_Other_options 0x7f0800f2
@@ -1445,6 +1445,7 @@ int id rr_main_l 0x7f080158
 int id rr_profile_pic 0x7f0801fe
 int id rr_re_enterpassword 0x7f080209
 int id rr_search 0x7f080105
+int id rr_send 0x7f08025f
 int id rr_user_detail 0x7f080102
 int id sans 0x7f080030
 int id satellite 0x7f080010
@@ -1553,7 +1554,7 @@ int id tv_loading 0x7f080092
 int id tv_logout_msg 0x7f08013d
 int id tv_month 0x7f08021e
 int id tv_myclick 0x7f080182
-int id tv_name 0x7f080262
+int id tv_name 0x7f080263
 int id tv_name_other 0x7f0801ff
 int id tv_negetive 0x7f08018a
 int id tv_notification_msg 0x7f08012b
@@ -1575,7 +1576,7 @@ int id tv_title_of_row 0x7f080140
 int id tv_typing 0x7f080198
 int id tv_unread 0x7f080118
 int id tv_user_address 0x7f080130
-int id tv_user_details 0x7f080263
+int id tv_user_details 0x7f080264
 int id tv_user_details_other 0x7f080201
 int id tv_usr_name 0x7f08012c
 int id tv_via 0x7f080129
