@@ -108,6 +108,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
     private long sentOn;
     private String chatId;
+    String firstname ;
 
     String[] splitted ;
 
@@ -195,6 +196,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         partnerPic = getIntent().getExtras().getString("partnerPic");
         partnerName = getIntent().getExtras().getString("partnerName");
         splitted = partnerName.split("\\s+");
+        firstname = splitted[0].toUpperCase();
+
         rId = getIntent().getExtras().getString("rId");
         partnerId = getIntent().getExtras().getString("partnerId");
         myClicks = getIntent().getExtras().getString("myClicks");
@@ -723,19 +726,19 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         String played_Countered = null;
         String  card_originator = null;
         String card_owner = null;
-        String edittext = null;
 
         String cardId = null;
         boolean from = true;
 
 
         from = intent.getExtras().getBoolean("FromCard");
-       
+
 
         if(from) {
             boolean isCounter = intent.getExtras().getBoolean("isCounter");
             cardUrl = intent.getExtras().getString("card_url");
             cardClicks = intent.getExtras().getString("card_clicks");
+
             cardTittle = intent.getExtras().getString("Title");
             cardDiscription = intent.getExtras().getString("Discription");
             cardId = intent.getExtras().getString("card_id");
@@ -807,7 +810,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             addChat.setCard_id(card_id);
             addChat.setCard_Played_Countered(played_Countered);
             addChat.setCard_originator(card_owner);
-            addChat.setCardPartnerName(partnerName);
+
+            addChat.setCardPartnerName(firstname);
 
             addChat.setTimeStamp(String.valueOf(sentOn));
             chatManager.chatListFromServer.add(addChat);
@@ -1208,7 +1212,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                     }
 
                 }else if (chatType.equalsIgnoreCase("5")) {
-
+                           String firstname1 = firstname + " ";
                    if (card_Accepted_Rejected.equalsIgnoreCase("accepted")) {
 
                        Log.e(TAG, "Chattype 5 accepted Only Card File");
@@ -1226,7 +1230,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                        addChat.setCard_id(card_id);
                        addChat.setCard_Played_Countered(card_Played_Countered);
                        addChat.setCard_originator(card_originator);
-                       addChat.setCardPartnerName(partnerName);
+
+                       addChat.setCardPartnerName(firstname1);
 
                        addChat.setTimeStamp(String.valueOf(sentOn));
                        chatManager.chatListFromServer.add(addChat);
@@ -1249,7 +1254,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                        addChat.setCard_id(card_id);
                        addChat.setCard_Played_Countered(card_Played_Countered);
                        addChat.setCard_originator(card_originator);
-                       addChat.setCardPartnerName(partnerName);
+                       addChat.setCardPartnerName(firstname1);
 
                        addChat.setTimeStamp(String.valueOf(sentOn));
                        chatManager.chatListFromServer.add(addChat);
@@ -1270,7 +1275,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                        addChat.setCard_id(card_id);
                        addChat.setCard_Played_Countered(card_Played_Countered);
                        addChat.setCard_originator(card_originator);
-                       addChat.setCardPartnerName(partnerName);
+                       addChat.setCardPartnerName(firstname1);
 
                        addChat.setTimeStamp(String.valueOf(sentOn));
                        chatManager.chatListFromServer.add(addChat);
@@ -1328,6 +1333,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             if (resultCode == RESULT_OK) {
                 switch (requestCode) {
                     case Constants.CAMERA_REQUEST:
+                        Bitmap imagebitmap ;
                         mImageCaptureUri = data.getData();
                         Log.e(TAG, "CAMERA_REQUEST" + "--> " + mImageCaptureUri);
                         try {
@@ -1351,7 +1357,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                         try {
 
                             mImageCaptureUri = Utils.decodeUri(ChatRecordView.this, mImageCaptureUri, 100);
-                            path = Utils.getRealPathFromURI(mImageCaptureUri, ChatRecordView.this);
+                               path = Utils.getRealPathFromURI(mImageCaptureUri, ChatRecordView.this);
                             currentImagepath = mImageCaptureUri.toString();
 
                             Picasso.with(ChatRecordView.this).load(mImageCaptureUri.toString())

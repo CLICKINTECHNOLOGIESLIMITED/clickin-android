@@ -75,10 +75,11 @@ public class CardGridViewAdapter extends ArrayAdapter<CardBean> {
             public void onClick(View view) {
 
                 Log.e(TAG, "View is Clicked" + pos);
-                CardBean bean = getItem(position);
+
 
 
                 if(debug) {
+                    CardBean bean = getItem(position);
                     String url = bean.getCardUrl();
                     String Title = bean.getCardTitle();
                     String Discription = bean.getCardDescription();
@@ -97,7 +98,7 @@ public class CardGridViewAdapter extends ArrayAdapter<CardBean> {
 
                 else {
 
-                    bean = getItem(position-1);
+                    CardBean bean = getItem(position);
                     String url;
                     String url1 = bean.getCardUrl() ;
                     String add = "/a/1080" ;

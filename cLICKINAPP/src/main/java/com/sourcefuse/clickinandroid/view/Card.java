@@ -3,7 +3,6 @@ package com.sourcefuse.clickinandroid.view;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -11,9 +10,9 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.sourcefuse.clickinandroid.utils.CardDialog;
 import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
@@ -119,11 +118,7 @@ public class Card extends Activity implements View.OnClickListener,TextWatcher {
                     }
                 });
 
-
-
     }
-
-
 
 
     @Override
@@ -162,6 +157,7 @@ public class Card extends Activity implements View.OnClickListener,TextWatcher {
                 trd_clicks_top.setText("15");
                 break;
             case R.id.btn_four:
+                clicks = "20";
                 trone.setSelected(false);
                 trtwo.setSelected(false);
                 trthree.setSelected(false);
@@ -171,7 +167,7 @@ public class Card extends Activity implements View.OnClickListener,TextWatcher {
                 trd_clicks_top.setText("20");
                 break;
             case R.id.btn_five:
-                clicks = "20";
+                clicks = "25";
                 trone.setSelected(false);
                 trtwo.setSelected(false);
                 trthree.setSelected(false);
@@ -181,27 +177,36 @@ public class Card extends Activity implements View.OnClickListener,TextWatcher {
                 trd_clicks_top.setText("25");
                 break;
             case R.id.btn_play:
-                Intent i=new Intent();
-                i.putExtra("FromCard",true);
-                if(forCounter){
-                 i.putExtra("isCounter",true);
-                }else{
-                  i.putExtra("isCounter",false);
-                }
-                i.putExtra("card_url",url);
-                i.putExtra("card_clicks",clicks);
-                i.putExtra("Title",cardTitle);
-                i.putExtra("Discription",cardDiscription);
-                i.putExtra("card_id",card_id);
 
-                i.setClass(this,ChatRecordView.class);
-                i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(i);
-              //  finish();
+                if(trd_clicks_top.getText().equals("  0") && trd_clicks_bottom.getText().equals("0 ")){
+
+                    CardDialog cardDialog = new CardDialog();
+                    cardDialog.popupDialog(Card.this);
+
+                }else {
+                    Intent i = new Intent();
+                    i.putExtra("FromCard", true);
+                    if (forCounter) {
+                        i.putExtra("isCounter", true);
+                    } else {
+                        i.putExtra("isCounter", false);
+                    }
+                    i.putExtra("card_url", url);
+                    i.putExtra("card_clicks", clicks);
+                    i.putExtra("Title", cardTitle);
+                    i.putExtra("Discription", cardDiscription);
+                    i.putExtra("card_id", card_id);
+
+                    i.setClass(this, ChatRecordView.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(i);
+                } //  finish();
                 break;
         }
     }
+
+
 
     @Override
     public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
