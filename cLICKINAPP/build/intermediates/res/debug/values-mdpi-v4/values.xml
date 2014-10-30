@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- From: file:/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/facebookSDK/unspecified/res/values-mdpi-v4/values.xml -->
+    <!-- From: file:/home/mukesh/clickAMaster/cLICKINAPP/build/intermediates/exploded-aar/clickAMaster/facebookSDK/unspecified/res/values-mdpi-v4/values.xml -->
     <eat-comment />
 
     <dimen name="com_facebook_picker_divider_width">1px</dimen>

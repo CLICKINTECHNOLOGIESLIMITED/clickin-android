@@ -31,12 +31,13 @@
         public static final String COLUMN_CLICKS = "clicks";
         public static final String COLUMN_TIMESTAMP = "timeStamp";
         public static final String COLUMN_FILEID = "fileId";
+        public static final String COLUMN_USERID = "userId";
 
         public static final String COLUMN_SHAREEDMESSAGE = "sharedMessage";
         public static final String COLUMN_VIDEOTHAUMB = "video_thumb";
         public static final String COLUMN_SENDERUSERTOKEN = "senderUserToken";
         public static final String COLUMN_RELATIONSHIPID = "relationshipId";
-        public static final String COLUMN_USERID = "userId";
+        //public static final String COLUMN_USERID = "userId";
         public static final String COLUMN_LOCATION = "location_coordinates";
         public static final String COLUMN_ISDELIVERED = "isDelivered";
         public static final String COLUMN_IMAGERATIO = "imageRatio";
@@ -78,6 +79,7 @@
                 + COLUMN_MSG_TYPE + " text, "
                 + COLUMN_CLICKS + " text, "
                 + COLUMN_TIMESTAMP + " text, "
+                + COLUMN_USERID + " text, "
                 + COLUMN_FILEID + " text);";
 
         private int i;
@@ -127,6 +129,7 @@
                     ChatRecordBeen chat = chatList.get(k);
                     ContentValues contentValues = new ContentValues();
                     Log.e(TAG,"----i..>"+k);
+                    contentValues.put(COLUMN_USERID, chat.getUserId());
                     contentValues.put(COLUMN_SID, chat.getSenderQbId());
                     contentValues.put(COLUMN_RID, chat.getRecieverQbId());
                     contentValues.put(COLUMN_MSGID, chat.getMessageId());
@@ -138,11 +141,13 @@
                     dbObj.insert(TABLE_CHATRECORD, null, contentValues);
                 }
             }else{
+                long naa=0;
                 for(int j = 0;j<chatList.size();j++) {
                     ChatRecordBeen chat = chatList.get(j);
                     ContentValues contentValues = new ContentValues();
 
                     contentValues.put(COLUMN_SID, chat.getSenderQbId());
+                    contentValues.put(COLUMN_USERID, chat.getUserId());
                     contentValues.put(COLUMN_RID, chat.getRecieverQbId());
                     contentValues.put(COLUMN_MSGID, chat.getMessageId());
                     contentValues.put(COLUMN_MSG, chat.getChatText());
@@ -150,7 +155,7 @@
                     contentValues.put(COLUMN_CLICKS, chat.getClicks());
                     contentValues.put(COLUMN_TIMESTAMP, chat.getTimeStamp());
                     contentValues.put(COLUMN_FILEID, chat.getChatImageUrl());
-                    dbObj.insert(TABLE_CHATRECORD, null, contentValues);
+                    naa=dbObj.insert(TABLE_CHATRECORD, null, contentValues);
                 }
             }
 
@@ -160,7 +165,7 @@
                 }
 
             return 1;
-        }
+        } 
 
 
 
@@ -172,18 +177,19 @@
 
             ArrayList<ChatRecordBeen> chatList = new ArrayList<ChatRecordBeen>();
             ChatRecordBeen chat;
-          //  String selectUserChats = "SELECT  * FROM " + TABLE_CHATRECORD + " ORDER BY "+COLUMN_TIMESTAMP +" DESC  WHERE ("+ COLUMN_SID + " = "+sQbId+" AND " +COLUMN_RID +" = "+rQbId+" ) OR ( "+ COLUMN_SID + " = "+rQbId+" AND " +COLUMN_RID +" = "+sQbId +" )";
-            String selectUserChats = "SELECT  * FROM " + TABLE_CHATRECORD +" WHERE ("+ COLUMN_SID + " = "+sQbId+" AND " +COLUMN_RID +" = "+rQbId+" ) OR ( "+ COLUMN_SID + " = "+rQbId+" AND " +COLUMN_RID +" = "+sQbId +" )";
+           //String selectUserChats = "SELECT  * FROM " + TABLE_CHATRECORD + " ORDER BY "+COLUMN_TIMESTAMP +" DESC  WHERE ("+ COLUMN_SID + " = "+sQbId+" AND " +COLUMN_RID +" = "+rQbId+" ) OR ( "+ COLUMN_SID + " = "+rQbId+" AND " +COLUMN_RID +" = "+sQbId +" )";
+            //String selectUserChats = "SELECT * FROM " + TABLE_CHATRECORD +" WHERE("+ COLUMN_SID + "="+sQbId+" AND " +COLUMN_RID +"="+rQbId+") OR ("+ COLUMN_SID + "="+rQbId+" AND " +COLUMN_RID +" = "+sQbId +")";
+            String selectUserChats = "SELECT * FROM " + TABLE_CHATRECORD +  " WHERE("+ COLUMN_SID + "="+sQbId+" AND " +COLUMN_RID +"="+rQbId+") OR ("+ COLUMN_SID + "="+rQbId+" AND " +COLUMN_RID +" = "+sQbId +")"+" ORDER BY "+COLUMN_TIMESTAMP;
             Log.e(TAG,"selectUserChats--> "+selectUserChats);
 
-            //Cursor chatCursor = dbObj.query(TABLE_CHATRECORD, null, null, null, null,null, null);
             Cursor chatCursor = dbObj. rawQuery( selectUserChats, null );
-
+            int si=chatCursor.getCount();
 
             if (chatCursor.moveToFirst()) {
                 do{
                     chat = new ChatRecordBeen();
                     chat.setSenderQbId(chatCursor.getString(chatCursor.getColumnIndex(COLUMN_SID)));
+                    chat.setUserId(chatCursor.getString(chatCursor.getColumnIndex(COLUMN_USERID)));
                     chat.setRecieverQbId(chatCursor.getString(chatCursor.getColumnIndex(COLUMN_RID)));
                     chat.setMessageId(chatCursor.getString(chatCursor.getColumnIndex(COLUMN_MSGID)));
                     chat.setChatText(chatCursor.getString(chatCursor.getColumnIndex(COLUMN_MSG)));
@@ -208,16 +214,12 @@
             if (dbObj == null || !dbObj.isOpen())
                 openDataBase();
 
-        //    String deleteUserChats = "DELETE FROM " + TABLE_CHATRECORD +" WHERE ("+ COLUMN_SID + " = "+sQbId+" AND " +COLUMN_RID +" = "+rQbId+" ) OR ( "+ COLUMN_SID + " = "+rQbId+" AND " +COLUMN_RID +" = "+sQbId +" )";
+        //String deleteUserChats = "DELETE FROM " + TABLE_CHATRECORD +" WHERE ("+ COLUMN_SID + "="+sQbId+" AND " +COLUMN_RID +"="+rQbId+") OR ("+ COLUMN_SID + "="+rQbId+" AND " +COLUMN_RID +"="+sQbId +")";
 
             String deleteUserChats  = "( "+ COLUMN_SID + " = "+sQbId+" AND " +COLUMN_RID +" = "+rQbId+" ) OR ( "+ COLUMN_SID + " = "+rQbId+" AND " +COLUMN_RID +" = "+sQbId+" )";
-
             Log.e(TAG,"deleteUserChats--> "+deleteUserChats);
-
-
             dbObj.delete(TABLE_CHATRECORD, deleteUserChats, null);
 
-            // dbObj. delete( deleteUserChats, null );
             return 1;
         }
 

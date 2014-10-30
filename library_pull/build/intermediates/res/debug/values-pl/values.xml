@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- From: file:/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/library_pull/src/main/res/values-pl/pull_refresh_strings.xml -->
+    <!-- From: file:/home/mukesh/clickAMaster/library_pull/src/main/res/values-pl/pull_refresh_strings.xml -->
     <eat-comment />
 
     <string name="pull_to_refresh_pull_label">Przesuń w dół, by odświeżyć…</string>

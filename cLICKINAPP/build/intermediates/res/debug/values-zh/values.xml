@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- From: file:/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.navercorp.pulltorefresh/library/3.2.0/res/values-zh/values.xml -->
+    <!-- From: file:/home/mukesh/clickAMaster/cLICKINAPP/build/intermediates/exploded-aar/com.navercorp.pulltorefresh/library/3.2.0/res/values-zh/values.xml -->
     <eat-comment />
 
     <string name="pull_to_refresh_pull_label">下拉刷新…</string>
