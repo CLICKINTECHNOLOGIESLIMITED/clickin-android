@@ -7,6 +7,11 @@ public class APIs {
     //public static final String baseurl = "http://23.21.65.97"; //staging
 
 
+
+   //clickin@sourcefuse.com
+   //sourcefuse1234
+
+
     public static final String CHECKREGISTEREDFRIENDS = baseurl+"/users/checkregisteredfriends/";
     public static final String RESENDVERIFYCODE = baseurl+"/users/resendvcode/";
     public static final String UPDATEPROFILE = baseurl+"/users/updateprofile/";
@@ -17,13 +22,13 @@ public class APIs {
 	public static final String SIGNIN = baseurl+"/users/signin/";
 
 	//Relationships
-    public static final String FETCHPROFILERELATIONSHIPS = baseurl+"/users/fetchprofilerelationships/profile_phone_no:%2B/";
+    public static final String FETCHPROFILERELATIONSHIPS = baseurl+"/users/fetchprofilerelationships/profile_phone_no:%2B";
     public static final String INVITEANDFOLLOWUSERS = baseurl+"/relationships/inviteandfollowusers/";
     public static final String DELETERELATIONSHIP = baseurl+"/relationships/deleterelationship/";
-    public static final String FETCHUSERSBYNAME = baseurl+"/relationships/fetchusersbyname/";
+    public static final String FETCHUSERSBYNAME = baseurl+"/relationships/fetchusersbyname";
     public static final String GETRELATIONSHIPS = baseurl+"/relationships/getrelationships/";
-    public static final String CHANGEVISIBILITY = baseurl+"/relationships/changevisibility/";
-    public static final String FOLLOWUPDATESTATUS = baseurl+"/users/followupdatestatus/";//REJECT FOLLOW REQUEST
+    public static final String CHANGEVISIBILITY = baseurl+"/relationships/changevisibility";
+    public static final String FOLLOWUPDATESTATUS = baseurl+"/users/followupdatestatus";//REJECT FOLLOW REQUEST
     public static final String NEWREQUEST = baseurl+"/relationships/newrequest/";
 	public static final String FOLLOWUSER = baseurl+"/relationships/followuser/";
 	public static final String UPDATESTATUS = baseurl+"/relationships/updatestatus/";
@@ -57,10 +62,10 @@ public class APIs {
     public static final String FETCHPROFILEINFO = baseurl+"/users/fetchprofileinfo/profile_phone_no:";
 
     //Setting..
-    public static final String SETTINGCHANGELASTSEENTIME = baseurl+"/settings/changelastseentime/";
-    public static final String SETTINGCHANGEDEACTIVATE = baseurl+"/settings/deactivateaccount/";
-    public static final String SETTINGCHANGEPASSWORD = baseurl+"/settings/changepassword/";
-    public static final String SETTINGREPORTPROBLEM = baseurl+"/settings/reportaproblem/";
-    public static final String SETTINGFORGOTPASSWORD = baseurl+"/settings/forgotpassword/";
-    public static final String SETTINGCHANGE = baseurl+"/settings/change/";
+    public static final String SETTINGCHANGELASTSEENTIME = baseurl+"/settings/changelastseentime";
+    public static final String SETTINGCHANGEDEACTIVATE = baseurl+"/settings/deactivateaccount";
+    public static final String SETTINGCHANGEPASSWORD = baseurl+"/settings/changepassword";
+    public static final String SETTINGREPORTPROBLEM = baseurl+"/settings/reportaproblem";
+    public static final String SETTINGFORGOTPASSWORD = baseurl+"/settings/forgotpassword";
+    public static final String SETTINGCHANGE = baseurl+"/settings/change";
 }

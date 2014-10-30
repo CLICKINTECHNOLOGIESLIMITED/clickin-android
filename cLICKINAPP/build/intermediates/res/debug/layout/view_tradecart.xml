@@ -134,6 +134,7 @@
         >
 
         <RelativeLayout
+            android:id="@+id/rr_send"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 

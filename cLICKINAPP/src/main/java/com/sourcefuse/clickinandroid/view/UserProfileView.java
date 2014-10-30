@@ -4,12 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
-import android.media.MediaScannerConnection;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.Handler;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,7 +23,6 @@ import com.sourcefuse.clickinandroid.model.ProfileManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.Constants;
-import com.sourcefuse.clickinandroid.utils.MyPreference;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.adapter.SimpleSectionedListAdapter1;
 import com.sourcefuse.clickinandroid.view.adapter.SimpleSectionedListAdapter1.Section;
@@ -35,14 +30,8 @@ import com.sourcefuse.clickinandroid.view.adapter.UserRelationAdapter;
 import com.sourcefuse.clickinapp.R;
 import com.squareup.picasso.Picasso;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
-
-import de.greenrobot.event.EventBus;
 
 
 public class UserProfileView extends ClickInBaseView implements View.OnClickListener {
@@ -174,6 +163,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
 		name.setText(authManager.getUserName());
 		String dtails = "";
         String gender="";
+        String dob = "";
         try {
             try {
                 Log.e(TAG,"Gender -->"+authManager.getGender());
@@ -181,7 +171,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
                     dtails = "Female, ";
                     gender="Female";
                 } else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().matches("guy")) {
-                    dtails = "Male, ";
+                    dtails = "Male,";
                     gender="Male";
                 }
             }catch (Exception e){}

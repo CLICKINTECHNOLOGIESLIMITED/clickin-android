@@ -99,18 +99,22 @@ Bundle bundle = getIntent().getExtras();
                     }
                 else
                 {
+                    searchLocation.setText(coordinates);
                     double latitude = Double.parseDouble(coordinates.substring(0,coordinates.indexOf(",")));
 
                     double longitude = Double.parseDouble(coordinates.substring(coordinates.indexOf(",")+1));
                     Log.e("lat/long",""+latitude+"/"+longitude);
                     // Creating a LatLng object for the current location
                     LatLng latLng = new LatLng(latitude, longitude);
+//                 
 
                     // Showing the current location in Google Map
                     googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
 
                     // Zoom in the Google Map
                     googleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+
+
                 }
             }
 

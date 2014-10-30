@@ -11,6 +11,7 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.sourcefuse.clickinapp.R;
@@ -21,18 +22,20 @@ import com.sourcefuse.clickinapp.R;
 public class ViewTradeCart extends Activity implements View.OnClickListener
 {
     TextWatcher textWatcher ;
-    ImageView mback ;
+    ImageView mback ,btnPlay;
     EditText card_text;
     TextView trd_clicks_top,trd_clicks_bottom;
     TextView trone,trtwo,trthree,trfour,trfive;
+    RelativeLayout layout ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.view_tradecart);
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        layout = (RelativeLayout)findViewById(R.id.rr_send);
         LinearLayout back = (LinearLayout)findViewById(R.id.linear_layout_back);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,6 +67,8 @@ public class ViewTradeCart extends Activity implements View.OnClickListener
         trthree.setOnClickListener(this);
         trfour.setOnClickListener(this);
         trfive.setOnClickListener(this);
+        btnPlay = (ImageView)findViewById(R.id.btn_play);
+        btnPlay.setOnClickListener(this);
 
 
 
@@ -164,11 +169,33 @@ public class ViewTradeCart extends Activity implements View.OnClickListener
                 trd_clicks_top.setText("25");
                 break;
             case R.id.btn_play:
+
+
+//                Intent i=new Intent();
+//                i.putExtra("FromCard",true);
+//                if(forCounter){
+//                    i.putExtra("isCounter",true);
+//                }else{
+//                    i.putExtra("isCounter",false);
+//                }
+//                i.putExtra("card_url",url);
+//                i.putExtra("card_clicks",clicks);
+//                i.putExtra("Title",cardTitle);
+//                i.putExtra("Discription",cardDiscription);
+//                i.putExtra("card_id",card_id);
+//
+//                i.setClass(this,ChatRecordView.class);
+//                i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                startActivity(i);
+                //  finish();
                 break;
+        }
+
         }
     }
 
 
 
 
-}
+

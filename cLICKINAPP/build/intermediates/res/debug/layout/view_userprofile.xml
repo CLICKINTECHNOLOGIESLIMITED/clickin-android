@@ -99,6 +99,7 @@
                         android:layout_below="@+id/iv_usr_icon"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="8dp"
+                        android:singleLine="false"
                         android:text="Jacob smith"
                         android:textColor="@color/owner_profile_address_m"
                         android:textSize="16sp" />

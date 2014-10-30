@@ -7,12 +7,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
-import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.telephony.TelephonyManager;
 import android.text.Editable;
@@ -39,15 +36,11 @@ import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
 import com.sourcefuse.clickinandroid.model.SettingManager;
-import com.sourcefuse.clickinandroid.services.QbChatService;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.ClickInAlertDialog;
 import com.sourcefuse.clickinandroid.utils.Constants;
-import com.sourcefuse.clickinandroid.utils.MyPreference;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
-
-import org.jivesoftware.smack.ConnectionListener;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -249,7 +242,8 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
             authManager.getProfileInfo("", authManager.getPhoneNo(), authManager.getUsrToken());
         } else if (getMsg.equalsIgnoreCase("SignIn False")) {
             Utils.dismissBarDialog();
-            Utils.showAlert(SignInView.this, authManager.getMessage());
+            Utils.showAlert(this,AlertMessage.wrong_signIn_details);
+            //Utils.showAlert(SignInView.this, authManager.getMessage());
         } else if (getMsg.equalsIgnoreCase("SignIn Network Error")) {
             Utils.dismissBarDialog();
             Utils.showAlert(act, AlertMessage.connectionError);
@@ -272,7 +266,8 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
 
         } else if (getMsg.equalsIgnoreCase("ProfileInfo False")) {
             Utils.dismissBarDialog();
-            Utils.showAlert(SignInView.this, authManager.getMessage());
+
+           Utils.showAlert(SignInView.this, authManager.getMessage());
         } else if (getMsg.equalsIgnoreCase("ProfileInfo Network Error")) {
             Utils.dismissBarDialog();
             Utils.showAlert(act, AlertMessage.connectionError);

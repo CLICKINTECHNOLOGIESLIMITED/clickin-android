@@ -114,7 +114,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     private long sentOn;
     private String chatId;
 
-
+    String[] splitted ;
 
     private boolean showAttachmentView = true;
     private LinearLayout llAttachment;
@@ -199,6 +199,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         qBId = getIntent().getExtras().getString("quickId");
         partnerPic = getIntent().getExtras().getString("partnerPic");
         partnerName = getIntent().getExtras().getString("partnerName");
+        splitted = partnerName.split("\\s+");
         rId = getIntent().getExtras().getString("rId");
         partnerId = getIntent().getExtras().getString("partnerId");
         myClicks = getIntent().getExtras().getString("myClicks");
@@ -209,7 +210,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         chatManager = ModelManager.getInstance().getChatManager();
         chatManager.chatListFromServer.clear();
 
-        chatManager.fetchChatRecord(rId, authManager.getPhoneNo(), authManager.getUsrToken(),"");
+        //chatManager.fetchChatRecord(rId, authManager.getPhoneNo(), authManager.getUsrToken(),"");
 // set ClicKs
         if(chatManager.getMyTotalClick()==0 && chatManager.getPartnerTotalClick()==0) {
             chatManager.setPartnerTotalClick(Integer.parseInt(myClicks));
@@ -221,7 +222,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             partnerTotalclicks.setText("" + chatManager.getPartnerTotalClick());
         }
 
-        profileName.setText("" + partnerName);
+        profileName.setText("" + splitted[0]);
         try {
             Picasso.with(ChatRecordView.this).load(authManager.getUserPic())
                     .skipMemoryCache()
@@ -326,7 +327,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
 
         chatData.clear();
-       // setlist();
+       setlist();
 
 
 
@@ -467,10 +468,11 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             dbHelper.openDataBase();
             authManager = ModelManager.getInstance().getAuthorizationManager();
             databaseList.clear();
-            chatData.clear();
+            
             databaseList = dbHelper.getAllChat(authManager.getQBId(), qBId);
             Log.e(TAG, "This get From DATABASE-> " + databaseList.size());
-            chatData.addAll(databaseList);
+            chatManager.chatListFromServer.addAll(databaseList);
+
         } catch (Exception e) {
             Log.e(TAG, "Exception-> " + e.toString());
         }
@@ -490,6 +492,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
 
                 ChatRecordBeen addChat = new ChatRecordBeen();
+                addChat.setSenderQbId(authManager.getQBId());
+                addChat.setRecieverQbId(qBId);
                 sentOn = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis();
                 chatId = authManager.getQBId()+qBId + sentOn;
                 Log.e(TAG, "chatId" + chatId);
@@ -511,19 +515,22 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                             addChat.setChatText(chatString);
                             chatString = "";
                         }
+                        addChat.setSenderQbId(authManager.getQBId());
+                        addChat.setRecieverQbId(qBId);
                         addChat.setUserId(authManager.getUserId());
                         addChat.setClicks(clicksValue);
                         addChat.setTimeStamp(String.valueOf(sentOn));
 
                         if (clicksValue.equalsIgnoreCase("no") && !Utils.isEmptyString(chatString)) {
                             sendWithExtension(chatString, "no");
+                            clicksValue = null;
                         } else if(Utils.isEmptyString(chatString) && !clicksValue.equalsIgnoreCase("no")) {
                             sendWithExtension(clicksValue+"   " , clicksValue+"   ");
                         }else if(!Utils.isEmptyString(chatString) &&  !clicksValue.equalsIgnoreCase("no") ) {
                             sendWithExtension(clicksValue+"      "+chatString , clicksValue);
                         }
 
-                        createRfecordOnQuickBlox(clicksValue + chatString, clicksValue, null, rId, authManager.getUserId(), authManager.getUsrToken(), "" + sentOn, chatId, "1", null, null, null, null, null, null);
+                        createRfecordOnQuickBlox(chatString, clicksValue, null, rId, authManager.getUserId(), authManager.getUsrToken(), "" + sentOn, chatId, "1", null, null, null, null, null, null);
                         chatManager.chatListFromServer.add(addChat);
                         adapter.notifyDataSetChanged();
                         //chatText.setText("");
@@ -727,11 +734,15 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         String played_Countered = null;
         String  card_originator = null;
         String card_owner = null;
+        String edittext = null;
 
         String cardId = null;
         boolean from = true;
 
+
         from = intent.getExtras().getBoolean("FromCard");
+       
+
         if(from) {
             boolean isCounter = intent.getExtras().getBoolean("isCounter");
             cardUrl = intent.getExtras().getString("card_url");
@@ -747,7 +758,9 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             }
 
 
-        }else{
+        }
+
+        else{
             cardUrl = intent.getExtras().getString("card_url");
             cardClicks = intent.getExtras().getString("card_clicks");
             cardTittle = intent.getExtras().getString("Title");
@@ -762,6 +775,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         }
 
     }
+
+
 
     private void sendCardToPartner(String card_url, String cardTittle,String cardDiscription,String cardId, String clicks,String is_CustomCard,String card_DB_ID,String accepted_Rejected,String played_Countered,String card_originator,String card_owner) {
 
@@ -791,6 +806,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
             ChatRecordBeen addChat = new ChatRecordBeen();
             addChat.setChatType("5");
+            addChat.setSenderQbId(authManager.getQBId());
+            addChat.setRecieverQbId(qBId);
             addChat.setUserId(authManager.getUserId());
             addChat.setCard_clicks(clicks);
             addChat.setCard_owner(authManager.getQBId());
@@ -889,7 +906,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
         try {
             dbHelper.deleteChat(authManager.getQBId(), qBId);
-            dbHelper.addChatList(chatData);
+            dbHelper.addChatList(chatManager.chatListFromServer);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1101,6 +1118,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 if (chatType.equalsIgnoreCase("1")) {
 
                     //chatManager = ModelManager.getInstance().getChatManager();
+                    addChat.setSenderQbId(authManager.getQBId());
+                    addChat.setRecieverQbId(qBId);
                     Log.e(TAG, "-TYPE ONE --");
                     if (clicks.equalsIgnoreCase("no")) {
                         addChat.setChatType(chatType);
@@ -1128,7 +1147,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                         adapter.notifyDataSetChanged();
                     }
                 } else if (chatType.equalsIgnoreCase("2")) {
-
+                    addChat.setSenderQbId(authManager.getQBId());
+                    addChat.setRecieverQbId(qBId);
                     if (clicks.equalsIgnoreCase("no") && Utils.isEmptyString(body)) {
                         Log.e(TAG, "Chattype 2 --2");
                         addChat.setChatType(chatType);
@@ -1166,7 +1186,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                     }
 
                 } else if (chatType.equalsIgnoreCase("3")) {
-
+                    addChat.setSenderQbId(authManager.getQBId());
+                    addChat.setRecieverQbId(qBId);
                     if (clicks.equalsIgnoreCase("no") && Utils.isEmptyString(body)) {
                         Log.e(TAG, "Chattype 3 Only Audio File");
 
@@ -1204,7 +1225,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                     }
 
                 }else if (chatType.equalsIgnoreCase("5")) {
-
+                    addChat.setSenderQbId(authManager.getQBId());
+                    addChat.setRecieverQbId(qBId);
                    if (card_Accepted_Rejected.equalsIgnoreCase("accepted")) {
 
                        Log.e(TAG, "Chattype 5 accepted Only Card File");
@@ -1397,9 +1419,9 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                     Log.e(TAG, "Uploaded  --> " + uploadedImgUrl);
                     sendImagetoPartner(uploadedImgUrl, msg, clicks);
                     if (clicks.equalsIgnoreCase("no")) {
-                        createRfecordOnQuickBlox(msg, null, uploadedImgUrl, rId, authManager.getUserId(), authManager.getUsrToken(), "" + sentOn, chatId, "2", null, "1", null, null, null, null);
+                        createRfecordOnQuickBlox(msg, null, uploadedImgUrl, rId, authManager.getUserId(), authManager.getUsrToken(), "" + sentOn, chatId, "2", null, "1.000000", null, null, null, null);
                     }else{
-                        createRfecordOnQuickBlox(clicks + msg, clicks, uploadedImgUrl, rId, authManager.getUserId(), authManager.getUsrToken(), "" + sentOn, chatId, "2", null, "1", null, null, null, null);
+                        createRfecordOnQuickBlox(msg, clicks, uploadedImgUrl, rId, authManager.getUserId(), authManager.getUsrToken(), "" + sentOn, chatId, "2", null, "1.000000", null, null, null, null);
                     }
                 }
             }

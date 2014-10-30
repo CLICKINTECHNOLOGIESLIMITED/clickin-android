@@ -213,6 +213,7 @@
     <color name="inbox_read">#c6c3c3</color>
     <color name="light_gray">#E6E6E6</color>
     <color name="lightest_gray">#F6F6F6</color>
+    <color name="menu_footer">#64718f</color>
     <color name="optionbar">#303030</color>
     <color name="owner_profile_address_m">#727271</color>
     <color name="owner_profile_header_b">#fefefe</color>
