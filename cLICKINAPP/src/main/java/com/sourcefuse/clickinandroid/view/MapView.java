@@ -41,55 +41,78 @@ import java.util.List;
     private EditText searchLocation;
     MarkerOptions markerOptions;
     LatLng latLng;
+    String coordinates = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.view_mapview);
-
+Bundle bundle = getIntent().getExtras();
+        if(bundle!=null)
+        {
+            coordinates = bundle.getString("coordinates");
+        }
       //  http://maps.google.com/maps/api/staticmap?center=28.6189112,77.3786174&markers=color%3ared|color%3ared|label%3aA|28.6189112,77.3786174&zoom=15&size=500x180&sensor=true
         //http://maps.google.com/maps/api/staticmap?center=28.6189112,77.3786174&zoom=15&size=500x180&sensor=true
         searchLocation = (EditText) findViewById(R.id.edt_location_search);
         searchLocation.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
 //            map =  ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
-        // Getting Google Play availability status
-        int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
 
-        // Showing status
-        if (status != ConnectionResult.SUCCESS) { // Google Play Services are not available
+            // Getting Google Play availability status
+            int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
 
-            int requestCode = 10;
-            Dialog dialog = GooglePlayServicesUtil.getErrorDialog(status, this, requestCode);
-            dialog.show();
+            // Showing status
+            if (status != ConnectionResult.SUCCESS) { // Google Play Services are not available
 
-        } else { // Google Play Services are available
+                int requestCode = 10;
+                Dialog dialog = GooglePlayServicesUtil.getErrorDialog(status, this, requestCode);
+                dialog.show();
 
-            // Getting reference to the SupportMapFragment of activity_main.xml
-            SupportMapFragment fm = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+            } else { // Google Play Services are available
 
-            // Getting GoogleMap object from the fragment
-            googleMap = fm.getMap();
+                // Getting reference to the SupportMapFragment of activity_main.xml
+                SupportMapFragment fm = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
 
-            // Enabling MyLocation Layer of Google Map
-            googleMap.setMyLocationEnabled(true);
+                // Getting GoogleMap object from the fragment
+                googleMap = fm.getMap();
 
-            // Getting LocationManager object from System Service LOCATION_SERVICE
-            LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+                if(coordinates==null) {
+                    // Enabling MyLocation Layer of Google Map
+                    googleMap.setMyLocationEnabled(true);
 
-            // Creating a criteria object to retrieve provider
-            Criteria criteria = new Criteria();
+                    // Getting LocationManager object from System Service LOCATION_SERVICE
+                    LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
-            // Getting the name of the best provider
-            String provider = locationManager.getBestProvider(criteria, true);
+                    // Creating a criteria object to retrieve provider
+                    Criteria criteria = new Criteria();
 
-            // Getting Current Location
-            Location location = locationManager.getLastKnownLocation(provider);
+                    // Getting the name of the best provider
+                    String provider = locationManager.getBestProvider(criteria, true);
 
-            if (location != null) {
-                onLocationChanged(location);
+                    // Getting Current Location
+                    Location location = locationManager.getLastKnownLocation(provider);
+
+                    if (location != null) {
+                        onLocationChanged(location);
+                    }
+                    locationManager.requestLocationUpdates(provider, 20000, 0, this);
+                    }
+                else
+                {
+                    double latitude = Double.parseDouble(coordinates.substring(0,coordinates.indexOf(",")));
+
+                    double longitude = Double.parseDouble(coordinates.substring(coordinates.indexOf(",")+1));
+                    Log.e("lat/long",""+latitude+"/"+longitude);
+                    // Creating a LatLng object for the current location
+                    LatLng latLng = new LatLng(latitude, longitude);
+
+                    // Showing the current location in Google Map
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+
+                    // Zoom in the Google Map
+                    googleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+                }
             }
-            locationManager.requestLocationUpdates(provider, 20000, 0, this);
-        }
 
         searchLocation.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override

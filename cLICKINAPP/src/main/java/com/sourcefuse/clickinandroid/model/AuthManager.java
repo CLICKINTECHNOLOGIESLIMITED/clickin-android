@@ -463,7 +463,7 @@ public class AuthManager extends Observable implements AuthManagerI {
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-
+        Log.e("othersphone url-->", "" + APIs.FETCHPROFILEINFO + "%2B" + str);
         client.get(APIs.FETCHPROFILEINFO + "%2B" + str, new JsonHttpResponseHandler() {
             boolean success = false;
 

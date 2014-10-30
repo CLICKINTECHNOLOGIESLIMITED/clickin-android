@@ -60,7 +60,7 @@
                     android:paddingBottom="2dp"
                     android:paddingLeft="5dp"
                     android:paddingTop="5dp"
-                    android:text="Jacob smith"
+
                     android:textColor="@color/profile_name_b"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -80,7 +80,7 @@
                     android:layout_below="@+id/iv_usr_icon"
                     android:layout_marginLeft="5dp"
                     android:padding="5dp"
-                    android:text="Jacob smith"
+
                     android:textColor="@color/profile_details"
                     android:textSize="14sp" />
 
@@ -257,7 +257,8 @@
             android:text="@string/txt_profile"
             android:textColor="@color/white"
             android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textAllCaps="true"/>
     </RelativeLayout>
 
 </RelativeLayout>

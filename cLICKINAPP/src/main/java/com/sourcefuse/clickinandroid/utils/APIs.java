@@ -3,8 +3,8 @@ package com.sourcefuse.clickinandroid.utils;
 public class APIs {
 	
 
-	//public static final String baseurl ="https://api.clickinapp.com";//prod
-public static final String baseurl = "http://23.21.65.97"; //staging
+	public static final String baseurl ="https://api.clickinapp.com";//prod
+    //public static final String baseurl = "http://23.21.65.97"; //staging
 
 
     public static final String CHECKREGISTEREDFRIENDS = baseurl+"/users/checkregisteredfriends/";
@@ -52,9 +52,9 @@ public static final String baseurl = "http://23.21.65.97"; //staging
 
 
     //fetchprofile
-	public static final String FETCHOTHERPROFILEINFO = baseurl+"/users/fetchprofileinfo/profile_phone_no/";
-    public static final String GETUSERFOLLOWER = baseurl+"/users/fetchprofilefollow/profile_phone_no/";
-    public static final String FETCHPROFILEINFO = baseurl+"/users/fetchprofileinfo/profile_phone_no:/";
+	public static final String FETCHOTHERPROFILEINFO = baseurl+"/users/fetchprofileinfo/profile_phone_no";
+    public static final String GETUSERFOLLOWER = baseurl+"/users/fetchprofilefollow/profile_phone_no";
+    public static final String FETCHPROFILEINFO = baseurl+"/users/fetchprofileinfo/profile_phone_no:";
 
     //Setting..
     public static final String SETTINGCHANGELASTSEENTIME = baseurl+"/settings/changelastseentime/";

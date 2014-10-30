@@ -49,6 +49,7 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
 	private boolean whichList =  false;
     private View headerView ;
 
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -105,6 +106,9 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
 			phForOtherUser = getIntent().getExtras().getString("phNumber");
             authManager.getProfileInfo(phForOtherUser,authManager.getPhoneNo(), authManager.getUsrToken());
             relationManager.fetchprofilerelationships(phForOtherUser, authManager.getPhoneNo(), authManager.getUsrToken());
+            Log.e("name",getIntent().getExtras().getString("name"));
+            name.setText(getIntent().getExtras().getString("name"));
+            profileHeader.setText(getIntent().getExtras().getString("name"));
 		}
 
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -235,9 +239,17 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
         relationManager = ModelManager.getInstance().getRelationManager();
         Log.e("onEventMainThread","-------"+message);
 			if (message.equalsIgnoreCase("ProfileInfo True")) {
-				setProfileData();
+                setProfileData();
+            }else if (message.equalsIgnoreCase("ProfileInfo False")) {
+
+            }else if (message.equalsIgnoreCase("ProfileInfoNetwork Error")) {
+                Utils.showAlert(this, AlertMessage.connectionError);
 			}else if (message.equalsIgnoreCase("Fetchprofilerelationships True")) {
 				setlist();
+            }else if (message.equalsIgnoreCase("Fetchprofilerelationships False")) {
+
+            }else if (message.equalsIgnoreCase("Fetchprofilerelationships Network Error")) {
+                Utils.showAlert(this, AlertMessage.connectionError);
 			}else if (message.equalsIgnoreCase("FollowUser True")) {
 				relationManager = ModelManager.getInstance().getRelationManager();
 				follow.setBackgroundResource(R.drawable.requested_grey);

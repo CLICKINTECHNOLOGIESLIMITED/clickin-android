@@ -3,6 +3,8 @@ package com.sourcefuse.clickinandroid.view;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -10,6 +12,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
@@ -75,6 +78,8 @@ public class FeedCommentsView extends Activity {
         comment = (EditText)findViewById(R.id.comment_edit);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
+        send_btn.setEnabled(false);
+
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,30 +94,51 @@ public class FeedCommentsView extends Activity {
         send_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                send = true;
+                if(!comment.getText().toString().trim().equalsIgnoreCase("")) {
 
-                FeedStarsBean feedStarsBean = new FeedStarsBean();
-                feedStarsBean.setUserName(authMgr.getUserName());
-                feedStarsBean.setUserId(authMgr.getUserId());
-                feedStarsBean.setcreated_sec(String.valueOf(Calendar.getInstance(TimeZone.getDefault()).getTimeInMillis()));
-                feedStarsBean.setUserPic(authMgr.getUserPic());
-                feedStarsBean.setComment(comment.getText().toString());
-                feedList.add(feedStarsBean);
-                if(adapter==null)
-                {
-                    adapter = new FeedsCommentsAdapter(FeedCommentsView.this, R.layout.view_feeds_comments_row, feedList);
-                    list.setAdapter(adapter);
+                    send = true;
+
+                    FeedStarsBean feedStarsBean = new FeedStarsBean();
+                    feedStarsBean.setUserName(authMgr.getUserName());
+                    feedStarsBean.setUserId(authMgr.getUserId());
+                    feedStarsBean.setcreated_sec(String.valueOf(Calendar.getInstance(TimeZone.getDefault()).getTimeInMillis()));
+                    feedStarsBean.setUserPic(authMgr.getUserPic());
+                    feedStarsBean.setComment(comment.getText().toString());
+                    feedList.add(feedStarsBean);
+                    if (adapter == null) {
+                        adapter = new FeedsCommentsAdapter(FeedCommentsView.this, R.layout.view_feeds_comments_row, feedList);
+                        list.setAdapter(adapter);
+                    } else
+                        adapter.notifyDataSetChanged();
+
+                    imm.hideSoftInputFromWindow(comment.getWindowToken(), 0);
+
+                    newsFeedManager.saveStarComment(authMgr.getPhoneNo(), authMgr.getUsrToken(), news_feedId, comment.getText().toString(), "comment");
+                    comment.setText("");
                 }
-                else
-                    adapter.notifyDataSetChanged();
 
-                imm.hideSoftInputFromWindow(comment.getWindowToken(), 0);
-
-                newsFeedManager.saveStarComment(authMgr.getPhoneNo(),authMgr.getUsrToken(),news_feedId,comment.getText().toString(),"comment");
-                comment.setText("");
             }
         });
 
+        comment.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(!s.toString().trim().equalsIgnoreCase(""))
+                    send_btn.setEnabled(true);
+                else
+                    send_btn.setEnabled(false);
+            }
+        });
 
         Utils.launchBarDialog(FeedCommentsView.this);
 
