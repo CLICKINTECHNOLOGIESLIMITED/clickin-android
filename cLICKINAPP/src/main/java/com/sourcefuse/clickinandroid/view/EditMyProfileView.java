@@ -183,6 +183,12 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
                         mySelfy.setImageBitmap(imageBitmap);
                     }
 
+
+
+
+
+
+
                     authManager.setUserPic(imageBitmap.toString());
                     authManager.setMenuUserInfoFlag(true);
 
@@ -224,6 +230,39 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
                     mySelfy.setImageBitmap(imageBitmap);
                     authManager.setUserPic(imageBitmap.toString());
                     authManager.setMenuUserInfoFlag(true);
+
+                    /* check code prafull*/
+
+
+
+
+                    Bitmap resized;
+                    if (imageBitmap.getWidth() >= imageBitmap.getHeight()) {
+
+                        resized = Bitmap.createBitmap(
+                                imageBitmap,
+                                imageBitmap.getWidth() / 2 - imageBitmap.getHeight() / 2,
+                                0,
+                                118,
+                                118
+                        );
+
+                    } else {
+
+                        resized = Bitmap.createBitmap(
+                                imageBitmap,
+                                0,
+                                imageBitmap.getHeight() / 2 - imageBitmap.getWidth() / 2,
+                                118,
+                                118
+                        );
+                    }
+
+                    mySelfy.setImageBitmap(imageBitmap);
+
+
+
+                    /* check code prafull*/
                     //authManager.setUserimageuri(mImageCaptureUri);
                     //authManager.setUserPic(Utils.decodeUri(mImageCaptureUri,EditMyProfileView.this));
                 } catch (Exception e) {

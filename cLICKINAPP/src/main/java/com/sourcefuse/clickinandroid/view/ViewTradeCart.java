@@ -15,7 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-
+import com.sourcefuse.clickinandroid.utils.CardDialog;
 import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
@@ -36,6 +36,7 @@ public class ViewTradeCart extends Activity implements View.OnClickListener
 
 
     boolean forCounter = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -203,22 +204,21 @@ public class ViewTradeCart extends Activity implements View.OnClickListener
                 trd_clicks_top.setText("25");
                 break;
             case R.id.btn_play:
+                String text = card_text.getText().toString();
+                if (trd_clicks_top.getText().equals(" 0") && trd_clicks_bottom.getText().equals("0 "))
+                {
+                    CardDialog cardDialog = new CardDialog();
+                    cardDialog.popupDialog(ViewTradeCart.this);
 
-       if (trd_clicks_top.getText().equals(" 0") && trd_clicks_bottom.getText().equals("0 ")) {
-
-             //       CardDialog cardDialog = new CardDialog();
-               //     cardDialog.popupDialog(ViewTradeCart.this);
-           Utils.showAlert(this,"Please add some clicks");
-
-                } else if(card_text.getText()!=null){
-                 //   CardDialog cardDialog = new CardDialog();
-                   // cardDialog.popupDialog(ViewTradeCart.this);
-           Utils.showAlert(this,"Please enter some text in card");
+                }else if((text == null || text.equalsIgnoreCase("null")
+                        || text.equalsIgnoreCase("") || text.length() < 1)){
+                    CardDialog cardDialog = new CardDialog();
+                    cardDialog.popupDialog1(ViewTradeCart.this);
                 }
 
                 else {
                     String strnull = null;
-                    String text = card_text.getText().toString();
+
                     Log.e(TAG, "Custom CARD Is >>>>>>>.");
                     Intent i = new Intent();
                     i.putExtra("FromCard", true);
@@ -239,6 +239,25 @@ public class ViewTradeCart extends Activity implements View.OnClickListener
                     i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i);
+                    //  finish();
+
+//                Intent i=new Intent();
+//                i.putExtra("FromCard",true);
+//                if(forCounter){
+//                    i.putExtra("isCounter",true);
+//                }else{
+//                    i.putExtra("isCounter",false);
+//                }
+//                i.putExtra("card_url",url);
+//                i.putExtra("card_clicks",clicks);
+//                i.putExtra("Title",cardTitle);
+//                i.putExtra("Discription",cardDiscription);
+//                i.putExtra("card_id",card_id);
+//
+//                i.setClass(this,ChatRecordView.class);
+//                i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                startActivity(i);
                     //  finish();
                     break;
                 }

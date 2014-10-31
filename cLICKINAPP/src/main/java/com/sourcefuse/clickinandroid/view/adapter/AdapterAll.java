@@ -75,12 +75,13 @@ public class AdapterAll extends ArrayAdapter<CardBean> {
                 else{
 
                     CardBean bean = getItem(position-1);
-                    String url;
-                    String url1 = bean.getCardUrl() ;
+                    String url = bean.getCardUrl();
+//                    String url = bean.getCardUrl() ;
                     String add = "/a/1080" ;
 
-                    url=url1.replaceFirst("cards\\/(\\d+)\\.jpg","cards\\/a\\/1080\\/$1\\.jpg");
-                    Log.e("All Adapter " , "This Modified URL::>>>>>>>>" +url);
+
+                  //  url=url1.replaceFirst("cards\\/(\\d+)\\.jpg","cards\\/a\\/1080\\/$1\\.jpg");
+                    Log.e("All Adapter " , "Original URL::>>>>>>>>" +url);
 
 
 					

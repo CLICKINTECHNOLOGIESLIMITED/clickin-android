@@ -3,7 +3,7 @@ package com.sourcefuse.clickinandroid.view;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -99,10 +99,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     private Button send, btnToCard;
 
     private QBPrivateChat chatObject;
-
-    private int relationListIndex,myClicks,userClicks;
-    private String qBId, rId, partnerPic, partnerName, partnerId,partnerPh,myTotalString,userTotalClicks;
-
+    private String qBId, rId, partnerPic, partnerName, partnerId,myClicks,userClicks,partnerPh;
     private ChatManager chatManager;
     private AuthManager authManager;
     private RelationManager relationManager;
@@ -118,9 +115,9 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
     private long sentOn;
     private String chatId;
-    private boolean emptyDb = true;
+    String firstname ;
 
-    String[] splitted;
+    String[] splitted ;
 
     private boolean showAttachmentView = true;
     private LinearLayout llAttachment;
@@ -206,6 +203,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         partnerPic = getIntent().getExtras().getString("partnerPic");
         partnerName = getIntent().getExtras().getString("partnerName");
         splitted = partnerName.split("\\s+");
+        firstname = splitted[0].toUpperCase();
+
         rId = getIntent().getExtras().getString("rId");
         partnerId = getIntent().getExtras().getString("partnerId");
 
@@ -891,7 +890,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             addChat.setCard_id(card_id);
             addChat.setCard_Played_Countered(played_Countered);
             addChat.setCard_originator(card_originator);
-            addChat.setCardPartnerName(partnerName);
+            addChat.setCardPartnerName(firstname);
 
             addChat.setTimeStamp(String.valueOf(sentOn));
             chatManager.chatListFromServer.add(addChat);
@@ -950,8 +949,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 againLoginToQuickBlox();
                 chatObject.removeChatMessageListener(this);
                 chatObject.addChatMessageListener(this);
-            } catch (Exception e1) {
-            }
+            }catch (Exception e1){}
             e.printStackTrace();
         }
     }
@@ -991,6 +989,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             EventBus.getDefault().unregister(this);
         }
         EventBus.getDefault().register(this);
+
+
 
         try {
             authManager = ModelManager.getInstance().getAuthorizationManager();
@@ -1297,7 +1297,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
                     }
 
-                } else if (chatType.equalsIgnoreCase("5")) {
+                }else if (chatType.equalsIgnoreCase("5")) {
+                    String firstname1 = firstname+" ";
                     addChat.setSenderQbId(authManager.getQBId());
                     addChat.setRecieverQbId(qBId);
 
@@ -1318,7 +1319,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                        addChat.setCard_id(card_id);
                        addChat.setCard_Played_Countered(card_Played_Countered);
                        addChat.setCard_originator(card_originator);
-                       addChat.setCardPartnerName(partnerName);
+                       addChat.setCardPartnerName(firstname1);
 
                        addChat.setTimeStamp(String.valueOf(sentOn));
                        chatManager.chatListFromServer.add(addChat);
@@ -1366,7 +1367,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                        addChat.setCard_id(card_id);
                        addChat.setCard_Played_Countered(card_Played_Countered);
                        addChat.setCard_originator(card_originator);
-                       addChat.setCardPartnerName(partnerName);
+                       addChat.setCardPartnerName(firstname1);
 
                        addChat.setTimeStamp(String.valueOf(sentOn));
                        chatManager.chatListFromServer.add(addChat);
@@ -1387,7 +1388,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                        addChat.setCard_id(card_id);
                        addChat.setCard_Played_Countered(card_Played_Countered);
                        addChat.setCard_originator(card_originator);
-                       addChat.setCardPartnerName(partnerName);
+                       addChat.setCardPartnerName(firstname1);
 
                        addChat.setTimeStamp(String.valueOf(sentOn));
                        chatManager.chatListFromServer.add(addChat);
@@ -1440,20 +1441,45 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             if (resultCode == RESULT_OK) {
                 switch (requestCode) {
                     case Constants.CAMERA_REQUEST:
-                        mImageCaptureUri = data.getData();
-                        Log.e(TAG, "CAMERA_REQUEST" + "--> " + mImageCaptureUri);
-                        try {
-                            mImageCaptureUri = Utils.decodeUri(ChatRecordView.this, mImageCaptureUri, 100);
-                            // Utils.decodeUri()
-                            path = Utils.getRealPathFromURI(mImageCaptureUri, ChatRecordView.this);
-                            currentImagepath = mImageCaptureUri.toString();
 
-                            Picasso.with(ChatRecordView.this).load(mImageCaptureUri.toString())
+                       // mImageCaptureUri = data.getData();
+
+                        Bitmap photo = (Bitmap) data.getExtras().get("data");
+                        mImageCaptureUri = getImageUri(ChatRecordView.this,photo);
+                        mImageCaptureUri = Utils.decodeUri(ChatRecordView.this, mImageCaptureUri, 100);
+
+                        path = Utils.getRealPathFromURI(mImageCaptureUri, ChatRecordView.this);
+                        currentImagepath = mImageCaptureUri.toString();
+                      //  attachBtn.setImageBitmap(photo);
+                        Log.e(TAG, "CAMERA_REQUEST" + "--> " + mImageCaptureUri);
+                        Log.e(TAG, "CAMERA_REQUEST Real Path" + "--> " + path);
+
+                        try{
+                                     Picasso.with(ChatRecordView.this).load(mImageCaptureUri.toString())
                                     .placeholder(R.drawable.default_profile)
                                     .error(R.drawable.default_profile).into(attachBtn);
-                        } catch (Exception ex) {
-                            Log.e("Exception", "Exception-->" + ex);
+
+                        }catch (Exception e){
+                            e.printStackTrace();
+
                         }
+//                        try {
+//
+//                            mImageCaptureUri = Utils.decodeUri(ChatRecordView.this, mImageCaptureUri, 100);
+//                            // Utils.decodeUri()
+//                            path = Utils.getRealPathFromURI(mImageCaptureUri, ChatRecordView.this);
+//                        //    bitmap = Utils.decodeUri(mImageCaptureUri,ChatRecordView.this);
+//                            currentImagepath = mImageCaptureUri.toString();
+//
+//                            Log.e("Exception", "Exception-->" +mImageCaptureUri);
+//
+//                            Picasso.with(ChatRecordView.this).load(mImageCaptureUri.toString())
+//                                    .placeholder(R.drawable.default_profile)
+//                                    .error(R.drawable.default_profile).into(attachBtn);
+//                        } catch (Exception ex) {
+//                            Log.e("Exception", "Exception-->" + ex);
+//                            ex.printStackTrace();
+//                        }
 
 
                         break;
@@ -1499,6 +1525,12 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         }
     }
 
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
+    }
 
     // IMAGE STUFF start
     private void uploadImageOnQuickBlox(final String path, final String msg, final String clicks,final String chat_Id) {
@@ -1817,17 +1849,20 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     }
 
 
-    public Bitmap ShrinkBitmap(String file, int width, int height) {
+
+    public Bitmap ShrinkBitmap(String file, int width, int height){
 
         BitmapFactory.Options bmpFactoryOptions = new BitmapFactory.Options();
         bmpFactoryOptions.inJustDecodeBounds = true;
         Bitmap bitmap = BitmapFactory.decodeFile(file, bmpFactoryOptions);
 
-        int heightRatio = (int) Math.ceil(bmpFactoryOptions.outHeight / (float) height);
-        int widthRatio = (int) Math.ceil(bmpFactoryOptions.outWidth / (float) width);
+        int heightRatio = (int)Math.ceil(bmpFactoryOptions.outHeight/(float)height);
+        int widthRatio = (int)Math.ceil(bmpFactoryOptions.outWidth/(float)width);
 
-        if (heightRatio > 1 || widthRatio > 1) {
-            if (heightRatio > widthRatio) {
+        if (heightRatio > 1 || widthRatio > 1)
+        {
+            if (heightRatio > widthRatio)
+            {
                 bmpFactoryOptions.inSampleSize = heightRatio;
             } else {
                 bmpFactoryOptions.inSampleSize = widthRatio;

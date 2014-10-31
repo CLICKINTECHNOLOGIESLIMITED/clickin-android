@@ -825,8 +825,8 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                             .into(holder.tradeImage);
                     try {
                         if (Integer.parseInt(item.getCard_clicks()) < 10) {
-                            holder.trdClicksTop.setText("0" + item.getCard_clicks());
-                            holder.trdClicksBottom.setText("0" + item.getCard_clicks());
+                            holder.trdClicksTop.setText("" + item.getCard_clicks());
+                            holder.trdClicksBottom.setText("" + item.getCard_clicks());
                         } else {
                             holder.trdClicksTop.setText(item.getCard_clicks());
                             holder.trdClicksBottom.setText(item.getCard_clicks());
@@ -900,8 +900,8 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
 
                     try {
                         if (Integer.parseInt(item.getCard_clicks()) < 10) {
-                            holder.trdClicksTop.setText("0" + item.getCard_clicks());
-                            holder.trdClicksBottom.setText("0" + item.getCard_clicks());
+                            holder.trdClicksTop.setText("" + item.getCard_clicks());
+                            holder.trdClicksBottom.setText("" + item.getCard_clicks());
                         } else {
                             holder.trdClicksTop.setText(item.getCard_clicks());
                             holder.trdClicksBottom.setText(item.getCard_clicks());
