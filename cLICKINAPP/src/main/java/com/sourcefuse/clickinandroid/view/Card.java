@@ -14,7 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.sourcefuse.clickinandroid.utils.CardDialog;
 import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
@@ -47,24 +46,24 @@ public class Card extends Activity implements View.OnClickListener,TextWatcher {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.card_click);
         Utils.launchBarDialog(Card.this);
-        trd_clicks_bottom = (TextView) findViewById(R.id.trd_clicks_bottom);
-        trd_clicks_top = (TextView) findViewById(R.id.trd_clicks_top);
-        tv_about_message = (TextView) findViewById(R.id.tv_about_message);
+        trd_clicks_bottom = (TextView)findViewById(R.id.trd_clicks_bottom);
+        trd_clicks_top = (TextView)findViewById(R.id.trd_clicks_top);
+        tv_about_message = (TextView)findViewById(R.id.tv_about_message);
 
-        trone = (TextView) findViewById(R.id.btn_one);
+        trone = (TextView)findViewById(R.id.btn_one);
         trone.setOnClickListener(this);
-        trtwo = (TextView) findViewById(R.id.btn_two);
+        trtwo = (TextView)findViewById(R.id.btn_two);
         trtwo.setOnClickListener(this);
-        trthree = (TextView) findViewById(R.id.btn_three);
+        trthree = (TextView)findViewById(R.id.btn_three);
         trthree.setOnClickListener(this);
-        trfour = (TextView) findViewById(R.id.btn_four);
+        trfour = (TextView)findViewById(R.id.btn_four);
         trfour.setOnClickListener(this);
-        trfive = (TextView) findViewById(R.id.btn_five);
+        trfive = (TextView)findViewById(R.id.btn_five);
         trfive.setOnClickListener(this);
-        btnPlay = (ImageView) findViewById(R.id.btn_play);
+        btnPlay = (ImageView)findViewById(R.id.btn_play);
         btnPlay.setOnClickListener(this);
 
-        LinearLayout back = (LinearLayout) findViewById(R.id.linear_layout_back);
+        LinearLayout back = (LinearLayout)findViewById(R.id.linear_layout_back);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -87,7 +86,7 @@ public class Card extends Activity implements View.OnClickListener,TextWatcher {
         Intent intent = getIntent();
         if (null != intent) {
             forCounter = intent.getExtras().getBoolean("ForCounter");
-            if (forCounter) {
+            if(forCounter){
                 trd_clicks_bottom.setText(intent.getStringExtra("cardClicks"));
                 trd_clicks_top.setText(intent.getStringExtra("cardClicks"));
                 tv_about_message.setText("HOW MANY CLICKS DO YOU WANT FOR IT?");
@@ -106,56 +105,80 @@ public class Card extends Activity implements View.OnClickListener,TextWatcher {
         } else {
             Log.e(TAG, "Value in intent in null");
         }
+//<<<<<<< HEAD
+//
+////        Picasso.with(this)
+////                .load(url)
+////
+////                .into(imageView , new Callback() {
+////                    @Override
+////                    public void onSuccess() {
+////
+////                        trd_clicks_top.setVisibility(View.VISIBLE);
+////                        trd_clicks_bottom.setVisibility(View.VISIBLE);
+////                        Utils.dismissBarDialog();
+////
+////                    }
+////
+////                    @Override
+////                    public void onError() {
+////
+////                    }
+////                });
+////
+////
+////
+////    }
+//
+//
+//        try {
+//            String url_to_load = url.replaceFirst("cards\\/(\\d+)\\.jpg","cards\\/a\\/1080\\/$1\\.jpg");
+//            Picasso.with(this)
+//                    .load(url_to_load)
+//                    .into(imageView, new Callback() {
+//                        @Override
+//                        public void onSuccess() {
+//
+//                            trd_clicks_top.setVisibility(View.VISIBLE);
+//                            trd_clicks_bottom.setVisibility(View.VISIBLE);
+//                            Utils.dismissBarDialog();
+//
+//                        }
+//
+//                        @Override
+//                        public void onError() {
+//
+//                        }
+//                    });
+//            Log.e(TAG,"Modified Url In The Picasso >>>>" +url_to_load);
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
+//Log.e(TAG,"Original Url" +url);
+//        }
+//=======
+        Picasso.with(this)
+                .load(url)
+                .into(imageView , new Callback() {
+                    @Override
+                    public void onSuccess() {
 
-//        Picasso.with(this)
-//                .load(url)
-//
-//                .into(imageView , new Callback() {
-//                    @Override
-//                    public void onSuccess() {
-//
-//                        trd_clicks_top.setVisibility(View.VISIBLE);
-//                        trd_clicks_bottom.setVisibility(View.VISIBLE);
-//                        Utils.dismissBarDialog();
-//
-//                    }
-//
-//                    @Override
-//                    public void onError() {
-//
-//                    }
-//                });
-//
-//
-//
-//    }
+                        trd_clicks_top.setVisibility(View.VISIBLE);
+                        trd_clicks_bottom.setVisibility(View.VISIBLE);
+                        Utils.dismissBarDialog();
+
+                    }
+
+                    @Override
+                    public void onError() {
+
+                    }
+                });
 
 
-        try {
-            String url_to_load = url.replaceFirst("cards\\/(\\d+)\\.jpg","cards\\/a\\/1080\\/$1\\.jpg");
-            Picasso.with(this)
-                    .load(url_to_load)
-                    .into(imageView, new Callback() {
-                        @Override
-                        public void onSuccess() {
 
-                            trd_clicks_top.setVisibility(View.VISIBLE);
-                            trd_clicks_bottom.setVisibility(View.VISIBLE);
-                            Utils.dismissBarDialog();
+    }
 
-                        }
-
-                        @Override
-                        public void onError() {
-
-                        }
-                    });
-            Log.e(TAG,"Modified Url In The Picasso >>>>" +url_to_load);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-Log.e(TAG,"Original Url" +url);
-        }
 
 
 
@@ -195,7 +218,6 @@ Log.e(TAG,"Original Url" +url);
                 trd_clicks_top.setText("15");
                 break;
             case R.id.btn_four:
-                clicks="20";
                 trone.setSelected(false);
                 trtwo.setSelected(false);
                 trthree.setSelected(false);
@@ -205,7 +227,7 @@ Log.e(TAG,"Original Url" +url);
                 trd_clicks_top.setText("20");
                 break;
             case R.id.btn_five:
-                clicks = "25";
+                clicks = "20";
                 trone.setSelected(false);
                 trtwo.setSelected(false);
                 trthree.setSelected(false);
@@ -215,46 +237,26 @@ Log.e(TAG,"Original Url" +url);
                 trd_clicks_top.setText("25");
                 break;
             case R.id.btn_play:
-//                Intent i=new Intent();
-//                i.setAction("CARD");
-//                i.putExtra("FromCard",true);
-//                if(forCounter){
-//                 i.putExtra("isCounter",true);
-//                 i.putExtra("card_id",card_id);
-//                }else{
-//                  i.putExtra("isCounter",false);
-//                }
-//                i.putExtra("card_url",url);
-//                i.putExtra("card_clicks",clicks);
-//                i.putExtra("Title",cardTitle);
-//                i.putExtra("Discription",cardDiscription);
-//                i.putExtra("card_Db_id",card_Db_id);
 
-                if(trd_clicks_top.getText().equals("  0") && trd_clicks_bottom.getText().equals("0 ")){
-
-                    CardDialog cardDialog = new CardDialog();
-                    cardDialog.popupDialog(Card.this);
-
-                }else {
-                    Intent i = new Intent();
-                    i.putExtra("FromCard", true);
-                    if (forCounter) {
-                        i.putExtra("isCounter", true);
-                        i.putExtra("card_id", card_id);
-                    } else {
-                        i.putExtra("isCounter", false);
-                    }
-                    i.putExtra("card_url", url);
-                    i.putExtra("card_clicks", clicks);
-                    i.putExtra("Title", cardTitle);
-                    i.putExtra("Discription", cardDiscription);
-                    i.putExtra("card_Db_id", card_Db_id);
-
-                    i.setClass(this, ChatRecordView.class);
-                    i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(i);
+                Intent i=new Intent();
+                i.setAction("CARD");
+                i.putExtra("FromCard",true);
+                if(forCounter){
+                 i.putExtra("isCounter",true);
+                 i.putExtra("card_id",card_id);
+                }else{
+                  i.putExtra("isCounter",false);
                 }
+                i.putExtra("is_CustomCard","false");
+                i.putExtra("card_url",url);
+                i.putExtra("card_clicks",clicks);
+                i.putExtra("Title",cardTitle);
+                i.putExtra("Discription",cardDiscription);
+                i.putExtra("card_Db_id",card_Db_id);
+                i.setClass(this,ChatRecordView.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
               //  finish();
                 break;
         }
