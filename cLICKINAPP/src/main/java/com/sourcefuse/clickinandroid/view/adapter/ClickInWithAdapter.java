@@ -60,22 +60,29 @@ public class ClickInWithAdapter extends ArrayAdapter<GetrelationshipsBean> {
         final RecordHolder rholder = (RecordHolder) row.getTag();
        if(!Utils.isEmptyString(item.getStatusAccepted()) && item.getStatusAccepted().matches("true")){
 
-        try{
+
             rholder.clickInUsrName.setText(item.getPartnerName());
             rholder.unReadNo.setText("");
             if(!item.getPartnerPic().equalsIgnoreCase("")) {
+                try{
                 Picasso.with(context).load(item.getPartnerPic())
-
-                        .error(R.drawable.default_profile)
+                        .skipMemoryCache()
+                        .error(R.drawable.male_user)
                         .into(rholder.clickInUsrimg);
+                }catch(Exception e){
+                    rholder.clickInUsrimg.setImageResource(R.drawable.male_user);
+                }
+
             }
             else
             {
                 rholder.clickInUsrimg.setImageResource(R.drawable.male_user);
             }
-        }catch(Exception e){}
-
-        }
+       }
+            else
+            {
+                rholder.clickInUsrimg.setImageResource(R.drawable.male_user);
+            }
 
         return row;
     }

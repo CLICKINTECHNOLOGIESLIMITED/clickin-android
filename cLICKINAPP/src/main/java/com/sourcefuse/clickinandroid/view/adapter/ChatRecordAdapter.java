@@ -270,7 +270,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.clicksText.setVisibility(View.GONE);
                     holder.clicksHeart.setVisibility(View.GONE);
 
-                    Picasso.with(context).load(item.getChatImageUrl())
+                    Picasso.with(context).load(item.getChatImageUrl()).centerCrop().skipMemoryCache()
                             .into(holder.chatImage);
 
                 }else if(Utils.isEmptyString(item.getClicks()) && !Utils.isEmptyString(item.getChatText())) {
@@ -288,7 +288,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.clicksHeart.setVisibility(View.GONE);
                     holder.chatText.setTextColor(context.getResources().getColor(R.color.black));
 
-                    Picasso.with(context).load(item.getChatImageUrl())
+                    Picasso.with(context).load(item.getChatImageUrl()).centerCrop().skipMemoryCache()
                             .into(holder.chatImage);
 
                 }else if(!Utils.isEmptyString(item.getClicks())) {
@@ -312,7 +312,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.chatText.setTextColor(context.getResources().getColor(R.color.white));
                     holder.sendStatus.setVisibility(View.GONE);
 
-                    Picasso.with(context).load(item.getChatImageUrl())
+                    Picasso.with(context).load(item.getChatImageUrl()).centerCrop().skipMemoryCache()
                             .into(holder.chatImage);
                 }
             }else{
@@ -342,7 +342,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                         holder.clicksText.setVisibility(View.GONE);
                         holder.clicksHeart.setVisibility(View.GONE);
                         holder.chatImage.setBackgroundResource(R.drawable.newbg);
-                        Picasso.with(context).load(item.getChatImageUrl())
+                        Picasso.with(context).load(item.getChatImageUrl()).centerCrop().skipMemoryCache()
                                 .into(holder.chatImage);
                         holder.timeText.setText("" + Utils.getLocalDatefromTimestamp(Long.parseLong(item.getTimeStamp())));
 
@@ -360,7 +360,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                         holder.chatText.setVisibility(View.VISIBLE);
                         holder.chatText.setText(""+Utils.lineBreacker(item.getChatText()));
                         holder.clicksArea.setBackgroundResource(R.drawable.newbg);
-                        Picasso.with(context).load(item.getChatImageUrl())
+                        Picasso.with(context).load(item.getChatImageUrl()).centerCrop().skipMemoryCache()
                                 .into(holder.chatImage);
                         holder.chatText.setTextColor(context.getResources().getColor(R.color.black));
                         holder.timeText.setText("" + Utils.getLocalDatefromTimestamp(Long.parseLong(item.getTimeStamp())));
@@ -388,7 +388,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.chatText.setTextColor(context.getResources().getColor(R.color.white));
                     holder.sendStatus.setVisibility(View.GONE);
                     holder.timeText.setText(""+Utils.getLocalDatefromTimestamp(Long.parseLong(item.getTimeStamp())));
-                    Picasso.with(context).load(item.getChatImageUrl())
+                    Picasso.with(context).load(item.getChatImageUrl()).centerCrop().skipMemoryCache()
                             .into(holder.chatImage);
 
                 }
@@ -564,7 +564,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.sendStatus.setVisibility(View.GONE);
                     holder.clicksText.setVisibility(View.GONE);
                     holder.clicksHeart.setVisibility(View.GONE);
-                    Picasso.with(context).load(item.getVideo_thumb())
+                    Picasso.with(context).load(item.getVideo_thumb()).centerCrop().skipMemoryCache()
                             .into(holder.chatImage);
                     holder.chatText.setTextColor(context.getResources().getColor(R.color.black));
                 }else if(Utils.isEmptyString(item.getClicks()) && !Utils.isEmptyString(item.getChatText())) {
@@ -580,7 +580,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.sendStatus.setVisibility(View.GONE);
                     holder.clicksText.setVisibility(View.GONE);
                     holder.clicksHeart.setVisibility(View.GONE);
-                    Picasso.with(context).load(item.getVideo_thumb())
+                    Picasso.with(context).load(item.getVideo_thumb()).centerCrop().skipMemoryCache()
                             .into(holder.chatImage);
                     holder.chatText.setTextColor(context.getResources().getColor(R.color.black));
                 }else if(!Utils.isEmptyString(item.getClicks())) {
@@ -604,7 +604,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.chatText.setTextColor(context.getResources().getColor(R.color.white));
                     holder.sendStatus.setVisibility(View.GONE);
 
-                    Picasso.with(context).load(item.getVideo_thumb())
+                    Picasso.with(context).load(item.getVideo_thumb()).centerCrop().skipMemoryCache()
                             .into(holder.chatImage);
                 }
             }else{
@@ -638,7 +638,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.chatText.setTextColor(context.getResources().getColor(R.color.black));
                     holder.timeText.setText("" + Utils.getLocalDatefromTimestamp(Long.parseLong(item.getTimeStamp())));
 
-                    Picasso.with(context).load(item.getVideo_thumb())
+                    Picasso.with(context).load(item.getVideo_thumb()).centerCrop().skipMemoryCache()
                             .into(holder.chatImage);
 
 
@@ -659,7 +659,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.chatText.setTextColor(context.getResources().getColor(R.color.black));
                     holder.timeText.setText("" + Utils.getLocalDatefromTimestamp(Long.parseLong(item.getTimeStamp())));
 
-                    Picasso.with(context).load(item.getVideo_thumb())
+                    Picasso.with(context).load(item.getVideo_thumb()).centerCrop().skipMemoryCache()
                             .into(holder.chatImage);
                 }else if(!Utils.isEmptyString(item.getClicks()) ){
 
@@ -685,7 +685,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.chatText.setTextColor(context.getResources().getColor(R.color.white));
                     holder.sendStatus.setVisibility(View.GONE);
                     holder.timeText.setText(""+Utils.getLocalDatefromTimestamp(Long.parseLong(item.getTimeStamp())));
-                    Picasso.with(context).load(item.getVideo_thumb())
+                    Picasso.with(context).load(item.getVideo_thumb()).centerCrop().skipMemoryCache()
                             .into(holder.chatImage);
                 }
             }
@@ -721,7 +721,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.sendStatus.setVisibility(View.GONE);
                     holder.clicksText.setVisibility(View.GONE);
                     holder.clicksHeart.setVisibility(View.GONE);
-                    Picasso.with(context).load(item.getChatImageUrl())
+                    Picasso.with(context).load(item.getChatImageUrl()).centerCrop().skipMemoryCache()
                             .into(holder.chatImage);
                     holder.chatText.setTextColor(context.getResources().getColor(R.color.black));
                 }
@@ -758,7 +758,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.chatText.setTextColor(context.getResources().getColor(R.color.black));
                     holder.timeText.setText("" + Utils.getLocalDatefromTimestamp(Long.parseLong(item.getTimeStamp())));
 
-                    Picasso.with(context).load(item.getChatImageUrl())
+                    Picasso.with(context).load(item.getChatImageUrl()).centerCrop().skipMemoryCache()
                             .into(holder.chatImage);
                 }
             }
@@ -781,7 +781,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.tv_acc_res_status.setText("ACCEPTED!");
                     holder.trd_clicks_top_ar.setText(item.getCard_clicks());
                     holder.trd_clicks_bottom_ar.setText(item.getCard_clicks());
-                    Picasso.with(context).load(item.getCard_url())
+                    Picasso.with(context).load(item.getCard_url()).centerCrop().skipMemoryCache()
                             .into(holder.iv_card_counter);
                     holder.iv_acc_rec.setBackgroundResource(R.drawable.c_card_accept);
                     holder.rl_acc_res_bg.setBackgroundResource(R.drawable.whitechatbg);
@@ -794,7 +794,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.tv_acc_res_status.setText("REJECTED!");
                     holder.trd_clicks_top_ar.setText(item.getCard_clicks());
                     holder.trd_clicks_bottom_ar.setText(item.getCard_clicks());
-                    Picasso.with(context).load(item.getCard_url())
+                    Picasso.with(context).load(item.getCard_url()).centerCrop().skipMemoryCache()
                             .into(holder.iv_card_counter);
                     holder.rl_acc_res_bg.setBackgroundResource(R.drawable.whitechatbg);
                     holder.iv_acc_rec.setBackgroundResource(R.drawable.c_card_rejected);
@@ -808,7 +808,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.tv_acc_res_status.setText("COUNTER OFFER");
                     holder.trd_clicks_top_ar.setText(item.getCard_clicks());
                     holder.trd_clicks_bottom_ar.setText(item.getCard_clicks());
-                    Picasso.with(context).load(item.getCard_url())
+                    Picasso.with(context).load(item.getCard_url()).centerCrop().skipMemoryCache()
                             .into(holder.iv_card_counter);
                     holder.rl_acc_res_bg.setBackgroundResource(R.drawable.whitechatbg);
                     holder.iv_acc_rec.setVisibility(View.GONE);
@@ -817,7 +817,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.cardViewCards.setGravity(Gravity.RIGHT);
                     // holder.cardViewCc.setVisibility(View.VISIBLE);
                     //holder.cardViewCc.setGravity(Gravity.RIGHT);
-                    Picasso.with(context).load(item.getCard_url())
+                    Picasso.with(context).load(item.getCard_url()).centerCrop().skipMemoryCache()
                             .into(holder.tradeImage);
                     try {
                         if (Integer.parseInt(item.getCard_clicks()) < 10) {
@@ -852,7 +852,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.iv_acc_rec.setBackgroundResource(R.drawable.c_card_accept);
                     holder.trd_clicks_top_ar.setText(item.getCard_clicks());
                     holder.trd_clicks_bottom_ar.setText(item.getCard_clicks());
-                    Picasso.with(context).load(item.getCard_url())
+                    Picasso.with(context).load(item.getCard_url()).skipMemoryCache()
                             .into(holder.iv_card_counter);
                     holder.rl_acc_res_bg.setBackgroundResource(R.drawable.newbg);
                 } else if (item.getCard_Accepted_Rejected().equalsIgnoreCase("rejected")) {
@@ -865,7 +865,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
 
                     holder.trd_clicks_top_ar.setText(item.getCard_clicks());
                     holder.trd_clicks_bottom_ar.setText(item.getCard_clicks());
-                    Picasso.with(context).load(item.getCard_url())
+                    Picasso.with(context).load(item.getCard_url()).skipMemoryCache()
                             .into(holder.iv_card_counter);
                     holder.rl_acc_res_bg.setBackgroundResource(R.drawable.newbg);
                     holder.iv_acc_rec.setVisibility(View.VISIBLE);
@@ -881,14 +881,14 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
 
                     holder.trd_clicks_top_ar.setText(item.getCard_clicks());
                     holder.trd_clicks_bottom_ar.setText(item.getCard_clicks());
-                    Picasso.with(context).load(item.getCard_url())
+                    Picasso.with(context).load(item.getCard_url()).skipMemoryCache()
                             .into(holder.iv_card_counter);
                     holder.rl_acc_res_bg.setBackgroundResource(R.drawable.newbg);
                     holder.iv_acc_rec.setVisibility(View.GONE);
 
                 } else {
                     holder.cardViewCards.setGravity(Gravity.RIGHT);
-                    Picasso.with(context).load(item.getCard_url())
+                    Picasso.with(context).load(item.getCard_url()).skipMemoryCache()
                             .into(holder.tradeImage);
 
                     holder.cardViewCards.setBackgroundResource(R.drawable.newbg);

@@ -88,7 +88,7 @@ public class FollowerAdapter extends ArrayAdapter<FollowerFollowingBean> {
         if(!item.getFolloweePic().equalsIgnoreCase("")) {
             try {
                 Picasso.with(context).load(item.getFolloweePic())
-
+                       .skipMemoryCache()
                         .error(R.drawable.male_user)
                         .into(rholder.usrimg);
             }

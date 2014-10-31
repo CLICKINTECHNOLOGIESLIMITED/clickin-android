@@ -28,7 +28,7 @@
             android:layout_height="60dp"
             android:layout_alignParentLeft="true"
 
-            android:src="@drawable/c_add_selfie" />
+         />
 
         <LinearLayout
             android:id="@+id/textLayout"

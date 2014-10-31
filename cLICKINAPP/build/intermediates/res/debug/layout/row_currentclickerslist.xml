@@ -8,7 +8,7 @@
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_alignParentLeft="true"
-        android:background="@drawable/default_profile" />
+       />
 
     <TextView
         android:id="@+id/tv_white"

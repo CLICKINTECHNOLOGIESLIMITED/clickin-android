@@ -233,14 +233,14 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
                             Picasso.with(this)
                                     .load(authManager.getUserPic())
                                     .skipMemoryCache()
-                                    .placeholder(R.drawable.default_profile)
+
                                     .error(R.drawable.male_user)
                                     .into(userPic);
                         }else if(dtails.equalsIgnoreCase("Female")) {
                             Picasso.with(this)
                                     .load(authManager.getUserPic())
                                     .skipMemoryCache()
-                                    .placeholder(R.drawable.default_profile)
+
                                     .error(R.drawable.female_user)
                                     .into(userPic);
                         }
@@ -256,14 +256,14 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
                         Picasso.with(this)
                                 .load(authManager.getUserPic())
                                 .skipMemoryCache()
-                                .placeholder(R.drawable.default_profile)
+
                                 .error(R.drawable.male_user)
                                 .into(userPic);
                     }else if(dtails.equalsIgnoreCase("Female")) {
                         Picasso.with(this)
                                 .load(authManager.getUserPic())
                                 .skipMemoryCache()
-                                .placeholder(R.drawable.default_profile)
+
                                 .error(R.drawable.female_user)
                                 .into(userPic);
                     }
@@ -535,10 +535,45 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         relationManager = ModelManager.getInstance().getRelationManager();
         userName.setText(authManager.getUserName());
         userPic.setScaleType(ScaleType.FIT_XY);
-        Picasso.with(ClickInBaseView.this).load(authManager.getUserPic())
-                .placeholder(R.drawable.default_profile)
-                .error(R.drawable.default_profile)
-                .into(userPic);
+
+        if(authManager.getGender()!=null) {
+            if (authManager.getGender().matches("guy")) {
+
+                try {
+                    if (!authManager.getUserPic().equalsIgnoreCase("")) {
+                        Picasso.with(ClickInBaseView.this)
+                                .load(authManager.getUserPic())
+                                .skipMemoryCache()
+
+                                .error(R.drawable.male_user).into(userPic);
+                    } else {
+                        userPic.setImageResource(R.drawable.male_user);
+                    }
+                } catch (Exception e) {
+                    userPic.setImageResource(R.drawable.male_user);
+                }
+            } else {
+                try {
+                    if (!authManager.getUserPic().equalsIgnoreCase("")) {
+                        Picasso.with(ClickInBaseView.this)
+                                .load(authManager.getUserPic())
+                                .skipMemoryCache()
+
+                                .error(R.drawable.female_user).into(userPic);
+                    } else {
+                        userPic.setImageResource(R.drawable.female_user);
+                    }
+                } catch (Exception e) {
+                    userPic.setImageResource(R.drawable.female_user);
+                }
+            }
+        }
+        else
+        {
+            userPic.setImageResource(R.drawable.male_user);
+        }
+
+
         setLeftMenuList();
     }
 

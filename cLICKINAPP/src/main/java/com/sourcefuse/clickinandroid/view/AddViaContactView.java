@@ -59,15 +59,26 @@ public class AddViaContactView extends Activity implements View.OnClickListener 
 			phoneNo.setText("" + mPhNo.substring(3));
 
 			image_uri = bundle.getString("ConUri");
-            if(!Utils.isEmptyString(image_uri)) {
-                Picasso.with(AddViaContactView.this).load(image_uri)
-                        .placeholder(R.drawable.default_profile)
-                        .error(R.drawable.default_profile)
-                        .into(conIcon);
+            try {
+                if(!Utils.isEmptyString(image_uri)) {
+                    Picasso.with(AddViaContactView.this).
+                            load(image_uri)
+                            .skipMemoryCache()
+
+                            .error(R.drawable.male_user)
+                            .into(conIcon);
+                } else {
+                    conIcon.setImageResource(R.drawable.male_user);
+                }
+            } catch (Exception e) {
+                    conIcon.setImageResource(R.drawable.male_user);
+            }
+
+
                // bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), Uri.parse(image_uri));
                 //conIcon.setImageBitmap(bitmap);
                 //bitmap.recycle();
-            }
+
 		}catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

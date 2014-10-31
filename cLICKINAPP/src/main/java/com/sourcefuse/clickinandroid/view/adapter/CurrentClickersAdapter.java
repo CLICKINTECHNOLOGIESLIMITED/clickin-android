@@ -72,13 +72,23 @@ public class CurrentClickersAdapter extends ArrayAdapter<CurrentClickerBean> {
             rholder.whiteDivider.setVisibility(View.VISIBLE);
         }
 
-        try{
+
             holder.clickers.setText(item.getName());
-            Picasso.with(context).load(item.getClickerPix())
-                    .placeholder(R.drawable.default_profile)
-                    .error(R.drawable.default_profile)
-                    .into(holder.usrimg);
-        }catch(Exception e){}
+        try {
+            if (!item.getClickerPix().equalsIgnoreCase("")) {
+                Picasso.with(context)
+                        .load(item.getClickerPix())
+                        .skipMemoryCache()
+
+                        .error(R.drawable.male_user).into(holder.usrimg);
+            } else {
+                holder.usrimg.setImageResource(R.drawable.male_user);
+            }
+        } catch (Exception e) {
+            holder.usrimg.setImageResource(R.drawable.male_user);
+        }
+
+
 
             holder.follow.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {

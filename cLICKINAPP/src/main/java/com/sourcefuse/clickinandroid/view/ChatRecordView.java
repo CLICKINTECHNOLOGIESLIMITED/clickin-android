@@ -1401,9 +1401,15 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                             path = Utils.getRealPathFromURI(mImageCaptureUri, ChatRecordView.this);
                             currentImagepath = mImageCaptureUri.toString();
 
-                            Picasso.with(ChatRecordView.this).load(mImageCaptureUri.toString())
-                                    .placeholder(R.drawable.default_profile)
-                                    .error(R.drawable.default_profile).into(attachBtn);
+                            if(!mImageCaptureUri.toString().equalsIgnoreCase("")) {
+                                Picasso.with(ChatRecordView.this).load(mImageCaptureUri.toString())
+                                        .centerCrop().skipMemoryCache()
+                                        .error(R.drawable.male_user).into(attachBtn);
+                            }
+                            else
+                            {
+                                attachBtn.setImageResource(R.drawable.male_user);
+                            }
                         } catch (Exception ex) {
                             Log.e("Exception", "Exception-->" + ex);
                         }
@@ -1418,10 +1424,15 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                             mImageCaptureUri = Utils.decodeUri(ChatRecordView.this, mImageCaptureUri, 100);
                             path = Utils.getRealPathFromURI(mImageCaptureUri, ChatRecordView.this);
                             currentImagepath = mImageCaptureUri.toString();
-
+                            if(!mImageCaptureUri.toString().equalsIgnoreCase("")) {
                             Picasso.with(ChatRecordView.this).load(mImageCaptureUri.toString())
-                                    .placeholder(R.drawable.default_profile)
-                                    .error(R.drawable.default_profile).into(attachBtn);
+                                    .centerCrop().skipMemoryCache()
+                                    .error(R.drawable.male_user).into(attachBtn);
+                        }
+                            else
+                        {
+                            attachBtn.setImageResource(R.drawable.male_user);
+                        }
                         } catch (Exception ex) {
                             Log.e("Exception", "Exception-->" + ex);
                         }
@@ -1992,16 +2003,56 @@ private void updateValues(Intent intent) {
     }
 
     profileName.setText("" + splitted[0]);
-    try {
-        Picasso.with(ChatRecordView.this).load(authManager.getUserPic())
-                .skipMemoryCache()
-                .placeholder(R.drawable.default_profile)
-                .error(R.drawable.default_profile).into(mypix);
-        Picasso.with(ChatRecordView.this).load(partnerPic)
-                .placeholder(R.drawable.default_profile)
-                .error(R.drawable.default_profile).into(partnerPix);
-    } catch (Exception e) {
+//    try {
+//        Picasso.with(ChatRecordView.this).load(authManager.getUserPic())
+//                .skipMemoryCache()
+//                .placeholder(R.drawable.default_profile)
+//                .error(R.drawable.default_profile).into(mypix);
+//        Picasso.with(ChatRecordView.this).load(partnerPic)
+//                .placeholder(R.drawable.default_profile)
+//                .error(R.drawable.default_profile).into(partnerPix);
+//    } catch (Exception e) {
+//    }
+    if(authManager.getGender()!=null) {
+        if (authManager.getGender().matches("guy")) {
+
+            try {
+                if (!authManager.getUserPic().equalsIgnoreCase("")) {
+                    Picasso.with(ChatRecordView.this)
+                            .load(authManager.getUserPic())
+                            .skipMemoryCache()
+                            .error(R.drawable.male_user).into(mypix);
+                } else {
+                    mypix.setImageResource(R.drawable.male_user);
+                }
+            } catch (Exception e) {
+                mypix.setImageResource(R.drawable.male_user);
+            }
+        } else {
+            try {
+                if (!authManager.getUserPic().equalsIgnoreCase("")) {
+                    Picasso.with(ChatRecordView.this)
+                            .load(authManager.getUserPic())
+                            .skipMemoryCache()
+
+                            .error(R.drawable.female_user).into(mypix);
+                } else {
+                    mypix.setImageResource(R.drawable.female_user);
+                }
+            } catch (Exception e) {
+                mypix.setImageResource(R.drawable.female_user);
+            }
+        }
     }
+    else
+    {
+        mypix.setImageResource(R.drawable.male_user);
+    }
+
+
+    Picasso.with(ChatRecordView.this).load(partnerPic)
+           .skipMemoryCache()
+            .error(R.drawable.male_user).into(partnerPix);
 
     chatData.clear();
     setlist();

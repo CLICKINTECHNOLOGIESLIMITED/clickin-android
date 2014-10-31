@@ -107,6 +107,7 @@ public class Card extends Activity implements View.OnClickListener,TextWatcher {
         }
         Picasso.with(this)
                 .load(url)
+
                 .into(imageView , new Callback() {
                     @Override
                     public void onSuccess() {

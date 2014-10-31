@@ -62,14 +62,14 @@ public class SpreadWordAdapter extends ArrayAdapter<ContactBean> {
             rholder.follow.setBackgroundResource(R.drawable.uncheck);
         }
 		try {
-			if(!Utils.isEmptyString(item.getConUri()))
+			if(!Utils.isEmptyString(item.getConUri())){
 			/*bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(),Uri.parse(item.getConUri()));
 			holder.usrimg.setImageBitmap(bitmap);*/
 
-                if(!item.getConUri().equalsIgnoreCase("")) {
+
                     try {
                         Picasso.with(context).load(item.getConUri())
-
+                             .skipMemoryCache()
                                 .error(R.drawable.male_user)
                                 .into(rholder.usrimg);
                     }

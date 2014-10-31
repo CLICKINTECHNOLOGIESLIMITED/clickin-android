@@ -7,6 +7,7 @@ import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -24,7 +25,10 @@ import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
 import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -84,21 +88,56 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
         } catch (Exception e) {
         }
 
-        try {
-            if (!authManager.getUserPic().equalsIgnoreCase("")) {
-            Picasso.with(EditMyProfileView.this).
-                    load(authManager.getUserPic())
-                    .skipMemoryCache()
+//        try {
+//            if (!authManager.getUserPic().equalsIgnoreCase("")) {
+//            Picasso.with(EditMyProfileView.this).
+//                    load(authManager.getUserPic())
+//                    .skipMemoryCache()
+//                    .centerCrop()
+//                    .error(R.drawable.male_user)
+//                    .into(mySelfy);
+//            } else {
+//                mySelfy.setImageResource(R.drawable.male_user);
+//            }
+//        } catch (Exception e) {
+//            mySelfy.setImageResource(R.drawable.male_user);
+//        }
+        if(authManager.getGender()!=null) {
+            if (authManager.getGender().matches("guy")) {
 
-                    .error(R.drawable.male_user)
-                    .into(mySelfy);
+                try {
+                    if (!authManager.getUserPic().equalsIgnoreCase("")) {
+                        Picasso.with(EditMyProfileView.this)
+                                .load(authManager.getUserPic())
+                                .skipMemoryCache()
+
+                                .error(R.drawable.male_user).into(mySelfy);
+                    } else {
+                        mySelfy.setImageResource(R.drawable.male_user);
+                    }
+                } catch (Exception e) {
+                    mySelfy.setImageResource(R.drawable.male_user);
+                }
             } else {
-                mySelfy.setImageResource(R.drawable.male_user);
+                try {
+                    if (!authManager.getUserPic().equalsIgnoreCase("")) {
+                        Picasso.with(EditMyProfileView.this)
+                                .load(authManager.getUserPic())
+                                .skipMemoryCache()
+
+                                .error(R.drawable.female_user).into(mySelfy);
+                    } else {
+                        mySelfy.setImageResource(R.drawable.female_user);
+                    }
+                } catch (Exception e) {
+                    mySelfy.setImageResource(R.drawable.female_user);
+                }
             }
-        } catch (Exception e) {
+        }
+        else
+        {
             mySelfy.setImageResource(R.drawable.male_user);
         }
-
 
     }
 
@@ -113,9 +152,10 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
                 finish();
                 break;
             case R.id.iv_edit_camera:
+                setCameraIntentUri();
                 Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
                 //   ImageUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
-                cameraIntent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
+                cameraIntent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, ImageUri);
                 try {
                     cameraIntent.putExtra("return-data", true);
                     startActivityForResult(cameraIntent, Constants.CAMERA_REQUEST);
@@ -174,53 +214,76 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) switch (requestCode) {
             case Constants.CAMERA_REQUEST:
-                Bitmap bitmap = null;
+                Log.e("camera","camera");
 
-                try {
+                    Bitmap bitmap = null;
 
-                    imageBitmap = null;
-                    mImageCaptureUri = null;
-                    mImageCaptureUri = data.getData();
-                    // Bitmap bmp = BitmapFactory.decodeResource(getResources(), Integer.parseInt(mImageCaptureUri.getPath()));
-                    imageBitmap = Utils.decodeUri(mImageCaptureUri, EditMyProfileView.this);
-                    if (imageBitmap.getWidth() > imageBitmap.getHeight()) {
-                        Matrix matrix = new Matrix();
-                        matrix.postRotate(90);
-                        imageBitmap = Bitmap.createBitmap(imageBitmap , 0, 0, imageBitmap.getWidth(), imageBitmap.getHeight(), matrix, true);
-                        mySelfy.setImageBitmap(imageBitmap);
-                    }else{
-                        mySelfy.setImageBitmap(imageBitmap);
+                    try {
+
+                        imageBitmap = null;
+
+//                        Log.e("uri", "" + mImageCaptureUri);
+                        if (data != null && data.hasExtra("data")) {
+                            Log.e("uri in if", "" + mImageCaptureUri);
+                            mImageCaptureUri = null;
+                            mImageCaptureUri = data.getData();
+                            // Bitmap bmp = BitmapFactory.decodeResource(getResources(), Integer.parseInt(mImageCaptureUri.getPath()));
+                            imageBitmap = Utils.decodeUri(mImageCaptureUri, EditMyProfileView.this);
+                            if (imageBitmap.getWidth() > imageBitmap.getHeight()) {
+                                Matrix matrix = new Matrix();
+                                matrix.postRotate(90);
+                                imageBitmap = Bitmap.createBitmap(imageBitmap, 0, 0, imageBitmap.getWidth(), imageBitmap.getHeight(), matrix, true);
+                                imageBitmap = resizeImage(imageBitmap);
+                                mySelfy.setImageBitmap(imageBitmap);
+                            } else {
+                                mySelfy.setImageBitmap(imageBitmap);
+                            }
+                        } else {
+                            Log.e("uri in else", "" + ImageUri);
+//                            Bitmap resized = (Bitmap) data.getExtras().get("data");
+//                            Bitmap bmp = Bitmap.createScaledBitmap(resized,
+//                            resized.getWidth(), resized.getHeight(), true);
+//
+//                            ByteArrayOutputStream stream = new
+//                            ByteArrayOutputStream();
+//                            bmp.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+//                            mySelfy.setImageBitmap(bmp);
+                            // byte[] byteArray = stream.toByteArray();
+                            Bitmap resized = null;
+                            try {
+                                // Uri outputFileUri =
+                                // Uri.fromFile(sdImageMainDirectory);
+                                resized = MediaStore.Images.Media.getBitmap(getContentResolver(), ImageUri);
+                                if (resized.getWidth() > resized.getHeight()) {
+                                    Matrix matrix = new Matrix();
+                                    matrix.postRotate(90);
+                                    imageBitmap = Bitmap.createBitmap(resized, 0, 0, resized.getWidth(), resized.getHeight(), matrix, true);
+                                    mySelfy.setImageBitmap(imageBitmap);
+                                }
+                                else
+                                {
+                                    mySelfy.setImageBitmap(resized);
+                                }
+//                                imageBitmap = resizeImage(imageBitmap);
+                                // filePath = app.encodeTobase64(resized, 100);
+
+                            } catch (FileNotFoundException e) {
+                                e.printStackTrace();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
 
-//                    authManager.setUserPic(imageBitmap.toString());
-//                    authManager.setMenuUserInfoFlag(true);
-
-//                    try {
-//                        ExifInterface ei = new ExifInterface(mImageCaptureUri.getPath());
-//                        int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-//
-//                        switch(orientation) {
-//                            case ExifInterface.ORIENTATION_ROTATE_90:
-//                                bitmap= rotateImage(imageBitmap, 90);
-//                                break;
-//                            case ExifInterface.ORIENTATION_ROTATE_180:
-//                                bitmap=rotateImage(imageBitmap, 180);
-//                                break;
-//                            // etc.
-//                        }
-//                    }
-//                    catch (Exception e)
-//                    {
-//                        e.printStackTrace();
-//                    }
-
-
                     break;
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+
             case Constants.SELECT_PICTURE:
                 try {
+                    Log.e("camera","gallery");
                     imageBitmap = null;
                     mImageCaptureUri = data.getData();
                     imageBitmap = Utils.decodeUri(mImageCaptureUri, EditMyProfileView.this);
@@ -230,7 +293,7 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
                         matrix.postRotate(270);
                         imageBitmap = Bitmap.createBitmap(imageBitmap , 0, 0, imageBitmap.getWidth(), imageBitmap.getHeight(), matrix, true);
                     }
-//                    imageBitmap = resizeImage(imageBitmap);
+                    imageBitmap = resizeImage(imageBitmap);
                     mySelfy.setImageBitmap(imageBitmap);
 //                    authManager.setUserPic(imageBitmap.toString());
 //                    authManager.setMenuUserInfoFlag(true);
@@ -244,29 +307,37 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
                 break;
         }
     }
+    public void setCameraIntentUri(){
+        File root = new File(Environment
+                .getExternalStorageDirectory()
+                + File.separator + "myDir" + File.separator);
+        root.mkdirs();
 
-//    private Bitmap resizeImage(Bitmap resized)
-//    {
-//        int height = resized.getHeight();
-//        int width = resized.getWidth();
-//        DisplayMetrics metrics = new DisplayMetrics();
-//        getWindowManager().getDefaultDisplay().getMetrics(metrics);
-//        int deviceHeight = Math.round(Utils.convertDpToPixel(118,this));
-//        int deviceWidth = Math.round(Utils.convertDpToPixel(118,this));
-//
-////        Uri cameraCaptureUri = app.getImageUri(resized, 100);
-//
-//        int resizeWidth = deviceWidth;
-//        int resizeHeight = height / deviceHeight * deviceWidth;
-//        if(height < deviceHeight){
-//            resizeHeight = height;
-//        }
-//        if(width < resizeWidth){
-//            resizeWidth = width;
-//        }
-//        Bitmap imageBitmap = Bitmap.createBitmap(resized , 0, 0, resizeWidth, resizeHeight);
-//        return imageBitmap;
-//    }
+        File sdImageMainDirectory = new File(root, "samplepic");
+        ImageUri = Uri.fromFile(sdImageMainDirectory);
+    }
+    private Bitmap resizeImage(Bitmap resized)
+    {
+        int height = resized.getHeight();
+        int width = resized.getWidth();
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        int deviceHeight = Math.round(Utils.convertDpToPixel(118,this));
+        int deviceWidth = Math.round(Utils.convertDpToPixel(118,this));
+
+//        Uri cameraCaptureUri = app.getImageUri(resized, 100);
+
+        int resizeWidth = deviceWidth;
+        int resizeHeight = height / deviceHeight * deviceWidth;
+        if(height < deviceHeight){
+            resizeHeight = height;
+        }
+        if(width < resizeWidth){
+            resizeWidth = width;
+        }
+        Bitmap imageBitmap = Bitmap.createBitmap(resized , 0, 0, resizeWidth, resizeHeight);
+        return imageBitmap;
+    }
 
     @Override
     public void onStart() {

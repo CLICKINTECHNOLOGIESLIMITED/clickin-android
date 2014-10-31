@@ -66,7 +66,7 @@ public class SearchAdapter extends ArrayAdapter<FetchUsersByNameBean> {
         if(!item.getUserPic().equalsIgnoreCase("")) {
             try {
                 Picasso.with(context).load(item.getUserPic())
-
+                        .skipMemoryCache()
                         .error(R.drawable.male_user)
                         .into(rholder.usrimg);
             }
