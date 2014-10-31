@@ -119,5 +119,7 @@
     <string name="txt_relationdelete">relationdelete</string>
     <string name="trade_hint">HOW MANY CLICKS ARE YOU WILLING TO OFFER?</string>
     <string name="title_activity_card">Card</string>
+    <string name="share_hint">Write your caption here...</string>
+
 
 </resources>

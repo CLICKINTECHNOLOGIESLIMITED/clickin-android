@@ -53,6 +53,7 @@ import com.sourcefuse.clickinandroid.dbhelper.ClickinDbHelper;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ChatManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
+import com.sourcefuse.clickinandroid.model.RelationManager;
 import com.sourcefuse.clickinandroid.model.bean.ChatRecordBeen;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.AudioUtil;
@@ -98,9 +99,11 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     private Button send, btnToCard;
 
     private QBPrivateChat chatObject;
-    private String qBId, rId, partnerPic, partnerName, partnerId,myClicks,userClicks,partnerPh;
+    private int relationListIndex,myClicks,userClicks;
+    private String qBId, rId, partnerPic, partnerName, partnerId,partnerPh,myTotalString,userTotalClicks;
     private ChatManager chatManager;
     private AuthManager authManager;
+    private RelationManager relationManager;
     private EditText chatText;
     private ImageView mypix, partnerPix, menu, attachBtn, notificationIcon;
     //  private ListView chatListView;
@@ -113,6 +116,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
     private long sentOn;
     private String chatId;
+    private boolean emptyDb = true;
 
     String[] splitted ;
 
@@ -202,25 +206,26 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         splitted = partnerName.split("\\s+");
         rId = getIntent().getExtras().getString("rId");
         partnerId = getIntent().getExtras().getString("partnerId");
-        myClicks = getIntent().getExtras().getString("myClicks");
-        userClicks = getIntent().getExtras().getString("userClicks");
+
+        myTotalString = getIntent().getExtras().getString("myClicks");
+        userTotalClicks = getIntent().getExtras().getString("userClicks");
+
+        myClicks = Integer.parseInt(myTotalString);
+        userClicks = Integer.parseInt(userTotalClicks);
+
+        myTotalclicks.setText("" + myTotalString);
+        partnerTotalclicks.setText("" + userTotalClicks);
+
         partnerPh =  getIntent().getExtras().getString("partnerPh");
+        relationListIndex = getIntent().getExtras().getInt("relationListIndex");
 
 // get Chat record From server
         chatManager = ModelManager.getInstance().getChatManager();
         chatManager.chatListFromServer.clear();
 
-        //chatManager.fetchChatRecord(rId, authManager.getPhoneNo(), authManager.getUsrToken(),"");
-// set ClicKs
-        if(chatManager.getMyTotalClick()==0 && chatManager.getPartnerTotalClick()==0) {
-            chatManager.setPartnerTotalClick(Integer.parseInt(myClicks));
-            chatManager.setMyTotalClick(Integer.parseInt(userClicks));
-            myTotalclicks.setText("" + userClicks);
-            partnerTotalclicks.setText("" + myClicks);
-        }else{
-            myTotalclicks.setText("" + chatManager.getMyTotalClick());
-            partnerTotalclicks.setText("" + chatManager.getPartnerTotalClick());
-        }
+
+
+
 
         profileName.setText("" + splitted[0]);
         try {
@@ -468,9 +473,13 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             dbHelper.openDataBase();
             authManager = ModelManager.getInstance().getAuthorizationManager();
             databaseList.clear();
-            
             databaseList = dbHelper.getAllChat(authManager.getQBId(), qBId);
             Log.e(TAG, "This get From DATABASE-> " + databaseList.size());
+            if( databaseList.size()==0){
+                emptyDb = true;
+                chatManager.fetchChatRecord(rId, authManager.getPhoneNo(), authManager.getUsrToken(),"");
+            }
+
             chatManager.chatListFromServer.addAll(databaseList);
 
         } catch (Exception e) {
@@ -482,6 +491,13 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         chatListView.setAdapter(adapter);
     }
 
+    private void setHistoryChat(){
+
+        adapter = new ChatRecordAdapter(this, R.layout.view_chat_demo, chatManager.chatListFromServer);
+        chatListView.setAdapter(adapter);
+
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -489,8 +505,6 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 ((RelativeLayout) findViewById(R.id.rl_flipper)).setVisibility(View.GONE);
                 chatString = "" + chatText.getText().toString();
                 String clicksValue = null;
-
-
                 ChatRecordBeen addChat = new ChatRecordBeen();
                 addChat.setSenderQbId(authManager.getQBId());
                 addChat.setRecieverQbId(qBId);
@@ -498,6 +512,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 chatId = authManager.getQBId()+qBId + sentOn;
                 Log.e(TAG, "chatId" + chatId);
 
+                if((chatString.length()>0  || isClicks()==true || mImageCaptureUri!= null ||  audioFilePath != null ||  videofilePath != null)){
                 try {
                     if (mImageCaptureUri == null && audioFilePath == null && videofilePath == null) {
                         Log.e(TAG, "NO Image- AND CLICKS--> ");
@@ -520,6 +535,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                         addChat.setUserId(authManager.getUserId());
                         addChat.setClicks(clicksValue);
                         addChat.setTimeStamp(String.valueOf(sentOn));
+                        addChat.setChatId(chatId);
+
 
                         if (clicksValue.equalsIgnoreCase("no") && !Utils.isEmptyString(chatString)) {
                             sendWithExtension(chatString, "no");
@@ -561,8 +578,9 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                         addChat.setTimeStamp(String.valueOf(sentOn));
                         addChat.setChatImageUrl(currentImagepath);
                         addChat.setChatText("" + chatString);
+                        addChat.setChatId(chatId);
 
-                        uploadImageOnQuickBlox(path.toString(), chatString,clicksValue);
+                        uploadImageOnQuickBlox(path.toString(), chatString,clicksValue,chatId);
                         chatManager.chatListFromServer.add(addChat);
                         adapter.notifyDataSetChanged();
 
@@ -661,22 +679,26 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                         attachBtn.setImageDrawable(getResources().getDrawable(R.drawable.attach_icon));
             }
 
-
-
-
-
                  }catch (Exception e){
                     e.printStackTrace();
                 }
-                mybar.setProgress(10);
+
                 chatText.setText("");
                 mImageCaptureUri = null;
                 chatString = "";
                 audioFilePath = null;
                 videofilePath = null;
-                seekValue =0;
-                attachBtn.setImageDrawable(getResources().getDrawable(R.drawable.attach_icon));
+//set user Clicks
+                    userClicks = userClicks + seekValue;
+                    Log.e(TAG,""+userClicks);
+                    partnerTotalclicks.setText("" + userClicks);
+                    relationManager = ModelManager.getInstance().getRelationManager();
+                    relationManager.acceptedList.get(relationListIndex).setUserClicks(Integer.toString(userClicks));
+                    mybar.setProgress(10);
+                    seekValue =0;
 
+                attachBtn.setImageDrawable(getResources().getDrawable(R.drawable.attach_icon));
+                }
                 break;
             case R.id.iv_menu_button:
                 hideAttachView();
@@ -800,6 +822,32 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             sentOn = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis();
             String chid = authManager.getQBId()+qBId + sentOn;
             createRfecordOnQuickBlox(null, null, null, rId, authManager.getUserId(), authManager.getUsrToken(), "" + sentOn, chid, "5", null, null, al.toString(), null, null, null);
+
+            if(accepted_Rejected.equalsIgnoreCase("accepted")){
+                if(card_originator.equalsIgnoreCase(authManager.getUserId())){
+
+                        myClicks = myClicks -Integer.parseInt(clicks);
+                        myTotalclicks.setText("" + myClicks);
+                        relationManager = ModelManager.getInstance().getRelationManager();
+                        relationManager.acceptedList.get(relationListIndex).setClicks(Integer.toString(myClicks));
+
+                        userClicks = userClicks + Integer.parseInt(clicks);
+                        partnerTotalclicks.setText("" + userClicks);
+                        relationManager = ModelManager.getInstance().getRelationManager();
+                        relationManager.acceptedList.get(relationListIndex).setUserClicks(Integer.toString(userClicks));
+                }else{
+                        myClicks = myClicks +Integer.parseInt(clicks);
+                        myTotalclicks.setText("" + myClicks);
+                        relationManager = ModelManager.getInstance().getRelationManager();
+                        relationManager.acceptedList.get(relationListIndex).setClicks(Integer.toString(myClicks));
+
+                        userClicks = userClicks - Integer.parseInt(clicks);
+                        partnerTotalclicks.setText("" + userClicks);
+                        relationManager = ModelManager.getInstance().getRelationManager();
+                        relationManager.acceptedList.get(relationListIndex).setUserClicks(Integer.toString(userClicks));
+                }
+                Log.e(TAG,"---clicks--> "+clicks);
+            }
 
             extension.setValue("card_clicks", clicks);
             extension.setValue("card_owner", card_owner);
@@ -935,9 +983,6 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             EventBus.getDefault().unregister(this);
         }
         EventBus.getDefault().register(this);
-
-
-
         try {
             authManager = ModelManager.getInstance().getAuthorizationManager();
             chatObject = authManager.getqBPrivateChat();
@@ -961,11 +1006,6 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         } catch (Exception e) {
         }
 
-        /*try {
-            chatObject.removeChatMessageListener(this);
-        } catch (Exception e) {
-
-        }*/
 
     }
 
@@ -975,19 +1015,26 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         authManager = ModelManager.getInstance().getAuthorizationManager();
         if (message.equalsIgnoreCase("FecthChat True")) {
             chatListView.onRefreshComplete();
-            int showAtIndex =  chatManager.chatListFromServer.size();
-            chatManager.chatListFromServer.addAll(0,chatManager.refreshivechatList);
-            if(isHistroy){
-                setlist();
+            if(isHistroy && emptyDb == false){
+                setHistoryChat();
                 isHistroy = false;
             }else{
+                chatManager.chatListFromServer.addAll(0,chatManager.refreshivechatList);
                 adapter.notifyDataSetChanged();
             }
 
-            android.util.Log.d("1", "message->" + message);
+            if(emptyDb){
+                //setHistoryChat();
+                Log.e("emptyDb", "emptyDb->");
+                adapter.notifyDataSetChanged();
+            }
+
+            emptyDb =false;
+
+            Log.e("1", "message->" + message);
         } else if (message.equalsIgnoreCase("FecthChat False")) {
             chatListView.onRefreshComplete();
-            setlist();
+            //setlist();
             Utils.dismissBarDialog();
             android.util.Log.d("2", "message->" + message);
         } else if (message.equalsIgnoreCase("FecthChat NetworkchatType Error")) {
@@ -1263,6 +1310,31 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
                        addChat.setTimeStamp(String.valueOf(sentOn));
                        chatManager.chatListFromServer.add(addChat);
+
+                       if(card_originator.equalsIgnoreCase(authManager.getUserId())){
+
+                           myClicks = myClicks - Integer.parseInt(card_clicks);
+                           myTotalclicks.setText("" + myClicks);
+                           relationManager = ModelManager.getInstance().getRelationManager();
+                           relationManager.acceptedList.get(relationListIndex).setClicks(Integer.toString(myClicks));
+
+                           userClicks = userClicks + Integer.parseInt(card_clicks);
+                           partnerTotalclicks.setText("" + userClicks);
+                           relationManager = ModelManager.getInstance().getRelationManager();
+                           relationManager.acceptedList.get(relationListIndex).setUserClicks(Integer.toString(userClicks));
+                       }else{
+                           myClicks = myClicks + Integer.parseInt(card_clicks);
+                           myTotalclicks.setText("" + myClicks);
+                           relationManager = ModelManager.getInstance().getRelationManager();
+                           relationManager.acceptedList.get(relationListIndex).setClicks(Integer.toString(myClicks));
+
+                           userClicks = userClicks - Integer.parseInt(card_clicks);
+                           partnerTotalclicks.setText("" + userClicks);
+                           relationManager = ModelManager.getInstance().getRelationManager();
+                           relationManager.acceptedList.get(relationListIndex).setUserClicks(Integer.toString(userClicks));
+                       }
+
+
                        adapter.notifyDataSetChanged();
 
                    }else if(card_Accepted_Rejected.equalsIgnoreCase("rejected")) {
@@ -1313,17 +1385,13 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
                 }
 
-               /* chatManager = ModelManager.getInstance().getChatManager();
-                int myV = grandClicksForSenderEnd(convertClicks(seekValue));
-                chatManager.setMyTotalClick(myV);
-                myTotalclicks.setText("" + chatManager.getMyTotalClick());*/
 
-
+                //Set myclicks on top
                 if (!Utils.isEmptyString(clicks)) {
-                    chatManager = ModelManager.getInstance().getChatManager();
-                    int v = grandClicksForReceiverEnd(clicks.trim());
-                    chatManager.setMyTotalClick(v);
-                    myTotalclicks.setText("" + chatManager.getMyTotalClick());
+                    myClicks = myClicks + grandClicksForReceiverEndInt(clicks);
+                    myTotalclicks.setText("" + myClicks);
+                    relationManager = ModelManager.getInstance().getRelationManager();
+                    relationManager.acceptedList.get(relationListIndex).setClicks(Integer.toString(myClicks));
                 }
 
                 fileID = null;
@@ -1422,7 +1490,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
 
     // IMAGE STUFF start
-    private void uploadImageOnQuickBlox(final String path, final String msg, final String clicks) {
+    private void uploadImageOnQuickBlox(final String path, final String msg, final String clicks,final String chat_Id) {
         Log.e(TAG, "uploadImageOnQuickBlox.....Uploading--> " + path);
         File mfile = new File(path);
         QBContent.uploadFileTask(mfile, true, new QBCallbackImpl() {
@@ -1434,9 +1502,9 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                     Log.e(TAG, "Uploaded  --> " + uploadedImgUrl);
                     sendImagetoPartner(uploadedImgUrl, msg, clicks);
                     if (clicks.equalsIgnoreCase("no")) {
-                        createRfecordOnQuickBlox(msg, null, uploadedImgUrl, rId, authManager.getUserId(), authManager.getUsrToken(), "" + sentOn, chatId, "2", null, "1.000000", null, null, null, null);
+                        createRfecordOnQuickBlox(msg, null, uploadedImgUrl, rId, authManager.getUserId(), authManager.getUsrToken(), "" + sentOn, chat_Id, "2", null, "1.000000", null, null, null, null);
                     }else{
-                        createRfecordOnQuickBlox(msg, clicks, uploadedImgUrl, rId, authManager.getUserId(), authManager.getUsrToken(), "" + sentOn, chatId, "2", null, "1.000000", null, null, null, null);
+                        createRfecordOnQuickBlox(msg, clicks, uploadedImgUrl, rId, authManager.getUserId(), authManager.getUsrToken(), "" + sentOn, chat_Id, "2", null, "1.000000", null, null, null, null);
                     }
                 }
             }
@@ -1610,7 +1678,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     }
 
 
-    private int grandClicksForReceiverEnd(String clicksValue) {
+    private int grandClicksForReceiverEndInt(String clicksValue) {
         int changeClicks = 0;
         if (clicksValue.equalsIgnoreCase("+01")) {
             changeClicks = 1;

@@ -29,4 +29,4 @@
                android:drawable="@drawable/progress_primary_holo_light" />
     </item>
 
-</layer-list><!-- From: file:/Users/NBP/git/Android-PullToRefresh/library/res/drawable/progress_horizontal_holo_light_right.xml --><!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.navercorp.pulltorefresh/library/3.2.0/res/drawable/progress_horizontal_holo_light_right.xml -->
+</layer-list><!-- From: file:/Users/NBP/git/Android-PullToRefresh/library/res/drawable/progress_horizontal_holo_light_right.xml --><!-- From: file:/home/mukesh/clickAMaster/cLICKINAPP/build/intermediates/exploded-aar/com.navercorp.pulltorefresh/library/3.2.0/res/drawable/progress_horizontal_holo_light_right.xml -->

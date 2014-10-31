@@ -1,6 +1,7 @@
 package com.sourcefuse.clickinandroid.view;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
@@ -14,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinapp.R;
 
 /**
@@ -21,12 +23,15 @@ import com.sourcefuse.clickinapp.R;
  */
 public class ViewTradeCart extends Activity implements View.OnClickListener
 {
+    private static final String TAG = ViewTradeCart.class.getSimpleName();
     TextWatcher textWatcher ;
     ImageView mback ,btnPlay;
     EditText card_text;
     TextView trd_clicks_top,trd_clicks_bottom;
-    TextView trone,trtwo,trthree,trfour,trfive;
+    TextView trone,trtwo,trthree,trfour,trfive,custom_card_msg;
     RelativeLayout layout ;
+    boolean forCounter = false;
+    String url,clicks,cardTitle,cardDiscription,card_Db_id,card_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +66,7 @@ public class ViewTradeCart extends Activity implements View.OnClickListener
         trthree = (TextView)findViewById(R.id.btn_three);
         trfour = (TextView)findViewById(R.id.btn_four);
         trfive = (TextView)findViewById(R.id.btn_five);
+        custom_card_msg = (TextView)findViewById(R.id.custom_card_msg);
 
         trone.setOnClickListener(this);
         trtwo.setOnClickListener(this);
@@ -114,6 +120,32 @@ public class ViewTradeCart extends Activity implements View.OnClickListener
         });
 
 
+
+        Intent intent = getIntent();
+        if (null != intent) {
+            forCounter = intent.getExtras().getBoolean("ForCounter");
+            if(forCounter){
+                trd_clicks_bottom.setText(intent.getStringExtra("cardClicks"));
+                trd_clicks_top.setText(intent.getStringExtra("cardClicks"));
+                custom_card_msg.setText("HOW MANY CLICKS DO YOU WANT FOR IT?");
+            }
+            url = intent.getStringExtra("Url");
+            cardTitle = intent.getStringExtra("Title");
+            cardDiscription = intent.getStringExtra("");
+
+            try {
+                card_id = intent.getStringExtra("card_id");
+            }catch (Exception e){
+
+            }
+            Log.e(TAG, "Url for the fetched Card is" + url + "," + cardTitle + "," + cardDiscription + "," + card_Db_id);
+
+        } else {
+            Log.e(TAG, "Value in intent in null");
+        }
+
+
+
         trd_clicks_top=(TextView)findViewById(R.id.trd_clicks_top);
         trd_clicks_bottom=(TextView)findViewById(R.id.trd_clicks_bottom);
     }
@@ -124,6 +156,7 @@ public class ViewTradeCart extends Activity implements View.OnClickListener
         {
 
             case R.id.btn_one:
+                clicks = "05";
                 trone.setSelected(true);
                 trtwo.setSelected(false);
                 trthree.setSelected(false);
@@ -133,6 +166,7 @@ public class ViewTradeCart extends Activity implements View.OnClickListener
                 trd_clicks_top.setText("05");
                 break;
             case R.id.btn_two:
+                clicks = "10";
                 trone.setSelected(false);
                 trtwo.setSelected(true);
                 trthree.setSelected(false);
@@ -142,6 +176,7 @@ public class ViewTradeCart extends Activity implements View.OnClickListener
                 trd_clicks_top.setText("10");
                 break;
             case R.id.btn_three:
+                clicks = "15";
                 trone.setSelected(false);
                 trtwo.setSelected(false);
                 trthree.setSelected(true);
@@ -151,6 +186,7 @@ public class ViewTradeCart extends Activity implements View.OnClickListener
                 trd_clicks_top.setText("15");
                 break;
             case R.id.btn_four:
+                clicks = "20";
                 trone.setSelected(false);
                 trtwo.setSelected(false);
                 trthree.setSelected(false);
@@ -160,6 +196,7 @@ public class ViewTradeCart extends Activity implements View.OnClickListener
                 trd_clicks_top.setText("20");
                 break;
             case R.id.btn_five:
+                clicks = "25";
                 trone.setSelected(false);
                 trtwo.setSelected(false);
                 trthree.setSelected(false);
@@ -171,23 +208,45 @@ public class ViewTradeCart extends Activity implements View.OnClickListener
             case R.id.btn_play:
 
 
-//                Intent i=new Intent();
-//                i.putExtra("FromCard",true);
-//                if(forCounter){
-//                    i.putExtra("isCounter",true);
-//                }else{
-//                    i.putExtra("isCounter",false);
-//                }
-//                i.putExtra("card_url",url);
-//                i.putExtra("card_clicks",clicks);
-//                i.putExtra("Title",cardTitle);
-//                i.putExtra("Discription",cardDiscription);
-//                i.putExtra("card_id",card_id);
-//
-//                i.setClass(this,ChatRecordView.class);
-//                i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-//                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                startActivity(i);
+                Intent i=new Intent();
+                i.putExtra("FromCard",true);
+                if(forCounter){
+                    i.putExtra("isCounter",true);
+                    i.putExtra("card_id",card_id);
+                }else{
+                    i.putExtra("isCounter",false);
+                }
+                i.putExtra("card_url",url);
+                i.putExtra("card_clicks",clicks);
+                i.putExtra("Title",card_text.getText().toString());
+                i.putExtra("Discription",cardDiscription);
+                i.putExtra("card_Db_id",card_Db_id);
+
+                i.setClass(this,ChatRecordView.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
+
+
+
+             /*   Intent i=new Intent();
+                i.putExtra("FromCard",true);
+                if(forCounter){
+                    i.putExtra("isCounter",true);
+                }else{
+                    i.putExtra("isCounter",false);
+                }
+                i.putExtra("card_url",url);
+                i.putExtra("card_clicks",clicks);
+                i.putExtra("card_custom",true);
+                i.putExtra("Title",card_text.getText().toString());
+                i.putExtra("Discription","");
+                i.putExtra("card_id",card_id);
+
+                i.setClass(this,ChatRecordView.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);*/
                 //  finish();
                 break;
         }

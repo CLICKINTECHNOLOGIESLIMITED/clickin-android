@@ -133,7 +133,6 @@
                 + COLUMN_card_url + " text, "
                 + COLUMN_card_id + " text, "
                 + COLUMN_card_Played_Countered + " text, "
-                + COLUMN_card_Accepted_Rejected + " text, "
                 + COLUMN_card_originator + " text, "
                 + COLUMN_cardPartnerName + " text);";
 

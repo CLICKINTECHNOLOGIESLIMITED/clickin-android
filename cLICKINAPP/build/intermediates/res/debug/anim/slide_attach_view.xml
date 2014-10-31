@@ -5,4 +5,4 @@
         android:fromXDelta="-100%"
         android:toXDelta="0%" >
     </translate>
-</set><!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/anim/slide_attach_view.xml -->
+</set><!-- From: file:/home/mukesh/clickAMaster/cLICKINAPP/src/main/res/anim/slide_attach_view.xml -->

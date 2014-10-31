@@ -2,4 +2,4 @@
 
 <translate xmlns:android="http://schemas.android.com/apk/res/android"
     android:fromYDelta="0%p" android:toYDelta="-100%p"
-    android:duration="@android:integer/config_longAnimTime"/><!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/anim/slide_out_up.xml -->
+    android:duration="@android:integer/config_longAnimTime"/><!-- From: file:/home/mukesh/clickAMaster/cLICKINAPP/src/main/res/anim/slide_out_up.xml -->
