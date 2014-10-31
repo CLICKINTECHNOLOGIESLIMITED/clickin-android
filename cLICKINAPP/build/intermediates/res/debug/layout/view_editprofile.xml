@@ -63,7 +63,7 @@
             android:layout_height="118dp"
             android:layout_weight="1"
             android:paddingLeft="-10dp"
-            android:src="@drawable/c_selfie" />
+            />
 
 
         <LinearLayout

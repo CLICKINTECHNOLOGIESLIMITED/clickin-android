@@ -79,7 +79,7 @@
                         android:layout_marginLeft="10dp"
                         android:paddingBottom="2dp"
                         android:paddingTop="5dp"
-                        android:text="Jacob smith"
+
                         android:textColor="@color/owner_profile_name_b"
                         android:textSize="20sp"
                         android:textStyle="bold" />
@@ -90,7 +90,7 @@
                         android:layout_height="150dp"
                         android:layout_below="@+id/tv_name"
                         android:layout_marginLeft="10dp"
-                        android:background="@drawable/female_crt" />
+                       />
 
                     <TextView
                         android:id="@+id/tv_user_details"
@@ -100,7 +100,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="8dp"
                         android:singleLine="false"
-                        android:text="Jacob smith"
+
                         android:textColor="@color/owner_profile_address_m"
                         android:textSize="16sp" />
 

@@ -223,17 +223,57 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         }
 
         profileName.setText("" + splitted[0]);
-        try {
-            Picasso.with(ChatRecordView.this).load(authManager.getUserPic())
-                    .skipMemoryCache()
-                    .placeholder(R.drawable.default_profile)
-                    .error(R.drawable.default_profile).into(mypix);
-            Picasso.with(ChatRecordView.this).load(partnerPic)
-                    .placeholder(R.drawable.default_profile)
-                    .error(R.drawable.default_profile).into(partnerPix);
-        } catch (Exception e) {
-        }
+//        try {
+//            Picasso.with(ChatRecordView.this).load(authManager.getUserPic())
+//                    .skipMemoryCache()
+//                    .placeholder(R.drawable.default_profile)
+//                    .error(R.drawable.default_profile).into(mypix);
+//            Picasso.with(ChatRecordView.this).load(partnerPic)
+//                    .placeholder(R.drawable.default_profile)
+//                    .error(R.drawable.default_profile).into(partnerPix);
+//        } catch (Exception e) {
+//        }
+        if(authManager.getGender()!=null) {
+        if (authManager.getGender().matches("guy")) {
 
+            try {
+                if (!authManager.getUserPic().equalsIgnoreCase("")) {
+                Picasso.with(ChatRecordView.this)
+                        .load(authManager.getUserPic())
+                        .skipMemoryCache()
+
+                        .error(R.drawable.male_user).into(mypix);
+                } else {
+                    mypix.setImageResource(R.drawable.male_user);
+                }
+            } catch (Exception e) {
+                mypix.setImageResource(R.drawable.male_user);
+            }
+        }
+        else
+        {
+            try {
+                if (!authManager.getUserPic().equalsIgnoreCase("")) {
+                Picasso.with(ChatRecordView.this)
+                        .load(authManager.getUserPic())
+                        .skipMemoryCache()
+
+                        .error(R.drawable.female_user).into(mypix);
+                } else {
+                    mypix.setImageResource(R.drawable.female_user);
+                }
+            } catch (Exception e) {
+                mypix.setImageResource(R.drawable.female_user);
+            }
+        }
+    }
+    else
+    {
+        mypix.setImageResource(R.drawable.male_user);
+    }
+        Picasso.with(ChatRecordView.this).load(partnerPic)
+                  
+                    .error(R.drawable.default_profile).into(partnerPix);
 
         mybar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
             @Override

@@ -71,7 +71,7 @@
                     android:layout_height="150dp"
                     android:layout_below="@+id/tv_name_other"
                     android:layout_marginLeft="10dp"
-                    android:src="@drawable/default_profile" />
+                    />
 
                 <TextView
                     android:id="@+id/tv_user_details_other"

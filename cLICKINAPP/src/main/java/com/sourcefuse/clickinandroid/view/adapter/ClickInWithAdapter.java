@@ -63,10 +63,16 @@ public class ClickInWithAdapter extends ArrayAdapter<GetrelationshipsBean> {
         try{
             rholder.clickInUsrName.setText(item.getPartnerName());
             rholder.unReadNo.setText("");
-            Picasso.with(context).load(item.getPartnerPic())
-                    .placeholder(R.drawable.default_profile)
-                    .error(R.drawable.default_profile)
-                    .into(rholder.clickInUsrimg);
+            if(!item.getPartnerPic().equalsIgnoreCase("")) {
+                Picasso.with(context).load(item.getPartnerPic())
+
+                        .error(R.drawable.default_profile)
+                        .into(rholder.clickInUsrimg);
+            }
+            else
+            {
+                rholder.clickInUsrimg.setImageResource(R.drawable.male_user);
+            }
         }catch(Exception e){}
 
         }

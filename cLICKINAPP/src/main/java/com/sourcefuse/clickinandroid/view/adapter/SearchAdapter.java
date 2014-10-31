@@ -62,10 +62,24 @@ public class SearchAdapter extends ArrayAdapter<FetchUsersByNameBean> {
         }
 
         rholder.usr_name.setText(item.getName());
-        Picasso.with(context).load(item.getUserPic())
-                .placeholder(R.drawable.default_profile)
-                .error(R.drawable.default_profile)
-                .into(rholder.usrimg);
+
+        if(!item.getUserPic().equalsIgnoreCase("")) {
+            try {
+                Picasso.with(context).load(item.getUserPic())
+
+                        .error(R.drawable.male_user)
+                        .into(rholder.usrimg);
+            }
+            catch (Exception e)
+            {
+                holder.usrimg.setImageResource(R.drawable.male_user);
+            }
+        }
+        else
+        {
+            holder.usrimg.setImageResource(R.drawable.male_user);
+        }
+
 
         return row;
     }

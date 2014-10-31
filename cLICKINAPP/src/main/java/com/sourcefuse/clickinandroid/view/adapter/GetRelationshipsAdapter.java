@@ -58,14 +58,26 @@ public class GetRelationshipsAdapter extends ArrayAdapter<GetrelationshipsBean> 
 
 		try{
 		rholder.usr_name.setText(item.getPartnerName());
-		Picasso.with(context).load(item.getPartnerPic())
-	    .placeholder(R.drawable.default_profile)
-	    .error(R.drawable.default_profile)
-	    .into(rholder.usrimg);
+
+            if(!item.getPartnerPic().equalsIgnoreCase("")) {
+                try {
+                    Picasso.with(context).load(item.getPartnerPic())
+
+                            .error(R.drawable.male_user)
+                            .into(rholder.usrimg);
+                }
+                catch (Exception e)
+                {
+                    holder.usrimg.setImageResource(R.drawable.male_user);
+                }
+            }
+            else
+            {
+                holder.usrimg.setImageResource(R.drawable.male_user);
+            }
+
 		}catch(Exception e){}
-		
-	
-		
+
 		
 		return row;
 	}

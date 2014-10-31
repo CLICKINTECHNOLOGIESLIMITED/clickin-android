@@ -287,9 +287,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.clicksText.setVisibility(View.GONE);
                     holder.clicksHeart.setVisibility(View.GONE);
                     holder.chatText.setTextColor(context.getResources().getColor(R.color.black));
+
                     Picasso.with(context).load(item.getChatImageUrl())
-                            .placeholder(R.drawable.default_profile)
-                            .error(R.drawable.default_profile).into(holder.chatImage);
+                            .into(holder.chatImage);
 
                 }else if(!Utils.isEmptyString(item.getClicks())) {
                     holder.chatImage.setVisibility(View.VISIBLE);
@@ -313,8 +313,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.sendStatus.setVisibility(View.GONE);
 
                     Picasso.with(context).load(item.getChatImageUrl())
-                            .placeholder(R.drawable.default_profile)
-                            .error(R.drawable.default_profile).into(holder.chatImage);
+                            .into(holder.chatImage);
                 }
             }else{
                 Log.e(TAG, "" + "Type 22 - SENDER");
@@ -343,7 +342,8 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                         holder.clicksText.setVisibility(View.GONE);
                         holder.clicksHeart.setVisibility(View.GONE);
                         holder.chatImage.setBackgroundResource(R.drawable.newbg);
-                        Picasso.with(context).load(item.getChatImageUrl()).into(holder.chatImage);
+                        Picasso.with(context).load(item.getChatImageUrl())
+                                .into(holder.chatImage);
                         holder.timeText.setText("" + Utils.getLocalDatefromTimestamp(Long.parseLong(item.getTimeStamp())));
 
                     } else if(Utils.isEmptyString(item.getClicks()) && !Utils.isEmptyString(item.getChatText())) {

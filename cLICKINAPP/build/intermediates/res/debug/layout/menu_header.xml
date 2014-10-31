@@ -17,7 +17,7 @@
             android:layout_height="50dp"
             android:layout_alignParentLeft="true"
             android:layout_margin="2dp"
-            android:background="@drawable/female_crt" />
+            />
 
         <com.sourcefuse.clickinandroid.utils.ClickInTextView
             android:id="@+id/iv_usr_name"

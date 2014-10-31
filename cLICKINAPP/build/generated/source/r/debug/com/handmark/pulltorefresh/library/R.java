@@ -104,11 +104,11 @@ public final class R {
 		public static final int webview = 0x7f08003c;
 	}
 	public static final class layout {
-		public static final int pull_to_refresh_header_google_style = 0x7f030049;
-		public static final int pull_to_refresh_header_horizontal = 0x7f03004a;
-		public static final int pull_to_refresh_header_vertical = 0x7f03004b;
-		public static final int pull_to_refresh_progress_google_style = 0x7f03004c;
-		public static final int pulling_progress_layout = 0x7f03004d;
+		public static final int pull_to_refresh_header_google_style = 0x7f03004a;
+		public static final int pull_to_refresh_header_horizontal = 0x7f03004b;
+		public static final int pull_to_refresh_header_vertical = 0x7f03004c;
+		public static final int pull_to_refresh_progress_google_style = 0x7f03004d;
+		public static final int pulling_progress_layout = 0x7f03004e;
 	}
 	public static final class string {
 		public static final int pull_to_refresh_from_bottom_pull_label = 0x7f0b0062;

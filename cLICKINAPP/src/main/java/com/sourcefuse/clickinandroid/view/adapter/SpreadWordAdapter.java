@@ -65,10 +65,25 @@ public class SpreadWordAdapter extends ArrayAdapter<ContactBean> {
 			if(!Utils.isEmptyString(item.getConUri()))
 			/*bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(),Uri.parse(item.getConUri()));
 			holder.usrimg.setImageBitmap(bitmap);*/
-                Picasso.with(context).load(item.getConUri())
-                        .placeholder(R.drawable.default_profile)
-                        .error(R.drawable.default_profile)
-                        .into(rholder.usrimg);
+
+                if(!item.getConUri().equalsIgnoreCase("")) {
+                    try {
+                        Picasso.with(context).load(item.getConUri())
+
+                                .error(R.drawable.male_user)
+                                .into(rholder.usrimg);
+                    }
+                    catch (Exception e)
+                    {
+                        holder.usrimg.setImageResource(R.drawable.male_user);
+                    }
+                }
+                else
+                {
+                    holder.usrimg.setImageResource(R.drawable.male_user);
+                }
+
+
 
 		}catch (Exception e) {
 			// TODO Auto-generated catch block

@@ -7,6 +7,7 @@ import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -84,13 +85,20 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
         }
 
         try {
-            Picasso.with(EditMyProfileView.this).load(authManager.getUserPic())
+            if (!authManager.getUserPic().equalsIgnoreCase("")) {
+            Picasso.with(EditMyProfileView.this).
+                    load(authManager.getUserPic())
                     .skipMemoryCache()
-                    .placeholder(R.drawable.default_profile)
-                    .error(R.drawable.default_profile)
+
+                    .error(R.drawable.male_user)
                     .into(mySelfy);
+            } else {
+                mySelfy.setImageResource(R.drawable.male_user);
+            }
         } catch (Exception e) {
+            mySelfy.setImageResource(R.drawable.male_user);
         }
+
 
     }
 
@@ -135,7 +143,8 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
                                     Log.e(TAG, "1" + e.toString());
                                 }
                             }
-
+                            authManager.setUserPic(imageBitmap.toString());
+                            authManager.setMenuUserInfoFlag(true);
                         } catch (Exception e) {
                             Log.e(TAG, "2" + e.toString());
                         }
@@ -183,8 +192,8 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
                         mySelfy.setImageBitmap(imageBitmap);
                     }
 
-                    authManager.setUserPic(imageBitmap.toString());
-                    authManager.setMenuUserInfoFlag(true);
+//                    authManager.setUserPic(imageBitmap.toString());
+//                    authManager.setMenuUserInfoFlag(true);
 
 //                    try {
 //                        ExifInterface ei = new ExifInterface(mImageCaptureUri.getPath());
@@ -221,9 +230,11 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
                         matrix.postRotate(270);
                         imageBitmap = Bitmap.createBitmap(imageBitmap , 0, 0, imageBitmap.getWidth(), imageBitmap.getHeight(), matrix, true);
                     }
+//                    imageBitmap = resizeImage(imageBitmap);
                     mySelfy.setImageBitmap(imageBitmap);
-                    authManager.setUserPic(imageBitmap.toString());
-                    authManager.setMenuUserInfoFlag(true);
+//                    authManager.setUserPic(imageBitmap.toString());
+//                    authManager.setMenuUserInfoFlag(true);
+
                     //authManager.setUserimageuri(mImageCaptureUri);
                     //authManager.setUserPic(Utils.decodeUri(mImageCaptureUri,EditMyProfileView.this));
                 } catch (Exception e) {
@@ -234,6 +245,28 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
         }
     }
 
+//    private Bitmap resizeImage(Bitmap resized)
+//    {
+//        int height = resized.getHeight();
+//        int width = resized.getWidth();
+//        DisplayMetrics metrics = new DisplayMetrics();
+//        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+//        int deviceHeight = Math.round(Utils.convertDpToPixel(118,this));
+//        int deviceWidth = Math.round(Utils.convertDpToPixel(118,this));
+//
+////        Uri cameraCaptureUri = app.getImageUri(resized, 100);
+//
+//        int resizeWidth = deviceWidth;
+//        int resizeHeight = height / deviceHeight * deviceWidth;
+//        if(height < deviceHeight){
+//            resizeHeight = height;
+//        }
+//        if(width < resizeWidth){
+//            resizeWidth = width;
+//        }
+//        Bitmap imageBitmap = Bitmap.createBitmap(resized , 0, 0, resizeWidth, resizeHeight);
+//        return imageBitmap;
+//    }
 
     @Override
     public void onStart() {

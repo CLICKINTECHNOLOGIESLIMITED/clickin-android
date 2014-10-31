@@ -85,10 +85,22 @@ public class FollowerAdapter extends ArrayAdapter<FollowerFollowingBean> {
 		
 		RecordHolder rholder = (RecordHolder) row.getTag();
 		rholder.usr_name.setText(item.getFolloweeName());
-		Picasso.with(context).load(item.getFolloweePic())
-	    .placeholder(R.drawable.default_profile)
-	    .error(R.drawable.default_profile)
-	    .into(rholder.usrimg);
+        if(!item.getFolloweePic().equalsIgnoreCase("")) {
+            try {
+                Picasso.with(context).load(item.getFolloweePic())
+
+                        .error(R.drawable.male_user)
+                        .into(rholder.usrimg);
+            }
+            catch (Exception e)
+            {
+                holder.usrimg.setImageResource(R.drawable.male_user);
+            }
+        }
+        else
+        {
+            holder.usrimg.setImageResource(R.drawable.male_user);
+        }
 
 
         profileManager = ModelManager.getInstance().getProfileManager();

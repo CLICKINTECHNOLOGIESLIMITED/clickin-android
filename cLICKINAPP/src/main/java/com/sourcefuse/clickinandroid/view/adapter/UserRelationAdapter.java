@@ -137,16 +137,24 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
 		}
 
 		showpending =false;
-		
-		
-		try{
-		Picasso.with(context).load(item.getPartnerPic())
-	    .placeholder(R.drawable.default_profile)
-	    .error(R.drawable.default_profile)
-	    .into(rholder.usrimg);
-	}catch(Exception e){
-		
-	}
+
+        if(!item.getPartnerPic().equalsIgnoreCase("")) {
+            try {
+                Picasso.with(context).load(item.getPartnerPic())
+
+                        .error(R.drawable.male_user)
+                        .into(rholder.usrimg);
+            }
+            catch (Exception e)
+            {
+                holder.usrimg.setImageResource(R.drawable.male_user);
+            }
+        }
+        else
+        {
+            holder.usrimg.setImageResource(R.drawable.male_user);
+        }
+
 		holder.privacy.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
             	authManager = ModelManager.getInstance().getAuthorizationManager();

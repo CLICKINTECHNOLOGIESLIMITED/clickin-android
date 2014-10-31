@@ -216,49 +216,121 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
                 if(imageBitmap!=null)
                     userimage.setImageBitmap(imageBitmap);
                 else{
-                    try{
-                        if(gender.equalsIgnoreCase("Male")){
-                            Picasso.with(UserProfileView.this)
-                                    .load(authManager.getUserPic())
-                                    .skipMemoryCache()
-                                    .placeholder(R.drawable.default_profile)
-                                    .error(R.drawable.male_user)
-                                    .into(userimage);
-                        }else if(gender.equalsIgnoreCase("Female")) {
-                            Picasso.with(UserProfileView.this)
-                                    .load(authManager.getUserPic())
-                                    .skipMemoryCache()
-                                    .placeholder(R.drawable.default_profile)
-                                    .error(R.drawable.female_user)
-                                    .into(userimage);
-                        }
+                    if(!gender.equalsIgnoreCase("")) {
 
-                    }catch(Exception e){
-                        e.printStackTrace();
+                                if (gender.equalsIgnoreCase("Male")) {
+                                    try {
+                                        if(!authManager.getUserPic().equalsIgnoreCase("")) {
+                                            Picasso.with(UserProfileView.this)
+                                                    .load(authManager.getUserPic())
+                                                    .skipMemoryCache()
+
+                                                    .error(R.drawable.male_user)
+                                                    .into(userimage);
+                                        }
+                                        else
+                                        {
+                                            userimage.setImageResource(R.drawable.male_user);
+                                        }
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                        userimage.setImageResource(R.drawable.male_user);
+                                    }
+                                } else if (gender.equalsIgnoreCase("Female")) {
+                                    try {
+                                        if(!authManager.getUserPic().equalsIgnoreCase("")) {
+                                            Picasso.with(UserProfileView.this)
+                                                    .load(authManager.getUserPic())
+                                                    .skipMemoryCache()
+
+                                                    .error(R.drawable.female_user)
+                                                    .into(userimage);
+                                        }
+                                        else
+                                        {
+                                            userimage.setImageResource(R.drawable.female_user);
+                                        }
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                        userimage.setImageResource(R.drawable.female_user);
+                                    }
+                                }
+
+                    }
+                    else
+                    {
+                        userimage.setImageResource(R.drawable.male_user);
                     }
                 }
 
             }else{
-                try{
-                    if(gender.equalsIgnoreCase("Male")){
-                        Picasso.with(UserProfileView.this)
-                                .load(authManager.getUserPic())
-                                .skipMemoryCache()
-                                .placeholder(R.drawable.default_profile)
-                                .error(R.drawable.male_user)
-                                .into(userimage);
-                    }else if(gender.equalsIgnoreCase("Female")) {
-                        Picasso.with(UserProfileView.this)
-                                .load(authManager.getUserPic())
-                                .skipMemoryCache()
-                                .placeholder(R.drawable.default_profile)
-                                .error(R.drawable.female_user)
-                                .into(userimage);
+                if(!gender.equalsIgnoreCase("")) {
+
+                    if (gender.equalsIgnoreCase("Male")) {
+                        try {
+                            if(!authManager.getUserPic().equalsIgnoreCase("")) {
+                                Picasso.with(UserProfileView.this)
+                                        .load(authManager.getUserPic())
+                                        .skipMemoryCache()
+
+                                        .error(R.drawable.male_user)
+                                        .into(userimage);
+                            }
+                            else
+                            {
+                                userimage.setImageResource(R.drawable.male_user);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            userimage.setImageResource(R.drawable.male_user);
+                        }
+                    } else if (gender.equalsIgnoreCase("Female")) {
+                        try {
+                            if(!authManager.getUserPic().equalsIgnoreCase("")) {
+                                Picasso.with(UserProfileView.this)
+                                        .load(authManager.getUserPic())
+                                        .skipMemoryCache()
+
+                                        .error(R.drawable.female_user)
+                                        .into(userimage);
+                            }
+                            else
+                            {
+                                userimage.setImageResource(R.drawable.female_user);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            userimage.setImageResource(R.drawable.female_user);
+                        }
                     }
 
-                }catch(Exception e){
-                    e.printStackTrace();
                 }
+                else
+                {
+                    userimage.setImageResource(R.drawable.male_user);
+                }
+
+
+//                try{
+//                    if(gender.equalsIgnoreCase("Male")){
+//                        Picasso.with(UserProfileView.this)
+//                                .load(authManager.getUserPic())
+//                                .skipMemoryCache()
+//
+//                                .error(R.drawable.male_user)
+//                                .into(userimage);
+//                    }else if(gender.equalsIgnoreCase("Female")) {
+//                        Picasso.with(UserProfileView.this)
+//                                .load(authManager.getUserPic())
+//                                .skipMemoryCache()
+//
+//                                .error(R.drawable.female_user)
+//                                .into(userimage);
+//                    }
+//
+//                }catch(Exception e){
+//                    e.printStackTrace();
+//                }
 
             }
 

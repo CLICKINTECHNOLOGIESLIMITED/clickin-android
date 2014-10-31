@@ -25,7 +25,7 @@ public final class R {
 		public static final int onTouch = 0x7f08000a;
 	}
 	public static final class layout {
-		public static final int crop_image_view = 0x7f030035;
+		public static final int crop_image_view = 0x7f030036;
 	}
 	public static final class string {
 		public static final int app_name = 0x7f0b0014;

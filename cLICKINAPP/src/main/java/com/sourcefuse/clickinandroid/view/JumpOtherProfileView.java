@@ -371,29 +371,42 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
 			String textfollowing = "<font color=#f29691>"+getResources().getString(R.string.txt_following)+"</font> <font color=#cccccc>"+authManager.getTmpFollowing()+"</font>";
 			following.setText(Html.fromHtml(textfollowing));
 
-            if (authManager.getTmpGender().matches("guy")) {
 
-                try {
-                    Picasso.with(JumpOtherProfileView.this)
-                            .load(authManager.getTmpUserPic())
-                            .skipMemoryCache()
-                            .placeholder(R.drawable.default_profile)
-                            .error(R.drawable.male_user).into(userimage);
-                } catch (Exception e) {
+            if(authManager.getTmpGender()!=null) {
+                if (authManager.getTmpGender().matches("guy")) {
+
+                    try {
+                        if (!authManager.getTmpUserPic().equalsIgnoreCase("")) {
+                            Picasso.with(JumpOtherProfileView.this)
+                                    .load(authManager.getTmpUserPic())
+                                    .skipMemoryCache()
+                                    .error(R.drawable.male_user).into(userimage);
+                        } else {
+                            userimage.setImageResource(R.drawable.male_user);
+                        }
+                    } catch (Exception e) {
+                        userimage.setImageResource(R.drawable.male_user);
+                    }
+                } else {
+                    try {
+                        if (!authManager.getTmpUserPic().equalsIgnoreCase("")) {
+                            Picasso.with(JumpOtherProfileView.this)
+                                    .load(authManager.getTmpUserPic())
+                                    .skipMemoryCache()
+
+                                    .error(R.drawable.female_user).into(userimage);
+                        } else {
+                            userimage.setImageResource(R.drawable.female_user);
+                        }
+                    } catch (Exception e) {
+                        userimage.setImageResource(R.drawable.female_user);
+                    }
                 }
             }
             else
             {
-                try {
-                    Picasso.with(JumpOtherProfileView.this)
-                            .load(authManager.getTmpUserPic())
-                            .skipMemoryCache()
-                            .placeholder(R.drawable.default_profile)
-                            .error(R.drawable.female_user).into(userimage);
-                } catch (Exception e) {
-                }
+                userimage.setImageResource(R.drawable.male_user);
             }
-
 		} 
 
 	}

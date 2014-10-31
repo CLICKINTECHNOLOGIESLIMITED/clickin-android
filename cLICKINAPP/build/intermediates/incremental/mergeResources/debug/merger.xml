@@ -19337,6 +19337,11 @@ false
                 qualifiers=""
                 type="layout" />
             <file
+                name="card_click_popup"
+                path="/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/layout/card_click_popup.xml"
+                qualifiers=""
+                type="layout" />
+            <file
                 name="list_divider"
                 path="/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/layout/list_divider.xml"
                 qualifiers=""
