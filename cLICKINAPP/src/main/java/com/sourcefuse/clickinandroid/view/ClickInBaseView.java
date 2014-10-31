@@ -107,6 +107,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 
         Intent intent = new Intent(ClickInBaseView.this, ChatRecordView.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setAction("UPDATE");
         intent.putExtra("quickId", quickBlockId);
         intent.putExtra("partnerPic", partnerPic);
         intent.putExtra("partnerName", partnerName);
@@ -121,6 +122,8 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         chatManager.setrelationshipId(rid);
 
         startActivity(intent);
+        slidemenu.showContent();
+        slidemenu.showContent(true);
 
     }
     /// Left Menu End
