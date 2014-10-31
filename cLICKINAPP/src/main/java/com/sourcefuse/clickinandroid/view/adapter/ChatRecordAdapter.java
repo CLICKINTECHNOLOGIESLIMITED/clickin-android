@@ -825,8 +825,8 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                             .into(holder.tradeImage);
                     try {
                         if (Integer.parseInt(item.getCard_clicks()) < 10) {
-                            holder.trdClicksTop.setText("" + item.getCard_clicks());
-                            holder.trdClicksBottom.setText("" + item.getCard_clicks());
+                            holder.trdClicksTop.setText("0" + item.getCard_clicks());
+                            holder.trdClicksBottom.setText("0" + item.getCard_clicks());
                         } else {
                             holder.trdClicksTop.setText(item.getCard_clicks());
                             holder.trdClicksBottom.setText(item.getCard_clicks());
@@ -900,8 +900,8 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
 
                     try {
                         if (Integer.parseInt(item.getCard_clicks()) < 10) {
-                            holder.trdClicksTop.setText("" + item.getCard_clicks());
-                            holder.trdClicksBottom.setText("" + item.getCard_clicks());
+                            holder.trdClicksTop.setText("0" + item.getCard_clicks());
+                            holder.trdClicksBottom.setText("0" + item.getCard_clicks());
                         } else {
                             holder.trdClicksTop.setText(item.getCard_clicks());
                             holder.trdClicksBottom.setText(item.getCard_clicks());
@@ -970,6 +970,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     i.setClass(context,ChatRecordView.class);
                     i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    i.setAction("Card");
                     context.startActivity(i);
                 }
             }
@@ -992,6 +993,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     i.putExtra("played_Countered","REJECTED!");
                     i.putExtra("card_originator",item.getCard_originator());
                     i.setClass(context,ChatRecordView.class);
+                    i.setAction("Card");
                     i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     context.startActivity(i);
@@ -1037,6 +1039,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     i.putExtra("played_Countered","ACCEPTED");
                     i.putExtra("card_originator",item.getCard_originator());
                     i.setClass(context,ChatRecordView.class);
+                    i.setAction("Card");
                     i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     context.startActivity(i);
@@ -1062,6 +1065,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     i.putExtra("played_Countered","REJECTED!");
                     i.putExtra("card_originator",item.getCard_originator());
                     i.setClass(context,ChatRecordView.class);
+                    i.setAction("Card");
                     i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     context.startActivity(i);

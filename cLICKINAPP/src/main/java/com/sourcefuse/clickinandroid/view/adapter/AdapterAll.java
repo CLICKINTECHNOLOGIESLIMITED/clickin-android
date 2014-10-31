@@ -68,6 +68,7 @@ public class AdapterAll extends ArrayAdapter<CardBean> {
                 if(position==0){
 
                     Intent intent = new Intent(getContext(), ViewTradeCart.class);
+                    intent.putExtra("ForCounter", false);
                     context.startActivity(intent);
                     ((Activity) context).overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
 
@@ -75,13 +76,12 @@ public class AdapterAll extends ArrayAdapter<CardBean> {
                 else{
 
                     CardBean bean = getItem(position-1);
-                    String url = bean.getCardUrl();
-//                    String url = bean.getCardUrl() ;
+                    String url;
+                    String url1 = bean.getCardUrl() ;
                     String add = "/a/1080" ;
 
-
-                  //  url=url1.replaceFirst("cards\\/(\\d+)\\.jpg","cards\\/a\\/1080\\/$1\\.jpg");
-                    Log.e("All Adapter " , "Original URL::>>>>>>>>" +url);
+                    url=url1.replaceFirst("cards\\/(\\d+)\\.jpg","cards\\/a\\/1080\\/$1\\.jpg");
+                    Log.e("All Adapter " , "This Modified URL::>>>>>>>>" +url);
 
 
 					
