@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- From: file:/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/facebookSDK/unspecified/res/values-he/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/facebookSDK/unspecified/res/values-he/values.xml -->
     <eat-comment />
 
     <string name="com_facebook_choose_friends">בחר חברים</string>
@@ -29,7 +29,7 @@
     <string name="com_facebook_usersettingsfragment_log_in_button">התחבר…</string>
     <string name="com_facebook_usersettingsfragment_logged_in">מחובר</string>
     <string name="com_facebook_usersettingsfragment_not_logged_in">לא מחובר</string>
-    <!-- From: file:/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.navercorp.pulltorefresh/library/3.2.0/res/values-he/values.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.navercorp.pulltorefresh/library/3.2.0/res/values-he/values.xml -->
     <eat-comment />
 
     <string name="pull_to_refresh_pull_label">משוך לרענון…</string>

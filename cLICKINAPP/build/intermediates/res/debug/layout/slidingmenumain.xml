@@ -2,4 +2,4 @@
 <com.jeremyfeinstein.slidingmenu.lib.SlidingMenu xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/slidingmenumain"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" /><!-- From: file:/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/slider_library/src/main/res/layout/slidingmenumain.xml --><!-- From: file:/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/slider_library/unspecified/res/layout/slidingmenumain.xml -->
+    android:layout_height="fill_parent" /><!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/slider_library/src/main/res/layout/slidingmenumain.xml --><!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/slider_library/unspecified/res/layout/slidingmenumain.xml -->

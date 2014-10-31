@@ -28,7 +28,9 @@ import com.sourcefuse.clickinandroid.model.bean.NewsFeedBean;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.FeedCommentsView;
 import com.sourcefuse.clickinandroid.view.FeedStarsView;
+import com.sourcefuse.clickinandroid.view.FeedVideoView;
 import com.sourcefuse.clickinandroid.view.Feed_large_img;
+import com.sourcefuse.clickinandroid.view.MapView;
 import com.sourcefuse.clickinapp.R;
 import com.squareup.picasso.Picasso;
 
@@ -283,7 +285,9 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
                 }
 
                 else  if (eachNewsFeed.get(position).getNewsFeedArray_chatDetail_type().equalsIgnoreCase("6")){
-
+                    Intent i = new Intent(context, MapView.class);
+                    i.putExtra("coordinates", eachNewsFeed.get(position).getNewsFeedArray_chatDetail_location_coordinates());
+                    context.startActivity(i);
                 }
             }
         });
@@ -313,6 +317,9 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
                 intent.setDataAndType(myUri, "video/*");
                 context.startActivity(intent);
 
+//                Intent intent = new Intent(context, FeedVideoView.class);
+//                intent.putExtra("url",eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content());
+//                context.startActivity(intent);
 
                 Log.e("video url", eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content());
             }

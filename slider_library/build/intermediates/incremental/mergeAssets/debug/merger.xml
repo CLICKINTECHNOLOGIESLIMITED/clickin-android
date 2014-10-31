@@ -2,10 +2,10 @@
 <merger version="2" >
 
     <dataSet config="main" >
-        <source path="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/slider_library/src/main/assets" />
+        <source path="/home/dell/Github/Git_Clickin/clickin-andoid/slider_library/src/main/assets" />
     </dataSet>
     <dataSet config="debug" >
-        <source path="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/slider_library/src/debug/assets" />
+        <source path="/home/dell/Github/Git_Clickin/clickin-andoid/slider_library/src/debug/assets" />
     </dataSet>
 
 </merger>

@@ -18,4 +18,4 @@
   <item android:state_checked="true" android:drawable="@drawable/com_facebook_button_check_on" />
   <item android:drawable="@drawable/com_facebook_button_check_off" />
 </selector>
-<!-- From: file:/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/facebookSDK/src/main/res/drawable/com_facebook_button_check.xml -->
+<!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/facebookSDK/src/main/res/drawable/com_facebook_button_check.xml -->

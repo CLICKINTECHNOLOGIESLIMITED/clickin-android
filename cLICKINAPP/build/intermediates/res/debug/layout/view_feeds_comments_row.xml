@@ -26,23 +26,23 @@
         android:textSize="20sp"
         android:visibility="gone" />
 
-<!--<View-->
-    <!--android:layout_width="fill_parent"-->
-    <!--android:layout_height="2dp"-->
-    <!--android:background="@color/dark_gray"-->
-    <!--android:layout_below="@+id/tv_heading_followers"-->
-    <!--android:id="@+id/view"-->
-    <!--android:layout_marginLeft="5dp"-->
-    <!--android:layout_marginRight="5dp"></View>-->
+<View
+    android:layout_width="fill_parent"
+    android:layout_height="2dp"
+    android:background="@color/light_gray"
+    android:layout_below="@+id/tv_heading_followers"
+    android:id="@+id/view"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"></View>
     <RelativeLayout
         android:id="@+id/rl_layout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        
+        android:padding="5dp"
         android:background="@color/white"
         android:layout_marginBottom="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="5dp" >
+android:layout_below="@+id/view"
+        >
 
         <ImageView
             android:id="@+id/iv_usr"
@@ -94,4 +94,4 @@
 
     </RelativeLayout>
 
-</RelativeLayout><!-- From: file:/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/src/main/res/layout/view_feeds_comments_row.xml -->
+</RelativeLayout><!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/layout/view_feeds_comments_row.xml -->

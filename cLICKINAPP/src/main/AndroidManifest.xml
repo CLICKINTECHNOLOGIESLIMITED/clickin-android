@@ -248,6 +248,11 @@
             android:launchMode="standard"
             android:screenOrientation="portrait">
         </activity>
+        <activity
+            android:name="com.sourcefuse.clickinandroid.view.FeedVideoView"
+            android:launchMode="standard"
+            android:screenOrientation="portrait">
+        </activity>
         <meta-data android:name="com.crashlytics.ApiKey" android:value="d9e80395ff1cf43b754406126aac3d0734cbaa5e"/>
     </application>
 

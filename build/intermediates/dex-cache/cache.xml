@@ -2,106 +2,106 @@
 <pre-dex-items>
 
     <item
-        dex="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/pre-dexed/debug/java-json-47b9f30f6df1a9e2042e55c7b107ea7c02b0d358.jar"
-        jar="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/libs/java-json.jar"
+        dex="/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-7246f528ebd008f2b2bc717763e09bb22cf36e5d.jar"
+        jar="/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/facebookSDK/unspecified/classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="5ad95f920896d288e895b0010c8f878f2cc44f1c"/>
+    <item
+        dex="/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/pre-dexed/debug/java-json-f4f2bef61aa3029dcdce04937a89fe6a4ba89cc7.jar"
+        jar="/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/libs/java-json.jar"
         jumboMode="false"
         revision="19.1.0"
         sha1="edad9c5de6fb8df07c535a47045956026011ffa3"/>
     <item
-        dex="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/pre-dexed/debug/internal_impl-20.0.0-037736a22cec10f93c97842a23abc949a455307e.jar"
-        jar="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/support-v4/20.0.0/libs/internal_impl-20.0.0.jar"
+        dex="/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-616125c532ecd78f9d5e68f4ad33cc6454e9af73.jar"
+        jar="/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/cropper/unspecified/classes.jar"
         jumboMode="false"
         revision="19.1.0"
-        sha1="e40b3078e3fbd353c9f44da8df25a8fc0078209d"/>
+        sha1="559075c3dfd8efbd7fa6adfcae71e579139d17b4"/>
     <item
-        dex="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-87ec36604c6cae0713c7a38b40fd3408a7aaf477.jar"
-        jar="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/library_header/unspecified/classes.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="97a63b4e037f93cd72f923159c871ef165c8581d"/>
-    <item
-        dex="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-59c49e349218b32573757fee2611dac13e43bb15.jar"
-        jar="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/support-v4/20.0.0/classes.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="8694693636ab36910c8100ce527c258ff3ebece0"/>
-    <item
-        dex="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/pre-dexed/debug/quickblox-android-1.2.4-b053b6356031f7f5162f85fbefc9e5b2a3c05d1a.jar"
-        jar="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/libs/quickblox-android-1.2.4.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="0980419c50643c4e3ce10cf39fb25b283e8a3ca9"/>
-    <item
-        dex="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-a839d5045e82856825bf27313c0e251104266673.jar"
-        jar="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/classes.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="f21927d22fe31889ecce94dd697a2e75b137e0ef"/>
-    <item
-        dex="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/pre-dexed/debug/eventbus-2.2.0-048cc96297e4b7fd02664ecfc7711ac5aed57835.jar"
-        jar="/home/akshit/.gradle/caches/modules-2/files-2.1/de.greenrobot/eventbus/2.2.0/8957e80562a7e6ac5d9421e46e0898336c06c307/eventbus-2.2.0.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="8957e80562a7e6ac5d9421e46e0898336c06c307"/>
-    <item
-        dex="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-22380b89c88f53b387d28629c8a59fb612686a05.jar"
-        jar="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/cropper/unspecified/classes.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="df46cae68b9131701a30f5b97e8d71419a272b34"/>
-    <item
-        dex="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/pre-dexed/debug/picasso-2.2.0-f019737b6a4e75514178ed8c6a2b05cadb95dd04.jar"
-        jar="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/libs/picasso-2.2.0.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="74137f8d9aac26dd9463efe32271f2be8d41cda9"/>
-    <item
-        dex="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-51d2971e2018bd5d2972d002bf53bd96e3243a9b.jar"
-        jar="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.viewpagerindicator/library/2.4.1/classes.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="88e8e18d365173ad04a543d76c157e0b644f0b3f"/>
-    <item
-        dex="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-f3211c00cf771e3aaa38ee4e9033f20df2f7fb3c.jar"
-        jar="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.google.android.gms/play-services/3.1.59/classes.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="2dd7b1a9ea65bb03d9cd16df777eeaf537a1fc81"/>
-    <item
-        dex="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/pre-dexed/debug/support-annotations-20.0.0-cb5382fe8f107b0530bcd335f7f7a30b8ea194de.jar"
-        jar="/home/akshit/Downloads/android-studio/sdk/extras/android/m2repository/com/android/support/support-annotations/20.0.0/support-annotations-20.0.0.jar"
+        dex="/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/pre-dexed/debug/support-annotations-20.0.0-ff6949487c0c32102e0f7a78e0cb7f41e374361f.jar"
+        jar="/home/dell/Downloads/Android_Tools/adt-bundle-linux-x86_64-20140702/sdk/extras/android/m2repository/com/android/support/support-annotations/20.0.0/support-annotations-20.0.0.jar"
         jumboMode="false"
         revision="19.1.0"
         sha1="9d9013e9ff35fc3756411e62873c363c70c638fa"/>
     <item
-        dex="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-2182c7b8f863fcf35ad99503e8ceb3e634b526c6.jar"
-        jar="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.navercorp.pulltorefresh/library/3.2.0/classes.jar"
+        dex="/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/pre-dexed/debug/quickblox-android-1.2.4-5ac130fd932ac04684864dfff1db17cdb3a11471.jar"
+        jar="/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/libs/quickblox-android-1.2.4.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="0980419c50643c4e3ce10cf39fb25b283e8a3ca9"/>
+    <item
+        dex="/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/pre-dexed/debug/picasso-2.2.0-b017d3ac1a2c83a4ed5d80812714295e538ec065.jar"
+        jar="/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/libs/picasso-2.2.0.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="74137f8d9aac26dd9463efe32271f2be8d41cda9"/>
+    <item
+        dex="/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-3f0ce17b7ed26db02df60cc28ea079a5aed114d2.jar"
+        jar="/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/library_header/unspecified/classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="fdcf9aeb46d7a09bdcea0b04a0281a2d26df70f5"/>
+    <item
+        dex="/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-ef6fa5415c4b8cb820d77f39e9c3e3b2fc5b1316.jar"
+        jar="/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.navercorp.pulltorefresh/library/3.2.0/classes.jar"
         jumboMode="false"
         revision="19.1.0"
         sha1="e81a90331089d2f9018e493b0fdd6bab92fae40c"/>
     <item
-        dex="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-954c95d3813b29686252c9b862fcc94c9f8db7e7.jar"
-        jar="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/slider_library/unspecified/classes.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="61f229fe11f830b24d28a27f5f7bda13200e046e"/>
-    <item
-        dex="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-976d4c81a80fdfa67a3a9e557358e13afedde13d.jar"
-        jar="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/library/unspecified/classes.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="d1da42a20a0372be01df9e63ef844aa02c2dfb8e"/>
-    <item
-        dex="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/pre-dexed/debug/android-async-http-1.4.4-920cdf574c79ff81524ebe4c7d7dc759eec82d63.jar"
-        jar="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/libs/android-async-http-1.4.4.jar"
+        dex="/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/pre-dexed/debug/android-async-http-1.4.4-bf840044002049ff7459fe63f479ec1086ef2034.jar"
+        jar="/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/libs/android-async-http-1.4.4.jar"
         jumboMode="false"
         revision="19.1.0"
         sha1="3bae85a076241828810bf8fbcc12e5891d5fc34c"/>
     <item
-        dex="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-a45dcdb4089165678fc22acf435be49750922eba.jar"
-        jar="/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/facebookSDK/unspecified/classes.jar"
+        dex="/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/pre-dexed/debug/internal_impl-20.0.0-70f2e7f68bfb103c3511516f16eb5bea18bb1439.jar"
+        jar="/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/support-v4/20.0.0/libs/internal_impl-20.0.0.jar"
         jumboMode="false"
         revision="19.1.0"
-        sha1="39f7bd76d31d9e3df8c6bc78f9906feaee929fbf"/>
+        sha1="e40b3078e3fbd353c9f44da8df25a8fc0078209d"/>
+    <item
+        dex="/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-6e189bb8021c4e490ff963f88e448ebcfd553ed6.jar"
+        jar="/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.viewpagerindicator/library/2.4.1/classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="88e8e18d365173ad04a543d76c157e0b644f0b3f"/>
+    <item
+        dex="/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-a838b35cbd3887fc6351f70fed011b2de87a053c.jar"
+        jar="/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/slider_library/unspecified/classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="983718ad64a73d8586ca31b1c6747fe4fb5e7217"/>
+    <item
+        dex="/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-c727e6b43732c01e346baabb213abf7817551f7e.jar"
+        jar="/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.google.android.gms/play-services/3.1.59/classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="2dd7b1a9ea65bb03d9cd16df777eeaf537a1fc81"/>
+    <item
+        dex="/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-a4ad4779abac4f08119c84c480ae1924c14a3305.jar"
+        jar="/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/clickin-andoid/library/unspecified/classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="763ccab89aa513bb17d4c503f4846c9c9607b835"/>
+    <item
+        dex="/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-6362f71026cb24b03f6db6032514f92cd0a106ff.jar"
+        jar="/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/support-v4/20.0.0/classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="8694693636ab36910c8100ce527c258ff3ebece0"/>
+    <item
+        dex="/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/pre-dexed/debug/classes-377f65d6a0e419147a917f450e59fa3f49235ee2.jar"
+        jar="/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="f21927d22fe31889ecce94dd697a2e75b137e0ef"/>
+    <item
+        dex="/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/build/intermediates/pre-dexed/debug/eventbus-2.2.0-10ccc2d96eb59a4ebebcaa38daa7018f0c8384d8.jar"
+        jar="/home/dell/.gradle/caches/modules-2/files-2.1/de.greenrobot/eventbus/2.2.0/8957e80562a7e6ac5d9421e46e0898336c06c307/eventbus-2.2.0.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="8957e80562a7e6ac5d9421e46e0898336c06c307"/>
 
 </pre-dex-items>

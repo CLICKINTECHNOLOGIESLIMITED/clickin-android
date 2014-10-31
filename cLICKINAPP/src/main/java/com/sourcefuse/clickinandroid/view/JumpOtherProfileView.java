@@ -49,6 +49,7 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
 	private boolean whichList =  false;
     private View headerView ;
 
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -105,6 +106,18 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
 			phForOtherUser = getIntent().getExtras().getString("phNumber");
             authManager.getProfileInfo(phForOtherUser,authManager.getPhoneNo(), authManager.getUsrToken());
             relationManager.fetchprofilerelationships(phForOtherUser, authManager.getPhoneNo(), authManager.getUsrToken());
+
+            name.setText(getIntent().getExtras().getString("name"));
+            profileHeader.setText(getIntent().getExtras().getString("name"));
+            if(name.getText().toString().trim().equalsIgnoreCase(authManager.getUserName().toString().trim())) {
+                rlClickWith.setVisibility(View.GONE);
+                follow.setVisibility(View.GONE);
+            }
+            else {
+                rlClickWith.setVisibility(View.VISIBLE);
+                follow.setVisibility(View.VISIBLE);
+            }
+
 		}
 
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -235,9 +248,17 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
         relationManager = ModelManager.getInstance().getRelationManager();
         Log.e("onEventMainThread","-------"+message);
 			if (message.equalsIgnoreCase("ProfileInfo True")) {
-				setProfileData();
+                setProfileData();
+            }else if (message.equalsIgnoreCase("ProfileInfo False")) {
+
+            }else if (message.equalsIgnoreCase("ProfileInfoNetwork Error")) {
+                Utils.showAlert(this, AlertMessage.connectionError);
 			}else if (message.equalsIgnoreCase("Fetchprofilerelationships True")) {
 				setlist();
+            }else if (message.equalsIgnoreCase("Fetchprofilerelationships False")) {
+
+            }else if (message.equalsIgnoreCase("Fetchprofilerelationships Network Error")) {
+                Utils.showAlert(this, AlertMessage.connectionError);
 			}else if (message.equalsIgnoreCase("FollowUser True")) {
 				relationManager = ModelManager.getInstance().getRelationManager();
 				follow.setBackgroundResource(R.drawable.requested_grey);
@@ -335,10 +356,12 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
 				dtails = getResources().getString(R.string.txt_male)
 						+ Utils.getCurrentYear(authManager.getTmpDOB()) + " "
 						+ getResources().getString(R.string.txt_yold);
+
 			} else {
 				dtails = getResources().getString(R.string.txt_female)
 						+ Utils.getCurrentYear(authManager.getTmpDOB()) + " "
 						+ getResources().getString(R.string.txt_yold);
+
 			}
 			Utils.getCurrentYear(authManager.getTmpDOB());
 			userdetails.setText(dtails + "\n");
@@ -347,14 +370,29 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
 			follower.setText(Html.fromHtml(text));
 			String textfollowing = "<font color=#f29691>"+getResources().getString(R.string.txt_following)+"</font> <font color=#cccccc>"+authManager.getTmpFollowing()+"</font>";
 			following.setText(Html.fromHtml(textfollowing));
-			
-			try {
-				Picasso.with(JumpOtherProfileView.this)
-						.load(authManager.getTmpUserPic())
-						.placeholder(R.drawable.default_profile)
-						.error(R.drawable.default_profile).into(userimage);
-			} catch (Exception e) {
-			}
+
+            if (authManager.getTmpGender().matches("guy")) {
+
+                try {
+                    Picasso.with(JumpOtherProfileView.this)
+                            .load(authManager.getTmpUserPic())
+                            .skipMemoryCache()
+                            .placeholder(R.drawable.default_profile)
+                            .error(R.drawable.male_user).into(userimage);
+                } catch (Exception e) {
+                }
+            }
+            else
+            {
+                try {
+                    Picasso.with(JumpOtherProfileView.this)
+                            .load(authManager.getTmpUserPic())
+                            .skipMemoryCache()
+                            .placeholder(R.drawable.default_profile)
+                            .error(R.drawable.female_user).into(userimage);
+                } catch (Exception e) {
+                }
+            }
 
 		} 
 

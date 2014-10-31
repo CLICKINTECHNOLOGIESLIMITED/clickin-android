@@ -289,7 +289,7 @@ public class SimpleSectionedListAdapter2 extends BaseAdapter implements PinnedSe
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String phNo;
+                    String phNo,name;
                     if(view.getText().toString().trim().equalsIgnoreCase(mSections.get(position).senderName.toString()))
                     {
                         phNo = mSections.get(position).senderPhNo;
@@ -298,11 +298,18 @@ public class SimpleSectionedListAdapter2 extends BaseAdapter implements PinnedSe
                     {
                         phNo = mSections.get(position).rcvrPhNo;
                     }
-                    Intent viewProfile = new Intent(mContext, JumpOtherProfileView.class);
-                    viewProfile.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    viewProfile.putExtra("FromOwnProfile", true);
-                    viewProfile.putExtra("phNumber",phNo);
+                    Intent viewProfile = null;
+//                    if(ModelManager.getInstance().getAuthorizationManager().getUserId().toString().equalsIgnoreCase(mSections.get(position).senderId.toString()))
+//                    if(view.getText().toString().trim().equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getUserName()))
+//                        viewProfile = new Intent(mContext, UserProfileView.class);
+//                    else {
+                        viewProfile = new Intent(mContext, JumpOtherProfileView.class);
+                        viewProfile.putExtra("FromOwnProfile", true);
+                        viewProfile.putExtra("phNumber", phNo);
+                        viewProfile.putExtra("name", view.getText().toString());
+//                    }
 
+                    viewProfile.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     mContext.startActivity(viewProfile);
                 }
             });
@@ -318,9 +325,18 @@ public class SimpleSectionedListAdapter2 extends BaseAdapter implements PinnedSe
                     {
                         phNo = mSections.get(position).rcvrPhNo;
                     }
-                    Intent viewProfile = new Intent(mContext, JumpOtherProfileView.class);
-                    viewProfile.putExtra("FromOwnProfile", true);
-                    viewProfile.putExtra("phNumber",phNo);
+                    Intent viewProfile = null;
+//                    if(ModelManager.getInstance().getAuthorizationManager().getUserId().toString().equalsIgnoreCase(mSections.get(position).senderId.toString()))
+//                    if(view1.getText().toString().trim().equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getUserName()))
+//                        viewProfile = new Intent(mContext, UserProfileView.class);
+//                    else {
+                        viewProfile = new Intent(mContext, JumpOtherProfileView.class);
+                        viewProfile.putExtra("FromOwnProfile", true);
+                        viewProfile.putExtra("phNumber", phNo);
+                        viewProfile.putExtra("name", view1.getText().toString());
+//                    }
+
+                    viewProfile.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     mContext.startActivity(viewProfile);
                 }
             });

@@ -51,7 +51,7 @@ public class SplashView extends Activity implements View.OnClickListener {
 
         // new MyPreference(getApplicationContext()).clearAllPreference();
 
-        if (isLogin()) {
+      /*  if (isLogin()) {
             //if user is already logged in, then set all user values in authmanager from prefrence
             AuthManager authManager = ModelManager.getInstance().getAuthorizationManager();
             SharedPreferences preferences= PreferenceManager.getDefaultSharedPreferences(this);
@@ -77,7 +77,7 @@ public class SplashView extends Activity implements View.OnClickListener {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             this.finish();
-        } else {
+        } else {*/
             if (signIn.getVisibility() == View.INVISIBLE && signUp.getVisibility() == View.INVISIBLE) {
 
                 signIn.startAnimation(fadeIn);
@@ -85,7 +85,7 @@ public class SplashView extends Activity implements View.OnClickListener {
                 signUp.startAnimation(fadeIn);
                 signUp.setVisibility(View.VISIBLE);
             }
-        }
+     //   }
 
 
         signIn.setOnClickListener(this);

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- From: file:/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cropper/src/main/res/values/colors.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cropper/src/main/res/values/colors.xml -->
     <eat-comment />
 
     <color name="black_translucent">#50000000</color>
-    <!-- From: file:/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cropper/src/main/res/values/attrs.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cropper/src/main/res/values/attrs.xml -->
     <eat-comment />
 
     <declare-styleable name="CropImageView">
@@ -19,11 +19,11 @@
         <attr name="aspectRatioY" format="integer" />
         <attr name="imageResource" format="reference" />
     </declare-styleable>
-    <!-- From: file:/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cropper/src/main/res/values/strings.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cropper/src/main/res/values/strings.xml -->
     <eat-comment />
 
     <string name="app_name">Cropper</string>
-    <!-- From: file:/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cropper/src/main/res/values/styles.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cropper/src/main/res/values/styles.xml -->
     <eat-comment />
 
     <style name="AppBaseTheme" parent="android:Theme.Light">

@@ -439,18 +439,15 @@ public class AuthManager extends Observable implements AuthManagerI {
         try {
             client = new AsyncHttpClient();
 
+           
+
+            //for development
+//            client.addHeader("user_token", usertoken);
+//            client.addHeader("phone_no", phone);
+
             //for prod
             client.addHeader("User-Token", usertoken);
             client.addHeader("Phone-No", phone);
-
-
-            //for development
-            client.addHeader("user_token", usertoken);
-            client.addHeader("phone_no", phone);
-
-            //for prod
-          //  client.addHeader("User-Token", usertoken);
-            //client.addHeader("Phone-No", phone);
 
             Log.e("usertoken-phone_no-othersphone-->", "" + usertoken + "-" + phone + "-" + othersphone);
 
@@ -463,7 +460,7 @@ public class AuthManager extends Observable implements AuthManagerI {
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-
+        Log.e("othersphone url-->", "" + APIs.FETCHPROFILEINFO + "%2B" + str);
         client.get(APIs.FETCHPROFILEINFO + "%2B" + str, new JsonHttpResponseHandler() {
             boolean success = false;
 

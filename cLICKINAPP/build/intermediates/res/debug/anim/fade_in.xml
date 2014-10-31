@@ -2,4 +2,4 @@
 <alpha xmlns:android="http://schemas.android.com/apk/res/android"
     android:interpolator="@android:anim/accelerate_interpolator"
     android:fromAlpha="0.0" android:toAlpha="1.0"
-    android:duration="500" /><!-- From: file:/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/src/main/res/anim/fade_in.xml -->
+    android:duration="500" /><!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/anim/fade_in.xml -->

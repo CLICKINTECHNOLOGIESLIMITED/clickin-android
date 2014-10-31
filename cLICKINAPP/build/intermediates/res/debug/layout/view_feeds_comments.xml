@@ -40,7 +40,7 @@
             android:layout_below="@+id/rr_header"
             android:padding="5dp"
             android:layout_above="@+id/bottom_header"
-            android:divider="@color/transparent"></ListView>
+            android:divider="@null"></ListView>
 
 <LinearLayout
     android:layout_width="fill_parent"
@@ -49,39 +49,81 @@
     android:background="@drawable/footer_bg"
     android:layout_alignParentBottom="true"
     >
+<LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/footer_middle_bg"
+    android:layout_margin="5dp"
+    android:orientation="horizontal"
+    android:layout_gravity="center_vertical">
+    <EditText
+    android:inputType="textMultiLine"
+android:layout_weight="1"
+    android:lines="4"
+    android:minLines="1"
+    android:gravity="top|left"
+    android:maxLines="4"
+    android:layout_height="wrap_content"
+    android:layout_width="fill_parent"
+    android:scrollbars="vertical"
+    android:hint="ADD A COMMENT"
+    android:id="@+id/comment_edit"
+    android:layout_marginLeft="10dp"
+    android:layout_marginTop="5dp"
+    android:textColor="@color/white"
+    android:textColorHint="@color/white"
 
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-       android:layout_margin="5dp"
-        android:background="@drawable/footer_middle_bg">
+    android:background="@color/transparent"/>
+
+    <ImageView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+   android:layout_gravity="bottom|right"
+    android:id="@+id/send_comment"
+    android:src="@drawable/send_btn"
+    android:layout_margin="5dp"
+
+    />
+    </LinearLayout>
+    <!--<RelativeLayout-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="wrap_content"-->
+       <!--android:layout_margin="5dp"-->
+        <!--android:background="@drawable/footer_middle_bg"-->
+        <!--android:layout_gravity="center_vertical">-->
 
 
-        <EditText
-            android:inputType="textMultiLine"
-        android:lines="4"
-        android:minLines="1"
-        android:gravity="top|left"
-        android:maxLines="4"
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent"
-        android:scrollbars="vertical"
-            android:hint="ADD A COMMENT"
-            android:id="@+id/comment_edit"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white"
-            android:layout_toLeftOf="@+id/send_comment"
-            android:background="@color/transparent"/>
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:id="@+id/send_comment"
-            android:src="@drawable/send_btn"
-            android:layout_margin="5dp"/>
-        </RelativeLayout>
+        <!--<EditText-->
+            <!--android:inputType="textMultiLine"-->
+
+        <!--android:lines="4"-->
+        <!--android:minLines="1"-->
+        <!--android:gravity="top|left"-->
+        <!--android:maxLines="4"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:scrollbars="vertical"-->
+            <!--android:hint="ADD A COMMENT"-->
+            <!--android:id="@+id/comment_edit"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:layout_marginTop="5dp"-->
+            <!--android:textColor="@color/white"-->
+            <!--android:textColorHint="@color/white"-->
+            <!--android:layout_toLeftOf="@+id/send_comment"-->
+            <!--android:background="@color/transparent"/>-->
+
+            <!--<ImageView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignParentRight="true"-->
+                <!--android:id="@+id/send_comment"-->
+                <!--android:src="@drawable/send_btn"-->
+                <!--android:layout_margin="5dp"-->
+               <!--android:layout_centerVertical="true"-->
+                <!--/>-->
+
+
+<!--</RelativeLayout>-->
 </LinearLayout>
     </RelativeLayout>
-<!-- From: file:/home/akshit/Desktop/gitforclickin-22oct/clickin-andoid/cLICKINAPP/src/main/res/layout/view_feeds_comments.xml -->
+<!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/layout/view_feeds_comments.xml -->
