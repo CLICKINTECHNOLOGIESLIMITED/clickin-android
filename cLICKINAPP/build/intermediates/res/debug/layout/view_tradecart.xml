@@ -221,6 +221,7 @@
             android:orientation="vertical">
 
             <com.sourcefuse.clickinandroid.utils.ClickInTextView
+                android:id="@+id/custom_card_msg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/btn_layout"
@@ -337,4 +338,4 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-</LinearLayout><!-- From: file:/home/mukesh/clickAMaster/cLICKINAPP/src/main/res/layout/view_tradecart.xml -->
+</LinearLayout><!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/layout/view_tradecart.xml -->

@@ -24,18 +24,18 @@ public final class R {
 		public static final int zOrderOnTop = 0x7f01007b;
 	}
 	public static final class color {
-		public static final int common_action_bar_splitter = 0x7f070015;
-		public static final int common_signin_btn_dark_text_default = 0x7f070017;
-		public static final int common_signin_btn_dark_text_disabled = 0x7f070018;
-		public static final int common_signin_btn_dark_text_focused = 0x7f070019;
-		public static final int common_signin_btn_dark_text_pressed = 0x7f07001a;
-		public static final int common_signin_btn_default_background = 0x7f07001b;
-		public static final int common_signin_btn_light_text_default = 0x7f07001c;
-		public static final int common_signin_btn_light_text_disabled = 0x7f07001d;
-		public static final int common_signin_btn_light_text_focused = 0x7f07001e;
-		public static final int common_signin_btn_light_text_pressed = 0x7f07001f;
-		public static final int common_signin_btn_text_dark = 0x7f070069;
-		public static final int common_signin_btn_text_light = 0x7f07006a;
+		public static final int common_action_bar_splitter = 0x7f070017;
+		public static final int common_signin_btn_dark_text_default = 0x7f070019;
+		public static final int common_signin_btn_dark_text_disabled = 0x7f07001a;
+		public static final int common_signin_btn_dark_text_focused = 0x7f07001b;
+		public static final int common_signin_btn_dark_text_pressed = 0x7f07001c;
+		public static final int common_signin_btn_default_background = 0x7f07001d;
+		public static final int common_signin_btn_light_text_default = 0x7f07001e;
+		public static final int common_signin_btn_light_text_disabled = 0x7f07001f;
+		public static final int common_signin_btn_light_text_focused = 0x7f070020;
+		public static final int common_signin_btn_light_text_pressed = 0x7f070021;
+		public static final int common_signin_btn_text_dark = 0x7f07006b;
+		public static final int common_signin_btn_text_light = 0x7f07006c;
 	}
 	public static final class drawable {
 		public static final int common_signin_btn_icon_dark = 0x7f02010d;

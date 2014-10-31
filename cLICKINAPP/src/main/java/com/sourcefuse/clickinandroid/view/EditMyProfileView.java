@@ -330,7 +330,7 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
 
 
                     /* check code prafull*/
->>>>>>> f8410dd4f3d3097b1d722c11a9700b5227c1e425
+
                     //authManager.setUserimageuri(mImageCaptureUri);
                     //authManager.setUserPic(Utils.decodeUri(mImageCaptureUri,EditMyProfileView.this));
                 } catch (Exception e) {

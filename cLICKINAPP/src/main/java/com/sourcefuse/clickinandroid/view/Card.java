@@ -106,32 +106,31 @@ public class Card extends Activity implements View.OnClickListener,TextWatcher {
         } else {
             Log.e(TAG, "Value in intent in null");
         }
-<<<<<<< HEAD
-        Picasso.with(this)
-                .load(url)
 
-                .into(imageView , new Callback() {
-                    @Override
-                    public void onSuccess() {
+//        Picasso.with(this)
+//                .load(url)
+//
+//                .into(imageView , new Callback() {
+//                    @Override
+//                    public void onSuccess() {
+//
+//                        trd_clicks_top.setVisibility(View.VISIBLE);
+//                        trd_clicks_bottom.setVisibility(View.VISIBLE);
+//                        Utils.dismissBarDialog();
+//
+//                    }
+//
+//                    @Override
+//                    public void onError() {
+//
+//                    }
+//                });
+//
+//
+//
+//    }
 
-                        trd_clicks_top.setVisibility(View.VISIBLE);
-                        trd_clicks_bottom.setVisibility(View.VISIBLE);
-                        Utils.dismissBarDialog();
 
-                    }
-
-                    @Override
-                    public void onError() {
-
-                    }
-                });
-
-
-
-    }
-
-
-=======
         try {
             String url_to_load = url.replaceFirst("cards\\/(\\d+)\\.jpg","cards\\/a\\/1080\\/$1\\.jpg");
             Picasso.with(this)
@@ -157,7 +156,7 @@ public class Card extends Activity implements View.OnClickListener,TextWatcher {
         }
 Log.e(TAG,"Original Url" +url);
         }
->>>>>>> f8410dd4f3d3097b1d722c11a9700b5227c1e425
+
 
 
     @Override
@@ -216,20 +215,20 @@ Log.e(TAG,"Original Url" +url);
                 trd_clicks_top.setText("25");
                 break;
             case R.id.btn_play:
-                Intent i=new Intent();
-                i.setAction("CARD");
-                i.putExtra("FromCard",true);
-                if(forCounter){
-                 i.putExtra("isCounter",true);
-                 i.putExtra("card_id",card_id);
-                }else{
-                  i.putExtra("isCounter",false);
-                }
-                i.putExtra("card_url",url);
-                i.putExtra("card_clicks",clicks);
-                i.putExtra("Title",cardTitle);
-                i.putExtra("Discription",cardDiscription);
-                i.putExtra("card_Db_id",card_Db_id);
+//                Intent i=new Intent();
+//                i.setAction("CARD");
+//                i.putExtra("FromCard",true);
+//                if(forCounter){
+//                 i.putExtra("isCounter",true);
+//                 i.putExtra("card_id",card_id);
+//                }else{
+//                  i.putExtra("isCounter",false);
+//                }
+//                i.putExtra("card_url",url);
+//                i.putExtra("card_clicks",clicks);
+//                i.putExtra("Title",cardTitle);
+//                i.putExtra("Discription",cardDiscription);
+//                i.putExtra("card_Db_id",card_Db_id);
 
                 if(trd_clicks_top.getText().equals("  0") && trd_clicks_bottom.getText().equals("0 ")){
 

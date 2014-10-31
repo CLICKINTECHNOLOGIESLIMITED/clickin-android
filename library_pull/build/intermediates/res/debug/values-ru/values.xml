@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- From: file:/home/mukesh/clickAMaster/library_pull/src/main/res/values-ru/pull_refresh_strings.xml -->
+    <!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/library_pull/src/main/res/values-ru/pull_refresh_strings.xml -->
     <eat-comment />
 
     <string name="pull_to_refresh_pull_label">потяните</string>
