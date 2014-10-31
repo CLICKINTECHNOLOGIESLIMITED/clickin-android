@@ -34,7 +34,21 @@ public class ChatManager extends Observable implements ChatManagerI {
     private ChatRecordBeen chatRecordBeen = null;
 
     private int myTotalClick = 0;
+    private String relationshipId;
+
     private int partnerTotalClick =0 ;
+
+
+
+
+    public String getRelationshipId() {
+        return relationshipId;
+    }
+
+    public void setrelationshipId(String relationshipId) {
+        this.relationshipId = relationshipId;
+    }
+
 
     public int getMyTotalClick() {
         return myTotalClick;
@@ -275,7 +289,7 @@ public class ChatManager extends Observable implements ChatManagerI {
 
     }
 
-    public void chatShare(String phone_no, String user_token, String relationshipId, String chatId, String media, String fbAccessToken, String twitterAccessToken, String twitterAccessTokenSecret, String googlePlusAccessToken, String comment) {
+    public void chatShare(String phone_no, String user_token, String relationshipId, String chatId, String media, String fbAccessToken, String twitterAccessToken, String twitterAccessTokenSecret, String googlePlusAccessToken, String comment,String accepted) {
         authManager = ModelManager.getInstance().getAuthorizationManager();
         JSONObject userInputDetails = new JSONObject();
         try {
@@ -289,6 +303,9 @@ public class ChatManager extends Observable implements ChatManagerI {
             userInputDetails.put("twitter_access_token_secret", twitterAccessTokenSecret);
             userInputDetails.put("googleplus_access_token", googlePlusAccessToken);
             userInputDetails.put("comment", comment);
+            userInputDetails.put("accepted", accepted);
+
+
 
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());

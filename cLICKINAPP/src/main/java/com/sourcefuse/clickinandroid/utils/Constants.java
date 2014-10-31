@@ -15,6 +15,7 @@ public class Constants {
     public static  boolean  addChatMessageListener = false;
 
 //QB for staging
+<<<<<<< HEAD
 //   public static final String CLICKIN_APP_ID = "6768";
 //    public static final String CLICKIN_AUTH_KEY = "QVr4uK5tt6cu6dN";
 //   public static final String CLICKIN_AUTH_SECRET = "4thHbq-eyLVJrhe";
@@ -22,6 +23,19 @@ public class Constants {
 
 // QB for prod
   public static final String CLICKIN_APP_ID = "5";
+=======
+
+  public static final String CLICKIN_APP_ID = "6768";
+   public static final String CLICKIN_AUTH_KEY = "QVr4uK5tt6cu6dN";
+   public static final String CLICKIN_AUTH_SECRET = "4thHbq-eyLVJrhe";
+    public static final String ACCOUNTKEY = "gBv3BjZnFzkVPUZEqEXm";
+
+
+
+// QB for prod
+ /*  public static final String CLICKIN_APP_ID = "5";
+
+>>>>>>> f8410dd4f3d3097b1d722c11a9700b5227c1e425
     public static final String CLICKIN_AUTH_KEY = "6QQJq2FSKKzHK2-";
     public static final String CLICKIN_AUTH_SECRET = "k9cTQAeFWrkEAWv";
     public static final String ACCOUNTKEY = "gBv3BjZnFzkVPUZEqEXm";

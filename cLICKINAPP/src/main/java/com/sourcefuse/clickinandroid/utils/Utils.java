@@ -412,7 +412,7 @@ public class Utils {
             throws FileNotFoundException {
         BitmapFactory.Options o = new BitmapFactory.Options();
         o.inJustDecodeBounds = true;
-        BitmapFactory.decodeStream(c.getContentResolver().openInputStream(uri), null, o);
+        BitmapFactory.decodeStream(c.getContentResolver().openInputStream(uri),null, o);
 
         int width_tmp = o.outWidth
                 , height_tmp = o.outHeight;

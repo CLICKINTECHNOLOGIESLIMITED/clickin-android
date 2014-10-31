@@ -249,6 +249,11 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
+            android:name="com.sourcefuse.clickinandroid.view.ViewShare"
+            android:launchMode="standard"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
             android:name="com.sourcefuse.clickinandroid.view.FeedVideoView"
             android:launchMode="standard"
             android:screenOrientation="portrait">

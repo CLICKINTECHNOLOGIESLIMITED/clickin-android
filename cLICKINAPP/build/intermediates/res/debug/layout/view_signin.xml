@@ -52,7 +52,7 @@
                 android:hint="@string/hint_email_no"
                 android:inputType="text"
                 android:paddingLeft="10dp"
-                android:text="+91012345"
+                android:text="+918527447215"
                 android:textColor="@color/signup_contry_code"
                 android:textColorHint="@color/singn_forg"
                 android:textSize="16sp"
@@ -116,4 +116,4 @@
         </RelativeLayout>
     </RelativeLayout>
 
-</RelativeLayout><!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/layout/view_signin.xml -->
+</RelativeLayout><!-- From: file:/home/mukesh/clickAMaster/cLICKINAPP/src/main/res/layout/view_signin.xml -->

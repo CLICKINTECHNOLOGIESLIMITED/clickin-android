@@ -236,6 +236,8 @@ android:layout_height="fill_parent">
                 android:layout_marginLeft="10dp"
                 android:layout_alignParentLeft="true"
                 android:src="@drawable/r_footer_icon"
+                android:scaleType="fitCenter"
+
                 />
 
             <EditText

@@ -30,6 +30,7 @@ import com.sourcefuse.clickinandroid.view.AddSomeoneView;
 import com.sourcefuse.clickinandroid.view.Card;
 import com.sourcefuse.clickinandroid.view.ChatRecordView;
 import com.sourcefuse.clickinandroid.view.ImageViewer;
+import com.sourcefuse.clickinandroid.view.ViewShare;
 import com.sourcefuse.clickinapp.R;
 import com.squareup.picasso.Picasso;
 
@@ -129,6 +130,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
             holder.chatText = (TextView) row.findViewById(R.id.chat_text);
             holder.timeText = (TextView) row.findViewById(R.id.tv_time_text);
             holder.clicksText = (TextView) row.findViewById(R.id.clicks_text);
+
+        holder.iv_type_two_share_icon_r = (ImageView) row.findViewById(R.id.iv_type_two_share_icon_r);
+
 
 
            // row.setTag(holder);
@@ -821,8 +825,8 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                             .into(holder.tradeImage);
                     try {
                         if (Integer.parseInt(item.getCard_clicks()) < 10) {
-                            holder.trdClicksTop.setText("0" + item.getCard_clicks());
-                            holder.trdClicksBottom.setText("0" + item.getCard_clicks());
+                            holder.trdClicksTop.setText("" + item.getCard_clicks());
+                            holder.trdClicksBottom.setText("" + item.getCard_clicks());
                         } else {
                             holder.trdClicksTop.setText(item.getCard_clicks());
                             holder.trdClicksBottom.setText(item.getCard_clicks());
@@ -891,12 +895,13 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     Picasso.with(context).load(item.getCard_url()).skipMemoryCache()
                             .into(holder.tradeImage);
 
+
                     holder.cardViewCards.setBackgroundResource(R.drawable.newbg);
 
                     try {
                         if (Integer.parseInt(item.getCard_clicks()) < 10) {
-                            holder.trdClicksTop.setText("0" + item.getCard_clicks());
-                            holder.trdClicksBottom.setText("0" + item.getCard_clicks());
+                            holder.trdClicksTop.setText("" + item.getCard_clicks());
+                            holder.trdClicksBottom.setText("" + item.getCard_clicks());
                         } else {
                             holder.trdClicksTop.setText(item.getCard_clicks());
                             holder.trdClicksBottom.setText(item.getCard_clicks());
@@ -1080,6 +1085,22 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                 }
             }
         });
+
+
+        holder.iv_type_two_share_icon_r.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+
+                   /* Intent intent = new Intent(getContext(), ViewShare.class);
+                    intent.putExtra("chat_id", item.getChatId());
+                    intent.putExtra("accepted",  "no");
+                    context.startActivity(intent);
+                    ((Activity) context).overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);*/
+
+            }
+        });
+
+
         return row;
     }
 
@@ -1088,7 +1109,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
 
         RelativeLayout rrMainLayout, rlTimeStatusSender,chatParentLayout,rl_acc_res_bg;
         LinearLayout llSrTime,clicksArea,cardView,cardAction,cardViewCc,cardViewCards,ll_cc_action;
-        ImageView chatImage, shareIcon, sendStatus,clicksHeart,audioView,playIcon ,tradeImage,iv_accept_card,iv_resect_card,iv_acc_rec,iv_card_counter,iv_again_counter_acc,iv_again_counter_rej;
+        ImageView chatImage, shareIcon, sendStatus,clicksHeart,audioView,playIcon ,tradeImage,iv_accept_card,iv_resect_card,iv_acc_rec,iv_card_counter,iv_again_counter_acc,iv_again_counter_rej,iv_type_two_share_icon_r;
         TextView chatText, timeText,clicksText,trdClicksBottom,trdClicksTop,card_partner_name,tv_counter_card,tv_acc_res_name,tv_acc_res_status,trd_clicks_top_ar,trd_clicks_bottom_ar,tv_counter_card_action;
 
 

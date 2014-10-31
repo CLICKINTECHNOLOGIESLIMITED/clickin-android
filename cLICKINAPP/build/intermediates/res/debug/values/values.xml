@@ -142,6 +142,8 @@
 
     <color name="card_click_color">#fafafa</color>
     <color name="card_click_color_pressed">#333333</color>
+    <color name="card_popup">#364566</color>
+    <color name="cardpopup_buttom">#00B0C7</color>
     <color name="chat_notification">#f29691</color>
     <color name="clickin_with_list">#E0ECF8</color>
     <color name="clrbartittle">#E42217</color>
@@ -1450,6 +1452,7 @@
     <eat-comment />
 
     <string name="search_message">Could not find the one you are loking for? invite them to join ClickIn\'.</string>
+    <string name="share_hint">Write your caption here...</string>
     <string name="spam_edit_hint">Please provide details.</string>
     <string name="spam_msg_eight">Exploitation</string>
     <string name="spam_msg_five">Self-harm</string>

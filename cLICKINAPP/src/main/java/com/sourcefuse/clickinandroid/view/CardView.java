@@ -60,6 +60,7 @@ public class CardView extends FragmentActivity{
 
         chatManager = ModelManager.getInstance().getChatManager();
         authManager = ModelManager.getInstance().getAuthorizationManager();
+        Utils.launchBarDialog(CardView.this);
         chatManager.fetchCards(authManager.getPhoneNo(),authManager.getUsrToken());
 
     }
@@ -291,6 +292,7 @@ public class CardView extends FragmentActivity{
         Log.d(TAG, "onEventMainThread->" + getMsg);
         authManager = ModelManager.getInstance().getAuthorizationManager();
         if (getMsg.equalsIgnoreCase("FetchCard True")) {
+            Utils.dismissBarDialog();
             setView();
         } else if (getMsg.equalsIgnoreCase("FetchCard False")) {
             Utils.dismissBarDialog();

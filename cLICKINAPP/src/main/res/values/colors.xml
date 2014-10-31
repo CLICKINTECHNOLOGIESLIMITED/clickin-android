@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <color name="cardpopup_buttom">#00B0C7</color>
+    <color name="card_popup">#364566</color>
     <color name="clrbartittle">#E42217</color>
     <color name="white">#ffffff</color>
     <color name="send_green">#8da656</color>

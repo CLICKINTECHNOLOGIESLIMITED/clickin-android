@@ -27,6 +27,7 @@ import android.widget.TextView;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.sourcefuse.clickinandroid.model.AuthManager;
+import com.sourcefuse.clickinandroid.model.ChatManager;
 import com.sourcefuse.clickinandroid.model.ClickInNotificationManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.NewsFeedManager;
@@ -65,7 +66,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
     private EditText edt_search;
     private SearchAdapter searchListadapter;
     private RelativeLayout imageMenuRefresh;
-
+    private int relationListIndex;
     //Right Menu.....
     public ListView notificationList;
     private ImageView backArrowRightSide;
@@ -73,6 +74,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
     public NewsFeedManager newsFeedManager;
     private Bitmap imageBitmap = null;
     SlidingMenu slidemenu;
+    private ChatManager chatManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,7 +103,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         clickWithlistView.setAdapter(simpleSectionedGridAdapter);
     }
 
-    private void switchView(String rid) {
+    private void switchView(String rid,int relationListIndex) {
 
         Intent intent = new Intent(ClickInBaseView.this, ChatRecordView.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -114,9 +116,10 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         intent.putExtra("myClicks", myClicks);
         intent.putExtra("userClicks", userClicks);
         intent.putExtra("partnerPh", partnerPh);
+        intent.putExtra("relationListIndex", relationListIndex);
 
-
-
+        chatManager = ModelManager.getInstance().getChatManager();
+        chatManager.setrelationshipId(rid);
 
         startActivity(intent);
         slidemenu.showContent();
@@ -293,7 +296,8 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
                         userClicks = relationManager.acceptedList.get(position - 2).getUserClicks();
                         partnerPh = relationManager.acceptedList.get(position - 2).getPhoneNo();
                         Log.e("", "position--In..> " + rId);
-                        switchView(rId);
+                        relationListIndex = (position-2);
+                        switchView(rId,relationListIndex);
 
                     } catch (Exception e) {
                     }
