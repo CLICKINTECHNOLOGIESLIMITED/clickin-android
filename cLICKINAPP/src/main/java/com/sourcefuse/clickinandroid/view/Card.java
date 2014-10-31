@@ -186,6 +186,7 @@ public class Card extends Activity implements View.OnClickListener,TextWatcher {
                 break;
             case R.id.btn_play:
                 Intent i=new Intent();
+                i.setAction("CARD");
                 i.putExtra("FromCard",true);
                 if(forCounter){
                  i.putExtra("isCounter",true);
