@@ -58,7 +58,7 @@ android:layout_height="fill_parent">
             android:layout_alignParentLeft="true"
             android:layout_margin="2dp"
             android:scaleType="fitXY"
-             />
+            android:background="@drawable/female_crt" />
 
 
 
@@ -116,7 +116,7 @@ android:layout_height="fill_parent">
             android:layout_alignParentRight="true"
             android:layout_margin="2dp"
             android:scaleType="fitXY"
-             />
+            android:background="@drawable/female_crt" />
     </RelativeLayout>
 
    <!-- <ListView
@@ -228,17 +228,32 @@ android:layout_height="fill_parent">
             android:background="@drawable/r_footer_bg"
 
             >
+<LinearLayout
+    android:layout_width="40dp"
+    android:layout_height="40dp"
+    android:layout_alignParentLeft="true"
+    android:layout_marginLeft="8dp"
+    >
+    <ImageView
+        android:id="@+id/iv_attach"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:layout_alignParentLeft="true"
+        android:src="@drawable/r_footer_icon"
+        android:scaleType="fitXY"
+        />
 
-            <ImageView
-                android:id="@+id/iv_attach"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_alignParentLeft="true"
-                android:src="@drawable/r_footer_icon"
-                android:scaleType="fitCenter"
 
-                />
+    </LinearLayout>
+            <!--<ImageView-->
+                <!--android:id="@+id/iv_attach"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginLeft="10dp"-->
+                <!--android:layout_alignParentLeft="true"-->
+                <!--android:src="@drawable/r_footer_icon"-->
+                <!--/>-->
 
             <EditText
                 android:id="@+id/edit_chatBox"
@@ -275,28 +290,28 @@ android:layout_height="fill_parent">
 
             <ImageView
                 android:id="@+id/iv_photo"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
                 android:background="@drawable/r_img_icon" />
 
             <ImageView
                 android:id="@+id/iv_video"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:background="@drawable/r_video_icon" />
 
             <ImageView
                 android:id="@+id/iv_adiuo"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
                 android:background="@drawable/r_mic_icon" />
 
             <ImageView
                 android:id="@+id/iv_location"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
                 android:background="@drawable/r_pin_icon" />
 

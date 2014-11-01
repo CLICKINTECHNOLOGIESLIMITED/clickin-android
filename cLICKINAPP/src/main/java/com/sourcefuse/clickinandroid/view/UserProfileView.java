@@ -3,7 +3,10 @@ package com.sourcefuse.clickinandroid.view;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.graphics.Typeface;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
@@ -212,11 +215,11 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         try {
             Uri tempUri=authManager.getUserImageUri();
             if(tempUri!=null){
-                imageBitmap = Utils.decodeUri(tempUri, UserProfileView.this);
+                imageBitmap = authManager.getUserbitmap();
                 if(imageBitmap!=null)
                     userimage.setImageBitmap(imageBitmap);
                 else{
-                    if(!gender.equalsIgnoreCase("")) {
+ if(!gender.equalsIgnoreCase("")) {
 
                                 if (gender.equalsIgnoreCase("Male")) {
                                     try {
@@ -264,7 +267,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
                 }
 
             }else{
-                if(!gender.equalsIgnoreCase("")) {
+  if(!gender.equalsIgnoreCase("")) {
 
                     if (gender.equalsIgnoreCase("Male")) {
                         try {
@@ -310,31 +313,9 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
                     userimage.setImageResource(R.drawable.male_user);
                 }
 
-
-//                try{
-//                    if(gender.equalsIgnoreCase("Male")){
-//                        Picasso.with(UserProfileView.this)
-//                                .load(authManager.getUserPic())
-//                                .skipMemoryCache()
-//
-//                                .error(R.drawable.male_user)
-//                                .into(userimage);
-//                    }else if(gender.equalsIgnoreCase("Female")) {
-//                        Picasso.with(UserProfileView.this)
-//                                .load(authManager.getUserPic())
-//                                .skipMemoryCache()
-//
-//                                .error(R.drawable.female_user)
-//                                .into(userimage);
-//                    }
-//
-//                }catch(Exception e){
-//                    e.printStackTrace();
-//                }
-
             }
 
-        } catch (FileNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 //

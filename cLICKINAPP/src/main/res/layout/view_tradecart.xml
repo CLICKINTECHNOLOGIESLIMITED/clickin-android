@@ -221,7 +221,7 @@
             android:orientation="vertical">
 
             <com.sourcefuse.clickinandroid.utils.ClickInTextView
-                android:id="@+id/custom_card_msg"
+                android:id="@+id/custom_card_msg_t"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/btn_layout"

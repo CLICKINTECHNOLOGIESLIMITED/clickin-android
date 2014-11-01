@@ -24,6 +24,8 @@ import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.bean.CardBean;
 import com.sourcefuse.clickinandroid.model.bean.ChatRecordBeen;
+import com.sourcefuse.clickinandroid.utils.APIs;
+import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.AddSomeoneView;
@@ -31,6 +33,7 @@ import com.sourcefuse.clickinandroid.view.Card;
 import com.sourcefuse.clickinandroid.view.ChatRecordView;
 import com.sourcefuse.clickinandroid.view.ImageViewer;
 import com.sourcefuse.clickinandroid.view.ViewShare;
+import com.sourcefuse.clickinandroid.view.ViewTradeCart;
 import com.sourcefuse.clickinapp.R;
 import com.squareup.picasso.Picasso;
 
@@ -123,6 +126,11 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
         holder.iv_again_counter_acc = (ImageView) row.findViewById(R.id.iv_again_counter_acc);
         holder.iv_again_counter_rej = (ImageView) row.findViewById(R.id.iv_again_counter_rej);
         holder.tv_counter_card_action = (TextView) row.findViewById(R.id.tv_counter_card_action);
+
+
+
+        holder.trd_custom_heading = (TextView) row.findViewById(R.id.trd_custom_heading);
+         holder.trd_custom_ar_heading = (TextView) row.findViewById(R.id.trd_custom_ar_heading);
 
 
 
@@ -274,7 +282,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.clicksText.setVisibility(View.GONE);
                     holder.clicksHeart.setVisibility(View.GONE);
 
-                    Picasso.with(context).load(item.getChatImageUrl()).centerCrop().skipMemoryCache()
+                    Picasso.with(context).load(item.getChatImageUrl())
                             .into(holder.chatImage);
 
                 }else if(Utils.isEmptyString(item.getClicks()) && !Utils.isEmptyString(item.getChatText())) {
@@ -291,9 +299,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.clicksText.setVisibility(View.GONE);
                     holder.clicksHeart.setVisibility(View.GONE);
                     holder.chatText.setTextColor(context.getResources().getColor(R.color.black));
-
-                    Picasso.with(context).load(item.getChatImageUrl()).centerCrop().skipMemoryCache()
-                            .into(holder.chatImage);
+                    Picasso.with(context).load(item.getChatImageUrl())
+                            .placeholder(R.drawable.default_profile)
+                            .error(R.drawable.default_profile).into(holder.chatImage);
 
                 }else if(!Utils.isEmptyString(item.getClicks())) {
                     holder.chatImage.setVisibility(View.VISIBLE);
@@ -316,8 +324,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.chatText.setTextColor(context.getResources().getColor(R.color.white));
                     holder.sendStatus.setVisibility(View.GONE);
 
-                    Picasso.with(context).load(item.getChatImageUrl()).centerCrop().skipMemoryCache()
-                            .into(holder.chatImage);
+                    Picasso.with(context).load(item.getChatImageUrl())
+                            .placeholder(R.drawable.default_profile)
+                            .error(R.drawable.default_profile).into(holder.chatImage);
                 }
             }else{
                 Log.e(TAG, "" + "Type 22 - SENDER");
@@ -346,8 +355,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                         holder.clicksText.setVisibility(View.GONE);
                         holder.clicksHeart.setVisibility(View.GONE);
                         holder.chatImage.setBackgroundResource(R.drawable.newbg);
-                        Picasso.with(context).load(item.getChatImageUrl()).centerCrop().skipMemoryCache()
-                                .into(holder.chatImage);
+                        Picasso.with(context).load(item.getChatImageUrl()).into(holder.chatImage);
                         holder.timeText.setText("" + Utils.getLocalDatefromTimestamp(Long.parseLong(item.getTimeStamp())));
 
                     } else if(Utils.isEmptyString(item.getClicks()) && !Utils.isEmptyString(item.getChatText())) {
@@ -364,7 +372,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                         holder.chatText.setVisibility(View.VISIBLE);
                         holder.chatText.setText(""+Utils.lineBreacker(item.getChatText()));
                         holder.clicksArea.setBackgroundResource(R.drawable.newbg);
-                        Picasso.with(context).load(item.getChatImageUrl()).centerCrop().skipMemoryCache()
+                        Picasso.with(context).load(item.getChatImageUrl())
                                 .into(holder.chatImage);
                         holder.chatText.setTextColor(context.getResources().getColor(R.color.black));
                         holder.timeText.setText("" + Utils.getLocalDatefromTimestamp(Long.parseLong(item.getTimeStamp())));
@@ -392,7 +400,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.chatText.setTextColor(context.getResources().getColor(R.color.white));
                     holder.sendStatus.setVisibility(View.GONE);
                     holder.timeText.setText(""+Utils.getLocalDatefromTimestamp(Long.parseLong(item.getTimeStamp())));
-                    Picasso.with(context).load(item.getChatImageUrl()).centerCrop().skipMemoryCache()
+                    Picasso.with(context).load(item.getChatImageUrl())
                             .into(holder.chatImage);
 
                 }
@@ -568,7 +576,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.sendStatus.setVisibility(View.GONE);
                     holder.clicksText.setVisibility(View.GONE);
                     holder.clicksHeart.setVisibility(View.GONE);
-                    Picasso.with(context).load(item.getVideo_thumb()).centerCrop().skipMemoryCache()
+                    Picasso.with(context).load(item.getVideo_thumb())
                             .into(holder.chatImage);
                     holder.chatText.setTextColor(context.getResources().getColor(R.color.black));
                 }else if(Utils.isEmptyString(item.getClicks()) && !Utils.isEmptyString(item.getChatText())) {
@@ -584,7 +592,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.sendStatus.setVisibility(View.GONE);
                     holder.clicksText.setVisibility(View.GONE);
                     holder.clicksHeart.setVisibility(View.GONE);
-                    Picasso.with(context).load(item.getVideo_thumb()).centerCrop().skipMemoryCache()
+                    Picasso.with(context).load(item.getVideo_thumb())
                             .into(holder.chatImage);
                     holder.chatText.setTextColor(context.getResources().getColor(R.color.black));
                 }else if(!Utils.isEmptyString(item.getClicks())) {
@@ -608,7 +616,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.chatText.setTextColor(context.getResources().getColor(R.color.white));
                     holder.sendStatus.setVisibility(View.GONE);
 
-                    Picasso.with(context).load(item.getVideo_thumb()).centerCrop().skipMemoryCache()
+                    Picasso.with(context).load(item.getVideo_thumb())
                             .into(holder.chatImage);
                 }
             }else{
@@ -642,7 +650,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.chatText.setTextColor(context.getResources().getColor(R.color.black));
                     holder.timeText.setText("" + Utils.getLocalDatefromTimestamp(Long.parseLong(item.getTimeStamp())));
 
-                    Picasso.with(context).load(item.getVideo_thumb()).centerCrop().skipMemoryCache()
+                    Picasso.with(context).load(item.getVideo_thumb())
                             .into(holder.chatImage);
 
 
@@ -663,7 +671,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.chatText.setTextColor(context.getResources().getColor(R.color.black));
                     holder.timeText.setText("" + Utils.getLocalDatefromTimestamp(Long.parseLong(item.getTimeStamp())));
 
-                    Picasso.with(context).load(item.getVideo_thumb()).centerCrop().skipMemoryCache()
+                    Picasso.with(context).load(item.getVideo_thumb())
                             .into(holder.chatImage);
                 }else if(!Utils.isEmptyString(item.getClicks()) ){
 
@@ -689,7 +697,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.chatText.setTextColor(context.getResources().getColor(R.color.white));
                     holder.sendStatus.setVisibility(View.GONE);
                     holder.timeText.setText(""+Utils.getLocalDatefromTimestamp(Long.parseLong(item.getTimeStamp())));
-                    Picasso.with(context).load(item.getVideo_thumb()).centerCrop().skipMemoryCache()
+                    Picasso.with(context).load(item.getVideo_thumb())
                             .into(holder.chatImage);
                 }
             }
@@ -725,7 +733,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.sendStatus.setVisibility(View.GONE);
                     holder.clicksText.setVisibility(View.GONE);
                     holder.clicksHeart.setVisibility(View.GONE);
-                    Picasso.with(context).load(item.getChatImageUrl()).centerCrop().skipMemoryCache()
+                    Picasso.with(context).load(item.getChatImageUrl())
                             .into(holder.chatImage);
                     holder.chatText.setTextColor(context.getResources().getColor(R.color.black));
                 }
@@ -762,7 +770,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.chatText.setTextColor(context.getResources().getColor(R.color.black));
                     holder.timeText.setText("" + Utils.getLocalDatefromTimestamp(Long.parseLong(item.getTimeStamp())));
 
-                    Picasso.with(context).load(item.getChatImageUrl()).centerCrop().skipMemoryCache()
+                    Picasso.with(context).load(item.getChatImageUrl())
                             .into(holder.chatImage);
                 }
             }
@@ -783,10 +791,20 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.cardViewCc.setGravity(Gravity.RIGHT);
                     holder.tv_acc_res_name.setText(item.getCardPartnerName());
                     holder.tv_acc_res_status.setText("ACCEPTED!");
+                    holder.trd_custom_heading.setVisibility(View.GONE);
                     holder.trd_clicks_top_ar.setText(item.getCard_clicks());
                     holder.trd_clicks_bottom_ar.setText(item.getCard_clicks());
-                    Picasso.with(context).load(item.getCard_url()).centerCrop().skipMemoryCache()
-                            .into(holder.iv_card_counter);
+
+                    if(item.getIs_CustomCard().equalsIgnoreCase("true")){
+                        holder.trd_custom_ar_heading.setVisibility(View.VISIBLE);
+                        holder.trd_custom_ar_heading.setText(item.getCard_heading());
+                        Picasso.with(context).load(Constants.CUSTOM_CARD_URL)
+                                .into(holder.iv_card_counter);
+                    }else{
+                        holder.trd_custom_ar_heading.setVisibility(View.GONE);
+                        Picasso.with(context).load(item.getCard_url())
+                                .into(holder.iv_card_counter);
+                    }
                     holder.iv_acc_rec.setBackgroundResource(R.drawable.c_card_accept);
                     holder.rl_acc_res_bg.setBackgroundResource(R.drawable.whitechatbg);
                 } else if (item.getCard_Accepted_Rejected().equalsIgnoreCase("rejected")) {
@@ -796,10 +814,20 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.cardViewCc.setGravity(Gravity.RIGHT);
                     holder.tv_acc_res_name.setText(item.getCardPartnerName());
                     holder.tv_acc_res_status.setText("REJECTED!");
+                    holder.trd_custom_heading.setVisibility(View.GONE);
                     holder.trd_clicks_top_ar.setText(item.getCard_clicks());
                     holder.trd_clicks_bottom_ar.setText(item.getCard_clicks());
-                    Picasso.with(context).load(item.getCard_url()).centerCrop().skipMemoryCache()
-                            .into(holder.iv_card_counter);
+
+                    if(item.getIs_CustomCard().equalsIgnoreCase("true")){
+                        holder.trd_custom_ar_heading.setVisibility(View.VISIBLE);
+                        holder.trd_custom_ar_heading.setText(item.getCard_heading());
+                        Picasso.with(context).load(Constants.CUSTOM_CARD_URL)
+                                .into(holder.iv_card_counter);
+                    }else{
+                        holder.trd_custom_ar_heading.setVisibility(View.GONE);
+                        Picasso.with(context).load(item.getCard_url())
+                                .into(holder.iv_card_counter);
+                    }
                     holder.rl_acc_res_bg.setBackgroundResource(R.drawable.whitechatbg);
                     holder.iv_acc_rec.setBackgroundResource(R.drawable.c_card_rejected);
 
@@ -812,21 +840,33 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.tv_acc_res_status.setText("COUNTER OFFER");
                     holder.trd_clicks_top_ar.setText(item.getCard_clicks());
                     holder.trd_clicks_bottom_ar.setText(item.getCard_clicks());
-                    Picasso.with(context).load(item.getCard_url()).centerCrop().skipMemoryCache()
-                            .into(holder.iv_card_counter);
+
+                    if(item.getIs_CustomCard().equalsIgnoreCase("true")){
+                        holder.trd_custom_ar_heading.setVisibility(View.VISIBLE);
+                        holder.trd_custom_ar_heading.setText(item.getCard_heading());
+                        Picasso.with(context).load(Constants.CUSTOM_CARD_URL)
+                                .into(holder.iv_card_counter);
+                    }else{
+                        holder.trd_custom_ar_heading.setVisibility(View.GONE);
+                        Picasso.with(context).load(item.getCard_url())
+                                .into(holder.iv_card_counter);
+                    }
+
                     holder.rl_acc_res_bg.setBackgroundResource(R.drawable.whitechatbg);
                     holder.iv_acc_rec.setVisibility(View.GONE);
-                } else {
+                }else if (item.getCard_Accepted_Rejected().equalsIgnoreCase("nil") && !item.getIs_CustomCard().equalsIgnoreCase("true")) {
                     holder.cardViewCards.setVisibility(View.VISIBLE);
                     holder.cardViewCards.setGravity(Gravity.RIGHT);
-                    // holder.cardViewCc.setVisibility(View.VISIBLE);
-                    //holder.cardViewCc.setGravity(Gravity.RIGHT);
-                    Picasso.with(context).load(item.getCard_url()).centerCrop().skipMemoryCache()
-                            .into(holder.tradeImage);
+                    holder.trd_custom_heading.setVisibility(View.GONE);
+
+
+                        Picasso.with(context).load(item.getCard_url())
+                                .into(holder.iv_card_counter);
+
                     try {
                         if (Integer.parseInt(item.getCard_clicks()) < 10) {
-                            holder.trdClicksTop.setText("0" + item.getCard_clicks());
-                            holder.trdClicksBottom.setText("0" + item.getCard_clicks());
+                            holder.trdClicksTop.setText("" + item.getCard_clicks());
+                            holder.trdClicksBottom.setText("" + item.getCard_clicks());
                         } else {
                             holder.trdClicksTop.setText(item.getCard_clicks());
                             holder.trdClicksBottom.setText(item.getCard_clicks());
@@ -836,6 +876,32 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     }
                     holder.card_partner_name.setText(item.getCardPartnerName().toUpperCase());
                     holder.cardViewCards.setBackgroundResource(R.drawable.whitechatbg);
+                }else if (item.getIs_CustomCard().equalsIgnoreCase("true")) {
+
+                    Log.e(TAG, "" + "Type 55 -Custom Card SENDER");
+                    holder.cardViewCards.setGravity(Gravity.RIGHT);
+
+
+                        Picasso.with(context).load(Constants.CUSTOM_CARD_URL)
+                                .into(holder.iv_card_counter);
+
+                    holder.trd_custom_heading.setVisibility(View.VISIBLE);
+                    holder.cardViewCards.setBackgroundResource(R.drawable.newbg);
+
+                    try {
+                        if (Integer.parseInt(item.getCard_clicks()) < 10) {
+                            holder.trdClicksTop.setText("" + item.getCard_clicks());
+                            holder.trdClicksBottom.setText("" + item.getCard_clicks());
+                        } else {
+                            holder.trdClicksTop.setText(item.getCard_clicks());
+                            holder.trdClicksBottom.setText(item.getCard_clicks());
+                        }
+
+                        holder.card_partner_name.setText(item.getCardPartnerName().toUpperCase());
+
+                    } catch (Exception e) {
+
+                    }
                 }
             }catch (Exception e){}
             }else {
@@ -853,11 +919,20 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.tv_acc_res_name.setText("You");
                     holder.tv_acc_res_status.setText("ACCEPTED!");
                     holder.iv_acc_rec.setVisibility(View.VISIBLE);
+                    holder.trd_custom_heading.setVisibility(View.GONE);
                     holder.iv_acc_rec.setBackgroundResource(R.drawable.c_card_accept);
                     holder.trd_clicks_top_ar.setText(item.getCard_clicks());
                     holder.trd_clicks_bottom_ar.setText(item.getCard_clicks());
-                    Picasso.with(context).load(item.getCard_url()).skipMemoryCache()
-                            .into(holder.iv_card_counter);
+                    if(item.getIs_CustomCard().equalsIgnoreCase("true")){
+                        holder.trd_custom_ar_heading.setVisibility(View.VISIBLE);
+                        holder.trd_custom_ar_heading.setText(item.getCard_heading());
+                        Picasso.with(context).load(Constants.CUSTOM_CARD_URL)
+                                .into(holder.iv_card_counter);
+                    }else{
+                        holder.trd_custom_ar_heading.setVisibility(View.GONE);
+                        Picasso.with(context).load(item.getCard_url())
+                                .into(holder.iv_card_counter);
+                    }
                     holder.rl_acc_res_bg.setBackgroundResource(R.drawable.newbg);
                 } else if (item.getCard_Accepted_Rejected().equalsIgnoreCase("rejected")) {
                     holder.cardViewCc.setVisibility(View.VISIBLE);
@@ -866,11 +941,19 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.cardViewCc.setGravity(Gravity.LEFT);
                     holder.tv_acc_res_name.setText("You");
                     holder.tv_acc_res_status.setText("REJECTED!");
-
+                    holder.trd_custom_heading.setVisibility(View.GONE);
                     holder.trd_clicks_top_ar.setText(item.getCard_clicks());
                     holder.trd_clicks_bottom_ar.setText(item.getCard_clicks());
-                    Picasso.with(context).load(item.getCard_url()).skipMemoryCache()
-                            .into(holder.iv_card_counter);
+                    if(item.getIs_CustomCard().equalsIgnoreCase("true")){
+                        holder.trd_custom_ar_heading.setVisibility(View.VISIBLE);
+                        holder.trd_custom_ar_heading.setText(item.getCard_heading());
+                        Picasso.with(context).load(Constants.CUSTOM_CARD_URL)
+                                .into(holder.iv_card_counter);
+                    }else{
+                        holder.trd_custom_ar_heading.setVisibility(View.GONE);
+                        Picasso.with(context).load(item.getCard_url())
+                                .into(holder.iv_card_counter);
+                    }
                     holder.rl_acc_res_bg.setBackgroundResource(R.drawable.newbg);
                     holder.iv_acc_rec.setVisibility(View.VISIBLE);
                     holder.iv_acc_rec.setBackgroundResource(R.drawable.c_card_rejected);
@@ -882,26 +965,57 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.cardViewCc.setGravity(Gravity.LEFT);
                     holder.tv_acc_res_name.setText("You made a");
                     holder.tv_acc_res_status.setText("COUNTER OFFER");
-
+                    holder.trd_custom_heading.setVisibility(View.GONE);
                     holder.trd_clicks_top_ar.setText(item.getCard_clicks());
                     holder.trd_clicks_bottom_ar.setText(item.getCard_clicks());
-                    Picasso.with(context).load(item.getCard_url()).skipMemoryCache()
-                            .into(holder.iv_card_counter);
+                    if(item.getIs_CustomCard().equalsIgnoreCase("true")){
+                        holder.trd_custom_ar_heading.setVisibility(View.VISIBLE);
+                        holder.trd_custom_ar_heading.setText(item.getCard_heading());
+                        Picasso.with(context).load(Constants.CUSTOM_CARD_URL)
+                                .into(holder.iv_card_counter);
+                    }else{
+                        holder.trd_custom_ar_heading.setVisibility(View.GONE);
+                        Picasso.with(context).load(item.getCard_url())
+                                .into(holder.iv_card_counter);
+                    }
                     holder.rl_acc_res_bg.setBackgroundResource(R.drawable.newbg);
                     holder.iv_acc_rec.setVisibility(View.GONE);
 
-                } else {
+                }else if (item.getCard_Accepted_Rejected().equalsIgnoreCase("nil") && !item.getIs_CustomCard().equalsIgnoreCase("true")) {
                     holder.cardViewCards.setGravity(Gravity.RIGHT);
-                    Picasso.with(context).load(item.getCard_url()).skipMemoryCache()
+                    Picasso.with(context).load(item.getCard_url())
                             .into(holder.tradeImage);
 
-
+                    holder.trd_custom_heading.setVisibility(View.GONE);
                     holder.cardViewCards.setBackgroundResource(R.drawable.newbg);
 
                     try {
                         if (Integer.parseInt(item.getCard_clicks()) < 10) {
-                            holder.trdClicksTop.setText("0" + item.getCard_clicks());
-                            holder.trdClicksBottom.setText("0" + item.getCard_clicks());
+                            holder.trdClicksTop.setText("" + item.getCard_clicks());
+                            holder.trdClicksBottom.setText("" + item.getCard_clicks());
+                        } else {
+                            holder.trdClicksTop.setText(item.getCard_clicks());
+                            holder.trdClicksBottom.setText(item.getCard_clicks());
+                        }
+
+                        holder.card_partner_name.setText(item.getCardPartnerName().toUpperCase());
+
+                    } catch (Exception e) {
+
+                    }
+                }else if (item.getIs_CustomCard().equalsIgnoreCase("true")) {
+
+                    Log.e(TAG, "" + "Type 55 -Custom Card SENDER");
+                    holder.cardViewCards.setGravity(Gravity.RIGHT);
+                    Picasso.with(context).load(Constants.CUSTOM_CARD_URL)
+                            .into(holder.tradeImage);
+                    holder.trd_custom_heading.setVisibility(View.VISIBLE);
+                    holder.cardViewCards.setBackgroundResource(R.drawable.newbg);
+                    holder.trd_custom_heading.setText("" + item.getCard_heading());
+                    try {
+                        if (Integer.parseInt(item.getCard_clicks()) < 10) {
+                          holder.trdClicksTop.setText("" + item.getCard_clicks());
+                            holder.trdClicksBottom.setText("" + item.getCard_clicks());
                         } else {
                             holder.trdClicksTop.setText(item.getCard_clicks());
                             holder.trdClicksBottom.setText(item.getCard_clicks());
@@ -1007,28 +1121,19 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
         // Counter card
         holder.tv_counter_card.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View arg0) {
+             public void onClick(View arg0) {
                 if (item.getChatType().equalsIgnoreCase("5")) {
-                    Intent intent = new Intent(getContext(), Card.class);
-                    intent.putExtra("ForCounter", true);
-                    intent.putExtra("Title", item.getCard_heading());
-                    intent.putExtra("Discription",  item.getCard_content());
-                    intent.putExtra("Url",  item.getCard_url());
-                    intent.putExtra("card_id", item.getCard_id());
-                    intent.putExtra("cardClicks",  item.getCard_clicks());
-                    context.startActivity(intent);
-                    ((Activity) context).overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
-                }
-            }
-        });
 
-        holder.iv_again_counter_acc.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                if (item.getChatType().equalsIgnoreCase("5")) {
-                    Intent i=new Intent();
+                    Intent i = null;
+                    if(item.getIs_CustomCard().equalsIgnoreCase("true")){
+                        i = new Intent(getContext(), ViewTradeCart.class);
+                       // i.putExtra("Url",  Constants.CUSTOM_CARD_URL);
+                    }else{
+                        i = new Intent(getContext(), Card.class);
+                        //i.putExtra("Url",  item.getCard_url());
+                    }
+                    i.putExtra("Url",  item.getCard_url());
                     i.putExtra("FromCard",false);
-                    i.putExtra("card_url",item.getCard_url());
                     i.putExtra("card_clicks",item.getCard_clicks());
                     i.putExtra("Title",item.getCard_heading());
                     i.putExtra("Discription",item.getCard_content());
@@ -1077,11 +1182,18 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
             @Override
             public void onClick(View arg0) {
                 if (item.getChatType().equalsIgnoreCase("5")) {
-                    Intent intent = new Intent(getContext(), Card.class);
+                    Intent intent = null;
+                    if(item.getIs_CustomCard().equalsIgnoreCase("true")){
+                        intent = new Intent(getContext(), ViewTradeCart.class);
+                       // intent.putExtra("Url",  Constants.CUSTOM_CARD_URL);
+                    }else{
+                        intent = new Intent(getContext(), Card.class);
+                        //intent.putExtra("Url",  item.getCard_url());
+                    }
+                    intent.putExtra("Url",  item.getCard_url());
                     intent.putExtra("ForCounter", true);
                     intent.putExtra("Title", item.getCard_heading());
                     intent.putExtra("Discription",  item.getCard_content());
-                    intent.putExtra("Url",  item.getCard_url());
                     intent.putExtra("card_id", item.getCard_id());
                     intent.putExtra("cardClicks",  item.getCard_clicks());
                     context.startActivity(intent);
@@ -1114,7 +1226,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
         RelativeLayout rrMainLayout, rlTimeStatusSender,chatParentLayout,rl_acc_res_bg;
         LinearLayout llSrTime,clicksArea,cardView,cardAction,cardViewCc,cardViewCards,ll_cc_action;
         ImageView chatImage, shareIcon, sendStatus,clicksHeart,audioView,playIcon ,tradeImage,iv_accept_card,iv_resect_card,iv_acc_rec,iv_card_counter,iv_again_counter_acc,iv_again_counter_rej,iv_type_two_share_icon_r;
-        TextView chatText, timeText,clicksText,trdClicksBottom,trdClicksTop,card_partner_name,tv_counter_card,tv_acc_res_name,tv_acc_res_status,trd_clicks_top_ar,trd_clicks_bottom_ar,tv_counter_card_action;
+        TextView chatText, timeText,clicksText,trdClicksBottom,trdClicksTop,card_partner_name,tv_counter_card,tv_acc_res_name,tv_acc_res_status,trd_clicks_top_ar,trd_clicks_bottom_ar,tv_counter_card_action,trd_custom_heading,trd_custom_ar_heading;
 
 
     }

@@ -244,45 +244,44 @@ public class SimpleSectionedListAdapter2 extends BaseAdapter implements PinnedSe
                     {
                         view.setText(mSections.get(position).senderName);
                         view1.setText(mSections.get(position).recieverName);
+
                         doubleArrow.setImageResource(R.drawable.arrow);
-                       if(authManager.getGender()!=null) {
-                           if (authManager.getGender().matches("guy")) {
+                        if(authManager.getGender()!=null) {
+                            if (authManager.getGender().matches("guy")) {
 
-                               try {
-                                   if (!mSections.get(position).senderImages.toString().equalsIgnoreCase("")) {
-                                       Picasso.with(mContext)
-                                               .load(mSections.get(position).senderImages)
-                                               .skipMemoryCache()
+                                try {
+                                    if (!mSections.get(position).senderImages.toString().equalsIgnoreCase("")) {
+                                        Picasso.with(mContext)
+                                                .load(mSections.get(position).senderImages)
+                                                .skipMemoryCache()
 
-                                               .error(R.drawable.male_user).into(imageview);
-                                   } else {
-                                       imageview.setImageResource(R.drawable.male_user);
-                                   }
-                               } catch (Exception e) {
-                                   imageview.setImageResource(R.drawable.male_user);
-                               }
-                           } else {
-                               try {
-                                   if (!mSections.get(position).senderImages.toString().equalsIgnoreCase("")) {
-                                       Picasso.with(mContext)
-                                               .load(mSections.get(position).senderImages)
-                                               .skipMemoryCache()
+                                                .error(R.drawable.male_user).into(imageview);
+                                    } else {
+                                        imageview.setImageResource(R.drawable.male_user);
+                                    }
+                                } catch (Exception e) {
+                                    imageview.setImageResource(R.drawable.male_user);
+                                }
+                            } else {
+                                try {
+                                    if (!mSections.get(position).senderImages.toString().equalsIgnoreCase("")) {
+                                        Picasso.with(mContext)
+                                                .load(mSections.get(position).senderImages)
+                                                .skipMemoryCache()
 
-                                               .error(R.drawable.female_user).into(imageview);
-                                   } else {
-                                       imageview.setImageResource(R.drawable.female_user);
-                                   }
-                               } catch (Exception e) {
-                                   imageview.setImageResource(R.drawable.female_user);
-                               }
-                           }
-                       }
+                                                .error(R.drawable.female_user).into(imageview);
+                                    } else {
+                                        imageview.setImageResource(R.drawable.female_user);
+                                    }
+                                } catch (Exception e) {
+                                    imageview.setImageResource(R.drawable.female_user);
+                                }
+                            }
+                        }
                         else
-                       {
-                           imageview.setImageResource(R.drawable.male_user);
-                       }
-
-//                        Picasso.with(mContext).load(mSections.get(position).senderImages).placeholder(R.drawable.default_profile).error(R.drawable.male_user).into(imageview);
+                        {
+                            imageview.setImageResource(R.drawable.male_user);
+                        }
 
                     }
                     else {
@@ -291,7 +290,6 @@ public class SimpleSectionedListAdapter2 extends BaseAdapter implements PinnedSe
                                 if ((mSections.get(position).senderId).toString().equalsIgnoreCase(prMgr.following.get(i).getFolloweeId())) {
                                     view.setText(mSections.get(position).senderName);
                                     view1.setText(mSections.get(position).recieverName);
-
                                     try {
                                         if (!mSections.get(position).senderImages.toString().equalsIgnoreCase("")) {
                                             Picasso.with(mContext)
@@ -313,7 +311,7 @@ public class SimpleSectionedListAdapter2 extends BaseAdapter implements PinnedSe
                                     doubleArrow.setImageResource(R.drawable.flip_arow);
                                     view.setText(mSections.get(position).recieverName);
                                     view1.setText(mSections.get(position).senderName);
-//                                    Picasso.with(mContext).load(mSections.get(position).recieverImages).skipMemoryCache().error(R.drawable.male_user).into(imageview);
+                                    Picasso.with(mContext).load(mSections.get(position).recieverImages).placeholder(R.drawable.dcontact).into(imageview);
                                     try {
                                         if (!mSections.get(position).recieverImages.toString().equalsIgnoreCase("")) {
                                             Picasso.with(mContext)
@@ -334,7 +332,6 @@ public class SimpleSectionedListAdapter2 extends BaseAdapter implements PinnedSe
                         } else {
                             view.setText(mSections.get(position).senderName);
                             view1.setText(mSections.get(position).recieverName);
-//                            Picasso.with(mContext).load(mSections.get(position).senderImages).skipMemoryCache().error(R.drawable.male_user).into(imageview);
                             try {
                                 if (!mSections.get(position).senderImages.toString().equalsIgnoreCase("")) {
                                     Picasso.with(mContext)

@@ -75,11 +75,10 @@ public class FollowingAdapter extends ArrayAdapter<FollowerFollowingBean> {
 			rholder.reqbtn.setBackgroundResource(R.drawable.requested_grey);
 		}
 		rholder.usr_name.setText(item.getFolloweeName());
-
         if(!item.getFolloweePic().equalsIgnoreCase("")) {
             try {
                 Picasso.with(context).load(item.getFolloweePic())
-                       .skipMemoryCache()
+                        .skipMemoryCache()
                         .error(R.drawable.male_user)
                         .into(rholder.usrimg);
             }
@@ -92,7 +91,6 @@ public class FollowingAdapter extends ArrayAdapter<FollowerFollowingBean> {
         {
             holder.usrimg.setImageResource(R.drawable.male_user);
         }
-
 
 
         rholder.reqbtn.setOnClickListener(new View.OnClickListener() {

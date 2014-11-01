@@ -137,11 +137,12 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
 		}
 
 		showpending =false;
-
-        if(!item.getPartnerPic().equalsIgnoreCase("")) {
+		
+		
+	 if(!item.getPartnerPic().equalsIgnoreCase("")) {
             try {
                 Picasso.with(context).load(item.getPartnerPic())
-                       .skipMemoryCache()
+                        .skipMemoryCache()
                         .error(R.drawable.male_user)
                         .into(rholder.usrimg);
             }
@@ -153,9 +154,7 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
         else
         {
             holder.usrimg.setImageResource(R.drawable.male_user);
-        }
-
-		holder.privacy.setOnClickListener(new View.OnClickListener() {
+        }		holder.privacy.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
             	authManager = ModelManager.getInstance().getAuthorizationManager();
     			relationManager = ModelManager.getInstance().getRelationManager();

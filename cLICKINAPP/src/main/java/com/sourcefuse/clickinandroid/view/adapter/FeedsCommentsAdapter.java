@@ -68,7 +68,6 @@ public class FeedsCommentsAdapter extends ArrayAdapter<FeedStarsBean> {
         authMgr = ModelManager.getInstance().getAuthorizationManager();
 
         holder.usr_name.setText(eachNewsFeed.get(position).getUserName());
-
         if(!eachNewsFeed.get(position).getUserPic().equalsIgnoreCase("")) {
             try {
                 Picasso.with(context).load(eachNewsFeed.get(position).getUserPic()).skipMemoryCache().error(R.drawable.male_user).into(holder.usrimg);

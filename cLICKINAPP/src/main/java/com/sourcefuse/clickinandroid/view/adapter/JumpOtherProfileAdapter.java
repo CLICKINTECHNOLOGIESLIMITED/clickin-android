@@ -60,26 +60,26 @@ public class JumpOtherProfileAdapter extends ArrayAdapter<ProfileRelationShipBea
 		
 		final RecordHolder rholder = (RecordHolder) row.getTag();
 		
-
+		try{
 		rholder.usr_name.setText(item.getPartnerName());
-
-
-        if(!item.getPartnerPic().equalsIgnoreCase("")) {
-            try {
-                Picasso.with(context).load(item.getPartnerPic())
-                       .skipMemoryCache()
-                        .error(R.drawable.male_user)
-                        .into(rholder.usrimg);
+            if(!item.getPartnerPic().equalsIgnoreCase("")) {
+                try {
+                    Picasso.with(context).load(item.getPartnerPic())
+                            .skipMemoryCache()
+                            .error(R.drawable.male_user)
+                            .into(rholder.usrimg);
+                }
+                catch (Exception e)
+                {
+                    holder.usrimg.setImageResource(R.drawable.male_user);
+                }
             }
-            catch (Exception e)
+            else
             {
                 holder.usrimg.setImageResource(R.drawable.male_user);
             }
-        }
-        else
-        {
-            holder.usrimg.setImageResource(R.drawable.male_user);
-        }
+		}catch(Exception e){}
+		
 		return row;
 	}
 

@@ -34,7 +34,7 @@
             android:paddingLeft="5dp"
             android:singleLine="true"
 
-            android:textColor="@color/black"
+            android:textColor="@color/menu_footer"
             android:textSize="15sp"
             android:hint="SEARCH CLICKIN'"/>
 
@@ -66,4 +66,4 @@
             android:scrollbars="none" />
     </RelativeLayout>
 
-</RelativeLayout><!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/layout/menu_view.xml -->
+</RelativeLayout><!-- From: file:/home/monika/gitcodeClickin/cLICKINAPP/src/main/res/layout/menu_view.xml -->

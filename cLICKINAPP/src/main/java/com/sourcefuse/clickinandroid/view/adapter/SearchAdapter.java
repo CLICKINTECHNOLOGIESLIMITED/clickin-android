@@ -62,7 +62,6 @@ public class SearchAdapter extends ArrayAdapter<FetchUsersByNameBean> {
         }
 
         rholder.usr_name.setText(item.getName());
-
         if(!item.getUserPic().equalsIgnoreCase("")) {
             try {
                 Picasso.with(context).load(item.getUserPic())
@@ -79,7 +78,6 @@ public class SearchAdapter extends ArrayAdapter<FetchUsersByNameBean> {
         {
             holder.usrimg.setImageResource(R.drawable.male_user);
         }
-
 
         return row;
     }

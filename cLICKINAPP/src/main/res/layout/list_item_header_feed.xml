@@ -28,7 +28,7 @@
             android:layout_height="60dp"
             android:layout_alignParentLeft="true"
 
-         />
+            />
 
         <LinearLayout
             android:id="@+id/textLayout"

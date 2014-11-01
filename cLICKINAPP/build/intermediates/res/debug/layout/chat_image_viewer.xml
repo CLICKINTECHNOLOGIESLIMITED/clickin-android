@@ -16,7 +16,6 @@
             android:id="@+id/chat_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="fitXY"
             />
 
         <ImageButton
@@ -40,4 +39,4 @@
         <!--/>-->
     </RelativeLayout>
 
-</RelativeLayout><!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/layout/chat_image_viewer.xml -->
+</RelativeLayout><!-- From: file:/home/monika/gitcodeClickin/cLICKINAPP/src/main/res/layout/chat_image_viewer.xml -->

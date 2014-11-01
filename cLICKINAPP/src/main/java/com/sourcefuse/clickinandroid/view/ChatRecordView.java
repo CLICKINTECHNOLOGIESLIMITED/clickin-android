@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -11,6 +12,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
@@ -99,10 +101,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     private Button send, btnToCard;
 
     private QBPrivateChat chatObject;
-
-    private int relationListIndex, myClicks, userClicks;
-    private String qBId, rId, partnerPic, partnerName, partnerId, partnerPh, myTotalString, userTotalClicks;
-
+    private int relationListIndex,myClicks,userClicks;
+    private String qBId, rId, partnerPic, partnerName, partnerId,partnerPh,myTotalString,userTotalClicks;
     private ChatManager chatManager;
     private AuthManager authManager;
     private RelationManager relationManager;
@@ -119,8 +119,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     private long sentOn;
     private String chatId;
     private boolean emptyDb = true;
-
-    String[] splitted;
+ 	String firstname ;
+    String[] splitted ;
 
     private boolean showAttachmentView = true;
     private LinearLayout llAttachment;
@@ -206,9 +206,10 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         partnerPic = getIntent().getExtras().getString("partnerPic");
         partnerName = getIntent().getExtras().getString("partnerName");
         splitted = partnerName.split("\\s+");
+        firstname = splitted[0].toUpperCase();
+
         rId = getIntent().getExtras().getString("rId");
         partnerId = getIntent().getExtras().getString("partnerId");
-
 
         myTotalString = getIntent().getExtras().getString("myClicks");
         userTotalClicks = getIntent().getExtras().getString("userClicks");
@@ -219,67 +220,128 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         myTotalclicks.setText("" + myTotalString);
         partnerTotalclicks.setText("" + userTotalClicks);
 
-        partnerPh = getIntent().getExtras().getString("partnerPh");
+        partnerPh =  getIntent().getExtras().getString("partnerPh");
         relationListIndex = getIntent().getExtras().getInt("relationListIndex");
-
 
 // get Chat record From server
         chatManager = ModelManager.getInstance().getChatManager();
         chatManager.chatListFromServer.clear();
 
 
+
+
+
         profileName.setText("" + splitted[0]);
-//        try {
-//            Picasso.with(ChatRecordView.this).load(authManager.getUserPic())
-//                    .skipMemoryCache()
-//                    .placeholder(R.drawable.default_profile)
-//                    .error(R.drawable.default_profile).into(mypix);
-//            Picasso.with(ChatRecordView.this).load(partnerPic)
-//                    .placeholder(R.drawable.default_profile)
-//                    .error(R.drawable.default_profile).into(partnerPix);
-//        } catch (Exception e) {
-//        }
-        if(authManager.getGender()!=null) {
-        if (authManager.getGender().matches("guy")) {
+        try {
+            Uri tempUri=authManager.getUserImageUri();
+            if(tempUri!=null){
+                 Bitmap imageBitmap;
+                imageBitmap = authManager.getUserbitmap();
+                if(imageBitmap!=null)
+                    mypix.setImageBitmap(imageBitmap);
+                else{
+                    if(!authManager.getGender().equalsIgnoreCase("")) {
 
-            try {
-                if (!authManager.getUserPic().equalsIgnoreCase("")) {
-                Picasso.with(ChatRecordView.this)
-                        .load(authManager.getUserPic())
-                        .skipMemoryCache()
+                        if (authManager.getGender().equalsIgnoreCase("Male")) {
+                            try {
+                                if(!authManager.getUserPic().equalsIgnoreCase("")) {
+                                    Picasso.with(this)
+                                            .load(authManager.getUserPic())
+                                            .skipMemoryCache()
 
-                        .error(R.drawable.male_user).into(mypix);
-                } else {
+                                            .error(R.drawable.male_user)
+                                            .into(mypix);
+                                }
+                                else
+                                {
+                                    mypix.setImageResource(R.drawable.male_user);
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                mypix.setImageResource(R.drawable.male_user);
+                            }
+                        } else if (authManager.getGender().equalsIgnoreCase("Female")) {
+                            try {
+                                if(!authManager.getUserPic().equalsIgnoreCase("")) {
+                                    Picasso.with(this)
+                                            .load(authManager.getUserPic())
+                                            .skipMemoryCache()
+
+                                            .error(R.drawable.female_user)
+                                            .into(mypix);
+                                }
+                                else
+                                {
+                                    mypix.setImageResource(R.drawable.female_user);
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                mypix.setImageResource(R.drawable.female_user);
+                            }
+                        }
+
+                    }
+                    else
+                    {
+                        mypix.setImageResource(R.drawable.male_user);
+                    }
+                }
+
+            }else{
+                if(!authManager.getGender().equalsIgnoreCase("")) {
+
+                    if (authManager.getGender().equalsIgnoreCase("Male")) {
+                        try {
+                            if(!authManager.getUserPic().equalsIgnoreCase("")) {
+                                Picasso.with(this)
+                                        .load(authManager.getUserPic())
+                                        .skipMemoryCache()
+
+                                        .error(R.drawable.male_user)
+                                        .into(mypix);
+                            }
+                            else
+                            {
+                                mypix.setImageResource(R.drawable.male_user);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            mypix.setImageResource(R.drawable.male_user);
+                        }
+                    } else if (authManager.getGender().equalsIgnoreCase("Female")) {
+                        try {
+                            if(!authManager.getUserPic().equalsIgnoreCase("")) {
+                                Picasso.with(this)
+                                        .load(authManager.getUserPic())
+                                        .skipMemoryCache()
+
+                                        .error(R.drawable.female_user)
+                                        .into(mypix);
+                            }
+                            else
+                            {
+                                mypix.setImageResource(R.drawable.female_user);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            mypix.setImageResource(R.drawable.female_user);
+                        }
+                    }
+
+                }
+                else
+                {
                     mypix.setImageResource(R.drawable.male_user);
                 }
-            } catch (Exception e) {
-                mypix.setImageResource(R.drawable.male_user);
-            }
-        }
-        else
-        {
-            try {
-                if (!authManager.getUserPic().equalsIgnoreCase("")) {
-                Picasso.with(ChatRecordView.this)
-                        .load(authManager.getUserPic())
-                        .skipMemoryCache()
 
-                        .error(R.drawable.female_user).into(mypix);
-                } else {
-                    mypix.setImageResource(R.drawable.female_user);
-                }
-            } catch (Exception e) {
-                mypix.setImageResource(R.drawable.female_user);
             }
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-    }
-    else
-    {
-        mypix.setImageResource(R.drawable.male_user);
-    }
         Picasso.with(ChatRecordView.this).load(partnerPic)
-                  
-                    .error(R.drawable.default_profile).into(partnerPix);
+
+                .error(R.drawable.male_user).into(partnerPix);
 
         mybar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
             @Override
@@ -299,7 +361,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                     // pos.setText("" + myvalue);
                     ((RelativeLayout) findViewById(R.id.rl_flipper)).setVisibility(View.VISIBLE);
                     ((RelativeLayout) findViewById(R.id.rl_flipper)).setBackgroundResource(R.color.white);
-                    ((TextView) findViewById(R.id.tv_flipper_value)).setText("" + clickForFlipper(myvalue));
+                    ((TextView) findViewById(R.id.tv_flipper_value)).setText(""+clickForFlipper(myvalue));
                     seekValue = myvalue;
                     // neg.setText("-10");
                 }
@@ -309,7 +371,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                     seekValue = myvalue;
                     ((RelativeLayout) findViewById(R.id.rl_flipper)).setVisibility(View.VISIBLE);
                     ((RelativeLayout) findViewById(R.id.rl_flipper)).setBackgroundResource(R.color.black_opacity);
-                    ((TextView) findViewById(R.id.tv_flipper_value)).setText("" + myvalue);
+                    ((TextView) findViewById(R.id.tv_flipper_value)).setText(""+myvalue);
                 }
                 if (myvalue == 0) {
                     seekValue = 0;
@@ -365,7 +427,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                     int lastIndex = chatManager.chatListFromServer.size() - 1;
                     String lastChatId = chatManager.chatListFromServer.get(0).getChatId();
                     chatManager.fetchChatRecord(rId, authManager.getPhoneNo(), authManager.getUsrToken(), lastChatId);
-                } catch (Exception e) {
+                }catch (Exception e){
 
                 }
             }
@@ -373,10 +435,15 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
 
         chatData.clear();
-        setlist();
+       setlist();
+
 
 
     }
+
+
+
+
 
 
     public void imageDialog() {
@@ -422,6 +489,9 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         );
         dialog.show();
     }
+
+
+
 
 
     public void alertDialog() {
@@ -493,8 +563,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             try {
                 chatObject.removeChatMessageListener(this);
                 chatObject.addChatMessageListener(this);
-            } catch (Exception e1) {
-            }
+            }catch (Exception e1){}
             Log.e(TAG, "Exception----> " + e.toString());
         }
 
@@ -507,12 +576,11 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             dbHelper.openDataBase();
             authManager = ModelManager.getInstance().getAuthorizationManager();
             databaseList.clear();
-
             databaseList = dbHelper.getAllChat(authManager.getQBId(), qBId);
             Log.e(TAG, "This get From DATABASE-> " + databaseList.size());
-            if (databaseList.size() == 0) {
+            if( databaseList.size()==0){
                 emptyDb = true;
-                chatManager.fetchChatRecord(rId, authManager.getPhoneNo(), authManager.getUsrToken(), "");
+                chatManager.fetchChatRecord(rId, authManager.getPhoneNo(), authManager.getUsrToken(),"");
             }
 
             chatManager.chatListFromServer.addAll(databaseList);
@@ -526,7 +594,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         chatListView.setAdapter(adapter);
     }
 
-    private void setHistoryChat() {
+    private void setHistoryChat(){
 
         adapter = new ChatRecordAdapter(this, R.layout.view_chat_demo, chatManager.chatListFromServer);
         chatListView.setAdapter(adapter);
@@ -536,7 +604,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_send:
+       case R.id.btn_send:
                 ((RelativeLayout) findViewById(R.id.rl_flipper)).setVisibility(View.GONE);
                 chatString = "" + chatText.getText().toString();
                 String clicksValue = null;
@@ -751,7 +819,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             case R.id.btn_to_card:
                 Intent intent = new Intent(ChatRecordView.this, CardView.class);
                 startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+                overridePendingTransition(R.anim.slide_in_up,R.anim.slide_out_up);
                 break;
 
             case R.id.iv_attach:
@@ -772,7 +840,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 Intent viewProfile = new Intent(ChatRecordView.this, JumpOtherProfileView.class);
                 viewProfile.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 viewProfile.putExtra("FromOwnProfile", true);
-                viewProfile.putExtra("phNumber", partnerPh);
+                viewProfile.putExtra("phNumber",partnerPh);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
                 startActivity(viewProfile);
                 break;
@@ -786,6 +854,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         super.onNewIntent(intent);
         String actionReq = intent.getAction();
         if (actionReq.equalsIgnoreCase("UPDATE")) {
+            new DBTask().execute();
             updateValues(intent);
         } else if (actionReq.equalsIgnoreCase("CARD")) {
             Log.e(TAG + "onNewIntent", "onNewIntent");
@@ -794,20 +863,20 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             String cardTittle = null;
             String cardDiscription = null;
 
-            String is_CustomCard = null;
-            String card_DB_ID = null;
-            String accepted_Rejected = null;
-            String played_Countered = null;
-            String card_originator = null;
-            String card_owner = null;
-            String edittext = null;
+        String is_CustomCard = null;
+        String card_DB_ID = null;
+        String accepted_Rejected = null;
+        String played_Countered = null;
+        String  card_originator = null;
+        String card_owner = null;
+        String edittext = null;
 
-            String card_Id = null;
-            boolean from = true;
+        String card_Id = null;
+        boolean from = true;
 
-            from = intent.getExtras().getBoolean("FromCard");
+        from = intent.getExtras().getBoolean("FromCard");
 
-            if (from) {
+        if (from) {
                 boolean isCounter = intent.getExtras().getBoolean("isCounter");
                 is_CustomCard = intent.getExtras().getString("is_CustomCard");
                 if(is_CustomCard.equalsIgnoreCase("true")){
@@ -851,11 +920,11 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 sendCardToPartner(cardUrl, cardTittle, cardDiscription, card_Id, cardClicks, is_CustomCard, card_DB_ID, accepted_Rejected, played_Countered, card_originator, card_owner);
             }
 
-        }
+    }
 
     }
 
-    private void sendCardToPartner(String card_url, String cardTittle, String cardDiscription, String card_Id, String clicks, String is_CustomCard, String card_DB_ID, String accepted_Rejected, String played_Countered, String card_originator, String card_owner) {
+  private void sendCardToPartner(String card_url, String cardTittle, String cardDiscription, String card_Id, String clicks, String is_CustomCard, String card_DB_ID, String accepted_Rejected, String played_Countered, String card_originator, String card_owner) {
 
         try {
             DefaultPacketExtension extension = new DefaultPacketExtension("extraParams", "jabber:client");
@@ -919,6 +988,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             extension.setValue("card_Played_Countered", played_Countered);
             extension.setValue("card_originator", card_originator);
 
+            Log.e(TAG,"is_CustomCard---> "+is_CustomCard);
+
             Message message = new Message();
             message.setType(Message.Type.chat); // 1-1 chat message
             message.setBody("");
@@ -937,12 +1008,15 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             addChat.setCard_DB_ID(card_DB_ID);
             addChat.setCard_heading(cardTittle);
             addChat.setCard_Accepted_Rejected(accepted_Rejected);
-            addChat.setCard_url(card_url);
+            if(is_CustomCard.equalsIgnoreCase("true")){
+                addChat.setCard_url(Constants.CUSTOM_CARD_URL);
+            }else{
+                addChat.setCard_url(card_url);
+            }
             addChat.setCard_id(card_id);
             addChat.setCard_Played_Countered(played_Countered);
             addChat.setCard_originator(card_originator);
             addChat.setCardPartnerName(partnerName);
-
             addChat.setTimeStamp(String.valueOf(sentOn));
             chatManager.chatListFromServer.add(addChat);
             adapter.notifyDataSetChanged();
@@ -1000,8 +1074,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 againLoginToQuickBlox();
                 chatObject.removeChatMessageListener(this);
                 chatObject.addChatMessageListener(this);
-            } catch (Exception e1) {
-            }
+            }catch (Exception e1){}
             e.printStackTrace();
         }
     }
@@ -1041,7 +1114,6 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             EventBus.getDefault().unregister(this);
         }
         EventBus.getDefault().register(this);
-
         try {
             authManager = ModelManager.getInstance().getAuthorizationManager();
             chatObject = authManager.getqBPrivateChat();
@@ -1074,23 +1146,21 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         authManager = ModelManager.getInstance().getAuthorizationManager();
         if (message.equalsIgnoreCase("FecthChat True")) {
             chatListView.onRefreshComplete();
-
-            if (isHistroy && emptyDb == false) {
+            if(isHistroy && emptyDb == false){
                 setHistoryChat();
                 isHistroy = false;
-            } else {
-                chatManager.chatListFromServer.addAll(0, chatManager.refreshivechatList);
+            }else{
+                chatManager.chatListFromServer.addAll(0,chatManager.refreshivechatList);
                 adapter.notifyDataSetChanged();
             }
 
-            if (emptyDb) {
+            if(emptyDb){
                 //setHistoryChat();
                 Log.e("emptyDb", "emptyDb->");
-
                 adapter.notifyDataSetChanged();
             }
 
-            emptyDb = false;
+            emptyDb =false;
 
             Log.e("1", "message->" + message);
         } else if (message.equalsIgnoreCase("FecthChat False")) {
@@ -1115,17 +1185,17 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         String fromUserId = null;
 
         //Card DS
-        String card_clicks = null;
-        String card_owner = null;
-        String card_content = null;
-        String is_CustomCard = null;
-        String card_DB_ID = null;
-        String card_heading = null;
-        String card_Accepted_Rejected = null;
-        String card_url = null;
-        String card_id = null;
-        String card_Played_Countered = null;
-        String card_originator = null;
+         String card_clicks = null;
+         String card_owner = null;
+         String card_content = null;
+         String is_CustomCard = null;
+         String card_DB_ID = null;
+         String card_heading = null;
+         String card_Accepted_Rejected  = null;
+         String card_url = null;
+         String card_id  = null;
+         String card_Played_Countered = null;
+         String card_originator = null;
 
         // Card DE
 
@@ -1223,13 +1293,13 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                         card_Accepted_Rejected = xmlJSONObj.getJSONObject("message").getJSONObject("extraParams").getString("card_Accepted_Rejected");
 
                     if (xmlJSONObj.getJSONObject("message").getJSONObject("extraParams").has("card_id"))
-                        card_id = xmlJSONObj.getJSONObject("message").getJSONObject("extraParams").getString("card_id");
+                        card_id =  xmlJSONObj.getJSONObject("message").getJSONObject("extraParams").getString("card_id");
 
                     if (xmlJSONObj.getJSONObject("message").getJSONObject("extraParams").has("card_Played_Countered"))
                         xmlJSONObj.getJSONObject("message").getJSONObject("extraParams").getString("card_Played_Countered");
 
                     if (xmlJSONObj.getJSONObject("message").getJSONObject("extraParams").has("card_originator"))
-                        card_originator = xmlJSONObj.getJSONObject("message").getJSONObject("extraParams").getString("card_originator");
+                        card_originator =  xmlJSONObj.getJSONObject("message").getJSONObject("extraParams").getString("card_originator");
 
                     chatType = "5";
                     Log.e(TAG, "Chattype--5");
@@ -1247,8 +1317,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                     if (clicks.equalsIgnoreCase("no")) {
                         addChat.setChatType(chatType);
                         addChat.setUserId(partnerId);
-                        Log.e(TAG, "body-w---> " + body);
-                        addChat.setChatText("" + body);
+                        Log.e(TAG,"body-w---> "+ body);
+                        addChat.setChatText(""+body);
                         addChat.setClicks(null);
                         addChat.setTimeStamp(String.valueOf(sentOn));
 
@@ -1347,34 +1417,36 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
                     }
 
-                } else if (chatType.equalsIgnoreCase("5")) {
+                }else if (chatType.equalsIgnoreCase("5")) {
+                    String firstname1 = firstname+" ";
                     addChat.setSenderQbId(authManager.getQBId());
                     addChat.setRecieverQbId(qBId);
+                  // if (card_Accepted_Rejected.equalsIgnoreCase("accepted")) {
+
+                       Log.e(TAG, "Chattype 5 accepted Only Card File");
+
+                       addChat.setChatType(chatType);
+                       addChat.setUserId(partnerId);
+                       addChat.setCard_clicks(card_clicks);
+                       addChat.setCard_owner(card_owner);
+                       addChat.setCard_content(card_content);
+                       addChat.setIs_CustomCard(is_CustomCard);
+                       addChat.setCard_DB_ID(card_DB_ID);
+                       addChat.setCard_heading(card_heading);
+                       addChat.setCard_Accepted_Rejected(card_Accepted_Rejected);
+                       addChat.setCard_url(card_url);
+                       addChat.setCard_id(card_id);
+                       addChat.setCard_Played_Countered(card_Played_Countered);
+                       addChat.setCard_originator(card_originator);
+                       addChat.setCardPartnerName(firstname1);
+
+                       addChat.setTimeStamp(String.valueOf(sentOn));
+                       chatManager.chatListFromServer.add(addChat);
+
+          
 
                     if (card_Accepted_Rejected.equalsIgnoreCase("accepted")) {
-
-                        Log.e(TAG, "Chattype 5 accepted Only Card File");
-
-                        addChat.setChatType(chatType);
-                        addChat.setUserId(partnerId);
-                        addChat.setCard_clicks(card_clicks);
-                        addChat.setCard_owner(card_owner);
-                        addChat.setCard_content(card_content);
-                        addChat.setIs_CustomCard(is_CustomCard);
-                        addChat.setCard_DB_ID(card_DB_ID);
-                        addChat.setCard_heading(card_heading);
-                        addChat.setCard_Accepted_Rejected(card_Accepted_Rejected);
-                        addChat.setCard_url(card_url);
-                        addChat.setCard_id(card_id);
-                        addChat.setCard_Played_Countered(card_Played_Countered);
-                        addChat.setCard_originator(card_originator);
-                        addChat.setCardPartnerName(partnerName);
-
-                        addChat.setTimeStamp(String.valueOf(sentOn));
-                        chatManager.chatListFromServer.add(addChat);
-
                         if (card_originator.equalsIgnoreCase(authManager.getUserId())) {
-
                             myClicks = myClicks - Integer.parseInt(card_clicks);
                             myTotalclicks.setText("" + myClicks);
                             relationManager = ModelManager.getInstance().getRelationManager();
@@ -1395,20 +1467,46 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                             relationManager = ModelManager.getInstance().getRelationManager();
                             relationManager.acceptedList.get(relationListIndex).setUserClicks(Integer.toString(userClicks));
                         }
+                    }
+                       adapter.notifyDataSetChanged();
 
+                   /*}else if(card_Accepted_Rejected.equalsIgnoreCase("rejected")) {
+                       
+                       Log.e(TAG, "Chattype 5 rejected Only Card File");
 
-                        adapter.notifyDataSetChanged();
+                       addChat.setChatType(chatType);
+                       addChat.setUserId(partnerId);
+                       addChat.setCard_clicks(card_clicks);
+                       addChat.setCard_owner(card_owner);
+                       addChat.setCard_content(card_content);
+                       addChat.setIs_CustomCard(is_CustomCard);
+                       addChat.setCard_DB_ID(card_DB_ID);
+                       addChat.setCard_heading(card_heading);
+                       addChat.setCard_Accepted_Rejected(card_Accepted_Rejected);
+                       addChat.setCard_url(card_url);
+                       addChat.setCard_id(card_id);
+                       addChat.setCard_Played_Countered(card_Played_Countered);
+                       addChat.setCard_originator(card_originator);
+                       addChat.setCardPartnerName(firstname1);
 
-                    } else if (card_Accepted_Rejected.equalsIgnoreCase("rejected")) {
-
-                        Log.e(TAG, "Chattype 5 rejected Only Card File");
-
+                       addChat.setTimeStamp(String.valueOf(sentOn));
+                       chatManager.chatListFromServer.add(addChat);
+                       adapter.notifyDataSetChanged();
+                   }else if (card_Accepted_Rejected.equalsIgnoreCase("countered")){
+                       Log.e(TAG, "Chattype 5 Only Card File");
+                      
                         addChat.setChatType(chatType);
                         addChat.setUserId(partnerId);
                         addChat.setCard_clicks(card_clicks);
                         addChat.setCard_owner(card_owner);
                         addChat.setCard_content(card_content);
                         addChat.setIs_CustomCard(is_CustomCard);
+                       addChat.setCard_url(card_url);
+                       *//* if (is_CustomCard.equalsIgnoreCase("true")){
+                            addChat.setCard_url(card_url);
+                        }else{
+                            addChat.setCard_url("");
+                        }*//*
                         addChat.setCard_DB_ID(card_DB_ID);
                         addChat.setCard_heading(card_heading);
                         addChat.setCard_Accepted_Rejected(card_Accepted_Rejected);
@@ -1416,12 +1514,12 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                         addChat.setCard_id(card_id);
                         addChat.setCard_Played_Countered(card_Played_Countered);
                         addChat.setCard_originator(card_originator);
-                        addChat.setCardPartnerName(partnerName);
+                       addChat.setCardPartnerName(firstname1);
 
-                        addChat.setTimeStamp(String.valueOf(sentOn));
-                        chatManager.chatListFromServer.add(addChat);
-                        adapter.notifyDataSetChanged();
-                    } else {
+                       addChat.setTimeStamp(String.valueOf(sentOn));
+                       chatManager.chatListFromServer.add(addChat);
+                       adapter.notifyDataSetChanged();
+                   } else if (card_Accepted_Rejected.equalsIgnoreCase("nil") && !is_CustomCard.equalsIgnoreCase("true")) {
                         Log.e(TAG, "Chattype 5 Only Card File");
 
                         addChat.setChatType(chatType);
@@ -1442,17 +1540,43 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                         addChat.setTimeStamp(String.valueOf(sentOn));
                         chatManager.chatListFromServer.add(addChat);
                         adapter.notifyDataSetChanged();
-                    }
+                    } else if (is_CustomCard.equalsIgnoreCase("true")) {
+                    Log.e(TAG, "Chattype 5 Only Card Custom");
+
+                    addChat.setChatType(chatType);
+                    addChat.setUserId(partnerId);
+                    addChat.setCard_clicks(card_clicks);
+                    addChat.setCard_owner(card_owner);
+                    addChat.setCard_content(card_content);
+                    addChat.setIs_CustomCard(is_CustomCard);
+                    addChat.setCard_DB_ID(card_DB_ID);
+                    addChat.setCard_heading(card_heading);
+                    addChat.setCard_Accepted_Rejected(card_Accepted_Rejected);
+                    addChat.setCard_url(card_url);
+                    addChat.setCard_id(card_id);
+                    addChat.setCard_Played_Countered(card_Played_Countered);
+                    addChat.setCard_originator(card_originator);
+                    addChat.setCardPartnerName(partnerName);
+
+                    addChat.setTimeStamp(String.valueOf(sentOn));
+                    chatManager.chatListFromServer.add(addChat);
+                    adapter.notifyDataSetChanged();
+                }
+*/
+
 
                 }
 
 
                 //Set myclicks on top
-                if (!Utils.isEmptyString(clicks)) {
-                    myClicks = myClicks + grandClicksForReceiverEndInt(clicks);
-                    myTotalclicks.setText("" + myClicks);
-                    relationManager = ModelManager.getInstance().getRelationManager();
-                    relationManager.acceptedList.get(relationListIndex).setClicks(Integer.toString(myClicks));
+
+                if(!chatType.equalsIgnoreCase("5")) {
+                    if (!Utils.isEmptyString(clicks)) {
+                        myClicks = myClicks + grandClicksForReceiverEndInt(clicks);
+                        myTotalclicks.setText("" + myClicks);
+                        relationManager = ModelManager.getInstance().getRelationManager();
+                        relationManager.acceptedList.get(relationListIndex).setClicks(Integer.toString(myClicks));
+                    }
                 }
 
                 fileID = null;
@@ -1469,6 +1593,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         } catch (Exception f) {
             f.printStackTrace();
         }
+
     }
 
     @Override
@@ -1489,31 +1614,47 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             super.onActivityResult(requestCode, resultCode, data);
             if (resultCode == RESULT_OK) {
                 switch (requestCode) {
-                    case Constants.CAMERA_REQUEST:
-                        mImageCaptureUri = data.getData();
+               case Constants.CAMERA_REQUEST:
+
+                       // mImageCaptureUri = data.getData();
+
+                        Bitmap photo = (Bitmap) data.getExtras().get("data");
+                        mImageCaptureUri = getImageUri(ChatRecordView.this,photo);
+                        mImageCaptureUri = Utils.decodeUri(ChatRecordView.this, mImageCaptureUri, 100);
+
+                        path = Utils.getRealPathFromURI(mImageCaptureUri, ChatRecordView.this);
+                        currentImagepath = mImageCaptureUri.toString();
+                      //  attachBtn.setImageBitmap(photo);
                         Log.e(TAG, "CAMERA_REQUEST" + "--> " + mImageCaptureUri);
-
-                            try {
-                                mImageCaptureUri = Utils.decodeUri(ChatRecordView.this, mImageCaptureUri, 100);
-                            } catch (FileNotFoundException e) {
-                                e.printStackTrace();
-                            }
-                            // Utils.decodeUri()
-                            path = Utils.getRealPathFromURI(mImageCaptureUri, ChatRecordView.this);
-                            currentImagepath = mImageCaptureUri.toString();
-
+                        Log.e(TAG, "CAMERA_REQUEST Real Path" + "--> " + path);
 
                         try{
                                      Picasso.with(ChatRecordView.this).load(mImageCaptureUri.toString())
-                                    .skipMemoryCache()
+                                    .placeholder(R.drawable.default_profile)
+									.skipMemoryCache()
                                     .error(R.drawable.default_profile).into(attachBtn);
 
-
-                        } catch (Exception ex) {
-                            Log.e("Exception", "Exception-->" + ex);
+                        }catch (Exception e){
+                            e.printStackTrace();
 
                         }
-
+//                        try {
+//
+//                            mImageCaptureUri = Utils.decodeUri(ChatRecordView.this, mImageCaptureUri, 100);
+//                            // Utils.decodeUri()
+//                            path = Utils.getRealPathFromURI(mImageCaptureUri, ChatRecordView.this);
+//                        //    bitmap = Utils.decodeUri(mImageCaptureUri,ChatRecordView.this);
+//                            currentImagepath = mImageCaptureUri.toString();
+//
+//                            Log.e("Exception", "Exception-->" +mImageCaptureUri);
+//
+//                            Picasso.with(ChatRecordView.this).load(mImageCaptureUri.toString())
+//                                    .placeholder(R.drawable.default_profile)
+//                                    .error(R.drawable.default_profile).into(attachBtn);
+//                        } catch (Exception ex) {
+//                            Log.e("Exception", "Exception-->" + ex);
+//                            ex.printStackTrace();
+//                        }
 
                         break;
                     case Constants.SELECT_PICTURE:
@@ -1524,15 +1665,11 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                             mImageCaptureUri = Utils.decodeUri(ChatRecordView.this, mImageCaptureUri, 100);
                             path = Utils.getRealPathFromURI(mImageCaptureUri, ChatRecordView.this);
                             currentImagepath = mImageCaptureUri.toString();
-                            if(!mImageCaptureUri.toString().equalsIgnoreCase("")) {
+
                             Picasso.with(ChatRecordView.this).load(mImageCaptureUri.toString())
-                                    .centerCrop().skipMemoryCache()
-                                    .error(R.drawable.male_user).into(attachBtn);
-                        }
-                            else
-                        {
-                            attachBtn.setImageResource(R.drawable.male_user);
-                        }
+									.skipMemoryCache()
+                                    .placeholder(R.drawable.default_profile)
+                                    .error(R.drawable.default_profile).into(attachBtn);
                         } catch (Exception ex) {
                             Log.e("Exception", "Exception-->" + ex);
                         }
@@ -1563,9 +1700,15 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         }
     }
 
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
+    }
 
     // IMAGE STUFF start
-    private void uploadImageOnQuickBlox(final String path, final String msg, final String clicks, final String chat_Id) {
+    private void uploadImageOnQuickBlox(final String path, final String msg, final String clicks,final String chat_Id) {
         Log.e(TAG, "uploadImageOnQuickBlox.....Uploading--> " + path);
         File mfile = new File(path);
         QBContent.uploadFileTask(mfile, true, new QBCallbackImpl() {
@@ -1577,11 +1720,9 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                     Log.e(TAG, "Uploaded  --> " + uploadedImgUrl);
                     sendImagetoPartner(uploadedImgUrl, msg, clicks);
                     if (clicks.equalsIgnoreCase("no")) {
-
                         createRfecordOnQuickBlox(msg, null, uploadedImgUrl, rId, authManager.getUserId(), authManager.getUsrToken(), "" + sentOn, chat_Id, "2", null, "1.000000", null, null, null, null);
-                    } else {
+                    }else{
                         createRfecordOnQuickBlox(msg, clicks, uploadedImgUrl, rId, authManager.getUserId(), authManager.getUsrToken(), "" + sentOn, chat_Id, "2", null, "1.000000", null, null, null, null);
-
                     }
                 }
             }
@@ -1609,8 +1750,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             try {
                 chatObject.removeChatMessageListener(this);
                 chatObject.addChatMessageListener(this);
-            } catch (Exception e1) {
-            }
+            }catch (Exception e1){}
           /*  chatObject = null;
             authManager = ModelManager.getInstance().getAuthorizationManager();
             chatObject = authManager.getqBPrivateChat();
@@ -1881,17 +2021,20 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     }
 
 
-    public Bitmap ShrinkBitmap(String file, int width, int height) {
+
+    public Bitmap ShrinkBitmap(String file, int width, int height){
 
         BitmapFactory.Options bmpFactoryOptions = new BitmapFactory.Options();
         bmpFactoryOptions.inJustDecodeBounds = true;
         Bitmap bitmap = BitmapFactory.decodeFile(file, bmpFactoryOptions);
 
-        int heightRatio = (int) Math.ceil(bmpFactoryOptions.outHeight / (float) height);
-        int widthRatio = (int) Math.ceil(bmpFactoryOptions.outWidth / (float) width);
+        int heightRatio = (int)Math.ceil(bmpFactoryOptions.outHeight/(float)height);
+        int widthRatio = (int)Math.ceil(bmpFactoryOptions.outWidth/(float)width);
 
-        if (heightRatio > 1 || widthRatio > 1) {
-            if (heightRatio > widthRatio) {
+        if (heightRatio > 1 || widthRatio > 1)
+        {
+            if (heightRatio > widthRatio)
+            {
                 bmpFactoryOptions.inSampleSize = heightRatio;
             } else {
                 bmpFactoryOptions.inSampleSize = widthRatio;
@@ -1947,8 +2090,11 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     }
 
 
-    private void createRfecordOnQuickBlox(String messageText, String clicks, String content, String relationshipId, String userId, String senderUserToken,
-                                          String sentOn, String chatId, String type, String video_thumb, String imageRatio, String cards,
+
+
+
+    private void  createRfecordOnQuickBlox(String messageText, String clicks, String content, String relationshipId, String userId, String senderUserToken,
+                                          String sentOn, String chatId, String type, String video_thumb,String imageRatio, String cards,
                                           String locationCoordinates, String sharedMessage, String deliveredChatID) {
         HashMap<String, Object> fields = new HashMap<String, Object>();
 
@@ -1961,7 +2107,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         if (!Utils.isEmptyString(content)) {
             fields.put("content", content);
             fields.put("imageRatio", imageRatio);
-        } else {
+        }else{
             fields.put("content", null);
             fields.put("imageRatio", null);
         }
@@ -1974,27 +2120,27 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
         if (!Utils.isEmptyString(content)) {
             fields.put("video_thumb", video_thumb);
-        } else {
+        }else{
             fields.put("video_thumb", null);
         }
         if (!Utils.isEmptyString(cards)) {
             fields.put("cards", cards);
-        } else {
+        }else{
             fields.put("cards", null);
         }
         if (!Utils.isEmptyString(locationCoordinates)) {
             fields.put("location_coordinates", locationCoordinates);
-        } else {
+        }else{
             fields.put("location_coordinates", null);
         }
         if (!Utils.isEmptyString(sharedMessage)) {
             fields.put("sharedMessage", sharedMessage);
-        } else {
+        }else{
             fields.put("sharedMessage", null);
         }
         if (!Utils.isEmptyString(deliveredChatID)) {
             fields.put("deliveredChatID", deliveredChatID);
-        } else {
+        }else{
             fields.put("deliveredChatID", null);
         }
 
@@ -2063,12 +2209,6 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
 private void updateValues(Intent intent) {
     //save previous chat here
-    try {
-        dbHelper.deleteChat(authManager.getQBId(), qBId);
-        dbHelper.addChatList(chatManager.chatListFromServer);
-    } catch (SQLException e) {
-        e.printStackTrace();
-    }
 
     addMenu(false);
     loginToQuickBlox();
@@ -2099,61 +2239,140 @@ private void updateValues(Intent intent) {
 
 
     profileName.setText("" + splitted[0]);
-//    try {
-//        Picasso.with(ChatRecordView.this).load(authManager.getUserPic())
-//                .skipMemoryCache()
-//                .placeholder(R.drawable.default_profile)
-//                .error(R.drawable.default_profile).into(mypix);
-//        Picasso.with(ChatRecordView.this).load(partnerPic)
-//                .placeholder(R.drawable.default_profile)
-//                .error(R.drawable.default_profile).into(partnerPix);
-//    } catch (Exception e) {
-//    }
-    if(authManager.getGender()!=null) {
-        if (authManager.getGender().matches("guy")) {
+    try {
+        Uri tempUri=authManager.getUserImageUri();
+        if(tempUri!=null){
+            Bitmap imageBitmap;
+            imageBitmap = authManager.getUserbitmap();
+            if(imageBitmap!=null)
+                mypix.setImageBitmap(imageBitmap);
+            else{
+                if(!authManager.getGender().equalsIgnoreCase("")) {
 
-            try {
-                if (!authManager.getUserPic().equalsIgnoreCase("")) {
-                    Picasso.with(ChatRecordView.this)
-                            .load(authManager.getUserPic())
-                            .skipMemoryCache()
-                            .error(R.drawable.male_user).into(mypix);
-                } else {
+                    if (authManager.getGender().equalsIgnoreCase("Male")) {
+                        try {
+                            if(!authManager.getUserPic().equalsIgnoreCase("")) {
+                                Picasso.with(this)
+                                        .load(authManager.getUserPic())
+                                        .skipMemoryCache()
+
+                                        .error(R.drawable.male_user)
+                                        .into(mypix);
+                            }
+                            else
+                            {
+                                mypix.setImageResource(R.drawable.male_user);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            mypix.setImageResource(R.drawable.male_user);
+                        }
+                    } else if (authManager.getGender().equalsIgnoreCase("Female")) {
+                        try {
+                            if(!authManager.getUserPic().equalsIgnoreCase("")) {
+                                Picasso.with(this)
+                                        .load(authManager.getUserPic())
+                                        .skipMemoryCache()
+
+                                        .error(R.drawable.female_user)
+                                        .into(mypix);
+                            }
+                            else
+                            {
+                                mypix.setImageResource(R.drawable.female_user);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            mypix.setImageResource(R.drawable.female_user);
+                        }
+                    }
+
+                }
+                else
+                {
                     mypix.setImageResource(R.drawable.male_user);
                 }
-            } catch (Exception e) {
+            }
+
+        }else{
+            if(!authManager.getGender().equalsIgnoreCase("")) {
+
+                if (authManager.getGender().equalsIgnoreCase("Male")) {
+                    try {
+                        if(!authManager.getUserPic().equalsIgnoreCase("")) {
+                            Picasso.with(this)
+                                    .load(authManager.getUserPic())
+                                    .skipMemoryCache()
+
+                                    .error(R.drawable.male_user)
+                                    .into(mypix);
+                        }
+                        else
+                        {
+                            mypix.setImageResource(R.drawable.male_user);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        mypix.setImageResource(R.drawable.male_user);
+                    }
+                } else if (authManager.getGender().equalsIgnoreCase("Female")) {
+                    try {
+                        if(!authManager.getUserPic().equalsIgnoreCase("")) {
+                            Picasso.with(this)
+                                    .load(authManager.getUserPic())
+                                    .skipMemoryCache()
+
+                                    .error(R.drawable.female_user)
+                                    .into(mypix);
+                        }
+                        else
+                        {
+                            mypix.setImageResource(R.drawable.female_user);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        mypix.setImageResource(R.drawable.female_user);
+                    }
+                }
+
+            }
+            else
+            {
                 mypix.setImageResource(R.drawable.male_user);
             }
-        } else {
-            try {
-                if (!authManager.getUserPic().equalsIgnoreCase("")) {
-                    Picasso.with(ChatRecordView.this)
-                            .load(authManager.getUserPic())
-                            .skipMemoryCache()
 
-                            .error(R.drawable.female_user).into(mypix);
-                } else {
-                    mypix.setImageResource(R.drawable.female_user);
-                }
-            } catch (Exception e) {
-                mypix.setImageResource(R.drawable.female_user);
-            }
         }
-    }
-    else
-    {
-        mypix.setImageResource(R.drawable.male_user);
-    }
 
-
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
     Picasso.with(ChatRecordView.this).load(partnerPic)
-           .skipMemoryCache()
+
             .error(R.drawable.male_user).into(partnerPix);
+
 
     chatData.clear();
     setlist();
 }
+
+ class DBTask extends AsyncTask<Void, Void, Void>{
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try {
+                dbHelper.deleteChat(authManager.getQBId(), qBId);
+                dbHelper.addChatList(chatManager.chatListFromServer);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return null;
+
+        }
+    }
 }
+
+
+
 
 
 

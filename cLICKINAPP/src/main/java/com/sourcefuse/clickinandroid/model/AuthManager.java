@@ -1,5 +1,6 @@
 package com.sourcefuse.clickinandroid.model;
 
+import android.graphics.Bitmap;
 import android.net.Uri;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -447,7 +448,7 @@ public class AuthManager extends Observable implements AuthManagerI {
 
             //for prod
             client.addHeader("User-Token", usertoken);
-           client.addHeader("Phone-No", phone);
+            client.addHeader("Phone-No", phone);
 
             Log.e("usertoken-phone_no-othersphone-->", "" + usertoken + "-" + phone + "-" + othersphone);
 
@@ -585,7 +586,7 @@ public class AuthManager extends Observable implements AuthManagerI {
     private String userCity;
     private String userCountry;
     private Uri userImageUri=null;
-
+    private Bitmap userbitmap;
 
     public void setUserCity(String userCity) {
         this.userCity = userCity;
@@ -1034,4 +1035,14 @@ public class AuthManager extends Observable implements AuthManagerI {
     public Uri getUserImageUri(){
         return this.userImageUri;
     }
+
+    public void setUserbitmap(Bitmap userbitmap)
+    {
+          this.userbitmap=userbitmap;
+    }
+
+      public Bitmap getUserbitmap()
+      {
+            return this.userbitmap;
+      }
 }

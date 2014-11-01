@@ -72,8 +72,7 @@ public class CurrentClickersAdapter extends ArrayAdapter<CurrentClickerBean> {
             rholder.whiteDivider.setVisibility(View.VISIBLE);
         }
 
-
-            holder.clickers.setText(item.getName());
+        holder.clickers.setText(item.getName());
         try {
             if (!item.getClickerPix().equalsIgnoreCase("")) {
                 Picasso.with(context)
@@ -87,7 +86,6 @@ public class CurrentClickersAdapter extends ArrayAdapter<CurrentClickerBean> {
         } catch (Exception e) {
             holder.usrimg.setImageResource(R.drawable.male_user);
         }
-
 
 
             holder.follow.setOnClickListener(new View.OnClickListener() {

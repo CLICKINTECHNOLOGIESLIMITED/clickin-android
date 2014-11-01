@@ -75,7 +75,6 @@ public class FeedsStarsAdapter extends ArrayAdapter<FeedStarsBean> {
         authMgr = ModelManager.getInstance().getAuthorizationManager();
 
         holder.usr_name.setText(eachNewsFeed.get(position).getUserName());
-
         if(!eachNewsFeed.get(position).getUserPic().equalsIgnoreCase("")) {
             try {
                 Picasso.with(context).load(eachNewsFeed.get(position).getUserPic()).skipMemoryCache().error(R.drawable.male_user).into(holder.usrimg);
@@ -88,7 +87,6 @@ public class FeedsStarsAdapter extends ArrayAdapter<FeedStarsBean> {
         else {
             holder.usrimg.setImageResource(R.drawable.male_user);
         }
-
         ProfileManager prMgr = ModelManager.getInstance().getProfileManager();
         if(prMgr.following!=null) {
             Log.e("followRequesed", "" + prMgr.following.size());

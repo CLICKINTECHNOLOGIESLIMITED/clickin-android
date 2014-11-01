@@ -183,17 +183,17 @@ public class RelationManager extends Observable implements RelationManagerI {
 			String usertoken) {
 		// TODO Auto-generated method stub
 		relationManager = ModelManager.getInstance().getRelationManager();
-		JSONObject userInputDetails = new JSONObject();
+//		JSONObject userInputDetails = new JSONObject();
 		try {
-			userInputDetails.put("phone_no", phone);
-			userInputDetails.put("user_token", usertoken);
+//			userInputDetails.put("phone_no", phone);
+//			userInputDetails.put("user_token", usertoken);
 
 			client = new AsyncHttpClient();
 //			client.addHeader("user_token", usertoken);
 //			client.addHeader("phone_no", phone);
             client.addHeader("User-Token", usertoken);
             client.addHeader("Phone-No", phone);
-			Log.e("INPUT_DATA-> ", "" + userInputDetails);
+//			Log.e("INPUT_DATA-> ", "" + userInputDetails);
 			strService = APIs.FETCHPROFILERELATIONSHIPS
 					+ othersPhone.substring(1);
 		} catch (Exception e1) {

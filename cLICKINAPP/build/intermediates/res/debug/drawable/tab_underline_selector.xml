@@ -2,4 +2,4 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_selected="true" android:drawable="@drawable/tabbottomline"/>
 
-</selector><!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/drawable/tab_underline_selector.xml -->
+</selector><!-- From: file:/home/monika/gitcodeClickin/cLICKINAPP/src/main/res/drawable/tab_underline_selector.xml -->

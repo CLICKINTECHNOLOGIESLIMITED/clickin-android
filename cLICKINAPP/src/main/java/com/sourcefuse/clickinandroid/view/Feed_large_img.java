@@ -33,7 +33,7 @@ public class Feed_large_img extends Activity {
         feeds_image = (ImageView)findViewById(R.id.feeds_large_img);
         back = (ImageView)findViewById(R.id.back);
 
-        Picasso.with(this).load(url).skipMemoryCache().into(feeds_image);
+        Picasso.with(this).load(url).into(feeds_image);
 
         back.setOnClickListener(new View.OnClickListener() {
 

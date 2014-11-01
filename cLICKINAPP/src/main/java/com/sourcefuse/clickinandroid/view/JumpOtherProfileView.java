@@ -371,8 +371,7 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
 			String textfollowing = "<font color=#f29691>"+getResources().getString(R.string.txt_following)+"</font> <font color=#cccccc>"+authManager.getTmpFollowing()+"</font>";
 			following.setText(Html.fromHtml(textfollowing));
 
-
-            if(authManager.getTmpGender()!=null) {
+   if(authManager.getTmpGender()!=null) {
                 if (authManager.getTmpGender().matches("guy")) {
 
                     try {
@@ -407,8 +406,8 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
             {
                 userimage.setImageResource(R.drawable.male_user);
             }
-		} 
+        }
+    }
 
-	}
 
 }

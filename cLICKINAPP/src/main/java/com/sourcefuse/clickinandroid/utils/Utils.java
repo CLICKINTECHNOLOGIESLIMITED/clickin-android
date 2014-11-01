@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -20,7 +19,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.MediaStore;
 import android.util.Base64;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Window;
 import android.widget.TextView;
@@ -412,7 +410,7 @@ public class Utils {
             throws FileNotFoundException {
         BitmapFactory.Options o = new BitmapFactory.Options();
         o.inJustDecodeBounds = true;
-        BitmapFactory.decodeStream(c.getContentResolver().openInputStream(uri),null, o);
+        BitmapFactory.decodeStream(c.getContentResolver().openInputStream(uri), null, o);
 
         int width_tmp = o.outWidth
                 , height_tmp = o.outHeight;
@@ -471,12 +469,5 @@ public class Utils {
             String dateFormatted = formatter.format(date);
             return dateFormatted;
         }
-    public static float convertDpToPixel(float dp, Context context){
-        Resources resources = context.getResources();
-        DisplayMetrics metrics = resources.getDisplayMetrics();
-        float px = dp * (metrics.densityDpi / 160f);
-
-        return px;
-    }
 
 }

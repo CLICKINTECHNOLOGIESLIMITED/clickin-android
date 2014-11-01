@@ -17,7 +17,7 @@
             android:layout_height="50dp"
             android:layout_alignParentLeft="true"
             android:layout_margin="2dp"
-            />
+           />
 
         <com.sourcefuse.clickinandroid.utils.ClickInTextView
             android:id="@+id/iv_usr_name"
@@ -35,4 +35,4 @@
             />
     </RelativeLayout>
 
-</RelativeLayout><!-- From: file:/home/dell/Github/Git_Clickin/clickin-andoid/cLICKINAPP/src/main/res/layout/menu_header.xml -->
+</RelativeLayout><!-- From: file:/home/monika/gitcodeClickin/cLICKINAPP/src/main/res/layout/menu_header.xml -->

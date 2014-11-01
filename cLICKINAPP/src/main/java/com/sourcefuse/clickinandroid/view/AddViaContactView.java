@@ -59,7 +59,7 @@ public class AddViaContactView extends Activity implements View.OnClickListener 
 			phoneNo.setText("" + mPhNo.substring(3));
 
 			image_uri = bundle.getString("ConUri");
-            try {
+             try {
                 if(!Utils.isEmptyString(image_uri)) {
                     Picasso.with(AddViaContactView.this).
                             load(image_uri)
@@ -71,14 +71,8 @@ public class AddViaContactView extends Activity implements View.OnClickListener 
                     conIcon.setImageResource(R.drawable.male_user);
                 }
             } catch (Exception e) {
-                    conIcon.setImageResource(R.drawable.male_user);
+                conIcon.setImageResource(R.drawable.male_user);
             }
-
-
-               // bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), Uri.parse(image_uri));
-                //conIcon.setImageBitmap(bitmap);
-                //bitmap.recycle();
-
 		}catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

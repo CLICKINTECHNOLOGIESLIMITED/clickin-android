@@ -28,13 +28,13 @@ public final class R {
 		public static final int title_text = 0x7f0100f2;
 	}
 	public static final class color {
-		public static final int com_facebook_blue = 0x7f070010;
-		public static final int com_facebook_loginview_text_color = 0x7f070011;
-		public static final int com_facebook_picker_search_bar_background = 0x7f070012;
-		public static final int com_facebook_picker_search_bar_text = 0x7f070013;
-		public static final int com_facebook_usersettingsfragment_connected_shadow_color = 0x7f070014;
-		public static final int com_facebook_usersettingsfragment_connected_text_color = 0x7f070015;
-		public static final int com_facebook_usersettingsfragment_not_connected_text_color = 0x7f070016;
+		public static final int com_facebook_blue = 0x7f07000e;
+		public static final int com_facebook_loginview_text_color = 0x7f07000f;
+		public static final int com_facebook_picker_search_bar_background = 0x7f070010;
+		public static final int com_facebook_picker_search_bar_text = 0x7f070011;
+		public static final int com_facebook_usersettingsfragment_connected_shadow_color = 0x7f070012;
+		public static final int com_facebook_usersettingsfragment_connected_text_color = 0x7f070013;
+		public static final int com_facebook_usersettingsfragment_not_connected_text_color = 0x7f070014;
 	}
 	public static final class dimen {
 		public static final int com_facebook_loginview_compound_drawable_padding = 0x7f090013;

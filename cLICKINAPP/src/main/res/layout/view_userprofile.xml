@@ -90,7 +90,8 @@
                         android:layout_height="150dp"
                         android:layout_below="@+id/tv_name"
                         android:layout_marginLeft="10dp"
-                       />
+                        android:adjustViewBounds="true"
+                        />
 
                     <TextView
                         android:id="@+id/tv_user_details"

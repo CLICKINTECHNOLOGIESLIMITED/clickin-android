@@ -34,7 +34,7 @@
             android:paddingLeft="5dp"
             android:singleLine="true"
 
-            android:textColor="@color/black"
+            android:textColor="@color/menu_footer"
             android:textSize="15sp"
             android:hint="SEARCH CLICKIN'"/>
 

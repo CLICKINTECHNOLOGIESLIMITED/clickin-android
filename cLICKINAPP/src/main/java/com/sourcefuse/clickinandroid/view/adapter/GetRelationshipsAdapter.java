@@ -58,11 +58,10 @@ public class GetRelationshipsAdapter extends ArrayAdapter<GetrelationshipsBean> 
 
 		try{
 		rholder.usr_name.setText(item.getPartnerName());
-
             if(!item.getPartnerPic().equalsIgnoreCase("")) {
                 try {
                     Picasso.with(context).load(item.getPartnerPic())
-                           .skipMemoryCache()
+                            .skipMemoryCache()
                             .error(R.drawable.male_user)
                             .into(rholder.usrimg);
                 }
@@ -76,8 +75,10 @@ public class GetRelationshipsAdapter extends ArrayAdapter<GetrelationshipsBean> 
                 holder.usrimg.setImageResource(R.drawable.male_user);
             }
 
-		}catch(Exception e){}
-
+        }catch(Exception e){}
+		
+	
+		
 		
 		return row;
 	}

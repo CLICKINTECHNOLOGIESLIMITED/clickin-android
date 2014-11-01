@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.sourcefuse.clickinandroid.utils.CardDialog;
 import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
@@ -105,63 +106,13 @@ public class Card extends Activity implements View.OnClickListener,TextWatcher {
         } else {
             Log.e(TAG, "Value in intent in null");
         }
-//<<<<<<< HEAD
-//
-////        Picasso.with(this)
-////                .load(url)
-////
-////                .into(imageView , new Callback() {
-////                    @Override
-////                    public void onSuccess() {
-////
-////                        trd_clicks_top.setVisibility(View.VISIBLE);
-////                        trd_clicks_bottom.setVisibility(View.VISIBLE);
-////                        Utils.dismissBarDialog();
-////
-////                    }
-////
-////                    @Override
-////                    public void onError() {
-////
-////                    }
-////                });
-////
-////
-////
-////    }
-//
-//
-//        try {
-//            String url_to_load = url.replaceFirst("cards\\/(\\d+)\\.jpg","cards\\/a\\/1080\\/$1\\.jpg");
-//            Picasso.with(this)
-//                    .load(url_to_load)
-//                    .into(imageView, new Callback() {
-//                        @Override
-//                        public void onSuccess() {
-//
-//                            trd_clicks_top.setVisibility(View.VISIBLE);
-//                            trd_clicks_bottom.setVisibility(View.VISIBLE);
-//                            Utils.dismissBarDialog();
-//
-//                        }
-//
-//                        @Override
-//                        public void onError() {
-//
-//                        }
-//                    });
-//            Log.e(TAG,"Modified Url In The Picasso >>>>" +url_to_load);
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
-//Log.e(TAG,"Original Url" +url);
-//        }
-//=======
-        Picasso.with(this)
-                .load(url)
-                .into(imageView , new Callback() {
-                    @Override
-                    public void onSuccess() {
+        try {
+            String url_to_load = url.replaceFirst("cards\\/(\\d+)\\.jpg","cards\\/a\\/1080\\/$1\\.jpg");
+            Picasso.with(this)
+                    .load(url_to_load)
+                    .into(imageView, new Callback() {
+                        @Override
+                        public void onSuccess() {
 
                         trd_clicks_top.setVisibility(View.VISIBLE);
                         trd_clicks_bottom.setVisibility(View.VISIBLE);
@@ -172,14 +123,14 @@ public class Card extends Activity implements View.OnClickListener,TextWatcher {
                     @Override
                     public void onError() {
 
-                    }
-                });
-
-
-
-    }
-
-
+                        }
+                    });
+            Log.e(TAG,"Modified Url In The Picasso >>>>" +url_to_load);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+Log.e(TAG,"Original Url" +url);
+        }
 
 
     @Override
@@ -218,6 +169,7 @@ public class Card extends Activity implements View.OnClickListener,TextWatcher {
                 trd_clicks_top.setText("15");
                 break;
             case R.id.btn_four:
+                clicks="20";
                 trone.setSelected(false);
                 trtwo.setSelected(false);
                 trthree.setSelected(false);
@@ -227,7 +179,7 @@ public class Card extends Activity implements View.OnClickListener,TextWatcher {
                 trd_clicks_top.setText("20");
                 break;
             case R.id.btn_five:
-                clicks = "20";
+                clicks = "25";
                 trone.setSelected(false);
                 trtwo.setSelected(false);
                 trthree.setSelected(false);
@@ -238,6 +190,12 @@ public class Card extends Activity implements View.OnClickListener,TextWatcher {
                 break;
             case R.id.btn_play:
 
+                if(trd_clicks_top.getText().equals("  0") && trd_clicks_bottom.getText().equals("0 ")){
+
+                    CardDialog cardDialog = new CardDialog();
+                    cardDialog.popupDialog(Card.this);
+
+                }else {
                 Intent i=new Intent();
                 i.setAction("CARD");
                 i.putExtra("FromCard",true);
@@ -253,10 +211,12 @@ public class Card extends Activity implements View.OnClickListener,TextWatcher {
                 i.putExtra("Title",cardTitle);
                 i.putExtra("Discription",cardDiscription);
                 i.putExtra("card_Db_id",card_Db_id);
+
                 i.setClass(this,ChatRecordView.class);
                 i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
+                }
               //  finish();
                 break;
         }

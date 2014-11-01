@@ -128,8 +128,9 @@ public class ProfileManager extends Observable implements ProfileManagerI {
 		authManager = ModelManager.getInstance().getAuthorizationManager();
 		try {
 			client = new AsyncHttpClient();
-//			client.addHeader("user-token", usertoken);
-//			client.addHeader("phone-no", phone);
+			//client.addHeader("user-token", usertoken);
+			//client.addHeader("phone-no", phone);
+
             client.addHeader("User-Token", usertoken);
             client.addHeader("Phone-No", phone);
 		} catch (Exception e1) {
@@ -315,8 +316,10 @@ public class ProfileManager extends Observable implements ProfileManagerI {
 			authManager = ModelManager.getInstance().getAuthorizationManager();
 			try {
 				client = new AsyncHttpClient();
-				client.addHeader("user_token", usertoken);
-				client.addHeader("phone_no", phone);
+				//client.addHeader("user_token", usertoken);
+				//client.addHeader("phone_no", phone);
+                client.addHeader("User-Token", usertoken);
+                client.addHeader("Phone-No", phone);
 				Log.e("","usertoken--"+usertoken+",,"+phone+"--partner_phone--"+partner_phone);
 			} catch (Exception e1) {
 				e1.printStackTrace();

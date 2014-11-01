@@ -15,9 +15,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-
+import com.sourcefuse.clickinandroid.utils.CardDialog;
 import com.sourcefuse.clickinandroid.utils.Log;
-import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
 
 /**
@@ -32,11 +31,12 @@ public class ViewTradeCart extends Activity implements View.OnClickListener
     TextView trone,trtwo,trthree,trfour,trfive,tv_about_message;
     RelativeLayout layout ;
     String clicks,cardTitle,cardDiscription,card_id, textCardH ;
-    String url = "https://s3.amazonaws.com/clickin-dev/cards/a/1080/custom_tradecart.jpg";
-    private static final String TAG = "CardViewAdapter";
+    String url ;
+    private static final String TAG = "ViewTradeCart";
 
 
     boolean forCounter = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,14 +65,15 @@ public class ViewTradeCart extends Activity implements View.OnClickListener
             }
         });
 
-
-
         trone = (TextView)findViewById(R.id.btn_one);
         trtwo = (TextView)findViewById(R.id.btn_two);
         trthree = (TextView)findViewById(R.id.btn_three);
         trfour = (TextView)findViewById(R.id.btn_four);
         trfive = (TextView)findViewById(R.id.btn_five);
-        tv_about_message = (TextView)findViewById(R.id.tv_about_message);
+        tv_about_message = (TextView)findViewById(R.id.custom_card_msg_t);
+        card_text=(EditText)findViewById(R.id.card_text12);
+        trd_clicks_top=(TextView)findViewById(R.id.trd_clicks_top);
+        trd_clicks_bottom=(TextView)findViewById(R.id.trd_clicks_bottom);
 
         trone.setOnClickListener(this);
         trtwo.setOnClickListener(this);
@@ -81,6 +82,8 @@ public class ViewTradeCart extends Activity implements View.OnClickListener
         trfive.setOnClickListener(this);
         btnPlay = (ImageView)findViewById(R.id.btn_play);
         btnPlay.setOnClickListener(this);
+
+        Log.e(TAG, "mjisjciencn");
 
             try {
                 Intent intent = getIntent();
@@ -91,16 +94,20 @@ public class ViewTradeCart extends Activity implements View.OnClickListener
                         trd_clicks_top.setText(intent.getStringExtra("cardClicks"));
                         tv_about_message.setText("HOW MANY CLICKS DO YOU WANT FOR IT?");
                         cardTitle = intent.getStringExtra("Title");
+                        Log.e(TAG,""+cardTitle);
                         card_id = intent.getStringExtra("card_id");
                         url = intent.getStringExtra("Url");
+                        card_text.setText(cardTitle);
                     }
                 } else {
                     Log.e(TAG, "Value in intent in null");
                 }
-                }catch (Exception e){}
+                }catch (Exception e){
+                e.printStackTrace();
+            }
 
 
-        card_text=(EditText)findViewById(R.id.card_text12);
+
         card_text.setMaxLines(5);
         card_text.addTextChangedListener(new TextWatcher() {
             @Override
@@ -142,8 +149,7 @@ public class ViewTradeCart extends Activity implements View.OnClickListener
         });
 
 
-        trd_clicks_top=(TextView)findViewById(R.id.trd_clicks_top);
-        trd_clicks_bottom=(TextView)findViewById(R.id.trd_clicks_bottom);
+
     }
 
     @Override
@@ -202,27 +208,27 @@ public class ViewTradeCart extends Activity implements View.OnClickListener
                 trd_clicks_top.setText("25");
                 break;
             case R.id.btn_play:
+                String text = card_text.getText().toString();
+                if (trd_clicks_top.getText().equals(" 0") && trd_clicks_bottom.getText().equals("0 "))
+                {
+                    CardDialog cardDialog = new CardDialog();
+                    cardDialog.popupDialog(ViewTradeCart.this);
 
-       if (trd_clicks_top.getText().equals(" 0") && trd_clicks_bottom.getText().equals("0 ")) {
+                }else if((text == null || text.equalsIgnoreCase("null")
+                        || text.equalsIgnoreCase("") || text.length() < 1)){
+                    CardDialog cardDialog = new CardDialog();
+                    cardDialog.popupDialog1(ViewTradeCart.this);
+                }
 
-             //       CardDialog cardDialog = new CardDialog();
-               //     cardDialog.popupDialog(ViewTradeCart.this);
-           Utils.showAlert(this,"Please add some clicks");
-
-                } else if(card_text.getText()==null){
-                 //   CardDialog cardDialog = new CardDialog();
-                   // cardDialog.popupDialog(ViewTradeCart.this);
-                 Utils.showAlert(this,"Please enter some text in card");
-                }else {
-                   String strnull = null;
-                   textCardH = card_text.getText().toString();
+                else {
+                   cardTitle = card_text.getText().toString();
                    Intent i=new Intent();
                    i.setAction("CARD");
                    i.putExtra("FromCard",true);
                    if(forCounter){
                        i.putExtra("isCounter",true);
                        i.putExtra("card_id",card_id);
-                       i.putExtra("Title",textCardH);
+                       i.putExtra("Title",cardTitle);
                        i.putExtra("is_CustomCard","true");
                        i.putExtra("card_url",url);
                        i.putExtra("card_clicks",clicks);
@@ -230,7 +236,7 @@ public class ViewTradeCart extends Activity implements View.OnClickListener
                        i.putExtra("isCounter",false);
                        i.putExtra("card_id","");
                        i.putExtra("is_CustomCard","true");
-                       i.putExtra("Title",textCardH);
+                       i.putExtra("Title",cardTitle);
                        i.putExtra("card_url",url);
                        i.putExtra("card_clicks",clicks);
                    }

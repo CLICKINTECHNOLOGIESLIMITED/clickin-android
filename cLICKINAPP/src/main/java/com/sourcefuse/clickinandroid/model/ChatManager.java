@@ -195,8 +195,7 @@ public class ChatManager extends Observable implements ChatManagerI {
 
         try {
             client = new AsyncHttpClient();
-//            client.addHeader("user_token", usertoken);
-//            client.addHeader("phone_no", phone);
+
             client.addHeader("User-Token", usertoken);
             client.addHeader("Phone-No", phone);
             Log.e("usertoken-phone_no-othersphone-->", "" + usertoken + "-" + phone);
