@@ -109,11 +109,17 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
 
             name.setText(getIntent().getExtras().getString("name"));
             profileHeader.setText(getIntent().getExtras().getString("name"));
-            if(name.getText().toString().trim().equalsIgnoreCase(authManager.getUserName().toString().trim())) {
-                rlClickWith.setVisibility(View.GONE);
-                follow.setVisibility(View.GONE);
+            if(authManager.getUserName()!=null) {
+                if (name.getText().toString().trim().equalsIgnoreCase(authManager.getUserName().toString().trim())) {
+                    rlClickWith.setVisibility(View.GONE);
+                    follow.setVisibility(View.GONE);
+                } else {
+                    rlClickWith.setVisibility(View.VISIBLE);
+                    follow.setVisibility(View.VISIBLE);
+                }
             }
-            else {
+            else
+            {
                 rlClickWith.setVisibility(View.VISIBLE);
                 follow.setVisibility(View.VISIBLE);
             }
@@ -159,12 +165,14 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
                 Intent intentFollower = new Intent(JumpOtherProfileView.this,FollowerList.class);
                 intentFollower.putExtra("FromOwnProfile", false);
                 intentFollower.putExtra("phoneNo", phForOtherUser);
+                intentFollower.putExtra("name", name.getText().toString().substring(0,name.getText().toString().indexOf(" ")));
                 startActivity(intentFollower);
                 break;
             case R.id.btn_following_other:
                 Intent intentFollowing = new Intent(JumpOtherProfileView.this,FollowingListView.class);
                 intentFollowing.putExtra("FromOwnProfile", false);
                 intentFollowing.putExtra("phoneNo", phForOtherUser);
+                intentFollowing.putExtra("name", name.getText().toString().substring(0,name.getText().toString().indexOf(" ")));
                 startActivity(intentFollowing);
                 break;
 		case R.id.btn_follow:
@@ -214,14 +222,14 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
 
 	private void switchView() {
 		Intent intent = new Intent(JumpOtherProfileView.this, FollowerList.class);
-		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		//intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		startActivity(intent);
 		//this.finish();
 	}
 	
 	private void switchViewToFollowingList() {
 		Intent intent = new Intent(JumpOtherProfileView.this, FollowingListView.class);
-		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+	//	intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		startActivity(intent);
 		//this.finish();
 	}
@@ -245,6 +253,7 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
         }
     }
     public void onEventMainThread(String message){
+        super.onEventMainThread(message);
         relationManager = ModelManager.getInstance().getRelationManager();
         Log.e("onEventMainThread","-------"+message);
 			if (message.equalsIgnoreCase("ProfileInfo True")) {
@@ -315,7 +324,7 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
 
 	private void switchView(String phone) {
 		Intent intent = new Intent(JumpOtherProfileView.this,JumpOtherProfileView.class);
-		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		//intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		intent.putExtra("FromOwnProfile", true);
 		intent.putExtra("phNumber", phone);
 		startActivity(intent);

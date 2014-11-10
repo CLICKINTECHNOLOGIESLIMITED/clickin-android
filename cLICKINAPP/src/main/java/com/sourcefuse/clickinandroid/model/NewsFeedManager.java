@@ -21,15 +21,17 @@ import java.util.Observable;
 
 import de.greenrobot.event.EventBus;
 
-public class NewsFeedManager extends Observable implements NewsFeedManagerI {
+public class NewsFeedManager  {
     private String TAG = this.getClass().getSimpleName();
     StringEntity se = null;
     AsyncHttpClient client;
     private AuthManager authManager;
     private CurrentClickerBean  currentClickerBean;
     private ProfileManager profilemanager;
+    public ArrayList<NewsFeedBean> userFeed = new ArrayList<NewsFeedBean>();
+    public ArrayList<FeedStarsBean> feedStarsList = new ArrayList<FeedStarsBean>();
 
-    @Override
+
     public void fetchNewsFeed(String lastNewsfeedId, String phone,String usertoken) {
         // TODO Auto-generated method stub
         JSONObject userInputDetails = new JSONObject();
@@ -305,7 +307,7 @@ JSONObject chatObj = newsfeedArray.getJSONObject(i).getJSONObject("chatDetail");
     }
 
 
-    @Override
+
     public void fetchFbFriends(String accessToken, String phone, String usertoken) {
         profilemanager = ModelManager.getInstance().getProfileManager();
         authManager = ModelManager.getInstance().getAuthorizationManager();
@@ -381,7 +383,7 @@ JSONObject chatObj = newsfeedArray.getJSONObject(i).getJSONObject("chatDetail");
         );
     }
 
-    @Override
+
     public void saveStarComment(String phone,String user_token, String newsfeedsId,  String comment, String type) {
         JSONObject userInputDetails = new JSONObject();
         try {
@@ -686,9 +688,4 @@ JSONObject chatObj = newsfeedArray.getJSONObject(i).getJSONObject("chatDetail");
 
 
 
-    private void triggerObservers(String success) {
-
-        setChanged();
-        notifyObservers(success);
-    }
 }

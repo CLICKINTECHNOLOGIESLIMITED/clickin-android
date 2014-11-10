@@ -15,9 +15,11 @@ import android.telephony.TelephonyManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -65,7 +67,7 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
     private boolean activeDone = false;
     private AuthManager authManager;
     private QBPrivateChat chat;
-    private RelationManager mRelationManager;
+
 
     private SettingManager settingManager;
 
@@ -111,24 +113,106 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
         signUp.setTypeface(typeface);
 
         try {
-            TelephonyManager manager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-            String cCode = manager.getNetworkCountryIso();
-            TelephonyManager tel = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-            String networkOperator = tel.getNetworkOperator();
-            int mcc = 0, mnc = 0;
-            if (networkOperator != null) {
-                mcc = Integer.parseInt(networkOperator.substring(0, 3));
-                mnc = Integer.parseInt(networkOperator.substring(3));
-            }
-            Log.e(TAG, "MCC : " + mcc + "\n" + "MNC : " + mnc + "-000-" + networkOperator);
-            String cCodecode = context.getResources().getConfiguration().locale.getCountry();
-            Locale loc = new Locale(cCodecode);
-            String cCodeN = getApplicationContext().getResources().getConfiguration().locale.getCountry(); // get country code
-            Log.e(TAG, "cCode" + cCode + "-cCodeN -" + cCodeN + "-" + getUserCountry(context) + "---" + loc.getISO3Country() + "--->" + cCodecode);
+//            TelephonyManager manager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+//            String cCode = manager.getNetworkCountryIso();
+//            TelephonyManager tel = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+//            String networkOperator = tel.getNetworkOperator();
+//            int mcc = 0, mnc = 0;
+//            if (networkOperator != null) {
+//                mcc = Integer.parseInt(networkOperator.substring(0, 3));
+//                mnc = Integer.parseInt(networkOperator.substring(3));
+//            }
+//            Log.e(TAG, "MCC : " + mcc + "\n" + "MNC : " + mnc + "-000-" + networkOperator);
+//            String cCodecode = context.getResources().getConfiguration().locale.getCountry();
+//            Locale loc = new Locale(cCodecode);
+//            String cCodeN = getApplicationContext().getResources().getConfiguration().locale.getCountry(); // get country code
+//            Log.e(TAG, "cCode" + cCode + "-cCodeN -" + cCodeN + "-" + getUserCountry(context) + "---" + loc.getISO3Country() + "--->" + cCodecode);
 
+            String CountryZipCode=null;
+            TelephonyManager  telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+            int simState = telephonyManager.getSimState();
+//Log.e("simState",""+simState+"/"+TelephonyManager.SIM_STATE_NETWORK_LOCKED+"/"+TelephonyManager.SIM_STATE_UNKNOWN+"/"+TelephonyManager.SIM_STATE_READY);
+            switch (simState) {
+
+                case (TelephonyManager.SIM_STATE_ABSENT): {
+                    ephone.setText("+(null)");
+                }
+                    break;
+
+                case (TelephonyManager.SIM_STATE_NETWORK_LOCKED):
+                {
+                        ephone.setText("+(null)");
+                }
+                    break;
+                case (TelephonyManager.SIM_STATE_PIN_REQUIRED): break;
+                case (TelephonyManager.SIM_STATE_PUK_REQUIRED): break;
+                case (TelephonyManager.SIM_STATE_UNKNOWN):
+                {
+                    ephone.setText("+(null)");
+                }
+                break;
+                case (TelephonyManager.SIM_STATE_READY): {
+
+                    // Get the SIM country ISO code
+                    String simCountry = telephonyManager.getSimCountryIso();
+//Log.e("simCountry",simCountry);
+                    // Get the operator code of the active SIM (MCC + MNC)
+                    String simOperatorCode = telephonyManager.getSimOperator();
+
+                    // Get the name of the SIM operator
+                    String simOperatorName = telephonyManager.getSimOperatorName();
+
+                    // Get the SIM’s serial number
+                    String simSerial = telephonyManager.getSimSerialNumber();
+
+
+                    //getNetworkCountryIso
+
+                    String[] rl=this.getResources().getStringArray(R.array.CountryCodes);
+
+                    for(int i=0;i<rl.length;i++){
+                        String[] g=rl[i].split(",");
+
+                        if(g[1].trim().equalsIgnoreCase(simCountry.trim().toUpperCase())){
+                            CountryZipCode=g[0];
+                            CountryZipCode= "+"+CountryZipCode;
+
+                            ephone.setText(CountryZipCode);
+
+                            break;
+                        }
+                    }
+                }
+                break;
+            }
+
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+            ephone.setSelection(ephone.getText().toString().length());
         } catch (Exception e) {
         }
+        ephone.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            inputMethodManager.showSoftInput(ephone, 0);
 
+                if(ephone.getText().toString().contains("null"))
+                {
+                    if (ephone.getSelectionStart() <= 6) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                }
+                else {
+                    if (ephone.getSelectionStart() <= 2) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                }
+            }
+        });
 
     }
 
@@ -191,7 +275,7 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
                 break;
             case R.id.tv_signup:
                 Intent intent = new Intent(SignInView.this, SignUpView.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+             //   intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
                 break;
@@ -262,7 +346,8 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
             editor.putString("country",authManager.getUserCountry());
             editor.putString("email",authManager.getEmailId());
             editor.commit();
-            new ImageDownloadTask().execute();
+           // new ImageDownloadTask().execute();
+            switchView();
 
         } else if (getMsg.equalsIgnoreCase("ProfileInfo False")) {
             Utils.dismissBarDialog();
@@ -339,6 +424,9 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
         SmackAndroid.init(this);
         com.sourcefuse.clickinandroid.utils.Log.e(TAG, "loginToQuickBlox --- getUserId=>" + authManager.getUserId() + ",--getUsrToken-=>" + authManager.getUsrToken());
         QBSettings.getInstance().fastConfigInit(Constants.CLICKIN_APP_ID, Constants.CLICKIN_AUTH_KEY, Constants.CLICKIN_AUTH_SECRET);
+        QBSettings.getInstance().setServerApiDomain("apiclickin.quickblox.com");
+        QBSettings.getInstance().setContentBucketName("qb-clickin");
+        QBSettings.getInstance().setChatServerDomain("chatclickin.quickblox.com");
         final QBUser user = new QBUser(authManager.getUserId(), authManager.getUsrToken());
 
         QBAuth.createSession(user, new QBCallbackImpl() {
@@ -432,7 +520,7 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
             String uriStr=uri.toString();
             editor.putString("userimageuri",uriStr);
             editor.commit();
-            switchView();
+
         }}
 
 }

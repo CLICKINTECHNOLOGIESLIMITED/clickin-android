@@ -117,6 +117,12 @@ public class Utils {
 
     }
 
+    public static String getCardURLForAndroid(String url) {
+
+        String url_to_load = url.replaceFirst("cards\\/(\\d+)\\.jpg","cards\\/a\\/1080\\/$1\\.jpg");
+        return url_to_load;
+    }
+
     public static boolean isEmailValid(CharSequence email) {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
@@ -279,8 +285,8 @@ public class Utils {
             @Override
             public void onClick(DialogInterface dialog, int id) {
                 if (id == 0) {
-                    Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                    cameraIntent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
+                    Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
                     try {
                         cameraIntent.putExtra("return-data", true);
                         contex.startActivityForResult(cameraIntent, Constants.CAMERA_REQUEST);
@@ -289,7 +295,7 @@ public class Utils {
                     dialog.dismiss();
                 } else if (id == 1) {
 
-                    Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     contex.startActivityForResult(pickPhoto, Constants.SELECT_PICTURE);
                     dialog.dismiss();
                 }
@@ -297,7 +303,7 @@ public class Utils {
         });
 
         dialog.setNeutralButton("Cancel",
-                new android.content.DialogInterface.OnClickListener() {
+                new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 

@@ -224,7 +224,7 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
             public void onClick(View v) { 
             	if(item.getStatusAccepted()=="true") {
                     Intent intent = new Intent(context, JumpOtherProfileView.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                //    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra("FromOwnProfile", true);
                     intent.putExtra("phNumber", item.getPhoneNo());
                     ((Activity) context).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);

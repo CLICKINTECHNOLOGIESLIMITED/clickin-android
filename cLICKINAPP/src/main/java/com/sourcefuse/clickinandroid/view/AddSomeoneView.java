@@ -76,7 +76,7 @@ public class AddSomeoneView extends Activity implements View.OnClickListener,
 				}else{
 					intent.putExtra("ConUri", "");	
 				}
-				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			//	intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 				startActivity(intent);
 				//finish();
 			}
@@ -130,7 +130,7 @@ public class AddSomeoneView extends Activity implements View.OnClickListener,
 			break;
 		case R.id.iv_keypad:
 			 Intent intent = new Intent(AddSomeoneView.this,AddViaNumberView.class);
-			 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		//	 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			 startActivity(intent);
 			 //finish();
 			break;

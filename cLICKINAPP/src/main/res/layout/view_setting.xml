@@ -608,7 +608,7 @@
                     android:background="@color/white"
                     android:gravity="center_vertical"
                     android:paddingLeft="20dp"
-                    android:text="General feedbak"
+                    android:text="General feedback"
                     android:textColor="@color/dark_gray"
                     android:textSize="18sp" />
 

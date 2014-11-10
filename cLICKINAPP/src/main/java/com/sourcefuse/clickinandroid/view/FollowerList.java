@@ -34,6 +34,7 @@ public class FollowerList extends Activity implements
 	private Typeface typeface;
     public static boolean fromOwnProfile = false;
     private RelativeLayout mFollowerListView,mFollowerListEmpty;
+    private String name="", phNo="";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +42,14 @@ public class FollowerList extends Activity implements
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.view_followerlist);
 		this.overridePendingTransition(R.anim.slide_in_right ,R.anim.slide_out_right);
+
+        Bundle bundle = getIntent().getExtras();
+        if(bundle!=null)
+        {
+            phNo = getIntent().getExtras().getString("phoneNo");
+            name = getIntent().getExtras().getString("name");
+        }
+
 		listView = (ListView) findViewById(R.id.list_follower);
         mFollowerListView = (RelativeLayout) findViewById(R.id.rl_followerdata);
         mFollowerListEmpty = (RelativeLayout) findViewById(R.id.rl_empty_follower);
@@ -61,10 +70,11 @@ public class FollowerList extends Activity implements
 
         fromOwnProfile = getIntent().getExtras().getBoolean("FromOwnProfile");
         if(fromOwnProfile) {
+            profileName.setText(authManager.getUserName());
             Utils.launchBarDialog(FollowerList.this);
              profManager.getFollwer("", authManager.getPhoneNo(), authManager.getUsrToken());
         }else {
-
+            profileName.setText(name);
             Utils.launchBarDialog(FollowerList.this);
             profManager.getFollwer(getIntent().getExtras().getString("phoneNo"), authManager.getPhoneNo(), authManager.getUsrToken());
        }
@@ -72,6 +82,7 @@ public class FollowerList extends Activity implements
 	}
 
 	public void setlist() {
+
         if(profManager.followers.size()>0){
             mFollowerListView.setVisibility(View.VISIBLE);
             mFollowerListEmpty.setVisibility(View.GONE);
@@ -82,8 +93,15 @@ public class FollowerList extends Activity implements
 		listView.setAdapter(adapter);
 		listView.setSelectionFromTop(index, top);
         }else{
-            mFollowerListEmpty.setVisibility(View.VISIBLE);
-            mFollowerListView.setVisibility(View.GONE);
+            if(fromOwnProfile) {
+                mFollowerListEmpty.setVisibility(View.VISIBLE);
+                mFollowerListView.setVisibility(View.GONE);
+            }
+            else
+            {
+                mFollowerListEmpty.setVisibility(View.GONE);
+                mFollowerListView.setVisibility(View.GONE);
+            }
         }
 	}
 

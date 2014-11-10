@@ -2,8 +2,11 @@ package com.sourcefuse.clickinandroid.view;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -16,6 +19,16 @@ import com.facebook.FacebookException;
 import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.widget.WebDialog;
+import com.quickblox.core.QBCallbackImpl;
+import com.quickblox.core.QBSettings;
+import com.quickblox.core.result.Result;
+import com.quickblox.module.auth.QBAuth;
+import com.quickblox.module.auth.result.QBSessionResult;
+import com.quickblox.module.chat.QBChatService;
+import com.quickblox.module.chat.listeners.SessionCallback;
+import com.quickblox.module.chat.smack.SmackAndroid;
+import com.quickblox.module.chat.xmpp.QBPrivateChat;
+import com.quickblox.module.users.model.QBUser;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.ProfileManager;
@@ -27,6 +40,12 @@ import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.adapter.SpreadWordAdapter;
 import com.sourcefuse.clickinapp.R;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 
 import de.greenrobot.event.EventBus;
@@ -35,10 +54,11 @@ import de.greenrobot.event.EventBus;
  * Created by mukesh on 22/4/14.
  */
 public class SpreadWordView extends Activity implements OnClickListener {
-    private static final String TAG = CurrentClickersView.class.getSimpleName();
+    private static final String TAG = "SpreadWordView";
 	private Button phonebook, facebook;
     private TextView back,invite, next;
 	//private ImageView toboard;
+    private QBPrivateChat chat;
 
 	private ListView listView;
 	private SpreadWordAdapter adapter;
@@ -70,7 +90,8 @@ public class SpreadWordView extends Activity implements OnClickListener {
 		next.setOnClickListener(this);
         authManager = ModelManager.getInstance().getAuthorizationManager();
         Utils.launchBarDialog(SpreadWordView.this);
-        new FetchContactFromPhone(SpreadWordView.this).getClickerList(authManager.getPhoneNo(),authManager.getUsrToken(),0);
+    //    new FetchContactFromPhone(SpreadWordView.this).getClickerList(authManager.getPhoneNo(),authManager.getUsrToken(),0);
+        setlist();
 		
 	}
 
@@ -90,12 +111,16 @@ public class SpreadWordView extends Activity implements OnClickListener {
     @Override
     public void onStart() {
         super.onStart();
-        if (EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().unregister(this);
-        }
+
         EventBus.getDefault().register(this);
     }
 
+    public void onStop(){
+        super.onStop();
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+    }
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
@@ -130,6 +155,9 @@ public class SpreadWordView extends Activity implements OnClickListener {
             finish();
 		break;
 		case R.id.btn_next:
+            Utils.launchBarDialog(this);
+            loginToQuickBlox();
+         //   authManager.getProfileInfo("", authManager.getPhoneNo(), authManager.getUsrToken());
             Intent clickersView = new Intent(SpreadWordView.this,UserProfileView.class);
             clickersView.putExtra("FromSignup", true);
             startActivity(clickersView);
@@ -265,8 +293,91 @@ public class SpreadWordView extends Activity implements OnClickListener {
         } else if(message.equalsIgnoreCase("CheckFriend Network Error")){
             Utils.dismissBarDialog();
             Utils.showAlert(SpreadWordView.this, AlertMessage.connectionError);
+        }else if (message.equalsIgnoreCase("ProfileInfo True")) {
+            //save values of user in shared prefrence for later use
+            Utils.dismissBarDialog();
+            SharedPreferences preferences= PreferenceManager.getDefaultSharedPreferences(this);
+            SharedPreferences.Editor editor=preferences.edit();
+            editor.putString("gender",authManager.getGender());
+            editor.putString("follower",authManager.getFollower());
+            editor.putString("following",authManager.getFollowing());
+            editor.putString("is_following",authManager.getIsFollowing());
+            editor.putString("name",authManager.getUserName());
+            editor.putString("user_pic",authManager.getUserPic());
+            editor.putString("dob",authManager.getdOB());
+            editor.putString("city",authManager.getUserCity());
+            editor.putString("country",authManager.getUserCountry());
+            editor.putString("email",authManager.getEmailId());
+            editor.commit();
+            // new ImageDownloadTask().execute();
+            switchView();
+
+        } else if (message.equalsIgnoreCase("ProfileInfo False")) {
+            Utils.dismissBarDialog();
+
+            Utils.showAlert(this, authManager.getMessage());
+        } else if (message.equalsIgnoreCase("ProfileInfo Network Error")) {
+            Utils.dismissBarDialog();
+            Utils.showAlert(this, AlertMessage.connectionError);
         }
 
     }
+
+    private void switchView() {
+        Intent intent = new Intent(this, UserProfileView.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("FromSignup", true);
+        startActivity(intent);
+        finish();
+    }
+
+    public void loginToQuickBlox() {
+        SmackAndroid.init(this);
+        com.sourcefuse.clickinandroid.utils.Log.e(TAG, "loginToQuickBlox --- getUserId=>" + authManager.getUserId() + ",--getUsrToken-=>" + authManager.getUsrToken());
+        QBSettings.getInstance().fastConfigInit(Constants.CLICKIN_APP_ID, Constants.CLICKIN_AUTH_KEY, Constants.CLICKIN_AUTH_SECRET);
+        QBSettings.getInstance().setServerApiDomain("apiclickin.quickblox.com");
+        QBSettings.getInstance().setContentBucketName("qb-clickin");
+        QBSettings.getInstance().setChatServerDomain("chatclickin.quickblox.com");
+        final QBUser user = new QBUser(authManager.getUserId(), authManager.getUsrToken());
+
+        QBAuth.createSession(user, new QBCallbackImpl() {
+
+
+            @Override
+            public void onComplete(Result result) {
+                if (result.isSuccess()) {
+                    QBSessionResult res = (QBSessionResult) result;
+                    user.setId(res.getSession().getUserId());
+                    //
+                    QBChatService.getInstance().loginWithUser(user, new SessionCallback() {
+                        @Override
+                        public void onLoginSuccess() {
+                            com.sourcefuse.clickinandroid.utils.Log.e(TAG, "Login successfully");
+                            QBChatService.getInstance().startAutoSendPresence(5);
+
+                            chat = QBChatService.getInstance().createChat();
+                            authManager.setqBPrivateChat(chat);
+                        }
+
+                        @Override
+                        public void onLoginError(String s) {
+                            com.sourcefuse.clickinandroid.utils.Log.e(TAG, "onLoginError");
+                            loginToQuickBlox();
+                        }
+
+
+                    });
+                    android.util.Log.e(TAG, "Session was successfully created");
+
+                } else {
+                    android.util.Log.e(TAG, "Errors " + result.getErrors().toString() + "result" + result);
+                }
+            }
+        });
+
+
+    }
+
+
 
 }

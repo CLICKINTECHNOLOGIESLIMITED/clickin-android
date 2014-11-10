@@ -22,7 +22,7 @@ import java.util.Observable;
 
 import de.greenrobot.event.EventBus;
 
-public class ChatManager extends Observable implements ChatManagerI {
+public class ChatManager  {
     private static final String TAG = ChatManager.class.getSimpleName();
     StringEntity se = null;
     AsyncHttpClient client;
@@ -38,7 +38,8 @@ public class ChatManager extends Observable implements ChatManagerI {
 
     private int partnerTotalClick =0 ;
 
-
+    public ArrayList<ChatRecordBeen> chatListFromServer = new ArrayList<ChatRecordBeen>();
+    public ArrayList<ChatRecordBeen> refreshivechatList = new ArrayList<ChatRecordBeen>();
 
 
     public String getRelationshipId() {
@@ -78,7 +79,7 @@ public class ChatManager extends Observable implements ChatManagerI {
     ArrayList<ArrayList<CardBean>> lists = new ArrayList<ArrayList<CardBean>>();
     public ArrayList<CardBean> all = new ArrayList<CardBean>();
 
-    @Override
+
     public void fetchChatRecord(String relationshipId, String phone,String usertoken,String chatId) {
 
 
@@ -190,7 +191,7 @@ public class ChatManager extends Observable implements ChatManagerI {
 
     }
 
-    @Override
+
     public void fetchCards(String phone, String usertoken) {
 
         try {

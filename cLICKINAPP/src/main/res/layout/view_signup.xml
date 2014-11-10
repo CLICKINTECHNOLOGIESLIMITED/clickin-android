@@ -34,11 +34,11 @@
             android:layout_below="@+id/tv_cntrycode"
             android:layout_marginRight="3dp"
             android:background="@drawable/s_country_code_textfield"
-            android:inputType="number|numberSigned"
+
             android:paddingBottom="8dp"
             android:paddingLeft="5dp"
             android:paddingTop="8dp"
-            android:text="+91"
+            android:text="+"
             android:textColor="@color/phone_no_clr"
             android:textColorHint="@color/defult_hint_clr"
             android:textSize="16sp">
@@ -55,7 +55,7 @@
             android:background="@drawable/s_number_textfield"
             android:ems="10"
             android:hint="@string/txt_phonenumber"
-            android:inputType="number"
+
             android:maxLength="10"
             android:paddingBottom="8dp"
             android:paddingLeft="10dp"

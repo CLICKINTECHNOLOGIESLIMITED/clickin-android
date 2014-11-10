@@ -84,21 +84,21 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
         authManager = ModelManager.getInstance().getAuthorizationManager();
         try {
             String[] names = (authManager.getUserName().split("\\s+", 2));
-            userName=names[0];
+            userName = names[0];
             myName.setText("" + names[0]);
-            userLastName=names[1];
+            userLastName = names[1];
             myLast.setText("" + names[1]);
-            userEmail=authManager.getEmailId();
+            userEmail = authManager.getEmailId();
             myEmail.setText(userEmail);
-            userCity=authManager.getUserCity();
+            userCity = authManager.getUserCity();
             myCity.setText(userCity);
-            userCountry=authManager.getUserCountry();
+            userCountry = authManager.getUserCountry();
             myCountry.setText(userCountry);
         } catch (Exception e) {
         }
 
-        Uri tempUri=authManager.getUserImageUri();
-        if(tempUri!=null){
+        Uri tempUri = authManager.getUserImageUri();
+        if (tempUri != null) {
             try {
                 imageBitmap = authManager.getUserbitmap();
                 if (imageBitmap != null)
@@ -141,10 +141,55 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
                         mySelfy.setImageResource(R.drawable.male_user);
                     }
                 }
-                }catch(Exception e){
-                    e.printStackTrace();
-                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+
+        }
+        else{
+
+            if (!authManager.getGender().equalsIgnoreCase("")) {
+
+                if (authManager.getGender().equalsIgnoreCase("guy")) {
+                    try {
+                        if (!authManager.getUserPic().equalsIgnoreCase("")) {
+                            Picasso.with(this)
+                                    .load(authManager.getUserPic())
+                                    .skipMemoryCache()
+
+                                    .error(R.drawable.male_user)
+                                    .into(mySelfy);
+                        } else {
+                            mySelfy.setImageResource(R.drawable.male_user);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        mySelfy.setImageResource(R.drawable.male_user);
+                    }
+                } else if (authManager.getGender().equalsIgnoreCase("girl")) {
+                    try {
+                        if (!authManager.getUserPic().equalsIgnoreCase("")) {
+                            Picasso.with(this)
+                                    .load(authManager.getUserPic())
+                                    .skipMemoryCache()
+
+                                    .error(R.drawable.female_user)
+                                    .into(mySelfy);
+                        } else {
+                            mySelfy.setImageResource(R.drawable.female_user);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        mySelfy.setImageResource(R.drawable.female_user);
+                    }
+                }
+
+            } else {
+                mySelfy.setImageResource(R.drawable.male_user);
+            }
+
+        }
 
 //
     }
@@ -153,7 +198,7 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_edit_gallery:
-                Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(pickPhoto, Constants.SELECT_PICTURE);
                 break;
             case R.id.iv_menu:
@@ -345,6 +390,7 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
                               authManager.setUserbitmap(resized);
 
                               userImageUri = mImageCaptureUri;
+                            authManager.setUserImageUri(userImageUri);
                               // authManager.setUserPic(imageBitmap.toString());
                               mImageCaptureUri = null;
                               authManager.setMenuUserInfoFlag(true);
@@ -422,6 +468,7 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
                               mySelfy.setImageBitmap(resized1);
                               authManager.setUserbitmap(resized1);
                               userImageUri = data.getData();
+                            authManager.setUserImageUri(userImageUri);
                               // authManager.setUserPic(imageBitmap.toString());
 
                               authManager.setMenuUserInfoFlag(true);
@@ -461,12 +508,13 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
         if (getMsg.equalsIgnoreCase("UpdateProfile True")) {
             Utils.dismissBarDialog();
             //update user profile information in auth manager now
-			authManager.setUserPic(imageBitmap.toString());
+         //   if(imageBitmap!=null)
+		//	authManager.setUserPic(imageBitmap.toString());
             authManager.setUserName(userName+" "+userLastName);
             authManager.setEmailId(userEmail);
             authManager.setUserCity(userCity);
             authManager.setUserCountry(userCountry);
-            authManager.setUserImageUri(userImageUri);
+       //     authManager.setUserImageUri(userImageUri);
             authManager.setEditProfileFlag(true);
             authManager.setMenuUserInfoFlag(true);
             imageBitmap = null;

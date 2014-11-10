@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.sourcefuse.clickinapp"
     android:largeHeap="true"
-    android:versionCode="1"
+    android:versionCode="2"
     android:versionName="1.0">
 
     <uses-sdk
@@ -260,7 +260,7 @@
             android:launchMode="standard"
             android:screenOrientation="portrait">
         </activity>
-        <meta-data android:name="com.crashlytics.ApiKey" android:value="d9e80395ff1cf43b754406126aac3d0734cbaa5e"/>
+        <meta-data android:name="com.crashlytics.ApiKey" android:value="3bcf050521edeb5967467d700b8aadf40e0664cc"/>
     </application>
 
 </manifest>

@@ -45,8 +45,7 @@ public class PlayItSafeView extends Activity implements View.OnClickListener,Tex
         typeface = Typeface.createFromAsset(PlayItSafeView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
         typefaceBold = Typeface.createFromAsset(PlayItSafeView.this.getAssets(),Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_BOLD);
 
-         act = this;
-	     context = this;;
+
        
         done = (Button) findViewById(R.id.btn_done_play);
         password = (EditText) findViewById(R.id.edt_password);
@@ -91,9 +90,7 @@ public class PlayItSafeView extends Activity implements View.OnClickListener,Tex
     @Override
     public void onStart() {
         super.onStart();
-        if (EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().unregister(this);
-        }
+
         EventBus.getDefault().register(this);
     }
 
@@ -109,15 +106,16 @@ public class PlayItSafeView extends Activity implements View.OnClickListener,Tex
         Log.d(TAG, "onEventMainThread->"+message);
 			authManager = ModelManager.getInstance().getAuthorizationManager();
 			if (message.equalsIgnoreCase("PlayItSafe True")) {
+                switchView();
 				//new FetchContactFromPhone(PlayItSafeView.this).getClickerList(authManager.getPhoneNo(),authManager.getUsrToken());
-				getUserDetails();
+			//	getUserDetails();
 			} else if (message.equalsIgnoreCase("PlayItSafe False")) {
 				Utils.dismissBarDialog();
 				Utils.showAlert(PlayItSafeView.this, authManager.getMessage());
 			} else if(message.equalsIgnoreCase("PlayItSafe Network Error")){
 				Utils.dismissBarDialog();
 				Utils.showAlert(act, AlertMessage.connectionError);	
-			}else if (message.equalsIgnoreCase("ProfileInfo True")) {
+			}/*else if (message.equalsIgnoreCase("ProfileInfo True")) {
 				Utils.dismissBarDialog();
 				switchView();
 			} else if (message.equalsIgnoreCase("ProfileInfo False")) {
@@ -127,19 +125,19 @@ public class PlayItSafeView extends Activity implements View.OnClickListener,Tex
 				Utils.dismissBarDialog();
 				Utils.showAlert(act, AlertMessage.connectionError);
 				
-			}
+			}*/
 			
 		}
     
-    private void getUserDetails(){
+  /*  private void getUserDetails(){
     	authManager = ModelManager.getInstance().getAuthorizationManager();
         authManager.getProfileInfo(null,authManager.getPhoneNo(), authManager.getUsrToken());
 
-    }
+    }*/
 	private void switchView() {
 		Intent intent = new Intent(PlayItSafeView.this, AddSomeoneView.class);
         intent.putExtra("FromOwnProfile", false);
-		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		//intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		startActivity(intent);
 		this.finish();
 	}

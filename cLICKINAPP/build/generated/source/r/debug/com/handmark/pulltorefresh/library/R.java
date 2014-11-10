@@ -53,55 +53,55 @@ public final class R {
 		public static final int ptrViewRefeshableViewProgressBarOnCenterWhileRefreshingEnabled = 0x7f0100af;
 	}
 	public static final class dimen {
-		public static final int header_footer_left_right_padding = 0x7f090035;
-		public static final int header_footer_top_bottom_padding = 0x7f090036;
-		public static final int indicator_corner_radius = 0x7f090037;
-		public static final int indicator_internal_padding = 0x7f090038;
-		public static final int indicator_right_padding = 0x7f090039;
+		public static final int header_footer_left_right_padding = 0x7f0a0035;
+		public static final int header_footer_top_bottom_padding = 0x7f0a0036;
+		public static final int indicator_corner_radius = 0x7f0a0037;
+		public static final int indicator_internal_padding = 0x7f0a0038;
+		public static final int indicator_right_padding = 0x7f0a0039;
 	}
 	public static final class drawable {
-		public static final int default_ptr_flip = 0x7f020130;
-		public static final int default_ptr_rotate = 0x7f020131;
-		public static final int indicator_arrow = 0x7f02016b;
-		public static final int indicator_bg_bottom = 0x7f02016c;
-		public static final int indicator_bg_top = 0x7f02016d;
-		public static final int progress_bg_holo_light = 0x7f02019a;
-		public static final int progress_horizontal_holo_light = 0x7f02019b;
-		public static final int progress_horizontal_holo_light_right = 0x7f02019c;
-		public static final int progress_indeterminate_horizontal_holo = 0x7f02019d;
-		public static final int progress_primary_holo_light = 0x7f02019e;
-		public static final int progress_secondary_holo_light = 0x7f02019f;
-		public static final int progressbar_indeterminate_holo1 = 0x7f0201a0;
-		public static final int progressbar_indeterminate_holo2 = 0x7f0201a1;
-		public static final int progressbar_indeterminate_holo3 = 0x7f0201a2;
-		public static final int progressbar_indeterminate_holo4 = 0x7f0201a3;
-		public static final int progressbar_indeterminate_holo5 = 0x7f0201a4;
-		public static final int progressbar_indeterminate_holo6 = 0x7f0201a5;
-		public static final int progressbar_indeterminate_holo7 = 0x7f0201a6;
-		public static final int progressbar_indeterminate_holo8 = 0x7f0201a7;
+		public static final int default_ptr_flip = 0x7f020131;
+		public static final int default_ptr_rotate = 0x7f020132;
+		public static final int indicator_arrow = 0x7f02016c;
+		public static final int indicator_bg_bottom = 0x7f02016d;
+		public static final int indicator_bg_top = 0x7f02016e;
+		public static final int progress_bg_holo_light = 0x7f02019b;
+		public static final int progress_horizontal_holo_light = 0x7f02019c;
+		public static final int progress_horizontal_holo_light_right = 0x7f02019d;
+		public static final int progress_indeterminate_horizontal_holo = 0x7f02019e;
+		public static final int progress_primary_holo_light = 0x7f02019f;
+		public static final int progress_secondary_holo_light = 0x7f0201a0;
+		public static final int progressbar_indeterminate_holo1 = 0x7f0201a1;
+		public static final int progressbar_indeterminate_holo2 = 0x7f0201a2;
+		public static final int progressbar_indeterminate_holo3 = 0x7f0201a3;
+		public static final int progressbar_indeterminate_holo4 = 0x7f0201a4;
+		public static final int progressbar_indeterminate_holo5 = 0x7f0201a5;
+		public static final int progressbar_indeterminate_holo6 = 0x7f0201a6;
+		public static final int progressbar_indeterminate_holo7 = 0x7f0201a7;
+		public static final int progressbar_indeterminate_holo8 = 0x7f0201a8;
 	}
 	public static final class id {
-		public static final int both = 0x7f08001d;
-		public static final int disabled = 0x7f08001a;
-		public static final int fl_inner = 0x7f080110;
-		public static final int fl_inner_for_google_style = 0x7f08010d;
-		public static final int google = 0x7f08001f;
-		public static final int gridview = 0x7f080036;
-		public static final int manualOnly = 0x7f08001e;
-		public static final int pullDownFromTop = 0x7f080020;
-		public static final int pullFromEnd = 0x7f08001c;
-		public static final int pullFromStart = 0x7f08001b;
-		public static final int pullUpFromBottom = 0x7f080021;
-		public static final int pull_to_refresh_image = 0x7f080111;
-		public static final int pull_to_refresh_progress = 0x7f080112;
-		public static final int pull_to_refresh_sub_text = 0x7f08010f;
-		public static final int pull_to_refresh_text = 0x7f08010e;
-		public static final int pulling_left_progressbar = 0x7f080115;
-		public static final int pulling_progress = 0x7f080113;
-		public static final int pulling_right_progressbar = 0x7f080116;
-		public static final int refreshing_progress = 0x7f080114;
-		public static final int scrollview = 0x7f08003a;
-		public static final int webview = 0x7f08003c;
+		public static final int both = 0x7f09001d;
+		public static final int disabled = 0x7f09001a;
+		public static final int fl_inner = 0x7f090114;
+		public static final int fl_inner_for_google_style = 0x7f090111;
+		public static final int google = 0x7f09001f;
+		public static final int gridview = 0x7f090036;
+		public static final int manualOnly = 0x7f09001e;
+		public static final int pullDownFromTop = 0x7f090020;
+		public static final int pullFromEnd = 0x7f09001c;
+		public static final int pullFromStart = 0x7f09001b;
+		public static final int pullUpFromBottom = 0x7f090021;
+		public static final int pull_to_refresh_image = 0x7f090115;
+		public static final int pull_to_refresh_progress = 0x7f090116;
+		public static final int pull_to_refresh_sub_text = 0x7f090113;
+		public static final int pull_to_refresh_text = 0x7f090112;
+		public static final int pulling_left_progressbar = 0x7f090119;
+		public static final int pulling_progress = 0x7f090117;
+		public static final int pulling_right_progressbar = 0x7f09011a;
+		public static final int refreshing_progress = 0x7f090118;
+		public static final int scrollview = 0x7f09003a;
+		public static final int webview = 0x7f09003c;
 	}
 	public static final class layout {
 		public static final int pull_to_refresh_header_google_style = 0x7f03004a;
@@ -111,12 +111,12 @@ public final class R {
 		public static final int pulling_progress_layout = 0x7f03004e;
 	}
 	public static final class string {
-		public static final int pull_to_refresh_from_bottom_pull_label = 0x7f0b0062;
-		public static final int pull_to_refresh_from_bottom_refreshing_label = 0x7f0b0063;
-		public static final int pull_to_refresh_from_bottom_release_label = 0x7f0b0064;
-		public static final int pull_to_refresh_pull_label = 0x7f0b0065;
-		public static final int pull_to_refresh_refreshing_label = 0x7f0b0066;
-		public static final int pull_to_refresh_release_label = 0x7f0b0067;
+		public static final int pull_to_refresh_from_bottom_pull_label = 0x7f0c0063;
+		public static final int pull_to_refresh_from_bottom_refreshing_label = 0x7f0c0064;
+		public static final int pull_to_refresh_from_bottom_release_label = 0x7f0c0065;
+		public static final int pull_to_refresh_pull_label = 0x7f0c0066;
+		public static final int pull_to_refresh_refreshing_label = 0x7f0c0067;
+		public static final int pull_to_refresh_release_label = 0x7f0c0068;
 	}
 	public static final class styleable {
 		public static final int[] PullToRefresh = { 0x7f010093, 0x7f010094, 0x7f010095, 0x7f010096, 0x7f010097, 0x7f010098, 0x7f010099, 0x7f01009a, 0x7f01009b, 0x7f01009c, 0x7f01009d, 0x7f01009e, 0x7f01009f, 0x7f0100a0, 0x7f0100a1, 0x7f0100a2, 0x7f0100a3, 0x7f0100a4, 0x7f0100a5, 0x7f0100a6, 0x7f0100a7, 0x7f0100a8, 0x7f0100a9, 0x7f0100aa, 0x7f0100ab, 0x7f0100ac, 0x7f0100ad, 0x7f0100ae, 0x7f0100af, 0x7f0100b0, 0x7f0100b1, 0x7f0100b2, 0x7f0100b3, 0x7f0100b4, 0x7f0100b5, 0x7f0100b6, 0x7f0100b7 };

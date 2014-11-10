@@ -95,8 +95,8 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
     @SuppressWarnings("static-access")
     public void setLeftMenuList() {
         clickInadapter = new ClickInWithAdapter(ClickInBaseView.this, R.layout.row_clickin_with, relationManager.acceptedList);
-        String[] mHeaderNames = {"CLICKIN"};
-        String[] mHeaderNames2 = {"WITH"};
+        String[] mHeaderNames = {"CLICKIN'"};
+        String[] mHeaderNames2 = {" WITH"};
         Integer[] mHeaderPositions = {0};
 
         ArrayList<SimpleSectionedListAdapter1.Section> sections = new ArrayList<SimpleSectionedListAdapter1.Section>();
@@ -419,7 +419,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
                         authManager.sendNewRequest(authManager.getPhoneNo(), partnerPhone, authManager.getUsrToken());*/
                         String partnerPhone = relationManager.fetchUsersByNameData.get(position).getPhoneNo();
                         Intent intent = new Intent(ClickInBaseView.this, JumpOtherProfileView.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                   //     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         intent.putExtra("FromOwnProfile", true);
                         intent.putExtra("phNumber", partnerPhone);
                         startActivity(intent);

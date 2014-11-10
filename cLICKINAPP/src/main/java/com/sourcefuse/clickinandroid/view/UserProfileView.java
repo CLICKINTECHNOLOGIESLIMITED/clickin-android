@@ -219,9 +219,9 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
                 if(imageBitmap!=null)
                     userimage.setImageBitmap(imageBitmap);
                 else{
- if(!gender.equalsIgnoreCase("")) {
+ if(!authManager.getGender().equalsIgnoreCase("")) {
 
-                                if (gender.equalsIgnoreCase("Male")) {
+                                if (authManager.getGender().equalsIgnoreCase("guy")) {
                                     try {
                                         if(!authManager.getUserPic().equalsIgnoreCase("")) {
                                             Picasso.with(UserProfileView.this)
@@ -239,7 +239,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
                                         e.printStackTrace();
                                         userimage.setImageResource(R.drawable.male_user);
                                     }
-                                } else if (gender.equalsIgnoreCase("Female")) {
+                                } else if (authManager.getGender().equalsIgnoreCase("girl")) {
                                     try {
                                         if(!authManager.getUserPic().equalsIgnoreCase("")) {
                                             Picasso.with(UserProfileView.this)
@@ -267,9 +267,9 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
                 }
 
             }else{
-  if(!gender.equalsIgnoreCase("")) {
+  if(!authManager.getGender().equalsIgnoreCase("")) {
 
-                    if (gender.equalsIgnoreCase("Male")) {
+                    if (authManager.getGender().equalsIgnoreCase("guy")) {
                         try {
                             if(!authManager.getUserPic().equalsIgnoreCase("")) {
                                 Picasso.with(UserProfileView.this)
@@ -287,7 +287,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
                             e.printStackTrace();
                             userimage.setImageResource(R.drawable.male_user);
                         }
-                    } else if (gender.equalsIgnoreCase("Female")) {
+                    } else if (authManager.getGender().equalsIgnoreCase("girl")) {
                         try {
                             if(!authManager.getUserPic().equalsIgnoreCase("")) {
                                 Picasso.with(UserProfileView.this)
@@ -401,7 +401,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
 		case R.id.btn_add_someone:
 			Intent intent = new Intent(UserProfileView.this,AddSomeoneView.class);
             intent.putExtra("FromOwnProfile", true);
-			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			//intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			startActivity(intent);
 			break;
         case R.id.btn_edit_profile:
@@ -442,6 +442,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
             Utils.showAlert(UserProfileView.this, AlertMessage.connectionError);
         }else if (message.equalsIgnoreCase("GetRelationShips False")) {
            Utils.dismissBarDialog();
+           doRestInitialization();
 //           setLeftMenuList();
   //         setlist();
        } else if(message.equalsIgnoreCase("GetRelationShips Network Error")){
@@ -526,16 +527,16 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
        }/*else if (message.equalsIgnoreCase("GetRelationShips True")) {
            Utils.dismissBarDialog();
            switchView();
-       } */else if (message.equalsIgnoreCase("GetRelationShips False")) {
+       } else if (message.equalsIgnoreCase("GetRelationShips False")) {
            Utils.dismissBarDialog();
            switchView();
            // Utils.showAlert(SignInView.this, authManager.getMessage());
-       } else if (message.equalsIgnoreCase("GetRelationShips Network Error")) {
+       } */else if (message.equalsIgnoreCase("GetRelationShips Network Error")) {
            Utils.dismissBarDialog();
            Utils.showAlert(UserProfileView.this, AlertMessage.connectionError);
-       }else if (message.equalsIgnoreCase("ProfileInfo True")) {
+       }/*else if (message.equalsIgnoreCase("ProfileInfo True")) {
            setProfileDataView();
-       } else if (message.equalsIgnoreCase("ProfileInfo False")) {
+       } */else if (message.equalsIgnoreCase("ProfileInfo False")) {
            Utils.dismissBarDialog();
            Utils.showAlert(UserProfileView.this, authManager.getMessage());
        } else if (message.equalsIgnoreCase("ProfileInfo Network Error")) {
@@ -561,14 +562,14 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
 
     private void switchView() {
 		Intent intent = new Intent(UserProfileView.this, FollowerList.class);
-		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+	//	intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		startActivity(intent);
 		//this.finish();
 	}
 	
 	private void switchViewToFollowingList() {
 		Intent intent = new Intent(UserProfileView.this, FollowingListView.class);
-		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		//intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		startActivity(intent);
 		//this.finish();
 	}

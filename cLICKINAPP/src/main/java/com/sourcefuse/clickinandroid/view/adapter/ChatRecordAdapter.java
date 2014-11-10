@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.facebook.android.Util;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.bean.CardBean;
@@ -106,6 +107,8 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
 
 
 
+        holder.rl_card = (RelativeLayout) row.findViewById(R.id.rl_card);
+
 
 
 
@@ -187,7 +190,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.chatImage.setVisibility(View.GONE);
                     holder.audioView.setVisibility(View.GONE);
                     holder.playIcon.setVisibility(View.GONE);
-                    holder.shareIcon.setVisibility(View.VISIBLE);
+                    holder.shareIcon.setVisibility(View.GONE);
                     holder.sendStatus.setVisibility(View.GONE);
                     holder.clicksArea.setBackgroundResource(R.drawable.c_clicks_r_bgpink);
                     holder.clicksText.setVisibility(View.VISIBLE);
@@ -234,7 +237,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.chatImage.setVisibility(View.GONE);
                     holder.audioView.setVisibility(View.GONE);
                     holder.playIcon.setVisibility(View.GONE);
-                    holder.shareIcon.setVisibility(View.VISIBLE);
+                    holder.shareIcon.setVisibility(View.GONE);
                     holder.sendStatus.setVisibility(View.GONE);
                     holder.clicksArea.setBackgroundResource(R.drawable.c_clicks_s_bgpink);
                     holder.clicksText.setVisibility(View.VISIBLE);
@@ -276,7 +279,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.audioView.setVisibility(View.GONE);
                     holder.playIcon.setVisibility(View.GONE);
                     holder.chatImage.setBackgroundResource(R.drawable.whitechatbg);
-                    holder.shareIcon.setVisibility(View.VISIBLE);
+                    holder.shareIcon.setVisibility(View.GONE);
                     holder.clicksArea.setVisibility(View.GONE);
                     holder.sendStatus.setVisibility(View.GONE);
                     holder.clicksText.setVisibility(View.GONE);
@@ -290,7 +293,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.audioView.setVisibility(View.GONE);
                     holder.playIcon.setVisibility(View.GONE);
                     holder.chatImage.setBackgroundResource(R.drawable.chat_image_white_bg);
-                    holder.shareIcon.setVisibility(View.VISIBLE);
+                    holder.shareIcon.setVisibility(View.GONE);
                     holder.clicksArea.setVisibility(View.VISIBLE);
                     holder.clicksArea.setBackgroundResource(R.drawable.whitechatbg);
                     holder.chatText.setVisibility(View.VISIBLE);
@@ -308,7 +311,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.audioView.setVisibility(View.GONE);
                     holder.playIcon.setVisibility(View.GONE);
                     holder.chatImage.setBackgroundResource(R.drawable.chat_image_pink_bg);
-                    holder.shareIcon.setVisibility(View.VISIBLE);
+                    holder.shareIcon.setVisibility(View.GONE);
                     holder.clicksArea.setVisibility(View.VISIBLE);
                     holder.clicksArea.setBackgroundResource(R.drawable.c_clicks_r_bgpink);
                     holder.chatText.setVisibility(View.VISIBLE);
@@ -349,7 +352,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                         holder.chatImage.setVisibility(View.VISIBLE);
                         holder.audioView.setVisibility(View.GONE);
                         holder.playIcon.setVisibility(View.GONE);
-                        holder.shareIcon.setVisibility(View.VISIBLE);
+                        holder.shareIcon.setVisibility(View.GONE);
                         holder.clicksArea.setVisibility(View.GONE);
                         holder.sendStatus.setVisibility(View.GONE);
                         holder.clicksText.setVisibility(View.GONE);
@@ -364,7 +367,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                         holder.audioView.setVisibility(View.GONE);
                         holder.playIcon.setVisibility(View.GONE);
                         holder.chatImage.setBackgroundResource(R.drawable.chat_image_white_bg);
-                        holder.shareIcon.setVisibility(View.VISIBLE);
+                        holder.shareIcon.setVisibility(View.GONE);
                         holder.clicksArea.setVisibility(View.VISIBLE);
                         holder.sendStatus.setVisibility(View.GONE);
                         holder.clicksText.setVisibility(View.GONE);
@@ -384,7 +387,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.audioView.setVisibility(View.GONE);
                     holder.playIcon.setVisibility(View.GONE);
                     holder.chatImage.setBackgroundResource(R.drawable.chat_image_pink_bg);
-                    holder.shareIcon.setVisibility(View.VISIBLE);
+                    holder.shareIcon.setVisibility(View.GONE);
                     holder.clicksArea.setVisibility(View.VISIBLE);
                     holder.clicksArea.setBackgroundResource(R.drawable.c_clicks_s_bgpink);
                     holder.chatText.setVisibility(View.VISIBLE);
@@ -430,7 +433,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.audioView.setVisibility(View.VISIBLE);
                     holder.playIcon.setVisibility(View.GONE);
                     holder.audioView.setBackgroundResource(R.drawable.c_audio_bg_w);
-                    holder.shareIcon.setVisibility(View.VISIBLE);
+                    holder.shareIcon.setVisibility(View.GONE);
                     holder.clicksArea.setVisibility(View.GONE);
                     holder.sendStatus.setVisibility(View.GONE);
                     holder.clicksText.setVisibility(View.GONE);
@@ -440,7 +443,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.audioView.setVisibility(View.VISIBLE);
                     holder.playIcon.setVisibility(View.GONE);
                     holder.audioView.setBackgroundResource(R.drawable.c_audio_bg_w);
-                    holder.shareIcon.setVisibility(View.VISIBLE);
+                    holder.shareIcon.setVisibility(View.GONE);
                     holder.clicksArea.setVisibility(View.VISIBLE);
                     holder.clicksArea.setBackgroundResource(R.drawable.whitechatbg);
                     holder.chatText.setVisibility(View.VISIBLE);
@@ -455,7 +458,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.audioView.setVisibility(View.VISIBLE);
                     holder.playIcon.setVisibility(View.GONE);
                     holder.audioView.setBackgroundResource(R.drawable.c_audio_bg_click);
-                    holder.shareIcon.setVisibility(View.VISIBLE);
+                    holder.shareIcon.setVisibility(View.GONE);
                     holder.clicksArea.setVisibility(View.VISIBLE);
                     holder.clicksArea.setBackgroundResource(R.drawable.c_clicks_r_bgpink);
                     holder.chatText.setVisibility(View.VISIBLE);
@@ -496,7 +499,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.audioView.setVisibility(View.VISIBLE);
                     holder.playIcon.setVisibility(View.GONE);
                     holder.audioView.setBackgroundResource(R.drawable.c_audio_bg_g);
-                    holder.shareIcon.setVisibility(View.VISIBLE);
+                    holder.shareIcon.setVisibility(View.GONE);
                     holder.clicksArea.setVisibility(View.GONE);
                     holder.sendStatus.setVisibility(View.GONE);
                     holder.clicksText.setVisibility(View.GONE);
@@ -509,7 +512,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.audioView.setVisibility(View.VISIBLE);
                     holder.playIcon.setVisibility(View.GONE);
                     holder.audioView.setBackgroundResource(R.drawable.c_audio_bg_g);
-                    holder.shareIcon.setVisibility(View.VISIBLE);
+                    holder.shareIcon.setVisibility(View.GONE);
                     holder.clicksArea.setVisibility(View.VISIBLE);
                     holder.sendStatus.setVisibility(View.GONE);
                     holder.clicksText.setVisibility(View.GONE);
@@ -528,7 +531,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.audioView.setVisibility(View.VISIBLE);
                     holder.playIcon.setVisibility(View.GONE);
                     holder.audioView.setBackgroundResource(R.drawable.c_audio_bg_click);
-                    holder.shareIcon.setVisibility(View.VISIBLE);
+                    holder.shareIcon.setVisibility(View.GONE);
                     holder.clicksArea.setVisibility(View.VISIBLE);
                     holder.clicksArea.setBackgroundResource(R.drawable.c_clicks_s_bgpink);
                     holder.chatText.setVisibility(View.VISIBLE);
@@ -571,7 +574,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.audioView.setVisibility(View.GONE);
                     holder.playIcon.setVisibility(View.VISIBLE);
                     holder.chatImage.setBackgroundResource(R.drawable.whitechatbg);
-                    holder.shareIcon.setVisibility(View.VISIBLE);
+                    holder.shareIcon.setVisibility(View.GONE);
                     holder.clicksArea.setVisibility(View.GONE);
                     holder.sendStatus.setVisibility(View.GONE);
                     holder.clicksText.setVisibility(View.GONE);
@@ -584,7 +587,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.audioView.setVisibility(View.GONE);
                     holder.playIcon.setVisibility(View.VISIBLE);
                     holder.chatImage.setBackgroundResource(R.drawable.chat_image_white_bg);
-                    holder.shareIcon.setVisibility(View.VISIBLE);
+                    holder.shareIcon.setVisibility(View.GONE);
                     holder.clicksArea.setVisibility(View.VISIBLE);
                     holder.clicksArea.setBackgroundResource(R.drawable.whitechatbg);
                     holder.chatText.setVisibility(View.VISIBLE);
@@ -600,7 +603,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.audioView.setVisibility(View.GONE);
                     holder.playIcon.setVisibility(View.VISIBLE);
                     holder.chatImage.setBackgroundResource(R.drawable.c_audio_bg_click);
-                    holder.shareIcon.setVisibility(View.VISIBLE);
+                    holder.shareIcon.setVisibility(View.GONE);
                     holder.clicksArea.setVisibility(View.VISIBLE);
                     holder.clicksArea.setBackgroundResource(R.drawable.c_clicks_r_bgpink);
                     holder.chatText.setVisibility(View.VISIBLE);
@@ -642,7 +645,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.audioView.setVisibility(View.GONE);
                     holder.playIcon.setVisibility(View.VISIBLE);
                     holder.chatImage.setBackgroundResource(R.drawable.newbg);
-                    holder.shareIcon.setVisibility(View.VISIBLE);
+                    holder.shareIcon.setVisibility(View.GONE);
                     holder.clicksArea.setVisibility(View.GONE);
                     holder.sendStatus.setVisibility(View.GONE);
                     holder.clicksText.setVisibility(View.GONE);
@@ -660,7 +663,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.audioView.setVisibility(View.GONE);
                     holder.playIcon.setVisibility(View.VISIBLE);
                     holder.audioView.setBackgroundResource(R.drawable.chat_image_white_bg);
-                    holder.shareIcon.setVisibility(View.VISIBLE);
+                    holder.shareIcon.setVisibility(View.GONE);
                     holder.clicksArea.setVisibility(View.VISIBLE);
                     holder.sendStatus.setVisibility(View.GONE);
                     holder.clicksText.setVisibility(View.GONE);
@@ -681,7 +684,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.audioView.setVisibility(View.GONE);
                     holder.playIcon.setVisibility(View.VISIBLE);
                     holder.chatImage.setBackgroundResource(R.drawable.chat_image_white_bg);
-                    holder.shareIcon.setVisibility(View.VISIBLE);
+                    holder.shareIcon.setVisibility(View.GONE);
                     holder.clicksArea.setVisibility(View.VISIBLE);
                     holder.clicksArea.setBackgroundResource(R.drawable.c_clicks_s_bgpink);
                     holder.chatText.setVisibility(View.VISIBLE);
@@ -725,7 +728,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.audioView.setVisibility(View.GONE);
                     holder.playIcon.setVisibility(View.GONE);
                     holder.chatImage.setBackgroundResource(R.drawable.chat_image_white_bg);
-                    holder.shareIcon.setVisibility(View.VISIBLE);
+                    holder.shareIcon.setVisibility(View.GONE);
                     holder.clicksArea.setVisibility(View.VISIBLE);
                     holder.clicksArea.setBackgroundResource(R.drawable.whitechatbg);
                     holder.chatText.setVisibility(View.VISIBLE);
@@ -759,7 +762,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.audioView.setVisibility(View.GONE);
                     holder.playIcon.setVisibility(View.GONE);
                     holder.audioView.setBackgroundResource(R.drawable.chat_image_white_bg);
-                    holder.shareIcon.setVisibility(View.VISIBLE);
+                    holder.shareIcon.setVisibility(View.GONE);
                     holder.clicksArea.setVisibility(View.VISIBLE);
                     holder.sendStatus.setVisibility(View.GONE);
                     holder.clicksText.setVisibility(View.GONE);
@@ -780,7 +783,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
             holder.cardAction.setVisibility(View.VISIBLE);
             holder.chatParentLayout.setVisibility(View.GONE);
             if (!item.getUserId().equalsIgnoreCase(authManager.getUserId())) {
-
+//RECEIVER CARD
                 Log.e(TAG, "" + "Type 55 -Card RECIVER");//RECIVER
             try {
 
@@ -798,9 +801,11 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     if(item.getIs_CustomCard().equalsIgnoreCase("true")){
                         holder.trd_custom_ar_heading.setVisibility(View.VISIBLE);
                         holder.trd_custom_ar_heading.setText(item.getCard_heading());
-                        Picasso.with(context).load(Constants.CUSTOM_CARD_URL)
-                                .into(holder.iv_card_counter);
+                        holder.iv_card_counter.setVisibility(View.VISIBLE);
+                        holder.iv_card_counter.setImageResource(R.drawable.c_custom_card);
+
                     }else{
+
                         holder.trd_custom_ar_heading.setVisibility(View.GONE);
                         Picasso.with(context).load(item.getCard_url())
                                 .into(holder.iv_card_counter);
@@ -821,9 +826,14 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     if(item.getIs_CustomCard().equalsIgnoreCase("true")){
                         holder.trd_custom_ar_heading.setVisibility(View.VISIBLE);
                         holder.trd_custom_ar_heading.setText(item.getCard_heading());
-                        Picasso.with(context).load(Constants.CUSTOM_CARD_URL)
-                                .into(holder.iv_card_counter);
+                        /*Picasso.with(context).load(Constants.CUSTOM_CARD_URL)
+                                .into(holder.iv_card_counter);*/
+                      //  holder.tradeImage.setVisibility(View.VISIBLE);
+                        holder.iv_card_counter.setVisibility(View.VISIBLE);
+                        holder.iv_card_counter.setImageResource(R.drawable.c_custom_card);
+
                     }else{
+
                         holder.trd_custom_ar_heading.setVisibility(View.GONE);
                         Picasso.with(context).load(item.getCard_url())
                                 .into(holder.iv_card_counter);
@@ -838,15 +848,19 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.cardViewCc.setGravity(Gravity.RIGHT);
                     holder.tv_acc_res_name.setText(item.getCardPartnerName() + "made a");
                     holder.tv_acc_res_status.setText("COUNTER OFFER");
+
                     holder.trd_clicks_top_ar.setText(item.getCard_clicks());
                     holder.trd_clicks_bottom_ar.setText(item.getCard_clicks());
 
                     if(item.getIs_CustomCard().equalsIgnoreCase("true")){
                         holder.trd_custom_ar_heading.setVisibility(View.VISIBLE);
                         holder.trd_custom_ar_heading.setText(item.getCard_heading());
-                        Picasso.with(context).load(Constants.CUSTOM_CARD_URL)
-                                .into(holder.iv_card_counter);
+                        /*Picasso.with(context).load(Constants.CUSTOM_CARD_URL)
+                                .into(holder.iv_card_counter);*/
+                        holder.iv_card_counter.setImageResource(R.drawable.c_custom_card);
+
                     }else{
+                        holder.tradeImage.setVisibility(View.GONE);
                         holder.trd_custom_ar_heading.setVisibility(View.GONE);
                         Picasso.with(context).load(item.getCard_url())
                                 .into(holder.iv_card_counter);
@@ -859,14 +873,13 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.cardViewCards.setGravity(Gravity.RIGHT);
                     holder.trd_custom_heading.setVisibility(View.GONE);
 
-
-                        Picasso.with(context).load(item.getCard_url())
-                                .into(holder.iv_card_counter);
+                    Picasso.with(context).load(Utils.getCardURLForAndroid(item.getCard_url()))
+                            .into(holder.tradeImage);
 
                     try {
                         if (Integer.parseInt(item.getCard_clicks()) < 10) {
-                            holder.trdClicksTop.setText("" + item.getCard_clicks());
-                            holder.trdClicksBottom.setText("" + item.getCard_clicks());
+                            holder.trdClicksTop.setText(item.getCard_clicks());
+                            holder.trdClicksBottom.setText(item.getCard_clicks());
                         } else {
                             holder.trdClicksTop.setText(item.getCard_clicks());
                             holder.trdClicksBottom.setText(item.getCard_clicks());
@@ -876,17 +889,19 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     }
                     holder.card_partner_name.setText(item.getCardPartnerName().toUpperCase());
                     holder.cardViewCards.setBackgroundResource(R.drawable.whitechatbg);
-                }else if (item.getIs_CustomCard().equalsIgnoreCase("true")) {
+              }else if (item.getIs_CustomCard().equalsIgnoreCase("true") && item.getCard_Accepted_Rejected().equalsIgnoreCase("nil")) {
 
-                    Log.e(TAG, "" + "Type 55 -Custom Card SENDER");
+
+                    holder.cardViewCards.setVisibility(View.VISIBLE);
+                    Log.e(TAG, "" + "Type 55 -Custom Card");
                     holder.cardViewCards.setGravity(Gravity.RIGHT);
 
-
-                        Picasso.with(context).load(Constants.CUSTOM_CARD_URL)
-                                .into(holder.iv_card_counter);
-
+                        /*Picasso.with(context).load(Constants.CUSTOM_CARD_URL)
+                                .into(holder.iv_card_counter);*/
+                    holder.tradeImage.setBackgroundResource(R.drawable.c_custom_card);
                     holder.trd_custom_heading.setVisibility(View.VISIBLE);
-                    holder.cardViewCards.setBackgroundResource(R.drawable.newbg);
+                    holder.trd_custom_heading.setText(item.getCard_heading());
+                    holder.cardViewCards.setBackgroundResource(R.drawable.whitechatbg);
 
                     try {
                         if (Integer.parseInt(item.getCard_clicks()) < 10) {
@@ -904,6 +919,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     }
                 }
             }catch (Exception e){}
+                //RECEIVER END FINISH
             }else {
                 Log.e(TAG, "" + "Type 55 -Card SENDER");
 
@@ -926,9 +942,13 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     if(item.getIs_CustomCard().equalsIgnoreCase("true")){
                         holder.trd_custom_ar_heading.setVisibility(View.VISIBLE);
                         holder.trd_custom_ar_heading.setText(item.getCard_heading());
-                        Picasso.with(context).load(Constants.CUSTOM_CARD_URL)
-                                .into(holder.iv_card_counter);
+                        /*Picasso.with(context).load(Constants.CUSTOM_CARD_URL)
+                                .into(holder.iv_card_counter);*/
+                        holder.iv_card_counter.setVisibility(View.VISIBLE);
+                        holder.iv_card_counter.setImageResource(R.drawable.c_custom_card);
+
                     }else{
+                        //holder.tradeImage.setVisibility(View.GONE);
                         holder.trd_custom_ar_heading.setVisibility(View.GONE);
                         Picasso.with(context).load(item.getCard_url())
                                 .into(holder.iv_card_counter);
@@ -947,9 +967,13 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     if(item.getIs_CustomCard().equalsIgnoreCase("true")){
                         holder.trd_custom_ar_heading.setVisibility(View.VISIBLE);
                         holder.trd_custom_ar_heading.setText(item.getCard_heading());
-                        Picasso.with(context).load(Constants.CUSTOM_CARD_URL)
-                                .into(holder.iv_card_counter);
+                       /* Picasso.with(context).load(Constants.CUSTOM_CARD_URL)
+                                .into(holder.iv_card_counter);*/
+                        holder.iv_card_counter.setVisibility(View.VISIBLE);
+                        holder.iv_card_counter.setImageResource(R.drawable.c_custom_card);
+
                     }else{
+                       // holder.tradeImage.setVisibility(View.GONE);
                         holder.trd_custom_ar_heading.setVisibility(View.GONE);
                         Picasso.with(context).load(item.getCard_url())
                                 .into(holder.iv_card_counter);
@@ -971,9 +995,13 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     if(item.getIs_CustomCard().equalsIgnoreCase("true")){
                         holder.trd_custom_ar_heading.setVisibility(View.VISIBLE);
                         holder.trd_custom_ar_heading.setText(item.getCard_heading());
-                        Picasso.with(context).load(Constants.CUSTOM_CARD_URL)
-                                .into(holder.iv_card_counter);
+                        /*Picasso.with(context).load(Constants.CUSTOM_CARD_URL)
+                                .into(holder.iv_card_counter);*/
+                        holder.iv_card_counter.setVisibility(View.VISIBLE);
+                        holder.iv_card_counter.setImageResource(R.drawable.c_custom_card);
+
                     }else{
+                       // holder.tradeImage.setVisibility(View.GONE);
                         holder.trd_custom_ar_heading.setVisibility(View.GONE);
                         Picasso.with(context).load(item.getCard_url())
                                 .into(holder.iv_card_counter);
@@ -982,8 +1010,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.iv_acc_rec.setVisibility(View.GONE);
 
                 }else if (item.getCard_Accepted_Rejected().equalsIgnoreCase("nil") && !item.getIs_CustomCard().equalsIgnoreCase("true")) {
-                    holder.cardViewCards.setGravity(Gravity.RIGHT);
-                    Picasso.with(context).load(item.getCard_url())
+                    holder.cardViewCards.setGravity(Gravity.LEFT);
+
+                    Picasso.with(context).load(Utils.getCardURLForAndroid(item.getCard_url()))
                             .into(holder.tradeImage);
 
                     holder.trd_custom_heading.setVisibility(View.GONE);
@@ -1003,18 +1032,27 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     } catch (Exception e) {
 
                     }
-                }else if (item.getIs_CustomCard().equalsIgnoreCase("true")) {
+                }else if (item.getIs_CustomCard().equalsIgnoreCase("true") && item.getCard_Accepted_Rejected().equalsIgnoreCase("nil")) {
 
                     Log.e(TAG, "" + "Type 55 -Custom Card SENDER");
-                    holder.cardViewCards.setGravity(Gravity.RIGHT);
-                    Picasso.with(context).load(Constants.CUSTOM_CARD_URL)
-                            .into(holder.tradeImage);
+
+                    holder.cardViewCards.setVisibility(View.VISIBLE);
+                    holder.cardViewCards.setGravity(Gravity.LEFT);
+
+                    /*Picasso.with(context).load(Constants.CUSTOM_CARD_URL)
+                            .into(holder.tradeImage);*/
+                   // holder.tradeImage.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.c_custom_card));//R.drawable.c_custom_card);
+
+
+                    //holder.rl_card.setBackgroundResource(R.drawable.c_custom_card);
+                    holder.tradeImage.setBackgroundResource(R.drawable.c_custom_card);
+
                     holder.trd_custom_heading.setVisibility(View.VISIBLE);
                     holder.cardViewCards.setBackgroundResource(R.drawable.newbg);
                     holder.trd_custom_heading.setText("" + item.getCard_heading());
                     try {
                         if (Integer.parseInt(item.getCard_clicks()) < 10) {
-                          holder.trdClicksTop.setText("" + item.getCard_clicks());
+                            holder.trdClicksTop.setText("" + item.getCard_clicks());
                             holder.trdClicksBottom.setText("" + item.getCard_clicks());
                         } else {
                             holder.trdClicksTop.setText(item.getCard_clicks());
@@ -1121,9 +1159,39 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
         // Counter card
         holder.tv_counter_card.setOnClickListener(new View.OnClickListener() {
             @Override
-             public void onClick(View arg0) {
+            public void onClick(View arg0) {
                 if (item.getChatType().equalsIgnoreCase("5")) {
 
+
+                        Intent intent = null;
+                        if(item.getIs_CustomCard().equalsIgnoreCase("true")){
+                            intent = new Intent(getContext(), ViewTradeCart.class);
+                            // intent.putExtra("Url",  Constants.CUSTOM_CARD_URL);
+                        }else{
+                            intent = new Intent(getContext(), Card.class);
+                            intent.putExtra("Url",  item.getCard_url());
+                            //intent.putExtra("Url",  item.getCard_url());
+                        }
+
+
+
+                    intent.putExtra("ForCounter", true);
+                    intent.putExtra("Title", item.getCard_heading());
+                    intent.putExtra("Discription",  item.getCard_content());
+
+                    intent.putExtra("card_id", item.getCard_id());
+                    intent.putExtra("cardClicks",  item.getCard_clicks());
+                    context.startActivity(intent);
+                    ((Activity) context).overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+                }
+            }
+        });
+
+        holder.iv_again_counter_acc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                if (item.getChatType().equalsIgnoreCase("5")) {
+/*
                     Intent i = null;
                     if(item.getIs_CustomCard().equalsIgnoreCase("true")){
                         i = new Intent(getContext(), ViewTradeCart.class);
@@ -1147,7 +1215,26 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     i.setAction("Card");
                     i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    context.startActivity(i);*/
+
+                    Intent i=new Intent();
+                    i.putExtra("FromCard",false);
+                    i.putExtra("card_url",item.getCard_url());
+                    i.putExtra("card_clicks",item.getCard_clicks());
+                    i.putExtra("Title",item.getCard_heading());
+                    i.putExtra("Discription",item.getCard_content());
+                    i.putExtra("card_id",item.getCard_id());
+                    i.putExtra("is_CustomCard",item.getIs_CustomCard());
+                    i.putExtra("card_DB_ID",item.getCard_DB_ID());
+                    i.putExtra("accepted_Rejected","accepted");
+                    i.putExtra("played_Countered","ACCEPTED");
+                    i.putExtra("card_originator",item.getCard_originator());
+                    i.setClass(context,ChatRecordView.class);
+                    i.setAction("Card");
+                    i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     context.startActivity(i);
+
                 }
             }
         });
@@ -1223,7 +1310,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
 
     static class RecordHolder {
 
-        RelativeLayout rrMainLayout, rlTimeStatusSender,chatParentLayout,rl_acc_res_bg;
+        RelativeLayout rrMainLayout, rlTimeStatusSender,chatParentLayout,rl_acc_res_bg,rl_card;
         LinearLayout llSrTime,clicksArea,cardView,cardAction,cardViewCc,cardViewCards,ll_cc_action;
         ImageView chatImage, shareIcon, sendStatus,clicksHeart,audioView,playIcon ,tradeImage,iv_accept_card,iv_resect_card,iv_acc_rec,iv_card_counter,iv_again_counter_acc,iv_again_counter_rej,iv_type_two_share_icon_r;
         TextView chatText, timeText,clicksText,trdClicksBottom,trdClicksTop,card_partner_name,tv_counter_card,tv_acc_res_name,tv_acc_res_status,trd_clicks_top_ar,trd_clicks_bottom_ar,tv_counter_card_action,trd_custom_heading,trd_custom_ar_heading;

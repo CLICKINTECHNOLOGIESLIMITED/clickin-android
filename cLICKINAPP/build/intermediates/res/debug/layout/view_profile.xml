@@ -68,7 +68,7 @@
                 android:id="@+id/rl_signupcontainer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/iv_profile_img"
+                android:layout_below="@+id/ll_image_container"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="-30dp"
                 android:background="@drawable/rounded_profile_bg"
@@ -308,15 +308,42 @@
                 android:layout_marginTop="-10dp"
                 android:background="@drawable/c_or" />
 
-            <ImageView
-                android:id="@+id/iv_profile_img"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <LinearLayout
+                android:id="@+id/ll_image_container"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:layout_below="@+id/btn_or"
-                android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/c_add_selfie"
-                android:padding="3dp" />
+                android:padding="3dp"
+                android:layout_centerHorizontal="true"
+                android:orientation="horizontal"
+                >
+
+                <ImageView
+                    android:id="@+id/iv_profile_img"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_below="@+id/btn_or"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/c_add_selfie"
+                    android:layout_weight="1"
+                    android:scaleType="fitXY"
+                    />
+
+                <!--<ImageView-->
+                    <!--android:id="@+id/iv_profile_img"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_below="@+id/btn_or"-->
+                    <!--android:layout_centerHorizontal="true"-->
+                    <!--android:layout_marginTop="10dp"-->
+                    <!--android:background="@drawable/c_add_selfie"-->
+                    <!--android:padding="3dp" />-->
+
+                </LinearLayout>
+
+
+
         </RelativeLayout>
     </ScrollView>
 

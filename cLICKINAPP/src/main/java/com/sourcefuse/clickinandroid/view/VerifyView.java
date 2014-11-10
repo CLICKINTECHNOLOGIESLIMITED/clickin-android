@@ -134,17 +134,15 @@ public class VerifyView extends Activity implements View.OnClickListener,
 
 	private void switchView() {
 		Intent intent = new Intent(VerifyView.this, ProfileView.class);
-		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		//intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		startActivity(intent);
-		this.finish();
+	    finish();
 	}
 
     @Override
     public void onStart() {
         super.onStart();
-        if (EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().unregister(this);
-        }
+
         EventBus.getDefault().register(this);
     }
 

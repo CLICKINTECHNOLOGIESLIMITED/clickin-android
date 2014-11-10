@@ -4,6 +4,8 @@ import android.util.Log;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.sourcefuse.clickinandroid.model.bean.ContactBean;
+import com.sourcefuse.clickinandroid.model.bean.CurrentClickerBean;
 import com.sourcefuse.clickinandroid.model.bean.FollowerFollowingBean;
 import com.sourcefuse.clickinandroid.utils.APIs;
 import com.sourcefuse.clickinandroid.utils.Utils;
@@ -20,7 +22,7 @@ import java.util.Observable;
 
 import de.greenrobot.event.EventBus;
 
-public class ProfileManager extends Observable implements ProfileManagerI {
+public class ProfileManager {
 
 	private StringEntity se = null;
 	private AsyncHttpClient client;
@@ -33,8 +35,13 @@ public class ProfileManager extends Observable implements ProfileManagerI {
     public ArrayList<FollowerFollowingBean> followRequesed = new ArrayList<FollowerFollowingBean>();
     public ArrayList<FollowerFollowingBean> pfollowerList =  new ArrayList<FollowerFollowingBean>();
 
+    public static ArrayList<FollowerFollowingBean> following = new ArrayList<FollowerFollowingBean>();
+    public static ArrayList<FollowerFollowingBean> followers = new ArrayList<FollowerFollowingBean>();
+    public  ArrayList<CurrentClickerBean> currentClickerList = new ArrayList<CurrentClickerBean>();
+    public  ArrayList<ContactBean> spreadTheWorldList = new ArrayList<ContactBean>();
 
-	@Override
+
+
 	public void setProfile(String fname, String lname, String phone,
 			String usertoken, String gender, String dob, String city,
 			String country, String email, String fbaccesstoken, String userpic) {
@@ -116,13 +123,7 @@ public class ProfileManager extends Observable implements ProfileManagerI {
 				});
 
 	}		
-	
-	private void triggerObservers(String success) {
-		setChanged();
-		notifyObservers(success);
-	}
 
-	@Override
 	public void getFollwer(String othersPhone,String phone, String usertoken) {
 		// TODO Auto-generated method stub
 		authManager = ModelManager.getInstance().getAuthorizationManager();
@@ -144,7 +145,7 @@ public class ProfileManager extends Observable implements ProfileManagerI {
 			str =  phone.substring(1);	
 		}
 		Log.e("APIs.GETUSERFOLLOWER+","----> "+APIs.GETUSERFOLLOWER+":%2B"+str);
-		client.get(APIs.GETUSERFOLLOWER, new JsonHttpResponseHandler() {
+		client.get(APIs.GETUSERFOLLOWER+":%2B"+str, new JsonHttpResponseHandler() {
 			boolean success = false;
 
 			@Override
@@ -341,9 +342,9 @@ public class ProfileManager extends Observable implements ProfileManagerI {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
-						triggerObservers("ProfileInfo False");
+						//triggerObservers("ProfileInfo False");
 					} else {
-						triggerObservers("ProfileInfo Network Error");
+						//triggerObservers("ProfileInfo Network Error");
 					}
 
 				}
@@ -407,9 +408,9 @@ public class ProfileManager extends Observable implements ProfileManagerI {
 //									// TODO Auto-generated catch block
 //									e1.printStackTrace();
 //								}
-								triggerObservers("GetrelationShips False");
+							//	triggerObservers("GetrelationShips False");
 							} else {
-								triggerObservers("GetrelationShips Network Error");
+							//	triggerObservers("GetrelationShips Network Error");
 							}
 						}
 
@@ -424,7 +425,7 @@ public class ProfileManager extends Observable implements ProfileManagerI {
 								state = response.getBoolean("success");
 								if (state) {
 									
-									triggerObservers("GetrelationShips True");
+								//	triggerObservers("GetrelationShips True");
 								}
 							} catch (JSONException e) {
 								e.printStackTrace();

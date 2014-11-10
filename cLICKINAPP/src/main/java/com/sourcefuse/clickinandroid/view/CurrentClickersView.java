@@ -83,6 +83,7 @@ public class CurrentClickersView extends Activity implements OnClickListener {
 
 
         authManager = ModelManager.getInstance().getAuthorizationManager();
+        EventBus.getDefault().register(this);
         Utils.launchBarDialog(CurrentClickersView.this);
         new FetchContactFromPhone(CurrentClickersView.this).getClickerList(authManager.getPhoneNo(),authManager.getUsrToken(),1);
 
@@ -103,9 +104,7 @@ public class CurrentClickersView extends Activity implements OnClickListener {
     @Override
     public void onStart() {
         super.onStart();
-        if (EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().unregister(this);
-        }
+        if(!(EventBus.getDefault().isRegistered(this)))
         EventBus.getDefault().register(this);
     }
 	@Override
@@ -138,13 +137,16 @@ public class CurrentClickersView extends Activity implements OnClickListener {
                 Toast.makeText(getApplicationContext(), "Please Check Your Internet Connection", Toast.LENGTH_SHORT).show();
             }
 
-        } else if (i == R.id.btn_back) {//	finish();
+        } else if (i == R.id.btn_back) {
+        	finish();
 
-        } else if (i == R.id.btn_middle_back) {
+        } /*else if (i == R.id.btn_middle_back) {
             finish();
 
-        } else if (i == R.id.btn_next) {
-            new AlertDialog.Builder(this)
+        }*/ else if (i == R.id.btn_next) {
+            Intent clickersView = new Intent(CurrentClickersView.this, SpreadWordView.class);
+            startActivity(clickersView);
+         /*   new AlertDialog.Builder(this)
                     .setMessage(AlertMessage.CURRENTCLICKERPAGE)
                     .setPositiveButton("Ok",
                             new DialogInterface.OnClickListener() {
@@ -163,7 +165,7 @@ public class CurrentClickersView extends Activity implements OnClickListener {
 
                 }
 
-            }).show();
+            }).show();*/
 
         }
 	}

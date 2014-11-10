@@ -90,14 +90,27 @@ public class ViewTradeCart extends Activity implements View.OnClickListener
                 if (null != intent) {
                     forCounter = intent.getExtras().getBoolean("ForCounter");
                     if (forCounter) {
+                     //   ((ImageView)findViewById(R.id.trade_image)).setImageResource(R.drawable.c_custom_card);
+
+                        card_text.setVisibility(View.GONE);
                         trd_clicks_bottom.setText(intent.getStringExtra("cardClicks"));
                         trd_clicks_top.setText(intent.getStringExtra("cardClicks"));
                         tv_about_message.setText("HOW MANY CLICKS DO YOU WANT FOR IT?");
                         cardTitle = intent.getStringExtra("Title");
                         Log.e(TAG,""+cardTitle);
                         card_id = intent.getStringExtra("card_id");
+
+
+
+
+                        ((TextView)findViewById(R.id.card_heading)).setVisibility(View.VISIBLE);
+                        ((TextView)findViewById(R.id.card_heading)).setText(cardTitle);
                         url = intent.getStringExtra("Url");
                         card_text.setText(cardTitle);
+                    }else{
+                      //  ((ImageView)findViewById(R.id.trade_image)).setImageResource(R.drawable.c_pinkxhdpi);
+                        card_text.setVisibility(View.VISIBLE);
+                        ((TextView)findViewById(R.id.card_heading)).setVisibility(View.GONE);
                     }
                 } else {
                     Log.e(TAG, "Value in intent in null");

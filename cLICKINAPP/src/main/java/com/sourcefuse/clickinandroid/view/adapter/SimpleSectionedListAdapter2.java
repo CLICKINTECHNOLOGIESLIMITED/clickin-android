@@ -385,7 +385,7 @@ public class SimpleSectionedListAdapter2 extends BaseAdapter implements PinnedSe
                         viewProfile.putExtra("name", view.getText().toString());
 //                    }
 
-                    viewProfile.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+              //      viewProfile.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     mContext.startActivity(viewProfile);
                 }
             });

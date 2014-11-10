@@ -49,7 +49,7 @@ public class SignUpView extends Activity implements TextWatcher,OnClickListener 
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.view_signup);
-		authManager = ModelManager.getInstance().getAuthorizationManager();
+
 		act = this;
 	    context = this;
 	    typeface = Typeface.createFromAsset(SignUpView.this.getAssets(),Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
@@ -57,7 +57,7 @@ public class SignUpView extends Activity implements TextWatcher,OnClickListener 
 		Utils.deviceId = Secure.getString(this.getContentResolver(),Secure.ANDROID_ID);
 
 
-        new MyPreference(getApplicationContext()).clearAllPreference();
+
 
 		checkmeout = (Button) findViewById(R.id.checkmeout);
 
@@ -94,8 +94,10 @@ public class SignUpView extends Activity implements TextWatcher,OnClickListener 
                 if (Utils.isPhoneValid(phoneNo.getText().toString()) && (phoneNo.getText().toString().length() >= 5)) {
                     Utils.launchBarDialog(SignUpView.this);
                     authManager = ModelManager.getInstance().getAuthorizationManager();
-                    authManager.setPhoneNo("+91" + phoneNo.getText().toString());
-                    authManager.signUpAuth("+91" + phoneNo.getText().toString(), Utils.deviceId.toString());
+                    String cntrycodeS=cntrycode.getText().toString().replaceAll("\\s+","");
+                    authManager.setCountrycode(cntrycodeS);
+                    authManager.setPhoneNo(cntrycodeS+ phoneNo.getText().toString().trim());
+                    authManager.signUpAuth(cntrycodeS + phoneNo.getText().toString().trim(), Utils.deviceId.toString());
                 } else {
                     Utils.showAlert(SignUpView.this, AlertMessage.phone);
                 }
@@ -137,9 +139,7 @@ public class SignUpView extends Activity implements TextWatcher,OnClickListener 
     @Override
     public void onStart() {
         super.onStart();
-        if (EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().unregister(this);
-        }
+
         EventBus.getDefault().register(this);
     }
 
@@ -168,10 +168,10 @@ public class SignUpView extends Activity implements TextWatcher,OnClickListener 
     }
 
 	private void switchView() {
-		 new FetchContactFromPhone(act).readContacts();
-		Intent intent = new Intent(SignUpView.this, VerifyView.class);
-		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+	//	 new FetchContactFromPhone(act).readContacts();
+		Intent intent = new Intent(this, VerifyView.class);
+	//	intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		startActivity(intent);
-		this.finish();
+		finish();
 	}
 }

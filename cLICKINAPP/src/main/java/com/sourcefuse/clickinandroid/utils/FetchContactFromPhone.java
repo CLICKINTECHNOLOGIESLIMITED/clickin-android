@@ -58,7 +58,7 @@ public class FetchContactFromPhone {
 		String phone = null;
 		String image_uri = "";
         String name = "";
-        Bitmap bitmap = null;
+
         String mPhone = null;
 
         int l = 0;
@@ -74,7 +74,11 @@ public class FetchContactFromPhone {
 					Cursor pCur = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,null,ContactsContract.CommonDataKinds.Phone.CONTACT_ID+ " = ?", new String[] { id }, null);
 					while (pCur.moveToNext()) {
 						phone = pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-                        mPhone = phone.replaceAll("\\s","");
+                         authManager=ModelManager.getInstance().getAuthorizationManager();
+                        if(!(phone.contains("+91")))
+                        mPhone =authManager.getCountrycode()+ phone.replaceAll("\\s","");
+                        else
+                        mPhone=phone.replaceAll("\\s","");
                         mcantactBean.setConName(name);
                         mcantactBean.setChecked(false);
                         Log.d("contactNumber","contactNumber->"+mPhone+" , ");
@@ -212,7 +216,8 @@ public class FetchContactFromPhone {
                         clickerArray = new ArrayList<CurrentClickerBean>();
                         for (int i = 0; i < list.length(); i++) {
                             JSONObject data = list.getJSONObject(i);
-                            if(clickers==data.getInt("exists")) {
+                            int existcode=data.getInt("exists");
+                            if(clickers==existcode) {
                                 ContactBean cb = Utils.contactMap.get(data.getString("phone_no"));
                                 Log.e("ContactBean","ContactBean"+ cb);
                                 if( cb!=null){
@@ -232,7 +237,7 @@ public class FetchContactFromPhone {
                                     profilemanager.currentClickerList.add(clickerList);
 
                                 }
-                            }  if(clickers==data.getInt("exists")) {
+                            } else if(existcode==0) {
                                 ContactBean cb = Utils.contactMap.get(data.getString("phone_no"));
                                 if( cb!=null){
                                     contactBean = new ContactBean();

@@ -39,7 +39,7 @@
             android:textColor="@color/dialog_text"/>
 
         <View
-            android:id="@+id/v_backdevider"
+            android:id="@+id/v_backdevider1"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_below="@+id/edt_getemailid"
@@ -57,7 +57,7 @@
             android:textColor="@color/dialog_text"/>
 
         <View
-            android:id="@+id/v_backdevider"
+            android:id="@+id/v_backdevider2"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_below="@+id/edt_getemailid"

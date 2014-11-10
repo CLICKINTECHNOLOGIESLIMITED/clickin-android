@@ -34,14 +34,23 @@ public class FollowingListView extends Activity implements
 	private Typeface typeface;
     public static boolean fromOwnProfile = false;
     private RelativeLayout mFollowingListView,mFollowingListEmpty;
+    private String name="", phNo="";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.view_followinglist);
-		this.overridePendingTransition(R.anim.slide_in_right,
-				R.anim.slide_out_right);
+        this.overridePendingTransition(R.anim.slide_in_right,
+                R.anim.slide_out_right);
+
+        Bundle bundle = getIntent().getExtras();
+        if(bundle!=null)
+        {
+            phNo = getIntent().getExtras().getString("phoneNo");
+            name = getIntent().getExtras().getString("name");
+        }
+
 		listView = (ListView) findViewById(R.id.list_following);
         mFollowingListView = (RelativeLayout) findViewById(R.id.rl_followingdata);
         mFollowingListEmpty = (RelativeLayout) findViewById(R.id.rl_empty_following);
@@ -61,21 +70,20 @@ public class FollowingListView extends Activity implements
 
         ((TextView) findViewById(R.id.tv_following_msgI)).setTypeface(typeface, typeface.BOLD);
         ((TextView) findViewById(R.id.tv_following_msgII)).setTypeface(typeface, typeface.BOLD);
-try {
-    fromOwnProfile = getIntent().getExtras().getBoolean("FromOwnProfile");
-    if (fromOwnProfile) {
-        Utils.launchBarDialog(FollowingListView.this);
-        profManager.getFollwer("", authManager.getPhoneNo(), authManager.getUsrToken());
-    } else {
+        try {
+            fromOwnProfile = getIntent().getExtras().getBoolean("FromOwnProfile");
+            if (fromOwnProfile) {
+                profileName.setText(authManager.getUserName());
+                Utils.launchBarDialog(FollowingListView.this);
+                profManager.getFollwer("", authManager.getPhoneNo(), authManager.getUsrToken());
+            } else {
+                profileName.setText(name);
+                Utils.launchBarDialog(FollowingListView.this);
+                profManager.getFollwer(phNo, authManager.getPhoneNo(), authManager.getUsrToken());
+            }
+        }catch (Exception e){}
 
-        Utils.launchBarDialog(FollowingListView.this);
-        profManager.getFollwer(getIntent().getExtras().getString("phoneNo"), authManager.getPhoneNo(), authManager.getUsrToken());
-    }
-}catch (Exception e){}
-
-
-
-	}
+            }
 
 	public void setlist() {
         if(profManager.following.size()>0) {
@@ -88,7 +96,10 @@ try {
             listView.setAdapter(adapter);
             listView.setSelectionFromTop(index, top);
         }else{
-            mFollowingListEmpty.setVisibility(View.VISIBLE);
+            if (fromOwnProfile)
+                 mFollowingListEmpty.setVisibility(View.VISIBLE);
+            else
+                mFollowingListEmpty.setVisibility(View.GONE);
         }
 
 	}

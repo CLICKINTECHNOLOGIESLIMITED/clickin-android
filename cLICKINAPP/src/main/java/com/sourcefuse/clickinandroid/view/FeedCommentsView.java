@@ -108,8 +108,12 @@ public class FeedCommentsView extends Activity {
                     if (adapter == null) {
                         adapter = new FeedsCommentsAdapter(FeedCommentsView.this, R.layout.view_feeds_comments_row, feedList);
                         list.setAdapter(adapter);
-                    } else
+                        list.setSelection(list.getCount());
+                    } else {
                         adapter.notifyDataSetChanged();
+                                list.setSelection(list.getCount());
+                    }
+
 
                     imm.hideSoftInputFromWindow(comment.getWindowToken(), 0);
 

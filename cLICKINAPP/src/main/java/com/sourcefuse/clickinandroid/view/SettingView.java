@@ -276,7 +276,7 @@ public class SettingView extends Activity implements View.OnClickListener {
                 QBChatService.getInstance().logout();
                 Log.e("", "holder.logoutYes");
                 Intent intent5 = new Intent(SettingView.this, SplashView.class);
-                intent5.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent5.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent5);
                 SettingView.this.finish();
                 break;

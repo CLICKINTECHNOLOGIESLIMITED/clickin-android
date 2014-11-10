@@ -101,6 +101,7 @@
             android:text="@string/txt_follower"
             android:textColor="@color/white"
             android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textAllCaps="true"/>
     </RelativeLayout>
 </RelativeLayout>

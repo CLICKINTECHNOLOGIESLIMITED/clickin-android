@@ -21,7 +21,7 @@ import java.util.Observable;
 
 import de.greenrobot.event.EventBus;
 
-public class RelationManager extends Observable implements RelationManagerI {
+public class RelationManager  {
     private static final String TAG = RelationManager.class.getSimpleName();
 	StringEntity se = null;
 	AsyncHttpClient client;
@@ -52,7 +52,7 @@ public class RelationManager extends Observable implements RelationManagerI {
 
 	String strService = null;
 
-	@Override
+
 	public void getRelationShips(String phone, String usertoken) {
 		// TODO Auto-generated method stub
 		relationManager = ModelManager.getInstance().getRelationManager();
@@ -178,7 +178,7 @@ public class RelationManager extends Observable implements RelationManagerI {
     }
 
 
-	@Override
+
 	public void fetchprofilerelationships(String othersPhone, String phone,
 			String usertoken) {
 		// TODO Auto-generated method stub
@@ -271,7 +271,7 @@ public class RelationManager extends Observable implements RelationManagerI {
 		});
 	}
 
-	@Override
+
 	public void changeUserVisibility(String relationshipIid, String mode,
 			String phone, String usertoken) {
 		// TODO Auto-generated method stub
@@ -328,13 +328,7 @@ public class RelationManager extends Observable implements RelationManagerI {
 				});
 	}
 
-	private void triggerObservers(String success) {
 
-		setChanged();
-		notifyObservers(success);
-	}
-
-	@Override
 	public void followUser(String followeePhoneNo, String phone,
 			String usertoken) {
 		relationManager = ModelManager.getInstance().getRelationManager();
@@ -392,7 +386,6 @@ public class RelationManager extends Observable implements RelationManagerI {
 				});
 	}
 
-	@Override
 	public void unFollowUser(String followId,String followingMode, String phone,
 			String usertoken) {
 		// TODO Auto-generated method stub
@@ -453,8 +446,7 @@ public class RelationManager extends Observable implements RelationManagerI {
 	}
 	
 	
-	
-	@Override
+
 	public void updateStatus(String relationshipIid, String phone,
 			String usertoken, String mode) {
 		relationManager = ModelManager.getInstance().getRelationManager();
@@ -508,7 +500,7 @@ public class RelationManager extends Observable implements RelationManagerI {
 				});
 		
 	}
-	@Override
+
 	public void deleteRelationship(String relationshipIid, String phone,
 			String usertoken) {
 		relationManager = ModelManager.getInstance().getRelationManager();
@@ -565,7 +557,7 @@ public class RelationManager extends Observable implements RelationManagerI {
 
 
 
-    @Override
+
     public void fetchusersbyname(String name,String phone, String usertoken) {
         relationManager = ModelManager.getInstance().getRelationManager();
         JSONObject userInputDetails = new JSONObject();
@@ -634,7 +626,7 @@ public class RelationManager extends Observable implements RelationManagerI {
     }
 
 
-    @Override
+
     public void followupdatestatus(String followId,String accepted,String phone, String usertoken){
         relationManager = ModelManager.getInstance().getRelationManager();
         JSONObject userInputDetails = new JSONObject();

@@ -48,6 +48,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
     ArrayList<NewsFeedBean> eachNewsFeed;
     MediaPlayer player;
     AuthManager authMgr;
+//    boolean starFlag=false;
 
     public FeedsAdapter(Activity context, int layoutResourceId,
                         ArrayList<NewsFeedBean> item) {
@@ -522,8 +523,9 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
         {
             holder.feed_star_image_button.setImageResource(R.drawable.pink_star_btn);
         }
-        else
+        else {
             holder.feed_star_image_button.setImageResource(R.drawable.star_btn);
+        }
 
 
         holder.feed_star_image_button.setOnClickListener(new View.OnClickListener() {
@@ -539,7 +541,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
                         if(stars.startsWith(","))
                             stars = stars.replaceFirst(",","").trim();
                         if(stars.endsWith(","))
-                            stars = stars.substring(0,stars.lastIndexOf(",")-1);
+                            stars = stars.substring(0,stars.lastIndexOf(","));
                         if(stars.equalsIgnoreCase("")) {
                             stars = "No Stars";
                             holder.feed_star_user.setTextColor(context.getResources().getColor(R.color.dark_gray));
@@ -550,21 +552,59 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
                     }
 
                 else {
-                    holder.feed_star_image_button.setImageResource(R.drawable.pink_star_btn);
-                        if(stars.equalsIgnoreCase("No Stars"))
-                            stars = "";
-                        if(stars.startsWith(","))
-                            stars = stars.replaceFirst(",","").trim();
-                        if(stars.endsWith(","))
-                            stars = stars.substring(0,stars.lastIndexOf(",")-1);
+                        if(eachNewsFeed.get(position).getNewsfeedArray_user_starred().equalsIgnoreCase("1"))
+                        {
+                            eachNewsFeed.get(position).setNewsfeedArray_user_starred("0");
+                            holder.feed_star_image_button.setImageResource(R.drawable.star_btn);
+                            if (stars.equalsIgnoreCase("No Stars"))
+                                stars = "";
+                            if (stars.startsWith(","))
+                                stars = stars.replaceFirst(",", "").trim();
+                            if (stars.endsWith(","))
+                                stars = stars.substring(0, stars.lastIndexOf(","));
 
-                        holder.feed_star_user.setTextColor(context.getResources().getColor(R.color.feed_senderuser));
-                        holder.feed_star_user.setClickable(true);
-                        if(stars.equalsIgnoreCase(""))
-                            holder.feed_star_user.setText(ModelManager.getInstance().getAuthorizationManager().getUserName());
-                        else
-                            holder.feed_star_user.setText(stars+", "+ ModelManager.getInstance().getAuthorizationManager().getUserName());
-                    ModelManager.getInstance().getNewsFeedManager().saveStarComment(authMgr.getPhoneNo(), authMgr.getUsrToken(),eachNewsFeed.get(position).getNewsfeedArray_id(),"","star");
+
+                            holder.feed_star_user.setTextColor(context.getResources().getColor(R.color.feed_senderuser));
+                            holder.feed_star_user.setClickable(true);
+                            if (stars.equalsIgnoreCase(""))
+                                holder.feed_star_user.setText(ModelManager.getInstance().getAuthorizationManager().getUserName());
+                            else if (stars.endsWith("Stars")) {
+                                stars = stars.substring(0, stars.indexOf(" "));
+                                int star = Integer.parseInt(stars) - 1;
+                                holder.feed_star_user.setText(star + " Stars");
+                                holder.feed_star_user.setTextColor(context.getResources().getColor(R.color.black));
+                            } else
+                                holder.feed_star_user.setText(stars + ", " + ModelManager.getInstance().getAuthorizationManager().getUserName());
+
+                            ModelManager.getInstance().getNewsFeedManager().unStarredNewsFeed(authMgr.getPhoneNo(),authMgr.getUsrToken(),eachNewsFeed.get(position).getNewsfeedArray_id());
+                        }
+                        else {
+
+                            eachNewsFeed.get(position).setNewsfeedArray_user_starred("1");
+                            holder.feed_star_image_button.setImageResource(R.drawable.pink_star_btn);
+                            if (stars.equalsIgnoreCase("No Stars"))
+                                stars = "";
+                            if (stars.startsWith(","))
+                                stars = stars.replaceFirst(",", "").trim();
+                            if (stars.endsWith(","))
+                                stars = stars.substring(0, stars.lastIndexOf(","));
+
+
+                            holder.feed_star_user.setTextColor(context.getResources().getColor(R.color.feed_senderuser));
+                            holder.feed_star_user.setClickable(true);
+                            if (stars.equalsIgnoreCase(""))
+                                holder.feed_star_user.setText(ModelManager.getInstance().getAuthorizationManager().getUserName());
+                            else if (stars.endsWith("Stars")) {
+                                stars = stars.substring(0, stars.indexOf(" "));
+                                int star = Integer.parseInt(stars) + 1;
+                                holder.feed_star_user.setText(star + " Stars");
+                                holder.feed_star_user.setTextColor(context.getResources().getColor(R.color.black));
+                            } else
+                                holder.feed_star_user.setText(stars + ", " + ModelManager.getInstance().getAuthorizationManager().getUserName());
+
+                            ModelManager.getInstance().getNewsFeedManager().saveStarComment(authMgr.getPhoneNo(), authMgr.getUsrToken(),eachNewsFeed.get(position).getNewsfeedArray_id(),"","star");
+                        }
+
                 }
             }
         });

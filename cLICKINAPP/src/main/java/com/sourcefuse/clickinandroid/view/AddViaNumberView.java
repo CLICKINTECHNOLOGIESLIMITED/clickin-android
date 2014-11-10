@@ -64,9 +64,7 @@ public class AddViaNumberView extends Activity implements View.OnClickListener {
     @Override
     public void onStart() {
         super.onStart();
-        if (EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().unregister(this);
-        }
+
         EventBus.getDefault().register(this);
     }
 
@@ -102,14 +100,6 @@ public class AddViaNumberView extends Activity implements View.OnClickListener {
 		}
 
 	
-	private void switchView() {
-		Intent intent = new Intent(AddViaNumberView.this, UserProfileView.class);
-		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		intent.putExtra("FromSignup", true);
-   	    intent.putExtra("othersProfile", false);
-   	    intent.putExtra("phNumber", "");
-		startActivity(intent);
-		this.finish();
-	}
+
 	
 }

@@ -15,16 +15,16 @@ public class Constants {
     public static  boolean  addChatMessageListener = false;
 
 //QB for staging
-  public static final String CLICKIN_APP_ID = "6768";
+  /*public static final String CLICKIN_APP_ID = "6768";
    public static final String CLICKIN_AUTH_KEY = "QVr4uK5tt6cu6dN";
    public static final String CLICKIN_AUTH_SECRET = "4thHbq-eyLVJrhe";
-    public static final String ACCOUNTKEY = "gBv3BjZnFzkVPUZEqEXm";
+    public static final String ACCOUNTKEY = "gBv3BjZnFzkVPUZEqEXm";*/
 
 // QB for prod
-  /* public static final String CLICKIN_APP_ID = "5";
+   public static final String CLICKIN_APP_ID = "5";
     public static final String CLICKIN_AUTH_KEY = "6QQJq2FSKKzHK2-";
     public static final String CLICKIN_AUTH_SECRET = "k9cTQAeFWrkEAWv";
-    public static final String ACCOUNTKEY = "gBv3BjZnFzkVPUZEqEXm";*/
+    public static final String ACCOUNTKEY = "gBv3BjZnFzkVPUZEqEXm";
 
 
 	public static final int sliderWidth = 60;

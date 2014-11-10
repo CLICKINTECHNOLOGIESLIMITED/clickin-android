@@ -12,6 +12,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 
+import com.crashlytics.android.Crashlytics;
 import com.quickblox.core.QBCallbackImpl;
 import com.quickblox.core.QBSettings;
 import com.quickblox.core.result.Result;
@@ -38,6 +39,7 @@ public class SplashView extends Activity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Crashlytics.start(this);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.view_splash);
 

@@ -16,7 +16,7 @@ import de.greenrobot.event.EventBus;
 /**
  * Created by mukesh on 25/7/14.
  */
-public class SettingManager implements SettingManagerI {
+public class SettingManager {
     private static final String TAG = SettingManager.class.getSimpleName();
 
     private AuthManager authManager;

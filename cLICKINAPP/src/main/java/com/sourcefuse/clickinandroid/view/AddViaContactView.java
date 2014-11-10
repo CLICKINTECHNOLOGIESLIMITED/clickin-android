@@ -173,7 +173,7 @@ public class AddViaContactView extends Activity implements View.OnClickListener 
 	};
 	private void switchView() {
 		Intent intent = new Intent(AddViaContactView.this, UserProfileView.class);
-		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+	//	intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		intent.putExtra("FromSignup", true);
    	    intent.putExtra("othersProfile", false);
    	    intent.putExtra("phNumber", "Nothing");

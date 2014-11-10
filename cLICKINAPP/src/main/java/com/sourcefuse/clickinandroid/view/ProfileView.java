@@ -6,16 +6,21 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.Typeface;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -44,14 +49,18 @@ import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 import de.greenrobot.event.EventBus;
 
-public class ProfileView extends Activity implements View.OnClickListener, TextWatcher {
+public class ProfileView extends Activity implements OnClickListener, TextWatcher {
     private String TAG = this.getClass().getSimpleName();
 
     public static final String[] MONTHS = {"JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"};
@@ -82,6 +91,7 @@ public class ProfileView extends Activity implements View.OnClickListener, TextW
     private ProfileManager profileManager;
     private String usrtoken;
     private Typeface typeface;
+    private Uri  userImageUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -173,9 +183,7 @@ public class ProfileView extends Activity implements View.OnClickListener, TextW
     @Override
     public void onStart() {
         super.onStart();
-        if (EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().unregister(this);
-        }
+
         EventBus.getDefault().register(this);
     }
 
@@ -211,9 +219,9 @@ public class ProfileView extends Activity implements View.OnClickListener, TextW
 
     private void switchView() {
         Intent intent = new Intent(ProfileView.this, PlayItSafeView.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+      //  intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
-        this.finish();
+      finish();
     }
 
 
@@ -223,35 +231,85 @@ public class ProfileView extends Activity implements View.OnClickListener, TextW
         authManager = ModelManager.getInstance().getAuthorizationManager();
         switch (v.getId()) {
             case R.id.btn_done:
+                Bitmap bitmap;
                 usrtoken = authManager.getUsrToken();
 
                 Log.e("", "---getUsrToken-----" + authManager.getUsrToken());
                 if (updateProfileValidation()) {
 
+
                     if (bitmapImage == null) {
                         try {
                             bitmapImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.default_profile);
+//                            ImageView im = (ImageView) findViewById(R.id.iv_profile_img);
+//                            bitmap = Bitmap.createBitmap(im.getWidth(), im.getHeight(), Bitmap.Config.ARGB_8888);
+//                            Canvas c = new Canvas(bitmap);
+//                            im.getDrawable().draw(c);
                         } catch (Exception e) {
                         }
+                        if (Utils.isEmailValid(email.getText().toString())) {
+                            Utils.launchBarDialog(ProfileView.this);
+                            authManager.setEmailId(email.getText().toString());
+                            profileManager = ModelManager.getInstance().getProfileManager();
+                            String cityStr="";
+                            String countryStr="";
+                            if(city.getText()!=null){
+                                cityStr=city.getText().toString();
+                            }
+
+                            if(country.getText()!=null){
+                                countryStr=country.getText().toString();
+                            }
+                            profileManager.setProfile(fname.getText().toString(), lname.getText().toString(), authManager.getPhoneNo(),
+                                    authManager.getUsrToken(), gender_var, "" + day + month + year, cityStr, countryStr, email.getText().toString(), "", Utils.encodeTobase64(bitmapImage));
+                        } else {
+                            Utils.showAlert(ProfileView.this, AlertMessage.vEmailid);
+                        }
+                    }else{
+                        ImageView im = (ImageView) findViewById(R.id.iv_profile_img);
+
+                        bitmap = Bitmap.createBitmap(im.getWidth(), im.getHeight(), Bitmap.Config.ARGB_8888);
+                        Canvas c = new Canvas(bitmap);
+                        im.getDrawable().draw(c);
+
+                        if (Utils.isEmailValid(email.getText().toString())) {
+                            Utils.launchBarDialog(ProfileView.this);
+                            authManager.setEmailId(email.getText().toString());
+                            profileManager = ModelManager.getInstance().getProfileManager();
+                            String cityStr="";
+                            String countryStr="";
+                            if(city.getText()!=null){
+                                cityStr=city.getText().toString();
+                            }
+
+                            if(country.getText()!=null){
+                                countryStr=country.getText().toString();
+                            }
+                            profileManager.setProfile(fname.getText().toString(), lname.getText().toString(), authManager.getPhoneNo(),
+                                    authManager.getUsrToken(), gender_var, "" + day + month + year, cityStr, countryStr, email.getText().toString(), "", Utils.encodeTobase64(bitmap));
+                        } else {
+                            Utils.showAlert(ProfileView.this, AlertMessage.vEmailid);
+                        }
+
                     }
-                    if (Utils.isEmailValid(email.getText().toString())) {
+               /*     if (Utils.isEmailValid(email.getText().toString())) {
                         Utils.launchBarDialog(ProfileView.this);
                         authManager.setEmailId(email.getText().toString());
                         profileManager = ModelManager.getInstance().getProfileManager();
                         profileManager.setProfile(fname.getText().toString(), lname.getText().toString(), authManager.getPhoneNo(),
-                                authManager.getUsrToken(), gender_var, "" + day + month + year, city.getText().toString(), country.getText().toString(), email.getText().toString(), "", Utils.encodeTobase64(bitmapImage));
+                                authManager.getUsrToken(), gender_var, "" + day + month + year, city.getText().toString(), country.getText().toString(), email.getText().toString(), "", Utils.encodeTobase64(bitmap));
                     } else {
                         Utils.showAlert(ProfileView.this, AlertMessage.vEmailid);
-                    }
+                    }*/
                 }
                 break;
             case R.id.btn_guy:
-                gender_var = "1";
+                gender_var = "guy";
                 guy.setBackgroundResource(R.drawable.c_pink_guy);
                 girl.setBackgroundResource(R.drawable.c_grey_girl);
                 break;
             case R.id.btn_girl_btn:
-                gender_var = "0";
+                gender_var = "girl";
                 guy.setBackgroundResource(R.drawable.c_grey_guy);
                 girl.setBackgroundResource(R.drawable.c_pink_girl);
                 break;
@@ -336,11 +394,11 @@ public class ProfileView extends Activity implements View.OnClickListener, TextW
 
                     try {
                         if (user.getProperty("gender").equals("male")) {
-                            gender_var = "1";
+                            gender_var = "guy";
                             guy.setBackgroundResource(R.drawable.c_pink_guy);
                             girl.setBackgroundResource(R.drawable.c_grey_girl);
                         } else {
-                            gender_var = "0";
+                            gender_var = "girl";
                             guy.setBackgroundResource(R.drawable.c_grey_guy);
                             girl.setBackgroundResource(R.drawable.c_pink_girl);
                         }
@@ -396,7 +454,9 @@ public class ProfileView extends Activity implements View.OnClickListener, TextW
 
 
                         LoadImage task = new LoadImage();
-                        task.execute(new String[]{"https://graph.facebook.com/" + user.getId() + "/picture?type=large"});
+                        String url="https://graph.facebook.com/" + user.getId() + "/picture?type=large";
+                  //      authManager.setUserPic(url);
+                        task.execute(url);
 
 
                         //						Picasso.with(ProfileView.this).load("https://graph.facebook.com/"+user.getId()+"/picture?type=large")
@@ -477,17 +537,25 @@ public class ProfileView extends Activity implements View.OnClickListener, TextW
             @Override
             public void onClick(DialogInterface dialog, int id) {
                 if (id == 0) {
-                    Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                    cameraIntent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
-                    try {
-                        cameraIntent.putExtra("return-data", true);
-                        startActivityForResult(cameraIntent, Constants.CAMERA_REQUEST);
-                    } catch (ActivityNotFoundException e) {
-                    }
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+                    mImageCaptureUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
+                    intent.putExtra("return-data", true);
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
+
+                    // start the image capture Intent
+                    startActivityForResult(intent, Constants.CAMERA_REQUEST);
+//                    Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+//                    cameraIntent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
+//                    try {
+//                        cameraIntent.putExtra("return-data", true);
+//                        startActivityForResult(cameraIntent, Constants.CAMERA_REQUEST);
+//                    } catch (ActivityNotFoundException e) {
+//
                     dialog.dismiss();
                 } else if (id == 1) {
 
-                    Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                     startActivityForResult(pickPhoto, Constants.SELECT_PICTURE);
 
 					/*Intent intent = new Intent();
@@ -500,7 +568,7 @@ public class ProfileView extends Activity implements View.OnClickListener, TextW
         });
 
         dialog.setNeutralButton("Cancel",
-                new android.content.DialogInterface.OnClickListener() {
+                new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
@@ -511,6 +579,60 @@ public class ProfileView extends Activity implements View.OnClickListener, TextW
         dialog.show();
     }
 
+    public static final int MEDIA_TYPE_IMAGE = 1;
+    private static final String IMAGE_DIRECTORY_NAME = "FootGloryFlow Application";
+
+    public static Uri getOutputMediaFileUri(int type) {
+        return Uri.fromFile(getOutputMediaFile(type));
+    }
+
+    private static File getOutputMediaFile(int type) {
+
+        // External sdcard location
+        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), IMAGE_DIRECTORY_NAME);
+
+        // Create the storage directory if it does not exist
+        if (!mediaStorageDir.exists()) {
+            if (!mediaStorageDir.mkdirs()) {
+
+                return null;
+            }
+        }
+
+        // Create a media file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss",
+                Locale.getDefault()).format(new Date());
+        File mediaFile;
+        if (type == MEDIA_TYPE_IMAGE) {
+            mediaFile = new File(mediaStorageDir.getPath() + File.separator
+                    + "IMG_" + timeStamp + ".jpg");
+        } else {
+            return null;
+        }
+
+        return mediaFile;
+    }
+
+    public static Bitmap getBitmapFromCameraData(Intent data, Context context) {
+        Uri selectedImage = data.getData();
+        String[] filePathColumn =
+                {
+                        MediaStore.Images.Media.DATA
+                };
+        Cursor cursor = context.getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+        cursor.moveToFirst();
+        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+        String picturePath = cursor.getString(columnIndex);
+        cursor.close();
+        return BitmapFactory.decodeFile(picturePath);
+    }
+
+    public String getRealPathFromURI(Uri uri) {
+        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+        cursor.moveToFirst();
+        int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+        return cursor.getString(idx);
+    }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         try {
@@ -523,14 +645,142 @@ public class ProfileView extends Activity implements View.OnClickListener, TextW
             if (resultCode == RESULT_OK) {
                 switch (requestCode) {
                     case Constants.CAMERA_REQUEST:
-                        mImageCaptureUri = data.getData();
-                        bitmapImage = Utils.decodeUri(mImageCaptureUri, ProfileView.this);
-                        profileimg.setImageBitmap(bitmapImage);
+//                        mImageCaptureUri = data.getData();
+//                        bitmapImage = Utils.decodeUri(mImageCaptureUri, ProfileView.this);
+//                        profileimg.setImageBitmap(bitmapImage);
+/*test code akshit */
+                        bitmapImage = BitmapFactory.decodeFile(mImageCaptureUri.getPath(), new BitmapFactory.Options());
+
+                        try {
+                            ExifInterface ei = new ExifInterface(mImageCaptureUri.getPath());
+                            int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+
+                            int angle = 0;
+
+                            if (orientation == ExifInterface.ORIENTATION_ROTATE_90) {
+                                angle = 90;
+                            } else if (orientation == ExifInterface.ORIENTATION_ROTATE_180) {
+                                angle = 180;
+                            } else if (orientation == ExifInterface.ORIENTATION_ROTATE_270) {
+                                angle = 270;
+                            }
+                            Matrix mat = new Matrix();
+                            mat.postRotate(angle);
+                            Log.e("angle from camera 1 --->", "" + angle);
+                              /*bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), mat, true);*/
+
+
+                            Bitmap resized;
+                            if (bitmapImage.getWidth() >= bitmapImage.getHeight()) {
+
+                                resized = Bitmap.createBitmap(
+                                        bitmapImage,
+                                        bitmapImage.getWidth() / 2 - bitmapImage.getHeight() / 2,
+                                        0,
+                                        bitmapImage.getHeight(),
+                                        bitmapImage.getHeight(), mat, true
+                                );
+
+                            } else {
+
+                                resized = Bitmap.createBitmap(
+                                        bitmapImage,
+                                        0,
+                                        bitmapImage.getHeight() / 2 - bitmapImage.getWidth() / 2,
+                                        bitmapImage.getWidth(),
+                                        bitmapImage.getWidth(), mat, true
+                                );
+                            }
+                            bitmapImage.recycle();
+
+                            profileimg.setImageBitmap(resized);
+                          //  authManager.setUserbitmap(resized);
+
+                            userImageUri = mImageCaptureUri;
+                      //      authManager.setUserImageUri(userImageUri);
+                        //    authManager.setUserbitmap(resized);
+                            // authManager.setUserPic(imageBitmap.toString());
+                            mImageCaptureUri = null;
+//                            authManager.setMenuUserInfoFlag(true);
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                         break;
                     case Constants.SELECT_PICTURE:
-                        mImageCaptureUri = data.getData();
-                        bitmapImage = Utils.decodeUri(mImageCaptureUri, ProfileView.this);
-                        profileimg.setImageBitmap(bitmapImage);
+//                        mImageCaptureUri = data.getData();
+//                        bitmapImage = Utils.decodeUri(mImageCaptureUri, ProfileView.this);
+//                        profileimg.setImageBitmap(bitmapImage);
+
+                        bitmapImage = getBitmapFromCameraData(data, getApplicationContext());
+
+/*test code akshit */
+                 /*    pick image from gallery  */
+
+
+                        try {
+                            ExifInterface ei = new ExifInterface(getRealPathFromURI(data.getData()));
+                            int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+
+                            int angle = 0;
+
+                            if (orientation == ExifInterface.ORIENTATION_ROTATE_90) {
+                                angle = 90;
+                            } else if (orientation == ExifInterface.ORIENTATION_ROTATE_180) {
+                                angle = 180;
+                            } else if (orientation == ExifInterface.ORIENTATION_ROTATE_270) {
+                                angle = 270;
+                            }
+                            Matrix mat = new Matrix();
+                            mat.postRotate(angle);
+
+
+                            Log.e("angle from gallery --->", "" + angle);
+
+                              /*bitmap1 = Bitmap.createBitmap(bitmap1, 0, 0, bitmap1.getWidth(), bitmap1.getHeight(), mat, true);*/
+
+
+
+
+
+
+                  /*      pick image from gallery    */
+
+
+                            Bitmap resized1;
+                            if (bitmapImage.getWidth() >= bitmapImage.getHeight()) {
+
+                                resized1 = Bitmap.createBitmap(
+                                        bitmapImage,
+                                        bitmapImage.getWidth() / 2 - bitmapImage.getHeight() / 2,
+                                        0,
+                                        bitmapImage.getHeight(),
+                                        bitmapImage.getHeight(), mat, true
+                                );
+
+                            } else {
+
+                                resized1 = Bitmap.createBitmap(
+                                        bitmapImage,
+                                        0,
+                                        bitmapImage.getHeight() / 2 - bitmapImage.getWidth() / 2,
+                                        bitmapImage.getWidth(),
+                                        bitmapImage.getWidth(), mat, true
+                                );
+                            }
+                            bitmapImage.recycle();
+
+                            profileimg.setImageBitmap(resized1);
+
+                            userImageUri = data.getData();
+                        //    authManager.setUserImageUri(userImageUri);
+                          //  authManager.setUserbitmap(resized1);
+
+
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     default:
                         break;
                 }

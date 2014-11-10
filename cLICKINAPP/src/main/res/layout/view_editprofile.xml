@@ -62,7 +62,7 @@
             android:layout_width="118dp"
             android:layout_height="118dp"
             android:layout_weight="1"
-            android:paddingLeft="-10dp"
+            android:paddingLeft="-1dp"
             android:adjustViewBounds="true"
             android:src="@drawable/c_selfie" />
 
@@ -72,6 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/iv_selfi"
             android:layout_weight="1"
+            android:layout_marginLeft="3dp"
             android:orientation="vertical">
 
             <com.sourcefuse.clickinandroid.utils.ClickInTextView
@@ -146,6 +147,8 @@
         android:textColor="@color/black"
         android:textColorHint="@color/sign_hint"
         android:textSize="16sp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginRight="28dp"
         >
 
 
@@ -165,7 +168,9 @@
         android:padding="10dp"
         android:textColor="@color/black"
         android:textColorHint="@color/sign_hint"
-        android:textSize="16sp"></EditText>
+        android:textSize="16sp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginRight="28dp"></EditText>
 
     <EditText
         android:id="@+id/edt_my_email"
@@ -181,7 +186,10 @@
         android:padding="10dp"
         android:textColor="@color/black"
         android:textColorHint="@color/sign_hint"
-        android:textSize="16sp"></EditText>
+        android:textSize="16sp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginRight="28dp"
+        ></EditText>
 
     <EditText
         android:id="@+id/edt_my_city"
@@ -197,7 +205,9 @@
         android:padding="10dp"
         android:textColor="@color/black"
         android:textColorHint="@color/sign_hint"
-        android:textSize="16sp"></EditText>
+        android:textSize="16sp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginRight="28dp"></EditText>
 
     <EditText
         android:id="@+id/edt_my_country"
@@ -213,7 +223,9 @@
         android:padding="10dp"
         android:textColor="@color/black"
         android:textColorHint="@color/sign_hint"
-        android:textSize="16sp"></EditText>
+        android:textSize="16sp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginRight="28dp"></EditText>
 
     <Button
         android:id="@+id/btn_click_to_save"
@@ -222,5 +234,7 @@
         android:layout_below="@+id/edt_my_country"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:background="@drawable/c_save_btn_text" />
+        android:background="@drawable/c_save_btn_text"
+        android:layout_marginLeft="28dp"
+        android:layout_marginRight="28dp"/>
 </RelativeLayout>
