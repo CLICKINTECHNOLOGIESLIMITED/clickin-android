@@ -132,11 +132,15 @@ public class Utils {
     }
 
     public static boolean isCountryCodeValid(String code) {
-        if (code.length() > 0) {
-            return true;
+        if (code.length() > 1) {
+            if(!(code.contains("+(null)")) && !(code.contains("null"))) {
+                return true;
+            }
         } else {
             return false;
         }
+
+        return false;
     }
 
     public static Bitmap getResizedBitmap(Bitmap image, int newHeight, int newWidth) {

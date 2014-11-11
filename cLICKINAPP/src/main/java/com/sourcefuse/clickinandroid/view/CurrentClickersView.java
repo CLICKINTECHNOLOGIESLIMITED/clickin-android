@@ -1,8 +1,7 @@
 package com.sourcefuse.clickinandroid.view;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -46,6 +45,7 @@ public class CurrentClickersView extends Activity implements OnClickListener {
     private CurrentClickersAdapter adapter;
     private ProfileManager profilemanager;
     private AuthManager authManager;
+    Dialog dialog ;
 
     private NewsFeedManager newsFeedManager;
 
@@ -169,7 +169,7 @@ public class CurrentClickersView extends Activity implements OnClickListener {
         }*/ else if (i == R.id.btn_next) {
 
             if(!(CurrentClickersView.followReqStatus)) {
-                new AlertDialog.Builder(this)
+              /*  new AlertDialog.Builder(this)
                         .setMessage(AlertMessage.CURRENTCLICKERPAGE)
                         .setPositiveButton("Ok",
                                 new DialogInterface.OnClickListener() {
@@ -189,7 +189,9 @@ public class CurrentClickersView extends Activity implements OnClickListener {
 
                     }
 
-                }).show();
+                }).show();*/
+				 String str = AlertMessage.CURRENTCLICKERPAGE;
+           		 fromSignalDialog(str);
             }else{
                 Intent clickersView = new Intent(CurrentClickersView.this, SpreadWordView.class);
                 startActivity(clickersView);
@@ -247,7 +249,8 @@ public class CurrentClickersView extends Activity implements OnClickListener {
             Utils.dismissBarDialog();
         } else if(message.equalsIgnoreCase("CheckFriend Network Error")){
             Utils.dismissBarDialog();
-            Utils.showAlert(CurrentClickersView.this, AlertMessage.connectionError);
+            fromSignalDialog(AlertMessage.connectionError);
+           // Utils.showAlert(CurrentClickersView.this, AlertMessage.connectionError);
         } else if (message.equalsIgnoreCase("FetchFbFriend True")) {
             Utils.dismissBarDialog();
             tempCurrentClickers=profilemanager.currentClickerListFB;
@@ -256,7 +259,8 @@ public class CurrentClickersView extends Activity implements OnClickListener {
             Utils.dismissBarDialog();
         } else if(message.equalsIgnoreCase("FetchFbFriend Network Error")){
             Utils.dismissBarDialog();
-            Utils.showAlert(CurrentClickersView.this, AlertMessage.connectionError);
+            fromSignalDialog(AlertMessage.connectionError);
+            //Utils.showAlert(CurrentClickersView.this, AlertMessage.connectionError);
         } /*else if (message.equalsIgnoreCase("NewsFeed False")) {
             Log.d("2", "message->" + message);
             Utils.dismissBarDialog();
@@ -273,5 +277,38 @@ public class CurrentClickersView extends Activity implements OnClickListener {
             EventBus.getDefault().unregister(this);
         }
     }
+
+    // Akshit Code Starts
+    public void fromSignalDialog(String str){
+
+        dialog = new Dialog(CurrentClickersView.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.setContentView(R.layout.alert_current_clicker);
+        dialog.setCancelable(false);
+        TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
+        msgI.setText(str);
+        msgI.setText(AlertMessage.CURRENTCLICKERPAGE);
+
+        Button skip = (Button)dialog.findViewById(R.id.coolio);
+        skip.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent clickersView = new Intent(CurrentClickersView.this, SpreadWordView.class);
+                startActivity(clickersView);
+            }
+        });
+
+        Button dismiss = (Button) dialog.findViewById(R.id.coolio1);
+        dismiss.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                dialog.dismiss();
+
+            }
+        });
+        dialog.show();
+    }
+// Ends
 
 }

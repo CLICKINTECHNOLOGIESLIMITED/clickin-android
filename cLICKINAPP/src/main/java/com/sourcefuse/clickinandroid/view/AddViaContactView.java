@@ -1,8 +1,7 @@
 package com.sourcefuse.clickinandroid.view;
 
 import android.app.Activity;
-import android.content.BroadcastReceiver;
-import android.content.Context;
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -34,6 +33,7 @@ public class AddViaContactView extends Activity implements View.OnClickListener 
 	String  image_uri,mPhNo;
 	private ImageView conIcon;
 	private AuthManager authManager ;
+    Dialog dialog ;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -140,10 +140,12 @@ public class AddViaContactView extends Activity implements View.OnClickListener 
         } else if (message.equalsIgnoreCase("RequestSend False")) {
             Utils.dismissBarDialog();
             Log.d("2", "message->"+message);
-            Utils.showAlert(AddViaContactView.this, authManager.getMessage());
+            fromSignalDialog(authManager.getMessage());
+          //  Utils.showAlert(AddViaContactView.this, authManager.getMessage());
         } else if(message.equalsIgnoreCase("RequestSend Network Error")){
             Utils.dismissBarDialog();
-            Utils.showAlert(AddViaContactView.this, AlertMessage.connectionError);
+            fromSignalDialog(AlertMessage.connectionError);
+           // Utils.showAlert(AddViaContactView.this, AlertMessage.connectionError);
             Log.d("3", "message->"+message);
 
         }
@@ -161,5 +163,27 @@ public class AddViaContactView extends Activity implements View.OnClickListener 
 		super.onDestroy();
 	}
 
+    // Akshit Code Starts
+    public void fromSignalDialog(String str){
 
+        dialog = new Dialog(AddViaContactView.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.setContentView(R.layout.alert_check_dialogs);
+        dialog.setCancelable(false);
+        TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
+        msgI.setText(str);
+
+
+        Button dismiss = (Button) dialog.findViewById(R.id.coolio);
+        dismiss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                dialog.dismiss();
+
+            }
+        });
+        dialog.show();
+    }
+// Ends
 }

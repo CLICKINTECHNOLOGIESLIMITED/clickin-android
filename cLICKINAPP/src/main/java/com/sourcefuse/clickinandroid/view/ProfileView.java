@@ -219,10 +219,12 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
             switchView();
         } else if (message.equalsIgnoreCase("UpdateProfile False")) {
             Utils.dismissBarDialog();
-            Utils.showAlert(ProfileView.this, authManager.getMessage());
+            alertDialog(authManager.getMessage());
+            //Utils.showAlert(ProfileView.this, authManager.getMessage());
         } else if (message.equalsIgnoreCase("UpdateProfile Network Error")) {
             Utils.dismissBarDialog();
-            Utils.showAlert(this, AlertMessage.connectionError);
+            alertDialog(AlertMessage.connectionError);
+            //Utils.showAlert(this, AlertMessage.connectionError);
         }
 
     }
@@ -270,13 +272,15 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
                             profileManager.setProfile(fname.getText().toString(), lname.getText().toString(), authManager.getPhoneNo(),
                                     authManager.getUsrToken(), gender_var, "" + day + month + year, cityStr, countryStr, email.getText().toString(), "", Utils.encodeTobase64(bitmapImage));
                         } else {
-                            Utils.showAlert(ProfileView.this, AlertMessage.vEmailid);
+                            alertDialog(AlertMessage.vEmailid);
+                            //Utils.showAlert(ProfileView.this, AlertMessage.vEmailid);
                         }
                     }else{
                         ImageView im = (ImageView) findViewById(R.id.iv_profile_img);
 
                         bitmap = Bitmap.createBitmap(im.getWidth(), im.getHeight(), Bitmap.Config.ARGB_8888);
                         Canvas c = new Canvas(bitmap);
+                        if(im.getDrawable()!=null)
                         im.getDrawable().draw(c);
 
                         if (Utils.isEmailValid(email.getText().toString())) {
@@ -295,7 +299,8 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
                             profileManager.setProfile(fname.getText().toString(), lname.getText().toString(), authManager.getPhoneNo(),
                                     authManager.getUsrToken(), gender_var, "" + day + month + year, cityStr, countryStr, email.getText().toString(), "", Utils.encodeTobase64(bitmap));
                         } else {
-                            Utils.showAlert(ProfileView.this, AlertMessage.vEmailid);
+                            alertDialog(AlertMessage.vEmailid);
+                            //Utils.showAlert(ProfileView.this, AlertMessage.vEmailid);
                         }
 
                     }
@@ -876,22 +881,27 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
     public boolean updateProfileValidation() {
         Log.e(TAG, "mCurrentyear" + mCurrentyear + "  year " + year);
         if (fname.getText().toString().length() < 1) {
-            Utils.showAlert(ProfileView.this, AlertMessage.fname);
+            alertDialog(AlertMessage.fname);
+           // Utils.showAlert(ProfileView.this, AlertMessage.fname);
             return false;
         } else if (lname.getText().toString().length() < 1) {
-            Utils.showAlert(ProfileView.this, AlertMessage.lname);
+            alertDialog(AlertMessage.lname);
+           // Utils.showAlert(ProfileView.this, AlertMessage.lname);
             return false;
         } else if (email.getText().toString().length() < 1) {
-            Utils.showAlert(ProfileView.this, AlertMessage.emailid);
+            alertDialog(AlertMessage.emailid);
+         //   Utils.showAlert(ProfileView.this, AlertMessage.emailid);
             return false;
         } else if ((mCurrentyear - year) == 0) {
             Log.e(TAG, "mCurrentyear" + mCurrentyear + "  year " + year);
-            Utils.showAlert(ProfileView.this, AlertMessage.ageValid);
+            alertDialog(AlertMessage.ageValid);
+           // Utils.showAlert(ProfileView.this, AlertMessage.ageValid);
             return false;
         }  // else if (periods_years.isLessThan(Years.years(17))) {
            else if(diffrence_in_mills < mills_in_17yrs){
             Log.e(TAG, "mCurrentyear" + diffrence_in_mills + "  year " + mills_in_17yrs);
-            Utils.showAlert(ProfileView.this, AlertMessage.UDERAGEMSGII);
+            alertDialog(AlertMessage.UDERAGEMSGII);
+         //   Utils.showAlert(ProfileView.this, AlertMessage.UDERAGEMSGII);
             return false;
         }
         return true;
@@ -906,21 +916,21 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
         return period;
     }
 
-    public void alertDialog(String msgStrI, String msgStrII) {
+    public void alertDialog(String msgStrI) {
         dialog = new Dialog(ProfileView.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawableResource(
                 android.R.color.transparent);
-        dialog.setContentView(R.layout.alert_nocheck);
+        dialog.setContentView(R.layout.alert_check_dialogs);
 
         TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
-        TextView msgII = (TextView) dialog.findViewById(R.id.alert_msgII);
+//        TextView msgII = (TextView) dialog.findViewById(R.id.alert_msgII);
         msgI.setText(msgStrI);
-        msgII.setText(msgStrII);
+
 
         // dialog.setCancelable(true);
         Button dismiss = (Button) dialog.findViewById(R.id.coolio);
-        dismiss.setBackgroundResource(R.drawable.try_again);
+
         dismiss.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View arg0) {

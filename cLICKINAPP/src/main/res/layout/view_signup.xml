@@ -118,7 +118,9 @@
             android:text=""
             android:textColor="@color/phone_no_clr"
             android:textColorHint="@color/defult_hint_clr"
-            android:textSize="16sp">
+            android:textSize="16sp"
+            android:textStyle="bold"
+            >
 
             <requestFocus />
         </EditText>

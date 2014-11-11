@@ -7,7 +7,7 @@ public class AlertMessage {
 
     public static final String Phonenolength = "The phone number you have entered is invalid. Please try again";
 	
-	public static final String phone = "Please enter a correct mobile number";
+	public static final String phone = "Enter correct mobile number";
 	public static final String dob = "Date of Birth can't be blank";
 	public static final String fname = "Please enter your First Name";
 	public static final String lname = "Please enter your Last Name";

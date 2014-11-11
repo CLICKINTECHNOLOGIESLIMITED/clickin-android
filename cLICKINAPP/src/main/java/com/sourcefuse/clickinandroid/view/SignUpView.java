@@ -37,6 +37,8 @@ public class SignUpView extends Activity implements TextWatcher,OnClickListener 
 	private EditText phoneNo, cntrycode;
 	private AuthManager authManager ;
 	private Typeface typefaceBold;
+    private Dialog dialog ;
+
 
 
 	@Override
@@ -140,10 +142,14 @@ public class SignUpView extends Activity implements TextWatcher,OnClickListener 
                     authManager.setPhoneNo(countryCode+ enterdPhoneNo);
                     authManager.signUpAuth(countryCode + enterdPhoneNo, Utils.deviceId.toString());
                 } else {
-                    Utils.showAlert(SignUpView.this, AlertMessage.phone);
+
+                    fromSignalDialog(AlertMessage.phone);
+                    //Utils.showAlert(SignUpView.this, AlertMessage.phone);
                 }
             }else{
-                Utils.showAlert(SignUpView.this, AlertMessage.country);
+
+                fromSignalDialog(AlertMessage.country);
+               // Utils.showAlert(SignUpView.this, AlertMessage.country);
             }
 			break;
 		}
@@ -221,12 +227,40 @@ public class SignUpView extends Activity implements TextWatcher,OnClickListener 
             finish();
         } else if (getMsg.equalsIgnoreCase("SignUp False")) {
             Utils.dismissBarDialog();
-            Utils.showAlert(SignUpView.this, AlertMessage.usrAllreadyExists);
+            fromSignalDialog(AlertMessage.usrAllreadyExists);
+           // Utils.showAlert(SignUpView.this, AlertMessage.usrAllreadyExists);
         } else if(getMsg.equalsIgnoreCase("SignUp Network Error")){
             Utils.dismissBarDialog();
-            Utils.showAlert(this, AlertMessage.connectionError);
+            fromSignalDialog(AlertMessage.connectionError);
+           // Utils.showAlert(this, AlertMessage.connectionError);
         }
     }
 
 
-}
+    // Akshit Code Starts
+    public void fromSignalDialog(String str){
+
+        dialog = new Dialog(SignUpView.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.setContentView(R.layout.alert_check_dialogs);
+        dialog.setCancelable(false);
+        TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
+        msgI.setText(str);
+
+
+        Button dismiss = (Button) dialog.findViewById(R.id.coolio);
+        dismiss.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                dialog.dismiss();
+
+            }
+        });
+        dialog.show();
+    }
+// Ends
+
+    }
+
+
