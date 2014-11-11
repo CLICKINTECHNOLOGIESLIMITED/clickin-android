@@ -1,15 +1,91 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:geekui="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/rl_main_signup"
     android:background="@drawable/white_pattern_bg">
 
-    <ImageView
+    <LinearLayout
         android:id="@+id/iv_topicon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/header_signin" />
+        android:background="@drawable/c_header_bg"
+        android:weightSum="2"
+        android:orientation="vertical">
 
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="50dp"-->
+            <!--android:orientation="vertical"-->
+            <!--android:weightSum="2"-->
+            <!-->-->
+
+            <com.sourcefuse.clickinandroid.utils.ClickInTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="bottom"
+            android:text="ENTER YOUR"
+            android:textColor="@color/profile_usr_name"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
+            android:paddingTop="10dp"
+
+                android:layout_marginTop="-30dp"
+                />
+
+            <com.sourcefuse.clickinandroid.utils.ClickInTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:layout_weight="1"
+                android:gravity="top"
+                android:text="DIGITS!"
+                android:textColor="@color/profile_usr_name"
+                android:textSize="51sp"
+                android:textStyle="bold"
+                geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
+                android:layout_marginTop="-16dp"
+                android:layout_marginLeft="75dp"
+               />
+
+           </LinearLayout>
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="50dp"-->
+            <!--android:gravity="top">-->
+
+            <!--<com.sourcefuse.clickinandroid.utils.ClickInTextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_gravity="center_vertical|top"-->
+                <!--android:layout_weight="1"-->
+                <!--android:text="DIGITS!"-->
+                <!--android:textColor="@color/profile_usr_name"-->
+                <!--android:textSize="45sp"-->
+                <!--android:paddingLeft="75sp"-->
+                <!--android:textStyle="bold"-->
+                <!--geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"-->
+                <!--android:gravity="center_vertical|top" />-->
+            <!--</LinearLayout>-->
+        <!--<com.sourcefuse.clickinandroid.utils.ClickInTextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--android:layout_weight="1"-->
+            <!--android:lines="2"-->
+            <!--android:gravity="center_horizontal"-->
+            <!--android:text="ENTER YOUR \n DIGITS !"-->
+            <!--android:textColor="@color/profile_usr_name"-->
+            <!--android:textSize="35sp"-->
+            <!--android:textStyle="bold"-->
+            <!--geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"-->
+             <!--/>-->
+
+    <!--</LinearLayout>-->
     <RelativeLayout
         android:id="@+id/linearLayout1"
         android:layout_width="wrap_content"
@@ -34,11 +110,12 @@
             android:layout_below="@+id/tv_cntrycode"
             android:layout_marginRight="3dp"
             android:background="@drawable/s_country_code_textfield"
-
+            android:inputType="phone"
+            android:ems="4"
             android:paddingBottom="8dp"
             android:paddingLeft="5dp"
             android:paddingTop="8dp"
-            android:text="+"
+            android:text=""
             android:textColor="@color/phone_no_clr"
             android:textColorHint="@color/defult_hint_clr"
             android:textSize="16sp">
@@ -53,8 +130,10 @@
             android:layout_below="@+id/tv_cntrycode"
             android:layout_toRightOf="@+id/edt_code"
             android:background="@drawable/s_number_textfield"
-            android:ems="10"
             android:hint="@string/txt_phonenumber"
+            android:inputType="phone"
+            android:ems="10"
+
 
             android:maxLength="10"
             android:paddingBottom="8dp"

@@ -1,55 +1,53 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:geekui="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+
+
     android:layout_height="match_parent"
+    android:id="@+id/btn_add_someone_action"
     android:background="@drawable/white_pattern_bg">
 
-    <ImageView
+    <LinearLayout
         android:id="@+id/iv_topicon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/add_someone" />
-    <!--   <LinearLayout
-           android:id="@+id/iv_topicon"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_centerHorizontal="true"
-           android:background="@drawable/header_bg"
-           android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@drawable/c_header_bg"
+        android:weightSum="2">
 
-           <LinearLayout
+        <com.sourcefuse.clickinandroid.utils.ClickInTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="ADD SOMEONE"
+            android:textColor="@color/profile_usr_name"
+            android:textSize="43sp"
+            android:textStyle="bold"
 
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:layout_gravity="center_horizontal"
-               android:background="@drawable/header_bg"
-               android:orientation="vertical">
+            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
+            />
+        <com.sourcefuse.clickinandroid.utils.ClickInTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="TO CLICK WITH"
+            android:textColor="@color/profile_usr_name"
+            android:textSize="43sp"
+            android:textStyle="bold"
+          android:layout_marginLeft="24dp"
+            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
+            android:layout_marginTop="-58dp"
+            />
 
-               <com.sourcefuse.clickin.utils.ClickInTextView
-                   android:id="@+id/tv_fb_msg_t"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:layout_gravity="center_horizontal"
-                   android:gravity="center_horizontal"
-                   android:text="ADD SOMEONE"
-                   android:textColor="@color/common_header_clr"
-                   android:textSize="36sp"
-                   android:textStyle="bold"
-                   geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
+      
 
-               <com.sourcefuse.clickin.utils.ClickInTextView
-                   android:id="@+id/tv_fb_msg_two"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:layout_gravity="center_horizontal"
-                   android:gravity="center_horizontal"
-                   android:text="TO CLICK WITH"
-                   android:textColor="@color/common_header_clr"
-                   android:textSize="36sp"
-                   android:textStyle="bold"
-                   geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
-           </LinearLayout>
-       </LinearLayout>-->
+    </LinearLayout>
+
     <RelativeLayout
         android:id="@+id/linearLayout1"
         android:layout_width="wrap_content"

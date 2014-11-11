@@ -82,7 +82,9 @@
 
                         android:textColor="@color/owner_profile_name_b"
                         android:textSize="20sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                       />
+
 
                     <ImageView
                         android:id="@+id/iv_usr_icon"
@@ -91,6 +93,7 @@
                         android:layout_below="@+id/tv_name"
                         android:layout_marginLeft="10dp"
                         android:adjustViewBounds="true"
+                        android:scaleType="fitXY"
                         />
 
                     <TextView

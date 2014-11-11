@@ -122,10 +122,49 @@
     </RelativeLayout>
 
 
-    <ImageView
+    <LinearLayout
         android:id="@+id/iv_toboard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/c_spread_word" />
+        android:orientation="vertical"
+        android:background="@drawable/c_header_bg"
+        android:weightSum="2">
+
+        <com.sourcefuse.clickinandroid.utils.ClickInTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0.9"
+            android:gravity="center"
+            android:text="SPREAD"
+            android:textColor="@color/profile_usr_name"
+            android:textSize="49sp"
+            android:textStyle="bold"
+            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
+
+            />
+
+        <com.sourcefuse.clickinandroid.utils.ClickInTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0.9"
+            android:gravity="center"
+            android:text="THE WORD"
+            android:textColor="@color/profile_usr_name"
+            android:textSize="37sp"
+            android:textStyle="bold"
+            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
+
+            android:layout_marginTop="-50dp"
+            />
+    </LinearLayout>
+
+    <!--<ImageView-->
+    <!--android:id="@+id/iv_toboard"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_centerHorizontal="true"-->
+    <!--android:background="@drawable/c_current_clickers" />-->
 </RelativeLayout>

@@ -1,15 +1,51 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:geekui="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/rl_playitsafe_action"
     android:background="@drawable/white_pattern_bg">
 
 
-    <ImageView
+    <LinearLayout
         android:id="@+id/iv_topicon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/play_it_safe" />
+        android:background="@drawable/c_header_bg"
+        android:weightSum="2">
+
+        <com.sourcefuse.clickinandroid.utils.ClickInTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0.8"
+            android:gravity="center"
+            android:text="PLAY IT"
+            android:textColor="@color/profile_usr_name"
+            android:textSize="45sp"
+            android:textStyle="bold"
+
+
+            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
+            />
+
+        <com.sourcefuse.clickinandroid.utils.ClickInTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0.8"
+            android:gravity="top"
+            android:text="SAFE"
+            android:textColor="@color/profile_usr_name"
+            android:textSize="67sp"
+            android:textStyle="bold"
+            android:layout_marginTop="-28dp"
+            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
+            />
+
+
+    </LinearLayout>
 
 
     <RelativeLayout

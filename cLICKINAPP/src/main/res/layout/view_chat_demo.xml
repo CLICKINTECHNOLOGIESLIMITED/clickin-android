@@ -34,9 +34,10 @@
 
             <ImageView
                 android:id="@+id/iv_chat_image"
-                android:layout_width="164dp"
-                android:layout_height="164dp"
-                android:background="@drawable/chat_image_pink_bg" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                />
 
             <ImageView
                 android:id="@+id/iv_audioView"

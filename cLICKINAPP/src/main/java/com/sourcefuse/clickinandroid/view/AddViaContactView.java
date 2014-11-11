@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
+import com.sourcefuse.clickinandroid.model.ProfileManager;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.Utils;
@@ -30,7 +31,6 @@ public class AddViaContactView extends Activity implements View.OnClickListener 
 	private Button backButton,getClickIn;
 	private TextView contacName;
 	private EditText phoneNo,cntry_cd;
-	private Bitmap bitmap;
 	String  image_uri,mPhNo;
 	private ImageView conIcon;
 	private AuthManager authManager ;
@@ -54,7 +54,6 @@ public class AddViaContactView extends Activity implements View.OnClickListener 
 			Bundle bundle = getIntent().getExtras();
 			contacName.setText("" + bundle.getString("ConName"));
             mPhNo = bundle.getString("ConNumber");
-            Log.e(TAG,"mPhNo-->"+mPhNo);
             cntry_cd.setText("" + mPhNo.substring(0,3));
 			phoneNo.setText("" + mPhNo.substring(3));
 
@@ -88,13 +87,20 @@ public class AddViaContactView extends Activity implements View.OnClickListener 
 			break;
 		case R.id.btn_get_clickIn:
 
-            Intent smsIntent = new Intent(Intent.ACTION_VIEW);
-            smsIntent.putExtra("sms_body", Constants.SEND_REQUEST_WITH_SMS_MESSAGE);
-            smsIntent.putExtra("address", mPhNo);
-            smsIntent.setType("vnd.android-dir/mms-sms");
-            startActivity(smsIntent);
-           // authManager = ModelManager.getInstance().getAuthorizationManager();
-            //authManager.sendNewRequest(authManager.getPhoneNo(), phoneNo.getText().toString(), authManager.getUsrToken());
+
+            ProfileManager prfManager= ModelManager.getInstance().getProfileManager();
+            if(prfManager.currClickersPhoneNums.contains(mPhNo)){
+                authManager = ModelManager.getInstance().getAuthorizationManager();
+                authManager.sendNewRequest(authManager.getPhoneNo(), phoneNo.getText().toString(), authManager.getUsrToken());
+            }else{
+                Intent smsIntent = new Intent(Intent.ACTION_VIEW);
+                smsIntent.putExtra("sms_body", Constants.SEND_REQUEST_WITH_SMS_MESSAGE);
+                smsIntent.putExtra("address", mPhNo);
+                smsIntent.setType("vnd.android-dir/mms-sms");
+                startActivity(smsIntent);
+            }
+
+
 			break;
 		}
 		
@@ -105,9 +111,7 @@ public class AddViaContactView extends Activity implements View.OnClickListener 
     @Override
     public void onStart() {
         super.onStart();
-        if (EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().unregister(this);
-        }
+
         EventBus.getDefault().register(this);
     }
 
@@ -124,9 +128,15 @@ public class AddViaContactView extends Activity implements View.OnClickListener 
         Log.d(TAG, "onEventMainThread->"+message);
         if (message.equalsIgnoreCase("RequestSend True")) {
             Utils.dismissBarDialog();
-            Log.d("1", "message->"+message);
+            //Log.d("1", "message->"+message);
+
+            Intent intent = new Intent(this,CurrentClickersView.class);
+            intent.putExtra("FromMenu",false);
+            intent.putExtra("FromSignup", true);
+            startActivity(intent);
+
             finish();
-            //switchView();
+
         } else if (message.equalsIgnoreCase("RequestSend False")) {
             Utils.dismissBarDialog();
             Log.d("2", "message->"+message);
@@ -135,7 +145,7 @@ public class AddViaContactView extends Activity implements View.OnClickListener 
             Utils.dismissBarDialog();
             Utils.showAlert(AddViaContactView.this, AlertMessage.connectionError);
             Log.d("3", "message->"+message);
-            finish();
+
         }
     }
 
@@ -146,38 +156,10 @@ public class AddViaContactView extends Activity implements View.OnClickListener 
 
     @Override
 	public void onDestroy() {
-		// Unregister since the activity is about to be closed.
-		LocalBroadcastManager.getInstance(AddViaContactView.this).unregisterReceiver(
-				mMessageReceiver);
+
+
 		super.onDestroy();
 	}
-	private final BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
-		@Override
-		public void onReceive(Context context, Intent intent) {
-			authManager = ModelManager.getInstance().getAuthorizationManager();
-			String message = intent.getStringExtra("message");
-				if (message.equalsIgnoreCase("RequestSend True")) {
-					Utils.dismissBarDialog();
-					Log.d("1", "message->"+message);
-					switchView();
-				} else if (message.equalsIgnoreCase("RequestSend False")) {
-					Utils.dismissBarDialog();
-					
-					Log.d("2", "message->"+message);
-				} else if(message.equalsIgnoreCase("RequestSend Network Error")){
-					Utils.dismissBarDialog();
-					Utils.showAlert(AddViaContactView.this, AlertMessage.connectionError);
-					Log.d("3", "message->"+message);
-				}
-		}
-	};
-	private void switchView() {
-		Intent intent = new Intent(AddViaContactView.this, UserProfileView.class);
-	//	intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		intent.putExtra("FromSignup", true);
-   	    intent.putExtra("othersProfile", false);
-   	    intent.putExtra("phNumber", "Nothing");
-		startActivity(intent);
-		this.finish();
-	}
+
+
 }

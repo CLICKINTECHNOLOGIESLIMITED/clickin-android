@@ -57,7 +57,7 @@ dependencies {
     compile 'com.google.android.gms:play-services:3.1+'
     compile 'com.viewpagerindicator:library:2.4.1@aar'
     compile files('libs/java-json.jar')
-
+    compile files ('libs/joda-time-2.5.jar')
 //    repositories {
 //        mavenCentral()
 //    }

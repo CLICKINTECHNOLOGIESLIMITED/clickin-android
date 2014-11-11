@@ -144,9 +144,21 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
       //  notificationMngr.getNotification("", authManager.getPhoneNo(), authManager.getUsrToken());
 
         //make next webservice request after current is finished
+        Bundle b=getIntent().getExtras();
+        boolean FromSignup=false;
+        if(b!=null){
+            if(b.containsKey("FromSignup")){
+                 FromSignup = getIntent().getExtras().getBoolean("FromSignup");
+            }
+        }
 
-        relationManager = ModelManager.getInstance().getRelationManager();
-        relationManager.getRelationShips(authManager.getPhoneNo(), authManager.getUsrToken());
+        if(FromSignup){
+            authManager.getProfileInfo("", authManager.getPhoneNo(), authManager.getUsrToken());
+        }else {
+
+            relationManager = ModelManager.getInstance().getRelationManager();
+            relationManager.getRelationShips(authManager.getPhoneNo(), authManager.getUsrToken());
+        }
         Log.e(TAG,"vv"+authManager.getPhoneNo()+""+authManager.getUsrToken());
         //profile information is already set in signIn view or in splash screen for auto login
       //  authManager.getProfileInfo("", authManager.getPhoneNo(), authManager.getUsrToken());
@@ -154,6 +166,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
       //  ModelManager.getInstance().getProfileManager().getFollwer("", authManager.getPhoneNo(), authManager.getUsrToken());
 	   // setProfileDataView();
         //setlist();
+
 
 
 
@@ -436,6 +449,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
        if (message.equalsIgnoreCase("deleteRelationship True")) {
            relationManager.getRelationShips(authManager.getPhoneNo(), authManager.getUsrToken());
         } else if (message.equalsIgnoreCase("deleteRelationship False")) {
+           Utils.dismissBarDialog();
             Utils.showAlert(UserProfileView.this, authManager.getMessage());
         } else if(message.equalsIgnoreCase("deleteRelationship Error")){
             Utils.dismissBarDialog();
@@ -450,12 +464,12 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
            Utils.showAlert(UserProfileView.this, AlertMessage.connectionError);
        }else if (message.equalsIgnoreCase("updateStatus true")) {
            relationManager.getRelationShips(authManager.getPhoneNo(), authManager.getUsrToken());
-        }else if (message.equalsIgnoreCase("SearchResult True")) {
+        }/*else if (message.equalsIgnoreCase("SearchResult True")) {
             Utils.dismissBarDialog();
             stopSearch = true;
             searchList.setVisibility(View.VISIBLE);
             setSearchList();
-        }else if(message.equalsIgnoreCase("UserVisible true")){
+        }*/else if(message.equalsIgnoreCase("UserVisible true")){
             adapter.notifyDataSetChanged();
             Log.d("3", "message->" + message);
         }else if(message.equalsIgnoreCase("Notification true")){
@@ -474,84 +488,21 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
            // setLeftMenuList();
          //  ModelManager.getInstance().getProfileManager().getFollwer("", authManager.getPhoneNo(), authManager.getUsrToken());
            doRestInitialization();
-        }else if (message.equalsIgnoreCase("NewsFeed True")) {
-           Utils.dismissBarDialog();
-           Log.d("1", "message aya->" + message);
-           Intent intent = new Intent(UserProfileView.this, FeedView.class);
-           startActivity(intent);
-       } else if (message.equalsIgnoreCase("NewsFeed False")) {
-           stopSearch = true;
-           Utils.dismissBarDialog();
-           //Utils.showAlert(UserProfileView.this, authManager.getMessage());
-           Log.d("2", "message->" + message);
-       } else if (message.equalsIgnoreCase("NewsFeed Error")) {
-           stopSearch = true;
-           Utils.dismissBarDialog();
-          // Utils.showAlert(UserProfileView.this, AlertMessage.connectionError);
-           Log.d("3", "message->" + message);
-       }else if (message.equalsIgnoreCase("ProfileInfo True")) {
+        }else if (message.equalsIgnoreCase("ProfileInfo True")) {
            Log.e(TAG,"ProfileInfo True");
-           setProfileDataView();
+           //setProfileDataView();
            relationManager. getRelationShips(authManager.getPhoneNo(), authManager.getUsrToken());
        } else if (message.equalsIgnoreCase("ProfileInfo False")) {
            Utils.dismissBarDialog();
-           //Utils.showAlert(UserProfileView.this, authManager.getMessage());
+           Utils.showAlert(UserProfileView.this, authManager.getMessage());
        } else if(message.equalsIgnoreCase("ProfileInfo Network Error")){
            Utils.dismissBarDialog();
-          // Utils.showAlert(UserProfileView.this, AlertMessage.connectionError);
-       }else if (message.equalsIgnoreCase("SearchResult True")) {
-           stopSearch = true;
-           Utils.dismissBarDialog();
-           searchList.setVisibility(View.VISIBLE);
-           setSearchList();
-       } else if (message.equalsIgnoreCase("SearchResult False")) {
-           stopSearch = true;
-           Utils.dismissBarDialog();
-           Utils.showAlert(UserProfileView.this, authManager.getMessage());
-       } else if (message.equalsIgnoreCase("SearchResult Error")) {
-           stopSearch = true;
-           Utils.dismissBarDialog();
            Utils.showAlert(UserProfileView.this, AlertMessage.connectionError);
-       }else if (message.equalsIgnoreCase("NewsFeed  True")) {
-           Utils.dismissBarDialog();
-           Intent intent = new Intent(UserProfileView.this, FeedView.class);
-           startActivity(intent);
-       } else if (message.equalsIgnoreCase("NewsFeed False")) {
-           stopSearch = true;
-           Utils.dismissBarDialog();
-           Utils.showAlert(UserProfileView.this, authManager.getMessage());
-       } else if (message.equalsIgnoreCase("NewsFeed Error")) {
-           stopSearch = true;
-           Utils.dismissBarDialog();
-           Utils.showAlert(UserProfileView.this, AlertMessage.connectionError);
-       }/*else if (message.equalsIgnoreCase("GetRelationShips True")) {
-           Utils.dismissBarDialog();
-           switchView();
-       } else if (message.equalsIgnoreCase("GetRelationShips False")) {
-           Utils.dismissBarDialog();
-           switchView();
-           // Utils.showAlert(SignInView.this, authManager.getMessage());
-       } */else if (message.equalsIgnoreCase("GetRelationShips Network Error")) {
-           Utils.dismissBarDialog();
-           Utils.showAlert(UserProfileView.this, AlertMessage.connectionError);
-       }/*else if (message.equalsIgnoreCase("ProfileInfo True")) {
-           setProfileDataView();
-       } */else if (message.equalsIgnoreCase("ProfileInfo False")) {
-           Utils.dismissBarDialog();
-           Utils.showAlert(UserProfileView.this, authManager.getMessage());
-       } else if (message.equalsIgnoreCase("ProfileInfo Network Error")) {
-           Utils.dismissBarDialog();
-           Utils.showAlert(UserProfileView.this, AlertMessage.connectionError);
-       }else if(message.equalsIgnoreCase("GetFollower True")){
+       } /*else if(message.equalsIgnoreCase("GetFollower True")){
            Utils.dismissBarDialog();
            doRestInitialization();
-        }
+        }*/
 
-
-
-       else {
-           Log.d("Else Part", "message->" + message);
-       }
 
     }
 

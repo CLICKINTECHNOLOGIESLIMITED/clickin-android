@@ -1,14 +1,55 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/white_pattern_bg">
+    android:id="@+id/rl_addvia_no_action"
+    android:background="@drawable/white_pattern_bg"
+    xmlns:geekui="http://schemas.android.com/apk/res-auto"
+    >
 
-    <ImageView
+    <LinearLayout
         android:id="@+id/iv_topicon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/add_someone" />
+        android:orientation="vertical"
+        android:background="@drawable/c_header_bg"
+        android:weightSum="2">
+
+        <com.sourcefuse.clickinandroid.utils.ClickInTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="bottom"
+            android:text="ADD SOMEONE"
+            android:textColor="@color/profile_usr_name"
+            android:textSize="43sp"
+            android:textStyle="bold"
+            android:layout_marginLeft="2dp"
+            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
+            />
+        <com.sourcefuse.clickinandroid.utils.ClickInTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_weight="1"
+            android:gravity="top"
+            android:text="TO CLICK WITH"
+            android:textColor="@color/profile_usr_name"
+            android:textSize="43sp"
+            android:textStyle="bold"
+            android:paddingLeft="28dp"
+            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
+            android:layout_marginTop="-20dp"
+            />
+    </LinearLayout>
+
+    <!--<ImageView-->
+    <!--android:id="@+id/iv_topicon"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_centerHorizontal="true"-->
+    <!--android:background="@drawable/add_someone" />-->
 
     <RelativeLayout
         android:id="@+id/linearLayout1"
@@ -38,14 +79,31 @@
             android:layout_below="@+id/edt_text_cntry_cd"
             android:orientation="horizontal">
 
+            <!--<EditText-->
+                <!--android:id="@+id/edt_cntry_cd"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="45dp"-->
+                <!--android:layout_below="@+id/tv_cntrycode"-->
+                <!--android:layout_marginRight="3dp"-->
+                <!--android:background="@drawable/s_country_code_textfield"-->
+                <!--android:inputType="number"-->
+                <!--android:maxLength="3"-->
+                <!--android:ems="4"-->
+                <!--android:paddingBottom="8dp"-->
+                <!--android:paddingLeft="5dp"-->
+                <!--android:paddingTop="8dp"-->
+                <!--android:text=""-->
+                <!--android:textColor="@color/black"-->
+                <!--android:textColorHint="@color/defult_hint_clr"-->
+                <!--android:textSize="16sp"></EditText>-->
+
             <EditText
                 android:id="@+id/edt_cntry_cd"
-                android:layout_width="50dp"
+                android:layout_width="wrap_content"
                 android:layout_height="45dp"
                 android:background="@color/dark_gray"
-                android:ems="10"
-                android:maxLength="3"
-                android:padding="10dp"
+                android:maxLines="1"
+                android:ems="4"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"></EditText>
@@ -57,6 +115,7 @@
                 android:layout_marginLeft="4dp"
                 android:background="@color/dark_gray"
                 android:ems="10"
+                android:maxLines="1"
                 android:inputType="phone"
                 android:padding="10dp"
                 android:textColor="@color/black"

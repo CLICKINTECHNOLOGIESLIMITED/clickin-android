@@ -54,17 +54,18 @@ import de.greenrobot.event.EventBus;
  * Created by mukesh on 22/4/14.
  */
 public class SpreadWordView extends Activity implements OnClickListener {
-    private static final String TAG = "SpreadWordView";
+
 	private Button phonebook, facebook;
-    private TextView back,invite, next;
+
 	//private ImageView toboard;
     private QBPrivateChat chat;
 
-	private ListView listView;
-	private SpreadWordAdapter adapter;
+
+
     private AuthManager authManager;
     public static  ArrayList<String> selectedPhoneArray = new ArrayList<String>();
     private ProfileManager profilemanager;
+
 
 
 	@Override
@@ -76,28 +77,29 @@ public class SpreadWordView extends Activity implements OnClickListener {
 		phonebook = (Button) findViewById(R.id.btn_phb);
 		facebook = (Button) findViewById(R.id.btn_fb);
 
-        invite = (TextView) findViewById(R.id.btn_invite);
-		listView = (ListView) findViewById(R.id.list_current_clickers);
-		back = (TextView) findViewById(R.id.btn_back);
-		next = (TextView) findViewById(R.id.btn_next);
+        ((TextView) findViewById(R.id.btn_invite)).setOnClickListener(this);
+
+		((TextView) findViewById(R.id.btn_back)).setOnClickListener(this);
+        ((TextView) findViewById(R.id.btn_next)).setOnClickListener(this);
 
 		phonebook.setOnClickListener(this);
 		facebook.setOnClickListener(this);
 
 
-        invite.setOnClickListener(this);
-        back.setOnClickListener(this);
-		next.setOnClickListener(this);
+
+
         authManager = ModelManager.getInstance().getAuthorizationManager();
-        Utils.launchBarDialog(SpreadWordView.this);
-    //    new FetchContactFromPhone(SpreadWordView.this).getClickerList(authManager.getPhoneNo(),authManager.getUsrToken(),0);
-        setlist();
+        EventBus.getDefault().register(this);
+        Utils.launchBarDialog(this);
+        new FetchContactFromPhone(SpreadWordView.this).getClickerList(authManager.getPhoneNo(),authManager.getUsrToken(),1);
+     //   setlist();
 		
 	}
 
 	public void setlist() {
         profilemanager = ModelManager.getInstance().getProfileManager();
-		adapter = new SpreadWordAdapter(SpreadWordView.this,R.layout.row_invitefriend, profilemanager.spreadTheWorldList);
+        ListView listView = (ListView) findViewById(R.id.list_current_clickers);
+        SpreadWordAdapter adapter = new SpreadWordAdapter(SpreadWordView.this,R.layout.row_invitefriend, profilemanager.spreadTheWorldList);
 		listView.setAdapter(adapter);
 
 	}
@@ -111,7 +113,7 @@ public class SpreadWordView extends Activity implements OnClickListener {
     @Override
     public void onStart() {
         super.onStart();
-
+        if(!(EventBus.getDefault().isRegistered(this)))
         EventBus.getDefault().register(this);
     }
 
@@ -156,7 +158,7 @@ public class SpreadWordView extends Activity implements OnClickListener {
 		break;
 		case R.id.btn_next:
             Utils.launchBarDialog(this);
-            loginToQuickBlox();
+
          //   authManager.getProfileInfo("", authManager.getPhoneNo(), authManager.getUsrToken());
             Intent clickersView = new Intent(SpreadWordView.this,UserProfileView.class);
             clickersView.putExtra("FromSignup", true);
@@ -167,7 +169,7 @@ public class SpreadWordView extends Activity implements OnClickListener {
             if(Utils.groupSms.size()>0) {
                 Intent smsIntent = new Intent(Intent.ACTION_VIEW);
                 smsIntent.putExtra("sms_body", Constants.SEND_REQUEST_WITH_SMS_MESSAGE_SPREAD);
-                String conta;
+
                 StringBuilder uri = new StringBuilder("sms:");
                 for (int i = 0; i < Utils.groupSms.size(); i++) {
                     uri.append(Utils.groupSms.get(i));
@@ -190,7 +192,7 @@ public class SpreadWordView extends Activity implements OnClickListener {
                 startActivity(sendIntent);
             }*/
 
-                Log.e("", "COUNT------>" + listView.getCount());
+
             }else{
                 Utils.showAlert(SpreadWordView.this, AlertMessage.GROUPSMSMSG);
             }
@@ -209,9 +211,9 @@ public class SpreadWordView extends Activity implements OnClickListener {
 
             }
         } catch (Exception e) {
-            android.util.Log.d(TAG, "" + e);
+         //   android.util.Log.d(TAG, "" + e);
         } catch (Error e) {
-            android.util.Log.d(TAG, "" + e);
+           // android.util.Log.d(TAG, "" + e);
         }
     }
     //Methods for Facebook
@@ -226,7 +228,7 @@ public class SpreadWordView extends Activity implements OnClickListener {
                                       Exception exception) {
         if (state.isOpened()) {
             final String access_Token = session.getAccessToken();
-            android.util.Log.d(TAG, access_Token);
+       //     android.util.Log.d(TAG, access_Token);
             sendRequestDialogForFriendList();
         } else if (state.isClosed()) {
             System.out.println("Logged out...");
@@ -251,10 +253,10 @@ public class SpreadWordView extends Activity implements OnClickListener {
                             try {
                                 final String requestId = values.getString("request");
                                 if (requestId != null) {
-                                    Log.e(TAG, "Request sent");
+                                  //  Log.e(TAG, "Request sent");
                                     Utils.dismissBarDialog();
                                 } else {
-                                    Log.e(TAG, "Request cancelled");
+                                //    Log.e(TAG, "Request cancelled");
                                     Utils.dismissBarDialog();
                                 }
                             }catch (Exception e){
@@ -283,7 +285,7 @@ public class SpreadWordView extends Activity implements OnClickListener {
 
 
     public void onEventMainThread(String message){
-        android.util.Log.d(TAG, "onEventMainThread->" + message);
+       // android.util.Log.d(TAG, "onEventMainThread->" + message);
         if (message.equalsIgnoreCase("CheckFriend True")) {
             Utils.dismissBarDialog();
             setlist();
@@ -293,91 +295,8 @@ public class SpreadWordView extends Activity implements OnClickListener {
         } else if(message.equalsIgnoreCase("CheckFriend Network Error")){
             Utils.dismissBarDialog();
             Utils.showAlert(SpreadWordView.this, AlertMessage.connectionError);
-        }else if (message.equalsIgnoreCase("ProfileInfo True")) {
-            //save values of user in shared prefrence for later use
-            Utils.dismissBarDialog();
-            SharedPreferences preferences= PreferenceManager.getDefaultSharedPreferences(this);
-            SharedPreferences.Editor editor=preferences.edit();
-            editor.putString("gender",authManager.getGender());
-            editor.putString("follower",authManager.getFollower());
-            editor.putString("following",authManager.getFollowing());
-            editor.putString("is_following",authManager.getIsFollowing());
-            editor.putString("name",authManager.getUserName());
-            editor.putString("user_pic",authManager.getUserPic());
-            editor.putString("dob",authManager.getdOB());
-            editor.putString("city",authManager.getUserCity());
-            editor.putString("country",authManager.getUserCountry());
-            editor.putString("email",authManager.getEmailId());
-            editor.commit();
-            // new ImageDownloadTask().execute();
-            switchView();
-
-        } else if (message.equalsIgnoreCase("ProfileInfo False")) {
-            Utils.dismissBarDialog();
-
-            Utils.showAlert(this, authManager.getMessage());
-        } else if (message.equalsIgnoreCase("ProfileInfo Network Error")) {
-            Utils.dismissBarDialog();
-            Utils.showAlert(this, AlertMessage.connectionError);
         }
-
     }
-
-    private void switchView() {
-        Intent intent = new Intent(this, UserProfileView.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra("FromSignup", true);
-        startActivity(intent);
-        finish();
-    }
-
-    public void loginToQuickBlox() {
-        SmackAndroid.init(this);
-        com.sourcefuse.clickinandroid.utils.Log.e(TAG, "loginToQuickBlox --- getUserId=>" + authManager.getUserId() + ",--getUsrToken-=>" + authManager.getUsrToken());
-        QBSettings.getInstance().fastConfigInit(Constants.CLICKIN_APP_ID, Constants.CLICKIN_AUTH_KEY, Constants.CLICKIN_AUTH_SECRET);
-        QBSettings.getInstance().setServerApiDomain("apiclickin.quickblox.com");
-        QBSettings.getInstance().setContentBucketName("qb-clickin");
-        QBSettings.getInstance().setChatServerDomain("chatclickin.quickblox.com");
-        final QBUser user = new QBUser(authManager.getUserId(), authManager.getUsrToken());
-
-        QBAuth.createSession(user, new QBCallbackImpl() {
-
-
-            @Override
-            public void onComplete(Result result) {
-                if (result.isSuccess()) {
-                    QBSessionResult res = (QBSessionResult) result;
-                    user.setId(res.getSession().getUserId());
-                    //
-                    QBChatService.getInstance().loginWithUser(user, new SessionCallback() {
-                        @Override
-                        public void onLoginSuccess() {
-                            com.sourcefuse.clickinandroid.utils.Log.e(TAG, "Login successfully");
-                            QBChatService.getInstance().startAutoSendPresence(5);
-
-                            chat = QBChatService.getInstance().createChat();
-                            authManager.setqBPrivateChat(chat);
-                        }
-
-                        @Override
-                        public void onLoginError(String s) {
-                            com.sourcefuse.clickinandroid.utils.Log.e(TAG, "onLoginError");
-                            loginToQuickBlox();
-                        }
-
-
-                    });
-                    android.util.Log.e(TAG, "Session was successfully created");
-
-                } else {
-                    android.util.Log.e(TAG, "Errors " + result.getErrors().toString() + "result" + result);
-                }
-            }
-        });
-
-
-    }
-
 
 
 }

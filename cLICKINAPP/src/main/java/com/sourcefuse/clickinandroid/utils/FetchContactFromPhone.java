@@ -75,8 +75,9 @@ public class FetchContactFromPhone {
 					while (pCur.moveToNext()) {
 						phone = pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
                          authManager=ModelManager.getInstance().getAuthorizationManager();
-                        if(!(phone.contains("+91")))
-                        mPhone =authManager.getCountrycode()+ phone.replaceAll("\\s","");
+                        String countryCode=authManager.getCountrycode();
+                        if(!(phone.contains(countryCode)))
+                        mPhone =countryCode+ phone.replaceAll("\\s","");
                         else
                         mPhone=phone.replaceAll("\\s","");
                         mcantactBean.setConName(name);
@@ -210,6 +211,7 @@ public class FetchContactFromPhone {
 					Log.d("", "Current Clickers response--> " + response);
 					success = response.getBoolean("success");
 					if (success) {
+                        profilemanager.currClickersPhoneNums.clear();
                         profilemanager.currentClickerList.clear();
                         profilemanager.spreadTheWorldList.clear();
                         JSONArray list = response.getJSONArray("phone_nos");
@@ -224,6 +226,7 @@ public class FetchContactFromPhone {
                                     clickerList = new CurrentClickerBean();
                                     if(data.has("phone_no")) {
                                         clickerList.setGetClickerPhone(data.getString("phone_no"));
+                                        profilemanager.currClickersPhoneNums.add(data.getString("phone_no"));
                                     }
                                     if(data.has("user_pic")){
                                         clickerList.setClickerPix(data.getString("user_pic"));

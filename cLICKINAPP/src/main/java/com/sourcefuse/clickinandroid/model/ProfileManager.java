@@ -39,7 +39,8 @@ public class ProfileManager {
     public static ArrayList<FollowerFollowingBean> followers = new ArrayList<FollowerFollowingBean>();
     public  ArrayList<CurrentClickerBean> currentClickerList = new ArrayList<CurrentClickerBean>();
     public  ArrayList<ContactBean> spreadTheWorldList = new ArrayList<ContactBean>();
-
+    public ArrayList<String>currClickersPhoneNums=new ArrayList<String>();
+    public  ArrayList<CurrentClickerBean> currentClickerListFB = new ArrayList<CurrentClickerBean>();
 
 
 	public void setProfile(String fname, String lname, String phone,

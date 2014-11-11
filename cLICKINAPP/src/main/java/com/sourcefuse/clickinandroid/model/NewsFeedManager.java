@@ -345,7 +345,7 @@ JSONObject chatObj = newsfeedArray.getJSONObject(i).getJSONObject("chatDetail");
                         try {
                             System.out.println("response--> " + response);
                             success = response.getBoolean("success");
-                            profilemanager.currentClickerList.clear();
+                            profilemanager.currentClickerListFB.clear();
                             if (success) {
                                 JSONArray list = response.getJSONArray("fbfriends");
                                 for (int i = 0; i < list.length(); i++) {
@@ -368,7 +368,7 @@ JSONObject chatObj = newsfeedArray.getJSONObject(i).getJSONObject("chatDetail");
                                         currentClickerBean.setFollow(0);
                                     }
 
-                                    profilemanager.currentClickerList.add(currentClickerBean);
+                                    profilemanager.currentClickerListFB.add(currentClickerBean);
                                 }
                                 EventBus.getDefault().post("FetchFbFriend True");
                             }

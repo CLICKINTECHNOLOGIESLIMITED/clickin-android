@@ -14,6 +14,7 @@ import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.ProfileManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
 import com.sourcefuse.clickinandroid.model.bean.CurrentClickerBean;
+import com.sourcefuse.clickinandroid.view.CurrentClickersView;
 import com.sourcefuse.clickinapp.R;
 import com.squareup.picasso.Picasso;
 
@@ -97,6 +98,7 @@ public class CurrentClickersAdapter extends ArrayAdapter<CurrentClickerBean> {
                         item.setFollow(1);
                         relationManager.followUser(item.getGetClickerPhone(), authManager.getPhoneNo(), authManager.getUsrToken());
                         rholder.follow.setBackgroundResource(R.drawable.requested_grey);
+                        CurrentClickersView.followReqStatus=true;
                     }
 
                 }

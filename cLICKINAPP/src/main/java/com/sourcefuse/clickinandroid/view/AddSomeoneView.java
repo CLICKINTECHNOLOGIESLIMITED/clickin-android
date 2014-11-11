@@ -9,6 +9,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
@@ -17,6 +18,12 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
+import com.facebook.android.Util;
+import com.sourcefuse.clickinandroid.model.AuthManager;
+import com.sourcefuse.clickinandroid.model.ModelManager;
+import com.sourcefuse.clickinandroid.model.ProfileManager;
+import com.sourcefuse.clickinandroid.model.bean.ContactBean;
+import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.FetchContactFromPhone;
 import com.sourcefuse.clickinandroid.utils.Utils;
@@ -27,7 +34,7 @@ import de.greenrobot.event.EventBus;
 
 public class AddSomeoneView extends Activity implements View.OnClickListener,
 		TextWatcher {
-    private static final String TAG = SignInView.class.getSimpleName();
+
 	private Button do_latter;
 	private EditText search_phbook;
 	private ListView listView;
@@ -36,6 +43,7 @@ public class AddSomeoneView extends Activity implements View.OnClickListener,
 	private ImageView keyIcon;
     private boolean mFrom = false;
     private Typeface typefaceBold;
+    AuthManager authManager;
 
 
 	@Override
@@ -58,16 +66,19 @@ public class AddSomeoneView extends Activity implements View.OnClickListener,
 		do_latter.setOnClickListener(this);
 		keyIcon.setOnClickListener(this);
 
-        new FetchContactFromPhone(this).readContacts();
-		adapter = new ContactAdapter(this, R.layout.row_contacts,Utils.itData);
-		listView.setAdapter(adapter);
-		
+         authManager=ModelManager.getInstance().getAuthorizationManager();
+     //   new FetchContactFromPhone(this).readContacts();
+
 		
 		listView.setOnItemClickListener(new OnItemClickListener()
 		{
 			@Override public void onItemClick(AdapterView<?> arg0, View arg1,int position, long arg3)
-			{ 
-				
+			{
+
+                InputMethodManager imm = (InputMethodManager)getSystemService(
+                        INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(search_phbook.getWindowToken(), 0);
+
 				Intent intent = new Intent(AddSomeoneView.this,AddViaContactView.class);
 				intent.putExtra("ConName", Utils.itData.get(position).getConName());
 				intent.putExtra("ConNumber", Utils.itData.get(position).getConNumber());
@@ -76,12 +87,22 @@ public class AddSomeoneView extends Activity implements View.OnClickListener,
 				}else{
 					intent.putExtra("ConUri", "");	
 				}
-			//	intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 				startActivity(intent);
-				//finish();
 			}
 		});
 
+        ((RelativeLayout) findViewById(R.id.btn_add_someone_action)).setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+
+                InputMethodManager imm = (InputMethodManager)getSystemService(
+                        INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(search_phbook.getWindowToken(), 0);
+
+            }
+
+        });
 
 
         mFrom = getIntent().getExtras().getBoolean("FromOwnProfile");
@@ -126,13 +147,11 @@ public class AddSomeoneView extends Activity implements View.OnClickListener,
              clickersView.putExtra("FromSignup", true);
              clickersView.putExtra("FromMenu", false);
 			 startActivity(clickersView);
-           finish();
+         //  finish();
 			break;
 		case R.id.iv_keypad:
 			 Intent intent = new Intent(AddSomeoneView.this,AddViaNumberView.class);
-		//	 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			 startActivity(intent);
-			 //finish();
 			break;
 		}
 	}
@@ -142,10 +161,12 @@ public class AddSomeoneView extends Activity implements View.OnClickListener,
     @Override
     public void onStart() {
         super.onStart();
-        if (EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().unregister(this);
-        }
+        search_phbook.setText("");
         EventBus.getDefault().register(this);
+        if(Utils.itData.size()==0) {
+            Utils.launchBarDialog(this);
+            new FetchContactFromPhone(this).getClickerList(authManager.getPhoneNo(), authManager.getUsrToken(), 1);
+        }
     }
 
     @Override
@@ -156,9 +177,19 @@ public class AddSomeoneView extends Activity implements View.OnClickListener,
         }
     }
 
-    public void onEventMainThread(String getMsg){
-        Log.d(TAG, "onEventMainThread->"+getMsg);
-        if (getMsg.equalsIgnoreCase("SearchResult true")) {
+    public void onEventMainThread(String message){
+
+        if (message.equalsIgnoreCase("CheckFriend True")) {
+            Utils.dismissBarDialog();
+            adapter = new ContactAdapter(this, R.layout.row_contacts,Utils.itData);
+            listView.setAdapter(adapter);
+
+        } else if (message.equalsIgnoreCase("CheckFriend False")) {
+            Utils.dismissBarDialog();
+            Utils.showAlert(this,authManager.getMessage());
+        } else if(message.equalsIgnoreCase("CheckFriend Network Error")){
+            Utils.dismissBarDialog();
+            Utils.showAlert(this, AlertMessage.connectionError);
         }
     }
 

@@ -49,10 +49,17 @@ import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
 
+import org.joda.time.DateTime;
+import org.joda.time.Period;
+import org.joda.time.Years;
+import org.joda.time.format.PeriodFormatter;
+import org.joda.time.format.PeriodFormatterBuilder;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -85,13 +92,22 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
     private int mCurrentday;
 
     private String gender_var = "";
-    public static Activity act;
-    public static Context context;
+
     private AuthManager authManager;
     private ProfileManager profileManager;
-    private String usrtoken;
+
     private Typeface typeface;
     private Uri  userImageUri;
+    private Calendar c ;
+    long diffrence_in_mills ;
+
+
+    private SimpleDateFormat mSimpleDateFormat;
+    private PeriodFormatter mPeriodFormat;
+    private Period age ;
+    Years periods_years ;
+    long mills_in_17yrs ;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,9 +115,9 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.view_profile);
         this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
-        act = this;
+
         Utils.acty = this;
-        context = this;
+
         typeface = Typeface.createFromAsset(ProfileView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
 
         done = (Button) findViewById(R.id.btn_done);
@@ -196,22 +212,17 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
     }
 
     public void onEventMainThread(String message) {
-        Log.d(TAG, "onEventMainThread->" + message);
-        Log.e("message ->", "-- " + message);
         if (message.equalsIgnoreCase("UpdateProfile True")) {
             Utils.dismissBarDialog();
             bitmapImage = null;
             //Log.e("Utils.DeleteImage","Utils.DeleteImage--->"+	Utils.DeleteImage(mImageCaptureUri,ProfileView.this));
             switchView();
-            Log.d("1", "message->" + message);
         } else if (message.equalsIgnoreCase("UpdateProfile False")) {
             Utils.dismissBarDialog();
             Utils.showAlert(ProfileView.this, authManager.getMessage());
-            Log.d("2", "message->" + message);
         } else if (message.equalsIgnoreCase("UpdateProfile Network Error")) {
             Utils.dismissBarDialog();
-            Utils.showAlert(act, AlertMessage.connectionError);
-            Log.d("3", "message->" + message);
+            Utils.showAlert(this, AlertMessage.connectionError);
         }
 
     }
@@ -219,7 +230,6 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
 
     private void switchView() {
         Intent intent = new Intent(ProfileView.this, PlayItSafeView.class);
-      //  intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
       finish();
     }
@@ -232,15 +242,12 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
         switch (v.getId()) {
             case R.id.btn_done:
                 Bitmap bitmap;
-                usrtoken = authManager.getUsrToken();
-
-                Log.e("", "---getUsrToken-----" + authManager.getUsrToken());
                 if (updateProfileValidation()) {
 
 
                     if (bitmapImage == null) {
                         try {
-                            bitmapImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.default_profile);
+                            bitmapImage = BitmapFactory.decodeResource(getResources(), R.drawable.default_profile);
 //                            ImageView im = (ImageView) findViewById(R.id.iv_profile_img);
 //                            bitmap = Bitmap.createBitmap(im.getWidth(), im.getHeight(), Bitmap.Config.ARGB_8888);
 //                            Canvas c = new Canvas(bitmap);
@@ -692,26 +699,15 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
                                 );
                             }
                             bitmapImage.recycle();
-
                             profileimg.setImageBitmap(resized);
-                          //  authManager.setUserbitmap(resized);
-
                             userImageUri = mImageCaptureUri;
-                      //      authManager.setUserImageUri(userImageUri);
-                        //    authManager.setUserbitmap(resized);
-                            // authManager.setUserPic(imageBitmap.toString());
                             mImageCaptureUri = null;
-//                            authManager.setMenuUserInfoFlag(true);
 
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                         break;
                     case Constants.SELECT_PICTURE:
-//                        mImageCaptureUri = data.getData();
-//                        bitmapImage = Utils.decodeUri(mImageCaptureUri, ProfileView.this);
-//                        profileimg.setImageBitmap(bitmapImage);
-
                         bitmapImage = getBitmapFromCameraData(data, getApplicationContext());
 
 /*test code akshit */
@@ -795,7 +791,7 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
     // display current date
     @SuppressLint("NewApi")
     public void setCurrentDateOnView() {
-        final Calendar c = Calendar.getInstance();
+         c = Calendar.getInstance();
         year = c.get(Calendar.YEAR);
         month = c.get(Calendar.MONTH);
         day = c.get(Calendar.DAY_OF_MONTH);
@@ -816,7 +812,10 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
         switch (id) {
             case DATE_DIALOG_ID:
                 // set date picker as current date
-                return new DatePickerDialog(this, datePickerListener, year, month, day);
+                DatePickerDialog dialog = new DatePickerDialog(this, datePickerListener, year, month, day);
+                dialog.getDatePicker().setMaxDate(new Date().getTime());
+                return dialog;
+                //return new DatePickerDialog(this, datePickerListener, year, month, day);
         }
         return null;
     }
@@ -832,6 +831,44 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
             tvMonth.setText("" + MONTHS[month]);
             tvYear.setText("" + year);
             dpResult.init(year, month, day, null);
+
+            Date start_date = null;
+            String date = day + "/" + month + "/" + year ;
+            long time = 0;
+            mSimpleDateFormat = new SimpleDateFormat("dd/MM/yy");
+            mPeriodFormat = new PeriodFormatterBuilder().appendYears()
+                    .appendSuffix(" year(s) ").appendMonths().appendSuffix(" month(s) ")
+                    .appendDays().appendSuffix(" day(s) ").printZeroNever().toFormatter();
+
+            try {
+                start_date = mSimpleDateFormat.parse(date.toString());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                time = mSimpleDateFormat.parse(date.toString()).getTime();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            long present = System.currentTimeMillis();
+            diffrence_in_mills = Math.abs(time-present);
+
+            Log.e(TAG,"Diffrence in Mills " +diffrence_in_mills);
+
+              age = calcDiff(start_date,new Date());
+              Log.e(TAG,"Age Difference " +age);
+//            DateTime start  = new DateTime(start_date);
+//            DateTime end = new DateTime(new Date());
+//
+//            diffrence_in_mills = end.getMillis() - start.getMillis();
+             long MILLISECONDS_IN_YEAR = (long) 1000 * 60 * 60 * 24 * 365;
+             mills_in_17yrs = 17 * MILLISECONDS_IN_YEAR ;
+//            Log.e(TAG,"Mill in 17 years" +mills_in_17yrs);
+//            periods_years = Years.yearsBetween(start,end);
+//           // Log.e(TAG ,"Actual Difference in years " + PeriodFormat.wordBased().print(periods_years));
+
 
         }
     };
@@ -851,12 +888,22 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
             Log.e(TAG, "mCurrentyear" + mCurrentyear + "  year " + year);
             Utils.showAlert(ProfileView.this, AlertMessage.ageValid);
             return false;
-        } else if ((mCurrentyear - year) <= 17) {
-            Log.e(TAG, "mCurrentyear" + mCurrentyear + "  year " + year);
+        }  // else if (periods_years.isLessThan(Years.years(17))) {
+           else if(diffrence_in_mills < mills_in_17yrs){
+            Log.e(TAG, "mCurrentyear" + diffrence_in_mills + "  year " + mills_in_17yrs);
             Utils.showAlert(ProfileView.this, AlertMessage.UDERAGEMSGII);
             return false;
         }
         return true;
+		}
+       private Period calcDiff(Date startDate,Date endDate)
+        {
+        DateTime START_DT = (startDate==null)?null:new DateTime(startDate);
+        DateTime END_DT = (endDate==null)?null:new DateTime(endDate);
+
+        Period period = new Period(START_DT, END_DT);
+
+        return period;
     }
 
     public void alertDialog(String msgStrI, String msgStrII) {

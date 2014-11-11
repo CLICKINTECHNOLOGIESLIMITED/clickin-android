@@ -358,7 +358,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                         holder.clicksText.setVisibility(View.GONE);
                         holder.clicksHeart.setVisibility(View.GONE);
                         holder.chatImage.setBackgroundResource(R.drawable.newbg);
-                        Picasso.with(context).load(item.getChatImageUrl()).into(holder.chatImage);
+                        Picasso.with(context)
+                                .load(item.getChatImageUrl()).resize(275,275).centerCrop()
+                                .into(holder.chatImage);
                         holder.timeText.setText("" + Utils.getLocalDatefromTimestamp(Long.parseLong(item.getTimeStamp())));
 
                     } else if(Utils.isEmptyString(item.getClicks()) && !Utils.isEmptyString(item.getChatText())) {
@@ -375,7 +377,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                         holder.chatText.setVisibility(View.VISIBLE);
                         holder.chatText.setText(""+Utils.lineBreacker(item.getChatText()));
                         holder.clicksArea.setBackgroundResource(R.drawable.newbg);
-                        Picasso.with(context).load(item.getChatImageUrl())
+                        Picasso.with(context).load(item.getChatImageUrl()).resize(275,275).centerCrop()
                                 .into(holder.chatImage);
                         holder.chatText.setTextColor(context.getResources().getColor(R.color.black));
                         holder.timeText.setText("" + Utils.getLocalDatefromTimestamp(Long.parseLong(item.getTimeStamp())));
@@ -403,7 +405,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatRecordBeen>{
                     holder.chatText.setTextColor(context.getResources().getColor(R.color.white));
                     holder.sendStatus.setVisibility(View.GONE);
                     holder.timeText.setText(""+Utils.getLocalDatefromTimestamp(Long.parseLong(item.getTimeStamp())));
-                    Picasso.with(context).load(item.getChatImageUrl())
+                    Picasso.with(context).load(item.getChatImageUrl()).resize(275,275).centerCrop()
                             .into(holder.chatImage);
 
                 }

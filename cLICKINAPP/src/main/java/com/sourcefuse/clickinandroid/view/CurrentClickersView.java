@@ -21,11 +21,14 @@ import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.NewsFeedManager;
 import com.sourcefuse.clickinandroid.model.ProfileManager;
+import com.sourcefuse.clickinandroid.model.bean.CurrentClickerBean;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.FetchContactFromPhone;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.adapter.CurrentClickersAdapter;
 import com.sourcefuse.clickinapp.R;
+
+import java.util.ArrayList;
 
 import de.greenrobot.event.EventBus;
 
@@ -37,7 +40,7 @@ public class CurrentClickersView extends Activity implements OnClickListener {
 	private Button phonebook, facebook;
 
     private TextView back,next,middleBack;
-	private ImageView toboard;
+
 	private View view;
     private ListView listView;
     private CurrentClickersAdapter adapter;
@@ -47,6 +50,8 @@ public class CurrentClickersView extends Activity implements OnClickListener {
     private NewsFeedManager newsFeedManager;
 
     private boolean showNextButton = false;
+    ArrayList<CurrentClickerBean>tempCurrentClickers;
+    public static boolean followReqStatus=false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,14 +62,14 @@ public class CurrentClickersView extends Activity implements OnClickListener {
 		phonebook = (Button) findViewById(R.id.btn_phb);
 		facebook = (Button) findViewById(R.id.btn_fb);
 		listView = (ListView)findViewById(R.id.list_current_clickers);
-		back = (TextView) findViewById(R.id.btn_back);
-        middleBack = (TextView) findViewById(R.id.btn_middle_back);
-        next = (TextView) findViewById(R.id.btn_next);
-		toboard = (ImageView) findViewById(R.id.iv_toboard);
+      back= (TextView) findViewById(R.id.btn_back);
+        middleBack=(TextView) findViewById(R.id.btn_middle_back);
+        next=(TextView) findViewById(R.id.btn_next);
+	//	toboard = (ImageView) findViewById(R.id.iv_toboard);
 		phonebook.setOnClickListener(this);
 		facebook.setOnClickListener(this);
 
-		
+		tempCurrentClickers=new ArrayList<CurrentClickerBean>();
 		back.setOnClickListener(this);
         middleBack.setOnClickListener(this);
 		next.setOnClickListener(this);
@@ -83,6 +88,8 @@ public class CurrentClickersView extends Activity implements OnClickListener {
 
 
         authManager = ModelManager.getInstance().getAuthorizationManager();
+        profilemanager = ModelManager.getInstance().getProfileManager();
+
         EventBus.getDefault().register(this);
         Utils.launchBarDialog(CurrentClickersView.this);
         new FetchContactFromPhone(CurrentClickersView.this).getClickerList(authManager.getPhoneNo(),authManager.getUsrToken(),1);
@@ -90,9 +97,8 @@ public class CurrentClickersView extends Activity implements OnClickListener {
 	}
 
 	 public void setlist() {
-         profilemanager = ModelManager.getInstance().getProfileManager();
 
-	        adapter = new CurrentClickersAdapter(CurrentClickersView.this, R.layout.row_currentclickerslist, profilemanager.currentClickerList);
+	        adapter = new CurrentClickersAdapter(CurrentClickersView.this, R.layout.row_currentclickerslist, tempCurrentClickers);
 
 	        int index = listView.getFirstVisiblePosition();
 	        View v = listView.getChildAt(0);
@@ -113,30 +119,47 @@ public class CurrentClickersView extends Activity implements OnClickListener {
         if (i == R.id.btn_phb) {
             phonebook.setBackgroundResource(R.drawable.c_phonebook_pink);
             facebook.setBackgroundResource(R.drawable.c_fb_grey);
+            if(profilemanager.currentClickerList.size()>0) {
+                tempCurrentClickers.clear();
+                tempCurrentClickers = profilemanager.currentClickerList;
+                setlist();
+            }else{
+                new FetchContactFromPhone(CurrentClickersView.this).getClickerList(authManager.getPhoneNo(),authManager.getUsrToken(),1);
 
-        } else if (i == R.id.btn_fb) {
-            phonebook.setBackgroundResource(R.drawable.c_phonebook_grey);
-            facebook.setBackgroundResource(R.drawable.c_fb_pink);
-            Utils.launchBarDialog(CurrentClickersView.this);
-            if (Utils.isConnectingToInternet(CurrentClickersView.this)) {
-
-                Session session = Session.getActiveSession();
-                if (session == null) {
-                    if (session == null) {
-                        session = new Session(this);
-                    }
-                    Session.setActiveSession(session);
-                }
-                if (!session.isOpened() && !session.isClosed()) {
-                    session.openForRead(new Session.OpenRequest(this).setCallback(callback).setPermissions("user_birthday", "basic_info", "email", "user_location"));
-                } else {
-                    Session.openActiveSession(this, true, callback);
-                }
-
-            } else {
-                Toast.makeText(getApplicationContext(), "Please Check Your Internet Connection", Toast.LENGTH_SHORT).show();
             }
 
+        } else if (i == R.id.btn_fb) {
+            tempCurrentClickers.clear();
+            if(adapter==null)
+                adapter = new CurrentClickersAdapter(CurrentClickersView.this, R.layout.row_currentclickerslist, tempCurrentClickers);
+
+            adapter.notifyDataSetChanged();
+            if(profilemanager.currentClickerListFB.size()!=0){
+                tempCurrentClickers=profilemanager.currentClickerListFB;
+                setlist();
+            }else {
+                phonebook.setBackgroundResource(R.drawable.c_phonebook_grey);
+                facebook.setBackgroundResource(R.drawable.c_fb_pink);
+                Utils.launchBarDialog(CurrentClickersView.this);
+                if (Utils.isConnectingToInternet(CurrentClickersView.this)) {
+
+                    Session session = Session.getActiveSession();
+                    if (session == null) {
+                        if (session == null) {
+                            session = new Session(this);
+                        }
+                        Session.setActiveSession(session);
+                    }
+                    if (!session.isOpened() && !session.isClosed()) {
+                        session.openForRead(new Session.OpenRequest(this).setCallback(callback).setPermissions("user_birthday", "basic_info", "email", "user_location"));
+                    } else {
+                        Session.openActiveSession(this, true, callback);
+                    }
+
+                } else {
+                    Toast.makeText(getApplicationContext(), "Please Check Your Internet Connection", Toast.LENGTH_SHORT).show();
+                }
+            }
         } else if (i == R.id.btn_back) {
         	finish();
 
@@ -144,28 +167,33 @@ public class CurrentClickersView extends Activity implements OnClickListener {
             finish();
 
         }*/ else if (i == R.id.btn_next) {
-            Intent clickersView = new Intent(CurrentClickersView.this, SpreadWordView.class);
-            startActivity(clickersView);
-         /*   new AlertDialog.Builder(this)
-                    .setMessage(AlertMessage.CURRENTCLICKERPAGE)
-                    .setPositiveButton("Ok",
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog,
-                                                    int which) {
-                                    dialog.dismiss();
+
+            if(!(CurrentClickersView.followReqStatus)) {
+                new AlertDialog.Builder(this)
+                        .setMessage(AlertMessage.CURRENTCLICKERPAGE)
+                        .setPositiveButton("Ok",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog,
+                                                        int which) {
+                                        dialog.dismiss();
+                                    }
+
                                 }
+                        ).setNegativeButton("Skip", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog,
+                                        int which) {
+                        Intent clickersView = new Intent(CurrentClickersView.this, SpreadWordView.class);
+                        startActivity(clickersView);
 
-                            }).setNegativeButton("Skip", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog,
-                                    int which) {
-                    Intent clickersView = new Intent(CurrentClickersView.this, SpreadWordView.class);
-                    startActivity(clickersView);
+                    }
 
-                }
-
-            }).show();*/
+                }).show();
+            }else{
+                Intent clickersView = new Intent(CurrentClickersView.this, SpreadWordView.class);
+                startActivity(clickersView);
+            }
 
         }
 	}
@@ -213,6 +241,7 @@ public class CurrentClickersView extends Activity implements OnClickListener {
         authManager = ModelManager.getInstance().getAuthorizationManager();
         if (message.equalsIgnoreCase("CheckFriend True")) {
             Utils.dismissBarDialog();
+            tempCurrentClickers=profilemanager.currentClickerList;
             setlist();
         } else if (message.equalsIgnoreCase("CheckFriend False")) {
             Utils.dismissBarDialog();
@@ -221,20 +250,19 @@ public class CurrentClickersView extends Activity implements OnClickListener {
             Utils.showAlert(CurrentClickersView.this, AlertMessage.connectionError);
         } else if (message.equalsIgnoreCase("FetchFbFriend True")) {
             Utils.dismissBarDialog();
+            tempCurrentClickers=profilemanager.currentClickerListFB;
             setlist();
         } else if (message.equalsIgnoreCase("FetchFbFriend False")) {
             Utils.dismissBarDialog();
         } else if(message.equalsIgnoreCase("FetchFbFriend Network Error")){
             Utils.dismissBarDialog();
             Utils.showAlert(CurrentClickersView.this, AlertMessage.connectionError);
-        } else if (message.equalsIgnoreCase("NewsFeed False")) {
+        } /*else if (message.equalsIgnoreCase("NewsFeed False")) {
             Log.d("2", "message->" + message);
-
             Utils.dismissBarDialog();
             Intent intent = new Intent(CurrentClickersView.this, FeedView.class);
-
             startActivity(intent);
-        }
+        }*/
 
     }
 

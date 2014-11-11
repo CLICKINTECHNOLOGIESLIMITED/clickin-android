@@ -5,6 +5,7 @@ public class AlertMessage {
 	public static final String connectionError = "Check your network connection";
     public static final String wrong_signIn_details = "The Username/Password \n combination entered is incorrect";
 
+    public static final String Phonenolength = "The phone number you have entered is invalid. Please try again";
 	
 	public static final String phone = "Please enter a correct mobile number";
 	public static final String dob = "Date of Birth can't be blank";

@@ -1,11 +1,12 @@
 build/*
 cLICKINAPP/build/*
-
+*.apk
 CLICKINAPP.iml
 clickin-andoid.iml
 gitcodeClickin.iml
-
-
+.idea
+build
+test.iml
 library/*
 
 

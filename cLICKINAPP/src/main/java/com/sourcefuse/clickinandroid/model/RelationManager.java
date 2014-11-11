@@ -105,7 +105,7 @@ public class RelationManager  {
 									JSONObject data = list.getJSONObject(i);
 									getRelationShipList = new GetrelationshipsBean();
 
-									if (!Utils.isEmptyString(data.getString("partner_QB_id"))) {
+									if (!Utils.isEmptyString(data.getString("partner_id"))) {
 										if(data.getString("accepted").matches("true")){
                                             setArrayListForDifferentStatus(data,acceptedList);
 										}else{
@@ -357,7 +357,7 @@ public class RelationManager  {
 						System.out.println("errorResponse--> " + errorResponse);
 						if (errorResponse != null) {
 							relationManager.setStatusMsg(errorResponse.getString("message"));
-                            EventBus.getDefault().post("FollowUser  false");
+                            EventBus.getDefault().post("FollowUser false");
 						} else {
                             EventBus.getDefault().post("FollowUser Network Error");
 						}

@@ -12,8 +12,10 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
@@ -62,6 +64,22 @@ public class PlayItSafeView extends Activity implements View.OnClickListener,Tex
 //        phone = Utils.prefrences.getString(Constants.PREFS_VALUE_PHONE, "");
 //        userToken = Utils.prefrences.getString(Constants.PREFS_VALUE_USER_TOKEN, "");
 //        emailid =Utils.prefrences.getString(Constants.PREFS_VALUE_USER_EMAILID, "");
+
+
+        ((RelativeLayout) findViewById(R.id.rl_playitsafe_action)).setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+
+                InputMethodManager imm = (InputMethodManager)getSystemService(
+                        INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(password.getWindowToken(), 0);
+                imm.hideSoftInputFromWindow(rePassword.getWindowToken(), 0);
+
+            }
+
+        });
+
 
     }
 
@@ -137,7 +155,6 @@ public class PlayItSafeView extends Activity implements View.OnClickListener,Tex
 	private void switchView() {
 		Intent intent = new Intent(PlayItSafeView.this, AddSomeoneView.class);
         intent.putExtra("FromOwnProfile", false);
-		//intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		startActivity(intent);
 		this.finish();
 	}
@@ -147,11 +164,14 @@ public class PlayItSafeView extends Activity implements View.OnClickListener,Tex
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_done_play:
-                if(password.getText().toString().length()>7) {
-                    if (password.getText().toString().matches(rePassword.getText().toString())) {
-                        Utils.launchBarDialog(PlayItSafeView.this);
+                String pwd,repwd;
+                pwd = password.getText().toString().trim();
+                repwd = rePassword.getText().toString().trim();
+                if(pwd.length()>7) {
+                    if (pwd.equals(repwd)) {
+                        Utils.launchBarDialog(this);
                         authManager = ModelManager.getInstance().getAuthorizationManager();
-                        authManager.playItSafeAuth(password.getText().toString(), authManager.getPhoneNo(), authManager.getEmailId(), authManager.getUsrToken());
+                        authManager.playItSafeAuth(pwd, authManager.getPhoneNo(), authManager.getEmailId(), authManager.getUsrToken());
                     } else {
                         Utils.showAlert(PlayItSafeView.this, AlertMessage.MATCHPASSWORD);
                     }

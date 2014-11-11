@@ -1,91 +1,217 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:geekui="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/white_pattern_bg">
 
-    <ImageView
+    <LinearLayout
         android:id="@+id/linearLayout_top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/e_enter_the_code" />
+        android:background="@drawable/c_header_bg"
+        android:orientation="vertical"
+        android:weightSum="2" >
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="vertical"
+            android:weightSum="2">
 
-    <LinearLayout
-        android:id="@+id/ll_boxs"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/linearLayout_top"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="45dp"
-        android:orientation="horizontal"
-        android:weightSum="4">
+            <com.sourcefuse.clickinandroid.utils.ClickInTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="bottom"
+                android:text="ENTER"
+                android:textColor="@color/profile_usr_name"
+                android:textSize="38sp"
+                android:textStyle="bold"
+                geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
 
-        <EditText
-            android:id="@+id/edt_one"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
-            android:layout_weight="1"
-            android:background="@drawable/e_v_number_field_empty"
-            android:cursorVisible="false"
-            android:gravity="center"
-            android:inputType="number"
-            android:maxLength="1"
-            android:padding="10dp"
-            android:textColor="@color/white"
-            android:textSize="45sp"
-            android:textStyle="bold"></EditText>
+                />
+            <!--android:paddingTop="10dp"-->
+            <!--android:paddingLeft="80sp"-->
+            <!--&lt;!&ndash;android:layout_marginTop="-30dp"&ndash;&gt;-->
+            <!--/>-->
 
-        <EditText
-            android:id="@+id/edt_two"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
-            android:layout_weight="1"
-            android:background="@drawable/e_v_number_field_empty"
-            android:cursorVisible="false"
-            android:gravity="center"
-            android:inputType="number"
-            android:maxLength="1"
-            android:padding="10dp"
-            android:textColor="@color/white"
-            android:textSize="45sp"
-            android:textStyle="bold"></EditText>
+            <com.sourcefuse.clickinandroid.utils.ClickInTextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_gravity="top"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="THE CODE"
+                android:textColor="@color/profile_usr_name"
+                android:textSize="38sp"
+                android:textStyle="bold"
+                geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
 
-        <EditText
-            android:id="@+id/edt_three"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
-            android:layout_weight="1"
-            android:background="@drawable/e_v_number_field_empty"
-            android:cursorVisible="false"
-            android:gravity="center"
-            android:inputType="number"
-            android:maxLength="1"
-            android:padding="10dp"
-            android:textColor="@color/white"
-            android:textSize="45sp"
-            android:textStyle="bold"></EditText>
+                android:layout_marginTop="-19dp"/>
+            <!--android:paddingLeft="80sp"/>-->5
 
-        <EditText
-            android:id="@+id/edt_four"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/e_v_number_field_empty"
-            android:cursorVisible="false"
-            android:ems="1"
-            android:gravity="center"
-            android:inputType="number"
-            android:maxLength="1"
-            android:padding="10dp"
-            android:textColor="@color/white"
-            android:textSize="45sp"
-            android:textStyle="bold"></EditText>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_boxs"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_alignBottom="@id/linearLayout_top"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="45dp"
+            android:orientation="horizontal"
+            android:weightSum="4">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp">
+
+                <EditText
+                    android:id="@+id/edt_one"
+                    android:layout_width="20dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="30dp"
+
+                    android:layout_weight="1"
+                    android:background="@drawable/e_v_number_field_empty"
+                    android:cursorVisible="false"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:padding="10dp"
+                    android:textColor="@color/white"
+                    android:textSize="45sp"
+                    android:textStyle="bold"></EditText>
+
+                <EditText
+                    android:id="@+id/edt_two"
+                    android:layout_width="20dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/e_v_number_field_empty"
+                    android:cursorVisible="false"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:padding="10dp"
+                    android:textColor="@color/white"
+                    android:textSize="45sp"
+                    android:textStyle="bold"></EditText>
+
+                <EditText
+                    android:id="@+id/edt_three"
+                    android:layout_width="20dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/e_v_number_field_empty"
+                    android:cursorVisible="false"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:padding="10dp"
+                    android:textColor="@color/white"
+                    android:textSize="45sp"
+                    android:textStyle="bold"></EditText>
+
+                <EditText
+                    android:id="@+id/edt_four"
+                    android:layout_width="20dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginRight="30dp"
+                    android:background="@drawable/e_v_number_field_empty"
+                    android:cursorVisible="false"
+                    android:ems="1"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:maxLength="1"
+                    android:padding="10dp"
+                    android:textColor="@color/white"
+                    android:textSize="45sp"
+                    android:textStyle="bold"></EditText>
+            </LinearLayout>
+
+        </LinearLayout>
     </LinearLayout>
+    <!--<LinearLayout-->
+    <!--android:id="@+id/ll_boxs"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignBottom="@id/linearLayout_top"-->
+    <!--android:layout_centerHorizontal="true"-->
+    <!--android:layout_marginBottom="45dp"-->
+    <!--android:orientation="horizontal"-->
+    <!--android:weightSum="4">-->
+
+    <!--<EditText-->
+    <!--android:id="@+id/edt_one"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginRight="5dp"-->
+    <!--android:layout_weight="1"-->
+    <!--android:background="@drawable/e_v_number_field_empty"-->
+    <!--android:cursorVisible="false"-->
+    <!--android:gravity="center"-->
+    <!--android:inputType="number"-->
+    <!--android:maxLength="1"-->
+    <!--android:padding="10dp"-->
+    <!--android:textColor="@color/white"-->
+    <!--android:textSize="45sp"-->
+    <!--android:textStyle="bold"></EditText>-->
+
+    <!--<EditText-->
+    <!--android:id="@+id/edt_two"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginRight="5dp"-->
+    <!--android:layout_weight="1"-->
+    <!--android:background="@drawable/e_v_number_field_empty"-->
+    <!--android:cursorVisible="false"-->
+    <!--android:gravity="center"-->
+    <!--android:inputType="number"-->
+    <!--android:maxLength="1"-->
+    <!--android:padding="10dp"-->
+    <!--android:textColor="@color/white"-->
+    <!--android:textSize="45sp"-->
+    <!--android:textStyle="bold"></EditText>-->
+
+    <!--<EditText-->
+    <!--android:id="@+id/edt_three"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginRight="5dp"-->
+    <!--android:layout_weight="1"-->
+    <!--android:background="@drawable/e_v_number_field_empty"-->
+    <!--android:cursorVisible="false"-->
+    <!--android:gravity="center"-->
+    <!--android:inputType="number"-->
+    <!--android:maxLength="1"-->
+    <!--android:padding="10dp"-->
+    <!--android:textColor="@color/white"-->
+    <!--android:textSize="45sp"-->
+    <!--android:textStyle="bold"></EditText>-->
+
+    <!--<EditText-->
+    <!--android:id="@+id/edt_four"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_weight="1"-->
+    <!--android:background="@drawable/e_v_number_field_empty"-->
+    <!--android:cursorVisible="false"-->
+    <!--android:ems="1"-->
+    <!--android:gravity="center"-->
+    <!--android:inputType="number"-->
+    <!--android:maxLength="1"-->
+    <!--android:padding="10dp"-->
+    <!--android:textColor="@color/white"-->
+    <!--android:textSize="45sp"-->
+    <!--android:textStyle="bold"></EditText>-->
+    <!--</LinearLayout>-->
+
 
     <Button
         android:id="@+id/btn_send"
