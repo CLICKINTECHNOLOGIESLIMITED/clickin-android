@@ -3,6 +3,7 @@ package com.sourcefuse.clickinandroid.view;
 
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -16,6 +17,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
@@ -129,10 +131,12 @@ public class PlayItSafeView extends Activity implements View.OnClickListener,Tex
 			//	getUserDetails();
 			} else if (message.equalsIgnoreCase("PlayItSafe False")) {
 				Utils.dismissBarDialog();
-				Utils.showAlert(PlayItSafeView.this, authManager.getMessage());
+                alertDialog(authManager.getMessage());
+			//	Utils.showAlert(PlayItSafeView.this, authManager.getMessage());
 			} else if(message.equalsIgnoreCase("PlayItSafe Network Error")){
 				Utils.dismissBarDialog();
-				Utils.showAlert(act, AlertMessage.connectionError);	
+                alertDialog(AlertMessage.connectionError);
+				//Utils.showAlert(act, AlertMessage.connectionError);
 			}/*else if (message.equalsIgnoreCase("ProfileInfo True")) {
 				Utils.dismissBarDialog();
 				switchView();
@@ -173,13 +177,40 @@ public class PlayItSafeView extends Activity implements View.OnClickListener,Tex
                         authManager = ModelManager.getInstance().getAuthorizationManager();
                         authManager.playItSafeAuth(pwd, authManager.getPhoneNo(), authManager.getEmailId(), authManager.getUsrToken());
                     } else {
-                        Utils.showAlert(PlayItSafeView.this, AlertMessage.MATCHPASSWORD);
+                        alertDialog(AlertMessage.MATCHPASSWORD);
+                    //    Utils.showAlert(PlayItSafeView.this, AlertMessage.MATCHPASSWORD);
                     }
                 }else {
-                    Utils.showAlert(PlayItSafeView.this, AlertMessage.PASSWORDLENGHT);
+                    alertDialog(AlertMessage.PASSWORDLENGHT);
+                    //Utils.showAlert(PlayItSafeView.this, AlertMessage.PASSWORDLENGHT);
                 }
                 break;
         }
+    }
+
+    //akshit Code for dialog starts
+    public void alertDialog(String msgStrI) {
+      final Dialog dialog = new Dialog(PlayItSafeView.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawableResource(
+                android.R.color.transparent);
+        dialog.setContentView(R.layout.alert_check_dialogs);
+
+        TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
+//        TextView msgII = (TextView) dialog.findViewById(R.id.alert_msgII);
+        msgI.setText(msgStrI);
+
+
+        // dialog.setCancelable(true);
+        Button dismiss = (Button) dialog.findViewById(R.id.coolio);
+
+        dismiss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 }
 

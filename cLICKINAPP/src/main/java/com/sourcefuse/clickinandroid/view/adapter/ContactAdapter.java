@@ -86,8 +86,8 @@ public class ContactAdapter extends ArrayAdapter<ContactBean> {
 			{
 				for (ContactBean wp : conData) 
 				{
-					if(wp.getConName()!=null)
-					if (wp.getConName().toLowerCase(Locale.getDefault()).contains(charText))
+					//if(wp.getConName()!=null)
+					if (wp.getConName().toLowerCase(Locale.getDefault()).contains(charText) || wp.getConNumber().toLowerCase(Locale.getDefault()).contains(charText))
 					{
 						refreshList.add(wp);
 					}

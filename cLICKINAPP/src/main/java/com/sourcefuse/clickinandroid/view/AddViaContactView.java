@@ -5,13 +5,16 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.v4.content.LocalBroadcastManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.sourcefuse.clickinandroid.model.AuthManager;
@@ -25,12 +28,12 @@ import com.squareup.picasso.Picasso;
 
 import de.greenrobot.event.EventBus;
 
-public class AddViaContactView extends Activity implements View.OnClickListener {
+public class AddViaContactView extends Activity implements View.OnClickListener,TextWatcher {
     private String TAG = PlayItSafeView.class.getSimpleName();
 	private Button backButton,getClickIn;
 	private TextView contacName;
 	private EditText phoneNo,cntry_cd;
-	String  image_uri,mPhNo;
+	String  image_uri;
 	private ImageView conIcon;
 	private AuthManager authManager ;
     Dialog dialog ;
@@ -44,6 +47,7 @@ public class AddViaContactView extends Activity implements View.OnClickListener 
 		contacName = (TextView) findViewById(R.id.tv_contact_name);
         cntry_cd = (EditText) findViewById(R.id.edt_cntry_cd);
 		phoneNo = (EditText) findViewById(R.id.edt_phone_no);
+        phoneNo.addTextChangedListener(this);
 		backButton = (Button) findViewById(R.id.btn_go_back);
 		getClickIn = (Button) findViewById(R.id.btn_get_clickIn);
 		conIcon  = (ImageView) findViewById(R.id.iv_contact_icon);
@@ -53,9 +57,9 @@ public class AddViaContactView extends Activity implements View.OnClickListener 
 		try {
 			Bundle bundle = getIntent().getExtras();
 			contacName.setText("" + bundle.getString("ConName"));
-            mPhNo = bundle.getString("ConNumber");
-            cntry_cd.setText("" + mPhNo.substring(0,3));
-			phoneNo.setText("" + mPhNo.substring(3));
+            String mlPhNo = bundle.getString("ConNumber");
+            cntry_cd.setText("" + mlPhNo.substring(0,3));
+			phoneNo.setText("" + mlPhNo.substring(3));
 
 			image_uri = bundle.getString("ConUri");
              try {
@@ -77,6 +81,21 @@ public class AddViaContactView extends Activity implements View.OnClickListener 
 			e.printStackTrace();
 		}
 		authManager = ModelManager.getInstance().getAuthorizationManager();
+
+        ((RelativeLayout) findViewById(R.id.rl_addvia_contact_action)).setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+
+                InputMethodManager imm = (InputMethodManager) getSystemService(
+                        INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(cntry_cd.getWindowToken(), 0);
+                imm.hideSoftInputFromWindow(phoneNo.getWindowToken(), 0);
+
+            }
+
+        });
+
 	}
 
 	@Override
@@ -87,11 +106,13 @@ public class AddViaContactView extends Activity implements View.OnClickListener 
 			break;
 		case R.id.btn_get_clickIn:
 
-
+  if(phoneNo.getText().toString().length()>=5) {
+          String mPhNo = cntry_cd.getText().toString().trim()+phoneNo.getText().toString().trim();
+		  
             ProfileManager prfManager= ModelManager.getInstance().getProfileManager();
             if(prfManager.currClickersPhoneNums.contains(mPhNo)){
                 authManager = ModelManager.getInstance().getAuthorizationManager();
-                authManager.sendNewRequest(authManager.getPhoneNo(), phoneNo.getText().toString(), authManager.getUsrToken());
+                authManager.sendNewRequest(authManager.getPhoneNo(), mPhNo, authManager.getUsrToken());
             }else{
                 Intent smsIntent = new Intent(Intent.ACTION_VIEW);
                 smsIntent.putExtra("sms_body", Constants.SEND_REQUEST_WITH_SMS_MESSAGE);
@@ -99,6 +120,9 @@ public class AddViaContactView extends Activity implements View.OnClickListener 
                 smsIntent.setType("vnd.android-dir/mms-sms");
                 startActivity(smsIntent);
             }
+ }else {
+                    fromSignalDialog(AlertMessage.phone);
+                }
 
 
 			break;
@@ -184,6 +208,29 @@ public class AddViaContactView extends Activity implements View.OnClickListener 
             }
         });
         dialog.show();
+    }
+
+
+    // akshit code start for Active and inActive Button
+    @Override
+    public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+
+    }
+    @Override
+    public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+
+        if (phoneNo.getText().toString().length()>0){
+
+            getClickIn.setBackgroundResource(R.drawable.c_getclicin_active);
+            getClickIn.setEnabled(true);
+        } else {
+            getClickIn.setEnabled(false);
+          getClickIn.setBackgroundResource(R.drawable.c_getclicin_deactive);
+        }
+    }
+    @Override
+    public void afterTextChanged(Editable editable) {
+
     }
 // Ends
 }

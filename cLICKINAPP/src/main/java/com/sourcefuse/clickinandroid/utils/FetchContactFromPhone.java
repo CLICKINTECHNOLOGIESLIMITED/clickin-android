@@ -34,7 +34,7 @@ public class FetchContactFromPhone {
 	private static StringEntity se = null;
 	private static AsyncHttpClient client;
 	private static AuthManager authManager;
-    private ProfileManager profilemanager;
+    private  ProfileManager profilemanager;
     private ArrayList<CurrentClickerBean>  clickerArray ;
     private CurrentClickerBean clickerList = null;
     private ContactBean contactBean = null;
@@ -43,6 +43,7 @@ public class FetchContactFromPhone {
 
     public FetchContactFromPhone(Context context) {
 		this.context = context;
+
 	}
 
 	/*public void getAllContacts() {
@@ -60,7 +61,7 @@ public class FetchContactFromPhone {
         String name = "";
 
         String mPhone = null;
-
+        String key="";
         int l = 0;
         Utils.itData.clear();
 		if (cur.getCount() > 0) {
@@ -75,10 +76,16 @@ public class FetchContactFromPhone {
 					while (pCur.moveToNext()) {
 						phone = pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
                          authManager=ModelManager.getInstance().getAuthorizationManager();
+
+
+                        //Monika- we need to show exact phone list without adding country , will add country code later on
+                        //But we need to maintain phone number with country code as key
                         String countryCode=authManager.getCountrycode();
-                        if(!(phone.contains(countryCode)))
-                        mPhone =countryCode+ phone.replaceAll("\\s","");
+
+                        if(!(phone.contains("+")))
+                        key =countryCode+ phone.replaceAll("\\s","");
                         else
+                        key=phone.replaceAll("\\s","");
                         mPhone=phone.replaceAll("\\s","");
                         mcantactBean.setConName(name);
                         mcantactBean.setChecked(false);
@@ -108,7 +115,7 @@ public class FetchContactFromPhone {
 					}
 				}
 
-                Utils.contactMap.put(mPhone,mcantactBean);
+                Utils.contactMap.put(key,mcantactBean);
 
 				Utils.itData.add(mcantactBean);
 
@@ -160,8 +167,7 @@ public class FetchContactFromPhone {
 
 	public  void getClickerList(String phone, String usertoken, final int clickers) {
 		// TODO Auto-generated method stub
-		authManager = ModelManager.getInstance().getAuthorizationManager();
-        profilemanager = ModelManager.getInstance().getProfileManager();
+
 
         readContacts();
 
@@ -170,10 +176,14 @@ public class FetchContactFromPhone {
 			JSONObject userInputDetails = new JSONObject();
 			ArrayList<String> list = new ArrayList<String>();
             Iterator myiterator = Utils.contactMap.keySet().iterator();
+            String countryCode=authManager.getCountrycode();
             while(myiterator.hasNext()) {
-                String key=(String)myiterator.next();
-                ContactBean value= (ContactBean)Utils.contactMap.get(key);
-                list.add(key);
+                String key1=(String)myiterator.next();
+                ContactBean value= (ContactBean)Utils.contactMap.get(key1);
+                if(!(key1.contains("+")))
+                    key1=countryCode+key1;
+                list.add(key1);
+
             }
             userInputDetails.put("phone_no", phone);
 			userInputDetails.put("user_token", usertoken);
@@ -211,6 +221,7 @@ public class FetchContactFromPhone {
 					Log.d("", "Current Clickers response--> " + response);
 					success = response.getBoolean("success");
 					if (success) {
+                        profilemanager=ModelManager.getInstance().getProfileManager();
                         profilemanager.currClickersPhoneNums.clear();
                         profilemanager.currentClickerList.clear();
                         profilemanager.spreadTheWorldList.clear();
@@ -264,5 +275,77 @@ public class FetchContactFromPhone {
 			}
 		});
 	}
+
+    //Monika- to check whether a number registered with clickin or not
+    public static void checkNumWithClickInDb(String num){
+        authManager = ModelManager.getInstance().getAuthorizationManager();
+
+        try {
+
+            client = new AsyncHttpClient();
+            JSONObject userInputDetails = new JSONObject();
+            ArrayList<String> list = new ArrayList<String>();
+            list.add(num);
+
+
+            userInputDetails.put("phone_no", authManager.getPhoneNo());
+            userInputDetails.put("user_token", authManager.getUsrToken());
+            userInputDetails.put("phone_nos",  new JSONArray(list));
+         //   Log.d("", "userInputDetails---> " + userInputDetails);
+            se = new StringEntity(userInputDetails.toString());
+            se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,"application/json"));
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+
+        client.post(null, APIs.CHECKREGISTEREDFRIENDS, se, "application/json",new JsonHttpResponseHandler() {
+            boolean success = false;
+
+            @Override
+            public void onFailure(int statusCode, Throwable e,JSONObject errorResponse) {
+                super.onFailure(statusCode, e, errorResponse);
+                Log.d("", "errorResponse--> " + errorResponse);
+                if (errorResponse != null) {
+                    try {
+                        authManager.setMessage(errorResponse.getString("message"));
+
+                    } catch (JSONException e1) {
+                        // TODO Auto-generated catch block
+                        e1.printStackTrace();
+                    }
+                    EventBus.getDefault().post("Num Check False");
+                }
+
+            }
+
+            @Override
+            public void onSuccess(int statusCode,org.apache.http.Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                try {
+                    Log.d("", "Current Clickers response--> " + response);
+                    success = response.getBoolean("success");
+                    String eventBusRes="Num Not Registered";
+                    if (success) {
+
+                        JSONArray list = response.getJSONArray("phone_nos");
+
+                        for (int i = 0; i < list.length(); i++) {
+                            JSONObject data = list.getJSONObject(i);
+                            int existcode=data.getInt("exists");
+                            if(existcode==1) {
+                               eventBusRes="Num Registered";
+                            } else if(existcode==0) {
+                                eventBusRes="Num Not Registered";
+                            }
+                        }
+
+                        EventBus.getDefault().post(eventBusRes);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
 
 }

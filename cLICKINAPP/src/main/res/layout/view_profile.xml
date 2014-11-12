@@ -403,6 +403,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:background="@drawable/c_next_inactive" />
+        android:background="@drawable/c_next_active" />
 
 </RelativeLayout>
