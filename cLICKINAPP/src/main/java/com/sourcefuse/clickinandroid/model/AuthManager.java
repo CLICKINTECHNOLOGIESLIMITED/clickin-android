@@ -996,8 +996,7 @@ public Boolean deviceRegistered;
                             JSONObject jobj = new JSONObject(response.getString("user"));
                             if (jobj.has("gender"))
                                 authManager.setTmpGender(jobj.getString("gender"));
-                            else
-                                authManager.setTmpGender("guy");
+
                             if (jobj.has("follower"))
                                 authManager.setTmpFollower(jobj.getString("follower"));
                             if (jobj.has("following"))
@@ -1017,9 +1016,7 @@ public Boolean deviceRegistered;
                             JSONObject jobj = new JSONObject(response.getString("user"));
                             if (jobj.has("gender")) {
                                 authManager.setGender(jobj.getString("gender"));
-                            } else {
-                                authManager.setGender("guy");
-                            }
+                            } 
                             if (jobj.has("follower"))
                                 authManager.setFollower(jobj.getString("follower"));
                             if (jobj.has("following"))
