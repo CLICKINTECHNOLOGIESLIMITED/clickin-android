@@ -1,6 +1,7 @@
 package com.sourcefuse.clickinandroid.view;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.facebook.android.Util;
 import com.sourcefuse.clickinandroid.model.AuthManager;
@@ -81,7 +83,12 @@ public class AddSomeoneView extends Activity implements View.OnClickListener,
 
 				Intent intent = new Intent(AddSomeoneView.this,AddViaContactView.class);
 				intent.putExtra("ConName", Utils.itData.get(position).getConName());
-				intent.putExtra("ConNumber", Utils.itData.get(position).getConNumber());
+
+                //Monika- we need to append counntry code if it doesn't with contact num
+                String phNum=Utils.itData.get(position).getConNumber();
+                if(!(phNum.contains("+")))
+                    phNum=authManager.getCountrycode()+phNum;
+				intent.putExtra("ConNumber", phNum);
 				if(!Utils.isEmptyString(Utils.itData.get(position).getConUri())){
 					intent.putExtra("ConUri", Utils.itData.get(position).getConUri());
 				}else{
@@ -179,6 +186,7 @@ public class AddSomeoneView extends Activity implements View.OnClickListener,
 
     public void onEventMainThread(String message){
 
+        authManager=ModelManager.getInstance().getAuthorizationManager();
         if (message.equalsIgnoreCase("CheckFriend True")) {
             Utils.dismissBarDialog();
             adapter = new ContactAdapter(this, R.layout.row_contacts,Utils.itData);
@@ -186,15 +194,39 @@ public class AddSomeoneView extends Activity implements View.OnClickListener,
 
         } else if (message.equalsIgnoreCase("CheckFriend False")) {
             Utils.dismissBarDialog();
-            Utils.showAlert(this,authManager.getMessage());
+          //  Utils.showAlert(this,authManager.getMessage());
+            fromSignalDialog(authManager.getMessage());
         } else if(message.equalsIgnoreCase("CheckFriend Network Error")){
             Utils.dismissBarDialog();
-            Utils.showAlert(this, AlertMessage.connectionError);
+        //    Utils.showAlert(this, AlertMessage.connectionError);
+            fromSignalDialog( AlertMessage.connectionError);
         }
     }
 
 
-	
 
+    // Akshit Code Starts
+    public void fromSignalDialog(String str){
+
+        final Dialog dialog = new Dialog(AddSomeoneView.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.setContentView(R.layout.alert_check_dialogs);
+        dialog.setCancelable(false);
+        TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
+        msgI.setText(str);
+
+
+        Button dismiss = (Button) dialog.findViewById(R.id.coolio);
+        dismiss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                dialog.dismiss();
+
+            }
+        });
+        dialog.show();
+    }
+// Ends
 
 }

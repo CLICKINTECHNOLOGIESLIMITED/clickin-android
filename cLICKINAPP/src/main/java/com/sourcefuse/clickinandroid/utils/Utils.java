@@ -66,6 +66,7 @@ public class Utils {
         barProgressDialog = new CustomProgressDialog(activity);
 //		barProgressDialog.setTitle("Loading ...");
 //		barProgressDialog.setMessage("In progress ...");
+        barProgressDialog.setCancelable(false);
         barProgressDialog.show();
     }
 

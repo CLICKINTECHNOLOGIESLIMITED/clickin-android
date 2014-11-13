@@ -185,10 +185,10 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
                 Log.e(TAG,"Gender -->"+authManager.getGender());
                 if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().matches("girl")) {
                     dtails = "Female, ";
-                    gender="Female";
+                    gender="girl";
                 } else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().matches("guy")) {
                     dtails = "Male,";
-                    gender="Male";
+                    gender="guy";
                 }
             }catch (Exception e){}
            dtails =  dtails+Utils.getCurrentYear(authManager.getdOB()) + " " + getResources().getString(R.string.txt_yold);
@@ -232,7 +232,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
                 if(imageBitmap!=null)
                     userimage.setImageBitmap(imageBitmap);
                 else{
- if(!authManager.getGender().equalsIgnoreCase("")) {
+            if(!authManager.getGender().equalsIgnoreCase("")) {
 
                                 if (authManager.getGender().equalsIgnoreCase("guy")) {
                                     try {

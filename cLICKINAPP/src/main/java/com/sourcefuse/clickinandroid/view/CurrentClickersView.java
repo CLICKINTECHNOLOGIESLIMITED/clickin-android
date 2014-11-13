@@ -296,6 +296,7 @@ public class CurrentClickersView extends Activity implements OnClickListener {
             public void onClick(View view) {
                 Intent clickersView = new Intent(CurrentClickersView.this, SpreadWordView.class);
                 startActivity(clickersView);
+                dialog.dismiss();
             }
         });
 

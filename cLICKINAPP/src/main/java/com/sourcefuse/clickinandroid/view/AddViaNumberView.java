@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -22,12 +24,13 @@ import com.sourcefuse.clickinandroid.model.ProfileManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.Constants;
+import com.sourcefuse.clickinandroid.utils.FetchContactFromPhone;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
 
 import de.greenrobot.event.EventBus;
 
-public class AddViaNumberView extends Activity implements View.OnClickListener {
+public class AddViaNumberView extends Activity implements View.OnClickListener,TextWatcher {
     private static final String TAG = PlayItSafeView.class.getSimpleName();
 	private Button backButton,getClickInVn;
 	private AuthManager authManager ;
@@ -35,6 +38,7 @@ public class AddViaNumberView extends Activity implements View.OnClickListener {
 	private EditText edtPhoneNo,edtCountryCode;
     private Typeface typefaceBold;
     Dialog dialog ;
+    String mPhNo;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +53,7 @@ public class AddViaNumberView extends Activity implements View.OnClickListener {
 		edtPhoneNo = (EditText) findViewById(R.id.edt_get_ph_no);
         edtCountryCode= (EditText)findViewById(R.id.edt_cntry_cd);
         edtCountryCode.setTypeface(typefaceBold);
+		edtPhoneNo.addTextChangedListener(AddViaNumberView.this);
         edtPhoneNo.setTypeface(typefaceBold);
 		backButton.setOnClickListener(this);
 		getClickInVn.setOnClickListener(this);
@@ -126,19 +131,16 @@ public class AddViaNumberView extends Activity implements View.OnClickListener {
 		case R.id.btn_get_click_via_no:
             if(Utils.isCountryCodeValid(edtCountryCode.getText().toString())){
                 if (Utils.isPhoneValid(edtPhoneNo.getText().toString()) && (edtPhoneNo.getText().toString().length() >= 5)) {
-                    String mPhNo=edtCountryCode.getText().toString().trim()+edtPhoneNo.getText().toString().trim();
-                    ProfileManager prfManager= ModelManager.getInstance().getProfileManager();
+                     mPhNo=edtCountryCode.getText().toString().trim()+edtPhoneNo.getText().toString().trim();
+                    //Monika-need to hit webservice to check num registered or not
+            /*        ProfileManager prfManager= ModelManager.getInstance().getProfileManager();
                     if(prfManager.currClickersPhoneNums.contains(mPhNo)){
                         authManager = ModelManager.getInstance().getAuthorizationManager();
                         authManager.sendNewRequest(authManager.getPhoneNo(), mPhNo, authManager.getUsrToken());
                     }else {
-                        Intent smsIntent = new Intent(Intent.ACTION_VIEW);
-                        smsIntent.putExtra("sms_body", Constants.SEND_REQUEST_WITH_SMS_MESSAGE);
-                        smsIntent.putExtra("address", mPhNo);
-                        smsIntent.setType("vnd.android-dir/mms-sms");
-                        startActivity(smsIntent);
-                    }
 
+                    }*/
+                    FetchContactFromPhone.checkNumWithClickInDb(mPhNo);
 
                 }else{
                     fromSignalDialog(AlertMessage.phone);
@@ -189,7 +191,20 @@ public class AddViaNumberView extends Activity implements View.OnClickListener {
 				      fromSignalDialog(AlertMessage.connectionError);
 				//	Utils.showAlert(AddViaNumberView.this, AlertMessage.connectionError);
                     //finish();
-				}
+				}else if(message.equalsIgnoreCase("Num Not Registered")){
+                    Intent smsIntent = new Intent(Intent.ACTION_VIEW);
+                    smsIntent.putExtra("sms_body", Constants.SEND_REQUEST_WITH_SMS_MESSAGE);
+                    smsIntent.putExtra("address", mPhNo);
+                    smsIntent.setType("vnd.android-dir/mms-sms");
+                    startActivity(smsIntent);
+                }else if(message.equalsIgnoreCase("Num Registered")){
+                    Utils.launchBarDialog(this);
+                    authManager = ModelManager.getInstance().getAuthorizationManager();
+                    authManager.sendNewRequest(authManager.getPhoneNo(), mPhNo, authManager.getUsrToken());
+                }else if(message.equalsIgnoreCase("Num Check False")){
+                    Utils.dismissBarDialog();
+                    fromSignalDialog(authManager.getMessage());
+                }
 		}
 
  public String GetCountryZipCode(){
@@ -235,6 +250,31 @@ public class AddViaNumberView extends Activity implements View.OnClickListener {
             }
         });
         dialog.show();
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+
+        if (edtPhoneNo.getText().toString().length()>0){
+
+            getClickInVn.setBackgroundResource(R.drawable.c_getclicin_active);
+            getClickInVn.setEnabled(true);
+        } else {
+            getClickInVn.setEnabled(false);
+            getClickInVn.setBackgroundResource(R.drawable.c_getclicin_deactive);
+        }
+
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable editable) {
+
     }
 // Ends
 

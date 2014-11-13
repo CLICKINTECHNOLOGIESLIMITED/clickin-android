@@ -191,7 +191,7 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
                 && email.getText().toString().length() > 1 && Utils.isEmailValid(email.getText().toString()) && ((mCurrentyear - year) <= 17)) {
             done.setBackgroundResource(R.drawable.c_next_active);
         } else {
-            done.setBackgroundResource(R.drawable.c_next_inactive);
+            done.setBackgroundResource(R.drawable.c_next_active);
         }
 
     }
@@ -537,59 +537,102 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
         }
     }
 
+   public void imageDialog(){
 
-    // get dialog for image . camera or gallery
-    public void imageDialog() {
-        String[] addPhoto;
-        addPhoto = new String[]{"Camera", "Gallery"};
-        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setTitle("Select Option");
-
-        dialog.setItems(addPhoto, new DialogInterface.OnClickListener() {
+       final Dialog mdialog = new Dialog(ProfileView.this);
+        mdialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        mdialog.getWindow().setBackgroundDrawableResource(
+                android.R.color.transparent);
+        mdialog.setContentView(R.layout.alert_take_picture);
+        Button cancel = (Button)mdialog.findViewById(R.id.dialog_cancel);
+        TextView textcamera = (TextView)mdialog.findViewById(R.id.take_picture);
+        TextView textgallery = (TextView)mdialog.findViewById(R.id.from_gallery);
+        textcamera.setOnClickListener(new OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int id) {
-                if (id == 0) {
-                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            public void onClick(View view) {
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                mImageCaptureUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
+                intent.putExtra("return-data", true);
+                intent.putExtra("android.intent.extras.CAMERA_FACING", 1);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
 
-                    mImageCaptureUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
-                    intent.putExtra("return-data", true);
-                    intent.putExtra(MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
+                // start the image capture Intent
+                startActivityForResult(intent, Constants.CAMERA_REQUEST);
 
-                    // start the image capture Intent
-                    startActivityForResult(intent, Constants.CAMERA_REQUEST);
-//                    Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-//                    cameraIntent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
-//                    try {
-//                        cameraIntent.putExtra("return-data", true);
-//                        startActivityForResult(cameraIntent, Constants.CAMERA_REQUEST);
-//                    } catch (ActivityNotFoundException e) {
-//
-                    dialog.dismiss();
-                } else if (id == 1) {
-
-                    Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(pickPhoto, Constants.SELECT_PICTURE);
+                mdialog.dismiss();
+            }
+        });
+        textgallery.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(pickPhoto, Constants.SELECT_PICTURE);
 
 					/*Intent intent = new Intent();
 					intent.setType("image*//*");
 					intent.setAction(Intent.ACTION_GET_CONTENT);
 					startActivityForResult(Intent.createChooser(intent, "Select Picture"),Constants.SELECT_PICTURE);*/
-                    dialog.dismiss();
-                }
+                mdialog.dismiss();
             }
         });
 
-        dialog.setNeutralButton("Cancel",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        dialog.dismiss();
-                    }
-                }
-        );
-        dialog.show();
+        cancel.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mdialog.dismiss();
+            }
+        });
+        mdialog.show();
     }
+
+
+//
+//    // get dialog for image . camera or gallery
+//    public void imageDialog() {
+//        String[] addPhoto;
+//        addPhoto = new String[]{"Camera", "Gallery"};
+//        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+//        dialog.setTitle("Select Option");
+//
+//        dialog.setItems(addPhoto, new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int id) {
+//                if (id == 0) {
+//                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                    mImageCaptureUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
+//                    intent.putExtra("return-data", true);
+//                    intent.putExtra("android.intent.extras.CAMERA_FACING", 1);
+//                    intent.putExtra(MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
+//
+//                    // start the image capture Intent
+//                    startActivityForResult(intent, Constants.CAMERA_REQUEST);
+//
+//                    dialog.dismiss();
+//                } else if (id == 1) {
+//
+//                    Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//                    startActivityForResult(pickPhoto, Constants.SELECT_PICTURE);
+//
+//					/*Intent intent = new Intent();
+//					intent.setType("image*//*");
+//					intent.setAction(Intent.ACTION_GET_CONTENT);
+//					startActivityForResult(Intent.createChooser(intent, "Select Picture"),Constants.SELECT_PICTURE);*/
+//                    dialog.dismiss();
+//                }
+//            }
+//        });
+//
+//        dialog.setNeutralButton("Cancel",
+//                new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//
+//                        dialog.dismiss();
+//                    }
+//                }
+//        );
+//        dialog.show();
+//    }
 
     public static final int MEDIA_TYPE_IMAGE = 1;
     private static final String IMAGE_DIRECTORY_NAME = "FootGloryFlow Application";

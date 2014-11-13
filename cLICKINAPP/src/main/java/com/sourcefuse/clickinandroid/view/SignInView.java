@@ -288,7 +288,7 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
 
     private void switchView() {
         Intent intent = new Intent(SignInView.this, UserProfileView.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+      //  intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();
     }
@@ -430,9 +430,9 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
         SmackAndroid.init(this);
         com.sourcefuse.clickinandroid.utils.Log.e(TAG, "loginToQuickBlox --- getUserId=>" + authManager.getUserId() + ",--getUsrToken-=>" + authManager.getUsrToken());
         QBSettings.getInstance().fastConfigInit(Constants.CLICKIN_APP_ID, Constants.CLICKIN_AUTH_KEY, Constants.CLICKIN_AUTH_SECRET);
-      //  QBSettings.getInstance().setServerApiDomain("apiclickin.quickblox.com");
-        //QBSettings.getInstance().setContentBucketName("qb-clickin");
-        //QBSettings.getInstance().setChatServerDomain("chatclickin.quickblox.com");
+        QBSettings.getInstance().setServerApiDomain("apiclickin.quickblox.com");
+        QBSettings.getInstance().setContentBucketName("qb-clickin");
+        QBSettings.getInstance().setChatServerDomain("chatclickin.quickblox.com");
         final QBUser user = new QBUser(authManager.getUserId(), authManager.getUsrToken());
 
         QBAuth.createSession(user, new QBCallbackImpl() {

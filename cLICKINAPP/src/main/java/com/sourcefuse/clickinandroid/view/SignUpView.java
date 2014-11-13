@@ -168,7 +168,7 @@ public class SignUpView extends Activity implements TextWatcher,OnClickListener 
 	@Override
 	public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-		if (phoneNo.getText().toString().length() > 1) {
+		if (phoneNo.getText().toString().length() >= 1) {
             checkmeout.setEnabled(true);
 			checkmeout.setBackgroundResource(R.drawable.s_checkout_active);
 		} else {

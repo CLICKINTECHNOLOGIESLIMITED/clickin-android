@@ -182,6 +182,7 @@ public class VerifyView extends Activity implements View.OnClickListener,
 		switch (v.getId()) {
 		case R.id.btn_send:
                 Utils.launchBarDialog(VerifyView.this);
+                 fromSignalertDialogDammit();
                 authManager = ModelManager.getInstance().getAuthorizationManager();
                 authManager.reSendVerifyCode(authManager.getPhoneNo(), authManager.getUsrToken());
                 break;
@@ -281,7 +282,7 @@ public class VerifyView extends Activity implements View.OnClickListener,
         dialog.setCancelable(false);
         TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
         TextView msgII = (TextView) dialog.findViewById(R.id.alert_msgII);
-        msgI.setText("The Code Has Been re-sent,Please check");
+        msgI.setText("The Code Has Been re-sent.Please check");
         msgII.setText("");
 
         Button dismiss = (Button) dialog.findViewById(R.id.coolio);

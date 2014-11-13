@@ -76,6 +76,7 @@
                 android:ems="10"
                 android:hint="@string/txt_search_phonebook"
                 android:padding="10dp"
+                android:singleLine="true"
                 android:textColor="@color/phone_no_clr"
                 android:textColorHint="@color/sign_hint"
                 android:textSize="14sp">
