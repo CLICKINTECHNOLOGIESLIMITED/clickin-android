@@ -75,7 +75,7 @@ public class ContactAdapter extends ArrayAdapter<ContactBean> {
 		return row;
 	}
 
-   
+
     // Filter Class
 		public void filter(String charText) {
 			charText = charText.toLowerCase(Locale.getDefault());
