@@ -129,6 +129,8 @@ public class CurrentClickersView extends Activity implements OnClickListener {
             }
 
         } else if (i == R.id.btn_fb) {
+            phonebook.setBackgroundResource(R.drawable.c_phonebook_grey);
+            facebook.setBackgroundResource(R.drawable.c_fb_pink);
             tempCurrentClickers.clear();
             if(adapter==null)
                 adapter = new CurrentClickersAdapter(CurrentClickersView.this, R.layout.row_currentclickerslist, tempCurrentClickers);
@@ -138,8 +140,7 @@ public class CurrentClickersView extends Activity implements OnClickListener {
                 tempCurrentClickers=profilemanager.currentClickerListFB;
                 setlist();
             }else {
-                phonebook.setBackgroundResource(R.drawable.c_phonebook_grey);
-                facebook.setBackgroundResource(R.drawable.c_fb_pink);
+
                 Utils.launchBarDialog(CurrentClickersView.this);
                 if (Utils.isConnectingToInternet(CurrentClickersView.this)) {
 
@@ -214,6 +215,7 @@ public class CurrentClickersView extends Activity implements OnClickListener {
         } catch (Error e) {
             Log.d(TAG, "" + e);
         }
+        Utils.dismissBarDialog();
     }
     //Methods for Facebook
     private Session.StatusCallback callback = new Session.StatusCallback() {
@@ -235,7 +237,9 @@ public class CurrentClickersView extends Activity implements OnClickListener {
 
         } else if (state.isClosed()) {
             System.out.println("Logged out...");
+            Utils.dismissBarDialog();
         }
+
     }
 
     public void onEventMainThread(String message){
@@ -255,7 +259,7 @@ public class CurrentClickersView extends Activity implements OnClickListener {
             Utils.dismissBarDialog();
             tempCurrentClickers=profilemanager.currentClickerListFB;
             setlist();
-        } else if (message.equalsIgnoreCase("FetchFbFriend False")) {
+        } else if (message.equalsIgnoreCase("FetchFbFriend false")) {
             Utils.dismissBarDialog();
         } else if(message.equalsIgnoreCase("FetchFbFriend Network Error")){
             Utils.dismissBarDialog();

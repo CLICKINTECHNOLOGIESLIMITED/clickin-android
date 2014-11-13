@@ -43,7 +43,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
 	private TextView profileHeader;
 	private ListView mUserRelationlistView;
 	private ImageView userimage;
-	private ImageView menu,notification;
+	//private ImageView menu,notification;
 	public UserRelationAdapter adapter;
 	private AuthManager authManager;
 	private RelationManager relationManager;
@@ -541,8 +541,23 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         mUserRelationlistView = (ListView) findViewById(R.id.list_click_with_profile);
         mUserRelationlistView.setDivider(getResources().getDrawable(R.drawable.owner_profile_side_line));
 
-        menu = (ImageView) findViewById(R.id.iv_menu);
-        notification = (ImageView) findViewById(R.id.iv_notification);
+       // menu = (ImageView) findViewById(R.id.iv_menu);
+       // notification = (ImageView) findViewById(R.id.iv_notification);
+
+        ((ImageView) findViewById(R.id.iv_open_left_menu)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                slidemenu.showMenu(true);
+            }
+        });
+        ((ImageView) findViewById(R.id.iv_open_right_menu)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                slidemenu.showSecondaryMenu(true);
+            }
+        });
+
+
         userimage = (ImageView) findViewById(R.id.iv_usr_icon);
         userimage.setScaleType(ScaleType.FIT_XY);
 
@@ -553,8 +568,8 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
 
         following.setOnClickListener(this);
         follower.setOnClickListener(this);
-        menu.setOnClickListener(this);
-        notification.setOnClickListener(this);
+        //menu.setOnClickListener(this);
+       // notification.setOnClickListener(this);
         EditProfile.setOnClickListener(this);
 
         name.setTypeface(typefaceBold);

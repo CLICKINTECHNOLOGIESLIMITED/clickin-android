@@ -90,6 +90,10 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 
         authManager = ModelManager.getInstance().getAuthorizationManager();
 
+
+
+
+
     }
 
     @SuppressWarnings("static-access")

@@ -371,6 +371,8 @@ JSONObject chatObj = newsfeedArray.getJSONObject(i).getJSONObject("chatDetail");
                                     profilemanager.currentClickerListFB.add(currentClickerBean);
                                 }
                                 EventBus.getDefault().post("FetchFbFriend True");
+                            }else{
+                                EventBus.getDefault().post("FetchFbFriend false");
                             }
 
                         } catch (JSONException e) {

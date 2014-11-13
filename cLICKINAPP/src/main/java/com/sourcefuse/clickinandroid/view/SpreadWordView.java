@@ -198,6 +198,7 @@ public class SpreadWordView extends Activity implements OnClickListener {
         } catch (Error e) {
            // android.util.Log.d(TAG, "" + e);
         }
+        Utils.dismissBarDialog();
     }
     //Methods for Facebook
     private Session.StatusCallback callback = new Session.StatusCallback() {
@@ -214,6 +215,7 @@ public class SpreadWordView extends Activity implements OnClickListener {
        //     android.util.Log.d(TAG, access_Token);
             sendRequestDialogForFriendList();
         } else if (state.isClosed()) {
+            Utils.dismissBarDialog();
             System.out.println("Logged out...");
         }
     }
