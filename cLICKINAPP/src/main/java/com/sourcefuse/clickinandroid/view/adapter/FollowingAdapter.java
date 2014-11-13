@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
 import com.sourcefuse.clickinandroid.model.bean.FollowerFollowingBean;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
+import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.FollowingListView;
@@ -32,7 +34,7 @@ public class FollowingAdapter extends ArrayAdapter<FollowerFollowingBean> {
 	int layoutResourceId;
     private AuthManager authManager;
     private RelationManager relationManager;
-
+      private Typeface typeface;
 	public FollowingAdapter(Context context, int layoutResourceId,
 			List<FollowerFollowingBean> item) {
 		super(context, layoutResourceId, item);
@@ -50,11 +52,17 @@ public class FollowingAdapter extends ArrayAdapter<FollowerFollowingBean> {
 			LayoutInflater inflater = ((Activity) context).getLayoutInflater();
 			row = inflater.inflate(layoutResourceId, parent, false);
 			holder = new RecordHolder();
-			holder.usr_name = (TextView) row
-					.findViewById(R.id.tv_clickers_name);
+
+                  typeface = Typeface.createFromAsset(context.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_BOLD);
+
+			holder.usr_name = (TextView) row .findViewById(R.id.tv_clickers_name);
+			holder.hfollowersRequest = (TextView) row .findViewById(R.id.tv_heading_rfollowers);
+			holder.hfollowers = (TextView) row .findViewById(R.id.tv_heading_followers);
 			holder.usrimg = (ImageView) row.findViewById(R.id.iv_usr);
 			holder.usrimg.setScaleType(ScaleType.FIT_XY);
 			holder.reqbtn = (Button) row.findViewById(R.id.btn_actions);
+                  /*holder.hfollowersRequest.setTypeface(typeface);
+                  holder.hfollowers.setTypeface(typeface);*/
 
 			row.setTag(holder);
 		} else {
@@ -135,7 +143,7 @@ public class FollowingAdapter extends ArrayAdapter<FollowerFollowingBean> {
 	}
 
 	static class RecordHolder {
-		TextView usr_name;
+		TextView usr_name,hfollowersRequest,hfollowers;
 		ImageView usrimg;
         Button reqbtn;
 

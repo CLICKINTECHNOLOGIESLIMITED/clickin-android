@@ -460,6 +460,9 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
                                     month = Integer.valueOf(dob[0]);
                                     day = Integer.valueOf(dob[1]);
 
+                                    age = getAge(year,month,day);
+
+
                                     tvDate.setText("" + day);
                                     tvMonth.setText("" + MONTHS[month - 1]);
                                     tvYear.setText("" + (year));
@@ -479,12 +482,7 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
                                     task.execute(url);
 
 
-                                    //						Picasso.with(ProfileView.this).load("https://graph.facebook.com/"+user.getId()+"/picture?type=large")
-                                    //						.placeholder(R.drawable.default_profile)
-                                    //						.resize(300,300)
-                                    //						.error(R.drawable.default_profile)
-                                    //						.into(profileimg);
-                                    //						//userdata.put("profile_image","https://graph.facebook.com/"+user.getId()+"/picture?type=large");
+
                               } catch (Exception e) {
                                     // TODO Auto-generated catch block
                                     e.printStackTrace();
@@ -593,53 +591,6 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
       }
 
 
-//
-//    // get dialog for image . camera or gallery
-//    public void imageDialog() {
-//        String[] addPhoto;
-//        addPhoto = new String[]{"Camera", "Gallery"};
-//        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-//        dialog.setTitle("Select Option");
-//
-//        dialog.setItems(addPhoto, new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int id) {
-//                if (id == 0) {
-//                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                    mImageCaptureUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
-//                    intent.putExtra("return-data", true);
-//                    intent.putExtra("android.intent.extras.CAMERA_FACING", 1);
-//                    intent.putExtra(MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
-//
-//                    // start the image capture Intent
-//                    startActivityForResult(intent, Constants.CAMERA_REQUEST);
-//
-//                    dialog.dismiss();
-//                } else if (id == 1) {
-//
-//                    Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//                    startActivityForResult(pickPhoto, Constants.SELECT_PICTURE);
-//
-//					/*Intent intent = new Intent();
-//					intent.setType("image*//*");
-//					intent.setAction(Intent.ACTION_GET_CONTENT);
-//					startActivityForResult(Intent.createChooser(intent, "Select Picture"),Constants.SELECT_PICTURE);*/
-//                    dialog.dismiss();
-//                }
-//            }
-//        });
-//
-//        dialog.setNeutralButton("Cancel",
-//                new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//
-//                        dialog.dismiss();
-//                    }
-//                }
-//        );
-//        dialog.show();
-//    }
 
       public static final int MEDIA_TYPE_IMAGE = 1;
       private static final String IMAGE_DIRECTORY_NAME = "FootGloryFlow Application";
@@ -913,7 +864,8 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
 
                   Log.e(TAG+"--------------->", "Diffrence in Mills " + diffrence_in_mills);
 
-/* code for age prafull */
+      /* code for age prafull */
+
                   age = getAge(selectedYear,selectedMonth,selectedDay);
                   Log.e(TAG, "Age Difference " + age);
 //            DateTime start  = new DateTime(start_date);
@@ -991,8 +943,7 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
       public void alertDialog(String msgStrI) {
             dialog = new Dialog(ProfileView.this);
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            dialog.getWindow().setBackgroundDrawableResource(
-                                                                    android.R.color.transparent);
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
             dialog.setContentView(R.layout.alert_check_dialogs);
 
             TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);

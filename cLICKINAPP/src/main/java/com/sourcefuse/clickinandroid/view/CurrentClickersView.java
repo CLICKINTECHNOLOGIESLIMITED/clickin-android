@@ -161,7 +161,8 @@ public class CurrentClickersView extends Activity implements OnClickListener {
                 }
             }
         } else if (i == R.id.btn_back) {
-        	finish();
+              finish();
+              overridePendingTransition(0, R.anim.top_out);
 
         } /*else if (i == R.id.btn_middle_back) {
             finish();
@@ -200,7 +201,14 @@ public class CurrentClickersView extends Activity implements OnClickListener {
         }
 	}
 
-    @Override
+      @Override
+      public void onBackPressed() {
+            super.onBackPressed();
+            finish();
+            overridePendingTransition(0, R.anim.top_out);
+      }
+
+      @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         try {
             super.onActivityResult(requestCode, resultCode, data);
