@@ -66,7 +66,7 @@ public class FetchContactFromPhone {
         Utils.itData.clear();
 		if (cur.getCount() > 0) {
 			while (cur.moveToNext()) {
-				mcantactBean = new ContactBean();
+				mcantactBean = new ContactBean("","","",true);
 				String id = cur.getString(cur.getColumnIndex(ContactsContract.Contacts._ID));
 				name = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
 				image_uri = cur.getString(cur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.PHOTO_URI));
@@ -254,7 +254,7 @@ public class FetchContactFromPhone {
                             } else if(existcode==0) {
                                 ContactBean cb = Utils.contactMap.get(data.getString("phone_no"));
                                 if( cb!=null){
-                                    contactBean = new ContactBean();
+                                    contactBean = new ContactBean("","","",true);
                                     contactBean.setConName(cb.getConName());
                                     contactBean.setConNumber(cb.getConNumber());
                                     contactBean.setChecked(false);

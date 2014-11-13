@@ -17,6 +17,7 @@ import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -74,11 +75,12 @@ public class ContactAdapter extends ArrayAdapter<ContactBean> {
 		return row;
 	}
 
-	
-	// Filter Class
+
+    // Filter Class
 		public void filter(String charText) {
 			charText = charText.toLowerCase(Locale.getDefault());
 			refreshList.clear();
+            Collections.sort(Utils.itData);
 			if (charText.length() == 0) {
 				conData.addAll(Utils.itData);
 			} 
@@ -89,7 +91,9 @@ public class ContactAdapter extends ArrayAdapter<ContactBean> {
 					//if(wp.getConName()!=null)
 					if (wp.getConName().toLowerCase(Locale.getDefault()).contains(charText) || wp.getConNumber().toLowerCase(Locale.getDefault()).contains(charText))
 					{
-						refreshList.add(wp);
+
+                        refreshList.add(wp);
+                        Collections.sort(refreshList);
 					}
 				}
 			}
