@@ -151,8 +151,8 @@ public class AddSomeoneView extends Activity implements View.OnClickListener,
 		switch (v.getId()) {
 		case R.id.btn_do_itlatter:
 			 Intent clickersView = new Intent(AddSomeoneView.this,CurrentClickersView.class);
-             clickersView.putExtra("FromSignup", true);
-             clickersView.putExtra("FromMenu", false);
+                   clickersView.putExtra("FromSignup", true);
+                   clickersView.putExtra("FromMenu", false);
 			 startActivity(clickersView);
          //  finish();
 			break;

@@ -70,19 +70,22 @@ public class FollowerAdapter extends ArrayAdapter<FollowerFollowingBean> {
             holder.hfollowers = (TextView) row.findViewById(R.id.tv_heading_followers);
 			holder.usrimg = (ImageView) row.findViewById(R.id.iv_usr);
 			holder.usrimg.setScaleType(ScaleType.FIT_XY);
+
+                  holder.divider_ = (ImageView) row.findViewById(R.id.divider_);
+
 			holder.reqbtn = (Button) row.findViewById(R.id.btn_actions);
             holder.resBtn = (Button) row.findViewById(R.id.btn_f_resect);
             holder.accBtn = (Button) row.findViewById(R.id.btn_f_accept);
             holder.rlResectAccept = (LinearLayout) row.findViewById(R.id.rl_resect_accept);
 
-            holder.hfollowersRequest.setTypeface(typeface, typeface.BOLD);
-            holder.hfollowers.setTypeface(typeface, typeface.BOLD);
+            /*holder.hfollowersRequest.setTypeface(typeface, typeface.BOLD);
+            holder.hfollowers.setTypeface(typeface, typeface.BOLD);*/
 
 			row.setTag(holder);
 		} else {
 			holder = (RecordHolder) row.getTag();
 		}
-		
+
 		RecordHolder rholder = (RecordHolder) row.getTag();
 		rholder.usr_name.setText(item.getFolloweeName());
         if(!item.getFolloweePic().equalsIgnoreCase("")) {
@@ -296,11 +299,11 @@ public class FollowerAdapter extends ArrayAdapter<FollowerFollowingBean> {
 	static class RecordHolder {
         LinearLayout rlResectAccept;
 		TextView usr_name,hfollowersRequest,hfollowers;
-		ImageView usrimg;
+		ImageView usrimg,divider_;
 		Button reqbtn;
         Button resBtn;
         Button accBtn;
-		
+
 
 	}
 }
