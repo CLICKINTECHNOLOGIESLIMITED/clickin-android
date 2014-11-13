@@ -86,7 +86,14 @@ public class SpreadWordView extends Activity implements OnClickListener {
 
 	}
 
-    @Override
+      @Override
+      public void onBackPressed() {
+            super.onBackPressed();
+            finish();
+            overridePendingTransition(0, R.anim.top_out);
+      }
+
+      @Override
     protected void onResume() {
         super.onResume();
       //  Utils.groupSms.clear();
@@ -136,7 +143,8 @@ public class SpreadWordView extends Activity implements OnClickListener {
 		break;
 		case R.id.btn_back:
 			//Log.e("", "COUNT------>" + listView.getCount());
-            finish();
+                  finish();
+                  overridePendingTransition(0, R.anim.top_out);
 		break;
 		case R.id.btn_next:
             Utils.launchBarDialog(this);

@@ -117,12 +117,18 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
         });
 
 	}
-
+      @Override
+      public void onBackPressed() {
+            super.onBackPressed();
+            finish();
+            overridePendingTransition(0, R.anim.top_out);
+      }
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.btn_go_back:
 			finish();
+                  overridePendingTransition(0, R.anim.top_out);
 			break;
 		case R.id.btn_get_clickIn:
 
