@@ -2,12 +2,10 @@ package com.sourcefuse.clickinandroid.view;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -246,16 +244,23 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
                 Bitmap bitmap;
                 if (updateProfileValidation()) {
 
-
+//akshit code start to set default pics for male,female and if no gender
                     if (bitmapImage == null) {
                         try {
-                            bitmapImage = BitmapFactory.decodeResource(getResources(), R.drawable.default_profile);
+                            if(gender_var.equalsIgnoreCase("guy")){
+                                bitmapImage= BitmapFactory.decodeResource(getResources(),R.drawable.male_user);
+                            }else if(gender_var.equalsIgnoreCase("girl")){
+                                bitmapImage=BitmapFactory.decodeResource(getResources(),R.drawable.female_user);
+                            }else {
+                                bitmapImage = BitmapFactory.decodeResource(getResources(), R.drawable.male_user);
+                            }
 //                            ImageView im = (ImageView) findViewById(R.id.iv_profile_img);
 //                            bitmap = Bitmap.createBitmap(im.getWidth(), im.getHeight(), Bitmap.Config.ARGB_8888);
 //                            Canvas c = new Canvas(bitmap);
 //                            im.getDrawable().draw(c);
                         } catch (Exception e) {
                         }
+
                         if (Utils.isEmailValid(email.getText().toString())) {
                             Utils.launchBarDialog(ProfileView.this);
                             authManager.setEmailId(email.getText().toString());
@@ -409,7 +414,7 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
                             gender_var = "guy";
                             guy.setBackgroundResource(R.drawable.c_pink_guy);
                             girl.setBackgroundResource(R.drawable.c_grey_girl);
-                        } else {
+                        } else{
                             gender_var = "girl";
                             guy.setBackgroundResource(R.drawable.c_grey_guy);
                             girl.setBackgroundResource(R.drawable.c_pink_girl);
@@ -758,7 +763,7 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
                     case Constants.SELECT_PICTURE:
                         bitmapImage = getBitmapFromCameraData(data, getApplicationContext());
 
-/*test code akshit */
+
                  /*    pick image from gallery  */
 
 
@@ -815,7 +820,7 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
                             bitmapImage.recycle();
 
                             profileimg.setImageBitmap(resized1);
-
+                       //      authManager.setUserPic(resized1.toString());
                             userImageUri = data.getData();
                         //    authManager.setUserImageUri(userImageUri);
                           //  authManager.setUserbitmap(resized1);

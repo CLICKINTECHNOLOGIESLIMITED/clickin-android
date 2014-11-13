@@ -16,8 +16,6 @@ import org.apache.http.protocol.HTTP;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Observable;
-
 import de.greenrobot.event.EventBus;
 
 public class AuthManager  {
@@ -996,9 +994,9 @@ public Boolean deviceRegistered;
                             JSONObject jobj = new JSONObject(response.getString("user"));
                             if (jobj.has("gender"))
                                 authManager.setTmpGender(jobj.getString("gender"));
-                            else
-                                authManager.setTmpGender("guy");
-                            if (jobj.has("follower"))
+//                            else
+//                                authManager.setGender("");
+                             if (jobj.has("follower"))
                                 authManager.setTmpFollower(jobj.getString("follower"));
                             if (jobj.has("following"))
                                 authManager.setTmpFollowing(jobj.getString("following"));
@@ -1015,11 +1013,11 @@ public Boolean deviceRegistered;
 
                         } else {
                             JSONObject jobj = new JSONObject(response.getString("user"));
-                            if (jobj.has("gender")) {
+                            if (jobj.has("gender"))
                                 authManager.setGender(jobj.getString("gender"));
-                            } else {
-                                authManager.setGender("guy");
-                            }
+//                            }else
+//                            authManager.setGender("");
+
                             if (jobj.has("follower"))
                                 authManager.setFollower(jobj.getString("follower"));
                             if (jobj.has("following"))
