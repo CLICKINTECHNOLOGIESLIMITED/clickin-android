@@ -2,12 +2,10 @@ package com.sourcefuse.clickinandroid.view;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -248,9 +246,18 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
                         if (updateProfileValidation()) {
 
 
-                              if (bitmapImage == null) {
-                                    try {
-                                          bitmapImage = BitmapFactory.decodeResource(getResources(), R.drawable.default_profile);
+                            //akshit code start to set default pics for male,female and if no gender
+                            if (bitmapImage == null) {
+                                try {
+                                    if(gender_var.equalsIgnoreCase("guy")) {
+                                        bitmapImage = BitmapFactory.decodeResource(getResources(), R.drawable.male_user);
+                                    }else if(gender_var.equalsIgnoreCase("girl")){
+                                        bitmapImage=BitmapFactory.decodeResource(getResources(),R.drawable.female_user);
+
+                                    }else{
+                                        bitmapImage = BitmapFactory.decodeResource(getResources(), R.drawable.male_user);
+                                    }
+
 //                            ImageView im = (ImageView) findViewById(R.id.iv_profile_img);
 //                            bitmap = Bitmap.createBitmap(im.getWidth(), im.getHeight(), Bitmap.Config.ARGB_8888);
 //                            Canvas c = new Canvas(bitmap);
