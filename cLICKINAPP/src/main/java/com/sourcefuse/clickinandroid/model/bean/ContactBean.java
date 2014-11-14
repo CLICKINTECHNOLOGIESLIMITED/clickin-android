@@ -1,12 +1,16 @@
 package com.sourcefuse.clickinandroid.model.bean;
 
+<<<<<<< HEAD
 import java.util.Comparator;
 
+=======
+>>>>>>> 5065e320d5c0053fcdd426eaf2c980eab897baca
 public class ContactBean {
 
     private String conName;
     private String conNumber;
     private String conUri;
+<<<<<<< HEAD
     private boolean isChecked;
 
 
@@ -17,6 +21,8 @@ public class ContactBean {
         this.isChecked = isChecked;
     }*/
 
+=======
+>>>>>>> 5065e320d5c0053fcdd426eaf2c980eab897baca
 
     public boolean isChecked() {
         return isChecked;
@@ -26,7 +32,7 @@ public class ContactBean {
         this.isChecked = isChecked;
     }
 
-
+    private boolean isChecked;
     /**
      * @return the conName
      */
@@ -65,6 +71,7 @@ public class ContactBean {
     }
 
 
+<<<<<<< HEAD
   /*  @Override
     public int compareTo(ContactBean other) {
 
@@ -80,4 +87,7 @@ public class ContactBean {
     }
 */
 
+=======
+
+>>>>>>> 5065e320d5c0053fcdd426eaf2c980eab897baca
 }

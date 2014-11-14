@@ -24,8 +24,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 
+import java.util.Comparator;
+import java.util.Iterator;
 import de.greenrobot.event.EventBus;
 
 public class FetchContactFromPhone {
@@ -125,8 +126,8 @@ public class FetchContactFromPhone {
 			}
 		}
 
-        Collections.sort(Utils.itData,new ContactNameComparator());
-	}
+        Collections.sort(Utils.itData,FetchContactFromPhone.NameComparator);
+    }
 
 	/*private class AsyncTaskRunner extends AsyncTask<String, String, String> {
 		private String resp;
@@ -271,6 +272,9 @@ public class FetchContactFromPhone {
 
                             }
                         }
+                        Collections.sort(profilemanager.spreadTheWorldList,FetchContactFromPhone.NameComparator);
+                        Collections.sort(profilemanager.currentClickerList,FetchContactFromPhone.CurrentClickersNameComparator);
+                        Collections.sort(profilemanager.currentClickerListFB,FetchContactFromPhone.CurrentClickersNameComparator);
 
                         //Collections.sort(profilemanager.currentClickerList, new ContactBean());
                         Collections.sort(profilemanager.spreadTheWorldList, new ContactNameComparator());
@@ -355,5 +359,28 @@ public class FetchContactFromPhone {
             }
         });
     }
+
+    //monika -to sort current phonebook and spreadword list
+    public static final Comparator<ContactBean> NameComparator = new Comparator<ContactBean>(){
+
+
+
+        @Override
+        public int compare(ContactBean contactBean, ContactBean contactBean2) {
+            return contactBean.getConName().compareTo(contactBean2.getConName());
+        }
+    };
+
+//monika -to sort current clickers list
+public static final Comparator<CurrentClickerBean> CurrentClickersNameComparator = new Comparator<CurrentClickerBean>(){
+
+
+
+    @Override
+    public int compare(CurrentClickerBean contactBean, CurrentClickerBean contactBean2) {
+        return contactBean.getName().compareTo(contactBean2.getName());
+    }
+};
+
 
 }

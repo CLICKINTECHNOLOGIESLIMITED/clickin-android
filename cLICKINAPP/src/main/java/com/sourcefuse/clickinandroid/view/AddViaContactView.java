@@ -56,19 +56,31 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
             String mlPhNo = bundle.getString("ConNumber");
             String onlyPhNo = null;
             String countryCode = null;
-            String[] rl=this.getResources().getStringArray(R.array.CountryCodes);
-            for(int i=0;i<rl.length;i++){
-                String[] g=rl[i].split(",");
-                countryCode = g[0];
-                countryCode= "+"+countryCode;
-                if(mlPhNo.startsWith(countryCode)){
-                    onlyPhNo = mlPhNo.replace(countryCode,"");
 
-                    break;
+            //first check country code from SIM and compare it with num
+            countryCode=Utils.getCountryCodeFromSim(this);
+            if(countryCode!=null){
+                if(mlPhNo.startsWith(countryCode)){
+                    onlyPhNo=mlPhNo.replace(countryCode,"");
+                }
+            }else {
+                String[] rl = this.getResources().getStringArray(R.array.CountryCodes);
+                for (int i = 0; i < rl.length; i++) {
+                    String[] g = rl[i].split(",");
+                    String tempcountryCode = g[0];
+                    tempcountryCode = "+" + tempcountryCode;
+                    if (mlPhNo.startsWith(tempcountryCode)) {
+                        onlyPhNo = mlPhNo.replace(tempcountryCode, "");
+                        countryCode = tempcountryCode;
+                        break;
+                    }
                 }
             }
 
-
+            if(countryCode==null){
+                countryCode="+(null)";
+                onlyPhNo=mlPhNo.replace("+","");
+            }
             cntry_cd.setText("" + countryCode);
 			phoneNo.setText("" + onlyPhNo);
             String 	image_uri = bundle.getString("ConUri");
@@ -129,11 +141,13 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
 
 		case R.id.btn_get_clickIn:
 
-       if(phoneNo.getText().toString().length()>=5) {
+         if(phoneNo.getText().toString().length()>=5) {
+
           String mPhNo = cntry_cd.getText().toString().trim()+phoneNo.getText().toString().trim();
             ProfileManager prfManager= ModelManager.getInstance().getProfileManager();
             if(prfManager.currClickersPhoneNums.contains(mPhNo)){
                 authManager = ModelManager.getInstance().getAuthorizationManager();
+                Utils.launchBarDialog(this);
                 authManager.sendNewRequest(authManager.getPhoneNo(), mPhNo, authManager.getUsrToken());
             }else{
                 Intent smsIntent = new Intent(Intent.ACTION_VIEW);

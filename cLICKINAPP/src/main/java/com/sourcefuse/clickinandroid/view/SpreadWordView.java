@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -31,6 +32,8 @@ import com.sourcefuse.clickinapp.R;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
+import java.util.ListIterator;
 
 import de.greenrobot.event.EventBus;
 
@@ -39,64 +42,70 @@ import de.greenrobot.event.EventBus;
  */
 public class SpreadWordView extends Activity implements OnClickListener {
 
-	private Button phonebook, facebook;
+    private Button phonebook, facebook;
+    private QBPrivateChat chat;
+    Dialog dialog ;
+    private AuthManager authManager;
+    private ProfileManager profilemanager;
 
 
 
-
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.view_spread_word);
-		this.overridePendingTransition(R.anim.slide_in_right ,R.anim.slide_out_right);
-		phonebook = (Button) findViewById(R.id.btn_phb);
-		facebook = (Button) findViewById(R.id.btn_fb);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.view_spread_word);
+        this.overridePendingTransition(R.anim.slide_in_right ,R.anim.slide_out_right);
+        phonebook = (Button) findViewById(R.id.btn_phb);
+        facebook = (Button) findViewById(R.id.btn_fb);
 
         ((TextView) findViewById(R.id.btn_invite)).setOnClickListener(this);
 
-		((TextView) findViewById(R.id.btn_back)).setOnClickListener(this);
+        ((TextView) findViewById(R.id.btn_back)).setOnClickListener(this);
         ((TextView) findViewById(R.id.btn_next)).setOnClickListener(this);
 
-		phonebook.setOnClickListener(this);
-		facebook.setOnClickListener(this);
+        phonebook.setOnClickListener(this);
+        facebook.setOnClickListener(this);
 
 
 
 
         AuthManager authManager = ModelManager.getInstance().getAuthorizationManager();
         EventBus.getDefault().register(this);
+        Utils.groupSms.clear();
         Utils.launchBarDialog(this);
         new FetchContactFromPhone(SpreadWordView.this).getClickerList(authManager.getPhoneNo(),authManager.getUsrToken(),1);
-     //   setlist();
-		
-	}
+        //   setlist();
+
+    }
+
 
 	public void setlist() {
         ProfileManager  profilemanager = ModelManager.getInstance().getProfileManager();
         ListView listView = (ListView) findViewById(R.id.list_current_clickers);
         SpreadWordAdapter adapter = new SpreadWordAdapter(SpreadWordView.this,R.layout.row_invitefriend, profilemanager.spreadTheWorldList);
 		listView.setAdapter(adapter);
-	}
 
-      @Override
-      public void onBackPressed() {
-            super.onBackPressed();
-            finish();
-            overridePendingTransition(0, R.anim.top_out);
-      }
+    }
 
-      @Override
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        overridePendingTransition(0, R.anim.top_out);
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
-      //  Utils.groupSms.clear();
+        //  Utils.groupSms.clear();
     }
 
     @Override
     public void onStart() {
         super.onStart();
         if(!(EventBus.getDefault().isRegistered(this)))
-        EventBus.getDefault().register(this);
+            EventBus.getDefault().register(this);
     }
 
     public void onStop(){
@@ -105,62 +114,68 @@ public class SpreadWordView extends Activity implements OnClickListener {
             EventBus.getDefault().unregister(this);
         }
     }
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.btn_phb:
-            phonebook.setBackgroundResource(R.drawable.c_phonebook_pink);
-            facebook.setBackgroundResource(R.drawable.c_fb_grey);
-		break;
-		case R.id.btn_fb:
-           // phonebook.setBackgroundResource(R.drawable.c_phonebook_grey);
-           // facebook.setBackgroundResource(R.drawable.c_fb_pink);
-            Utils.launchBarDialog(SpreadWordView.this);
-            if (Utils.isConnectingToInternet(SpreadWordView.this)) {
-                Session session = Session.getActiveSession();
-                if (session == null) {
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_phb:
+                phonebook.setBackgroundResource(R.drawable.c_phonebook_pink);
+                facebook.setBackgroundResource(R.drawable.c_fb_grey);
+                break;
+            case R.id.btn_fb:
+                // phonebook.setBackgroundResource(R.drawable.c_phonebook_grey);
+                // facebook.setBackgroundResource(R.drawable.c_fb_pink);
+                Utils.launchBarDialog(SpreadWordView.this);
+                if (Utils.isConnectingToInternet(SpreadWordView.this)) {
+                    Session session = Session.getActiveSession();
+
                     if (session == null) {
-                        session = new Session(this);
+                        if (session == null) {
+                            session = new Session(this);
+                        }
+                        Session.setActiveSession(session);
                     }
-                    Session.setActiveSession(session);
+                    if (!session.isOpened() && !session.isClosed()) {
+                        session.openForRead(new Session.OpenRequest(this).setCallback(callback).setPermissions("user_birthday","basic_info","email","user_location"));
+                    } else {
+                        Session.openActiveSession(this, true, callback);
+                    }
                 }
-                if (!session.isOpened() && !session.isClosed()) {
-                    session.openForRead(new Session.OpenRequest(this).setCallback(callback).setPermissions("user_birthday","basic_info","email","user_location"));
-                } else {
-                    Session.openActiveSession(this, true, callback);
+                else{
+                    Toast.makeText(getApplicationContext(), "Please Check Your Internet Connection", Toast.LENGTH_SHORT).show();
                 }
-            }
-            else{
-                Toast.makeText(getApplicationContext(), "Please Check Your Internet Connection", Toast.LENGTH_SHORT).show();
-            }
-		break;
-		case R.id.btn_back:
-			//Log.e("", "COUNT------>" + listView.getCount());
-                  finish();
-                  overridePendingTransition(0, R.anim.top_out);
-		break;
-		case R.id.btn_next:
-            Utils.launchBarDialog(this);
+                break;
+            case R.id.btn_back:
+                //Log.e("", "COUNT------>" + listView.getCount());
+                finish();
+                overridePendingTransition(0, R.anim.top_out);
+                break;
+            case R.id.btn_next:
+                Utils.launchBarDialog(this);
 
-         //   authManager.getProfileInfo("", authManager.getPhoneNo(), authManager.getUsrToken());
-            Intent clickersView = new Intent(SpreadWordView.this,UserProfileView.class);
-            clickersView.putExtra("FromSignup", true);
-            startActivity(clickersView);
-            finish();
-	    break;
-        case R.id.btn_invite:
-            if(Utils.groupSms.size()>0) {
-                Intent smsIntent = new Intent(Intent.ACTION_VIEW);
-                smsIntent.putExtra("sms_body", Constants.SEND_REQUEST_WITH_SMS_MESSAGE_SPREAD);
+                //   authManager.getProfileInfo("", authManager.getPhoneNo(), authManager.getUsrToken());
+                Intent clickersView = new Intent(SpreadWordView.this,UserProfileView.class);
+                clickersView.putExtra("FromSignup", true);
+                startActivity(clickersView);
+                finish();
+                break;
+            case R.id.btn_invite:
+                if(Utils.groupSms.size()>0) {
+                    Intent smsIntent = new Intent(Intent.ACTION_VIEW);
+                    smsIntent.putExtra("sms_body", Constants.SEND_REQUEST_WITH_SMS_MESSAGE_SPREAD);
 
-                StringBuilder uri = new StringBuilder("sms:");
-                for (int i = 0; i < Utils.groupSms.size(); i++) {
-                    uri.append(Utils.groupSms.get(i));
-                    uri.append(", ");
-                }
-                smsIntent.setType("vnd.android-dir/mms-sms");
-                smsIntent.setData(Uri.parse(uri.toString()));
-                startActivity(smsIntent);
+                    StringBuilder uri = new StringBuilder("sms:");
+                    ListIterator<String> iterator=Utils.groupSms.listIterator();
+                    while(iterator.hasNext()){
+                        String num=iterator.next();
+                        uri.append(num);
+                        if(iterator.hasNext())
+                            uri.append(",");
+                    }
+
+                    smsIntent.setType("vnd.android-dir/mms-sms");
+                    smsIntent.setData(Uri.parse(uri.toString()));
+                    startActivity(smsIntent);
 
             /*Intent smsIntent = new Intent(Intent.ACTION_VIEW);
             smsIntent.putExtra("sms_body", "Hello ClickIn");
@@ -176,13 +191,13 @@ public class SpreadWordView extends Activity implements OnClickListener {
             }*/
 
 
-            }else{
-                fromSignalDialog(AlertMessage.GROUPSMSMSG);
-                //Utils.showAlert(SpreadWordView.this, AlertMessage.GROUPSMSMSG);
-            }
-        break;
-		}
-	}
+                }else{
+                    fromSignalDialog(AlertMessage.GROUPSMSMSG);
+                    //Utils.showAlert(SpreadWordView.this, AlertMessage.GROUPSMSMSG);
+                }
+                break;
+        }
+    }
 
 
     @Override
@@ -194,9 +209,9 @@ public class SpreadWordView extends Activity implements OnClickListener {
             }catch(Exception e){
             }
         } catch (Exception e) {
-         //   android.util.Log.d(TAG, "" + e);
+            //   android.util.Log.d(TAG, "" + e);
         } catch (Error e) {
-           // android.util.Log.d(TAG, "" + e);
+            // android.util.Log.d(TAG, "" + e);
         }
         Utils.dismissBarDialog();
     }
@@ -212,7 +227,7 @@ public class SpreadWordView extends Activity implements OnClickListener {
                                       Exception exception) {
         if (state.isOpened()) {
             final String access_Token = session.getAccessToken();
-       //     android.util.Log.d(TAG, access_Token);
+            //     android.util.Log.d(TAG, access_Token);
             sendRequestDialogForFriendList();
         } else if (state.isClosed()) {
             Utils.dismissBarDialog();
@@ -232,36 +247,36 @@ public class SpreadWordView extends Activity implements OnClickListener {
                             params))
                     .setOnCompleteListener(new WebDialog.OnCompleteListener() {
 
-                        @Override
-                        public void onComplete(Bundle values,
-                                               FacebookException error) {
-                            try {
-                                final String requestId = values.getString("request");
-                                if (requestId != null) {
-                                  //  Log.e(TAG, "Request sent");
-                                    Utils.dismissBarDialog();
-                                } else {
-                                //    Log.e(TAG, "Request cancelled");
-                                    Utils.dismissBarDialog();
-                                }
-                            }catch (Exception e){
+                                               @Override
+                                               public void onComplete(Bundle values,
+                                                                      FacebookException error) {
+                                                   try {
+                                                       final String requestId = values.getString("request");
+                                                       if (requestId != null) {
+                                                           //  Log.e(TAG, "Request sent");
+                                                           Utils.dismissBarDialog();
+                                                       } else {
+                                                           //    Log.e(TAG, "Request cancelled");
+                                                           Utils.dismissBarDialog();
+                                                       }
+                                                   }catch (Exception e){
 
-                            }
+                                                   }
 
-                            phonebook.setBackgroundResource(R.drawable.c_phonebook_pink);
-                            facebook.setBackgroundResource(R.drawable.c_fb_grey);
-                            Utils.dismissBarDialog();
-                            }
+                                                   phonebook.setBackgroundResource(R.drawable.c_phonebook_pink);
+                                                   facebook.setBackgroundResource(R.drawable.c_fb_grey);
+                                                   Utils.dismissBarDialog();
+                                               }
 
-                        }
+                                           }
 
-                        )
-                                .
+                    )
+                    .
 
-                        build();
+                            build();
 
-                        requestsDialog.show();
-                    }catch (Exception e){}
+            requestsDialog.show();
+        }catch (Exception e){}
     }
 
 
@@ -270,7 +285,7 @@ public class SpreadWordView extends Activity implements OnClickListener {
 
 
     public void onEventMainThread(String message){
-       // android.util.Log.d(TAG, "onEventMainThread->" + message);
+        // android.util.Log.d(TAG, "onEventMainThread->" + message);
         if (message.equalsIgnoreCase("CheckFriend True")) {
             Utils.dismissBarDialog();
             setlist();
@@ -280,6 +295,7 @@ public class SpreadWordView extends Activity implements OnClickListener {
         } else if(message.equalsIgnoreCase("CheckFriend Network Error")){
             Utils.dismissBarDialog();
             fromSignalDialog(AlertMessage.connectionError);
+
         }
     }
 

@@ -33,7 +33,8 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 
-public class UserProfileView extends ClickInBaseView implements View.OnClickListener {
+public class
+        UserProfileView extends ClickInBaseView implements View.OnClickListener {
     private static final String TAG = UserProfileView.class.getSimpleName();
 	private Button follower, following,btnAddSomeone,EditProfile;
 	private TextView profileHeader;
@@ -59,51 +60,67 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-	/*	setContentView(R.layout.view_userprofile);
+        setContentView(R.layout.view_userprofile);
 
-		addMenu(true);
-		this.overridePendingTransition(R.anim.slide_in_right ,R.anim.slide_out_right);
-		authManager = ModelManager.getInstance().getAuthorizationManager();
+        addMenu(true);
+        this.overridePendingTransition(R.anim.slide_in_right ,R.anim.slide_out_right);
+        authManager = ModelManager.getInstance().getAuthorizationManager();
         typefaceMedium = Typeface.createFromAsset(UserProfileView.this.getAssets(),Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
         typefaceBold = Typeface.createFromAsset(UserProfileView.this.getAssets(),Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_BOLD);
 
-		following = (Button) findViewById(R.id.btn_following);
-		follower = (Button) findViewById(R.id.btn_follower);
+        following = (Button) findViewById(R.id.btn_following);
+        follower = (Button) findViewById(R.id.btn_follower);
         EditProfile = (Button) findViewById(R.id.btn_edit_profile);
 
         mUserRelationlistView = (ListView) findViewById(R.id.list_click_with_profile);
-		mUserRelationlistView.setDivider(getResources().getDrawable(R.drawable.owner_profile_side_line));
+        mUserRelationlistView.setDivider(getResources().getDrawable(R.drawable.owner_profile_side_line));
 
-		menu = (ImageView) findViewById(R.id.iv_menu);
-		notification = (ImageView) findViewById(R.id.iv_notification);
-		userimage = (ImageView) findViewById(R.id.iv_usr_icon);
-		userimage.setScaleType(ScaleType.FIT_XY);
+        // menu = (ImageView) findViewById(R.id.iv_menu);
+        // notification = (ImageView) findViewById(R.id.iv_notification);
 
-		name = (TextView) findViewById(R.id.tv_name);
-		userdetails = (TextView) findViewById(R.id.tv_user_details);
-		profileHeader = (TextView) findViewById(R.id.tv_profile_txt);
+        ((ImageView) findViewById(R.id.iv_open_left_menu)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                slidemenu.showMenu(true);
+            }
+        });
+        ((ImageView) findViewById(R.id.iv_open_right_menu)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                slidemenu.showSecondaryMenu(true);
+            }
+        });
 
 
-		following.setOnClickListener(this);
-		follower.setOnClickListener(this);
-		menu.setOnClickListener(this);
-		notification.setOnClickListener(this);
+        userimage = (ImageView) findViewById(R.id.iv_usr_icon);
+        userimage.setScaleType(ScaleType.FIT_XY);
+
+        name = (TextView) findViewById(R.id.tv_name);
+        userdetails = (TextView) findViewById(R.id.tv_user_details);
+        profileHeader = (TextView) findViewById(R.id.tv_profile_txt);
+
+
+        following.setOnClickListener(this);
+        follower.setOnClickListener(this);
+        //menu.setOnClickListener(this);
+        // notification.setOnClickListener(this);
         EditProfile.setOnClickListener(this);
 
-		name.setTypeface(typefaceBold);
-		userdetails.setTypeface(typefaceMedium);
-		profileHeader.setTypeface(typefaceBold);
+        name.setTypeface(typefaceBold);
+        userdetails.setTypeface(typefaceMedium);
+        profileHeader.setTypeface(typefaceBold);
 
 
-		following.setTypeface(typefaceBold);
-		follower.setTypeface(typefaceBold);
+        following.setTypeface(typefaceBold);
+        follower.setTypeface(typefaceBold);
 
 
 
 
-		//code to set adapter to populate list
-		footerView =  ((LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.footer_pro_list, null, false);
-        mUserRelationlistView.addFooterView(footerView);*/
+        //code to set adapter to populate list
+        footerView =  ((LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.footer_pro_list, null, false);
+        mUserRelationlistView.addFooterView(footerView);
+
 
 
 /*not required to check whether it is logged in or not.
@@ -125,7 +142,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         }*/
 
 
-        Utils.launchBarDialog(this);
+    //    Utils.launchBarDialog(this);
 		authManager = ModelManager.getInstance().getAuthorizationManager();
         notificationMngr = ModelManager.getInstance().getNotificationManagerManager();
       //  notificationMngr.getNotification("", authManager.getPhoneNo(), authManager.getUsrToken());
@@ -142,9 +159,12 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         if(FromSignup){
             authManager.getProfileInfo("", authManager.getPhoneNo(), authManager.getUsrToken());
         }else {
-
-            relationManager = ModelManager.getInstance().getRelationManager();
-            relationManager.getRelationShips(authManager.getPhoneNo(), authManager.getUsrToken());
+            setNotificationList();
+            setLeftMenuList();
+            setProfileDataView();
+            setlist();
+         //   relationManager = ModelManager.getInstance().getRelationManager();
+           // relationManager.getRelationShips(authManager.getPhoneNo(), authManager.getUsrToken());
         }
         Log.e(TAG,"vv"+authManager.getPhoneNo()+""+authManager.getUsrToken());
         //profile information is already set in signIn view or in splash screen for auto login
@@ -252,9 +272,6 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
 
                     } else// if gender is null set default
                     {
-//                        Picasso.with(UserProfileView.this).load(imageBitmap.toString())
-//                                .error(R.drawable.male_user)
-//                                .into(userimage);
                       //  Log.e("Default Esle->","DEfault Else->");
                         userimage.setImageResource(R.drawable.male_user);
                     }
@@ -519,66 +536,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
 	}
 
     private void doRestInitialization(){
-        setContentView(R.layout.view_userprofile);
 
-        addMenu(true);
-        this.overridePendingTransition(R.anim.slide_in_right ,R.anim.slide_out_right);
-        authManager = ModelManager.getInstance().getAuthorizationManager();
-        typefaceMedium = Typeface.createFromAsset(UserProfileView.this.getAssets(),Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
-        typefaceBold = Typeface.createFromAsset(UserProfileView.this.getAssets(),Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_BOLD);
-
-        following = (Button) findViewById(R.id.btn_following);
-        follower = (Button) findViewById(R.id.btn_follower);
-        EditProfile = (Button) findViewById(R.id.btn_edit_profile);
-
-        mUserRelationlistView = (ListView) findViewById(R.id.list_click_with_profile);
-        mUserRelationlistView.setDivider(getResources().getDrawable(R.drawable.owner_profile_side_line));
-
-       // menu = (ImageView) findViewById(R.id.iv_menu);
-       // notification = (ImageView) findViewById(R.id.iv_notification);
-
-        ((ImageView) findViewById(R.id.iv_open_left_menu)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                slidemenu.showMenu(true);
-            }
-        });
-        ((ImageView) findViewById(R.id.iv_open_right_menu)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                slidemenu.showSecondaryMenu(true);
-            }
-        });
-
-
-        userimage = (ImageView) findViewById(R.id.iv_usr_icon);
-        userimage.setScaleType(ScaleType.FIT_XY);
-
-        name = (TextView) findViewById(R.id.tv_name);
-        userdetails = (TextView) findViewById(R.id.tv_user_details);
-        profileHeader = (TextView) findViewById(R.id.tv_profile_txt);
-
-
-        following.setOnClickListener(this);
-        follower.setOnClickListener(this);
-        //menu.setOnClickListener(this);
-       // notification.setOnClickListener(this);
-        EditProfile.setOnClickListener(this);
-
-        name.setTypeface(typefaceBold);
-        userdetails.setTypeface(typefaceMedium);
-        profileHeader.setTypeface(typefaceBold);
-
-
-        following.setTypeface(typefaceBold);
-        follower.setTypeface(typefaceBold);
-
-
-
-
-        //code to set adapter to populate list
-        footerView =  ((LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.footer_pro_list, null, false);
-        mUserRelationlistView.addFooterView(footerView);
         setNotificationList();
         setLeftMenuList();
         setProfileDataView();
@@ -586,5 +544,10 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
     }
 
 
-	
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        relationManager = ModelManager.getInstance().getRelationManager();
+        relationManager.getRelationShips(authManager.getPhoneNo(), authManager.getUsrToken());
+    }
 }

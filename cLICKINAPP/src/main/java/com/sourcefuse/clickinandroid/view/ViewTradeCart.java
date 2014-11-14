@@ -9,6 +9,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -64,6 +65,23 @@ public class ViewTradeCart extends Activity implements View.OnClickListener
 
             }
         });
+
+        // akshit code for closing keypad if touched anywhere outside
+        ((LinearLayout) findViewById(R.id.linear_layout_root_viewtradecard)).setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+
+                InputMethodManager imm = (InputMethodManager) getSystemService(
+                        INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(card_text.getWindowToken(), 0);
+
+
+            }
+
+        });
+
+//ends
 
         trone = (TextView)findViewById(R.id.btn_one);
         trtwo = (TextView)findViewById(R.id.btn_two);

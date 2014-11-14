@@ -63,66 +63,74 @@
         android:background="@drawable/white_border"
         android:padding="15dp">
 
-        <TextView
-            android:id="@+id/edt_text_cntry_cd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="2dp"
-            android:text="@string/txt_cntrycode"
-            android:textColor="@color/topshade"
-            android:textSize="15sp"></TextView>
+
 
         <LinearLayout
+
             android:id="@+id/ll_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/edt_text_cntry_cd"
+            android:weightSum="2"
             android:orientation="horizontal">
 
-            <!--<EditText-->
-                <!--android:id="@+id/edt_cntry_cd"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="45dp"-->
-                <!--android:layout_below="@+id/tv_cntrycode"-->
-                <!--android:layout_marginRight="3dp"-->
-                <!--android:background="@drawable/s_country_code_textfield"-->
-                <!--android:inputType="number"-->
-                <!--android:maxLength="3"-->
-                <!--android:ems="4"-->
-                <!--android:paddingBottom="8dp"-->
-                <!--android:paddingLeft="5dp"-->
-                <!--android:paddingTop="8dp"-->
-                <!--android:text=""-->
-                <!--android:textColor="@color/black"-->
-                <!--android:textColorHint="@color/defult_hint_clr"-->
-                <!--android:textSize="16sp"></EditText>-->
+            <LinearLayout
+                android:layout_width="80dp"
+                android:layout_height="fill_parent"
+                android:weightSum="2"
+                android:orientation="vertical"
+                android:layout_marginTop="5dp"
+                >
 
-            <com.sourcefuse.clickinandroid.utils.ClickInEditBox
-                android:id="@+id/edt_cntry_cd"
-                android:layout_width="wrap_content"
-                android:layout_height="45dp"
-                android:background="@color/dark_gray"
-                android:maxLines="1"
-                android:ems="4"
-                android:inputType="phone"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
-                android:textStyle="bold"/>
+                <TextView
+                    android:id="@+id/edt_text_cntry_cd"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="2dp"
+                    android:singleLine="true"
+                    android:text="@string/txt_cntrycode"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="10sp"></TextView>
 
-            <com.sourcefuse.clickinandroid.utils.ClickInEditBox
-                android:id="@+id/edt_get_ph_no"
-                android:layout_width="wrap_content"
-                android:layout_height="45dp"
-                android:layout_marginLeft="4dp"
-                android:background="@color/dark_gray"
-                android:ems="10"
-                android:maxLines="1"
-                android:inputType="phone"
-                android:padding="10dp"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:textStyle="bold"/>
+
+                <com.sourcefuse.clickinandroid.utils.ClickInEditBox
+                    android:id="@+id/edt_cntry_cd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:background="@color/dark_gray"
+                    android:maxLines="1"
+                    android:ems="4"
+                    android:inputType="phone"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
+                    android:textStyle="bold"/>
+
+                </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="horizontal"
+                android:layout_marginTop="21.2dp">
+
+                <com.sourcefuse.clickinandroid.utils.ClickInEditBox
+                    android:id="@+id/edt_get_ph_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:layout_marginLeft="4dp"
+                    android:background="@color/dark_gray"
+                    android:ems="10"
+                    android:maxLines="1"
+                    android:inputType="phone"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold">
+                    <requestFocus />
+             </com.sourcefuse.clickinandroid.utils.ClickInEditBox>
+                </LinearLayout>
+
+
         </LinearLayout>
 
         <RelativeLayout
