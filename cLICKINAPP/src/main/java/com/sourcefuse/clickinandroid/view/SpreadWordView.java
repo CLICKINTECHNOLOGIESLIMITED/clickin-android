@@ -32,6 +32,8 @@ import com.sourcefuse.clickinapp.R;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
+import java.util.ListIterator;
 
 import de.greenrobot.event.EventBus;
 
@@ -75,6 +77,7 @@ public class SpreadWordView extends Activity implements OnClickListener {
 
         authManager = ModelManager.getInstance().getAuthorizationManager();
         EventBus.getDefault().register(this);
+        Utils.groupSms.clear();
         Utils.launchBarDialog(this);
         new FetchContactFromPhone(SpreadWordView.this).getClickerList(authManager.getPhoneNo(),authManager.getUsrToken(),1);
         //   setlist();
@@ -84,11 +87,7 @@ public class SpreadWordView extends Activity implements OnClickListener {
     public void setlist() {
         profilemanager = ModelManager.getInstance().getProfileManager();
         ListView listView = (ListView) findViewById(R.id.list_current_clickers);
-        //rough code
-        for(ContactBean temp:profilemanager.spreadTheWorldList){
-            String name=temp.getConName();
-            Log.e("SpreadWordList SpreadWordView", name);
-        }
+
         SpreadWordAdapter adapter = new SpreadWordAdapter(SpreadWordView.this,R.layout.row_invitefriend, profilemanager.spreadTheWorldList);
         listView.setAdapter(adapter);
 
@@ -169,10 +168,14 @@ public class SpreadWordView extends Activity implements OnClickListener {
                     smsIntent.putExtra("sms_body", Constants.SEND_REQUEST_WITH_SMS_MESSAGE_SPREAD);
 
                     StringBuilder uri = new StringBuilder("sms:");
-                    for (int i = 0; i < Utils.groupSms.size(); i++) {
-                        uri.append(Utils.groupSms.get(i));
-                        uri.append(", ");
+                    ListIterator<String> iterator=Utils.groupSms.listIterator();
+                    while(iterator.hasNext()){
+                        String num=iterator.next();
+                        uri.append(num);
+                        if(iterator.hasNext())
+                            uri.append(",");
                     }
+
                     smsIntent.setType("vnd.android-dir/mms-sms");
                     smsIntent.setData(Uri.parse(uri.toString()));
                     startActivity(smsIntent);
