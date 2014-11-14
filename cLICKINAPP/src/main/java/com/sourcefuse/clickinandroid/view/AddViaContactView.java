@@ -54,13 +54,33 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
 		backButton.setOnClickListener(this);
 		getClickIn.setOnClickListener(this);
 
+
+
+
+
+
+
 		try {
 			Bundle bundle = getIntent().getExtras();
 			contacName.setText("" + bundle.getString("ConName"));
             String mlPhNo = bundle.getString("ConNumber");
-            cntry_cd.setText("" + mlPhNo.substring(0,3));
-			phoneNo.setText("" + mlPhNo.substring(3));
+            String onlyPhNo = null;
+            String countryCode = null;
+            String[] rl=this.getResources().getStringArray(R.array.CountryCodes);
+            for(int i=0;i<rl.length;i++){
+                String[] g=rl[i].split(",");
+                countryCode = g[0];
+                countryCode= "+"+countryCode;
+                if(mlPhNo.startsWith(countryCode)){
+                    onlyPhNo = mlPhNo.replace(countryCode,"");
 
+                    break;
+                }
+            }
+
+
+            cntry_cd.setText("" + countryCode);
+			phoneNo.setText("" + onlyPhNo);
 			image_uri = bundle.getString("ConUri");
              try {
                 if(!Utils.isEmptyString(image_uri)) {
@@ -97,12 +117,18 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
         });
 
 	}
-
+      @Override
+      public void onBackPressed() {
+            super.onBackPressed();
+            finish();
+            overridePendingTransition(0, R.anim.top_out);
+      }
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.btn_go_back:
 			finish();
+                  overridePendingTransition(0, R.anim.top_out);
 			break;
 		case R.id.btn_get_clickIn:
 

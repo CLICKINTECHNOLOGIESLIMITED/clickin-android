@@ -187,6 +187,9 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
                 break;
             }
 
+              /* test code in sign in view */
+
+
             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
             ephone.setSelection(ephone.getText().toString().length());
         } catch (Exception e) {

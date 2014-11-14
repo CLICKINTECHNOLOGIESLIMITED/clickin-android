@@ -3,10 +3,7 @@ package com.sourcefuse.clickinandroid.view;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
 import android.graphics.Typeface;
-import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
@@ -33,7 +30,6 @@ import com.sourcefuse.clickinandroid.view.adapter.UserRelationAdapter;
 import com.sourcefuse.clickinapp.R;
 import com.squareup.picasso.Picasso;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 
@@ -43,7 +39,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
 	private TextView profileHeader;
 	private ListView mUserRelationlistView;
 	private ImageView userimage;
-	private ImageView menu,notification;
+	//private ImageView menu,notification;
 	public UserRelationAdapter adapter;
 	private AuthManager authManager;
 	private RelationManager relationManager;
@@ -173,42 +169,44 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
 
 	}
 
-	public void setProfileDataView(){
+	public void setProfileDataView() {
 
-		authManager = ModelManager.getInstance().getAuthorizationManager();
-		name.setText(authManager.getUserName());
-		String dtails = "";
-        String gender="";
+        authManager = ModelManager.getInstance().getAuthorizationManager();
+        name.setText(authManager.getUserName());
+        String dtails = "";
+        String gender = "";
         String dob = "";
         try {
             try {
-                Log.e(TAG,"Gender -->"+authManager.getGender());
+                Log.e(TAG, "Gender -->" + authManager.getGender());
                 if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().matches("girl")) {
                     dtails = "Female, ";
-                    gender="girl";
+                    gender = "girl";
                 } else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().matches("guy")) {
                     dtails = "Male,";
-                    gender="guy";
+                    gender = "guy";
                 }
-            }catch (Exception e){}
-           dtails =  dtails+Utils.getCurrentYear(authManager.getdOB()) + " " + getResources().getString(R.string.txt_yold);
-        }catch (Exception e){}
-
-        if(!Utils.isEmptyString(authManager.getUserCity()) && Utils.isEmptyString(authManager.getUserCountry())){
-            dtails =  dtails+"\n"+authManager.getUserCity();
-            userdetails.setText(dtails);
-        }else if (Utils.isEmptyString(authManager.getUserCity()) && !Utils.isEmptyString(authManager.getUserCountry())){
-            dtails =  dtails+"\n"+authManager.getUserCountry();
-            userdetails.setText(dtails);
-        }else if (!Utils.isEmptyString(authManager.getUserCity()) && !Utils.isEmptyString(authManager.getUserCountry())){
-            userdetails.setText(dtails+"\n"+authManager.getUserCity() + "," + authManager.getUserCountry());
-        }else {
-            userdetails.setText(dtails+"\n");
+            } catch (Exception e) {
+            }
+            dtails = dtails + Utils.getCurrentYear(authManager.getdOB()) + " " + getResources().getString(R.string.txt_yold);
+        } catch (Exception e) {
         }
-		String text = "<font color=#cccccc>"+authManager.getFollower()+"</font> <font color=#oob0c7>"+getResources().getString(R.string.txt_follower)+"</font>";
-		follower.setText(Html.fromHtml(text));
-		String textfollowing = "<font color=#f29691>"+getResources().getString(R.string.txt_following)+"</font> <font color=#cccccc>"+authManager.getFollowing()+"</font>";
-		following.setText(Html.fromHtml(textfollowing));
+
+        if (!Utils.isEmptyString(authManager.getUserCity()) && Utils.isEmptyString(authManager.getUserCountry())) {
+            dtails = dtails + "\n" + authManager.getUserCity();
+            userdetails.setText(dtails);
+        } else if (Utils.isEmptyString(authManager.getUserCity()) && !Utils.isEmptyString(authManager.getUserCountry())) {
+            dtails = dtails + "\n" + authManager.getUserCountry();
+            userdetails.setText(dtails);
+        } else if (!Utils.isEmptyString(authManager.getUserCity()) && !Utils.isEmptyString(authManager.getUserCountry())) {
+            userdetails.setText(dtails + "\n" + authManager.getUserCity() + "," + authManager.getUserCountry());
+        } else {
+            userdetails.setText(dtails + "\n");
+        }
+        String text = "<font color=#cccccc>" + authManager.getFollower() + "</font> <font color=#oob0c7>" + getResources().getString(R.string.txt_follower) + "</font>";
+        follower.setText(Html.fromHtml(text));
+        String textfollowing = "<font color=#f29691>" + getResources().getString(R.string.txt_following) + "</font> <font color=#cccccc>" + authManager.getFollowing() + "</font>";
+        following.setText(Html.fromHtml(textfollowing));
      /*   try{
             if(dtails.equalsIgnoreCase("Male")){
                 Picasso.with(UserProfileView.this)
@@ -225,115 +223,134 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
             }
 
 		}catch(Exception e){}*/
+
+        //akshit code start for image and default image at userprofile
         try {
-            Uri tempUri=authManager.getUserImageUri();
-            if(tempUri!=null){
+            Uri tempUri = authManager.getUserImageUri();
+            if (tempUri != null) {
                 imageBitmap = authManager.getUserbitmap();
-                if(imageBitmap!=null)
+
+                if (imageBitmap != null) {   //set image bitmap if not null
                     userimage.setImageBitmap(imageBitmap);
-                else{
-            if(!authManager.getGender().equalsIgnoreCase("")) {
-
-                                if (authManager.getGender().equalsIgnoreCase("guy")) {
-                                    try {
-                                        if(!authManager.getUserPic().equalsIgnoreCase("")) {
-                                            Picasso.with(UserProfileView.this)
-                                                    .load(authManager.getUserPic())
-                                                    .skipMemoryCache()
-
-                                                    .error(R.drawable.male_user)
-                                                    .into(userimage);
-                                        }
-                                        else
-                                        {
-                                            userimage.setImageResource(R.drawable.male_user);
-                                        }
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
-                                        userimage.setImageResource(R.drawable.male_user);
-                                    }
-                                } else if (authManager.getGender().equalsIgnoreCase("girl")) {
-                                    try {
-                                        if(!authManager.getUserPic().equalsIgnoreCase("")) {
-                                            Picasso.with(UserProfileView.this)
-                                                    .load(authManager.getUserPic())
-                                                    .skipMemoryCache()
-
-                                                    .error(R.drawable.female_user)
-                                                    .into(userimage);
-                                        }
-                                        else
-                                        {
-                                            userimage.setImageResource(R.drawable.female_user);
-                                        }
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
-                                        userimage.setImageResource(R.drawable.female_user);
-                                    }
+                  //  Log.e("bit map greater than zero->","bit map greater than zero->");
+                } else { ///if image bitmap null
+                    if (!authManager.getGender().equalsIgnoreCase("")) {//gender not null
+                        if (authManager.getGender().equalsIgnoreCase("guy")) {///if guy
+                            try {
+                                if (!authManager.getUserPic().equalsIgnoreCase("")) {
+                                    Picasso.with(UserProfileView.this)
+                                            .load(authManager.getUserPic())
+                                            .skipMemoryCache()
+                                            .error(R.drawable.male_user)
+                                            .into(userimage);
+                                 //   Log.e("guy->","guy->");
+                                } else {
+                                    userimage.setImageResource(R.drawable.male_user);
+                                //    Log.e("guy exception->","guy exceptionElse->");
                                 }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                userimage.setImageResource(R.drawable.male_user);
+                           //     Log.e("guy exception->","guy exception->");
+                            }
+                        } //if guy ends
+                        else if (authManager.getGender().equalsIgnoreCase("girl")) {//if girl
+                            try {
+                                if (!authManager.getUserPic().equalsIgnoreCase("")) {//with pic
+                                    Picasso.with(UserProfileView.this)
+                                            .load(authManager.getUserPic())
+                                            .skipMemoryCache()
+                                            .error(R.drawable.female_user)
+                                            .into(userimage);
+                                //    Log.e("Female->","female->");
+                                } else {
+                                    userimage.setImageResource(R.drawable.female_user);
+                                   // Log.e("Female->","female Else->");
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                               // Log.e("Female->","female Exception->");
+                                userimage.setImageResource(R.drawable.female_user);
+                            }
+                        }
 
-                    }
-                    else
+                    } else// if gender is null set default
                     {
+//                        Picasso.with(UserProfileView.this).load(imageBitmap.toString())
+//                                .error(R.drawable.male_user)
+//                                .into(userimage);
+                      //  Log.e("Default Esle->","DEfault Else->");
                         userimage.setImageResource(R.drawable.male_user);
                     }
                 }
 
-            }else{
-  if(!authManager.getGender().equalsIgnoreCase("")) {
+            } else {//if temp uri null
+                if (!authManager.getGender().equalsIgnoreCase("")) {//gender not null
 
-                    if (authManager.getGender().equalsIgnoreCase("guy")) {
+                    if (authManager.getGender().equalsIgnoreCase("guy")) {//gender guy
                         try {
-                            if(!authManager.getUserPic().equalsIgnoreCase("")) {
+                            if (!authManager.getUserPic().equalsIgnoreCase("")) {
                                 Picasso.with(UserProfileView.this)
                                         .load(authManager.getUserPic())
                                         .skipMemoryCache()
-
                                         .error(R.drawable.male_user)
                                         .into(userimage);
-                            }
-                            else
-                            {
+                                //   userimage.setImageResource(R.drawable.male_user);
+                          //      Log.e("URL" ,"Url for giving image for guy" +authManager.getUserPic());
+                           //     Log.e("guy->","guy->");
+                            } else {
+                            //    Log.e("guy->","guyElse->");
                                 userimage.setImageResource(R.drawable.male_user);
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
+                          //  Log.e("guy->","guyExceptin->");
                             userimage.setImageResource(R.drawable.male_user);
                         }
-                    } else if (authManager.getGender().equalsIgnoreCase("girl")) {
+                    } //gender guy ends
+                    else if (authManager.getGender().equalsIgnoreCase("girl")) {//gender girl
                         try {
-                            if(!authManager.getUserPic().equalsIgnoreCase("")) {
+                            if (!authManager.getUserPic().equalsIgnoreCase("")) {
                                 Picasso.with(UserProfileView.this)
                                         .load(authManager.getUserPic())
                                         .skipMemoryCache()
 
                                         .error(R.drawable.female_user)
                                         .into(userimage);
-                            }
-                            else
-                            {
+                                Log.e("girl->","GEnder guy two ->");
+                                Log.e("url",""+authManager.getUserPic());
+                                //userimage.setImageResource(R.drawable.female_user);
+                            } else {
                                 userimage.setImageResource(R.drawable.female_user);
+                              //  Log.e("girel->","Gender Girl Two->");
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
                             userimage.setImageResource(R.drawable.female_user);
+                            //Log.e("girel->","Exception Gender Girl Two->");
                         }
-                    }
+                    }//gender girl end
 
-                }
-                else
-                {
+                }//if gender null
+                else {
                     userimage.setImageResource(R.drawable.male_user);
+
                 }
 
             }
 
+
         } catch (Exception e) {
             e.printStackTrace();
+            userimage.setImageResource(R.drawable.male_user);
+            Log.e("total exception->","total exception->");
         }
 //
-		
-	}
+    }
+//akshit code ends
+
+
+
 
 
     @Override
@@ -541,8 +558,23 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         mUserRelationlistView = (ListView) findViewById(R.id.list_click_with_profile);
         mUserRelationlistView.setDivider(getResources().getDrawable(R.drawable.owner_profile_side_line));
 
-        menu = (ImageView) findViewById(R.id.iv_menu);
-        notification = (ImageView) findViewById(R.id.iv_notification);
+       // menu = (ImageView) findViewById(R.id.iv_menu);
+       // notification = (ImageView) findViewById(R.id.iv_notification);
+
+        ((ImageView) findViewById(R.id.iv_open_left_menu)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                slidemenu.showMenu(true);
+            }
+        });
+        ((ImageView) findViewById(R.id.iv_open_right_menu)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                slidemenu.showSecondaryMenu(true);
+            }
+        });
+
+
         userimage = (ImageView) findViewById(R.id.iv_usr_icon);
         userimage.setScaleType(ScaleType.FIT_XY);
 
@@ -553,8 +585,8 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
 
         following.setOnClickListener(this);
         follower.setOnClickListener(this);
-        menu.setOnClickListener(this);
-        notification.setOnClickListener(this);
+        //menu.setOnClickListener(this);
+       // notification.setOnClickListener(this);
         EditProfile.setOnClickListener(this);
 
         name.setTypeface(typefaceBold);

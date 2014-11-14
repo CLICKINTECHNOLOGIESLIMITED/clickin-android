@@ -4,7 +4,14 @@
     android:layout_height="match_parent"
     android:background="@drawable/white_pattern_bg">
 
-    <RelativeLayout
+    <include
+        android:id="@+id/include_header"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/clickin_header"
+        />
+
+  <!--  <RelativeLayout
         android:id="@+id/rr_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -42,12 +49,12 @@
             android:layout_marginTop="1dp"
             android:paddingLeft="50dp"
             android:src="@drawable/owner_profile_hedder_icon" />
-    </RelativeLayout>
+    </RelativeLayout>-->
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/rr_header"
+        android:layout_below="@+id/include_header"
         android:layout_marginTop="5dp"
         android:orientation="horizontal"
         android:weightSum="2">

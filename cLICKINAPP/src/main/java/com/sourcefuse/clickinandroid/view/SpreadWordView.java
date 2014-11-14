@@ -86,7 +86,14 @@ public class SpreadWordView extends Activity implements OnClickListener {
 
 	}
 
-    @Override
+      @Override
+      public void onBackPressed() {
+            super.onBackPressed();
+            finish();
+            overridePendingTransition(0, R.anim.top_out);
+      }
+
+      @Override
     protected void onResume() {
         super.onResume();
       //  Utils.groupSms.clear();
@@ -136,7 +143,8 @@ public class SpreadWordView extends Activity implements OnClickListener {
 		break;
 		case R.id.btn_back:
 			//Log.e("", "COUNT------>" + listView.getCount());
-            finish();
+                  finish();
+                  overridePendingTransition(0, R.anim.top_out);
 		break;
 		case R.id.btn_next:
             Utils.launchBarDialog(this);
@@ -198,6 +206,7 @@ public class SpreadWordView extends Activity implements OnClickListener {
         } catch (Error e) {
            // android.util.Log.d(TAG, "" + e);
         }
+        Utils.dismissBarDialog();
     }
     //Methods for Facebook
     private Session.StatusCallback callback = new Session.StatusCallback() {
@@ -214,6 +223,7 @@ public class SpreadWordView extends Activity implements OnClickListener {
        //     android.util.Log.d(TAG, access_Token);
             sendRequestDialogForFriendList();
         } else if (state.isClosed()) {
+            Utils.dismissBarDialog();
             System.out.println("Logged out...");
         }
     }

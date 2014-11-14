@@ -121,12 +121,18 @@ public class AddViaNumberView extends Activity implements View.OnClickListener,T
             Log.e(TAG, "Exception-->" + e.toString());
         }
 	}
-
+      @Override
+      public void onBackPressed() {
+            super.onBackPressed();
+            finish();
+            overridePendingTransition(0, R.anim.top_out);
+      }
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.btn_go_back_num:
 			finish();
+                  overridePendingTransition(0, R.anim.top_out);
 			break;
 		case R.id.btn_get_click_via_no:
             if(Utils.isCountryCodeValid(edtCountryCode.getText().toString())){
