@@ -16,9 +16,11 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
@@ -30,7 +32,6 @@ import com.sourcefuse.clickinapp.R;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -57,6 +58,8 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
     private Uri userImageUri;
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,8 +83,31 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
         OpenGallery.setOnClickListener(this);
         backAction.setOnClickListener(this);
 
-
         authManager = ModelManager.getInstance().getAuthorizationManager();
+
+
+        // akshit code for closing keypad if touched anywhere outside
+        ((RelativeLayout) findViewById(R.id.relative_layout_root_editprofile)).setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+
+                InputMethodManager imm = (InputMethodManager)getSystemService(
+                        INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(myCity.getWindowToken(), 0);
+                imm.hideSoftInputFromWindow(myName.getWindowToken(), 0);
+                imm.hideSoftInputFromWindow(myLast.getWindowToken(), 0);
+                imm.hideSoftInputFromWindow(myEmail.getWindowToken(), 0);
+                imm.hideSoftInputFromWindow(myCountry.getWindowToken(), 0);
+                imm.hideSoftInputFromWindow(mySelfy.getWindowToken(), 0);
+
+
+
+
+            }
+
+        });
+//ends
         try {
             String[] names = (authManager.getUserName().split("\\s+", 2));
             userName = names[0];

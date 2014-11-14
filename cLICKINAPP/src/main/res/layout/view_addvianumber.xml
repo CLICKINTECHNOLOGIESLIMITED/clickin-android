@@ -88,7 +88,7 @@
                     android:layout_marginBottom="2dp"
                     android:singleLine="true"
                     android:text="@string/txt_cntrycode"
-                    android:textColor="@color/topshade"
+                    android:textColor="@color/dark_gray"
                     android:textSize="10sp"></TextView>
 
                 <EditText

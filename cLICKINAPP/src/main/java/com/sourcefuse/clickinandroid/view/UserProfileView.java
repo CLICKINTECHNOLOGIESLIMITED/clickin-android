@@ -33,7 +33,8 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 
-public class UserProfileView extends ClickInBaseView implements View.OnClickListener {
+public class
+        UserProfileView extends ClickInBaseView implements View.OnClickListener {
     private static final String TAG = UserProfileView.class.getSimpleName();
 	private Button follower, following,btnAddSomeone,EditProfile;
 	private TextView profileHeader;
@@ -276,9 +277,6 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
 
                     } else// if gender is null set default
                     {
-//                        Picasso.with(UserProfileView.this).load(imageBitmap.toString())
-//                                .error(R.drawable.male_user)
-//                                .into(userimage);
                       //  Log.e("Default Esle->","DEfault Else->");
                         userimage.setImageResource(R.drawable.male_user);
                     }

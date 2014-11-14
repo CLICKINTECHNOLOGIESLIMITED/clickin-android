@@ -2,13 +2,10 @@ package com.sourcefuse.clickinandroid.view;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -182,7 +179,7 @@ public class VerifyView extends Activity implements View.OnClickListener,
 		switch (v.getId()) {
 		case R.id.btn_send:
                 Utils.launchBarDialog(VerifyView.this);
-                 fromSignalertDialogDammit();
+                 Utils.fromSignalertDialogDammit(VerifyView.this);
                 authManager = ModelManager.getInstance().getAuthorizationManager();
                 authManager.reSendVerifyCode(authManager.getPhoneNo(), authManager.getUsrToken());
                 break;
@@ -259,7 +256,7 @@ public class VerifyView extends Activity implements View.OnClickListener,
                 send.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        fromSignalertDialogDammit();
+                        Utils.fromSignalertDialogDammit(VerifyView.this);
                     }
                 });
 
@@ -274,27 +271,7 @@ public class VerifyView extends Activity implements View.OnClickListener,
 		dialog.show();
 	}
 
-    public void fromSignalertDialogDammit() {
-        dialog = new Dialog(VerifyView.this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        dialog.setContentView(R.layout.alert_nocheck);
-        dialog.setCancelable(false);
-        TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
-        TextView msgII = (TextView) dialog.findViewById(R.id.alert_msgII);
-        msgI.setText("The Code Has Been re-sent.Please check");
-        msgII.setText("");
 
-        Button dismiss = (Button) dialog.findViewById(R.id.coolio);
-        dismiss.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                dialog.dismiss();
-
-            }
-        });
-        dialog.show();
-    }
 
     public void fromSignalertDialog(String msgStrI, String msgStrII) {
         dialog = new Dialog(VerifyView.this);

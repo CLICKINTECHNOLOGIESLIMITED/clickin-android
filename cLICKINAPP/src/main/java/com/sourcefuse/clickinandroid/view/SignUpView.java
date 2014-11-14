@@ -2,15 +2,12 @@ package com.sourcefuse.clickinandroid.view;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.provider.Settings.Secure;
-import android.telephony.TelephonyManager;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -18,7 +15,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
@@ -96,12 +92,12 @@ public class SignUpView extends Activity implements TextWatcher,OnClickListener 
                     authManager.signUpAuth(countryCode + enterdPhoneNo, Utils.deviceId.toString());
                 } else {
 
-                    fromSignalDialog(AlertMessage.phone);
+                    Utils.fromSignalDialog(this,AlertMessage.phone);
                     //Utils.showAlert(SignUpView.this, AlertMessage.phone);
                 }
             }else{
 
-                fromSignalDialog(AlertMessage.country);
+                Utils.fromSignalDialog(this,AlertMessage.country);
                // Utils.showAlert(SignUpView.this, AlertMessage.country);
             }
 			break;
@@ -157,39 +153,16 @@ public class SignUpView extends Activity implements TextWatcher,OnClickListener 
             finish();
         } else if (getMsg.equalsIgnoreCase("SignUp False")) {
             Utils.dismissBarDialog();
-            fromSignalDialog(AlertMessage.usrAllreadyExists);
+            Utils.fromSignalDialog(this,AlertMessage.usrAllreadyExists);
            // Utils.showAlert(SignUpView.this, AlertMessage.usrAllreadyExists);
         } else if(getMsg.equalsIgnoreCase("SignUp Network Error")){
             Utils.dismissBarDialog();
-            fromSignalDialog(AlertMessage.connectionError);
+            Utils.fromSignalDialog(this,AlertMessage.connectionError);
            // Utils.showAlert(this, AlertMessage.connectionError);
         }
     }
 
 
-    // Akshit Code Starts
-    public void fromSignalDialog(String str){
-
-        dialog = new Dialog(SignUpView.this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        dialog.setContentView(R.layout.alert_check_dialogs);
-        dialog.setCancelable(false);
-        TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
-        msgI.setText(str);
-
-
-        Button dismiss = (Button) dialog.findViewById(R.id.coolio);
-        dismiss.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                dialog.dismiss();
-
-            }
-        });
-        dialog.show();
-    }
-// Ends
 
     }
 

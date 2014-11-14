@@ -11,17 +11,16 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.telephony.TelephonyManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.quickblox.core.QBCallbackImpl;
@@ -50,7 +49,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.Locale;
 
 import de.greenrobot.event.EventBus;
 
@@ -81,7 +79,7 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.view_signin);
-
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         act = this;
         context = this;
         typeface = Typeface.createFromAsset(SignInView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
@@ -97,15 +95,15 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
         forgotPwd = (TextView) findViewById(R.id.tv_forgot_pwd);
         signUp = (TextView) findViewById(R.id.tv_signup);
         ephone.addTextChangedListener(this);
-       
+
         ePwd.addTextChangedListener(this);
         forgotPwd.setOnClickListener(this);
         do_latter.setOnClickListener(this);
         forgotPwd.setOnClickListener(this);
         signUp.setOnClickListener(this);
 
-
-
+        ephone.setOnClickListener(this);
+        ePwd.setOnClickListener(this);
 
         ephone.setTypeface(typefaceBold);
         ePwd.setTypeface(typefaceBold);
@@ -113,133 +111,74 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
         signUp.setTypeface(typeface);
         signUp.setTypeface(typeface);
 
-        try {
-//            TelephonyManager manager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-//            String cCode = manager.getNetworkCountryIso();
-//            TelephonyManager tel = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-//            String networkOperator = tel.getNetworkOperator();
-//            int mcc = 0, mnc = 0;
-//            if (networkOperator != null) {
-//                mcc = Integer.parseInt(networkOperator.substring(0, 3));
-//                mnc = Integer.parseInt(networkOperator.substring(3));
-//            }
-//            Log.e(TAG, "MCC : " + mcc + "\n" + "MNC : " + mnc + "-000-" + networkOperator);
-//            String cCodecode = context.getResources().getConfiguration().locale.getCountry();
-//            Locale loc = new Locale(cCodecode);
-//            String cCodeN = getApplicationContext().getResources().getConfiguration().locale.getCountry(); // get country code
-//            Log.e(TAG, "cCode" + cCode + "-cCodeN -" + cCodeN + "-" + getUserCountry(context) + "---" + loc.getISO3Country() + "--->" + cCodecode);
 
-            String CountryZipCode=null;
-            TelephonyManager  telephonyManager = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
-            int simState = telephonyManager.getSimState();
-//Log.e("simState",""+simState+"/"+TelephonyManager.SIM_STATE_NETWORK_LOCKED+"/"+TelephonyManager.SIM_STATE_UNKNOWN+"/"+TelephonyManager.SIM_STATE_READY);
-            switch (simState) {
+        // akshit code for closing keypad if touched anywhere outside
+        ((RelativeLayout) findViewById(R.id.relative_layout_root_signin)).setOnClickListener(new View.OnClickListener() {
 
-                case (TelephonyManager.SIM_STATE_ABSENT): {
-                    ephone.setText("+(null)");
-                }
-                    break;
-
-                case (TelephonyManager.SIM_STATE_NETWORK_LOCKED):
-                {
-                        ephone.setText("+(null)");
-                }
-                    break;
-                case (TelephonyManager.SIM_STATE_PIN_REQUIRED): break;
-                case (TelephonyManager.SIM_STATE_PUK_REQUIRED): break;
-                case (TelephonyManager.SIM_STATE_UNKNOWN):
-                {
-                    ephone.setText("+(null)");
-                }
-                break;
-                case (TelephonyManager.SIM_STATE_READY): {
-
-                    // Get the SIM country ISO code
-                    String simCountry = telephonyManager.getSimCountryIso();
-//Log.e("simCountry",simCountry);
-                    // Get the operator code of the active SIM (MCC + MNC)
-                    String simOperatorCode = telephonyManager.getSimOperator();
-
-                    // Get the name of the SIM operator
-                    String simOperatorName = telephonyManager.getSimOperatorName();
-
-                    // Get the SIM’s serial number
-                    String simSerial = telephonyManager.getSimSerialNumber();
-
-
-                    //getNetworkCountryIso
-
-                    String[] rl=this.getResources().getStringArray(R.array.CountryCodes);
-
-                    for(int i=0;i<rl.length;i++){
-                        String[] g=rl[i].split(",");
-
-                        if(g[1].trim().equalsIgnoreCase(simCountry.trim().toUpperCase())){
-                            CountryZipCode=g[0];
-                            CountryZipCode= "+"+CountryZipCode;
-
-                            ephone.setText(CountryZipCode);
-
-                            break;
-                        }
-                    }
-                }
-                break;
-            }
-
-              /* test code in sign in view */
-
-
-            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-            ephone.setSelection(ephone.getText().toString().length());
-        } catch (Exception e) {
-        }
-        ephone.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
+            public void onClick(View arg0) {
 
-            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-            inputMethodManager.showSoftInput(ephone, 0);
+                InputMethodManager imm = (InputMethodManager) getSystemService(
+                        INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(ePwd.getWindowToken(), 0);
+                imm.hideSoftInputFromWindow(ephone.getWindowToken(), 0);
 
-
-                if(ephone.getText().toString().contains("null"))
-                {
-                    if (ephone.getSelectionStart() <= 6) {
-                        return false;
-                    } else {
-                        return true;
-                    }
-                }
-                else {
-                    if (ephone.getSelectionStart() <= 2) {
-                        return false;
-                    } else {
-                        return true;
-                    }
-                }
             }
+
         });
 
-    }
+//ends
 
-
-    public static String getUserCountry(Context context) {
+//
+//            //akshit code for country Code
         try {
-            final TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-            final String simCountry = tm.getSimCountryIso();
-            if (simCountry != null && simCountry.length() == 2) { // SIM country code is available
-                return simCountry.toLowerCase(Locale.US);
-            } else if (tm.getPhoneType() != TelephonyManager.PHONE_TYPE_CDMA) { // device is not 3G (would be unreliable)
-                String networkCountry = tm.getNetworkCountryIso();
-                if (networkCountry != null && networkCountry.length() == 2) { // network country code is available
-                    return networkCountry.toLowerCase(Locale.US);
-                }
+            String countryCode = Utils.getCountryCodeFromSim(this);
+            if (countryCode == null) {
+                ephone.setText("+(null)");
+            } else {
+                ephone.setText(countryCode);
             }
+
+
         } catch (Exception e) {
         }
-        return null;
-    }
 
+
+        ephone.setSelection(ephone.getText().toString().length());
+        //No need For this akshit
+
+
+//        ephone.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//
+//           InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+//            inputMethodManager.showSoftInput(ephone, 0);
+//
+//
+//                if(ephone.getText().toString().contains("null"))
+//                {
+//                    if (ephone.getSelectionStart() <= 6) {
+//                        return false;
+//                    } else {
+//                        return true;
+//                    }
+//                }
+//
+//                else {
+//                    if (ephone.getSelectionStart() <= 2) {
+//                        return false;
+//                    } else {
+//                        return true;
+//                    }
+//                }
+//            }
+//        });
+//
+//    }
+
+
+    }
     @Override
     public void afterTextChanged(Editable s) {
     }
@@ -268,9 +207,12 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
         switch (v.getId()) {
             case R.id.btn_get_clickin:
 
-             /*  ClickInAlertDialog.networkErrorAlert(SignInView.this);*/
+             RelativeLayout layout = (RelativeLayout)findViewById(R.id.relative_layout_root_signin);
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(layout.getWindowToken(), 0);
 
                 if (activeDone) {
+                    getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
                     authManager = ModelManager.getInstance().getAuthorizationManager();
                     Utils.launchBarDialog(SignInView.this);
                     authManager.signIn(ephone.getText().toString(), ePwd.getText().toString(), authManager.getDeviceRegistereId(), Constants.DEVICETYPE);
@@ -332,12 +274,12 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
             authManager.getProfileInfo("", authManager.getPhoneNo(), authManager.getUsrToken());
         } else if (getMsg.equalsIgnoreCase("SignIn False")) {
             Utils.dismissBarDialog();
-            fromSignalDialog(AlertMessage.wrong_signIn_details);
+           Utils.fromSignalDialog(this,AlertMessage.wrong_signIn_details);
           //  Utils.showAlert(this,AlertMessage.wrong_signIn_details);
             //Utils.showAlert(SignInView.this, authManager.getMessage());
         } else if (getMsg.equalsIgnoreCase("SignIn Network Error")) {
             Utils.dismissBarDialog();
-            fromSignalDialog(AlertMessage.connectionError);
+            Utils.fromSignalDialog(this,AlertMessage.connectionError);
             //Utils.showAlert(act, AlertMessage.connectionError);
         } else if (getMsg.equalsIgnoreCase("ProfileInfo True")) {
             //save values of user in shared prefrence for later use
@@ -360,11 +302,11 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
         } else if (getMsg.equalsIgnoreCase("ProfileInfo False")) {
             Utils.dismissBarDialog();
 
-            fromSignalDialog(authManager.getMessage());
+            Utils.fromSignalDialog(this,authManager.getMessage());
           // Utils.showAlert(SignInView.this, authManager.getMessage());
         } else if (getMsg.equalsIgnoreCase("ProfileInfo Network Error")) {
             Utils.dismissBarDialog();
-            fromSignalDialog(AlertMessage.connectionError);
+            Utils.fromSignalDialog(this,AlertMessage.connectionError);
             //Utils.showAlert(act, AlertMessage.connectionError);
         } else if (getMsg.equalsIgnoreCase("ForgotPassword True")) {
             mDialog.dismiss();
@@ -377,7 +319,7 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
         } else if (getMsg.equalsIgnoreCase("ForgotPassword Network Error")) {
             mDialog.dismiss();
             Utils.dismissBarDialog();
-            fromSignalDialog(AlertMessage.connectionError);
+            Utils.fromSignalDialog(this,AlertMessage.connectionError);
          //   Utils.showAlert(act, AlertMessage.connectionError);
         }
 
@@ -535,29 +477,6 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
         }}
 
 
-    // Akshit Code Starts
-    public void fromSignalDialog(String str){
-
-        dialog = new Dialog(SignInView.this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        dialog.setContentView(R.layout.alert_check_dialogs);
-        dialog.setCancelable(false);
-        TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
-        msgI.setText(str);
-
-
-        Button dismiss = (Button) dialog.findViewById(R.id.coolio);
-        dismiss.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                dialog.dismiss();
-
-            }
-        });
-        dialog.show();
-    }
-// Ends
 
 }
 

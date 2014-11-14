@@ -25,12 +25,14 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -139,6 +141,8 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
             //city.addTextChangedListener(this);
             //country.addTextChangedListener(this);
 
+
+
             done.setOnClickListener(this);
             guy.setOnClickListener(this);
             girl.setOnClickListener(this);
@@ -168,6 +172,27 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
             tvDate.setTypeface(typeface);
             tvMonth.setTypeface(typeface);
             tvYear.setTypeface(typeface);
+
+          // akshit code for closing keypad if touched anywhere outside
+          ((RelativeLayout) findViewById(R.id.relative_layout_root_profile)).setOnClickListener(new View.OnClickListener() {
+
+              @Override
+              public void onClick(View arg0) {
+
+                  InputMethodManager imm = (InputMethodManager)getSystemService(
+                          INPUT_METHOD_SERVICE);
+                  imm.hideSoftInputFromWindow(fname.getWindowToken(), 0);
+                  imm.hideSoftInputFromWindow(lname.getWindowToken(), 0);
+                  imm.hideSoftInputFromWindow(city.getWindowToken(), 0);
+                  imm.hideSoftInputFromWindow(country.getWindowToken(), 0);
+                  imm.hideSoftInputFromWindow(email.getWindowToken(), 0);
+                  imm.hideSoftInputFromWindow(guy.getWindowToken(), 0);
+                  imm.hideSoftInputFromWindow(girl.getWindowToken(), 0);
+
+              }
+
+          });
+//ends
 
 
       }

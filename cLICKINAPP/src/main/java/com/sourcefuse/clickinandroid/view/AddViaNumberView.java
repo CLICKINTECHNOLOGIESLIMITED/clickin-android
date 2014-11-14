@@ -2,14 +2,11 @@ package com.sourcefuse.clickinandroid.view;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.telephony.TelephonyManager;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
@@ -20,7 +17,6 @@ import android.widget.TextView;
 
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
-import com.sourcefuse.clickinandroid.model.ProfileManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.Constants;
@@ -71,54 +67,70 @@ public class AddViaNumberView extends Activity implements View.OnClickListener,T
 
         });
 		authManager = ModelManager.getInstance().getAuthorizationManager();
-     try {
-            String CountryZipCode = null;
-            TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-            int simState = telephonyManager.getSimState();
-            //Log.e("simState",""+simState+"/"+TelephonyManager.SIM_STATE_NETWORK_LOCKED+"/"+TelephonyManager.SIM_STATE_UNKNOWN+"/"+TelephonyManager.SIM_STATE_READY);
-            switch (simState) {
+//     try {
+//            String CountryZipCode = null;
+//            TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+//            int simState = telephonyManager.getSimState();
+//            //Log.e("simState",""+simState+"/"+TelephonyManager.SIM_STATE_NETWORK_LOCKED+"/"+TelephonyManager.SIM_STATE_UNKNOWN+"/"+TelephonyManager.SIM_STATE_READY);
+//            switch (simState) {
+//
+//                case (TelephonyManager.SIM_STATE_ABSENT): {
+//                    edtCountryCode.setText("+(null)");
+//                }
+//                break;
+//
+//                case (TelephonyManager.SIM_STATE_NETWORK_LOCKED): {
+//                    edtCountryCode.setText("+(null)");
+//                }
+//                break;
+//                case (TelephonyManager.SIM_STATE_PIN_REQUIRED):
+//                    break;
+//                case (TelephonyManager.SIM_STATE_PUK_REQUIRED):
+//                    break;
+//                case (TelephonyManager.SIM_STATE_UNKNOWN): {
+//                    edtCountryCode.setText("+(null)");
+//                }
+//                break;
+//                case (TelephonyManager.SIM_STATE_READY): {
+//
+//                    String simCountry = telephonyManager.getSimCountryIso();
+//                    Log.e("simCountry",simCountry);
+//
+//                    String simOperatorCode = telephonyManager.getSimOperator();
+//                    Log.e("simOperatorCode",simOperatorCode);
+//
+//                    String simOperatorName = telephonyManager.getSimOperatorName();
+//                    Log.e("simOperatorName",simOperatorName);
+//
+//                    String simSerial = telephonyManager.getSimSerialNumber();
+//                    Log.e("simSerial",simSerial);
+//
+//                    CountryZipCode = GetCountryZipCode();
+//                    CountryZipCode = "+" + CountryZipCode;
+//                    Log.e("COUNTRY ZIP CODE", CountryZipCode);
+//                    edtCountryCode.setText(CountryZipCode);
+//                }
+//                break;
+//            }
+//
+//        }catch(Exception e){
+//            Log.e(TAG, "Exception-->" + e.toString());
+//        }
+//
 
-                case (TelephonyManager.SIM_STATE_ABSENT): {
-                    edtCountryCode.setText("+(null)");
-                }
-                break;
 
-                case (TelephonyManager.SIM_STATE_NETWORK_LOCKED): {
-                    edtCountryCode.setText("+(null)");
-                }
-                break;
-                case (TelephonyManager.SIM_STATE_PIN_REQUIRED):
-                    break;
-                case (TelephonyManager.SIM_STATE_PUK_REQUIRED):
-                    break;
-                case (TelephonyManager.SIM_STATE_UNKNOWN): {
-                    edtCountryCode.setText("+(null)");
-                }
-                break;
-                case (TelephonyManager.SIM_STATE_READY): {
+        //akshit code start For country Code ,
 
-                    String simCountry = telephonyManager.getSimCountryIso();
-                    Log.e("simCountry",simCountry);
-
-                    String simOperatorCode = telephonyManager.getSimOperator();
-                    Log.e("simOperatorCode",simOperatorCode);
-
-                    String simOperatorName = telephonyManager.getSimOperatorName();
-                    Log.e("simOperatorName",simOperatorName);
-
-                    String simSerial = telephonyManager.getSimSerialNumber();
-                    Log.e("simSerial",simSerial);
-
-                    CountryZipCode = GetCountryZipCode();
-                    CountryZipCode = "+" + CountryZipCode;
-                    Log.e("COUNTRY ZIP CODE", CountryZipCode);
-                    edtCountryCode.setText(CountryZipCode);
-                }
-                break;
+        try{
+            String countryCode=Utils.getCountryCodeFromSim(this);
+            if(countryCode==null){
+                edtCountryCode.setText("+(null)");
+            }else{
+                edtCountryCode.setText(countryCode);
             }
 
-        }catch(Exception e){
-            Log.e(TAG, "Exception-->" + e.toString());
+
+        } catch (Exception e) {
         }
 	}
       @Override
@@ -213,28 +225,28 @@ public class AddViaNumberView extends Activity implements View.OnClickListener,T
                 }
 		}
 
- public String GetCountryZipCode(){
-        String CountryID="";
-        String CountryZipCode="";
-        try {
-            TelephonyManager manager = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
-            //getNetworkCountryIso
-            CountryID = manager.getSimCountryIso().toUpperCase();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-        String[] rl=this.getResources().getStringArray(R.array.CountryCodes);
-        for(int i=0;i<rl.length;i++){
-            String[] g=rl[i].split(",");
-            if(g[1].trim().equals(CountryID.trim())){
-                CountryZipCode=g[0];
-                Log.e("Code","Tis is Code>>>>>" +CountryZipCode);
-                break;
-            }
-        }
-        return CountryZipCode;
-    }
+// public String GetCountryZipCode(){
+//        String CountryID="";
+//        String CountryZipCode="";
+//        try {
+//            TelephonyManager manager = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
+//            //getNetworkCountryIso
+//            CountryID = manager.getSimCountryIso().toUpperCase();
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
+//
+//        String[] rl=this.getResources().getStringArray(R.array.CountryCodes);
+//        for(int i=0;i<rl.length;i++){
+//            String[] g=rl[i].split(",");
+//            if(g[1].trim().equals(CountryID.trim())){
+//                CountryZipCode=g[0];
+//                Log.e("Code","Tis is Code>>>>>" +CountryZipCode);
+//                break;
+//            }
+//        }
+//        return CountryZipCode;
+//    }
     // Akshit Code Starts
     public void fromSignalDialog(String str){
 
