@@ -22,6 +22,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.quickblox.core.QBCallbackImpl;
@@ -36,6 +37,7 @@ import com.quickblox.module.chat.xmpp.QBPrivateChat;
 import com.quickblox.module.users.model.QBUser;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
+import com.sourcefuse.clickinandroid.model.RelationManager;
 import com.sourcefuse.clickinandroid.model.SettingManager;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.ClickInAlertDialog;
@@ -268,6 +270,9 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
             case R.id.btn_get_clickin:
 
              /*  ClickInAlertDialog.networkErrorAlert(SignInView.this);*/
+                RelativeLayout layout = (RelativeLayout)findViewById(R.id.relative_layout_root_signin);
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(layout.getWindowToken(), 0);
 
                 if (activeDone) {
                     authManager = ModelManager.getInstance().getAuthorizationManager();
@@ -353,8 +358,10 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
             editor.putString("country",authManager.getUserCountry());
             editor.putString("email",authManager.getEmailId());
             editor.commit();
+           RelationManager relationManager = ModelManager.getInstance().getRelationManager();
+            relationManager.getRelationShips(authManager.getPhoneNo(), authManager.getUsrToken());
            // new ImageDownloadTask().execute();
-            switchView();
+
 
         } else if (getMsg.equalsIgnoreCase("ProfileInfo False")) {
             Utils.dismissBarDialog();
@@ -378,6 +385,17 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
             Utils.dismissBarDialog();
             fromSignalDialog(AlertMessage.connectionError);
          //   Utils.showAlert(act, AlertMessage.connectionError);
+        }else if (getMsg.equalsIgnoreCase("GetRelationShips False")) {
+            Utils.dismissBarDialog();
+
+//           setLeftMenuList();
+            //         setlist();
+        } else if(getMsg.equalsIgnoreCase("GetRelationShips Network Error")){
+            Utils.dismissBarDialog();
+            fromSignalDialog(AlertMessage.connectionError);
+        }else if(getMsg.equalsIgnoreCase("GetrelationShips True")){
+            Utils.dismissBarDialog();
+            switchView();
         }
 
     }
