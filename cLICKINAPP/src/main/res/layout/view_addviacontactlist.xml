@@ -92,35 +92,51 @@
                 android:textStyle="bold"></TextView>
 
         </RelativeLayout>
+<LinearLayout
+    android:id="@+id/ll2"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/rr_contact_iv"
+    android:orientation="vertical"
+    android:weightSum="1">
 
-        <TextView
-            android:id="@+id/edt_text_cntry_cd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/rr_contact_iv"
-            android:layout_marginBottom="2dp"
-            android:text="@string/txt_cntrycode"
-            android:textColor="@color/dark_gray"
-            android:textSize="10sp"></TextView>
+    <TextView
+        android:id="@+id/edt_text_cntry_cd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rr_contact_iv"
+        android:layout_marginBottom="2dp"
+        android:text="@string/txt_cntrycode"
+        android:textColor="@color/dark_gray"
+        android:textSize="10sp"
+        android:layout_weight="23.50"></TextView>
+
+
+    <EditText
+        android:id="@+id/edt_cntry_cd"
+        android:layout_width="fill_parent"
+        android:layout_height="45dp"
+        android:background="@color/dark_gray"
+        android:ems="10"
+        android:singleLine="true"
+        android:padding="10dp"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"></EditText>
+
+
+</LinearLayout>
+
 
         <LinearLayout
             android:id="@+id/ll_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/edt_text_cntry_cd"
+            android:layout_marginTop="84.1dp"
+            android:layout_toRightOf="@id/ll2"
+
             android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/edt_cntry_cd"
-                android:layout_width="50dp"
-                android:layout_height="45dp"
-                android:background="@color/dark_gray"
-                android:ems="10"
-                android:singleLine="true"
-                android:padding="10dp"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:textStyle="bold"></EditText>
 
             <EditText
                 android:id="@+id/edt_phone_no"
@@ -128,7 +144,7 @@
                 android:layout_height="45dp"
                 android:layout_marginLeft="4dp"
                 android:background="@color/dark_gray"
-                android:ems="10"
+                android:ems="12"
                 android:inputType="phone"
                 android:padding="10dp"
                 android:textColor="@color/black"

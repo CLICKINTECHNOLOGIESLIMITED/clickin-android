@@ -56,7 +56,10 @@
                 android:textColor="@color/signup_contry_code"
                 android:textColorHint="@color/singn_forg"
                 android:textSize="16sp"
-                android:textStyle="bold"></EditText>
+                android:textStyle="bold">
+
+
+                </EditText>
 
             <EditText
                 android:id="@+id/edt_passwd"
