@@ -72,59 +72,12 @@ public class SignUpView extends Activity implements TextWatcher,OnClickListener 
 
         });
 
-        try {
-            String CountryZipCode = null;
-            TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-            int simState = telephonyManager.getSimState();
-            //Log.e("simState",""+simState+"/"+TelephonyManager.SIM_STATE_NETWORK_LOCKED+"/"+TelephonyManager.SIM_STATE_UNKNOWN+"/"+TelephonyManager.SIM_STATE_READY);
-            switch (simState) {
-
-                case (TelephonyManager.SIM_STATE_ABSENT): {
-                    cntrycode.setText("+(null)");
-                }
-                break;
-
-                case (TelephonyManager.SIM_STATE_NETWORK_LOCKED): {
-                    cntrycode.setText("+(null)");
-                }
-                break;
-                case (TelephonyManager.SIM_STATE_PIN_REQUIRED):
-                    break;
-                case (TelephonyManager.SIM_STATE_PUK_REQUIRED):
-                    break;
-                case (TelephonyManager.SIM_STATE_UNKNOWN): {
-                    cntrycode.setText("+(null)");
-                }
-                break;
-                case (TelephonyManager.SIM_STATE_READY): {
-
-                    String simCountry = telephonyManager.getSimCountryIso();
-                    Log.e("simCountry",simCountry);
-
-                    String simOperatorCode = telephonyManager.getSimOperator();
-                    Log.e("simOperatorCode",simOperatorCode);
-
-                    String simOperatorName = telephonyManager.getSimOperatorName();
-                    Log.e("simOperatorName",simOperatorName);
-
-                    String simSerial = telephonyManager.getSimSerialNumber();
-                    Log.e("simSerial",simSerial);
-
-                    CountryZipCode = GetCountryZipCode();
-                    CountryZipCode = "+" + CountryZipCode;
-                    Log.e("COUNTRY ZIP CODE", CountryZipCode);
-                    cntrycode.setText(CountryZipCode);
-                }
-                break;
-            }
-//            TelephonyManager mTelephonyMgr;
-//            mTelephonyMgr = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-//            myNumber = mTelephonyMgr.getLine1Number();
-//            Log.e(TAG,"myNumber-->"+myNumber);
-//            phoneNo.setText(myNumber);
-            }catch(Exception e){
-                Log.e("Exception TAG" , "Exception-->" + e.toString());
-            }
+        String countryCode=Utils.getCountryCodeFromSim(this);
+        if(countryCode==null){
+            cntrycode.setText("+(null)");
+        }else{
+            cntrycode.setText(countryCode);
+        }
         }
 
 
@@ -178,29 +131,6 @@ public class SignUpView extends Activity implements TextWatcher,OnClickListener 
 
 	}
 
-
-    public String GetCountryZipCode(){
-        String CountryID="";
-        String CountryZipCode="";
-        try {
-            TelephonyManager manager = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
-            //getNetworkCountryIso
-            CountryID = manager.getSimCountryIso().toUpperCase();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-        String[] rl=this.getResources().getStringArray(R.array.CountryCodes);
-        for(int i=0;i<rl.length;i++){
-            String[] g=rl[i].split(",");
-            if(g[1].trim().equals(CountryID.trim())){
-                CountryZipCode=g[0];
-                Log.e("Code","Tis is Code>>>>>" +CountryZipCode);
-                break;
-            }
-        }
-        return CountryZipCode;
-    }
 
 
 
