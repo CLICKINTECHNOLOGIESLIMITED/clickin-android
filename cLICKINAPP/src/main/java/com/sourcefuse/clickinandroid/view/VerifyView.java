@@ -31,11 +31,9 @@ public class VerifyView extends Activity implements View.OnClickListener,
     private static final String TAG = VerifyView.class.getSimpleName();
 	private Button send;
 	private EditText d_one, d_two, d_three, d_four;
-
-
 	private AuthManager authManager;
-	private Dialog dialog;
-    String focus = "";
+
+
 
 
 	@Override
@@ -235,7 +233,7 @@ public class VerifyView extends Activity implements View.OnClickListener,
 		}
 
 	public void alertDialog(String msgStrI, String msgStrII) {
-		dialog = new Dialog(VerifyView.this);
+        final Dialog dialog = new Dialog(VerifyView.this);
 		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		dialog.getWindow().setBackgroundDrawableResource(
 				android.R.color.transparent);
@@ -275,7 +273,7 @@ public class VerifyView extends Activity implements View.OnClickListener,
 	}
 
     public void fromSignalertDialogDammit() {
-        dialog = new Dialog(VerifyView.this);
+       final Dialog dialog = new Dialog(VerifyView.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         dialog.setContentView(R.layout.alert_nocheck);
@@ -297,7 +295,7 @@ public class VerifyView extends Activity implements View.OnClickListener,
     }
 
     public void fromSignalertDialog(String msgStrI, String msgStrII) {
-        dialog = new Dialog(VerifyView.this);
+        final Dialog dialog = new Dialog(VerifyView.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         dialog.setContentView(R.layout.alert_nocheck);

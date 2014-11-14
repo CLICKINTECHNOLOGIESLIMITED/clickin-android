@@ -11,9 +11,7 @@ import com.viewpagerindicator.IconPagerAdapter;
 class TestFragmentAdapter extends FragmentStatePagerAdapter implements IconPagerAdapter {
 
     protected static final int[] CONTENT = new int[]{R.drawable.first_screen, R.drawable.second_screen, R.drawable.third_screen, R.drawable.fourth_screen, R.drawable.fifth_screen, R.drawable.sixth_page};
-    protected static final int[] ICONS = new int[]{
-
-    };
+    protected static final int[] ICONS = new int[]{};
 
     private int mCount = CONTENT.length;
 

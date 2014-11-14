@@ -41,13 +41,11 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
 	private JumpOtherProfileAdapter adapter;
 	private AuthManager authManager;
 	private RelationManager relationManager;
-    private ProfileManager profileManager;
 	private TextView name, userdetails;
 	private boolean othersUser = false;
 	public String phone,phForOtherUser;
 	private Typeface typeface;
 	private boolean whichList =  false;
-    private View headerView ;
 
 
 	@Override
@@ -98,7 +96,6 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
 		userdetails.setTypeface(typeface);
 		
 	
-		//othersUser = getIntent().getExtras().getBoolean("othersProfile");
 		othersUser = getIntent().getExtras().getBoolean("FromOwnProfile");
 		if(othersUser){
             authManager = ModelManager.getInstance().getAuthorizationManager();
@@ -138,10 +135,6 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
 	        }
 	    });
 
-
-//code to set adapter to populate list
-       // headerView =  ((LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.header_otherprofile, null, false);
-        //listView.addHeaderView(headerView);
 	}
 
 	public void setlist() {
@@ -211,9 +204,6 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
 			break;
 		case R.id.iv_notification_other:
 			slidemenu.showSecondaryMenu(true);
-//			Intent intent = new Intent(JumpOtherProfileView.this,AddSomeoneView.class);
-//			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//			startActivity(intent);
 			break;
 
 		}
@@ -222,16 +212,12 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
 
 	private void switchView() {
 		Intent intent = new Intent(JumpOtherProfileView.this, FollowerList.class);
-		//intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		startActivity(intent);
-		//this.finish();
 	}
 	
 	private void switchViewToFollowingList() {
 		Intent intent = new Intent(JumpOtherProfileView.this, FollowingListView.class);
-	//	intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		startActivity(intent);
-		//this.finish();
 	}
 
     @Override
@@ -324,7 +310,6 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
 
 	private void switchView(String phone) {
 		Intent intent = new Intent(JumpOtherProfileView.this,JumpOtherProfileView.class);
-		//intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		intent.putExtra("FromOwnProfile", true);
 		intent.putExtra("phNumber", phone);
 		startActivity(intent);
@@ -349,7 +334,6 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
 
 		if (othersUser) {
 			othesProfileName.setText(authManager.getTmpUserName());
-			//clickwithName.setText(authManager.getTmpUserName());
 			name.setText(authManager.getTmpUserName());
 			String dtails;
 			

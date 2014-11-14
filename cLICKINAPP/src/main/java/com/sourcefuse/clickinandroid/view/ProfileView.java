@@ -78,33 +78,19 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
       private Uri mImageCaptureUri;
       private DatePicker dpResult;
       private ImageView profileimg;
-      private Dialog dialog;
-
       private static final int DATE_DIALOG_ID = 9990;
       private Bitmap bitmapImage;
       private int year;
       private int month;
       private int day;
-
       private int mCurrentyear;
-      private int mCurrentmonth;
-      private int mCurrentday;
-
       private String gender_var = "";
-
       private AuthManager authManager;
       private ProfileManager profileManager;
-
-      private Typeface typeface;
       private Uri userImageUri;
-      private Calendar c;
       long diffrence_in_mills;
-
-
       private SimpleDateFormat mSimpleDateFormat;
-      private PeriodFormatter mPeriodFormat;
       private int age;
-      Years periods_years;
       long mills_in_17yrs;
 
 
@@ -115,9 +101,7 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
             setContentView(R.layout.view_profile);
             this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
-            Utils.acty = this;
 
-            typeface = Typeface.createFromAsset(ProfileView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
 
             done = (Button) findViewById(R.id.btn_done);
             guy = (Button) findViewById(R.id.btn_guy);
@@ -159,15 +143,6 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
             setCurrentDateOnView();
             authManager = ModelManager.getInstance().getAuthorizationManager();
 
-            fname.setTypeface(typeface);
-            lname.setTypeface(typeface);
-            city.setTypeface(typeface);
-            country.setTypeface(typeface);
-            email.setTypeface(typeface);
-
-            tvDate.setTypeface(typeface);
-            tvMonth.setTypeface(typeface);
-            tvYear.setTypeface(typeface);
 
 
       }
@@ -312,15 +287,6 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
                                     }
 
                               }
-               /*     if (Utils.isEmailValid(email.getText().toString())) {
-                        Utils.launchBarDialog(ProfileView.this);
-                        authManager.setEmailId(email.getText().toString());
-                        profileManager = ModelManager.getInstance().getProfileManager();
-                        profileManager.setProfile(fname.getText().toString(), lname.getText().toString(), authManager.getPhoneNo(),
-                                authManager.getUsrToken(), gender_var, "" + day + month + year, city.getText().toString(), country.getText().toString(), email.getText().toString(), "", Utils.encodeTobase64(bitmap));
-                    } else {
-                        Utils.showAlert(ProfileView.this, AlertMessage.vEmailid);
-                    }*/
                         }
                         break;
                   case R.id.btn_guy:
@@ -345,7 +311,6 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
              * Connect With FB only session is create in this Activity
 			 */
 
-                        //Boolean isInternetPresent = isConnectingToInternet();
                         if (Utils.isConnectingToInternet(ProfileView.this)) {
 
                               Session session = Session.getActiveSession();
@@ -572,11 +537,6 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
                   public void onClick(View view) {
                         Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                         startActivityForResult(pickPhoto, Constants.SELECT_PICTURE);
-
-					/*Intent intent = new Intent();
-                              intent.setType("image*//*");
-					intent.setAction(Intent.ACTION_GET_CONTENT);
-					startActivityForResult(Intent.createChooser(intent, "Select Picture"),Constants.SELECT_PICTURE);*/
                         mdialog.dismiss();
                   }
             });
@@ -797,15 +757,11 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
       // display current date
       @SuppressLint("NewApi")
       public void setCurrentDateOnView() {
-            c = Calendar.getInstance();
+          Calendar c = Calendar.getInstance();
             year = c.get(Calendar.YEAR);
             month = c.get(Calendar.MONTH);
             day = c.get(Calendar.DAY_OF_MONTH);
-
             mCurrentyear = year;
-
-            // String monthname=c.getDisplayName(Calendar.MONTH, Calendar.LONG,
-            // Locale.getDefault());
             tvDate.setText("" + day);
             tvMonth.setText("" + MONTHS[month]);
             tvYear.setText("" + year);
@@ -843,7 +799,7 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
                   String date = day + "/" + month + "/" + year;
                   long time = 0;
                   mSimpleDateFormat = new SimpleDateFormat("dd/MM/yy");
-                  mPeriodFormat = new PeriodFormatterBuilder().appendYears()
+                PeriodFormatter mPeriodFormat = new PeriodFormatterBuilder().appendYears()
                                           .appendSuffix(" year(s) ").appendMonths().appendSuffix(" month(s) ")
                                           .appendDays().appendSuffix(" day(s) ").printZeroNever().toFormatter();
 
@@ -941,7 +897,7 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
       }
 
       public void alertDialog(String msgStrI) {
-            dialog = new Dialog(ProfileView.this);
+          final Dialog dialog = new Dialog(ProfileView.this);
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
             dialog.setContentView(R.layout.alert_check_dialogs);

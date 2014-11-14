@@ -39,7 +39,6 @@ import java.util.List;
     private static final String TAG = ChatRecordView.class.getSimpleName();
     private GoogleMap googleMap;
     private EditText searchLocation;
-    MarkerOptions markerOptions;
     LatLng latLng;
     String coordinates = null;
     @Override
@@ -213,7 +212,7 @@ Bundle bundle = getIntent().getExtras();
                         address.getMaxAddressLineIndex() > 0 ? address.getAddressLine(0) : "",
                         address.getCountryName());
 
-                markerOptions = new MarkerOptions();
+                MarkerOptions markerOptions = new MarkerOptions();
                 markerOptions.position(latLng);
                 markerOptions.title(addressText);
 

@@ -36,8 +36,7 @@ public class SignUpView extends Activity implements TextWatcher,OnClickListener 
 	private Button checkmeout;
 	private EditText phoneNo, cntrycode;
 	private AuthManager authManager ;
-	private Typeface typefaceBold;
-    private Dialog dialog ;
+
 
 
 
@@ -46,16 +45,12 @@ public class SignUpView extends Activity implements TextWatcher,OnClickListener 
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.view_signup);
-        typefaceBold = Typeface.createFromAsset(SignUpView.this.getAssets(),Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_BOLD);
 		Utils.deviceId = Secure.getString(this.getContentResolver(),Secure.ANDROID_ID);
 
 		checkmeout = (Button) findViewById(R.id.checkmeout);
 		cntrycode = (EditText) findViewById(R.id.edt_code);
 		phoneNo = (EditText) findViewById(R.id.edt_phoneno);
 		phoneNo.addTextChangedListener(this);
-		
-		cntrycode.setTypeface(typefaceBold);
-		phoneNo.setTypeface(typefaceBold);
 		checkmeout.setOnClickListener(this);
         checkmeout.setEnabled(false);
 		    ((RelativeLayout) findViewById(R.id.rl_main_signup)).setOnClickListener(new View.OnClickListener() {
@@ -240,7 +235,7 @@ public class SignUpView extends Activity implements TextWatcher,OnClickListener 
     // Akshit Code Starts
     public void fromSignalDialog(String str){
 
-        dialog = new Dialog(SignUpView.this);
+        final Dialog dialog = new Dialog(SignUpView.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         dialog.setContentView(R.layout.alert_check_dialogs);

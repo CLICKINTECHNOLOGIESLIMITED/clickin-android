@@ -97,7 +97,7 @@
                 <!--android:textColorHint="@color/defult_hint_clr"-->
                 <!--android:textSize="16sp"></EditText>-->
 
-            <EditText
+            <com.sourcefuse.clickinandroid.utils.ClickInEditBox
                 android:id="@+id/edt_cntry_cd"
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
@@ -107,9 +107,10 @@
                 android:inputType="phone"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                android:textStyle="bold"></EditText>
+                geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
+                android:textStyle="bold"/>
 
-            <EditText
+            <com.sourcefuse.clickinandroid.utils.ClickInEditBox
                 android:id="@+id/edt_get_ph_no"
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
@@ -121,10 +122,7 @@
                 android:padding="10dp"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                android:textStyle="bold">
-
-                <requestFocus />
-            </EditText>
+                android:textStyle="bold"/>
         </LinearLayout>
 
         <RelativeLayout

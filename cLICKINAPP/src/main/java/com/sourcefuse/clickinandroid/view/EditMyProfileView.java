@@ -507,27 +507,22 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
         authManager = ModelManager.getInstance().getAuthorizationManager();
         if (getMsg.equalsIgnoreCase("UpdateProfile True")) {
             Utils.dismissBarDialog();
-            //update user profile information in auth manager now
-         //   if(imageBitmap!=null)
-		//	authManager.setUserPic(imageBitmap.toString());
             authManager.setUserName(userName+" "+userLastName);
             authManager.setEmailId(userEmail);
             authManager.setUserCity(userCity);
             authManager.setUserCountry(userCountry);
-       //     authManager.setUserImageUri(userImageUri);
             authManager.setEditProfileFlag(true);
             authManager.setMenuUserInfoFlag(true);
             imageBitmap = null;
             finish();
         } else if (getMsg.equalsIgnoreCase("UpdateProfile False")) {
             Utils.dismissBarDialog();
-authManager.setUserbitmap(null);
-  authManager.setUserImageUri(null);
-            // authManager.setEditProfileFlag(false);
+            authManager.setUserbitmap(null);
+            authManager.setUserImageUri(null);
         } else if (getMsg.equalsIgnoreCase("UpdateProfile Network Error")) {
             Utils.dismissBarDialog();
- authManager.setUserbitmap(null);
-  authManager.setUserImageUri(null);
+            authManager.setUserbitmap(null);
+            authManager.setUserImageUri(null);
             Utils.showAlert(EditMyProfileView.this, AlertMessage.connectionError);
         }
     }

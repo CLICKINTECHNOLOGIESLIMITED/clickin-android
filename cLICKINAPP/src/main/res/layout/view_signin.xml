@@ -44,7 +44,7 @@
             android:background="@drawable/white_border"
             android:padding="15dp">
 
-            <EditText
+            <com.sourcefuse.clickinandroid.utils.ClickInEditBox
                 android:id="@+id/edt_email_phoneno"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
@@ -56,9 +56,10 @@
                 android:textColor="@color/signup_contry_code"
                 android:textColorHint="@color/singn_forg"
                 android:textSize="16sp"
-                android:textStyle="bold"></EditText>
+                geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
+                android:textStyle="bold"/>
 
-            <EditText
+            <com.sourcefuse.clickinandroid.utils.ClickInEditBox
                 android:id="@+id/edt_passwd"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
@@ -72,6 +73,7 @@
                 android:textColor="@color/signup_contry_code"
                 android:textColorHint="@color/singn_forg"
                 android:textSize="16sp"
+                geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
                 android:textStyle="bold" />
         </RelativeLayout>
 
@@ -93,7 +95,7 @@
             android:layout_marginRight="20dp"
             android:layout_marginTop="5dp">
 
-            <TextView
+            <com.sourcefuse.clickinandroid.utils.ClickInTextView
                 android:id="@+id/tv_forgot_pwd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -101,9 +103,10 @@
                 android:padding="10dp"
                 android:text="@string/txt_forget_pwd"
                 android:textColor="@color/singn_forg"
+                geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
                 android:textStyle="bold" />
 
-            <TextView
+            <com.sourcefuse.clickinandroid.utils.ClickInTextView
                 android:id="@+id/tv_signup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -111,6 +114,7 @@
                 android:gravity="center_vertical|center"
                 android:padding="10dp"
                 android:text="@string/txt_signup"
+                geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
                 android:textColor="@color/singn_forg"
                 android:textStyle="bold" />
         </RelativeLayout>

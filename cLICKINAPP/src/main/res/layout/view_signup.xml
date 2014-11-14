@@ -14,13 +14,6 @@
         android:weightSum="2"
         android:orientation="vertical">
 
-        <!--<LinearLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="50dp"-->
-            <!--android:orientation="vertical"-->
-            <!--android:weightSum="2"-->
-            <!-->-->
-
             <com.sourcefuse.clickinandroid.utils.ClickInTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -33,8 +26,7 @@
             android:textStyle="bold"
             geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
             android:paddingTop="10dp"
-
-                android:layout_marginTop="-30dp"
+            android:layout_marginTop="-30dp"
                 />
 
             <com.sourcefuse.clickinandroid.utils.ClickInTextView
@@ -53,39 +45,7 @@
                />
 
            </LinearLayout>
-        <!--<LinearLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="50dp"-->
-            <!--android:gravity="top">-->
 
-            <!--<com.sourcefuse.clickinandroid.utils.ClickInTextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_gravity="center_vertical|top"-->
-                <!--android:layout_weight="1"-->
-                <!--android:text="DIGITS!"-->
-                <!--android:textColor="@color/profile_usr_name"-->
-                <!--android:textSize="45sp"-->
-                <!--android:paddingLeft="75sp"-->
-                <!--android:textStyle="bold"-->
-                <!--geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"-->
-                <!--android:gravity="center_vertical|top" />-->
-            <!--</LinearLayout>-->
-        <!--<com.sourcefuse.clickinandroid.utils.ClickInTextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_gravity="center_vertical"-->
-            <!--android:layout_weight="1"-->
-            <!--android:lines="2"-->
-            <!--android:gravity="center_horizontal"-->
-            <!--android:text="ENTER YOUR \n DIGITS !"-->
-            <!--android:textColor="@color/profile_usr_name"-->
-            <!--android:textSize="35sp"-->
-            <!--android:textStyle="bold"-->
-            <!--geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"-->
-             <!--/>-->
-
-    <!--</LinearLayout>-->
     <RelativeLayout
         android:id="@+id/linearLayout1"
         android:layout_width="wrap_content"
@@ -103,7 +63,7 @@
             android:textColor="@color/singn_forg"
             android:textSize="10sp" />
 
-        <EditText
+        <com.sourcefuse.clickinandroid.utils.ClickInEditBox
             android:id="@+id/edt_code"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -116,6 +76,7 @@
             android:paddingLeft="5dp"
             android:paddingTop="8dp"
             android:text=""
+            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
             android:textColor="@color/phone_no_clr"
             android:textColorHint="@color/defult_hint_clr"
             android:textSize="16sp"
@@ -123,9 +84,9 @@
             >
 
             <requestFocus />
-        </EditText>
+        </com.sourcefuse.clickinandroid.utils.ClickInEditBox>
 
-        <EditText
+        <com.sourcefuse.clickinandroid.utils.ClickInEditBox
             android:id="@+id/edt_phoneno"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -135,18 +96,17 @@
             android:hint="@string/txt_phonenumber"
             android:inputType="phone"
             android:ems="10"
-
-
             android:maxLength="10"
             android:paddingBottom="8dp"
             android:paddingLeft="10dp"
             android:paddingTop="8dp"
+            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
             android:textColor="@color/phone_no_clr"
             android:textColorHint="@color/sign_hint"
             android:textSize="16sp">
 
             <requestFocus />
-        </EditText>
+        </com.sourcefuse.clickinandroid.utils.ClickInEditBox>
 
         <Button
             android:id="@+id/checkmeout"

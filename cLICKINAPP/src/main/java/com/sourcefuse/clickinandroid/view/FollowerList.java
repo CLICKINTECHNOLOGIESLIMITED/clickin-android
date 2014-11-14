@@ -53,7 +53,6 @@ public class FollowerList extends Activity implements
             mFollowerListView = (RelativeLayout) findViewById(R.id.rl_followerdata);
             mFollowerListEmpty = (RelativeLayout) findViewById(R.id.rl_empty_follower);
             profileName = (TextView) findViewById(R.id.tv_profile_txt_wer);
-            //tagScreen = (TextView) findViewById(R.id.tv_tag_screen);
             back = (ImageView) findViewById(R.id.iv_back);
             notification = (ImageView) findViewById(R.id.iv_notification_list);
             back.setOnClickListener(this);
@@ -62,7 +61,7 @@ public class FollowerList extends Activity implements
             authManager = ModelManager.getInstance().getAuthorizationManager();
             typeface = Typeface.createFromAsset(FollowerList.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
             profileName.setTypeface(typeface, typeface.BOLD);
-            //tagScreen.setTypeface(typeface);
+
 
             ((TextView) findViewById(R.id.tv_follower_msgI)).setTypeface(typeface, typeface.BOLD);
             ((TextView) findViewById(R.id.tv_follower_msgII)).setTypeface(typeface, typeface.BOLD);

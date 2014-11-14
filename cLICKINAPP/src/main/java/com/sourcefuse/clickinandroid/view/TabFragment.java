@@ -20,7 +20,6 @@ public class TabFragment extends Fragment {
 
     private int index;
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

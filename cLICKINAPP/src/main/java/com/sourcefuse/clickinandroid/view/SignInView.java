@@ -61,21 +61,9 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
     private Button do_latter;
     private TextView forgotPwd, signUp;
     private EditText ephone, ePwd,getemailid ;
-    public static Activity act;
-    public static Context context;
-
     private boolean activeDone = false;
     private AuthManager authManager;
-    private QBPrivateChat chat;
-    Dialog dialog ;
-
-
-    private SettingManager settingManager;
-
-    private Typeface typeface, typefaceBold;
     private Dialog mDialog;
-    public Thread myThread;
-    boolean gotoProfile = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,10 +71,6 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.view_signin);
 
-        act = this;
-        context = this;
-        typeface = Typeface.createFromAsset(SignInView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
-        typefaceBold = Typeface.createFromAsset(SignInView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_BOLD);
         this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
         authManager = ModelManager.getInstance().getAuthorizationManager();
@@ -107,11 +91,11 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
 
 
 
-        ephone.setTypeface(typefaceBold);
+        /*ephone.setTypeface(typefaceBold);
         ePwd.setTypeface(typefaceBold);
         forgotPwd.setTypeface(typeface);
         signUp.setTypeface(typeface);
-        signUp.setTypeface(typeface);
+        signUp.setTypeface(typeface);*/
 
         try {
 //            TelephonyManager manager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
@@ -218,24 +202,6 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
             }
         });
 
-    }
-
-
-    public static String getUserCountry(Context context) {
-        try {
-            final TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-            final String simCountry = tm.getSimCountryIso();
-            if (simCountry != null && simCountry.length() == 2) { // SIM country code is available
-                return simCountry.toLowerCase(Locale.US);
-            } else if (tm.getPhoneType() != TelephonyManager.PHONE_TYPE_CDMA) { // device is not 3G (would be unreliable)
-                String networkCountry = tm.getNetworkCountryIso();
-                if (networkCountry != null && networkCountry.length() == 2) { // network country code is available
-                    return networkCountry.toLowerCase(Locale.US);
-                }
-            }
-        } catch (Exception e) {
-        }
-        return null;
     }
 
     @Override
@@ -415,7 +381,7 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
             public void onClick(View v) {
                 if (Utils.isEmailValid(getemailid.getText().toString())) {
 
-                    settingManager = ModelManager.getInstance().getSettingManager();
+                    SettingManager settingManager = ModelManager.getInstance().getSettingManager();
                     settingManager.forgotYourPassword(getemailid.getText().toString());
                 }else{
                     ClickInAlertDialog.clickInAlert(SignInView.this,"Please enter a valid email address","Error",true);
@@ -453,7 +419,7 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
                             com.sourcefuse.clickinandroid.utils.Log.e(TAG, "Login successfully");
                             QBChatService.getInstance().startAutoSendPresence(5);
 
-                            chat = QBChatService.getInstance().createChat();
+                            QBPrivateChat chat = QBChatService.getInstance().createChat();
                             authManager.setqBPrivateChat(chat);
                         }
 
@@ -476,67 +442,11 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
 
     }
 
-    private  class ImageDownloadTask extends AsyncTask<Void,Void,File> {
-        File file;
-        @Override
-        protected File doInBackground( Void... params ) {
-            InputStream is = null;
-
-           file = new File(context.getFilesDir().getAbsolutePath() + "/userpic1.jpg");
-            try { 
-                URL url = new URL(authManager.getUserPic());
-            /* Open a connection to that URL. */
-                URLConnection ucon = url.openConnection();
-
-            /*
-             * Define InputStreams to read from the URLConnection.
-             */
-                is = ucon.getInputStream();
-              //  FileOutputStream fOut = openFileOutput("uerpic.jpg",MODE_WORLD_READABLE);
-                OutputStream os = new FileOutputStream(file) ;
-                byte [ ] data = new byte [ is.available ( ) ] ;
-                is.read ( data ) ; os.write (data );is.close ( ) ; os.close ( ) ;
-                return file;
-            }
-            catch (Exception e){
-                Log .d ( "ImageManager " , " Error: " + e ) ;
-            }
-
-            return null;
-        }
-        protected void onPostExecute (File file) {
-         /*   try{
-                MediaScannerConnection.scanFile(null, new String[]{file.toString()}, null, new MediaScannerConnection.OnScanCompletedListener() {
-                    public void onScanCompleted(String path, Uri uri) {
-                        Log.i(" External Storage", " Scanned " + path + " : ");
-                        Log.i(" E x t e r n a l S t o r a g e ", " - > u r i = " + uri);
-                        authManager.setUserImageUri(uri);
-                    }
-                }) ;
-            }catch (Exception e) {
-                e.printStackTrace();
-                // TODO: handle exception
-            }*/
-            Uri uri=Uri.fromFile(file);
-            try {
-                Bitmap imageBitmap = Utils.decodeUri(uri, SignInView.this);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-            authManager.setUserImageUri(uri);
-            SharedPreferences preferences=PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-            SharedPreferences.Editor editor=preferences.edit();
-            String uriStr=uri.toString();
-            editor.putString("userimageuri",uriStr);
-            editor.commit();
-
-        }}
-
 
     // Akshit Code Starts
     public void fromSignalDialog(String str){
 
-        dialog = new Dialog(SignInView.this);
+       final Dialog dialog = new Dialog(SignInView.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         dialog.setContentView(R.layout.alert_check_dialogs);

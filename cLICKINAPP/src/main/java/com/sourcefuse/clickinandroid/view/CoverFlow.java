@@ -22,14 +22,7 @@ import java.util.TimerTask;
  */
 public class CoverFlow extends FragmentActivity {
 
-
     ViewPager mPager;
-    PageIndicator mIndicator;
-    TestFragmentAdapter mAdapter;
-    FragmentManager fragmentManager;
-    TestFragmentAdapter adapter;
-    Timer timer;
-    MyTimerTask myTimerTask;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,15 +43,15 @@ public class CoverFlow extends FragmentActivity {
 
         }
 
-        mAdapter = new TestFragmentAdapter(getSupportFragmentManager());
+        TestFragmentAdapter mAdapter = new TestFragmentAdapter(getSupportFragmentManager());
 
         mPager = (ViewPager)findViewById(R.id.pager);
         mPager.setAdapter(mAdapter);
 
-        mIndicator = (CustomCirclePageIndicator)findViewById(R.id.indicator);
+        PageIndicator  mIndicator = (CustomCirclePageIndicator)findViewById(R.id.indicator);
         mIndicator.setViewPager(mPager);
-        timer = new Timer();
-        myTimerTask = new MyTimerTask();
+        Timer  timer = new Timer();
+        MyTimerTask myTimerTask = new MyTimerTask();
         timer.schedule(myTimerTask, 3000, 3000);
 
     }

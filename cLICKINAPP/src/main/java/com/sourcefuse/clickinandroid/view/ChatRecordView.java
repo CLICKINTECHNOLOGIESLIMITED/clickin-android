@@ -115,7 +115,6 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     private RelationManager relationManager;
     private EditText chatText;
     private ImageView mypix, partnerPix, menu, attachBtn, notificationIcon;
-    //  private ListView chatListView;
     private PullToRefreshListView chatListView;
     private ChatRecordAdapter adapter;
     public static ArrayList<ChatRecordBeen> chatData = new ArrayList<ChatRecordBeen>();
@@ -164,10 +163,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         loginToQuickBlox();
         typeface = Typeface.createFromAsset(ChatRecordView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
         send = (Button) findViewById(R.id.btn_send);
-        //chatListView = (ListView) findViewById(R.id.chat_list);
-
         chatListView = (PullToRefreshListView) findViewById(R.id.chat_list);
-
         chatText = (EditText) findViewById(R.id.edit_chatBox);
         mybar = (SeekBar) findViewById(R.id.seekBar1);
         pos = (TextView) findViewById(R.id.tv_positive);
@@ -358,11 +354,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                     ((RelativeLayout) findViewById(R.id.rl_flipper)).setBackgroundResource(R.color.white);
                     ((TextView) findViewById(R.id.tv_flipper_value)).setText("" + clickForFlipper(myvalue));
                     seekValue = myvalue;
-                    // neg.setText("-10");
                 }
                 if (myvalue < 0) {
-                    //pos.setText("+10");
-                    // neg.setText("" + myvalue);
                     seekValue = myvalue;
                     ((RelativeLayout) findViewById(R.id.rl_flipper)).setVisibility(View.VISIBLE);
                     ((RelativeLayout) findViewById(R.id.rl_flipper)).setBackgroundResource(R.color.black_opacity);
@@ -371,8 +364,6 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 if (myvalue == 0) {
                     seekValue = 0;
                     ((RelativeLayout) findViewById(R.id.rl_flipper)).setVisibility(View.GONE);
-                    //pos.setText("+10");
-                    //  neg.setText("-10");
                 }
             }
         });
@@ -383,7 +374,6 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             @Override
             public void onClick(View v) {
                 hideAttachView();
-                //   Utils.imageDialog(ChatRecordView.this);
                 imageDialog();
             }
         });

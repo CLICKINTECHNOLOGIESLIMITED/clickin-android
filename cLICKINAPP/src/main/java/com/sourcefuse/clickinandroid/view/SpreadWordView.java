@@ -21,6 +21,7 @@ import com.quickblox.module.chat.xmpp.QBPrivateChat;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.ProfileManager;
+import com.sourcefuse.clickinandroid.model.bean.ContactBean;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.FetchContactFromPhone;
@@ -29,6 +30,7 @@ import com.sourcefuse.clickinandroid.view.adapter.SpreadWordAdapter;
 import com.sourcefuse.clickinapp.R;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import de.greenrobot.event.EventBus;
 
@@ -39,14 +41,6 @@ public class SpreadWordView extends Activity implements OnClickListener {
 
 	private Button phonebook, facebook;
 
-	//private ImageView toboard;
-    private QBPrivateChat chat;
-     Dialog dialog ;
-
-
-    private AuthManager authManager;
-    public static  ArrayList<String> selectedPhoneArray = new ArrayList<String>();
-    private ProfileManager profilemanager;
 
 
 
@@ -70,7 +64,7 @@ public class SpreadWordView extends Activity implements OnClickListener {
 
 
 
-        authManager = ModelManager.getInstance().getAuthorizationManager();
+        AuthManager authManager = ModelManager.getInstance().getAuthorizationManager();
         EventBus.getDefault().register(this);
         Utils.launchBarDialog(this);
         new FetchContactFromPhone(SpreadWordView.this).getClickerList(authManager.getPhoneNo(),authManager.getUsrToken(),1);
@@ -79,11 +73,10 @@ public class SpreadWordView extends Activity implements OnClickListener {
 	}
 
 	public void setlist() {
-        profilemanager = ModelManager.getInstance().getProfileManager();
+        ProfileManager  profilemanager = ModelManager.getInstance().getProfileManager();
         ListView listView = (ListView) findViewById(R.id.list_current_clickers);
         SpreadWordAdapter adapter = new SpreadWordAdapter(SpreadWordView.this,R.layout.row_invitefriend, profilemanager.spreadTheWorldList);
 		listView.setAdapter(adapter);
-
 	}
 
       @Override
@@ -120,8 +113,8 @@ public class SpreadWordView extends Activity implements OnClickListener {
             facebook.setBackgroundResource(R.drawable.c_fb_grey);
 		break;
 		case R.id.btn_fb:
-            phonebook.setBackgroundResource(R.drawable.c_phonebook_grey);
-            facebook.setBackgroundResource(R.drawable.c_fb_pink);
+           // phonebook.setBackgroundResource(R.drawable.c_phonebook_grey);
+           // facebook.setBackgroundResource(R.drawable.c_fb_pink);
             Utils.launchBarDialog(SpreadWordView.this);
             if (Utils.isConnectingToInternet(SpreadWordView.this)) {
                 Session session = Session.getActiveSession();
@@ -199,7 +192,6 @@ public class SpreadWordView extends Activity implements OnClickListener {
             try{
                 Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
             }catch(Exception e){
-
             }
         } catch (Exception e) {
          //   android.util.Log.d(TAG, "" + e);
@@ -231,7 +223,7 @@ public class SpreadWordView extends Activity implements OnClickListener {
 
     private void sendRequestDialogForFriendList() {
         try {
-            authManager = ModelManager.getInstance().getAuthorizationManager();
+            AuthManager authManager = ModelManager.getInstance().getAuthorizationManager();
             Bundle params = new Bundle();
             params.putString("message", authManager.getUserName() + AlertMessage.SREADTHEWORDMSGON);
             WebDialog requestsDialog = (
@@ -288,22 +280,19 @@ public class SpreadWordView extends Activity implements OnClickListener {
         } else if(message.equalsIgnoreCase("CheckFriend Network Error")){
             Utils.dismissBarDialog();
             fromSignalDialog(AlertMessage.connectionError);
-          //  Utils.showAlert(SpreadWordView.this, AlertMessage.connectionError);
         }
     }
 
     // Akshit Code Starts
     public void fromSignalDialog(String str){
 
-        dialog = new Dialog(SpreadWordView.this);
+       final Dialog dialog = new Dialog(SpreadWordView.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         dialog.setContentView(R.layout.alert_check_dialogs);
         dialog.setCancelable(false);
         TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
         msgI.setText(str);
-
-
         Button dismiss = (Button) dialog.findViewById(R.id.coolio);
         dismiss.setOnClickListener(new OnClickListener() {
             @Override

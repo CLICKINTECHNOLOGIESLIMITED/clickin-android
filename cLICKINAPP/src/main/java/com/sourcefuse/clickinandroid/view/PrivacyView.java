@@ -30,9 +30,7 @@ public class PrivacyView extends Activity implements View.OnClickListener
         setContentView(R.layout.view_privacy_layout);
         this.overridePendingTransition(R.anim.slide_in_right ,R.anim.slide_out_right);
         mprivacywebview=(WebView)findViewById(R.id.web_privacy_view);
-
         typefaceBold = Typeface.createFromAsset(PrivacyView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_BOLD);
-
         ((TextView) findViewById(R.id.tv_profile_txt)).setTypeface(typefaceBold);
         findViewById(R.id.iv_back_noti).setOnClickListener(this);
 

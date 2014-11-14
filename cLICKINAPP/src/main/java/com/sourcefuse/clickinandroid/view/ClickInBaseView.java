@@ -133,8 +133,6 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 
         ActivityManager am = (ActivityManager) this.getSystemService(ACTIVITY_SERVICE);
         List< ActivityManager.RunningTaskInfo > taskInfo = am.getRunningTasks(1);
-      //  Log.d("topActivity", "CURRENT Activity ::"
-        //        + taskInfo.get(0).topActivity.getClassName());
         ComponentName componentInfo = taskInfo.get(0).topActivity;
         String className=componentInfo.getClassName();
         if(className.equalsIgnoreCase("com.sourcefuse.clickinandroid.view.ChatRecordView")){
@@ -228,10 +226,6 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 
         userName.setText(authManager.getUserName());
         userPic.setScaleType(ScaleType.FIT_XY);
-     /*   Picasso.with(ClickInBaseView.this).load(authManager.getUserPic())
-                .placeholder(R.drawable.default_profile)
-                .error(R.drawable.default_profile)
-                .into(userPic);*/
         String dtails = "";
         try {
             try {
