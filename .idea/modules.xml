@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/CodeClickin.iml" filepath="$PROJECT_DIR$/CodeClickin.iml" />
       <module fileurl="file://$PROJECT_DIR$/cLICKINAPP/cLICKINAPP.iml" filepath="$PROJECT_DIR$/cLICKINAPP/cLICKINAPP.iml" />
-      <module fileurl="file://$PROJECT_DIR$/clickin-andoid.iml" filepath="$PROJECT_DIR$/clickin-andoid.iml" />
       <module fileurl="file://$PROJECT_DIR$/cropper/cropper.iml" filepath="$PROJECT_DIR$/cropper/cropper.iml" />
       <module fileurl="file://$PROJECT_DIR$/facebookSDK/facebookSDK.iml" filepath="$PROJECT_DIR$/facebookSDK/facebookSDK.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
