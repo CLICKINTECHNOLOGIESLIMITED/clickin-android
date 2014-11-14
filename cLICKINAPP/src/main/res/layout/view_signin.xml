@@ -5,7 +5,7 @@
     android:background="@drawable/white_pattern_bg">
 
     <RelativeLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/Relative_layout_root"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
@@ -57,7 +57,6 @@
                 android:textColorHint="@color/singn_forg"
                 android:textSize="16sp"
                 android:textStyle="bold">
-
 
                 </EditText>
 

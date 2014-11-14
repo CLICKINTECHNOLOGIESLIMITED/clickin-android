@@ -97,6 +97,7 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
         forgotPwd = (TextView) findViewById(R.id.tv_forgot_pwd);
         signUp = (TextView) findViewById(R.id.tv_signup);
         ephone.addTextChangedListener(this);
+       
         ePwd.addTextChangedListener(this);
         forgotPwd.setOnClickListener(this);
         do_latter.setOnClickListener(this);
