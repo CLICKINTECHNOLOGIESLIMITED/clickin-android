@@ -3,7 +3,8 @@
     android:id="@+id/relative_layout_root_signin"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/white_pattern_bg">
+    android:background="@drawable/white_pattern_bg"
+    android:id="@+id/relative_layout_root_signin">
 
     <RelativeLayout
         android:id="@+id/relative_layout"

@@ -35,6 +35,7 @@ import com.quickblox.module.chat.xmpp.QBPrivateChat;
 import com.quickblox.module.users.model.QBUser;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
+import com.sourcefuse.clickinandroid.model.RelationManager;
 import com.sourcefuse.clickinandroid.model.SettingManager;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.ClickInAlertDialog;
@@ -207,7 +208,10 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
         switch (v.getId()) {
             case R.id.btn_get_clickin:
 
-             RelativeLayout layout = (RelativeLayout)findViewById(R.id.relative_layout_root_signin);
+
+             /*  ClickInAlertDialog.networkErrorAlert(SignInView.this);*/
+                RelativeLayout layout = (RelativeLayout)findViewById(R.id.relative_layout_root_signin);
+
                 InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(layout.getWindowToken(), 0);
 
@@ -296,8 +300,10 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
             editor.putString("country",authManager.getUserCountry());
             editor.putString("email",authManager.getEmailId());
             editor.commit();
+           RelationManager relationManager = ModelManager.getInstance().getRelationManager();
+            relationManager.getRelationShips(authManager.getPhoneNo(), authManager.getUsrToken());
            // new ImageDownloadTask().execute();
-            switchView();
+
 
         } else if (getMsg.equalsIgnoreCase("ProfileInfo False")) {
             Utils.dismissBarDialog();
@@ -321,6 +327,17 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
             Utils.dismissBarDialog();
             Utils.fromSignalDialog(this,AlertMessage.connectionError);
          //   Utils.showAlert(act, AlertMessage.connectionError);
+        }else if (getMsg.equalsIgnoreCase("GetRelationShips False")) {
+            Utils.dismissBarDialog();
+
+//           setLeftMenuList();
+            //         setlist();
+        } else if(getMsg.equalsIgnoreCase("GetRelationShips Network Error")){
+            Utils.dismissBarDialog();
+            Utils.fromSignalDialog(this,AlertMessage.connectionError);
+        }else if(getMsg.equalsIgnoreCase("GetrelationShips True")){
+            Utils.dismissBarDialog();
+            switchView();
         }
 
     }

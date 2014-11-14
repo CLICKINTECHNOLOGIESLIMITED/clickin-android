@@ -112,7 +112,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
     private void switchView(String rid,int relationListIndex) {
 
         Intent intent = new Intent(ClickInBaseView.this, ChatRecordView.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         intent.setAction("UPDATE");
         intent.putExtra("quickId", quickBlockId);
         intent.putExtra("partnerPic", partnerPic);
@@ -137,9 +137,10 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         if(className.equalsIgnoreCase("com.sourcefuse.clickinandroid.view.ChatRecordView")){
             startActivity(intent);
             slidemenu.showContent();
-            slidemenu.showContent(true);
+          //  slidemenu.showContent(true);
         }else{
             startActivity(intent);
+           // slidemenu.showContent(true);
         }
 
 
@@ -374,7 +375,21 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
             public void onClick(View arg0) {
                 Log.e("","00000000-userPic"+slidemenu);
                 Intent intent = new Intent(ClickInBaseView.this, UserProfileView.class);
-                startActivity(intent);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+                List< ActivityManager.RunningTaskInfo > taskInfo = am.getRunningTasks(1);
+                //  Log.d("topActivity", "CURRENT Activity ::"
+                //        + taskInfo.get(0).topActivity.getClassName());
+                ComponentName componentInfo = taskInfo.get(0).topActivity;
+                String className=componentInfo.getClassName();
+                if(className.equalsIgnoreCase("com.sourcefuse.clickinandroid.view.UserProfileView")){
+                    startActivity(intent);
+                    slidemenu.showContent();
+                   // slidemenu.showContent(true);
+                }else{
+                    startActivity(intent);
+                    //slidemenu.showContent(true);
+                }
                // slidemenu.animate();
               //  slidemenu.showMenu(true);
                 /*slidemenu.showMenu(true);
