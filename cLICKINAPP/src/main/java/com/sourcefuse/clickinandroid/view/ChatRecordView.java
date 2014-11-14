@@ -91,7 +91,8 @@ import java.util.TimeZone;
 
 import de.greenrobot.event.EventBus;
 
-public class ChatRecordView extends ClickInBaseView implements View.OnClickListener,
+public class
+        ChatRecordView extends ClickInBaseView implements View.OnClickListener,
         TextWatcher, ChatMessageListener,ConnectionListener {
     private SeekBar mybar;
     private TextView pos, neg, profileName, typingtext, myTotalclicks, partnerTotalclicks;
