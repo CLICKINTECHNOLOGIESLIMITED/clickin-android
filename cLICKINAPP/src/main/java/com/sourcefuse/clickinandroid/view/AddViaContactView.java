@@ -135,6 +135,7 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
             finish();
             overridePendingTransition(0, R.anim.top_out);
       }
+
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {

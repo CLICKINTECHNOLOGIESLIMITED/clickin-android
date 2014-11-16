@@ -79,7 +79,8 @@ public class FetchContactFromPhone {
 					while (pCur.moveToNext()) {
 						phone = pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
                         try {
-                            String temp=phone.substring(1);
+                            String temp1=phone.replaceAll("\\s","");
+                            String temp=temp1.substring(1);
                             int ph = Integer.parseInt(temp);
                         }catch(Exception e){
                             break;

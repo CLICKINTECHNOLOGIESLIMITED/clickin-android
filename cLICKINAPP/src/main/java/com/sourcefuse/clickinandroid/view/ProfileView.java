@@ -420,7 +420,7 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
 
                               try {
 
-                                    Log.d(TAG, user.getLocation().getProperty("name").toString());
+                                  //  Log.d(TAG, user.getLocation().getProperty("name").toString());
                                     String userLocationName = user.getLocation().getProperty("name").toString();
 
                                     String[] citynCountry = userLocationName.split(",");

@@ -83,7 +83,7 @@ public class CurrentClickersView extends Activity implements OnClickListener {
         authManager = ModelManager.getInstance().getAuthorizationManager();
         profilemanager = ModelManager.getInstance().getProfileManager();
 
-        EventBus.getDefault().register(this);
+       // EventBus.getDefault().register(this);
       //  Utils.launchBarDialog(CurrentClickersView.this);
         tempCurrentClickers=profilemanager.currentClickerList;
         setlist();
