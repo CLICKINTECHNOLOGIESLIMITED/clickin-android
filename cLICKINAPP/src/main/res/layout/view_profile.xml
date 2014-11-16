@@ -122,7 +122,7 @@
 
                 >
 
-                <EditText
+                <com.sourcefuse.clickinandroid.utils.ClickInEditBox
                     android:id="@+id/etd_fname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -132,7 +132,6 @@
                     android:gravity="center_vertical"
                     android:hint="@string/txt_fname"
                     android:imeOptions="actionNext"
-
                     android:inputType="textCapWords"
                     android:lines="1"
                     android:paddingBottom="5dp"
@@ -140,10 +139,11 @@
                     android:paddingRight="5dp"
                     android:paddingTop="5dp"
                     android:textColor="@color/black"
+                    geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"
                     android:textColorHint="@color/sign_hint"
                     android:textSize="16sp" />
 
-                <EditText
+                <com.sourcefuse.clickinandroid.utils.ClickInEditBox
                     android:id="@+id/edt_lname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -155,11 +155,11 @@
                     android:inputType="textCapWords"
                     android:hint="@string/txt_lname"
                     android:imeOptions="actionNext"
-
                     android:paddingBottom="5dp"
                     android:paddingLeft="8dp"
                     android:paddingRight="5dp"
                     android:paddingTop="5dp"
+                    geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"
                     android:textColor="@color/black"
                     android:textColorHint="@color/sign_hint"
                     android:textSize="16sp" />
@@ -194,7 +194,7 @@
                         android:background="@drawable/c_grey_girl" />
                 </LinearLayout>
 
-                <EditText
+                <com.sourcefuse.clickinandroid.utils.ClickInEditBox
                     android:id="@+id/edt_city"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -210,11 +210,12 @@
                     android:paddingLeft="8dp"
                     android:paddingRight="5dp"
                     android:paddingTop="5dp"
+                    geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"
                     android:textColor="@color/black"
                     android:textColorHint="@color/sign_hint"
                     android:textSize="16sp" />
 
-                <EditText
+                <com.sourcefuse.clickinandroid.utils.ClickInEditBox
                     android:id="@+id/edt_cntry"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -232,10 +233,11 @@
                     android:paddingRight="5dp"
                     android:paddingTop="5dp"
                     android:textColor="@color/black"
+                    geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"
                     android:textColorHint="@color/sign_hint"
                     android:textSize="16sp" />
 
-                <EditText
+                <com.sourcefuse.clickinandroid.utils.ClickInEditBox
                     android:id="@+id/edt_emailid"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -253,6 +255,7 @@
                     android:paddingRight="5dp"
                     android:paddingTop="5dp"
                     android:textColor="@color/black"
+                    geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"
                     android:textColorHint="@color/sign_hint"
                     android:textSize="16sp" />
 

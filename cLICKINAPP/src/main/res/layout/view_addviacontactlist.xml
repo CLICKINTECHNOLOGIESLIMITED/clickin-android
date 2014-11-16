@@ -118,8 +118,9 @@
         android:layout_height="45dp"
         android:background="@color/dark_gray"
         android:ems="10"
-        android:singleLine="true"
         android:inputType="phone"
+        android:singleLine="true"
+
         android:padding="10dp"
         android:textColor="@color/black"
         android:textSize="16sp"

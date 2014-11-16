@@ -2,15 +2,12 @@ package com.sourcefuse.clickinandroid.view;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.provider.Settings.Secure;
-import android.telephony.TelephonyManager;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -36,8 +33,7 @@ public class SignUpView extends Activity implements TextWatcher,OnClickListener 
 	private Button checkmeout;
 	private EditText phoneNo, cntrycode;
 	private AuthManager authManager ;
-	private Typeface typefaceBold;
-    private Dialog dialog ;
+
 
 
 
@@ -46,16 +42,12 @@ public class SignUpView extends Activity implements TextWatcher,OnClickListener 
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.view_signup);
-        typefaceBold = Typeface.createFromAsset(SignUpView.this.getAssets(),Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_BOLD);
 		Utils.deviceId = Secure.getString(this.getContentResolver(),Secure.ANDROID_ID);
 
 		checkmeout = (Button) findViewById(R.id.checkmeout);
 		cntrycode = (EditText) findViewById(R.id.edt_code);
 		phoneNo = (EditText) findViewById(R.id.edt_phoneno);
 		phoneNo.addTextChangedListener(this);
-		
-		cntrycode.setTypeface(typefaceBold);
-		phoneNo.setTypeface(typefaceBold);
 		checkmeout.setOnClickListener(this);
         checkmeout.setEnabled(false);
 		    ((RelativeLayout) findViewById(R.id.rl_main_signup)).setOnClickListener(new View.OnClickListener() {
@@ -96,12 +88,12 @@ public class SignUpView extends Activity implements TextWatcher,OnClickListener 
                     authManager.signUpAuth(countryCode + enterdPhoneNo, Utils.deviceId.toString());
                 } else {
 
-                    fromSignalDialog(AlertMessage.phone);
+                    Utils.fromSignalDialog(this,AlertMessage.phone);
                     //Utils.showAlert(SignUpView.this, AlertMessage.phone);
                 }
             }else{
 
-                fromSignalDialog(AlertMessage.country);
+                Utils.fromSignalDialog(this,AlertMessage.country);
                // Utils.showAlert(SignUpView.this, AlertMessage.country);
             }
 			break;
@@ -157,11 +149,11 @@ public class SignUpView extends Activity implements TextWatcher,OnClickListener 
             finish();
         } else if (getMsg.equalsIgnoreCase("SignUp False")) {
             Utils.dismissBarDialog();
-            fromSignalDialog(AlertMessage.usrAllreadyExists);
+            Utils.fromSignalDialog(this,AlertMessage.usrAllreadyExists);
            // Utils.showAlert(SignUpView.this, AlertMessage.usrAllreadyExists);
         } else if(getMsg.equalsIgnoreCase("SignUp Network Error")){
             Utils.dismissBarDialog();
-            fromSignalDialog(AlertMessage.connectionError);
+            Utils.fromSignalDialog(this,AlertMessage.connectionError);
            // Utils.showAlert(this, AlertMessage.connectionError);
         }
     }
@@ -170,7 +162,7 @@ public class SignUpView extends Activity implements TextWatcher,OnClickListener 
     // Akshit Code Starts
     public void fromSignalDialog(String str){
 
-        dialog = new Dialog(SignUpView.this);
+        final Dialog dialog = new Dialog(SignUpView.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         dialog.setContentView(R.layout.alert_check_dialogs);

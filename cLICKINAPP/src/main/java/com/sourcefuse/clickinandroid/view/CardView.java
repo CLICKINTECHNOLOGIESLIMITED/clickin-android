@@ -37,9 +37,6 @@ import de.greenrobot.event.EventBus;
 @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
 public class CardView extends FragmentActivity{
     private static final String TAG = CardView.class.getSimpleName();
-    private ViewPager viewPager;
-    //private TabsPagerAdapter mAdapter;
-    //private ActionBar actionBar;
 
     private ImageView mBackButton;
     public TabHost tabHost;
@@ -65,32 +62,11 @@ public class CardView extends FragmentActivity{
 
     }
 
-    //    public class MyTabFactory implements TabHost.TabContentFactory {
-//
-//        Context context;
-//        public MyTabFactory(Context context) {
-//            this.context = context;
-//        }
-//
-//        public View createTabContent(String tag) {
-//            View v = new View(context);
-//            v.setMinimumWidth(0);
-//            v.setMinimumHeight(0);
-//            return v;
-//        }
-//    }
+
     private  void  setView(){
         setContentView(R.layout.view_tabhost2);
 
         mBackButton = (ImageView) findViewById(R.id.iv_back_trade);
-     //   viewPager = (ViewPager) findViewById(R.id.pager);
-        //actionBar = getActionBar();
-
-//        tabadapter = new TabsPagerAdapter1(getApplicationContext(),getSupportFragmentManager(),card);
-//        viewPager.setAdapter(tabadapter);
-//        viewPager.setCurrentItem(0);
-
-
         final LinearLayout l = (LinearLayout)findViewById(R.id.Linear_layout);
         final TabWidget tabWidget = (TabWidget)findViewById(android.R.id.tabs);
 

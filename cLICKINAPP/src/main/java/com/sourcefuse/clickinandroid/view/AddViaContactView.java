@@ -30,13 +30,11 @@ import de.greenrobot.event.EventBus;
 
 public class AddViaContactView extends Activity implements View.OnClickListener,TextWatcher {
     private String TAG = PlayItSafeView.class.getSimpleName();
-	private Button backButton,getClickIn;
-	private TextView contacName;
+	private Button getClickIn;
 	private EditText phoneNo,cntry_cd;
-	String  image_uri;
 	private ImageView conIcon;
 	private AuthManager authManager ;
-    Dialog dialog ;
+
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,25 +42,17 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.view_addviacontactlist);
 		this.overridePendingTransition(R.anim.slide_in_right ,R.anim.slide_out_right);
-		contacName = (TextView) findViewById(R.id.tv_contact_name);
+
         cntry_cd = (EditText) findViewById(R.id.edt_cntry_cd);
 		phoneNo = (EditText) findViewById(R.id.edt_phone_no);
         phoneNo.addTextChangedListener(this);
-		backButton = (Button) findViewById(R.id.btn_go_back);
 		getClickIn = (Button) findViewById(R.id.btn_get_clickIn);
 		conIcon  = (ImageView) findViewById(R.id.iv_contact_icon);
-		backButton.setOnClickListener(this);
 		getClickIn.setOnClickListener(this);
-
-
-
-
-
-
 
 		try {
 			Bundle bundle = getIntent().getExtras();
-			contacName.setText("" + bundle.getString("ConName"));
+            ((TextView) findViewById(R.id.tv_contact_name)).setText("" + bundle.getString("ConName"));
             String mlPhNo = bundle.getString("ConNumber");
             String onlyPhNo = null;
             String countryCode = null;
@@ -93,7 +83,7 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
             }
             cntry_cd.setText("" + countryCode);
 			phoneNo.setText("" + onlyPhNo);
-			image_uri = bundle.getString("ConUri");
+            String 	image_uri = bundle.getString("ConUri");
              try {
                 if(!Utils.isEmptyString(image_uri)) {
                     Picasso.with(AddViaContactView.this).
@@ -128,6 +118,16 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
 
         });
 
+
+        ((Button) findViewById(R.id.btn_go_back)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                overridePendingTransition(0, R.anim.top_out);
+            }
+        });
+
+
 	}
       @Override
       public void onBackPressed() {
@@ -138,15 +138,12 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.btn_go_back:
-			finish();
-                  overridePendingTransition(0, R.anim.top_out);
-			break;
+
 		case R.id.btn_get_clickIn:
 
          if(phoneNo.getText().toString().length()>=5) {
+
           String mPhNo = cntry_cd.getText().toString().trim()+phoneNo.getText().toString().trim();
-		  
             ProfileManager prfManager= ModelManager.getInstance().getProfileManager();
             if(prfManager.currClickersPhoneNums.contains(mPhNo)){
                 authManager = ModelManager.getInstance().getAuthorizationManager();
@@ -159,11 +156,9 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
                 smsIntent.setType("vnd.android-dir/mms-sms");
                 startActivity(smsIntent);
             }
- }else {
+         }else {
                     fromSignalDialog(AlertMessage.phone);
                 }
-
-
 			break;
 		}
 		
@@ -229,7 +224,7 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
     // Akshit Code Starts
     public void fromSignalDialog(String str){
 
-        dialog = new Dialog(AddViaContactView.this);
+        final Dialog dialog = new Dialog(AddViaContactView.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         dialog.setContentView(R.layout.alert_check_dialogs);

@@ -7,9 +7,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Matrix;
 import android.graphics.Typeface;
-import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
@@ -46,7 +44,6 @@ import com.sourcefuse.clickinandroid.view.adapter.SimpleSectionedListAdapter1;
 import com.sourcefuse.clickinapp.R;
 import com.squareup.picasso.Picasso;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -133,8 +130,6 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 
         ActivityManager am = (ActivityManager) this.getSystemService(ACTIVITY_SERVICE);
         List< ActivityManager.RunningTaskInfo > taskInfo = am.getRunningTasks(1);
-      //  Log.d("topActivity", "CURRENT Activity ::"
-        //        + taskInfo.get(0).topActivity.getClassName());
         ComponentName componentInfo = taskInfo.get(0).topActivity;
         String className=componentInfo.getClassName();
         if(className.equalsIgnoreCase("com.sourcefuse.clickinandroid.view.ChatRecordView")){
@@ -229,10 +224,6 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 
         userName.setText(authManager.getUserName());
         userPic.setScaleType(ScaleType.FIT_XY);
-     /*   Picasso.with(ClickInBaseView.this).load(authManager.getUserPic())
-                .placeholder(R.drawable.default_profile)
-                .error(R.drawable.default_profile)
-                .into(userPic);*/
         String dtails = "";
         try {
             try {
@@ -681,31 +672,33 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
                 } else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().matches("guy")) {
                     dtails = "Male";
                 }
-            }catch (Exception e){}
+            } catch (Exception e) {
+            }
 
-        }catch (Exception e){}
+        } catch (Exception e) {
+        }
 
-        if(authManager.isMenuUserInfoFlag()) {
-            Log.e("Inside if" ,"THis time Control is in If <><><><><><><><><");
+        if (authManager.isMenuUserInfoFlag()) {
+            Log.e("Inside if", "THis time Control is in If <><><><><><><><><");
             userName.setText(authManager.getUserName());
             userPic.setScaleType(ScaleType.FIT_XY);
 
             try {
-                Uri tempUri=authManager.getUserImageUri();
-                if(tempUri!=null){
+                Uri tempUri = authManager.getUserImageUri();
+                if (tempUri != null) {
                     imageBitmap = authManager.getUserbitmap();
-                    if(imageBitmap!=null)
+                    if (imageBitmap != null)
                         userPic.setImageBitmap(imageBitmap);
-                    else{
-                        try{
-                            if(dtails.equalsIgnoreCase("Male")){
+                    else {
+                        try {
+                            if (dtails.equalsIgnoreCase("Male")) {
                                 Picasso.with(this)
                                         .load(authManager.getUserPic())
                                         .skipMemoryCache()
 
                                         .error(R.drawable.male_user)
                                         .into(userPic);
-                            }else if(dtails.equalsIgnoreCase("Female")) {
+                            } else if (dtails.equalsIgnoreCase("Female")) {
                                 Picasso.with(this)
                                         .load(authManager.getUserPic())
                                         .skipMemoryCache()
@@ -714,21 +707,21 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
                                         .into(userPic);
                             }
 
-                        }catch(Exception e){
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
 
-                }else{
-                    try{
-                        if(dtails.equalsIgnoreCase("Male")){
+                } else {
+                    try {
+                        if (dtails.equalsIgnoreCase("Male")) {
                             Picasso.with(this)
                                     .load(authManager.getUserPic())
                                     .skipMemoryCache()
 
                                     .error(R.drawable.male_user)
                                     .into(userPic);
-                        }else if(dtails.equalsIgnoreCase("Female")) {
+                        } else if (dtails.equalsIgnoreCase("Female")) {
                             Picasso.with(this)
                                     .load(authManager.getUserPic())
                                     .skipMemoryCache()
@@ -737,7 +730,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
                                     .into(userPic);
                         }
 
-                    }catch(Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
 
@@ -747,24 +740,24 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
                 e.printStackTrace();
             }
             authManager.setMenuUserInfoFlag(false);
-        }else{
-            Log.e("Inside Else " ,"THis time control is in Else <><><><><><><><><><>");
+        } else {
+            Log.e("Inside Else ", "THis time control is in Else <><><><><><><><><><>");
             try {
-                Uri tempUri=authManager.getUserImageUri();
-                if(tempUri!=null){
+                Uri tempUri = authManager.getUserImageUri();
+                if (tempUri != null) {
                     imageBitmap = authManager.getUserbitmap();
-                    if(imageBitmap!=null)
+                    if (imageBitmap != null)
                         userPic.setImageBitmap(imageBitmap);
-                    else{
-                        try{
-                            if(dtails.equalsIgnoreCase("Male")){
+                    else {
+                        try {
+                            if (dtails.equalsIgnoreCase("Male")) {
                                 Picasso.with(this)
                                         .load(authManager.getUserPic())
                                         .skipMemoryCache()
 
                                         .error(R.drawable.male_user)
                                         .into(userPic);
-                            }else if(dtails.equalsIgnoreCase("Female")) {
+                            } else if (dtails.equalsIgnoreCase("Female")) {
                                 Picasso.with(this)
                                         .load(authManager.getUserPic())
                                         .skipMemoryCache()
@@ -773,21 +766,21 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
                                         .into(userPic);
                             }
 
-                        }catch(Exception e){
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
 
-                }else{
-                    try{
-                        if(dtails.equalsIgnoreCase("Male")){
+                } else {
+                    try {
+                        if (dtails.equalsIgnoreCase("Male")) {
                             Picasso.with(this)
                                     .load(authManager.getUserPic())
                                     .skipMemoryCache()
 
                                     .error(R.drawable.male_user)
                                     .into(userPic);
-                        }else if(dtails.equalsIgnoreCase("Female")) {
+                        } else if (dtails.equalsIgnoreCase("Female")) {
                             Picasso.with(this)
                                     .load(authManager.getUserPic())
                                     .skipMemoryCache()
@@ -796,7 +789,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
                                     .into(userPic);
                         }
 
-                    }catch(Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
 
@@ -817,6 +810,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 
 
 
+    
     }
 
     @Override

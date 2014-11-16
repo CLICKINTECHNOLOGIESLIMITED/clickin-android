@@ -19,7 +19,6 @@ import com.sourcefuse.clickinapp.R;
 public class TermUseView extends Activity implements View.OnClickListener
 {
     WebView webView;
-    private Typeface typefaceBold;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,9 +26,6 @@ public class TermUseView extends Activity implements View.OnClickListener
         setContentView(R.layout.view_term_use);
         this.overridePendingTransition(R.anim.slide_in_right ,R.anim.slide_out_right);
         findViewById(R.id.iv_back_noti).setOnClickListener(this);
-
-        typefaceBold = Typeface.createFromAsset(TermUseView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_BOLD);
-        ((TextView) findViewById(R.id.tv_profile_txt)).setTypeface(typefaceBold);
 
         webView=(WebView)findViewById(R.id.web_term_view);
         webView.getSettings().setAppCacheEnabled(false);

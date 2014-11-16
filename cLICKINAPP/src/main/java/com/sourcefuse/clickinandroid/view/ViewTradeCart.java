@@ -9,6 +9,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -30,7 +31,7 @@ public class ViewTradeCart extends Activity implements View.OnClickListener
     TextView trd_clicks_top,trd_clicks_bottom;
     TextView trone,trtwo,trthree,trfour,trfive,tv_about_message;
     RelativeLayout layout ;
-    String clicks,cardTitle,cardDiscription,card_id, textCardH ;
+    String clicks,cardTitle,card_id;
     String url ;
     private static final String TAG = "ViewTradeCart";
 
@@ -65,6 +66,23 @@ public class ViewTradeCart extends Activity implements View.OnClickListener
             }
         });
 
+        // akshit code for closing keypad if touched anywhere outside
+        ((LinearLayout) findViewById(R.id.linear_layout_root_viewtradecard)).setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+
+                InputMethodManager imm = (InputMethodManager) getSystemService(
+                        INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(card_text.getWindowToken(), 0);
+
+
+            }
+
+        });
+
+//ends
+
         trone = (TextView)findViewById(R.id.btn_one);
         trtwo = (TextView)findViewById(R.id.btn_two);
         trthree = (TextView)findViewById(R.id.btn_three);
@@ -83,15 +101,11 @@ public class ViewTradeCart extends Activity implements View.OnClickListener
         btnPlay = (ImageView)findViewById(R.id.btn_play);
         btnPlay.setOnClickListener(this);
 
-        Log.e(TAG, "mjisjciencn");
-
             try {
                 Intent intent = getIntent();
                 if (null != intent) {
                     forCounter = intent.getExtras().getBoolean("ForCounter");
                     if (forCounter) {
-                     //   ((ImageView)findViewById(R.id.trade_image)).setImageResource(R.drawable.c_custom_card);
-
                         card_text.setVisibility(View.GONE);
                         trd_clicks_bottom.setText(intent.getStringExtra("cardClicks"));
                         trd_clicks_top.setText(intent.getStringExtra("cardClicks"));
@@ -99,16 +113,11 @@ public class ViewTradeCart extends Activity implements View.OnClickListener
                         cardTitle = intent.getStringExtra("Title");
                         Log.e(TAG,""+cardTitle);
                         card_id = intent.getStringExtra("card_id");
-
-
-
-
                         ((TextView)findViewById(R.id.card_heading)).setVisibility(View.VISIBLE);
                         ((TextView)findViewById(R.id.card_heading)).setText(cardTitle);
                         url = intent.getStringExtra("Url");
                         card_text.setText(cardTitle);
                     }else{
-                      //  ((ImageView)findViewById(R.id.trade_image)).setImageResource(R.drawable.c_pinkxhdpi);
                         card_text.setVisibility(View.VISIBLE);
                         ((TextView)findViewById(R.id.card_heading)).setVisibility(View.GONE);
                     }
@@ -139,25 +148,6 @@ public class ViewTradeCart extends Activity implements View.OnClickListener
             @Override
             public void afterTextChanged(Editable editable) {
 
-
-//                TextWatcher textWatcher1 = null;
-//               try {
-//                   String s = card_text.getText().toString();
-//
-//                   if (s.length() % 14 == 0 && s.length() > 0) {
-//
-//                       s = s + "\n";
-//
-//                       card_text.removeTextChangedListener(textWatcher1);
-//
-//                       card_text.setText(s);
-//
-//                       card_text.addTextChangedListener(textWatcher1);
-//                   }
-//
-//               }catch (Exception e){
-//                   e.printStackTrace();
-//               }
             }
         });
 

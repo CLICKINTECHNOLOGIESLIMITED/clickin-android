@@ -33,11 +33,7 @@ public class PlayItSafeView extends Activity implements View.OnClickListener,Tex
     private static final String TAG = PlayItSafeView.class.getSimpleName();
     private Button done;
     private EditText password,rePassword;
-   // private String emailid ,phone,userToken;
-    public static Activity act;
-    public static Context context;
     private AuthManager authManager ;
-    private Typeface typeface,typefaceBold;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +42,6 @@ public class PlayItSafeView extends Activity implements View.OnClickListener,Tex
         setContentView(R.layout.view_playitsafe);
         this.overridePendingTransition(R.anim.slide_in_right ,R.anim.slide_out_right);
         authManager = ModelManager.getInstance().getAuthorizationManager();
-        typeface = Typeface.createFromAsset(PlayItSafeView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
-        typefaceBold = Typeface.createFromAsset(PlayItSafeView.this.getAssets(),Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_BOLD);
-
-
        
         done = (Button) findViewById(R.id.btn_done_play);
         password = (EditText) findViewById(R.id.edt_password);
@@ -57,16 +49,7 @@ public class PlayItSafeView extends Activity implements View.OnClickListener,Tex
         password.addTextChangedListener(this);
         rePassword.addTextChangedListener(this);
 
-        password.setTypeface(typefaceBold);
-        rePassword.setTypeface(typefaceBold);
-
         done.setOnClickListener(this);
-        
-//        Utils.prefrences = getSharedPreferences(context.getString(R.string.PREFS_NAME), MODE_PRIVATE);
-//        phone = Utils.prefrences.getString(Constants.PREFS_VALUE_PHONE, "");
-//        userToken = Utils.prefrences.getString(Constants.PREFS_VALUE_USER_TOKEN, "");
-//        emailid =Utils.prefrences.getString(Constants.PREFS_VALUE_USER_EMAILID, "");
-
 
         ((RelativeLayout) findViewById(R.id.rl_playitsafe_action)).setOnClickListener(new View.OnClickListener() {
 
@@ -127,35 +110,15 @@ public class PlayItSafeView extends Activity implements View.OnClickListener,Tex
 			authManager = ModelManager.getInstance().getAuthorizationManager();
 			if (message.equalsIgnoreCase("PlayItSafe True")) {
                 switchView();
-				//new FetchContactFromPhone(PlayItSafeView.this).getClickerList(authManager.getPhoneNo(),authManager.getUsrToken());
-			//	getUserDetails();
 			} else if (message.equalsIgnoreCase("PlayItSafe False")) {
 				Utils.dismissBarDialog();
                 alertDialog(authManager.getMessage());
-			//	Utils.showAlert(PlayItSafeView.this, authManager.getMessage());
 			} else if(message.equalsIgnoreCase("PlayItSafe Network Error")){
 				Utils.dismissBarDialog();
                 alertDialog(AlertMessage.connectionError);
-				//Utils.showAlert(act, AlertMessage.connectionError);
-			}/*else if (message.equalsIgnoreCase("ProfileInfo True")) {
-				Utils.dismissBarDialog();
-				switchView();
-			} else if (message.equalsIgnoreCase("ProfileInfo False")) {
-				Utils.dismissBarDialog();
-				Utils.showAlert(PlayItSafeView.this, authManager.getMessage());
-			} else if(message.equalsIgnoreCase("ProfileInfo Network Error")){
-				Utils.dismissBarDialog();
-				Utils.showAlert(act, AlertMessage.connectionError);
-				
-			}*/
+			}
 			
 		}
-    
-  /*  private void getUserDetails(){
-    	authManager = ModelManager.getInstance().getAuthorizationManager();
-        authManager.getProfileInfo(null,authManager.getPhoneNo(), authManager.getUsrToken());
-
-    }*/
 	private void switchView() {
 		Intent intent = new Intent(PlayItSafeView.this, AddSomeoneView.class);
         intent.putExtra("FromOwnProfile", false);
@@ -178,11 +141,9 @@ public class PlayItSafeView extends Activity implements View.OnClickListener,Tex
                         authManager.playItSafeAuth(pwd, authManager.getPhoneNo(), authManager.getEmailId(), authManager.getUsrToken());
                     } else {
                         alertDialog(AlertMessage.MATCHPASSWORD);
-                    //    Utils.showAlert(PlayItSafeView.this, AlertMessage.MATCHPASSWORD);
                     }
                 }else {
                     alertDialog(AlertMessage.PASSWORDLENGHT);
-                    //Utils.showAlert(PlayItSafeView.this, AlertMessage.PASSWORDLENGHT);
                 }
                 break;
         }

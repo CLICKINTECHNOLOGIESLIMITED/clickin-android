@@ -31,13 +31,6 @@ import com.sourcefuse.clickinapp.R;
 
 import de.greenrobot.event.EventBus;
 
-/**
- * This is an example usage of the AnimatedExpandableListView class.
- * <p/>
- * It is an activity that holds a listview which is populated with 100 groups
- * where each group has from 1 to 100 children (so the first group will have one
- * child, the second will have two children and so on...).
- */
 public class SettingView extends Activity implements View.OnClickListener {
       private ImageView backarrow;
       private static final String TAG = ChatRecordView.class.getSimpleName();
@@ -48,10 +41,8 @@ public class SettingView extends Activity implements View.OnClickListener {
       int height;
       private Typeface typefacemedium;
       private Typeface typefaceBold;
-
       private AuthManager authManager;
       private SettingManager settingManager;
-
       private UiLifecycleHelper uiHelper;
 
       @Override

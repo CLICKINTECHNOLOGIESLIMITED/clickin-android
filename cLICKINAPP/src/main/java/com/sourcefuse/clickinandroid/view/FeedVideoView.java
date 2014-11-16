@@ -32,9 +32,8 @@ import de.greenrobot.event.EventBus;
  */
 public class FeedVideoView extends Activity {
 
-    ImageView menu;
+    //ImageView menu;
     String url;
-    // Declare variables
     ProgressDialog pDialog;
     VideoView videoview;
 

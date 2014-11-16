@@ -63,7 +63,6 @@ public class FollowingListView extends Activity implements
             authManager = ModelManager.getInstance().getAuthorizationManager();
             typeface = Typeface.createFromAsset(FollowingListView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
             profileName.setTypeface(typeface, typeface.BOLD);
-            /*tagScreen.setTypeface(typeface);*/
 
 
             ((TextView) findViewById(R.id.tv_following_msgI)).setTypeface(typeface, typeface.BOLD);
@@ -133,7 +132,6 @@ public class FollowingListView extends Activity implements
                   EventBus.getDefault().unregister(this);
             }
       }
-
       public void onEventMainThread(String getMsg) {
             Log.d(TAG, "onEventMainThread->" + getMsg);
             authManager = ModelManager.getInstance().getAuthorizationManager();
@@ -149,7 +147,5 @@ public class FollowingListView extends Activity implements
                   Utils.showAlert(FollowingListView.this, AlertMessage.connectionError);
                   Log.d("3", "message->" + getMsg);
             }
-
       }
-
 }

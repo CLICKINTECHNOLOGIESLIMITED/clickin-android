@@ -80,7 +80,7 @@ public class ContactAdapter extends ArrayAdapter<ContactBean> {
 		public void filter(String charText) {
 			charText = charText.toLowerCase(Locale.getDefault());
 			refreshList.clear();
-           // Collections.sort(Utils.itData);
+
 			if (charText.length() == 0) {
 				conData.addAll(Utils.itData);
 			} 
@@ -93,7 +93,7 @@ public class ContactAdapter extends ArrayAdapter<ContactBean> {
 					{
 
                         refreshList.add(wp);
-                      //  Collections.sort(refreshList);
+
 					}
 				}
 			}

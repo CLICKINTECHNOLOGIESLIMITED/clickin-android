@@ -33,25 +33,17 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 
-public class UserProfileView extends ClickInBaseView implements View.OnClickListener {
+public class
+        UserProfileView extends ClickInBaseView implements View.OnClickListener {
     private static final String TAG = UserProfileView.class.getSimpleName();
 	private Button follower, following,btnAddSomeone,EditProfile;
 	private TextView profileHeader;
 	private ListView mUserRelationlistView;
 	private ImageView userimage;
-	//private ImageView menu,notification;
 	public UserRelationAdapter adapter;
 	private AuthManager authManager;
 	private RelationManager relationManager;
-    private ProfileManager profileManager;
-    private Uri imageuri ;
-
-	
-
 	private TextView name,userdetails;
-	
-	//private boolean fromSignup;
-	//private boolean othersUser = false;
 	public String phone;
     private ClickInNotificationManager notificationMngr;
 	private Typeface typefaceBold,typefaceMedium;
@@ -226,22 +218,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         follower.setText(Html.fromHtml(text));
         String textfollowing = "<font color=#f29691>" + getResources().getString(R.string.txt_following) + "</font> <font color=#cccccc>" + authManager.getFollowing() + "</font>";
         following.setText(Html.fromHtml(textfollowing));
-     /*   try{
-            if(dtails.equalsIgnoreCase("Male")){
-                Picasso.with(UserProfileView.this)
-                        .load(authManager.getUserPic())
-                        .skipMemoryCache()
-                        .error(R.drawable.female_crt)
-                        .into(userimage);
-            }else if(dtails.equalsIgnoreCase("Female")) {
-                Picasso.with(UserProfileView.this)
-                        .load(authManager.getUserPic())
-                        .skipMemoryCache()
-                        .error(R.drawable.female_crt)
-                        .into(userimage);
-            }
 
-		}catch(Exception e){}*/
 
         //akshit code start for image and default image at userprofile
         try {
@@ -295,9 +272,6 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
 
                     } else// if gender is null set default
                     {
-//                        Picasso.with(UserProfileView.this).load(imageBitmap.toString())
-//                                .error(R.drawable.male_user)
-//                                .into(userimage);
                       //  Log.e("Default Esle->","DEfault Else->");
                         userimage.setImageResource(R.drawable.male_user);
                     }
@@ -426,7 +400,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
     @Override
 	public void onClick(View v) {
         authManager = ModelManager.getInstance().getAuthorizationManager();
-        profileManager = ModelManager.getInstance().getProfileManager();
+        ProfileManager profileManager = ModelManager.getInstance().getProfileManager();
 		switch (v.getId()) {
 		case R.id.btn_follower:
             Intent intentFollower = new Intent(UserProfileView.this,FollowerList.class);

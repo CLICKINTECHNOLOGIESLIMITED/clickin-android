@@ -58,7 +58,7 @@
         android:background="@drawable/white_border"
         android:padding="15dp">
 
-        <EditText
+        <com.sourcefuse.clickinandroid.utils.ClickInEditBox
             android:id="@+id/edt_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -69,11 +69,12 @@
             android:inputType="textPassword"
             android:padding="10dp"
             android:textColor="@color/black"
+            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
             android:textColorHint="@color/sign_hint"
             android:textSize="16sp">
 
             <requestFocus />
-        </EditText>
+        </com.sourcefuse.clickinandroid.utils.ClickInEditBox>
     </RelativeLayout>
 
     <RelativeLayout
@@ -86,7 +87,7 @@
         android:background="@drawable/white_border"
         android:padding="15dp">
 
-        <EditText
+        <com.sourcefuse.clickinandroid.utils.ClickInEditBox
             android:id="@+id/edt_re_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -97,7 +98,8 @@
             android:padding="10dp"
             android:textColor="@color/black"
             android:textColorHint="@color/sign_hint"
-            android:textSize="16sp"></EditText>
+            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
+            android:textSize="16sp"></com.sourcefuse.clickinandroid.utils.ClickInEditBox>
 
 
     </RelativeLayout>

@@ -91,18 +91,19 @@
                     android:textColor="@color/dark_gray"
                     android:textSize="10sp"></TextView>
 
-                <EditText
+
+                <com.sourcefuse.clickinandroid.utils.ClickInEditBox
                     android:id="@+id/edt_cntry_cd"
-                    android:layout_width="fill_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="45dp"
                     android:background="@color/dark_gray"
                     android:maxLines="1"
                     android:ems="4"
-
                     android:inputType="phone"
                     android:textColor="@color/black"
                     android:textSize="16sp"
-                    android:textStyle="bold"></EditText>
+                    geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
+                    android:textStyle="bold"/>
 
                 </LinearLayout>
 
@@ -112,7 +113,7 @@
                 android:orientation="horizontal"
                 android:layout_marginTop="21.2dp">
 
-                <EditText
+                <com.sourcefuse.clickinandroid.utils.ClickInEditBox
                     android:id="@+id/edt_get_ph_no"
                     android:layout_width="wrap_content"
                     android:layout_height="45dp"
@@ -125,48 +126,11 @@
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="bold">
-
                     <requestFocus />
-                </EditText>
+             </com.sourcefuse.clickinandroid.utils.ClickInEditBox>
                 </LinearLayout>
-            <!--<TextView-->
-                <!--android:id="@+id/edt_text_cntry_cd"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginBottom="2dp"-->
-                <!--android:text="@string/txt_cntrycode"-->
-                <!--android:textColor="@color/topshade"-->
-                <!--android:textSize="15sp"></TextView>-->
 
-            <!--<EditText-->
-                <!--android:id="@+id/edt_cntry_cd"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="45dp"-->
-                <!--android:background="@color/dark_gray"-->
-                <!--android:maxLines="1"-->
-                <!--android:ems="4"-->
-                <!---->
-                <!--android:inputType="phone"-->
-                <!--android:textColor="@color/black"-->
-                <!--android:textSize="16sp"-->
-                <!--android:textStyle="bold"></EditText>-->
 
-            <!--<EditText-->
-                <!--android:id="@+id/edt_get_ph_no"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="45dp"-->
-                <!--android:layout_marginLeft="4dp"-->
-                <!--android:background="@color/dark_gray"-->
-                <!--android:ems="10"-->
-                <!--android:maxLines="1"-->
-                <!--android:inputType="phone"-->
-                <!--android:padding="10dp"-->
-                <!--android:textColor="@color/black"-->
-                <!--android:textSize="16sp"-->
-                <!--android:textStyle="bold">-->
-
-                <!--<requestFocus />-->
-            <!--</EditText>-->
         </LinearLayout>
 
         <RelativeLayout

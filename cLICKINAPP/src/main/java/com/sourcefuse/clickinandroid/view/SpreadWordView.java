@@ -43,14 +43,9 @@ import de.greenrobot.event.EventBus;
 public class SpreadWordView extends Activity implements OnClickListener {
 
     private Button phonebook, facebook;
-
-    //private ImageView toboard;
     private QBPrivateChat chat;
     Dialog dialog ;
-
-
     private AuthManager authManager;
-    public static  ArrayList<String> selectedPhoneArray = new ArrayList<String>();
     private ProfileManager profilemanager;
 
 
@@ -75,21 +70,22 @@ public class SpreadWordView extends Activity implements OnClickListener {
 
 
 
-        authManager = ModelManager.getInstance().getAuthorizationManager();
+        AuthManager authManager = ModelManager.getInstance().getAuthorizationManager();
         EventBus.getDefault().register(this);
         Utils.groupSms.clear();
-        Utils.launchBarDialog(this);
-        new FetchContactFromPhone(SpreadWordView.this).getClickerList(authManager.getPhoneNo(),authManager.getUsrToken(),1);
+        //Utils.launchBarDialog(this);
+      //  new FetchContactFromPhone(SpreadWordView.this).getClickerList(authManager.getPhoneNo(),authManager.getUsrToken(),1);
         //   setlist();
+        setlist();
 
     }
 
-    public void setlist() {
-        profilemanager = ModelManager.getInstance().getProfileManager();
-        ListView listView = (ListView) findViewById(R.id.list_current_clickers);
 
+	public void setlist() {
+        ProfileManager  profilemanager = ModelManager.getInstance().getProfileManager();
+        ListView listView = (ListView) findViewById(R.id.list_current_clickers);
         SpreadWordAdapter adapter = new SpreadWordAdapter(SpreadWordView.this,R.layout.row_invitefriend, profilemanager.spreadTheWorldList);
-        listView.setAdapter(adapter);
+		listView.setAdapter(adapter);
 
     }
 
@@ -119,6 +115,7 @@ public class SpreadWordView extends Activity implements OnClickListener {
             EventBus.getDefault().unregister(this);
         }
     }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -132,6 +129,7 @@ public class SpreadWordView extends Activity implements OnClickListener {
                 Utils.launchBarDialog(SpreadWordView.this);
                 if (Utils.isConnectingToInternet(SpreadWordView.this)) {
                     Session session = Session.getActiveSession();
+
                     if (session == null) {
                         if (session == null) {
                             session = new Session(this);
@@ -241,7 +239,7 @@ public class SpreadWordView extends Activity implements OnClickListener {
 
     private void sendRequestDialogForFriendList() {
         try {
-            authManager = ModelManager.getInstance().getAuthorizationManager();
+            AuthManager authManager = ModelManager.getInstance().getAuthorizationManager();
             Bundle params = new Bundle();
             params.putString("message", authManager.getUserName() + AlertMessage.SREADTHEWORDMSGON);
             WebDialog requestsDialog = (
@@ -298,22 +296,20 @@ public class SpreadWordView extends Activity implements OnClickListener {
         } else if(message.equalsIgnoreCase("CheckFriend Network Error")){
             Utils.dismissBarDialog();
             fromSignalDialog(AlertMessage.connectionError);
-            //  Utils.showAlert(SpreadWordView.this, AlertMessage.connectionError);
+
         }
     }
 
     // Akshit Code Starts
     public void fromSignalDialog(String str){
 
-        dialog = new Dialog(SpreadWordView.this);
+       final Dialog dialog = new Dialog(SpreadWordView.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         dialog.setContentView(R.layout.alert_check_dialogs);
         dialog.setCancelable(false);
         TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
         msgI.setText(str);
-
-
         Button dismiss = (Button) dialog.findViewById(R.id.coolio);
         dismiss.setOnClickListener(new OnClickListener() {
             @Override

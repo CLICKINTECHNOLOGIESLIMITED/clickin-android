@@ -24,9 +24,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
+
 import java.util.Comparator;
 import java.util.Iterator;
-
 import de.greenrobot.event.EventBus;
 
 public class FetchContactFromPhone {
@@ -78,6 +78,13 @@ public class FetchContactFromPhone {
 					Cursor pCur = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,null,ContactsContract.CommonDataKinds.Phone.CONTACT_ID+ " = ?", new String[] { id }, null);
 					while (pCur.moveToNext()) {
 						phone = pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                        try {
+                            String temp=phone.substring(1);
+                            int ph = Integer.parseInt(temp);
+                        }catch(Exception e){
+                            break;
+                        }
+
                          authManager=ModelManager.getInstance().getAuthorizationManager();
 
 
@@ -103,32 +110,30 @@ public class FetchContactFromPhone {
 						 mcantactBean.setConNumber("+91" + mPhone.substring((l - 10)));
 						 }*/
 
+                        if (image_uri != null) {
+                            try {
+                                // bitmap =
+                                // MediaStore.Images.Media.getBitmap(this.getContentResolver(),Uri.parse(image_uri));
+                                // System.out.println(bitmap);
+                                mcantactBean.setConUri(image_uri);
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        Utils.contactMap.put(key,mcantactBean);
+
+                        Utils.itData.add(mcantactBean);
+
 					}
 					pCur.close();
 
-				if (image_uri != null) {
-					try {
-						// bitmap =
-						// MediaStore.Images.Media.getBitmap(this.getContentResolver(),Uri.parse(image_uri));
-						// System.out.println(bitmap);
-						mcantactBean.setConUri(image_uri);
-
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-
-                Utils.contactMap.put(key,mcantactBean);
-
-				Utils.itData.add(mcantactBean);
 
                 }
 			}
 		}
 
         Collections.sort(Utils.itData,FetchContactFromPhone.NameComparator);
-
-
     }
 
 	/*private class AsyncTaskRunner extends AsyncTask<String, String, String> {
@@ -267,11 +272,8 @@ public class FetchContactFromPhone {
                                     contactBean.setConNumber(cb.getConNumber());
                                     contactBean.setChecked(false);
                                     contactBean.setConUri(cb.getConUri());
-
                                     profilemanager.spreadTheWorldList.add(contactBean);
-
                                 }
-
                             }
                         }
                         Collections.sort(profilemanager.spreadTheWorldList,FetchContactFromPhone.NameComparator);

@@ -34,10 +34,7 @@ public class ImageViewer extends Activity {
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
             }
         });
-
-
         imageView = (ImageView)findViewById(R.id.chat_image);
-
         Intent intent = getIntent();
         image = intent.getStringExtra("Url");
         Picasso.with(this).load(image).into(imageView);
