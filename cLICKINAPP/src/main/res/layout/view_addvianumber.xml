@@ -118,7 +118,7 @@
                     android:layout_height="45dp"
                     android:layout_marginLeft="4dp"
                     android:background="@color/dark_gray"
-                    android:ems="10"
+                    android:ems="11"
                     android:maxLines="1"
                     android:inputType="phone"
                     android:padding="10dp"
