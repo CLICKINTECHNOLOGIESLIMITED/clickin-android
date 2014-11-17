@@ -91,6 +91,8 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 
 
 
+
+
     }
 
     @SuppressWarnings("static-access")
@@ -147,14 +149,10 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
     }
     /// Left Menu End
 
-
-
-
-
-
-
     public void addMenu(boolean setData) {
         // TODO Auto-generated method stub
+
+
         slidemenu = new SlidingMenu(this);
         slidemenu.setMode(SlidingMenu.LEFT_RIGHT);
         slidemenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
@@ -186,6 +184,24 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         //slidemenu.setSecondaryShadowDrawable(R.drawable.shadow);
         rightMenuElements();
         setNotificationList();
+
+        // akshit code for closing keypad if touched anywhere outside
+        ((RelativeLayout) findViewById(R.id.relative_layout_root_menuview)).setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+
+                InputMethodManager imm = (InputMethodManager) getSystemService(
+                        INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
+
+
+            }
+
+        });
+
+//ends
+
 
 
     }

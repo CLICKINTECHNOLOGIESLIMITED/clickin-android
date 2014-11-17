@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -22,7 +21,6 @@ import com.quickblox.module.chat.xmpp.QBPrivateChat;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.ProfileManager;
-import com.sourcefuse.clickinandroid.model.bean.ContactBean;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.FetchContactFromPhone;
@@ -31,8 +29,6 @@ import com.sourcefuse.clickinandroid.view.adapter.SpreadWordAdapter;
 import com.sourcefuse.clickinapp.R;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.ListIterator;
 
 import de.greenrobot.event.EventBus;
@@ -195,7 +191,7 @@ public class SpreadWordView extends Activity implements OnClickListener {
 
 
                 }else{
-                    fromSignalDialog(AlertMessage.GROUPSMSMSG);
+                    Utils.fromSignalDialog(this,AlertMessage.GROUPSMSMSG);
                     //Utils.showAlert(SpreadWordView.this, AlertMessage.GROUPSMSMSG);
                 }
                 break;
@@ -297,32 +293,10 @@ public class SpreadWordView extends Activity implements OnClickListener {
 
         } else if(message.equalsIgnoreCase("CheckFriend Network Error")){
             Utils.dismissBarDialog();
-            fromSignalDialog(AlertMessage.connectionError);
+            Utils.fromSignalDialog(this,AlertMessage.connectionError);
             //  Utils.showAlert(SpreadWordView.this, AlertMessage.connectionError);
         }
     }
 
-    // Akshit Code Starts
-    public void fromSignalDialog(String str){
 
-        dialog = new Dialog(SpreadWordView.this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        dialog.setContentView(R.layout.alert_check_dialogs);
-        dialog.setCancelable(false);
-        TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
-        msgI.setText(str);
-
-
-        Button dismiss = (Button) dialog.findViewById(R.id.coolio);
-        dismiss.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                dialog.dismiss();
-
-            }
-        });
-        dialog.show();
-    }
-// Ends
 }

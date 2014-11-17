@@ -13,7 +13,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
@@ -161,11 +160,11 @@ public class AddViaNumberView extends Activity implements View.OnClickListener,T
                     FetchContactFromPhone.checkNumWithClickInDb(mPhNo);
 
                 }else{
-                    fromSignalDialog(AlertMessage.phone);
+                    Utils.fromSignalDialog(this,AlertMessage.phone);
                 }
 
             }else{
-                fromSignalDialog(AlertMessage.country);
+                Utils.fromSignalDialog(this,AlertMessage.country);
             }
 
 			break;
@@ -201,12 +200,12 @@ public class AddViaNumberView extends Activity implements View.OnClickListener,T
 					//switchView();
 				} else if (message.equalsIgnoreCase("RequestSend False")) {
 					Utils.dismissBarDialog();
-                    fromSignalDialog(authManager.getMessage());
+                    Utils.fromSignalDialog(this,authManager.getMessage());
                     //Utils.showAlert(AddViaNumberView.this, authManager.getMessage());
                    // finish();
 				} else if(message.equalsIgnoreCase("RequestSend Network Error")){
 					Utils.dismissBarDialog();
-				      fromSignalDialog(AlertMessage.connectionError);
+				      Utils.fromSignalDialog(this,AlertMessage.connectionError);
 				//	Utils.showAlert(AddViaNumberView.this, AlertMessage.connectionError);
                     //finish();
 				}else if(message.equalsIgnoreCase("Num Not Registered")){
@@ -221,7 +220,7 @@ public class AddViaNumberView extends Activity implements View.OnClickListener,T
                     authManager.sendNewRequest(authManager.getPhoneNo(), mPhNo, authManager.getUsrToken());
                 }else if(message.equalsIgnoreCase("Num Check False")){
                     Utils.dismissBarDialog();
-                    fromSignalDialog(authManager.getMessage());
+                    Utils.fromSignalDialog(this,authManager.getMessage());
                 }
 		}
 
@@ -247,28 +246,6 @@ public class AddViaNumberView extends Activity implements View.OnClickListener,T
 //        }
 //        return CountryZipCode;
 //    }
-    // Akshit Code Starts
-    public void fromSignalDialog(String str){
-
-        dialog = new Dialog(AddViaNumberView.this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        dialog.setContentView(R.layout.alert_check_dialogs);
-        dialog.setCancelable(false);
-        TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
-        msgI.setText(str);
-
-
-        Button dismiss = (Button) dialog.findViewById(R.id.coolio);
-        dismiss.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                dialog.dismiss();
-
-            }
-        });
-        dialog.show();
-    }
 
     @Override
     public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {

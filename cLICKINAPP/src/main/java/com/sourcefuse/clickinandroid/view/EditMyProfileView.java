@@ -279,7 +279,8 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
                             Log.e(TAG, "2" + e.toString());
                         }
                     }else {
-                        Utils.showAlert(EditMyProfileView.this, AlertMessage.vEmailid);
+                        Utils.fromSignalDialog(this,AlertMessage.vEmailid);
+                       // Utils.showAlert(EditMyProfileView.this, AlertMessage.vEmailid);
                     }
                 }
 
@@ -349,13 +350,16 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
     public boolean updateProfileValidation() {
 
         if (myName.getText().toString().length() < 1) {
-            Utils.showAlert(EditMyProfileView.this, AlertMessage.fname);
+            Utils.fromSignalDialog(this,AlertMessage.fname);
+            //Utils.showAlert(EditMyProfileView.this, AlertMessage.fname);
             return false;
         } else if (myLast.getText().toString().length() < 1) {
-            Utils.showAlert(EditMyProfileView.this, AlertMessage.lname);
+            Utils.fromSignalDialog(this,AlertMessage.lname);
+            //Utils.showAlert(EditMyProfileView.this, AlertMessage.lname);
             return false;
         } else if (myEmail.getText().toString().length() < 1) {
-            Utils.showAlert(EditMyProfileView.this, AlertMessage.emailid);
+            Utils.fromSignalDialog(this,AlertMessage.emailid);
+            //Utils.showAlert(EditMyProfileView.this, AlertMessage.emailid);
             return false;
         }
         return true;
@@ -460,11 +464,6 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
 
                               /*bitmap1 = Bitmap.createBitmap(bitmap1, 0, 0, bitmap1.getWidth(), bitmap1.getHeight(), mat, true);*/
 
-
-
-
-
-
                   /*      pick image from gallery    */
 
 
@@ -554,7 +553,8 @@ authManager.setUserbitmap(null);
             Utils.dismissBarDialog();
  authManager.setUserbitmap(null);
   authManager.setUserImageUri(null);
-            Utils.showAlert(EditMyProfileView.this, AlertMessage.connectionError);
+            Utils.fromSignalDialog(this,AlertMessage.connectionError);
+            //Utils.showAlert(EditMyProfileView.this, AlertMessage.connectionError);
         }
     }
 

@@ -299,7 +299,8 @@ public class CardView extends FragmentActivity{
 
         } else if (getMsg.equalsIgnoreCase("FetchCard Network Error")) {
             Utils.dismissBarDialog();
-            Utils.showAlert(CardView.this, AlertMessage.connectionError);
+            Utils.fromSignalDialog(this,AlertMessage.connectionError);
+            //Utils.showAlert(CardView.this, AlertMessage.connectionError);
         }
     }
 

@@ -16,8 +16,9 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.sourcefuse.clickinandroid.utils.CardDialog;
+import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.Log;
+import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
 
 /**
@@ -243,13 +244,14 @@ public class ViewTradeCart extends Activity implements View.OnClickListener
                 String text = card_text.getText().toString();
                 if (trd_clicks_top.getText().equals(" 0") && trd_clicks_bottom.getText().equals("0 "))
                 {
-                    CardDialog cardDialog = new CardDialog();
-                    cardDialog.popupDialog(ViewTradeCart.this);
+                    Utils.fromSignalDialog(this, AlertMessage.selectClicks);
+//                    CardDialog cardDialog = new CardDialog();
+//                    cardDialog.popupDialog(ViewTradeCart.this);
 
                 }else if((text == null || text.equalsIgnoreCase("null")
-                        || text.equalsIgnoreCase("") || text.length() < 1)){
-                    CardDialog cardDialog = new CardDialog();
-                    cardDialog.popupDialog1(ViewTradeCart.this);
+                        || text.equalsIgnoreCase("") || text.length() < 1)) {
+                    Utils.fromSignalDialog(this, AlertMessage.enterCustomCardtext);
+
                 }
 
                 else {

@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -191,9 +190,11 @@ public class CurrentClickersView extends Activity implements OnClickListener {
 
                     }
 
+
                 }).show();*/
 				 String str = AlertMessage.CURRENTCLICKERPAGE;
-           		 fromSignalDialog(str);
+                skipDialog(AlertMessage.CURRENTCLICKERPAGE);
+
             }else{
                 Intent clickersView = new Intent(CurrentClickersView.this, SpreadWordView.class);
                 startActivity(clickersView);
@@ -261,7 +262,7 @@ public class CurrentClickersView extends Activity implements OnClickListener {
             Utils.dismissBarDialog();
         } else if(message.equalsIgnoreCase("CheckFriend Network Error")){
             Utils.dismissBarDialog();
-            fromSignalDialog(AlertMessage.connectionError);
+            Utils.fromSignalDialog(this,AlertMessage.connectionError);
            // Utils.showAlert(CurrentClickersView.this, AlertMessage.connectionError);
         } else if (message.equalsIgnoreCase("FetchFbFriend True")) {
             Utils.dismissBarDialog();
@@ -271,7 +272,7 @@ public class CurrentClickersView extends Activity implements OnClickListener {
             Utils.dismissBarDialog();
         } else if(message.equalsIgnoreCase("FetchFbFriend Network Error")){
             Utils.dismissBarDialog();
-            fromSignalDialog(AlertMessage.connectionError);
+            Utils.fromSignalDialog(this,AlertMessage.connectionError);
             //Utils.showAlert(CurrentClickersView.this, AlertMessage.connectionError);
         } /*else if (message.equalsIgnoreCase("NewsFeed False")) {
             Log.d("2", "message->" + message);
@@ -290,8 +291,9 @@ public class CurrentClickersView extends Activity implements OnClickListener {
         }
     }
 
+
     // Akshit Code Starts
-    public void fromSignalDialog(String str){
+    public void skipDialog(String str){
 
         dialog = new Dialog(CurrentClickersView.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -324,4 +326,7 @@ public class CurrentClickersView extends Activity implements OnClickListener {
     }
 // Ends
 
+
 }
+
+

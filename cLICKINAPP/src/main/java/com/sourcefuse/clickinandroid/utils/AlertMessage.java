@@ -4,6 +4,8 @@ public class AlertMessage {
 	
 	public static final String connectionError = "Check your network connection";
     public static final String wrong_signIn_details = "The Username/Password \n combination entered is incorrect";
+    public static final String selectClicks = "Please select clicks first.";
+    public static final String enterCustomCardtext = "Please enter the text for custom \n card";
 
     public static final String Phonenolength = "The phone number you have entered is invalid. Please try again";
 	
