@@ -49,7 +49,8 @@ import java.util.List;
 
 import de.greenrobot.event.EventBus;
 
-public class ClickInBaseView extends Activity implements TextWatcher, SlidingMenu.OnOpenListener, SlidingMenu.OnCloseListener {
+public class
+        ClickInBaseView extends Activity implements TextWatcher, SlidingMenu.OnOpenListener, SlidingMenu.OnCloseListener {
 
 
       /// Left Menu
@@ -707,12 +708,12 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
             } else if (message.equalsIgnoreCase("SearchResult False")) {
                   stopSearch = true;
                   Utils.dismissBarDialog();
-                  Utils.showAlert(ClickInBaseView.this, authManager.getMessage());
+                  Utils.fromSignalDialog(ClickInBaseView.this, authManager.getMessage());
                   Log.d("2", "message->" + message);
             } else if (message.equalsIgnoreCase("SearchResult Error")) {
                   stopSearch = true;
                   Utils.dismissBarDialog();
-                  Utils.showAlert(ClickInBaseView.this, AlertMessage.connectionError);
+                  Utils.fromSignalDialog(ClickInBaseView.this, AlertMessage.connectionError);
                   Log.d("3", "message->" + message);
             } else if (message.equalsIgnoreCase("NewsFeed  True")) {
                   Utils.dismissBarDialog();
@@ -750,7 +751,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
             } else if (message.equalsIgnoreCase("NewsFeed Error")) {
                   stopSearch = true;
                   Utils.dismissBarDialog();
-                  Utils.showAlert(ClickInBaseView.this, AlertMessage.connectionError);
+                  Utils.fromSignalDialog(ClickInBaseView.this, AlertMessage.connectionError);
                   Log.d("3", "message->" + message);
             }
 

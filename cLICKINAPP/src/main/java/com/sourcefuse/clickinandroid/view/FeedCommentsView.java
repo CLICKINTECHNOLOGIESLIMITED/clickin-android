@@ -12,7 +12,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
@@ -21,14 +20,9 @@ import com.sourcefuse.clickinandroid.model.bean.FeedStarsBean;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.Utils;
-import com.sourcefuse.clickinandroid.view.adapter.FeedsAdapter;
 import com.sourcefuse.clickinandroid.view.adapter.FeedsCommentsAdapter;
-import com.sourcefuse.clickinandroid.view.adapter.FeedsStarsAdapter;
-import com.sourcefuse.clickinandroid.view.adapter.SimpleSectionedListAdapter2.Section;
 import com.sourcefuse.clickinapp.R;
 
-import java.lang.reflect.Array;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -174,7 +168,7 @@ public class FeedCommentsView extends Activity {
         } else if (message.equalsIgnoreCase("FetchCommentStatus False")) {
             Utils.dismissBarDialog();
         } else if (message.equalsIgnoreCase("FetchCommentStatus Network Error")) {
-            Utils.showAlert(FeedCommentsView.this, AlertMessage.connectionError);
+            Utils.fromSignalDialog(FeedCommentsView.this, AlertMessage.connectionError);
 
         }
     }

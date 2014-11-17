@@ -125,6 +125,8 @@ public class Utils {
                 }).show();
 
     }
+
+
     //akshit code starts
     public static void fromSignalDialog1(Activity activity,String msgStrI, String msgStrII) {
         dialog = new Dialog(activity);

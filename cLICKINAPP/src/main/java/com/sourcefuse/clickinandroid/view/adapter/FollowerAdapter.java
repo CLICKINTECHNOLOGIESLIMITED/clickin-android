@@ -315,7 +315,7 @@ public class FollowerAdapter extends ArrayAdapter<FollowerFollowingBean> {
         final Dialog dialog = new Dialog(((Activity)context));
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        dialog.setContentView(R.layout.alert_current_clicker);
+        dialog.setContentView(R.layout.alert_follower_adapter);
         dialog.setCancelable(false);
         TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
 
