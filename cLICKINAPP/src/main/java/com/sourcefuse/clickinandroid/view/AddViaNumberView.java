@@ -4,9 +4,12 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Telephony;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
@@ -26,54 +29,53 @@ import com.sourcefuse.clickinapp.R;
 
 import de.greenrobot.event.EventBus;
 
-public class AddViaNumberView extends Activity implements View.OnClickListener,TextWatcher {
-    private static final String TAG = PlayItSafeView.class.getSimpleName();
-	private Button getClickInVn;
-	private AuthManager authManager ;
-	private EditText edtPhoneNo,edtCountryCode;
+public class AddViaNumberView extends Activity implements View.OnClickListener, TextWatcher {
+      private static final String TAG = PlayItSafeView.class.getSimpleName();
+      private Button getClickInVn;
+      private AuthManager authManager;
+      private EditText edtPhoneNo, edtCountryCode;
 
 
-    String mPhNo;
+      String mPhNo;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.view_addvianumber);
-
-
-		this.overridePendingTransition(R.anim.slide_in_right ,R.anim.slide_out_right);
-		getClickInVn = (Button) findViewById(R.id.btn_get_click_via_no);
-		edtPhoneNo = (EditText) findViewById(R.id.edt_get_ph_no);
-        edtCountryCode= (EditText)findViewById(R.id.edt_cntry_cd);
-		edtPhoneNo.addTextChangedListener(AddViaNumberView.this);
-
-		getClickInVn.setOnClickListener(this);
-        ((RelativeLayout) findViewById(R.id.rl_addvia_no_action)).setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View arg0) {
-
-                InputMethodManager imm = (InputMethodManager) getSystemService(
-                        INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(edtPhoneNo.getWindowToken(), 0);
-                imm.hideSoftInputFromWindow(edtCountryCode.getWindowToken(), 0);
-
-            }
-
-        });
+      @Override
+      protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            requestWindowFeature(Window.FEATURE_NO_TITLE);
+            setContentView(R.layout.view_addvianumber);
 
 
+            this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+            getClickInVn = (Button) findViewById(R.id.btn_get_click_via_no);
+            edtPhoneNo = (EditText) findViewById(R.id.edt_get_ph_no);
+            edtCountryCode = (EditText) findViewById(R.id.edt_cntry_cd);
+            edtPhoneNo.addTextChangedListener(AddViaNumberView.this);
 
-        ((Button) findViewById(R.id.btn_go_back_num)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-                overridePendingTransition(0, R.anim.top_out);
-            }
-        });
+            getClickInVn.setOnClickListener(this);
+            ((RelativeLayout) findViewById(R.id.rl_addvia_no_action)).setOnClickListener(new View.OnClickListener() {
 
-		authManager = ModelManager.getInstance().getAuthorizationManager();
+                  @Override
+                  public void onClick(View arg0) {
+
+                        InputMethodManager imm = (InputMethodManager) getSystemService(
+                                                                                              INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(edtPhoneNo.getWindowToken(), 0);
+                        imm.hideSoftInputFromWindow(edtCountryCode.getWindowToken(), 0);
+
+                  }
+
+            });
+
+
+            ((Button) findViewById(R.id.btn_go_back_num)).setOnClickListener(new View.OnClickListener() {
+                  @Override
+                  public void onClick(View v) {
+                        finish();
+                        overridePendingTransition(0, R.anim.top_out);
+                  }
+            });
+
+            authManager = ModelManager.getInstance().getAuthorizationManager();
 //     try {
 //            String CountryZipCode = null;
 //            TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
@@ -126,34 +128,36 @@ public class AddViaNumberView extends Activity implements View.OnClickListener,T
 //
 
 
-        //akshit code start For country Code ,
+            //akshit code start For country Code ,
 
-        try{
-            String countryCode=Utils.getCountryCodeFromSim(this);
-            if(countryCode==null){
-                edtCountryCode.setText("+(null)");
-            }else{
-                edtCountryCode.setText(countryCode);
+            try {
+                  String countryCode = Utils.getCountryCodeFromSim(this);
+                  if (countryCode == null) {
+                        edtCountryCode.setText("+(null)");
+                  } else {
+                        edtCountryCode.setText(countryCode);
+                  }
+
+
+            } catch (Exception e) {
             }
+      }
 
-
-        } catch (Exception e) {
-        }
-	}
       @Override
       public void onBackPressed() {
             super.onBackPressed();
             finish();
             overridePendingTransition(0, R.anim.top_out);
       }
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.btn_get_click_via_no:
-            if(Utils.isCountryCodeValid(edtCountryCode.getText().toString())){
-                if (Utils.isPhoneValid(edtPhoneNo.getText().toString()) && (edtPhoneNo.getText().toString().length() >= 5)) {
-                     mPhNo=edtCountryCode.getText().toString().trim()+edtPhoneNo.getText().toString().trim();
-                    //Monika-need to hit webservice to check num registered or not
+
+      @Override
+      public void onClick(View v) {
+            switch (v.getId()) {
+                  case R.id.btn_get_click_via_no:
+                        if (Utils.isCountryCodeValid(edtCountryCode.getText().toString())) {
+                              if (Utils.isPhoneValid(edtPhoneNo.getText().toString()) && (edtPhoneNo.getText().toString().length() >= 5)) {
+                                    mPhNo = edtCountryCode.getText().toString().trim() + edtPhoneNo.getText().toString().trim();
+                                    //Monika-need to hit webservice to check num registered or not
             /*        ProfileManager prfManager= ModelManager.getInstance().getProfileManager();
                     if(prfManager.currClickersPhoneNums.contains(mPhNo)){
                         authManager = ModelManager.getInstance().getAuthorizationManager();
@@ -161,74 +165,106 @@ public class AddViaNumberView extends Activity implements View.OnClickListener,T
                     }else {
 
                     }*/
-                    FetchContactFromPhone.checkNumWithClickInDb(mPhNo);
+                                    FetchContactFromPhone.checkNumWithClickInDb(mPhNo);
 
-                }else{
-                    fromSignalDialog(AlertMessage.phone);
-                }
+                              } else {
+                                    fromSignalDialog(AlertMessage.phone);
+                              }
 
-            }else{
-                fromSignalDialog(AlertMessage.country);
+                        } else {
+                              fromSignalDialog(AlertMessage.country);
+                        }
+
+                        break;
+
             }
+      }
 
-			break;
-			
-		}
-	}
+      @Override
+      public void onStart() {
+            super.onStart();
 
-    @Override
-    public void onStart() {
-        super.onStart();
+            EventBus.getDefault().register(this);
+      }
 
-        EventBus.getDefault().register(this);
-    }
+      @Override
+      public void onStop() {
+            super.onStop();
+            if (EventBus.getDefault().isRegistered(this)) {
+                  EventBus.getDefault().unregister(this);
+            }
+      }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        if(EventBus.getDefault().isRegistered(this)){
-            EventBus.getDefault().unregister(this);
-        }
-    }
+      public void onEventMainThread(String message) {
+            authManager = ModelManager.getInstance().getAuthorizationManager();
+            if (message.equalsIgnoreCase("RequestSend True")) {
+                  Utils.dismissBarDialog();
+                  Intent intent = new Intent(this, CurrentClickersView.class);
+                  intent.putExtra("FromMenu", false);
+                  intent.putExtra("FromSignup", true);
+                  startActivity(intent);
 
-    public void onEventMainThread(String message){
-			authManager = ModelManager.getInstance().getAuthorizationManager();
-				if (message.equalsIgnoreCase("RequestSend True")) {
-					Utils.dismissBarDialog();
-                    Intent intent = new Intent(this,CurrentClickersView.class);
-                    intent.putExtra("FromMenu",false);
-                    intent.putExtra("FromSignup", true);
-                    startActivity(intent);
+                  finish();
+                  //switchView();
+            } else if (message.equalsIgnoreCase("RequestSend False")) {
+                  Utils.dismissBarDialog();
+                  fromSignalDialog(authManager.getMessage());
+                  //Utils.showAlert(AddViaNumberView.this, authManager.getMessage());
+                  // finish();
+            } else if (message.equalsIgnoreCase("RequestSend Network Error")) {
+                  Utils.dismissBarDialog();
+                  fromSignalDialog(AlertMessage.connectionError);
+                  //	Utils.showAlert(AddViaNumberView.this, AlertMessage.connectionError);
+                  //finish();
+            } else if (message.equalsIgnoreCase("Num Not Registered")) {
 
-                    finish();
-					//switchView();
-				} else if (message.equalsIgnoreCase("RequestSend False")) {
-					Utils.dismissBarDialog();
-                    fromSignalDialog(authManager.getMessage());
-                    //Utils.showAlert(AddViaNumberView.this, authManager.getMessage());
-                   // finish();
-				} else if(message.equalsIgnoreCase("RequestSend Network Error")){
-					Utils.dismissBarDialog();
-				      fromSignalDialog(AlertMessage.connectionError);
-				//	Utils.showAlert(AddViaNumberView.this, AlertMessage.connectionError);
-                    //finish();
-				}else if(message.equalsIgnoreCase("Num Not Registered")){
-                    Intent smsIntent = new Intent(Intent.ACTION_VIEW);
-                    smsIntent.putExtra("sms_body", Constants.SEND_REQUEST_WITH_SMS_MESSAGE);
-                    smsIntent.putExtra("address", mPhNo);
-                    smsIntent.setType("vnd.android-dir/mms-sms");
-                    startActivity(smsIntent);
-                }else if(message.equalsIgnoreCase("Num Registered")){
-                    Utils.launchBarDialog(this);
-                    authManager = ModelManager.getInstance().getAuthorizationManager();
-                    authManager.sendNewRequest(authManager.getPhoneNo(), mPhNo, authManager.getUsrToken());
-                }else if(message.equalsIgnoreCase("Num Check False")){
-                    Utils.dismissBarDialog();
-                    fromSignalDialog(authManager.getMessage());
-                }
-		}
+                  /* send sms if not not register */
+                  /*  send sms for nexus 5 check build version*/
+                  /* prafull code */
+                  try {
 
-// public String GetCountryZipCode(){
+
+
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) //At least KitKat
+                        {
+                              String defaultSmsPackageName = Telephony.Sms.getDefaultSmsPackage(AddViaNumberView.this); //Need to change the build to API 19
+
+                              Intent sendIntent = new Intent(Intent.ACTION_SEND);
+                              sendIntent.setType("text/plain");
+                              sendIntent.putExtra(Intent.EXTRA_TEXT, Constants.SEND_REQUEST_WITH_SMS_MESSAGE);
+
+                              if (defaultSmsPackageName != null)//Can be null in case that there is no default, then the user would be able to choose any app that support this intent.
+                              {
+                                    sendIntent.setPackage(defaultSmsPackageName);
+                              }
+                              startActivity(sendIntent);
+
+                        } else //For early versions, do what worked for you before.
+                        {
+                              Intent smsIntent = new Intent(Intent.ACTION_VIEW);
+                              smsIntent.putExtra("sms_body", Constants.SEND_REQUEST_WITH_SMS_MESSAGE);
+                              smsIntent.putExtra("address", mPhNo);
+                              smsIntent.setType("vnd.android-dir/mms-sms");
+                              startActivity(smsIntent);
+                        }
+
+                  } catch (Exception e) {
+                        e.printStackTrace();
+                        Log.e("Exception to send sms--->", "" + e.toString());
+                  }
+
+
+            } else if (message.equalsIgnoreCase("Num Registered")) {
+                  Utils.launchBarDialog(this);
+                  authManager = ModelManager.getInstance().getAuthorizationManager();
+                  authManager.sendNewRequest(authManager.getPhoneNo(), mPhNo, authManager.getUsrToken());
+            } else if (message.equalsIgnoreCase("Num Check False")) {
+                  Utils.dismissBarDialog();
+                  fromSignalDialog(authManager.getMessage());
+            }
+      }
+
+      // public String GetCountryZipCode(){
 //        String CountryID="";
 //        String CountryZipCode="";
 //        try {
@@ -250,55 +286,54 @@ public class AddViaNumberView extends Activity implements View.OnClickListener,T
 //        }
 //        return CountryZipCode;
 //    }
-    // Akshit Code Starts
-    public void fromSignalDialog(String str){
+      // Akshit Code Starts
+      public void fromSignalDialog(String str) {
 
-        final Dialog dialog = new Dialog(AddViaNumberView.this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        dialog.setContentView(R.layout.alert_check_dialogs);
-        dialog.setCancelable(false);
-        TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
-        msgI.setText(str);
+            final Dialog dialog = new Dialog(AddViaNumberView.this);
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+            dialog.setContentView(R.layout.alert_check_dialogs);
+            dialog.setCancelable(false);
+            TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
+            msgI.setText(str);
 
 
-        Button dismiss = (Button) dialog.findViewById(R.id.coolio);
-        dismiss.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                dialog.dismiss();
+            Button dismiss = (Button) dialog.findViewById(R.id.coolio);
+            dismiss.setOnClickListener(new View.OnClickListener() {
+                  @Override
+                  public void onClick(View arg0) {
+                        dialog.dismiss();
 
+                  }
+            });
+            dialog.show();
+      }
+
+      @Override
+      public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+
+      }
+
+      @Override
+      public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+
+            if (edtPhoneNo.getText().toString().length() > 0) {
+
+                  getClickInVn.setBackgroundResource(R.drawable.c_getclicin_active);
+                  getClickInVn.setEnabled(true);
+            } else {
+                  getClickInVn.setEnabled(false);
+                  getClickInVn.setBackgroundResource(R.drawable.c_getclicin_deactive);
             }
-        });
-        dialog.show();
-    }
-
-    @Override
-    public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-
-    }
-
-    @Override
-    public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-
-        if (edtPhoneNo.getText().toString().length()>0){
-
-            getClickInVn.setBackgroundResource(R.drawable.c_getclicin_active);
-            getClickInVn.setEnabled(true);
-        } else {
-            getClickInVn.setEnabled(false);
-            getClickInVn.setBackgroundResource(R.drawable.c_getclicin_deactive);
-        }
 
 
-    }
+      }
 
-    @Override
-    public void afterTextChanged(Editable editable) {
+      @Override
+      public void afterTextChanged(Editable editable) {
 
-    }
+      }
 // Ends
-
 
 
 }

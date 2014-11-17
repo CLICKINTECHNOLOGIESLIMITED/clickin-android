@@ -90,7 +90,13 @@ public class FeedView extends ClickInBaseView implements View.OnClickListener{
         EventBus.getDefault().register(this);
     }
 
-    @Override
+      @Override
+      public void onBackPressed() {
+            super.onBackPressed();
+            overridePendingTransition(0, R.anim.top_out);
+      }
+
+      @Override
     public void onStop() {
         super.onStop();
         if (EventBus.getDefault().isRegistered(this)) {
