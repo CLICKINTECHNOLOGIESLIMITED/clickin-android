@@ -429,12 +429,7 @@ public class
 
       }
 
-      @Override
-      public void onBackPressed() {
-            super.onBackPressed();
-            finish();
-            overridePendingTransition(0, R.anim.top_out);
-      }
+
       public void imageDialog() {
             String[] addPhoto;
             addPhoto = new String[]{"Camera", "Gallery"};
