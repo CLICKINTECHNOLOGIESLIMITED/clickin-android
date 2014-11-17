@@ -144,7 +144,8 @@ public class FollowingListView extends Activity implements
                   Log.d("2", "message->" + getMsg);
             } else if (getMsg.equalsIgnoreCase("GetFollower Network Error")) {
                   Utils.dismissBarDialog();
-                  Utils.showAlert(FollowingListView.this, AlertMessage.connectionError);
+                Utils.fromSignalDialog(this,AlertMessage.connectionError);
+                  //Utils.showAlert(FollowingListView.this, AlertMessage.connectionError);
                   Log.d("3", "message->" + getMsg);
             }
       }

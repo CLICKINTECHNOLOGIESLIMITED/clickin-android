@@ -138,15 +138,16 @@ public class FollowerList extends Activity implements
                   // profManager.getFollwer("", authManager.getPhoneNo(), authManager.getUsrToken());
                   adapter.notifyDataSetChanged();
             } else if (getMsg.equalsIgnoreCase("UnFollowUser false")) {
-                  Utils.showAlert(FollowerList.this, authManager.getMessage());
+                Utils.fromSignalDialog(this,authManager.getMessage());
+                  //Utils.showAlert(FollowerList.this, authManager.getMessage());
             } else if (getMsg.equalsIgnoreCase("UnFollowUser Network Error")) {
-                  Utils.showAlert(FollowerList.this, AlertMessage.connectionError);
+                  Utils.fromSignalDialog(FollowerList.this, AlertMessage.connectionError);
             } else if (getMsg.equalsIgnoreCase("FollowUser true")) {
                   adapter.notifyDataSetChanged();
             } else if (getMsg.equalsIgnoreCase("FollowUser false")) {
-                  Utils.showAlert(FollowerList.this, authManager.getMessage());
+                  Utils.fromSignalDialog(FollowerList.this, authManager.getMessage());
             } else if (getMsg.equalsIgnoreCase("FollowUser Network Error")) {
-                  Utils.showAlert(FollowerList.this, AlertMessage.connectionError);
+                  Utils.fromSignalDialog(FollowerList.this, AlertMessage.connectionError);
             } else if (getMsg.equalsIgnoreCase("GetFollower True")) {
                   Utils.dismissBarDialog();
                   setlist();
@@ -156,14 +157,14 @@ public class FollowerList extends Activity implements
                   Log.d("2", "message->" + getMsg);
             } else if (getMsg.equalsIgnoreCase("GetFollower Network Error")) {
                   Utils.dismissBarDialog();
-                  Utils.showAlert(FollowerList.this, AlertMessage.connectionError);
+                  Utils.fromSignalDialog(FollowerList.this, AlertMessage.connectionError);
                   Log.d("3", "message->" + getMsg);
             } else if (getMsg.equalsIgnoreCase("followUpdateStatus True")) {
                   adapter.notifyDataSetChanged();
             } else if (getMsg.equalsIgnoreCase("followUpdateStatus False")) {
 
             } else if (getMsg.equalsIgnoreCase("followUpdateStatus Network Error")) {
-                  Utils.showAlert(FollowerList.this, AlertMessage.connectionError);
+                  Utils.fromSignalDialog(FollowerList.this, AlertMessage.connectionError);
             }
 
       }
