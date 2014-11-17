@@ -63,7 +63,6 @@ public class FeedView extends ClickInBaseView implements View.OnClickListener{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        requestWindowFeature(Window.FEATURE_NO_TITLE);
 
 
         setContentView(R.layout.view_feedview_list);
@@ -113,9 +112,7 @@ public class FeedView extends ClickInBaseView implements View.OnClickListener{
         headerPosition=0;
 
         for(NewsFeedBean eachNewsFeed : newsFeedBeanArrayList){
-//            if(!eachNewsFeed.getNewsFeedArray_senderDetail_name().equalsIgnoreCase("null")) {
                 senderName.add(eachNewsFeed.getNewsFeedArray_senderDetail_name());
-                Log.e("senderName", eachNewsFeed.getNewsFeedArray_senderDetail_name());
                 senderId.add(eachNewsFeed.getNewsFeedArray_senderDetail_id());
                 receiverName.add(eachNewsFeed.getNewsFeedArray_receiverDetail_name());
                 receiverId.add(eachNewsFeed.getNewsFeedArray_receiverDetail_id());
@@ -123,13 +120,9 @@ public class FeedView extends ClickInBaseView implements View.OnClickListener{
                 recieverImages.add(eachNewsFeed.getNewsFeedArray_receiverDetail_user_pic());
                 senderPhNo.add(eachNewsFeed.getNewsFeedArray_senderDetail_phno());
                 recieverPhNo.add(eachNewsFeed.getNewsFeedArray_receiverDetail_phno());
-                Log.e("created time", String.valueOf(eachNewsFeed.getNewsfeedArray_created()));
-//            timeOfFeed.add(eachNewsFeed.getNewsfeedArray_created().substring(eachNewsFeed.getNewsfeedArray_created().indexOf(" ")+1));
                 timeOfFeed.add(eachNewsFeed.getNewsfeedArray_created());
-                Log.e("headerPosition ", "" + headerPosition);
                 mHeaderPositions.add(headerPosition);
                 headerPosition = headerPosition + 1;
-//            }
 
         }
 
@@ -142,7 +135,6 @@ public class FeedView extends ClickInBaseView implements View.OnClickListener{
         list.setHorizontalScrollBarEnabled(false);
         list.setVerticalScrollBarEnabled(false);
         list.setVerticalFadingEdgeEnabled(false);
-//        list.setAdapter(null);
 
         sections.clear();
 
@@ -190,7 +182,6 @@ public class FeedView extends ClickInBaseView implements View.OnClickListener{
             stopSearch = true;
             Utils.dismissBarDialog();
             newsFeedManager.userFeed.clear();
-//            Utils.showAlert(ClickInBaseView.this, authManager.getMessage());
 
             no_feed_image = (RelativeLayout) findViewById(R.id.no_feed_image);
             no_feed_image.setVisibility(View.VISIBLE);
@@ -201,11 +192,7 @@ public class FeedView extends ClickInBaseView implements View.OnClickListener{
             Utils.showAlert(FeedView.this, AlertMessage.connectionError);
             android.util.Log.d("3", "message->" + message);
         } else if (message.equalsIgnoreCase("NewsFeedDelete False")){
-//            Utils.dismissBarDialog();
-//            Toast.makeText(this,"There was error in processing your request.",Toast.LENGTH_SHORT).show();
         } else if(message.equalsIgnoreCase("NewsFeedDelete True")){
-//            Utils.dismissBarDialog();
-//            Constants.comments = true;
             newsFeedManager.fetchNewsFeed("", ModelManager.getInstance().getAuthorizationManager().getPhoneNo(), ModelManager.getInstance().getAuthorizationManager().getUsrToken());
         }else if(message.equalsIgnoreCase("NewsFeedDelete Network Error"))
         {

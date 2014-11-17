@@ -18,9 +18,12 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.MediaStore;
+import android.telephony.TelephonyManager;
 import android.util.Base64;
 import android.util.Log;
+import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -118,6 +121,52 @@ public class Utils {
 
     }
 
+    //akshit code dialog
+
+    public static void fromSignalertDialogDammit(Activity activity) {
+        dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.setContentView(R.layout.alert_nocheck);
+        dialog.setCancelable(false);
+        TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
+        TextView msgII = (TextView) dialog.findViewById(R.id.alert_msgII);
+        msgI.setText("The Code Has Been re-sent.Please check");
+        msgII.setText("");
+
+        Button dismiss = (Button) dialog.findViewById(R.id.coolio);
+        dismiss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                dialog.dismiss();
+
+            }
+        });
+        dialog.show();
+    }
+       // Akshit Code Starts
+    public static void fromSignalDialog(Activity activity ,String str){
+
+        dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.setContentView(R.layout.alert_check_dialogs);
+        dialog.setCancelable(false);
+        TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
+        msgI.setText(str);
+
+
+        Button dismiss = (Button) dialog.findViewById(R.id.coolio);
+        dismiss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                dialog.dismiss();
+
+            }
+        });
+        dialog.show();
+    }
+    // Ends
     public static String getCardURLForAndroid(String url) {
 
         String url_to_load = url.replaceFirst("cards\\/(\\d+)\\.jpg","cards\\/a\\/1080\\/$1\\.jpg");
@@ -481,4 +530,65 @@ public class Utils {
             return dateFormatted;
         }
 
-}
+
+    //monika- function to get country code from Sim
+    public static String getCountryCodeFromSim(Context context){
+
+            String CountryZipCode = null;
+            TelephonyManager telephonyManager = (TelephonyManager)context. getSystemService(Context.TELEPHONY_SERVICE);
+            int simState = telephonyManager.getSimState();
+            //Log.e("simState",""+simState+"/"+TelephonyManager.SIM_STATE_NETWORK_LOCKED+"/"+TelephonyManager.SIM_STATE_UNKNOWN+"/"+TelephonyManager.SIM_STATE_READY);
+            switch (simState) {
+
+                case (TelephonyManager.SIM_STATE_ABSENT):
+
+                case (TelephonyManager.SIM_STATE_NETWORK_LOCKED):
+
+                case (TelephonyManager.SIM_STATE_PIN_REQUIRED):
+
+                case (TelephonyManager.SIM_STATE_PUK_REQUIRED):
+
+                case (TelephonyManager.SIM_STATE_UNKNOWN):
+                     CountryZipCode=null;
+
+                    break;
+                case (TelephonyManager.SIM_STATE_READY): {
+
+
+                    CountryZipCode = GetCountryZipCode(context);
+                    CountryZipCode = "+" + CountryZipCode;
+                    Log.e("COUNTRY ZIP CODE", CountryZipCode);
+
+
+                    break;
+                }
+            }
+            return CountryZipCode;
+    }
+
+
+        public static String GetCountryZipCode(Context context){
+            String CountryID="";
+            String CountryZipCode="";
+            try {
+                TelephonyManager manager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+                //getNetworkCountryIso
+                CountryID = manager.getSimCountryIso().toUpperCase();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+            String[] rl=context.getResources().getStringArray(R.array.CountryCodes);
+            for(int i=0;i<rl.length;i++){
+                String[] g=rl[i].split(",");
+                if(g[1].trim().equals(CountryID.trim())){
+                    CountryZipCode=g[0];
+                    Log.e("Code","Tis is Code>>>>>" +CountryZipCode);
+                    break;
+                }
+            }
+            return CountryZipCode;
+        }
+
+
+    }

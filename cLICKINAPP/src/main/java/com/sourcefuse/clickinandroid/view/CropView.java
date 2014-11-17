@@ -130,6 +130,7 @@ public class CropView extends Activity implements View.OnClickListener {
 
                         if (resizebitmap != null) {
                               authManager.setmResizeBitmap(resizebitmap);
+                              authManager.setUserImageUri(Uri.parse(getIntent().getStringExtra("uri")));
                               Intent intent = new Intent(getApplicationContext(), EditMyProfileView.class);
                               intent.putExtra("retake", "fckoff");
                               setResult(Activity.RESULT_OK, intent);
@@ -138,4 +139,6 @@ public class CropView extends Activity implements View.OnClickListener {
                         break;
             }
       }
+
+
 }

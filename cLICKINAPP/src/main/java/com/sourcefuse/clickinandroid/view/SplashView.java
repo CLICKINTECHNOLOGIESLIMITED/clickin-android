@@ -88,12 +88,8 @@ public class SplashView extends Activity implements View.OnClickListener {
                 signUp.setVisibility(View.VISIBLE);
             }
      //   }
-
-
         signIn.setOnClickListener(this);
         signUp.setOnClickListener(this);
-
-
     }
 
     @Override

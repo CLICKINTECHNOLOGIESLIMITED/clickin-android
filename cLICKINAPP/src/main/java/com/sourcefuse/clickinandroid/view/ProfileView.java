@@ -25,12 +25,14 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -78,33 +80,19 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
       private Uri mImageCaptureUri;
       private DatePicker dpResult;
       private ImageView profileimg;
-      private Dialog dialog;
-
       private static final int DATE_DIALOG_ID = 9990;
       private Bitmap bitmapImage;
       private int year;
       private int month;
       private int day;
-
       private int mCurrentyear;
-      private int mCurrentmonth;
-      private int mCurrentday;
-
       private String gender_var = "";
-
       private AuthManager authManager;
       private ProfileManager profileManager;
-
-      private Typeface typeface;
       private Uri userImageUri;
-      private Calendar c;
       long diffrence_in_mills;
-
-
       private SimpleDateFormat mSimpleDateFormat;
-      private PeriodFormatter mPeriodFormat;
       private int age;
-      Years periods_years;
       long mills_in_17yrs;
 
 
@@ -115,9 +103,7 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
             setContentView(R.layout.view_profile);
             this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
-            Utils.acty = this;
 
-            typeface = Typeface.createFromAsset(ProfileView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
 
             done = (Button) findViewById(R.id.btn_done);
             guy = (Button) findViewById(R.id.btn_guy);
@@ -139,6 +125,8 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
             //city.addTextChangedListener(this);
             //country.addTextChangedListener(this);
 
+
+
             done.setOnClickListener(this);
             guy.setOnClickListener(this);
             girl.setOnClickListener(this);
@@ -159,15 +147,27 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
             setCurrentDateOnView();
             authManager = ModelManager.getInstance().getAuthorizationManager();
 
-            fname.setTypeface(typeface);
-            lname.setTypeface(typeface);
-            city.setTypeface(typeface);
-            country.setTypeface(typeface);
-            email.setTypeface(typeface);
 
-            tvDate.setTypeface(typeface);
-            tvMonth.setTypeface(typeface);
-            tvYear.setTypeface(typeface);
+          // akshit code for closing keypad if touched anywhere outside
+          ((RelativeLayout) findViewById(R.id.relative_layout_root_profile)).setOnClickListener(new View.OnClickListener() {
+
+              @Override
+              public void onClick(View arg0) {
+
+                  InputMethodManager imm = (InputMethodManager)getSystemService(
+                          INPUT_METHOD_SERVICE);
+                  imm.hideSoftInputFromWindow(fname.getWindowToken(), 0);
+                  imm.hideSoftInputFromWindow(lname.getWindowToken(), 0);
+                  imm.hideSoftInputFromWindow(city.getWindowToken(), 0);
+                  imm.hideSoftInputFromWindow(country.getWindowToken(), 0);
+                  imm.hideSoftInputFromWindow(email.getWindowToken(), 0);
+                  imm.hideSoftInputFromWindow(guy.getWindowToken(), 0);
+                  imm.hideSoftInputFromWindow(girl.getWindowToken(), 0);
+
+              }
+
+          });
+//ends
 
 
       }
@@ -312,15 +312,6 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
                                     }
 
                               }
-               /*     if (Utils.isEmailValid(email.getText().toString())) {
-                        Utils.launchBarDialog(ProfileView.this);
-                        authManager.setEmailId(email.getText().toString());
-                        profileManager = ModelManager.getInstance().getProfileManager();
-                        profileManager.setProfile(fname.getText().toString(), lname.getText().toString(), authManager.getPhoneNo(),
-                                authManager.getUsrToken(), gender_var, "" + day + month + year, city.getText().toString(), country.getText().toString(), email.getText().toString(), "", Utils.encodeTobase64(bitmap));
-                    } else {
-                        Utils.showAlert(ProfileView.this, AlertMessage.vEmailid);
-                    }*/
                         }
                         break;
                   case R.id.btn_guy:
@@ -345,7 +336,6 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
              * Connect With FB only session is create in this Activity
 			 */
 
-                        //Boolean isInternetPresent = isConnectingToInternet();
                         if (Utils.isConnectingToInternet(ProfileView.this)) {
 
                               Session session = Session.getActiveSession();
@@ -572,11 +562,6 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
                   public void onClick(View view) {
                         Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                         startActivityForResult(pickPhoto, Constants.SELECT_PICTURE);
-
-					/*Intent intent = new Intent();
-                              intent.setType("image*//*");
-					intent.setAction(Intent.ACTION_GET_CONTENT);
-					startActivityForResult(Intent.createChooser(intent, "Select Picture"),Constants.SELECT_PICTURE);*/
                         mdialog.dismiss();
                   }
             });
@@ -662,8 +647,14 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
 //                        mImageCaptureUri = data.getData();
 //                        bitmapImage = Utils.decodeUri(mImageCaptureUri, ProfileView.this);
 //                        profileimg.setImageBitmap(bitmapImage);
-/*test code akshit */
-                                    bitmapImage = BitmapFactory.decodeFile(mImageCaptureUri.getPath(), new BitmapFactory.Options());
+/*test code akshit */               Bitmap bitmap = BitmapFactory.decodeFile(mImageCaptureUri.getPath(), new BitmapFactory.Options());
+                                    BitmapFactory.Options bmpFactoryOptions = new BitmapFactory.Options();
+                                    Bitmap bitmap1;
+                                    bmpFactoryOptions.inSampleSize = 2;
+                                    bmpFactoryOptions.outWidth = bitmap.getWidth();
+                                    bmpFactoryOptions.outHeight = bitmap.getHeight();
+                                    bmpFactoryOptions.inJustDecodeBounds = false;
+                                    bitmapImage = BitmapFactory.decodeFile(mImageCaptureUri.getPath(), bmpFactoryOptions);
 
                                     try {
                                           ExifInterface ei = new ExifInterface(mImageCaptureUri.getPath());
@@ -684,7 +675,7 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
                               /*bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), mat, true);*/
 
 
-                                          Bitmap resized;
+                                          /*Bitmap resized;
                                           if (bitmapImage.getWidth() >= bitmapImage.getHeight()) {
 
                                                 resized = Bitmap.createBitmap(
@@ -704,18 +695,49 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
                                                                                      bitmapImage.getWidth(),
                                                                                      bitmapImage.getWidth(), mat, true
                                                 );
+                                          }*/
+
+
+                                          Bitmap resize;
+                                          resize = Bitmap.createBitmap(bitmapImage, 0, 0, bitmapImage.getWidth(), bitmapImage.getHeight(), mat, true);
+                                          if (resize != null) {
+
+                                                try {
+                                                      authManager.setOrginalBitmap(resize);
+                                                      Intent intent = new Intent(ProfileView.this, CropView.class);
+                                                      intent.putExtra("from", "fromcamera");
+                                                      intent.putExtra("uri",mImageCaptureUri.toString());
+                                                      startActivityForResult(intent, Constants.CROP_PICTURE);
+                                                } catch (Exception e) {
+                                                      e.printStackTrace();
+                                                      Log.e("exception--->", "exception--->");
+                                                }
                                           }
-                                          bitmapImage.recycle();
+                                          /*bitmapImage.recycle();
                                           profileimg.setImageBitmap(resized);
                                           userImageUri = mImageCaptureUri;
-                                          mImageCaptureUri = null;
+                                          mImageCaptureUri = null;*/
 
                                     } catch (Exception e) {
                                           e.printStackTrace();
                                     }
                                     break;
                               case Constants.SELECT_PICTURE:
-                                    bitmapImage = getBitmapFromCameraData(data, getApplicationContext());
+
+
+                                    Bitmap bitmap12 = getBitmapFromCameraData(data, getApplicationContext());
+
+
+                 /*    pick image from gallery  */
+                                    BitmapFactory.Options bmpFactoryOptions1 = new BitmapFactory.Options();
+                                    Bitmap bitmap11;
+                                    bmpFactoryOptions1.inSampleSize = 2;
+                                    bmpFactoryOptions1.outWidth = bitmap12.getWidth();
+                                    bmpFactoryOptions1.outHeight = bitmap12.getHeight();
+                                    bmpFactoryOptions1.inJustDecodeBounds = false;
+                                    bitmapImage = BitmapFactory.decodeFile(getRealPathFromURI(data.getData()), bmpFactoryOptions1);
+
+                                    /*bitmapImage = getBitmapFromCameraData(data, getApplicationContext());*/
 
 /*test code akshit */
                  /*    pick image from gallery  */
@@ -742,15 +764,28 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
 
                               /*bitmap1 = Bitmap.createBitmap(bitmap1, 0, 0, bitmap1.getWidth(), bitmap1.getHeight(), mat, true);*/
 
+                                          bitmapImage = Bitmap.createBitmap(bitmapImage, 0, 0, bitmapImage.getWidth(), bitmapImage.getHeight(), mat, true);
 
-
-
+                                          userImageUri = data.getData();
+                                          if (bitmapImage != null) {
+                                                try {
+                                                      authManager.setOrginalBitmap(null);
+                                                      authManager.setOrginalBitmap(bitmapImage);
+                                                      Intent intent = new Intent(ProfileView.this, CropView.class);
+                                                      intent.putExtra("from", "fromgallery");
+                                                      intent.putExtra("uri",userImageUri.toString());
+                                                      startActivityForResult(intent, Constants.CROP_PICTURE);
+                                                } catch (Exception e) {
+                                                      e.printStackTrace();
+                                                      Log.e("exception--->", "exception--->");
+                                                }
+                                          }
 
 
                   /*      pick image from gallery    */
 
 
-                                          Bitmap resized1;
+                                          /*Bitmap resized1;
                                           if (bitmapImage.getWidth() >= bitmapImage.getHeight()) {
 
                                                 resized1 = Bitmap.createBitmap(
@@ -775,7 +810,7 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
 
                                           profileimg.setImageBitmap(resized1);
 
-                                          userImageUri = data.getData();
+                                          userImageUri = data.getData();*/
                                           //    authManager.setUserImageUri(userImageUri);
                                           //  authManager.setUserbitmap(resized1);
 
@@ -783,6 +818,34 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
                                     } catch (Exception e) {
                                           e.printStackTrace();
                                     }
+                                    break;
+
+
+                              case Constants.CROP_PICTURE:
+
+                                    if (data.getStringExtra("retake").equalsIgnoreCase("camare")) {
+                                          Intent intent1 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                                          mImageCaptureUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
+                                          intent1.putExtra("return-data", true);
+                                          intent1.putExtra(MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
+                                          startActivityForResult(intent1, Constants.CAMERA_REQUEST);
+                                    } else if (data.getStringExtra("retake").equalsIgnoreCase("gallery")) {
+                                          Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                                          startActivityForResult(pickPhoto, Constants.SELECT_PICTURE);
+                                    } else if (authManager.getmResizeBitmap() != null) {
+                                          profileimg.setImageBitmap(authManager.getmResizeBitmap());
+
+                                          authManager.setUserImageUri(userImageUri);
+                                          authManager.setUserbitmap(authManager.getmResizeBitmap());
+                                          authManager.setOrginalBitmap(null);
+                                          authManager.setmResizeBitmap(null);
+
+                                     /*Bitmap imageBitmap = authManager.getmResizeBitmap();
+                                          authManager.setUserbitmap(authManager.getmResizeBitmap());
+                                          authManager.setOrginalBitmap(null);
+                                          authManager.setmResizeBitmap(null);*/
+                                    }
+                                    break;
                               default:
                                     break;
                         }
@@ -797,15 +860,11 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
       // display current date
       @SuppressLint("NewApi")
       public void setCurrentDateOnView() {
-            c = Calendar.getInstance();
+          Calendar c = Calendar.getInstance();
             year = c.get(Calendar.YEAR);
             month = c.get(Calendar.MONTH);
             day = c.get(Calendar.DAY_OF_MONTH);
-
             mCurrentyear = year;
-
-            // String monthname=c.getDisplayName(Calendar.MONTH, Calendar.LONG,
-            // Locale.getDefault());
             tvDate.setText("" + day);
             tvMonth.setText("" + MONTHS[month]);
             tvYear.setText("" + year);
@@ -843,7 +902,7 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
                   String date = day + "/" + month + "/" + year;
                   long time = 0;
                   mSimpleDateFormat = new SimpleDateFormat("dd/MM/yy");
-                  mPeriodFormat = new PeriodFormatterBuilder().appendYears()
+                PeriodFormatter mPeriodFormat = new PeriodFormatterBuilder().appendYears()
                                           .appendSuffix(" year(s) ").appendMonths().appendSuffix(" month(s) ")
                                           .appendDays().appendSuffix(" day(s) ").printZeroNever().toFormatter();
 
@@ -941,7 +1000,7 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
       }
 
       public void alertDialog(String msgStrI) {
-            dialog = new Dialog(ProfileView.this);
+          final Dialog dialog = new Dialog(ProfileView.this);
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
             dialog.setContentView(R.layout.alert_check_dialogs);

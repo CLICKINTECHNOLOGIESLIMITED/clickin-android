@@ -16,9 +16,11 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
@@ -30,7 +32,6 @@ import com.sourcefuse.clickinapp.R;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -147,7 +148,6 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
                   }
 
             } else {
-
                   if (!authManager.getGender().equalsIgnoreCase("")) {
 
                         if (authManager.getGender().equalsIgnoreCase("guy")) {
@@ -341,6 +341,13 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
 
 
                   Bitmap bitmap = BitmapFactory.decodeFile(mImageCaptureUri.getPath(), new BitmapFactory.Options());
+                  BitmapFactory.Options bmpFactoryOptions = new BitmapFactory.Options();
+                  Bitmap bitmap1;
+                  bmpFactoryOptions.inSampleSize = 2;
+                  bmpFactoryOptions.outWidth = bitmap.getWidth();
+                  bmpFactoryOptions.outHeight = bitmap.getHeight();
+                  bmpFactoryOptions.inJustDecodeBounds = false;
+                  bitmap1 = BitmapFactory.decodeFile(mImageCaptureUri.getPath(), bmpFactoryOptions);
 
                   try {
                         ExifInterface ei = new ExifInterface(mImageCaptureUri.getPath());
@@ -360,13 +367,14 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
                         Log.e("angle from camera 1 --->", "" + angle);
 
                         Bitmap resize;
-                        resize = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), mat, true);
+                        resize = Bitmap.createBitmap(bitmap1, 0, 0, bitmap1.getWidth(), bitmap1.getHeight(), mat, true);
                         if (resize != null) {
 
                               try {
                                     authManager.setOrginalBitmap(resize);
                                     Intent intent = new Intent(EditMyProfileView.this, CropView.class);
                                     intent.putExtra("from", "fromcamera");
+                                    intent.putExtra("uri", mImageCaptureUri.toString());
                                     startActivityForResult(intent, Constants.CROP_PICTURE);
                               } catch (Exception e) {
                                     e.printStackTrace();
@@ -374,7 +382,7 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
                               }
                         }
                         userImageUri = mImageCaptureUri;
-                        authManager.setUserImageUri(userImageUri);
+                        /*authManager.setUserImageUri(userImageUri);*/
                         // authManager.setUserPic(imageBitmap.toString());
                         mImageCaptureUri = null;
                         authManager.setMenuUserInfoFlag(true);
@@ -382,8 +390,6 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
                   } catch (Exception e) {
                         e.printStackTrace();
                   }
-
-
 
 
             }
@@ -395,10 +401,10 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
 
                  /*    pick image from gallery  */
                   BitmapFactory.Options bmpFactoryOptions = new BitmapFactory.Options();
-                  bmpFactoryOptions.inJustDecodeBounds = true;
-                  bmpFactoryOptions.inSampleSize =2;
-                  Bitmap bitmap1 = BitmapFactory.decodeFile(getRealPathFromURI(data.getData()), bmpFactoryOptions);
-
+                  Bitmap bitmap1;
+                  bmpFactoryOptions.inSampleSize = 2;
+                  bmpFactoryOptions.outWidth = bitmap.getWidth();
+                  bmpFactoryOptions.outHeight = bitmap.getHeight();
                   bmpFactoryOptions.inJustDecodeBounds = false;
                   bitmap1 = BitmapFactory.decodeFile(getRealPathFromURI(data.getData()), bmpFactoryOptions);
 
@@ -462,13 +468,14 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
                   /*bitmap.recycle();*/
 
 
-
+                  userImageUri = data.getData();
                   if (bitmap != null) {
                         try {
                               authManager.setOrginalBitmap(null);
                               authManager.setOrginalBitmap(bitmap);
                               Intent intent = new Intent(EditMyProfileView.this, CropView.class);
                               intent.putExtra("from", "fromgallery");
+                              intent.putExtra("uri", userImageUri.toString());
                               startActivityForResult(intent, Constants.CROP_PICTURE);
                         } catch (Exception e) {
                               e.printStackTrace();
@@ -477,8 +484,8 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
                   }
 
 
-                  userImageUri = data.getData();
-                  authManager.setUserImageUri(userImageUri);
+
+                  /*authManager.setUserImageUri(userImageUri);*/
                   // authManager.setUserPic(imageBitmap.toString());
 
                   authManager.setMenuUserInfoFlag(true);
@@ -498,10 +505,10 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
                         startActivityForResult(pickPhoto, Constants.SELECT_PICTURE);
                   } else if (authManager.getmResizeBitmap() != null) {
                         mySelfy.setImageBitmap(authManager.getmResizeBitmap());
-                        Bitmap imageBitmap = authManager.getmResizeBitmap();
+                        /*Bitmap imageBitmap = authManager.getmResizeBitmap();
                         authManager.setUserbitmap(authManager.getmResizeBitmap());
                         authManager.setOrginalBitmap(null);
-                        authManager.setmResizeBitmap(null);
+                        authManager.setmResizeBitmap(null);*/
                   }
             }
       }
@@ -520,6 +527,7 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
 
             EventBus.getDefault().unregister(this);
 
+
       }
 
       public void onEventMainThread(String getMsg) {
@@ -527,30 +535,34 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
             authManager = ModelManager.getInstance().getAuthorizationManager();
             if (getMsg.equalsIgnoreCase("UpdateProfile True")) {
                   Utils.dismissBarDialog();
-                  //update user profile information in auth manager now
-                  //   if(imageBitmap!=null)
-                  //	authManager.setUserPic(imageBitmap.toString());
                   authManager.setUserName(userName + " " + userLastName);
                   authManager.setEmailId(userEmail);
                   authManager.setUserCity(userCity);
                   authManager.setUserCountry(userCountry);
-                  //     authManager.setUserImageUri(userImageUri);
                   authManager.setEditProfileFlag(true);
                   authManager.setMenuUserInfoFlag(true);
 
+                  authManager.setUserbitmap(authManager.getmResizeBitmap());
+                  authManager.setUserImageUri(userImageUri);
+                  authManager.setOrginalBitmap(null);
+                  authManager.setmResizeBitmap(null);
                   finish();
             } else if (getMsg.equalsIgnoreCase("UpdateProfile False")) {
                   Utils.dismissBarDialog();
                   authManager.setUserbitmap(null);
                   authManager.setUserImageUri(null);
-                  // authManager.setEditProfileFlag(false);
+                  authManager.setOrginalBitmap(null);
+                  authManager.setmResizeBitmap(null);
             } else if (getMsg.equalsIgnoreCase("UpdateProfile Network Error")) {
                   Utils.dismissBarDialog();
                   authManager.setUserbitmap(null);
                   authManager.setUserImageUri(null);
+                  authManager.setOrginalBitmap(null);
+                  authManager.setmResizeBitmap(null);
                   Utils.showAlert(EditMyProfileView.this, AlertMessage.connectionError);
             }
       }
+
 
 }
 

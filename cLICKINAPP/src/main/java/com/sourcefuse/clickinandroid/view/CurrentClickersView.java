@@ -37,19 +37,13 @@ import de.greenrobot.event.EventBus;
 public class CurrentClickersView extends Activity implements OnClickListener {
     private static final String TAG = CurrentClickersView.class.getSimpleName();
 	private Button phonebook, facebook;
-
     private TextView back,next,middleBack;
-
-	private View view;
     private ListView listView;
     private CurrentClickersAdapter adapter;
     private ProfileManager profilemanager;
     private AuthManager authManager;
-    Dialog dialog ;
 
-    private NewsFeedManager newsFeedManager;
 
-    private boolean showNextButton = false;
     ArrayList<CurrentClickerBean>tempCurrentClickers;
     public static boolean followReqStatus=false;
 
@@ -62,10 +56,9 @@ public class CurrentClickersView extends Activity implements OnClickListener {
 		phonebook = (Button) findViewById(R.id.btn_phb);
 		facebook = (Button) findViewById(R.id.btn_fb);
 		listView = (ListView)findViewById(R.id.list_current_clickers);
-      back= (TextView) findViewById(R.id.btn_back);
+        back= (TextView) findViewById(R.id.btn_back);
         middleBack=(TextView) findViewById(R.id.btn_middle_back);
         next=(TextView) findViewById(R.id.btn_next);
-	//	toboard = (ImageView) findViewById(R.id.iv_toboard);
 		phonebook.setOnClickListener(this);
 		facebook.setOnClickListener(this);
 
@@ -75,7 +68,7 @@ public class CurrentClickersView extends Activity implements OnClickListener {
 		next.setOnClickListener(this);
 
 
-        showNextButton = getIntent().getExtras().getBoolean("FromMenu");
+        boolean showNextButton = getIntent().getExtras().getBoolean("FromMenu");
         if(showNextButton){
             middleBack.setVisibility(View.VISIBLE);
             back.setVisibility(View.GONE);
@@ -239,7 +232,7 @@ public class CurrentClickersView extends Activity implements OnClickListener {
             final String access_Token = session.getAccessToken();
             Log.d(TAG, access_Token);
 
-            newsFeedManager = ModelManager.getInstance().getNewsFeedManager();
+            NewsFeedManager newsFeedManager = ModelManager.getInstance().getNewsFeedManager();
             authManager = ModelManager.getInstance().getAuthorizationManager();
             newsFeedManager.fetchFbFriends(access_Token,authManager.getPhoneNo(),authManager.getUsrToken());
 
@@ -262,7 +255,6 @@ public class CurrentClickersView extends Activity implements OnClickListener {
         } else if(message.equalsIgnoreCase("CheckFriend Network Error")){
             Utils.dismissBarDialog();
             fromSignalDialog(AlertMessage.connectionError);
-           // Utils.showAlert(CurrentClickersView.this, AlertMessage.connectionError);
         } else if (message.equalsIgnoreCase("FetchFbFriend True")) {
             Utils.dismissBarDialog();
             tempCurrentClickers=profilemanager.currentClickerListFB;
@@ -272,13 +264,7 @@ public class CurrentClickersView extends Activity implements OnClickListener {
         } else if(message.equalsIgnoreCase("FetchFbFriend Network Error")){
             Utils.dismissBarDialog();
             fromSignalDialog(AlertMessage.connectionError);
-            //Utils.showAlert(CurrentClickersView.this, AlertMessage.connectionError);
-        } /*else if (message.equalsIgnoreCase("NewsFeed False")) {
-            Log.d("2", "message->" + message);
-            Utils.dismissBarDialog();
-            Intent intent = new Intent(CurrentClickersView.this, FeedView.class);
-            startActivity(intent);
-        }*/
+        }
 
     }
 
@@ -293,7 +279,7 @@ public class CurrentClickersView extends Activity implements OnClickListener {
     // Akshit Code Starts
     public void fromSignalDialog(String str){
 
-        dialog = new Dialog(CurrentClickersView.this);
+        final Dialog dialog = new Dialog(CurrentClickersView.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         dialog.setContentView(R.layout.alert_current_clicker);

@@ -2,15 +2,12 @@ package com.sourcefuse.clickinandroid.view;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.provider.Settings.Secure;
-import android.telephony.TelephonyManager;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -36,8 +33,7 @@ public class SignUpView extends Activity implements TextWatcher,OnClickListener 
 	private Button checkmeout;
 	private EditText phoneNo, cntrycode;
 	private AuthManager authManager ;
-	private Typeface typefaceBold;
-    private Dialog dialog ;
+
 
 
 
@@ -46,16 +42,12 @@ public class SignUpView extends Activity implements TextWatcher,OnClickListener 
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.view_signup);
-        typefaceBold = Typeface.createFromAsset(SignUpView.this.getAssets(),Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_BOLD);
 		Utils.deviceId = Secure.getString(this.getContentResolver(),Secure.ANDROID_ID);
 
 		checkmeout = (Button) findViewById(R.id.checkmeout);
 		cntrycode = (EditText) findViewById(R.id.edt_code);
 		phoneNo = (EditText) findViewById(R.id.edt_phoneno);
 		phoneNo.addTextChangedListener(this);
-		
-		cntrycode.setTypeface(typefaceBold);
-		phoneNo.setTypeface(typefaceBold);
 		checkmeout.setOnClickListener(this);
         checkmeout.setEnabled(false);
 		    ((RelativeLayout) findViewById(R.id.rl_main_signup)).setOnClickListener(new View.OnClickListener() {
@@ -72,59 +64,12 @@ public class SignUpView extends Activity implements TextWatcher,OnClickListener 
 
         });
 
-        try {
-            String CountryZipCode = null;
-            TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-            int simState = telephonyManager.getSimState();
-            //Log.e("simState",""+simState+"/"+TelephonyManager.SIM_STATE_NETWORK_LOCKED+"/"+TelephonyManager.SIM_STATE_UNKNOWN+"/"+TelephonyManager.SIM_STATE_READY);
-            switch (simState) {
-
-                case (TelephonyManager.SIM_STATE_ABSENT): {
-                    cntrycode.setText("+(null)");
-                }
-                break;
-
-                case (TelephonyManager.SIM_STATE_NETWORK_LOCKED): {
-                    cntrycode.setText("+(null)");
-                }
-                break;
-                case (TelephonyManager.SIM_STATE_PIN_REQUIRED):
-                    break;
-                case (TelephonyManager.SIM_STATE_PUK_REQUIRED):
-                    break;
-                case (TelephonyManager.SIM_STATE_UNKNOWN): {
-                    cntrycode.setText("+(null)");
-                }
-                break;
-                case (TelephonyManager.SIM_STATE_READY): {
-
-                    String simCountry = telephonyManager.getSimCountryIso();
-                    Log.e("simCountry",simCountry);
-
-                    String simOperatorCode = telephonyManager.getSimOperator();
-                    Log.e("simOperatorCode",simOperatorCode);
-
-                    String simOperatorName = telephonyManager.getSimOperatorName();
-                    Log.e("simOperatorName",simOperatorName);
-
-                    String simSerial = telephonyManager.getSimSerialNumber();
-                    Log.e("simSerial",simSerial);
-
-                    CountryZipCode = GetCountryZipCode();
-                    CountryZipCode = "+" + CountryZipCode;
-                    Log.e("COUNTRY ZIP CODE", CountryZipCode);
-                    cntrycode.setText(CountryZipCode);
-                }
-                break;
-            }
-//            TelephonyManager mTelephonyMgr;
-//            mTelephonyMgr = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-//            myNumber = mTelephonyMgr.getLine1Number();
-//            Log.e(TAG,"myNumber-->"+myNumber);
-//            phoneNo.setText(myNumber);
-            }catch(Exception e){
-                Log.e("Exception TAG" , "Exception-->" + e.toString());
-            }
+        String countryCode=Utils.getCountryCodeFromSim(this);
+        if(countryCode==null){
+            cntrycode.setText("+(null)");
+        }else{
+            cntrycode.setText(countryCode);
+        }
         }
 
 
@@ -143,12 +88,12 @@ public class SignUpView extends Activity implements TextWatcher,OnClickListener 
                     authManager.signUpAuth(countryCode + enterdPhoneNo, Utils.deviceId.toString());
                 } else {
 
-                    fromSignalDialog(AlertMessage.phone);
+                    Utils.fromSignalDialog(this,AlertMessage.phone);
                     //Utils.showAlert(SignUpView.this, AlertMessage.phone);
                 }
             }else{
 
-                fromSignalDialog(AlertMessage.country);
+                Utils.fromSignalDialog(this,AlertMessage.country);
                // Utils.showAlert(SignUpView.this, AlertMessage.country);
             }
 			break;
@@ -179,29 +124,6 @@ public class SignUpView extends Activity implements TextWatcher,OnClickListener 
 	}
 
 
-    public String GetCountryZipCode(){
-        String CountryID="";
-        String CountryZipCode="";
-        try {
-            TelephonyManager manager = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
-            //getNetworkCountryIso
-            CountryID = manager.getSimCountryIso().toUpperCase();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-        String[] rl=this.getResources().getStringArray(R.array.CountryCodes);
-        for(int i=0;i<rl.length;i++){
-            String[] g=rl[i].split(",");
-            if(g[1].trim().equals(CountryID.trim())){
-                CountryZipCode=g[0];
-                Log.e("Code","Tis is Code>>>>>" +CountryZipCode);
-                break;
-            }
-        }
-        return CountryZipCode;
-    }
-
 
 
     @Override
@@ -227,11 +149,11 @@ public class SignUpView extends Activity implements TextWatcher,OnClickListener 
             finish();
         } else if (getMsg.equalsIgnoreCase("SignUp False")) {
             Utils.dismissBarDialog();
-            fromSignalDialog(AlertMessage.usrAllreadyExists);
+            Utils.fromSignalDialog(this,AlertMessage.usrAllreadyExists);
            // Utils.showAlert(SignUpView.this, AlertMessage.usrAllreadyExists);
         } else if(getMsg.equalsIgnoreCase("SignUp Network Error")){
             Utils.dismissBarDialog();
-            fromSignalDialog(AlertMessage.connectionError);
+            Utils.fromSignalDialog(this,AlertMessage.connectionError);
            // Utils.showAlert(this, AlertMessage.connectionError);
         }
     }
@@ -240,7 +162,7 @@ public class SignUpView extends Activity implements TextWatcher,OnClickListener 
     // Akshit Code Starts
     public void fromSignalDialog(String str){
 
-        dialog = new Dialog(SignUpView.this);
+        final Dialog dialog = new Dialog(SignUpView.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         dialog.setContentView(R.layout.alert_check_dialogs);

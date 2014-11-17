@@ -1004,6 +1004,7 @@ public class AuthManager {
                                         org.apache.http.Header[] headers, JSONObject response) {
                         super.onSuccess(statusCode, headers, response);
                         try {
+
                               Log.e(TAG, "response--> " + response);
                               success = response.getBoolean("success");
                               if (success) {
@@ -1058,6 +1059,7 @@ public class AuthManager {
 
                                     EventBus.getDefault().post("ProfileInfo True");
                               }
+
 
                         } catch (JSONException e) {
                               e.printStackTrace();

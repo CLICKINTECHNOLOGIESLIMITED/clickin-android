@@ -42,10 +42,9 @@ public class ViewShare extends Activity implements View.OnClickListener{
     private static final String TAG = ViewShare.class.getSimpleName();
     public static final List<String> PERMISSIONS = Arrays.asList("publish_actions");
     TextView mshr_point,mshr_comment;
-    EditText mshr_caption;
     private ChatManager chatManager;
     private AuthManager authManager;
-    private String relationshipId,chatId,accepted;
+    private String chatId,accepted;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +53,6 @@ public class ViewShare extends Activity implements View.OnClickListener{
         setContentView(R.layout.view_share_screen);
 
         findViewById(R.id.shr_facebook).setOnClickListener(this);
-      //  findViewById(R.id.shr_twitter).setOnClickListener(this);
-       // findViewById(R.id.shr_googleplus).setOnClickListener(this);
         findViewById(R.id.shr_btn_share).setOnClickListener(this);
         mshr_point=(TextView)findViewById(R.id.shr_point);
         mshr_comment=(TextView)findViewById(R.id.shr_comment);
@@ -96,10 +93,6 @@ public class ViewShare extends Activity implements View.OnClickListener{
                     Toast.makeText(getApplicationContext(), "Please Check Your Internet Connection", Toast.LENGTH_SHORT).show();
                 }
                 break;
-           /* case R.id.shr_twitter:
-                break;
-            case R.id.shr_googleplus:
-                break;*/
             case R.id.shr_btn_share:
                 break;
 

@@ -1,19 +1,23 @@
 package com.sourcefuse.clickinandroid.model.bean;
 
-public class ContactBean implements Comparable<ContactBean>{
+import java.util.Comparator;
+
+
+public class ContactBean {
 
     private String conName;
     private String conNumber;
     private String conUri;
-    private boolean isChecked;
 
 
-    public ContactBean(String conName, String conNumber, String conUri,boolean isChecked) {
+
+  /*  public ContactBean(String conName, String conNumber, String conUri,boolean isChecked) {
         this.conName = conName;
         this.conNumber = conNumber;
         this.conUri = conUri;
         this.isChecked = isChecked;
-    }
+    }*/
+
 
 
     public boolean isChecked() {
@@ -24,7 +28,7 @@ public class ContactBean implements Comparable<ContactBean>{
         this.isChecked = isChecked;
     }
 
-
+    private boolean isChecked;
     /**
      * @return the conName
      */
@@ -63,10 +67,5 @@ public class ContactBean implements Comparable<ContactBean>{
     }
 
 
-    @Override
-    public int compareTo(ContactBean other) {
 
-        /* For Ascending order*/
-        return this.getConName().compareTo(other.getConName());
-    }
 }

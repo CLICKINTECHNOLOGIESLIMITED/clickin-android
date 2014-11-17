@@ -40,8 +40,6 @@ import de.greenrobot.event.EventBus;
  */
 public class FeedCommentsView extends Activity {
     private ListView list;
-    private ArrayList<Section> sections = new ArrayList<Section>();
-
     private NewsFeedManager newsFeedManager;
     private AuthManager authMgr;
 
@@ -166,7 +164,6 @@ public class FeedCommentsView extends Activity {
         }
     }
     public void onEventMainThread(String message) {
-//        android.util.Log.d("Clickin", "onEventMainThread->" + message);
 
         if (message.equalsIgnoreCase("FetchCommentStatus True")) {
             if(feedList.size()>comment_count)
@@ -174,13 +171,10 @@ public class FeedCommentsView extends Activity {
             adapter = new FeedsCommentsAdapter(this, R.layout.view_feeds_comments_row, feedList);
             list.setAdapter(adapter);
             Utils.dismissBarDialog();
-//            android.util.Log.d("1", "message->" + message);
         } else if (message.equalsIgnoreCase("FetchCommentStatus False")) {
             Utils.dismissBarDialog();
-//            android.util.Log.d("2", "message->" + message);
         } else if (message.equalsIgnoreCase("FetchCommentStatus Network Error")) {
             Utils.showAlert(FeedCommentsView.this, AlertMessage.connectionError);
-//            android.util.Log.d("3", "message->" + message);
 
         }
     }

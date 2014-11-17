@@ -4,32 +4,20 @@
                 xmlns:geekui="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@android:color/black"
                 android:orientation="vertical">
 
-    <ScrollView
-        android:id="@+id/scroll_"
-        android:layout_width="fill_parent"
+
+    <com.edmodo.cropper.CropImageView
+        android:id="@+id/crop_image"
+        xmlns:custom="http://schemas.android.com/apk/res-auto"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        >
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        custom:imageResource="@drawable/ic_launcher"
+        />
 
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:orientation="horizontal"
-            android:layout_height="wrap_content">
-
-            <com.edmodo.cropper.CropImageView
-                android:id="@+id/crop_image"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_gravity="center"
-                />
-
-            <ImageView
-                android:id="@+id/real_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
-    </ScrollView>
 
     <LinearLayout
         android:id="@+id/btn_layout"
@@ -48,8 +36,8 @@
             android:layout_weight="1"
             android:text="@string/retake"
             android:textColor="@android:color/white"
-            android:textSize="16sp"
-            geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"/>
+            android:textSize="20sp"
+            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"/>
 
         <com.sourcefuse.clickinandroid.utils.ClickInTextView
             android:id="@+id/btn_use"
@@ -61,8 +49,8 @@
             android:gravity="right"
             android:text="@string/usephoto"
             android:textColor="@android:color/white"
-            android:textSize="16sp"
-            geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"/>
+            android:textSize="20sp"
+            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"/>
 
     </LinearLayout>
 </RelativeLayout>

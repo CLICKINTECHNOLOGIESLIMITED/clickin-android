@@ -74,16 +74,16 @@
 
         <activity
             android:name="com.sourcefuse.clickinandroid.view.SignInView"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait"></activity>
         <activity
             android:name="com.sourcefuse.clickinandroid.view.SpreadWordView"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait"></activity>
 
         <activity
             android:name="com.sourcefuse.clickinandroid.view.SignUpView"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible|adjustPan"></activity>
         <activity
@@ -92,42 +92,42 @@
             android:screenOrientation="portrait"></activity>
         <activity
             android:name="com.sourcefuse.clickinandroid.view.VerifyView"
-            android:launchMode="singleTask"
+
             android:windowSoftInputMode="stateVisible|adjustPan"
             android:screenOrientation="portrait"></activity>
         <activity
             android:name="com.sourcefuse.clickinandroid.view.PlayItSafeView"
-            android:launchMode="singleTask"
+
             android:windowSoftInputMode="stateVisible|adjustPan"
             android:screenOrientation="portrait"></activity>
         <activity
             android:name="com.sourcefuse.clickinandroid.view.UserProfileView"
-            android:launchMode="standard"
+
             android:screenOrientation="portrait"></activity>
         <activity
             android:name="com.sourcefuse.clickinandroid.view.FollowerList"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait"></activity>
 
         <activity
             android:name="com.sourcefuse.clickinandroid.view.AddViaNumberView"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait"></activity>
         <activity
             android:name="com.sourcefuse.clickinandroid.view.AddViaContactView"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait"></activity>
         <activity
             android:name="com.sourcefuse.clickinandroid.view.AddSomeoneView"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait"></activity>
         <activity
             android:name="com.sourcefuse.clickinandroid.view.CurrentClickersView"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait"></activity>
         <activity
             android:name="com.sourcefuse.clickinandroid.view.FollowingListView"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait"></activity>
         <activity
             android:name="com.sourcefuse.clickinandroid.view.JumpOtherProfileView"
@@ -176,7 +176,7 @@
 
         <activity
             android:name="com.sourcefuse.clickinandroid.view.Card"
-            android:launchMode="singleTask"
+
             android:screenOrientation="portrait" />
 
         <activity

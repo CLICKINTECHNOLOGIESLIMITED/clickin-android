@@ -31,12 +31,6 @@ public final class TestFragment extends Fragment {
         args.putInt("img", imageS);
         fragment.setArguments(args);
         return fragment;
-
-//		pathimage=imageUrl;
-//		couponN=couponName;
-//		pointsR= pointsRequired;
-//		couponId =i;
-//		return fragment;
     }
 
     @Override
@@ -46,7 +40,6 @@ public final class TestFragment extends Fragment {
         if(getArguments() != null) {
             imageS = getArguments().getInt("img");
         }
-        //fragVal = getArguments() != null ? getArguments().getInt("val") : 1;
     }
 
     @Override

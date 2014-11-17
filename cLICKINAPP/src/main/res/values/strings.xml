@@ -331,4 +331,10 @@
         <item>260,ZM</item>
         <item>263,ZW</item>
     </string-array>
+
+    <string name="retake">Retake</string>
+    <string name="usephoto">Use Photo</string>
+    <string name="cancel">Cancel</string>
+    <string name="choose">Choose</string>
+
 </resources>

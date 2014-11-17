@@ -86,8 +86,6 @@ public class ViewSpamorAbuse extends Activity implements View.OnClickListener {
                 if (Utils.isEmptyString(comment)) {
                     comment = "";
                 }
-
-                //Utils.launchBarDialog(ViewSpamorAbuse.this);
                 settingManager.reportaproblem(phone_no, user_token, problem_type, spam_or_abuse_type, comment);
 
                 break;
