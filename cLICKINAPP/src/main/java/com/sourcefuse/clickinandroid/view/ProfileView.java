@@ -168,8 +168,6 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
 
           });
 //ends
-
-
       }
 
       @Override
@@ -218,11 +216,12 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
                   switchView();
             } else if (message.equalsIgnoreCase("UpdateProfile False")) {
                   Utils.dismissBarDialog();
-                  alertDialog(authManager.getMessage());
+                  Utils.fromSignalDialog(this,authManager.getMessage());
                   //Utils.showAlert(ProfileView.this, authManager.getMessage());
             } else if (message.equalsIgnoreCase("UpdateProfile Network Error")) {
                   Utils.dismissBarDialog();
-                  alertDialog(AlertMessage.connectionError);
+                Utils.fromSignalDialog(this,AlertMessage.connectionError);
+                  //alertDialog(AlertMessage.connectionError);
                   //Utils.showAlert(this, AlertMessage.connectionError);
             }
 
@@ -280,7 +279,8 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
                                           profileManager.setProfile(fname.getText().toString(), lname.getText().toString(), authManager.getPhoneNo(),
                                                                            authManager.getUsrToken(), gender_var, "" + day + month + year, cityStr, countryStr, email.getText().toString(), "", Utils.encodeTobase64(bitmapImage));
                                     } else {
-                                          alertDialog(AlertMessage.vEmailid);
+                                        Utils.fromSignalDialog(this,AlertMessage.vEmailid);
+                                          //alertDialog(AlertMessage.vEmailid);
                                           //Utils.showAlert(ProfileView.this, AlertMessage.vEmailid);
                                     }
                               } else {
@@ -307,7 +307,8 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
                                           profileManager.setProfile(fname.getText().toString(), lname.getText().toString(), authManager.getPhoneNo(),
                                                                            authManager.getUsrToken(), gender_var, "" + day + month + year, cityStr, countryStr, email.getText().toString(), "", Utils.encodeTobase64(bitmap));
                                     } else {
-                                          alertDialog(AlertMessage.vEmailid);
+
+                                          Utils.fromSignalDialog(this,AlertMessage.vEmailid);
                                           //Utils.showAlert(ProfileView.this, AlertMessage.vEmailid);
                                     }
 
@@ -921,8 +922,6 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
                   long present = System.currentTimeMillis();
                   diffrence_in_mills = Math.abs(time - present);
 
-                  Log.e(TAG+"--------------->", "Diffrence in Mills " + diffrence_in_mills);
-
       /* code for age prafull */
 
                   age = getAge(selectedYear,selectedMonth,selectedDay);
@@ -964,26 +963,26 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
       public boolean updateProfileValidation() {
             Log.e(TAG, "mCurrentyear" + mCurrentyear + "  year " + year);
             if (fname.getText().toString().length() < 1) {
-                  alertDialog(AlertMessage.fname);
+                  Utils.fromSignalDialog(this,AlertMessage.fname);
                   // Utils.showAlert(ProfileView.this, AlertMessage.fname);
                   return false;
             } else if (lname.getText().toString().length() < 1) {
-                  alertDialog(AlertMessage.lname);
+                  Utils.fromSignalDialog(this,AlertMessage.lname);
                   // Utils.showAlert(ProfileView.this, AlertMessage.lname);
                   return false;
             } else if (email.getText().toString().length() < 1) {
-                  alertDialog(AlertMessage.emailid);
+                  Utils.fromSignalDialog(this,AlertMessage.emailid);
                   //   Utils.showAlert(ProfileView.this, AlertMessage.emailid);
                   return false;
             } else if ((mCurrentyear - year) == 0) {
                   Log.e(TAG, "mCurrentyear" + mCurrentyear + "  year " + year);
-                  alertDialog(AlertMessage.ageValid);
+                  Utils.fromSignalDialog(this,AlertMessage.ageValid);
                   // Utils.showAlert(ProfileView.this, AlertMessage.ageValid);
                   return false;
             }  // else if (periods_years.isLessThan(Years.years(17))) {
             else if (age < 17) {
                   Log.e(TAG, "mCurrentyear" + diffrence_in_mills + "  year " + mills_in_17yrs);
-                  alertDialog(AlertMessage.UDERAGEMSGII);
+                  Utils.fromSignalDialog(this,AlertMessage.UDERAGEMSGII);
                   //   Utils.showAlert(ProfileView.this, AlertMessage.UDERAGEMSGII);
                   return false;
             }
@@ -999,27 +998,6 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
             return period;
       }
 
-      public void alertDialog(String msgStrI) {
-          final Dialog dialog = new Dialog(ProfileView.this);
-            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-            dialog.setContentView(R.layout.alert_check_dialogs);
 
-            TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
-//        TextView msgII = (TextView) dialog.findViewById(R.id.alert_msgII);
-            msgI.setText(msgStrI);
-
-
-            // dialog.setCancelable(true);
-            Button dismiss = (Button) dialog.findViewById(R.id.coolio);
-
-            dismiss.setOnClickListener(new OnClickListener() {
-                  @Override
-                  public void onClick(View arg0) {
-                        dialog.dismiss();
-                  }
-            });
-            dialog.show();
-      }
 
 }

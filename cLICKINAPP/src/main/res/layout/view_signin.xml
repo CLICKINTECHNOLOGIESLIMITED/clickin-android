@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/white_pattern_bg"
-   >
+    >
 
     <RelativeLayout
         android:id="@+id/relative_layout"
@@ -88,7 +88,7 @@
             android:layout_below="@+id/linearLayout1"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:background="@drawable/c_getclicin_deactive" />
+            android:background="@drawable/c_getclicin_active" />
 
         <RelativeLayout
             android:id="@+id/ll_search"

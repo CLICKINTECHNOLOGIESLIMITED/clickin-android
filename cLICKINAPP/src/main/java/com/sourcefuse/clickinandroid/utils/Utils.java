@@ -120,6 +120,28 @@ public class Utils {
                 }).show();
 
     }
+    //akshit code starts
+    public static void fromSignalDialog1(Activity activity,String msgStrI, String msgStrII) {
+        dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.setContentView(R.layout.alert_nocheck);
+        dialog.setCancelable(false);
+        TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
+        TextView msgII = (TextView) dialog.findViewById(R.id.alert_msgII);
+        msgI.setText(msgStrI);
+        msgII.setText(msgStrII);
+
+        Button dismiss = (Button) dialog.findViewById(R.id.coolio);
+        dismiss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                dialog.dismiss();
+
+            }
+        });
+        dialog.show();
+    }
 
     //akshit code dialog
 
@@ -167,6 +189,14 @@ public class Utils {
         dialog.show();
     }
     // Ends
+
+ //Akshit Code starts
+    public static void followerAdapterdialog(Activity activity){
+
+
+
+    }
+
     public static String getCardURLForAndroid(String url) {
 
         String url_to_load = url.replaceFirst("cards\\/(\\d+)\\.jpg","cards\\/a\\/1080\\/$1\\.jpg");

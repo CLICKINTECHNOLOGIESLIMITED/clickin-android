@@ -5,10 +5,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.Typeface;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Editable;
@@ -43,14 +39,6 @@ import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URL;
-import java.net.URLConnection;
-
 import de.greenrobot.event.EventBus;
 
 
@@ -68,7 +56,7 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.view_signin);
-
+          getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
@@ -183,9 +171,13 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
         if (ephone.getText().toString().length() > 0 && ePwd.getText().toString().length() > 0) {
             activeDone = true;
             do_latter.setBackgroundResource(R.drawable.c_getclicin_active);
-        } else {
-            activeDone = false;
-            do_latter.setBackgroundResource(R.drawable.c_getclicin_deactive);
+//        } else if(ephone.getText().toString().length()==0){
+//            Utils.fromSignalDialog(this,AlertMessage.enterPhoneEmail);
+//
+////            activeDone = false;ep
+////            do_latter.setBackgroundResource(R.drawable.c_getclicin_deactive);
+//        }
+//       }
         }
 
     }
@@ -202,12 +194,18 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
                 InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(layout.getWindowToken(), 0);
 
-                if (activeDone) {
+                if (activeDone && ephone.getText().toString().length() >0 && ephone.getText().toString() != "+null" && ePwd.getText().toString().length()>0) {
                     getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
                     authManager = ModelManager.getInstance().getAuthorizationManager();
                     Utils.launchBarDialog(SignInView.this);
                     authManager.signIn(ephone.getText().toString(), ePwd.getText().toString(), authManager.getDeviceRegistereId(), Constants.DEVICETYPE);
                 }
+                else if(ephone.getText().toString().length() ==0){
+                    Utils.fromSignalDialog(this,AlertMessage.enterPhoneEmail);
+                }else if(ePwd.getText().toString().length()==0){
+                    Utils.fromSignalDialog(this,AlertMessage.enterPassword);
+                }
+
                 break;
             case R.id.tv_forgot_pwd:
                 forgetPasswordAlert(SignInView.this);
@@ -425,29 +423,7 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
     }
 
 
-    // Akshit Code Starts
-    public void fromSignalDialog(String str){
 
-       final Dialog dialog = new Dialog(SignInView.this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        dialog.setContentView(R.layout.alert_check_dialogs);
-        dialog.setCancelable(false);
-        TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
-        msgI.setText(str);
-
-
-        Button dismiss = (Button) dialog.findViewById(R.id.coolio);
-        dismiss.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                dialog.dismiss();
-
-            }
-        });
-        dialog.show();
-    }
-// Ends
 
 }
 
