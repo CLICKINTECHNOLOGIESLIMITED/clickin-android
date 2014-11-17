@@ -122,35 +122,36 @@ public class PlayItSafeView extends Activity implements View.OnClickListener,Tex
         }
     }
 
-    public void onEventMainThread(String message){
-        Log.d(TAG, "onEventMainThread->"+message);
+    public void onEventMainThread(String message) {
+        Log.d(TAG, "onEventMainThread->" + message);
 
-			authManager = ModelManager.getInstance().getAuthorizationManager();
-			if (message.equalsIgnoreCase("PlayItSafe True")) {
-                new FetchContactFromPhone(this).getClickerList(authManager.getPhoneNo(), authManager.getUsrToken(), 1);
+        authManager = ModelManager.getInstance().getAuthorizationManager();
+        if (message.equalsIgnoreCase("PlayItSafe True")) {
+            new FetchContactFromPhone(this).getClickerList(authManager.getPhoneNo(), authManager.getUsrToken(), 1);
 
 
-              } else if (message.equalsIgnoreCase("PlayItSafe False")) {
-              Utils.dismissBarDialog();
-              Utils.fromSignalDialog(this,authManager.getMessage());
+        } else if (message.equalsIgnoreCase("PlayItSafe False")) {
+            Utils.dismissBarDialog();
+            Utils.fromSignalDialog(this, authManager.getMessage());
             ;
             //	Utils.showAlert(PlayItSafeView.this, authManager.getMessage());
-             } else if(message.equalsIgnoreCase("PlayItSafe Network Error")){
-                Utils.dismissBarDialog();
-                Utils.fromSignalDialog(this,AlertMessage.connectionError);
-             } else  if (message.equalsIgnoreCase("CheckFriend True")) {
+        } else if (message.equalsIgnoreCase("PlayItSafe Network Error")) {
+            Utils.dismissBarDialog();
+            Utils.fromSignalDialog(this, AlertMessage.connectionError);
+        } else if (message.equalsIgnoreCase("CheckFriend True")) {
             Utils.dismissBarDialog();
             switchView();
 
-          } else if (message.equalsIgnoreCase("CheckFriend False")) {
+        } else if (message.equalsIgnoreCase("CheckFriend False")) {
             Utils.dismissBarDialog();
             //  Utils.showAlert(this,authManager.getMessage());
-            Utils.fromSignalDialog(this,authManager.getMessage());
-          } else if(message.equalsIgnoreCase("CheckFriend Network Error")){
+            Utils.fromSignalDialog(this, authManager.getMessage());
+        } else if (message.equalsIgnoreCase("CheckFriend Network Error")) {
             Utils.dismissBarDialog();
             //    Utils.showAlert(this, AlertMessage.connectionError);
-            Utils.fromSignalDialog( this,AlertMessage.connectionError);
+            Utils.fromSignalDialog(this, AlertMessage.connectionError);
         }
+    }
 
     private void switchView() {
         Intent intent = new Intent(PlayItSafeView.this, AddSomeoneView.class);
