@@ -10,6 +10,8 @@ import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
@@ -60,7 +62,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.view_userprofile);
-
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         addMenu(true);
         this.overridePendingTransition(R.anim.slide_in_right ,R.anim.slide_out_right);
         authManager = ModelManager.getInstance().getAuthorizationManager();
@@ -73,6 +75,25 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
 
         mUserRelationlistView = (ListView) findViewById(R.id.list_click_with_profile);
         mUserRelationlistView.setDivider(getResources().getDrawable(R.drawable.owner_profile_side_line));
+
+
+//        // akshit code for closing keypad if touched anywhere outside
+//        ((RelativeLayout) findViewById(R.id.rl_usr_profile)).setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View arg0) {
+//
+//                InputMethodManager imm = (InputMethodManager) getSystemService(
+//                        INPUT_METHOD_SERVICE);
+//                imm.hideSoftInputFromWindow(userimage.getWindowToken(), 0);
+//
+//
+//            }
+//
+//        });
+//
+////ends
+
 
         // menu = (ImageView) findViewById(R.id.iv_menu);
         // notification = (ImageView) findViewById(R.id.iv_notification);
@@ -174,6 +195,13 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         //setlist();
 
 
+            findViewById(R.id.iv_usr_icon).setOnClickListener(new View.OnClickListener() {
+                  @Override
+                  public void onClick(View view) {
+                        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
+                  }
+            });
 
 
 
@@ -468,10 +496,13 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
            relationManager.getRelationShips(authManager.getPhoneNo(), authManager.getUsrToken());
         } else if (message.equalsIgnoreCase("deleteRelationship False")) {
            Utils.dismissBarDialog();
-            Utils.showAlert(UserProfileView.this, authManager.getMessage());
+           Utils.fromSignalDialog(this,authManager.getMessage());
+            //Utils.showAlert(UserProfileView.this, authManager.getMessage());
         } else if(message.equalsIgnoreCase("deleteRelationship Error")){
             Utils.dismissBarDialog();
-            Utils.showAlert(UserProfileView.this, AlertMessage.connectionError);
+              Utils.fromSignalDialog(this,AlertMessage.connectionError);
+
+            //Utils.showAlert(UserProfileView.this, AlertMessage.connectionError);
         }else if (message.equalsIgnoreCase("GetRelationShips False")) {
            Utils.dismissBarDialog();
            doRestInitialization();
@@ -479,7 +510,8 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
   //         setlist();
        } else if(message.equalsIgnoreCase("GetRelationShips Network Error")){
            Utils.dismissBarDialog();
-           Utils.showAlert(UserProfileView.this, AlertMessage.connectionError);
+           Utils.fromSignalDialog(this,AlertMessage.connectionError);
+           //Utils.showAlert(UserProfileView.this, AlertMessage.connectionError);
        }else if (message.equalsIgnoreCase("updateStatus true")) {
            relationManager.getRelationShips(authManager.getPhoneNo(), authManager.getUsrToken());
         }/*else if (message.equalsIgnoreCase("SearchResult True")) {
@@ -512,10 +544,12 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
            relationManager. getRelationShips(authManager.getPhoneNo(), authManager.getUsrToken());
        } else if (message.equalsIgnoreCase("ProfileInfo False")) {
            Utils.dismissBarDialog();
-           Utils.showAlert(UserProfileView.this, authManager.getMessage());
+           Utils.fromSignalDialog(this,authManager.getMessage());
+           //Utils.showAlert(UserProfileView.this, authManager.getMessage());
        } else if(message.equalsIgnoreCase("ProfileInfo Network Error")){
            Utils.dismissBarDialog();
-           Utils.showAlert(UserProfileView.this, AlertMessage.connectionError);
+           Utils.fromSignalDialog(this,AlertMessage.connectionError);
+           //Utils.showAlert(UserProfileView.this, AlertMessage.connectionError);
        } /*else if(message.equalsIgnoreCase("GetFollower True")){
            Utils.dismissBarDialog();
            doRestInitialization();

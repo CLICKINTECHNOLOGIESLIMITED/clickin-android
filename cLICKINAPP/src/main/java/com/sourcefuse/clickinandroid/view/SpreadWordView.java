@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -22,7 +21,6 @@ import com.quickblox.module.chat.xmpp.QBPrivateChat;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.ProfileManager;
-import com.sourcefuse.clickinandroid.model.bean.ContactBean;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.FetchContactFromPhone;
@@ -31,8 +29,6 @@ import com.sourcefuse.clickinandroid.view.adapter.SpreadWordAdapter;
 import com.sourcefuse.clickinapp.R;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.ListIterator;
 
 import de.greenrobot.event.EventBus;
@@ -44,10 +40,9 @@ public class SpreadWordView extends Activity implements OnClickListener {
 
     private Button phonebook, facebook;
     private QBPrivateChat chat;
-    Dialog dialog ;
+    Dialog dialog;
     private AuthManager authManager;
     private ProfileManager profilemanager;
-
 
 
     @Override
@@ -55,7 +50,7 @@ public class SpreadWordView extends Activity implements OnClickListener {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.view_spread_word);
-        this.overridePendingTransition(R.anim.slide_in_right ,R.anim.slide_out_right);
+        this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
         phonebook = (Button) findViewById(R.id.btn_phb);
         facebook = (Button) findViewById(R.id.btn_fb);
 
@@ -68,13 +63,11 @@ public class SpreadWordView extends Activity implements OnClickListener {
         facebook.setOnClickListener(this);
 
 
-
-
         AuthManager authManager = ModelManager.getInstance().getAuthorizationManager();
-      //  EventBus.getDefault().register(this);
+        //  EventBus.getDefault().register(this);
         Utils.groupSms.clear();
         //Utils.launchBarDialog(this);
-      //  new FetchContactFromPhone(SpreadWordView.this).getClickerList(authManager.getPhoneNo(),authManager.getUsrToken(),1);
+        //  new FetchContactFromPhone(SpreadWordView.this).getClickerList(authManager.getPhoneNo(),authManager.getUsrToken(),1);
         //   setlist();
         profilemanager=ModelManager.getInstance().getProfileManager();
 
@@ -88,11 +81,11 @@ public class SpreadWordView extends Activity implements OnClickListener {
     }
 
 
-	public void setlist() {
-        ProfileManager  profilemanager = ModelManager.getInstance().getProfileManager();
+    public void setlist() {
+        ProfileManager profilemanager = ModelManager.getInstance().getProfileManager();
         ListView listView = (ListView) findViewById(R.id.list_current_clickers);
-        SpreadWordAdapter adapter = new SpreadWordAdapter(SpreadWordView.this,R.layout.row_invitefriend, profilemanager.spreadTheWorldList);
-		listView.setAdapter(adapter);
+        SpreadWordAdapter adapter = new SpreadWordAdapter(SpreadWordView.this, R.layout.row_invitefriend, profilemanager.spreadTheWorldList);
+        listView.setAdapter(adapter);
 
     }
 
@@ -112,11 +105,11 @@ public class SpreadWordView extends Activity implements OnClickListener {
     @Override
     public void onStart() {
         super.onStart();
-        if(!(EventBus.getDefault().isRegistered(this)))
+        if (!(EventBus.getDefault().isRegistered(this)))
             EventBus.getDefault().register(this);
     }
 
-    public void onStop(){
+    public void onStop() {
         super.onStop();
         if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this);
@@ -144,12 +137,11 @@ public class SpreadWordView extends Activity implements OnClickListener {
                         Session.setActiveSession(session);
                     }
                     if (!session.isOpened() && !session.isClosed()) {
-                        session.openForRead(new Session.OpenRequest(this).setCallback(callback).setPermissions("user_birthday","basic_info","email","user_location"));
+                        session.openForRead(new Session.OpenRequest(this).setCallback(callback).setPermissions("user_birthday", "basic_info", "email", "user_location"));
                     } else {
                         Session.openActiveSession(this, true, callback);
                     }
-                }
-                else{
+                } else {
                     Toast.makeText(getApplicationContext(), "Please Check Your Internet Connection", Toast.LENGTH_SHORT).show();
                 }
                 break;
@@ -162,22 +154,22 @@ public class SpreadWordView extends Activity implements OnClickListener {
                 Utils.launchBarDialog(this);
 
                 //   authManager.getProfileInfo("", authManager.getPhoneNo(), authManager.getUsrToken());
-                Intent clickersView = new Intent(SpreadWordView.this,UserProfileView.class);
+                Intent clickersView = new Intent(SpreadWordView.this, UserProfileView.class);
                 clickersView.putExtra("FromSignup", true);
                 startActivity(clickersView);
                 finish();
                 break;
             case R.id.btn_invite:
-                if(Utils.groupSms.size()>0) {
+                if (Utils.groupSms.size() > 0) {
                     Intent smsIntent = new Intent(Intent.ACTION_VIEW);
                     smsIntent.putExtra("sms_body", Constants.SEND_REQUEST_WITH_SMS_MESSAGE_SPREAD);
 
                     StringBuilder uri = new StringBuilder("sms:");
-                    ListIterator<String> iterator=Utils.groupSms.listIterator();
-                    while(iterator.hasNext()){
-                        String num=iterator.next();
+                    ListIterator<String> iterator = Utils.groupSms.listIterator();
+                    while (iterator.hasNext()) {
+                        String num = iterator.next();
                         uri.append(num);
-                        if(iterator.hasNext())
+                        if (iterator.hasNext())
                             uri.append(",");
                     }
 
@@ -199,8 +191,8 @@ public class SpreadWordView extends Activity implements OnClickListener {
             }*/
 
 
-                }else{
-                    fromSignalDialog(AlertMessage.GROUPSMSMSG);
+                } else {
+                    Utils.fromSignalDialog(this, AlertMessage.GROUPSMSMSG);
                     //Utils.showAlert(SpreadWordView.this, AlertMessage.GROUPSMSMSG);
                 }
                 break;
@@ -212,9 +204,9 @@ public class SpreadWordView extends Activity implements OnClickListener {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         try {
             super.onActivityResult(requestCode, resultCode, data);
-            try{
+            try {
                 Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
-            }catch(Exception e){
+            } catch (Exception e) {
             }
         } catch (Exception e) {
             //   android.util.Log.d(TAG, "" + e);
@@ -223,6 +215,7 @@ public class SpreadWordView extends Activity implements OnClickListener {
         }
         Utils.dismissBarDialog();
     }
+
     //Methods for Facebook
     private Session.StatusCallback callback = new Session.StatusCallback() {
         @Override
@@ -231,6 +224,7 @@ public class SpreadWordView extends Activity implements OnClickListener {
             onSessionStateChange(session, state, exception);
         }
     };
+
     private void onSessionStateChange(Session session, SessionState state,
                                       Exception exception) {
         if (state.isOpened()) {
@@ -267,7 +261,7 @@ public class SpreadWordView extends Activity implements OnClickListener {
                                                            //    Log.e(TAG, "Request cancelled");
                                                            Utils.dismissBarDialog();
                                                        }
-                                                   }catch (Exception e){
+                                                   } catch (Exception e) {
 
                                                    }
 
@@ -284,15 +278,12 @@ public class SpreadWordView extends Activity implements OnClickListener {
                             build();
 
             requestsDialog.show();
-        }catch (Exception e){}
+        } catch (Exception e) {
+        }
     }
 
 
-
-
-
-
-    public void onEventMainThread(String message){
+    public void onEventMainThread(String message) {
         // android.util.Log.d(TAG, "onEventMainThread->" + message);
         if (message.equalsIgnoreCase("CheckFriend True")) {
             Utils.dismissBarDialog();
@@ -300,32 +291,14 @@ public class SpreadWordView extends Activity implements OnClickListener {
         } else if (message.equalsIgnoreCase("CheckFriend False")) {
             Utils.dismissBarDialog();
 
-        } else if(message.equalsIgnoreCase("CheckFriend Network Error")){
+        } else if (message.equalsIgnoreCase("CheckFriend Network Error")) {
             Utils.dismissBarDialog();
-            fromSignalDialog(AlertMessage.connectionError);
+
+            Utils.fromSignalDialog(this, AlertMessage.connectionError);
+            //  Utils.showAlert(SpreadWordView.this, AlertMessage.connectionError);
 
         }
     }
 
-    // Akshit Code Starts
-    public void fromSignalDialog(String str){
 
-       final Dialog dialog = new Dialog(SpreadWordView.this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        dialog.setContentView(R.layout.alert_check_dialogs);
-        dialog.setCancelable(false);
-        TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
-        msgI.setText(str);
-        Button dismiss = (Button) dialog.findViewById(R.id.coolio);
-        dismiss.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                dialog.dismiss();
-
-            }
-        });
-        dialog.show();
-    }
-// Ends
 }

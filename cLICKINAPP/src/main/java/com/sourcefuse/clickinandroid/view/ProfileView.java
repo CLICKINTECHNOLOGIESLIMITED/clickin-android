@@ -154,8 +154,7 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
               @Override
               public void onClick(View arg0) {
 
-                  InputMethodManager imm = (InputMethodManager)getSystemService(
-                          INPUT_METHOD_SERVICE);
+                  InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
                   imm.hideSoftInputFromWindow(fname.getWindowToken(), 0);
                   imm.hideSoftInputFromWindow(lname.getWindowToken(), 0);
                   imm.hideSoftInputFromWindow(city.getWindowToken(), 0);

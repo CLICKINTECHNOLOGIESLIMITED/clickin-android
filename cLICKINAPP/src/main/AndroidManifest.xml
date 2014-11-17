@@ -46,7 +46,7 @@
 
     <uses-permission android:name="com.example.gcm.permission.C2D_MESSAGE" />
     <uses-permission android:name="android.permission.GET_TASKS" ></uses-permission>
-
+    <uses-permission android:name="android.permission.SEND_SMS"/>
     <application
         android:allowBackup="true"
         android:icon="@drawable/app_icon"
@@ -261,7 +261,12 @@
             android:screenOrientation="portrait">
         </activity>
 
-        <activity android:name="com.sourcefuse.clickinandroid.view.CropView"></activity>
+        <activity
+            android:name="com.sourcefuse.clickinandroid.view.CropView"
+            android:launchMode="standard"
+            android:screenOrientation="portrait">
+        </activity>
+
         <meta-data android:name="com.crashlytics.ApiKey" android:value="3bcf050521edeb5967467d700b8aadf40e0664cc"/>
     </application>
 

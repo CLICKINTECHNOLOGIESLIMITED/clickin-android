@@ -313,12 +313,13 @@ public class SettingView extends Activity implements View.OnClickListener {
                               Utils.launchBarDialog(SettingView.this);
                               settingManager.changePassword(phone_no, user_token, old_password, new_password, confirm_password);
                         } else if (!new_password.equalsIgnoreCase(confirm_password)) {
-                              Utils.showAlert(this, AlertMessage.CHANGE_PASSWORD_NOT_MATCH);
+                            Utils.fromSignalDialog(this,AlertMessage.CHANGE_PASSWORD_NOT_MATCH);
+                              //Utils.showAlert(this, AlertMessage.CHANGE_PASSWORD_NOT_MATCH);
                         } else if (Utils.isEmptyString(old_password) || Utils.isEmptyString(new_password) || Utils.isEmptyString(confirm_password)) {
-                              Utils.showAlert(this, AlertMessage.CHANGE_PASSWORD);
+                              Utils.fromSignalDialog(this, AlertMessage.CHANGE_PASSWORD);
                         } else if (old_password.length() < 8 || new_password.length() < 8 || confirm_password.length() < 8) {
 
-                              Utils.showAlert(this, AlertMessage.CHANGE_PASSWORD_CHARACTER);
+                              Utils.fromSignalDialog(this, AlertMessage.CHANGE_PASSWORD_CHARACTER);
                         }
 
                         break;
@@ -384,15 +385,15 @@ public class SettingView extends Activity implements View.OnClickListener {
       public void onEventMainThread(String message) {
             if (message.equalsIgnoreCase("ChangePassword True")) {
                   Utils.dismissBarDialog();
-                  Utils.showAlert(this, AlertMessage.CHANGE_PASSWORD_SUCESS);
+                  Utils.fromSignalDialog(this, AlertMessage.CHANGE_PASSWORD_SUCESS);
             }
             if (message.equalsIgnoreCase("ChangePassword Network Error")) {
                   Utils.dismissBarDialog();
-                  Utils.showAlert(this, AlertMessage.connectionError);
+                  Utils.fromSignalDialog(this, AlertMessage.connectionError);
             }
             if (message.equalsIgnoreCase("ChangePassword False")) {
                   Utils.dismissBarDialog();
-                  Utils.showAlert(this, AlertMessage.CHANGE_PASSWORD_FAILURE);
+                  Utils.fromSignalDialog(this, AlertMessage.CHANGE_PASSWORD_FAILURE);
             }
             if (message.equalsIgnoreCase("ReportaProblem True")) {
                   Utils.dismissBarDialog();

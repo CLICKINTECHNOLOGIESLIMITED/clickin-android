@@ -1,13 +1,11 @@
 package com.sourcefuse.clickinandroid.view;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
@@ -18,13 +16,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-import com.facebook.android.Util;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
-import com.sourcefuse.clickinandroid.model.ProfileManager;
-import com.sourcefuse.clickinandroid.model.bean.ContactBean;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.FetchContactFromPhone;
@@ -185,37 +179,13 @@ public class AddSomeoneView extends Activity implements
         } else if (message.equalsIgnoreCase("CheckFriend False")) {
             Utils.dismissBarDialog();
           //  Utils.showAlert(this,authManager.getMessage());
-            fromSignalDialog(authManager.getMessage());
+            Utils.fromSignalDialog(this,authManager.getMessage());
         } else if(message.equalsIgnoreCase("CheckFriend Network Error")){
             Utils.dismissBarDialog();
         //    Utils.showAlert(this, AlertMessage.connectionError);
-            fromSignalDialog( AlertMessage.connectionError);
+            Utils.fromSignalDialog( this,AlertMessage.connectionError);
         }
     }
 
-
-
-    // Akshit Code Starts
-    public void fromSignalDialog(String str){
-
-        final Dialog dialog = new Dialog(AddSomeoneView.this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        dialog.setContentView(R.layout.alert_check_dialogs);
-        dialog.setCancelable(false);
-        TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
-        msgI.setText(str);
-
-        Button dismiss = (Button) dialog.findViewById(R.id.coolio);
-        dismiss.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                dialog.dismiss();
-
-            }
-        });
-        dialog.show();
-    }
-// Ends
 
 }

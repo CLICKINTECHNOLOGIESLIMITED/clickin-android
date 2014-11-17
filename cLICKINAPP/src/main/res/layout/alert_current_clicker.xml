@@ -40,14 +40,11 @@
             android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/alert_msgI"
-
             android:textSize="20dp"
             android:text="Skip"
-
             android:textStyle="bold"
             android:textColor="@color/white"
             android:layout_marginTop="40dp"
-
             android:background="@drawable/blue_btn" />
 
         <Button
@@ -57,8 +54,7 @@
             android:layout_below="@+id/alert_msgI"
             android:layout_centerHorizontal="true"
             android:textSize="20dp"
-            android:text="OK"
-
+            android:text="Ok"
             android:textStyle="bold"
             android:textColor="@color/white"
             android:layout_marginTop="40dp"

@@ -3,7 +3,9 @@ package com.sourcefuse.clickinandroid.view;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+
 import android.graphics.Bitmap;
+
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Telephony;
@@ -153,6 +155,7 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
                 Utils.launchBarDialog(this);
                 authManager.sendNewRequest(authManager.getPhoneNo(), mPhNo, authManager.getUsrToken());
             }else{
+<<<<<<< HEAD
                 /* send sms if not not register */
                  /*  send sms for nexus 5 check build version*/
                  /* prafull code */
@@ -186,15 +189,56 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
                     e.printStackTrace();
                     Log.e("Exception to send sms--->", "" + e.toString());
                 }
+=======
+>>>>>>> cd6bd6158bee7a225fef6522ed0af42ab7653d7c
                 /*Intent smsIntent = new Intent(Intent.ACTION_VIEW);
                 smsIntent.putExtra("sms_body", Constants.SEND_REQUEST_WITH_SMS_MESSAGE);
                 smsIntent.putExtra("address", mPhNo);
                 smsIntent.setType("vnd.android-dir/mms-sms");
                 startActivity(smsIntent);*/
+<<<<<<< HEAD
+=======
+
+                  /* send sms if not not register */
+                 /*  send sms for nexus 5 check build version*/
+                 /* prafull code */
+                  try {
+
+
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) //At least KitKat
+                        {
+                              String defaultSmsPackageName = Telephony.Sms.getDefaultSmsPackage(AddViaContactView.this); //Need to change the build to API 19
+
+                              Intent sendIntent = new Intent(Intent.ACTION_SEND);
+                              sendIntent.setType("text/plain");
+                              sendIntent.putExtra(Intent.EXTRA_TEXT, Constants.SEND_REQUEST_WITH_SMS_MESSAGE);
+
+                              if (defaultSmsPackageName != null)//Can be null in case that there is no default, then the user would be able to choose any app that support this intent.
+                              {
+                                    sendIntent.setPackage(defaultSmsPackageName);
+                              }
+                              startActivity(sendIntent);
+
+                        } else //For early versions, do what worked for you before.
+                        {
+                              Intent smsIntent = new Intent(Intent.ACTION_VIEW);
+                              smsIntent.putExtra("sms_body", Constants.SEND_REQUEST_WITH_SMS_MESSAGE);
+                              smsIntent.putExtra("address", mPhNo);
+                              smsIntent.setType("vnd.android-dir/mms-sms");
+                              startActivity(smsIntent);
+                        }
+
+                  } catch (Exception e) {
+                        e.printStackTrace();
+                        Log.e("Exception to send sms--->", "" + e.toString());
+                  }
+>>>>>>> cd6bd6158bee7a225fef6522ed0af42ab7653d7c
             }
-         }else {
-                    fromSignalDialog(AlertMessage.phone);
-                }
+
+ }else {
+                    Utils.fromSignalDialog(this,AlertMessage.phone);
+
+         }
 			break;
 		}
 		
@@ -234,11 +278,11 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
         } else if (message.equalsIgnoreCase("RequestSend False")) {
             Utils.dismissBarDialog();
             Log.d("2", "message->"+message);
-            fromSignalDialog(authManager.getMessage());
+            Utils.fromSignalDialog(this,authManager.getMessage());
           //  Utils.showAlert(AddViaContactView.this, authManager.getMessage());
         } else if(message.equalsIgnoreCase("RequestSend Network Error")){
             Utils.dismissBarDialog();
-            fromSignalDialog(AlertMessage.connectionError);
+            Utils.fromSignalDialog(this,AlertMessage.connectionError);
            // Utils.showAlert(AddViaContactView.this, AlertMessage.connectionError);
             Log.d("3", "message->"+message);
 
@@ -257,28 +301,8 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
 		super.onDestroy();
 	}
 
-    // Akshit Code Starts
-    public void fromSignalDialog(String str){
-
-        final Dialog dialog = new Dialog(AddViaContactView.this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        dialog.setContentView(R.layout.alert_check_dialogs);
-        dialog.setCancelable(false);
-        TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
-        msgI.setText(str);
 
 
-        Button dismiss = (Button) dialog.findViewById(R.id.coolio);
-        dismiss.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                dialog.dismiss();
-
-            }
-        });
-        dialog.show();
-    }
 
 
     // akshit code start for Active and inActive Button
