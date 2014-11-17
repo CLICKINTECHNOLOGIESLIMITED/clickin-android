@@ -2,13 +2,13 @@
 package com.sourcefuse.clickinandroid.view.adapter;
 
 import android.app.Activity;
-import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -42,10 +42,12 @@ public class FollowerAdapter extends ArrayAdapter<FollowerFollowingBean> {
     private RelationManager relationManager;
     private ProfileManager profileManager;
     private Typeface typeface;
+    FollowerFollowingBean item ;
+    RecordHolder vholder ;
 
 
 
-	public FollowerAdapter(Context context, int layoutResourceId,
+    public FollowerAdapter(Context context, int layoutResourceId,
 			List<FollowerFollowingBean> item) {
 		super(context, layoutResourceId, item);
 		this.layoutResourceId = layoutResourceId;
@@ -55,7 +57,7 @@ public class FollowerAdapter extends ArrayAdapter<FollowerFollowingBean> {
 
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
-		final FollowerFollowingBean item = getItem(position);
+		item = getItem(position);
 		View row = convertView;
 		RecordHolder holder = null;
 		if (row == null) {
@@ -210,34 +212,34 @@ public class FollowerAdapter extends ArrayAdapter<FollowerFollowingBean> {
 
 
 
-        final RecordHolder vholder = (RecordHolder) row.getTag();
+         vholder = (RecordHolder) row.getTag();
         rholder.reqbtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 authManager = ModelManager.getInstance().getAuthorizationManager();
                 relationManager = ModelManager.getInstance().getRelationManager();
                 if(!Utils.isEmptyString(item.getAccepted()) && item.getAccepted().matches("true") && item.getFollowingAccepted().matches("true") && item.getIsFollowing().matches("true")){
-
-                    new AlertDialog.Builder(context).setMessage(AlertMessage.UNFOLLOWUSER).setPositiveButton("Ok",
-                            new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-
-                                    vholder.reqbtn.setBackgroundResource(R.drawable.follow);
-                                 relationManager.unFollowUser(item.getFollowingId(),"true", authManager.getPhoneNo(), authManager.getUsrToken());
-                                    item.setIsFollowing("false");
-                                    item.setFollowingAccepted("false");
-                                    //FollowerList.adapter.notifyDataSetChanged();
-                                    Log.e(TAG, "Click - holder.follow="+item.getIsFollowing());
-                                }
-
-                            }
-                    ).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-
-                    }).show();
+                                 unfallowDialog();
+//                    new AlertDialog.Builder(context).setMessage(AlertMessage.UNFOLLOWUSER).setPositiveButton("Ok",
+//                            new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialog, int which) {
+//
+//                                    vholder.reqbtn.setBackgroundResource(R.drawable.follow);
+//                                 relationManager.unFollowUser(item.getFollowingId(),"true", authManager.getPhoneNo(), authManager.getUsrToken());
+//                                    item.setIsFollowing("false");
+//                                    item.setFollowingAccepted("false");
+//                                    //FollowerList.adapter.notifyDataSetChanged();
+//                                    Log.e(TAG, "Click - holder.follow="+item.getIsFollowing());
+//                                }
+//
+//                            }
+//                    ).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            dialog.dismiss();
+//                        }
+//
+//                    }).show();
                 }else if(!Utils.isEmptyString(item.getAccepted()) && item.getAccepted().matches("true") && item.getIsFollowing().matches("false") && item.getFollowingAccepted().matches("false")){
                     vholder.reqbtn.setBackgroundResource(R.drawable.requested_grey);
                    relationManager.followUser(item.getPhoneNo(), authManager.getPhoneNo(), authManager.getUsrToken());
@@ -306,6 +308,44 @@ public class FollowerAdapter extends ArrayAdapter<FollowerFollowingBean> {
 
 
 	}
+
+    // Akshit Code Starts to show pop-up for unfollowing friend
+    public void unfallowDialog(){
+
+        final Dialog dialog = new Dialog(((Activity)context));
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.setContentView(R.layout.alert_current_clicker);
+        dialog.setCancelable(false);
+        TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
+
+        msgI.setText(AlertMessage.unFollowselecteduser);
+
+        Button skip = (Button)dialog.findViewById(R.id.coolio);
+        skip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                vholder.reqbtn.setBackgroundResource(R.drawable.follow);
+                relationManager.unFollowUser(item.getFollowingId(),"true", authManager.getPhoneNo(), authManager.getUsrToken());
+                item.setIsFollowing("false");
+                item.setFollowingAccepted("false");
+                //FollowerList.adapter.notifyDataSetChanged();
+                Log.e(TAG, "Click - holder.follow="+item.getIsFollowing());
+                dialog.dismiss();
+            }
+        });
+
+        Button dismiss = (Button) dialog.findViewById(R.id.coolio1);
+        dismiss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                dialog.dismiss();
+
+            }
+        });
+        dialog.show();
+    }
+// Ends
 
 
 }

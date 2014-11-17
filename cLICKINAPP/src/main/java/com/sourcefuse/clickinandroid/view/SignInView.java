@@ -59,33 +59,17 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
     private Button do_latter;
     private TextView forgotPwd, signUp;
     private EditText ephone, ePwd,getemailid ;
-    public static Activity act;
-    public static Context context;
-
-    // private boolean activeDone = false;
-    private boolean activeDone=true;
+    private boolean activeDone = false;
     private AuthManager authManager;
-    private QBPrivateChat chat;
-    Dialog dialog ;
-
-
-    private SettingManager settingManager;
-
-    private Typeface typeface, typefaceBold;
     private Dialog mDialog;
-    public Thread myThread;
-    boolean gotoProfile = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.view_signin);
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-        act = this;
-        context = this;
-        typeface = Typeface.createFromAsset(SignInView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
-        typefaceBold = Typeface.createFromAsset(SignInView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_BOLD);
+
+
         this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
         authManager = ModelManager.getInstance().getAuthorizationManager();
@@ -107,11 +91,11 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
         ephone.setOnClickListener(this);
         ePwd.setOnClickListener(this);
 
-        ephone.setTypeface(typefaceBold);
+        /*ephone.setTypeface(typefaceBold);
         ePwd.setTypeface(typefaceBold);
         forgotPwd.setTypeface(typeface);
         signUp.setTypeface(typeface);
-        signUp.setTypeface(typeface);
+        signUp.setTypeface(typeface);*/
 
 
         // akshit code for closing keypad if touched anywhere outside
@@ -144,6 +128,8 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
 
         } catch (Exception e) {
         }
+
+
 
 
         ephone.setSelection(ephone.getText().toString().length());
@@ -197,13 +183,9 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
         if (ephone.getText().toString().length() > 0 && ePwd.getText().toString().length() > 0) {
             activeDone = true;
             do_latter.setBackgroundResource(R.drawable.c_getclicin_active);
-//        } else if(ephone.getText().toString().length()==0){
-//            Utils.fromSignalDialog(this,AlertMessage.enterPhoneEmail);
-//
-////            activeDone = false;ep
-////            do_latter.setBackgroundResource(R.drawable.c_getclicin_deactive);
-//        }
-//       }
+        } else {
+            activeDone = false;
+            do_latter.setBackgroundResource(R.drawable.c_getclicin_deactive);
         }
 
     }
@@ -220,25 +202,19 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
                 InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(layout.getWindowToken(), 0);
 
-                if (activeDone && ephone.getText().toString().length() >0 && ephone.getText().toString() != "+null" && ePwd.getText().toString().length()>0) {
+                if (activeDone) {
                     getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
                     authManager = ModelManager.getInstance().getAuthorizationManager();
                     Utils.launchBarDialog(SignInView.this);
                     authManager.signIn(ephone.getText().toString(), ePwd.getText().toString(), authManager.getDeviceRegistereId(), Constants.DEVICETYPE);
                 }
-                else if(ephone.getText().toString().length() ==0){
-                    Utils.fromSignalDialog(this,AlertMessage.enterPhoneEmail);
-                }else if(ePwd.getText().toString().length()==0){
-                    Utils.fromSignalDialog(this,AlertMessage.enterPassword);
-                }
-
                 break;
             case R.id.tv_forgot_pwd:
                 forgetPasswordAlert(SignInView.this);
                 break;
             case R.id.tv_signup:
                 Intent intent = new Intent(SignInView.this, SignUpView.class);
-                //   intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+             //   intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
                 break;
@@ -246,11 +222,11 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
     }
 
 
-
+    
 
     private void switchView() {
         Intent intent = new Intent(SignInView.this, UserProfileView.class);
-        //  intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+      //  intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();
     }
@@ -267,7 +243,7 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
     public void onStop() {
         super.onStop();
 
-        EventBus.getDefault().unregister(this);
+            EventBus.getDefault().unregister(this);
 
     }
 
@@ -282,15 +258,15 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
             editor.putString("myPhoneNo",authManager.getPhoneNo());
             editor.commit();
 
-            //  new MyPreference(SignInView.this).setToken(authManager.getUsrToken());
+          //  new MyPreference(SignInView.this).setToken(authManager.getUsrToken());
             //new MyPreference(SignInView.this).setmyPhoneNo(authManager.getPhoneNo());
 
             loginToQuickBlox();
             authManager.getProfileInfo("", authManager.getPhoneNo(), authManager.getUsrToken());
         } else if (getMsg.equalsIgnoreCase("SignIn False")) {
             Utils.dismissBarDialog();
-            Utils.fromSignalDialog(this,AlertMessage.wrong_signIn_details);
-            //  Utils.showAlert(this,AlertMessage.wrong_signIn_details);
+           Utils.fromSignalDialog(this,AlertMessage.wrong_signIn_details);
+          //  Utils.showAlert(this,AlertMessage.wrong_signIn_details);
             //Utils.showAlert(SignInView.this, authManager.getMessage());
         } else if (getMsg.equalsIgnoreCase("SignIn Network Error")) {
             Utils.dismissBarDialog();
@@ -311,16 +287,16 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
             editor.putString("country",authManager.getUserCountry());
             editor.putString("email",authManager.getEmailId());
             editor.commit();
-            RelationManager relationManager = ModelManager.getInstance().getRelationManager();
+           RelationManager relationManager = ModelManager.getInstance().getRelationManager();
             relationManager.getRelationShips(authManager.getPhoneNo(), authManager.getUsrToken());
-            // new ImageDownloadTask().execute();
+           // new ImageDownloadTask().execute();
 
 
         } else if (getMsg.equalsIgnoreCase("ProfileInfo False")) {
             Utils.dismissBarDialog();
 
             Utils.fromSignalDialog(this,authManager.getMessage());
-            // Utils.showAlert(SignInView.this, authManager.getMessage());
+          // Utils.showAlert(SignInView.this, authManager.getMessage());
         } else if (getMsg.equalsIgnoreCase("ProfileInfo Network Error")) {
             Utils.dismissBarDialog();
             Utils.fromSignalDialog(this,AlertMessage.connectionError);
@@ -337,7 +313,7 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
             mDialog.dismiss();
             Utils.dismissBarDialog();
             Utils.fromSignalDialog(this,AlertMessage.connectionError);
-            //   Utils.showAlert(act, AlertMessage.connectionError);
+         //   Utils.showAlert(act, AlertMessage.connectionError);
         }else if (getMsg.equalsIgnoreCase("GetRelationShips False")) {
             Utils.dismissBarDialog();
 
@@ -387,11 +363,10 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
             public void onClick(View v) {
                 if (Utils.isEmailValid(getemailid.getText().toString())) {
 
-                    settingManager = ModelManager.getInstance().getSettingManager();
+                    SettingManager settingManager = ModelManager.getInstance().getSettingManager();
                     settingManager.forgotYourPassword(getemailid.getText().toString());
                 }else{
-                    Utils.fromSignalDialog(SignInView.this,AlertMessage.vEmailid);
-                    // ClickInAlertDialog.clickInAlert(SignInView.this,"Please enter a valid email address","Error",true);
+                    ClickInAlertDialog.clickInAlert(SignInView.this,"Please enter a valid email address","Error",true);
                 }
             }
         });
@@ -426,7 +401,7 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
                             com.sourcefuse.clickinandroid.utils.Log.e(TAG, "Login successfully");
                             QBChatService.getInstance().startAutoSendPresence(5);
 
-                            chat = QBChatService.getInstance().createChat();
+                            QBPrivateChat chat = QBChatService.getInstance().createChat();
                             authManager.setqBPrivateChat(chat);
                         }
 
@@ -449,63 +424,30 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
 
     }
 
-    private  class ImageDownloadTask extends AsyncTask<Void,Void,File> {
-        File file;
-        @Override
-        protected File doInBackground( Void... params ) {
-            InputStream is = null;
 
-            file = new File(context.getFilesDir().getAbsolutePath() + "/userpic1.jpg");
-            try {
-                URL url = new URL(authManager.getUserPic());
-            /* Open a connection to that URL. */
-                URLConnection ucon = url.openConnection();
+    // Akshit Code Starts
+    public void fromSignalDialog(String str){
 
-            /*
-             * Define InputStreams to read from the URLConnection.
-             */
-                is = ucon.getInputStream();
-                //  FileOutputStream fOut = openFileOutput("uerpic.jpg",MODE_WORLD_READABLE);
-                OutputStream os = new FileOutputStream(file) ;
-                byte [ ] data = new byte [ is.available ( ) ] ;
-                is.read ( data ) ; os.write (data );is.close ( ) ; os.close ( ) ;
-                return file;
+       final Dialog dialog = new Dialog(SignInView.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.setContentView(R.layout.alert_check_dialogs);
+        dialog.setCancelable(false);
+        TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
+        msgI.setText(str);
+
+
+        Button dismiss = (Button) dialog.findViewById(R.id.coolio);
+        dismiss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                dialog.dismiss();
+
             }
-            catch (Exception e){
-                Log .d ( "ImageManager " , " Error: " + e ) ;
-            }
-
-            return null;
-        }
-        protected void onPostExecute (File file) {
-         /*   try{
-                MediaScannerConnection.scanFile(null, new String[]{file.toString()}, null, new MediaScannerConnection.OnScanCompletedListener() {
-                    public void onScanCompleted(String path, Uri uri) {
-                        Log.i(" External Storage", " Scanned " + path + " : ");
-                        Log.i(" E x t e r n a l S t o r a g e ", " - > u r i = " + uri);
-                        authManager.setUserImageUri(uri);
-                    }
-                }) ;
-            }catch (Exception e) {
-                e.printStackTrace();
-                // TODO: handle exception
-            }*/
-            Uri uri=Uri.fromFile(file);
-            try {
-                Bitmap imageBitmap = Utils.decodeUri(uri, SignInView.this);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-            authManager.setUserImageUri(uri);
-            SharedPreferences preferences=PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-            SharedPreferences.Editor editor=preferences.edit();
-            String uriStr=uri.toString();
-            editor.putString("userimageuri",uriStr);
-            editor.commit();
-
-        }}
-
-
+        });
+        dialog.show();
+    }
+// Ends
 
 }
 

@@ -9,7 +9,8 @@ public class AlertMessage {
     public static final String enterPhoneEmail = "Please enter Phone No./Email ID";
     public static final String enterPassword = "Please enter password";
     public static final String eMailAlreadyExist = "This email already exists. Please check and try again";
-    ;
+    public static final String unFollowselecteduser = "Do you want unfollow the selected user." ;
+
 
 
 

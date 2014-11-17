@@ -10,6 +10,7 @@ public class Constants {
 	public static final  int CROP_PROFILE_PIC=3;
 	public static final int CAMERA_REQUEST = 1888;
 	public static final int SELECT_PICTURE = 1;
+	public static final int CROP_PICTURE = 12;
 	public static final int  CALL_CHAT_INSTANC = 45*1000;
 
     public static  boolean  addChatMessageListener = false;

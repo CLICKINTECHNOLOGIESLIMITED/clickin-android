@@ -648,8 +648,14 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
 //                        mImageCaptureUri = data.getData();
 //                        bitmapImage = Utils.decodeUri(mImageCaptureUri, ProfileView.this);
 //                        profileimg.setImageBitmap(bitmapImage);
-/*test code akshit */
-                                    bitmapImage = BitmapFactory.decodeFile(mImageCaptureUri.getPath(), new BitmapFactory.Options());
+/*test code akshit */               Bitmap bitmap = BitmapFactory.decodeFile(mImageCaptureUri.getPath(), new BitmapFactory.Options());
+                                    BitmapFactory.Options bmpFactoryOptions = new BitmapFactory.Options();
+                                    Bitmap bitmap1;
+                                    bmpFactoryOptions.inSampleSize = 2;
+                                    bmpFactoryOptions.outWidth = bitmap.getWidth();
+                                    bmpFactoryOptions.outHeight = bitmap.getHeight();
+                                    bmpFactoryOptions.inJustDecodeBounds = false;
+                                    bitmapImage = BitmapFactory.decodeFile(mImageCaptureUri.getPath(), bmpFactoryOptions);
 
                                     try {
                                           ExifInterface ei = new ExifInterface(mImageCaptureUri.getPath());
@@ -670,7 +676,7 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
                               /*bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), mat, true);*/
 
 
-                                          Bitmap resized;
+                                          /*Bitmap resized;
                                           if (bitmapImage.getWidth() >= bitmapImage.getHeight()) {
 
                                                 resized = Bitmap.createBitmap(
@@ -690,18 +696,49 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
                                                                                      bitmapImage.getWidth(),
                                                                                      bitmapImage.getWidth(), mat, true
                                                 );
+                                          }*/
+
+
+                                          Bitmap resize;
+                                          resize = Bitmap.createBitmap(bitmapImage, 0, 0, bitmapImage.getWidth(), bitmapImage.getHeight(), mat, true);
+                                          if (resize != null) {
+
+                                                try {
+                                                      authManager.setOrginalBitmap(resize);
+                                                      Intent intent = new Intent(ProfileView.this, CropView.class);
+                                                      intent.putExtra("from", "fromcamera");
+                                                      intent.putExtra("uri",mImageCaptureUri.toString());
+                                                      startActivityForResult(intent, Constants.CROP_PICTURE);
+                                                } catch (Exception e) {
+                                                      e.printStackTrace();
+                                                      Log.e("exception--->", "exception--->");
+                                                }
                                           }
-                                          bitmapImage.recycle();
+                                          /*bitmapImage.recycle();
                                           profileimg.setImageBitmap(resized);
                                           userImageUri = mImageCaptureUri;
-                                          mImageCaptureUri = null;
+                                          mImageCaptureUri = null;*/
 
                                     } catch (Exception e) {
                                           e.printStackTrace();
                                     }
                                     break;
                               case Constants.SELECT_PICTURE:
-                                    bitmapImage = getBitmapFromCameraData(data, getApplicationContext());
+
+
+                                    Bitmap bitmap12 = getBitmapFromCameraData(data, getApplicationContext());
+
+
+                 /*    pick image from gallery  */
+                                    BitmapFactory.Options bmpFactoryOptions1 = new BitmapFactory.Options();
+                                    Bitmap bitmap11;
+                                    bmpFactoryOptions1.inSampleSize = 2;
+                                    bmpFactoryOptions1.outWidth = bitmap12.getWidth();
+                                    bmpFactoryOptions1.outHeight = bitmap12.getHeight();
+                                    bmpFactoryOptions1.inJustDecodeBounds = false;
+                                    bitmapImage = BitmapFactory.decodeFile(getRealPathFromURI(data.getData()), bmpFactoryOptions1);
+
+                                    /*bitmapImage = getBitmapFromCameraData(data, getApplicationContext());*/
 
 /*test code akshit */
                  /*    pick image from gallery  */
@@ -728,15 +765,28 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
 
                               /*bitmap1 = Bitmap.createBitmap(bitmap1, 0, 0, bitmap1.getWidth(), bitmap1.getHeight(), mat, true);*/
 
+                                          bitmapImage = Bitmap.createBitmap(bitmapImage, 0, 0, bitmapImage.getWidth(), bitmapImage.getHeight(), mat, true);
 
-
-
+                                          userImageUri = data.getData();
+                                          if (bitmapImage != null) {
+                                                try {
+                                                      authManager.setOrginalBitmap(null);
+                                                      authManager.setOrginalBitmap(bitmapImage);
+                                                      Intent intent = new Intent(ProfileView.this, CropView.class);
+                                                      intent.putExtra("from", "fromgallery");
+                                                      intent.putExtra("uri",userImageUri.toString());
+                                                      startActivityForResult(intent, Constants.CROP_PICTURE);
+                                                } catch (Exception e) {
+                                                      e.printStackTrace();
+                                                      Log.e("exception--->", "exception--->");
+                                                }
+                                          }
 
 
                   /*      pick image from gallery    */
 
 
-                                          Bitmap resized1;
+                                          /*Bitmap resized1;
                                           if (bitmapImage.getWidth() >= bitmapImage.getHeight()) {
 
                                                 resized1 = Bitmap.createBitmap(
@@ -761,7 +811,7 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
 
                                           profileimg.setImageBitmap(resized1);
 
-                                          userImageUri = data.getData();
+                                          userImageUri = data.getData();*/
                                           //    authManager.setUserImageUri(userImageUri);
                                           //  authManager.setUserbitmap(resized1);
 
@@ -769,6 +819,34 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
                                     } catch (Exception e) {
                                           e.printStackTrace();
                                     }
+                                    break;
+
+
+                              case Constants.CROP_PICTURE:
+
+                                    if (data.getStringExtra("retake").equalsIgnoreCase("camare")) {
+                                          Intent intent1 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                                          mImageCaptureUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
+                                          intent1.putExtra("return-data", true);
+                                          intent1.putExtra(MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
+                                          startActivityForResult(intent1, Constants.CAMERA_REQUEST);
+                                    } else if (data.getStringExtra("retake").equalsIgnoreCase("gallery")) {
+                                          Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                                          startActivityForResult(pickPhoto, Constants.SELECT_PICTURE);
+                                    } else if (authManager.getmResizeBitmap() != null) {
+                                          profileimg.setImageBitmap(authManager.getmResizeBitmap());
+
+                                          authManager.setUserImageUri(userImageUri);
+                                          authManager.setUserbitmap(authManager.getmResizeBitmap());
+                                          authManager.setOrginalBitmap(null);
+                                          authManager.setmResizeBitmap(null);
+
+                                     /*Bitmap imageBitmap = authManager.getmResizeBitmap();
+                                          authManager.setUserbitmap(authManager.getmResizeBitmap());
+                                          authManager.setOrginalBitmap(null);
+                                          authManager.setmResizeBitmap(null);*/
+                                    }
+                                    break;
                               default:
                                     break;
                         }

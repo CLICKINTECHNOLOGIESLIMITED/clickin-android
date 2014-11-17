@@ -260,6 +260,11 @@
             android:launchMode="standard"
             android:screenOrientation="portrait">
         </activity>
+        <activity
+            android:name="com.sourcefuse.clickinandroid.view.CropView"
+            android:launchMode="standard"
+            android:screenOrientation="portrait">
+        </activity>
         <meta-data android:name="com.crashlytics.ApiKey" android:value="3bcf050521edeb5967467d700b8aadf40e0664cc"/>
     </application>
 
