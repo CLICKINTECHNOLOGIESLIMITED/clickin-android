@@ -78,6 +78,14 @@ public class FetchContactFromPhone {
 					Cursor pCur = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,null,ContactsContract.CommonDataKinds.Phone.CONTACT_ID+ " = ?", new String[] { id }, null);
 					while (pCur.moveToNext()) {
 						phone = pCur.getString(pCur.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                        try {
+                            String temp1=phone.replaceAll("\\s","");
+                            String temp=temp1.substring(1);
+                            int ph = Integer.parseInt(temp);
+                        }catch(Exception e){
+                            break;
+                        }
+
                          authManager=ModelManager.getInstance().getAuthorizationManager();
 
 
@@ -103,24 +111,24 @@ public class FetchContactFromPhone {
 						 mcantactBean.setConNumber("+91" + mPhone.substring((l - 10)));
 						 }*/
 
+                        if (image_uri != null) {
+                            try {
+                                // bitmap =
+                                // MediaStore.Images.Media.getBitmap(this.getContentResolver(),Uri.parse(image_uri));
+                                // System.out.println(bitmap);
+                                mcantactBean.setConUri(image_uri);
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        Utils.contactMap.put(key,mcantactBean);
+
+                        Utils.itData.add(mcantactBean);
+
 					}
 					pCur.close();
 
-				if (image_uri != null) {
-					try {
-						// bitmap =
-						// MediaStore.Images.Media.getBitmap(this.getContentResolver(),Uri.parse(image_uri));
-						// System.out.println(bitmap);
-						mcantactBean.setConUri(image_uri);
-
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-
-                Utils.contactMap.put(key,mcantactBean);
-
-				Utils.itData.add(mcantactBean);
 
                 }
 			}
@@ -265,19 +273,13 @@ public class FetchContactFromPhone {
                                     contactBean.setConNumber(cb.getConNumber());
                                     contactBean.setChecked(false);
                                     contactBean.setConUri(cb.getConUri());
-
                                     profilemanager.spreadTheWorldList.add(contactBean);
-
                                 }
-
                             }
                         }
                         Collections.sort(profilemanager.spreadTheWorldList,FetchContactFromPhone.NameComparator);
                         Collections.sort(profilemanager.currentClickerList,FetchContactFromPhone.CurrentClickersNameComparator);
                         Collections.sort(profilemanager.currentClickerListFB,FetchContactFromPhone.CurrentClickersNameComparator);
-
-                        //Collections.sort(profilemanager.currentClickerList, new ContactBean());
-                        //Collections.sort(profilemanager.spreadTheWorldList, new ContactNameComparator());
 
                         EventBus.getDefault().post("CheckFriend True");
 					}

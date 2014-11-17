@@ -71,11 +71,12 @@ public class SpreadWordView extends Activity implements OnClickListener {
 
 
         AuthManager authManager = ModelManager.getInstance().getAuthorizationManager();
-        EventBus.getDefault().register(this);
+      //  EventBus.getDefault().register(this);
         Utils.groupSms.clear();
-        Utils.launchBarDialog(this);
-        new FetchContactFromPhone(SpreadWordView.this).getClickerList(authManager.getPhoneNo(),authManager.getUsrToken(),1);
+        //Utils.launchBarDialog(this);
+      //  new FetchContactFromPhone(SpreadWordView.this).getClickerList(authManager.getPhoneNo(),authManager.getUsrToken(),1);
         //   setlist();
+        setlist();
 
     }
 

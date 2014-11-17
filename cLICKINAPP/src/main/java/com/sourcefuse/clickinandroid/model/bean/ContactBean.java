@@ -1,5 +1,6 @@
 package com.sourcefuse.clickinandroid.model.bean;
 
+
 import java.util.Comparator;
 
 
@@ -10,13 +11,6 @@ public class ContactBean {
     private String conUri;
 
 
-
-  /*  public ContactBean(String conName, String conNumber, String conUri,boolean isChecked) {
-        this.conName = conName;
-        this.conNumber = conNumber;
-        this.conUri = conUri;
-        this.isChecked = isChecked;
-    }*/
 
 
 
