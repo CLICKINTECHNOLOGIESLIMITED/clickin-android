@@ -55,5 +55,14 @@ public class Constants {
 	public static boolean comments = false;
 
     public static String CUSTOM_CARD_URL = "https://s3.amazonaws.com/clickin-dev/cards/a/1080/custom_tradecart.jpg";
+
+    public final static int CHAT_TYPE_TEXT = 1;
+    public final static int CHAT_TYPE_IMAGE = 2;
+    public final static int CHAT_TYPE_AUDIO = 3;
+    public final static int CHAT_TYPE_VIDEO = 4;
+    public final static int CHAT_TYPE_LOCATION= 5;
+    public final static int CHAT_TYPE_CARD = 7;
+
+
 	
 }

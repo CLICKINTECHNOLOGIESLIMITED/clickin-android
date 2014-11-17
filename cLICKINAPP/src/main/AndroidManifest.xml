@@ -237,7 +237,7 @@
         </activity>
 
         <service
-            android:name="com.sourcefuse.clickinandroid.services.QbChatService"
+            android:name="com.sourcefuse.clickinandroid.services.MyQbChatService"
             android:enabled="true" />
 
         <activity

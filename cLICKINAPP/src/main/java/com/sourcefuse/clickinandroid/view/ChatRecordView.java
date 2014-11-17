@@ -1,12 +1,12 @@
 package com.sourcefuse.clickinandroid.view;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.ActivityNotFoundException;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
@@ -16,6 +16,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.IBinder;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -57,7 +58,9 @@ import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ChatManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
+import com.sourcefuse.clickinandroid.model.bean.ChatMessageBody;
 import com.sourcefuse.clickinandroid.model.bean.ChatRecordBeen;
+import com.sourcefuse.clickinandroid.services.MyQbChatService;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.AudioUtil;
 import com.sourcefuse.clickinandroid.utils.Constants;
@@ -80,7 +83,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.sql.SQLException;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -92,7 +94,7 @@ import java.util.TimeZone;
 import de.greenrobot.event.EventBus;
 
 public class ChatRecordView extends ClickInBaseView implements View.OnClickListener,
-        TextWatcher, ChatMessageListener,ConnectionListener {
+        TextWatcher,ConnectionListener {
     private SeekBar mybar;
     private TextView pos, neg, profileName, typingtext, myTotalclicks, partnerTotalclicks;
     int myvalue = 10, min = -10;
@@ -138,6 +140,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
     private Dialog dialog;
     private Handler myHandler;
+    public MyQbChatService myQbChatService;
     private String audioFilePath;
     private Runnable myRunnable = new Runnable() {
         @Override
@@ -151,6 +154,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
         }
     };
+    private boolean mIsBound;
 
 
     private ClickinDbHelper dbHelper;
@@ -159,8 +163,10 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
        super.onCreate(savedInstanceState);
         setContentView(R.layout.view_chat_layout);
+        Intent i=new Intent(this,MyQbChatService.class);
+        bindService(i,mConnection,Context.BIND_AUTO_CREATE);
         addMenu(false);
-        loginToQuickBlox();
+      //  loginToQuickBlox();
         typeface = Typeface.createFromAsset(ChatRecordView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
         send = (Button) findViewById(R.id.btn_send);
         chatListView = (PullToRefreshListView) findViewById(R.id.chat_list);
@@ -426,6 +432,10 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     }
 
 
+
+
+
+
     public void imageDialog() {
         String[] addPhoto;
         addPhoto = new String[]{"Camera", "Gallery"};
@@ -541,8 +551,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         } catch (Exception e) {
             e.printStackTrace();
             try {
-                chatObject.removeChatMessageListener(this);
-                chatObject.addChatMessageListener(this);
+               // chatObject.removeChatMessageListener(this);
+                //chatObject.addChatMessageListener(this);
             } catch (Exception e1) {
             }
             Log.e(TAG, "Exception----> " + e.toString());
@@ -587,10 +597,16 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_send:
-                ((RelativeLayout) findViewById(R.id.rl_flipper)).setVisibility(View.GONE);
+                ChatMessageBody temp=new ChatMessageBody();
+                temp.textMsg="" + chatText.getText().toString();
+                temp.partnerQbId=qBId;
+                temp.chatType=Constants.CHAT_TYPE_TEXT;
+                temp.clicks="no";
+                myQbChatService.sendMessage(temp);
+           /*     ((RelativeLayout) findViewById(R.id.rl_flipper)).setVisibility(View.GONE);
                 chatString = "" + chatText.getText().toString();
                 String clicksValue = null;
-                ChatRecordBeen addChat = new ChatRecordBeen();
+               ChatRecordBeen addChat = new ChatRecordBeen();
                 addChat.setSenderQbId(authManager.getQBId());
                 addChat.setRecieverQbId(qBId);
                 sentOn = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis();
@@ -788,7 +804,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
 
                     attachBtn.setImageDrawable(getResources().getDrawable(R.drawable.attach_icon));
-                }
+                }*/
                 break;
             case R.id.iv_menu_button:
                 hideAttachView();
@@ -1007,8 +1023,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
         } catch (Exception e) {
             try {
-                chatObject.removeChatMessageListener(this);
-                chatObject.addChatMessageListener(this);
+               // chatObject.removeChatMessageListener(this);
+               // chatObject.addChatMessageListener(this);
             } catch (Exception e1) {
             }
           /*  chatObject = null;
@@ -1050,15 +1066,15 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         message.setType(Message.Type.chat); // 1-1 chat message
         message.addExtension(extension);
         try {
-            chatObject.sendMessage(Integer.parseInt(qBId), message);
+            //chatObject.sendMessage(Integer.parseInt(qBId), message);
         } catch (Exception e) {
 
-            try {
+            /*try {
                 againLoginToQuickBlox();
                 chatObject.removeChatMessageListener(this);
                 chatObject.addChatMessageListener(this);
             } catch (Exception e1) {
-            }
+            }*/
             e.printStackTrace();
         }
     }
@@ -1078,7 +1094,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         super.onDestroy();
 
         try {
-            chatObject.removeChatMessageListener(this);
+           // chatObject.removeChatMessageListener(this);
         } catch (Exception e) {
         }
 
@@ -1087,6 +1103,13 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             dbHelper.addChatList(chatManager.chatListFromServer);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+
+
+        if (mIsBound) {
+            // Detach our existing connection.
+            unbindService(mConnection);
+            mIsBound = false;
         }
     }
 
@@ -1102,8 +1125,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         try {
             authManager = ModelManager.getInstance().getAuthorizationManager();
             chatObject = authManager.getqBPrivateChat();
-            chatObject.removeChatMessageListener(this);
-            chatObject.addChatMessageListener(this);
+          //  chatObject.removeChatMessageListener(this);
+           // chatObject.addChatMessageListener(this);
         } catch (Exception e) {
         }
 
@@ -1118,7 +1141,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         }
 
         try {
-            chatObject.removeChatMessageListener(this);
+          //  chatObject.removeChatMessageListener(this);
         } catch (Exception e) {
         }
 
@@ -1161,7 +1184,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         }
     }
 
-    @Override
+   /* @Override
     public void processMessage(Message message) {
         //Set typin Status....
         String chatType = "0";
@@ -1355,11 +1378,11 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                         addChat.setUserId(partnerId);
                         addChat.setClicks(clicks);
                         addChat.setChatText(body);
-                        /*if( body.equalsIgnoreCase(clicks)){
+                        *//*if( body.equalsIgnoreCase(clicks)){
                             addChat.setClicks(body);
                         }else{
                             addChat.setClicks(body.substring(0, 4));
-                        }*/
+                        }*//*
                         addChat.setTimeStamp(String.valueOf(sentOn));
                         chatManager.chatListFromServer.add(addChat);
                         adapter.notifyDataSetChanged();
@@ -1572,9 +1595,9 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         } catch (Exception f) {
             f.printStackTrace();
         }
-    }
+    }*/
 
-    @Override
+    /*@Override
     public boolean accept(Message.Type messageType) {
         switch (messageType) {
             case chat:
@@ -1584,7 +1607,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 Log.e(TAG, "M Not get");
                 return false;
         }
-    }
+    }*/
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -1725,8 +1748,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             chatObject.sendMessage(Integer.parseInt(qBId), message);
         } catch (Exception e) {
             try {
-                chatObject.removeChatMessageListener(this);
-                chatObject.addChatMessageListener(this);
+               // chatObject.removeChatMessageListener(this);
+               // chatObject.addChatMessageListener(this);
             } catch (Exception e1) {
             }
           /*  chatObject = null;
@@ -1799,7 +1822,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             chatObject = null;
             authManager = ModelManager.getInstance().getAuthorizationManager();
             chatObject = authManager.getqBPrivateChat();
-            chatObject.addChatMessageListener(this);
+            //chatObject.addChatMessageListener(this);
             //chatObject.notifyAll();
         } catch (Exception e) {
             // authManager = ModelManager.getInstance().getAuthorizationManager();
@@ -2373,6 +2396,34 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
 
     }
+
+    private ServiceConnection mConnection = new ServiceConnection() {
+        public void onServiceConnected(ComponentName className, IBinder service) {
+            // This is called when the connection with the service has been
+            // established, giving us the service object we can use to
+            // interact with the service.  Because we have bound to a explicit
+            // service that we know is running in our own process, we can
+            // cast its IBinder to a concrete class and directly access it.
+            myQbChatService = ((MyQbChatService.LocalBinder) service).getService();
+           /* myQbChatService.createRoom(mRoomName);*/
+
+           // showMessages();
+
+            // Tell the user about this for our demo.
+//            Toast.makeText(Binding.this, R.string.local_service_connected,
+//                    Toast.LENGTH_SHORT).show();
+        }
+
+        public void onServiceDisconnected(ComponentName className) {
+            // This is called when the connection with the service has been
+            // unexpectedly disconnected -- that is, its process crashed.
+            // Because it is running in our same process, we should never
+            // see this happen.
+            myQbChatService = null;
+//            Toast.makeText(Binding.this, R.string.local_service_disconnected,
+//                    Toast.LENGTH_SHORT).show();
+        }
+    };
 }
 
 
