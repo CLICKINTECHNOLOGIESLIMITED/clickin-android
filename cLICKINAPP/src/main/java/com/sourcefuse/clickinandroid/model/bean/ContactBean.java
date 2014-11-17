@@ -1,10 +1,18 @@
 package com.sourcefuse.clickinandroid.model.bean;
 
+
+import java.util.Comparator;
+
+
 public class ContactBean {
 
     private String conName;
     private String conNumber;
     private String conUri;
+
+
+
+
 
     public boolean isChecked() {
         return isChecked;

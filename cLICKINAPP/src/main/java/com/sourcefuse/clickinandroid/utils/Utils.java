@@ -30,7 +30,6 @@ import android.widget.Toast;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.bean.ContactBean;
-import com.sourcefuse.clickinandroid.view.SpreadWordView;
 import com.sourcefuse.clickinapp.R;
 
 import java.io.ByteArrayOutputStream;
@@ -191,7 +190,12 @@ public class Utils {
     }
     // Ends
 
+ //Akshit Code starts
+    public static void followerAdapterdialog(Activity activity){
 
+
+
+    }
 
     public static String getCardURLForAndroid(String url) {
 

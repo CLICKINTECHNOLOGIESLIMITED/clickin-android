@@ -306,5 +306,7 @@ public class FollowerAdapter extends ArrayAdapter<FollowerFollowingBean> {
 
 
 	}
+
+
 }
 

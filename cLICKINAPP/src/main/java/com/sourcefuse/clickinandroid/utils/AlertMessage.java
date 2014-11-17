@@ -1,34 +1,40 @@
 package com.sourcefuse.clickinandroid.utils;
 
 public class AlertMessage {
-	
-	public static final String connectionError = "Check your network connection";
+
+    public static final String connectionError = "Check your network connection";
     public static final String wrong_signIn_details = "The Username/Password \n combination entered is incorrect";
     public static final String selectClicks = "Please select clicks first.";
     public static final String enterCustomCardtext = "Please enter the text for custom \n card";
+    public static final String enterPhoneEmail = "Please enter Phone No./Email ID";
+    public static final String enterPassword = "Please enter password";
+    public static final String eMailAlreadyExist = "This email already exists. Please check and try again";
+    ;
+
+
 
     public static final String Phonenolength = "The phone number you have entered is invalid. Please try again";
-	
-	public static final String phone = "Enter correct mobile number";
-	public static final String dob = "Date of Birth can't be blank";
-	public static final String fname = "Please enter your First Name";
-	public static final String lname = "Please enter your Last Name";
-	public static final String gender = "Please select gender";
-	public static final String city = "City name can't be blank";
-	public static final String country = "Please enter the country code";
-	public static final String vEmailid = "Please enter a valid email address";
+
+    public static final String phone = "Enter correct mobile number";
+    public static final String dob = "Date of Birth can't be blank";
+    public static final String fname = "Please enter your First Name";
+    public static final String lname = "Please enter your Last Name";
+    public static final String gender = "Please select gender";
+    public static final String city = "City name can't be blank";
+    public static final String country = "Please enter the country code";
+    public static final String vEmailid = "Please enter a valid email address";
     public static final String emailid = "Please enter your email address";
     public static final String ageValid = "Please enter your Date of Birth";
-	public static final String profilepic = "Select a user image";
+    public static final String profilepic = "Select a user image";
     public static final String usrAllreadyExists =  "A User with the same phone no. already exists. Please check and try again, or contact our help team";
-	
-	public static final String SENDVERIFYMSGI = "WE SENT YOU THE CODE!";
-	public static final String SENDVERIFYMSGII = "Just to make sure you didn't \nwrong number us";
-	
-	public static final String WRONGVERIFYCODEI = "OOPS!\nSOMETHING WENT WRONG.\n";
-	public static final String WRONGVERIFYCODEII = "Please re-enter the code";
-	public static final String UDERAGEMSGI = "OOPS!";
-	public static final String UDERAGEMSGII = "OOPS!\n Too young to be clickin'\n Come back later...";
+
+    public static final String SENDVERIFYMSGI = "WE SENT YOU THE CODE!";
+    public static final String SENDVERIFYMSGII = "Just to make sure you didn't \nwrong number us";
+
+    public static final String WRONGVERIFYCODEI = "OOPS!\nSOMETHING WENT WRONG.\n";
+    public static final String WRONGVERIFYCODEII = "Please re-enter the code";
+    public static final String UDERAGEMSGI = "OOPS!";
+    public static final String UDERAGEMSGII = "OOPS!\n Too young to be clickin'\n Come back later...";
 
     public static final String PASSWORDLENGHT = "Your password should be at least 8 characters long.";
     public static final String MATCHPASSWORD = "Password doesn't match. Please try again";

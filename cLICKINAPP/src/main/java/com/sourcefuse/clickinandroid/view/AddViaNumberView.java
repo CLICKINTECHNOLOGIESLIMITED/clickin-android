@@ -27,12 +27,11 @@ import de.greenrobot.event.EventBus;
 
 public class AddViaNumberView extends Activity implements View.OnClickListener,TextWatcher {
     private static final String TAG = PlayItSafeView.class.getSimpleName();
-	private Button backButton,getClickInVn;
+	private Button getClickInVn;
 	private AuthManager authManager ;
-    private RelationManager relationManager ;
 	private EditText edtPhoneNo,edtCountryCode;
-    private Typeface typefaceBold;
-    Dialog dialog ;
+
+
     String mPhNo;
 
 	@Override
@@ -41,16 +40,13 @@ public class AddViaNumberView extends Activity implements View.OnClickListener,T
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.view_addvianumber);
 
-        typefaceBold = Typeface.createFromAsset(AddViaNumberView.this.getAssets(),Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_BOLD);
+
 		this.overridePendingTransition(R.anim.slide_in_right ,R.anim.slide_out_right);
-		backButton = (Button) findViewById(R.id.btn_go_back_num);
 		getClickInVn = (Button) findViewById(R.id.btn_get_click_via_no);
 		edtPhoneNo = (EditText) findViewById(R.id.edt_get_ph_no);
         edtCountryCode= (EditText)findViewById(R.id.edt_cntry_cd);
-        edtCountryCode.setTypeface(typefaceBold);
 		edtPhoneNo.addTextChangedListener(AddViaNumberView.this);
-        edtPhoneNo.setTypeface(typefaceBold);
-		backButton.setOnClickListener(this);
+
 		getClickInVn.setOnClickListener(this);
         ((RelativeLayout) findViewById(R.id.rl_addvia_no_action)).setOnClickListener(new View.OnClickListener() {
 
@@ -65,6 +61,17 @@ public class AddViaNumberView extends Activity implements View.OnClickListener,T
             }
 
         });
+
+
+
+        ((Button) findViewById(R.id.btn_go_back_num)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                overridePendingTransition(0, R.anim.top_out);
+            }
+        });
+
 		authManager = ModelManager.getInstance().getAuthorizationManager();
 //     try {
 //            String CountryZipCode = null;
@@ -141,10 +148,6 @@ public class AddViaNumberView extends Activity implements View.OnClickListener,T
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.btn_go_back_num:
-			finish();
-                  overridePendingTransition(0, R.anim.top_out);
-			break;
 		case R.id.btn_get_click_via_no:
             if(Utils.isCountryCodeValid(edtCountryCode.getText().toString())){
                 if (Utils.isPhoneValid(edtPhoneNo.getText().toString()) && (edtPhoneNo.getText().toString().length() >= 5)) {

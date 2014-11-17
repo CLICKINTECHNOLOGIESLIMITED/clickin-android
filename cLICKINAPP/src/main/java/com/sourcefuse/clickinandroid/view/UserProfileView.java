@@ -41,19 +41,10 @@ public class
 	private TextView profileHeader;
 	private ListView mUserRelationlistView;
 	private ImageView userimage;
-	//private ImageView menu,notification;
 	public UserRelationAdapter adapter;
 	private AuthManager authManager;
 	private RelationManager relationManager;
-    private ProfileManager profileManager;
-    private Uri imageuri ;
-
-	
-
 	private TextView name,userdetails;
-	
-	//private boolean fromSignup;
-	//private boolean othersUser = false;
 	public String phone;
     private ClickInNotificationManager notificationMngr;
 	private Typeface typefaceBold,typefaceMedium;
@@ -247,22 +238,7 @@ public class
         follower.setText(Html.fromHtml(text));
         String textfollowing = "<font color=#f29691>" + getResources().getString(R.string.txt_following) + "</font> <font color=#cccccc>" + authManager.getFollowing() + "</font>";
         following.setText(Html.fromHtml(textfollowing));
-     /*   try{
-            if(dtails.equalsIgnoreCase("Male")){
-                Picasso.with(UserProfileView.this)
-                        .load(authManager.getUserPic())
-                        .skipMemoryCache()
-                        .error(R.drawable.female_crt)
-                        .into(userimage);
-            }else if(dtails.equalsIgnoreCase("Female")) {
-                Picasso.with(UserProfileView.this)
-                        .load(authManager.getUserPic())
-                        .skipMemoryCache()
-                        .error(R.drawable.female_crt)
-                        .into(userimage);
-            }
 
-		}catch(Exception e){}*/
 
         //akshit code start for image and default image at userprofile
         try {
@@ -444,7 +420,7 @@ public class
     @Override
 	public void onClick(View v) {
         authManager = ModelManager.getInstance().getAuthorizationManager();
-        profileManager = ModelManager.getInstance().getProfileManager();
+        ProfileManager profileManager = ModelManager.getInstance().getProfileManager();
 		switch (v.getId()) {
 		case R.id.btn_follower:
             Intent intentFollower = new Intent(UserProfileView.this,FollowerList.class);

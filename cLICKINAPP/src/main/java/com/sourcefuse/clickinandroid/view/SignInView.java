@@ -62,7 +62,8 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
     public static Activity act;
     public static Context context;
 
-    private boolean activeDone = false;
+    // private boolean activeDone = false;
+    private boolean activeDone=true;
     private AuthManager authManager;
     private QBPrivateChat chat;
     Dialog dialog ;
@@ -196,9 +197,13 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
         if (ephone.getText().toString().length() > 0 && ePwd.getText().toString().length() > 0) {
             activeDone = true;
             do_latter.setBackgroundResource(R.drawable.c_getclicin_active);
-        } else {
-            activeDone = false;
-            do_latter.setBackgroundResource(R.drawable.c_getclicin_deactive);
+//        } else if(ephone.getText().toString().length()==0){
+//            Utils.fromSignalDialog(this,AlertMessage.enterPhoneEmail);
+//
+////            activeDone = false;ep
+////            do_latter.setBackgroundResource(R.drawable.c_getclicin_deactive);
+//        }
+//       }
         }
 
     }
@@ -215,19 +220,25 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
                 InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(layout.getWindowToken(), 0);
 
-                if (activeDone) {
+                if (activeDone && ephone.getText().toString().length() >0 && ephone.getText().toString() != "+null" && ePwd.getText().toString().length()>0) {
                     getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
                     authManager = ModelManager.getInstance().getAuthorizationManager();
                     Utils.launchBarDialog(SignInView.this);
                     authManager.signIn(ephone.getText().toString(), ePwd.getText().toString(), authManager.getDeviceRegistereId(), Constants.DEVICETYPE);
                 }
+                else if(ephone.getText().toString().length() ==0){
+                    Utils.fromSignalDialog(this,AlertMessage.enterPhoneEmail);
+                }else if(ePwd.getText().toString().length()==0){
+                    Utils.fromSignalDialog(this,AlertMessage.enterPassword);
+                }
+
                 break;
             case R.id.tv_forgot_pwd:
                 forgetPasswordAlert(SignInView.this);
                 break;
             case R.id.tv_signup:
                 Intent intent = new Intent(SignInView.this, SignUpView.class);
-             //   intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                //   intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
                 break;
@@ -235,11 +246,11 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
     }
 
 
-    
+
 
     private void switchView() {
         Intent intent = new Intent(SignInView.this, UserProfileView.class);
-      //  intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        //  intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();
     }
@@ -256,7 +267,7 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
     public void onStop() {
         super.onStop();
 
-            EventBus.getDefault().unregister(this);
+        EventBus.getDefault().unregister(this);
 
     }
 
@@ -271,15 +282,15 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
             editor.putString("myPhoneNo",authManager.getPhoneNo());
             editor.commit();
 
-          //  new MyPreference(SignInView.this).setToken(authManager.getUsrToken());
+            //  new MyPreference(SignInView.this).setToken(authManager.getUsrToken());
             //new MyPreference(SignInView.this).setmyPhoneNo(authManager.getPhoneNo());
 
             loginToQuickBlox();
             authManager.getProfileInfo("", authManager.getPhoneNo(), authManager.getUsrToken());
         } else if (getMsg.equalsIgnoreCase("SignIn False")) {
             Utils.dismissBarDialog();
-           Utils.fromSignalDialog(this,AlertMessage.wrong_signIn_details);
-          //  Utils.showAlert(this,AlertMessage.wrong_signIn_details);
+            Utils.fromSignalDialog(this,AlertMessage.wrong_signIn_details);
+            //  Utils.showAlert(this,AlertMessage.wrong_signIn_details);
             //Utils.showAlert(SignInView.this, authManager.getMessage());
         } else if (getMsg.equalsIgnoreCase("SignIn Network Error")) {
             Utils.dismissBarDialog();
@@ -300,16 +311,16 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
             editor.putString("country",authManager.getUserCountry());
             editor.putString("email",authManager.getEmailId());
             editor.commit();
-           RelationManager relationManager = ModelManager.getInstance().getRelationManager();
+            RelationManager relationManager = ModelManager.getInstance().getRelationManager();
             relationManager.getRelationShips(authManager.getPhoneNo(), authManager.getUsrToken());
-           // new ImageDownloadTask().execute();
+            // new ImageDownloadTask().execute();
 
 
         } else if (getMsg.equalsIgnoreCase("ProfileInfo False")) {
             Utils.dismissBarDialog();
 
             Utils.fromSignalDialog(this,authManager.getMessage());
-          // Utils.showAlert(SignInView.this, authManager.getMessage());
+            // Utils.showAlert(SignInView.this, authManager.getMessage());
         } else if (getMsg.equalsIgnoreCase("ProfileInfo Network Error")) {
             Utils.dismissBarDialog();
             Utils.fromSignalDialog(this,AlertMessage.connectionError);
@@ -326,7 +337,7 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
             mDialog.dismiss();
             Utils.dismissBarDialog();
             Utils.fromSignalDialog(this,AlertMessage.connectionError);
-         //   Utils.showAlert(act, AlertMessage.connectionError);
+            //   Utils.showAlert(act, AlertMessage.connectionError);
         }else if (getMsg.equalsIgnoreCase("GetRelationShips False")) {
             Utils.dismissBarDialog();
 
@@ -379,7 +390,8 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
                     settingManager = ModelManager.getInstance().getSettingManager();
                     settingManager.forgotYourPassword(getemailid.getText().toString());
                 }else{
-                    ClickInAlertDialog.clickInAlert(SignInView.this,"Please enter a valid email address","Error",true);
+                    Utils.fromSignalDialog(SignInView.this,AlertMessage.vEmailid);
+                    // ClickInAlertDialog.clickInAlert(SignInView.this,"Please enter a valid email address","Error",true);
                 }
             }
         });
@@ -443,8 +455,8 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
         protected File doInBackground( Void... params ) {
             InputStream is = null;
 
-           file = new File(context.getFilesDir().getAbsolutePath() + "/userpic1.jpg");
-            try { 
+            file = new File(context.getFilesDir().getAbsolutePath() + "/userpic1.jpg");
+            try {
                 URL url = new URL(authManager.getUserPic());
             /* Open a connection to that URL. */
                 URLConnection ucon = url.openConnection();
@@ -453,7 +465,7 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
              * Define InputStreams to read from the URLConnection.
              */
                 is = ucon.getInputStream();
-              //  FileOutputStream fOut = openFileOutput("uerpic.jpg",MODE_WORLD_READABLE);
+                //  FileOutputStream fOut = openFileOutput("uerpic.jpg",MODE_WORLD_READABLE);
                 OutputStream os = new FileOutputStream(file) ;
                 byte [ ] data = new byte [ is.available ( ) ] ;
                 is.read ( data ) ; os.write (data );is.close ( ) ; os.close ( ) ;

@@ -28,7 +28,7 @@ import com.sourcefuse.clickinapp.R;
 
 import de.greenrobot.event.EventBus;
 
-public class AddSomeoneView extends Activity implements View.OnClickListener,
+public class AddSomeoneView extends Activity implements
 		TextWatcher {
 
 	private Button do_latter;
@@ -36,9 +36,6 @@ public class AddSomeoneView extends Activity implements View.OnClickListener,
 	private ListView listView;
 	private ContactAdapter adapter;
 	private RelativeLayout showContactlist;
-	private ImageView keyIcon;
-    private boolean mFrom = false;
-    private Typeface typefaceBold;
     AuthManager authManager;
 
 
@@ -48,23 +45,14 @@ public class AddSomeoneView extends Activity implements View.OnClickListener,
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.view_addsomeone);
 		this.overridePendingTransition(R.anim.slide_in_right ,R.anim.slide_out_right);
-        typefaceBold = Typeface.createFromAsset(AddSomeoneView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_BOLD);
+
 
 		do_latter = (Button) findViewById(R.id.btn_do_itlatter);
 		search_phbook = (EditText) findViewById(R.id.edt_search_ph);
-
-		keyIcon = (ImageView) findViewById(R.id.iv_keypad);
 		listView = (ListView) findViewById(R.id.list_contact);
-
 		showContactlist = (RelativeLayout) findViewById(R.id.rr_con_list);
-        search_phbook.setTypeface(typefaceBold);
 		search_phbook.addTextChangedListener(this);
-		do_latter.setOnClickListener(this);
-		keyIcon.setOnClickListener(this);
-
-         authManager=ModelManager.getInstance().getAuthorizationManager();
-     //   new FetchContactFromPhone(this).readContacts();
-
+        authManager=ModelManager.getInstance().getAuthorizationManager();
 		
 		listView.setOnItemClickListener(new OnItemClickListener()
 		{
@@ -106,12 +94,30 @@ public class AddSomeoneView extends Activity implements View.OnClickListener,
         });
 
 
-        mFrom = getIntent().getExtras().getBoolean("FromOwnProfile");
+       boolean mFrom = getIntent().getExtras().getBoolean("FromOwnProfile");
         if(mFrom){
             do_latter.setVisibility(View.GONE);
         }else{
             do_latter.setVisibility(View.VISIBLE);
         }
+
+
+        ((ImageView) findViewById(R.id.iv_keypad)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AddSomeoneView.this,AddViaNumberView.class);
+                startActivity(intent);
+            }
+        });
+        do_latter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent clickersView = new Intent(AddSomeoneView.this,CurrentClickersView.class);
+                clickersView.putExtra("FromSignup", true);
+                clickersView.putExtra("FromMenu", false);
+                startActivity(clickersView);
+            }
+        });
 
 
 	}
@@ -139,25 +145,6 @@ public class AddSomeoneView extends Activity implements View.OnClickListener,
 			showContactlist.setVisibility(View.GONE);
 		}
 	}
-
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.btn_do_itlatter:
-			 Intent clickersView = new Intent(AddSomeoneView.this,CurrentClickersView.class);
-                   clickersView.putExtra("FromSignup", true);
-                   clickersView.putExtra("FromMenu", false);
-			 startActivity(clickersView);
-         //  finish();
-			break;
-		case R.id.iv_keypad:
-			 Intent intent = new Intent(AddSomeoneView.this,AddViaNumberView.class);
-			 startActivity(intent);
-			break;
-		}
-	}
-
-
 
     @Override
     public void onStart() {
@@ -196,5 +183,6 @@ public class AddSomeoneView extends Activity implements View.OnClickListener,
             Utils.fromSignalDialog( this,AlertMessage.connectionError);
         }
     }
+
 
 }

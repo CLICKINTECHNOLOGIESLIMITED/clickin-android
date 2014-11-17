@@ -69,7 +69,7 @@
             android:gravity="center_horizontal"
             android:orientation="horizontal">
 
-            <EditText
+            <com.sourcefuse.clickinandroid.utils.ClickInEditBox
                 android:id="@+id/edt_search_ph"
                 android:layout_width="240dp"
                 android:layout_height="45dp"
@@ -78,12 +78,10 @@
                 android:hint="@string/txt_search_phonebook"
                 android:padding="10dp"
                 android:singleLine="true"
+                geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
                 android:textColor="@color/phone_no_clr"
                 android:textColorHint="@color/sign_hint"
-                android:textSize="14sp">
-
-                <requestFocus />
-            </EditText>
+                android:textSize="14sp"/>
 
             <ImageView
                 android:id="@+id/iv_keypad"
@@ -118,10 +116,12 @@
 
     <Button
         android:id="@+id/btn_do_itlatter"
-        android:layout_width="wrap_content"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/linearLayout1"
         android:layout_centerHorizontal="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:layout_marginTop="40dp"
         android:background="@drawable/c_do_it_later" />
 

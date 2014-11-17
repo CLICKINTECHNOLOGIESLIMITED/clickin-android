@@ -31,12 +31,12 @@ public class PlayItSafeView extends Activity implements View.OnClickListener,Tex
     private static final String TAG = PlayItSafeView.class.getSimpleName();
     private Button done;
     private EditText password,rePassword;
-   // private String emailid ,phone,userToken;
+    // private String emailid ,phone,userToken;
     public static Activity act;
     public static Context context;
     private AuthManager authManager ;
     private Typeface typeface,typefaceBold;
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +48,7 @@ public class PlayItSafeView extends Activity implements View.OnClickListener,Tex
         typefaceBold = Typeface.createFromAsset(PlayItSafeView.this.getAssets(),Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_BOLD);
 
 
-       
+
         done = (Button) findViewById(R.id.btn_done_play);
         password = (EditText) findViewById(R.id.edt_password);
         rePassword = (EditText) findViewById(R.id.edt_re_password);
@@ -59,7 +59,7 @@ public class PlayItSafeView extends Activity implements View.OnClickListener,Tex
         rePassword.setTypeface(typefaceBold);
 
         done.setOnClickListener(this);
-        
+
 //        Utils.prefrences = getSharedPreferences(context.getString(R.string.PREFS_NAME), MODE_PRIVATE);
 //        phone = Utils.prefrences.getString(Constants.PREFS_VALUE_PHONE, "");
 //        userToken = Utils.prefrences.getString(Constants.PREFS_VALUE_USER_TOKEN, "");
@@ -122,21 +122,21 @@ public class PlayItSafeView extends Activity implements View.OnClickListener,Tex
 
     public void onEventMainThread(String message){
         Log.d(TAG, "onEventMainThread->"+message);
-			authManager = ModelManager.getInstance().getAuthorizationManager();
-			if (message.equalsIgnoreCase("PlayItSafe True")) {
-                switchView();
-				//new FetchContactFromPhone(PlayItSafeView.this).getClickerList(authManager.getPhoneNo(),authManager.getUsrToken());
-			//	getUserDetails();
-			} else if (message.equalsIgnoreCase("PlayItSafe False")) {
-				Utils.dismissBarDialog();
-                Utils.fromSignalDialog(this,authManager.getMessage());
-                ;
-			//	Utils.showAlert(PlayItSafeView.this, authManager.getMessage());
-			} else if(message.equalsIgnoreCase("PlayItSafe Network Error")){
-				Utils.dismissBarDialog();
-                Utils.fromSignalDialog(this,AlertMessage.connectionError);
-				//Utils.showAlert(act, AlertMessage.connectionError);
-			}/*else if (message.equalsIgnoreCase("ProfileInfo True")) {
+        authManager = ModelManager.getInstance().getAuthorizationManager();
+        if (message.equalsIgnoreCase("PlayItSafe True")) {
+            switchView();
+            //new FetchContactFromPhone(PlayItSafeView.this).getClickerList(authManager.getPhoneNo(),authManager.getUsrToken());
+            //	getUserDetails();
+        } else if (message.equalsIgnoreCase("PlayItSafe False")) {
+            Utils.dismissBarDialog();
+            Utils.fromSignalDialog(this,authManager.getMessage());
+            ;
+            //	Utils.showAlert(PlayItSafeView.this, authManager.getMessage());
+        } else if(message.equalsIgnoreCase("PlayItSafe Network Error")){
+            Utils.dismissBarDialog();
+            Utils.fromSignalDialog(this,AlertMessage.connectionError);
+            //Utils.showAlert(act, AlertMessage.connectionError);
+        }/*else if (message.equalsIgnoreCase("ProfileInfo True")) {
 				Utils.dismissBarDialog();
 				switchView();
 			} else if (message.equalsIgnoreCase("ProfileInfo False")) {
@@ -147,22 +147,22 @@ public class PlayItSafeView extends Activity implements View.OnClickListener,Tex
 				Utils.showAlert(act, AlertMessage.connectionError);
 				
 			}*/
-			
-		}
-    
-  /*  private void getUserDetails(){
-    	authManager = ModelManager.getInstance().getAuthorizationManager();
-        authManager.getProfileInfo(null,authManager.getPhoneNo(), authManager.getUsrToken());
 
-    }*/
-	private void switchView() {
-		Intent intent = new Intent(PlayItSafeView.this, AddSomeoneView.class);
+    }
+
+    /*  private void getUserDetails(){
+          authManager = ModelManager.getInstance().getAuthorizationManager();
+          authManager.getProfileInfo(null,authManager.getPhoneNo(), authManager.getUsrToken());
+
+      }*/
+    private void switchView() {
+        Intent intent = new Intent(PlayItSafeView.this, AddSomeoneView.class);
         intent.putExtra("FromOwnProfile", false);
-		startActivity(intent);
-		this.finish();
-	}
-	
-	
+        startActivity(intent);
+        this.finish();
+    }
+
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -177,7 +177,7 @@ public class PlayItSafeView extends Activity implements View.OnClickListener,Tex
                         authManager.playItSafeAuth(pwd, authManager.getPhoneNo(), authManager.getEmailId(), authManager.getUsrToken());
                     } else {
                         Utils.fromSignalDialog(this,AlertMessage.MATCHPASSWORD);
-                    //    Utils.showAlert(PlayItSafeView.this, AlertMessage.MATCHPASSWORD);
+                        //    Utils.showAlert(PlayItSafeView.this, AlertMessage.MATCHPASSWORD);
                     }
                 }else {
                     Utils.fromSignalDialog(this,AlertMessage.PASSWORDLENGHT);

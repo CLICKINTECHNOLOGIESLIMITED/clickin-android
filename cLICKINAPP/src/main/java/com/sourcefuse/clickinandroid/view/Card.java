@@ -24,10 +24,7 @@ import com.squareup.picasso.Picasso;
  */
 public class Card extends Activity implements View.OnClickListener,TextWatcher {
 
-//    String stringData ;
-//    String stringdiscription ;
-
-    private TextView card_title, card_desription,tv_about_message;
+    private TextView tv_about_message;
     private static final String TAG = "CardViewAdapter";
     ImageView mBackButton;
     String url,clicks,cardTitle,cardDiscription,card_Db_id,card_id;

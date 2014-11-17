@@ -36,19 +36,13 @@ import de.greenrobot.event.EventBus;
 public class CurrentClickersView extends Activity implements OnClickListener {
     private static final String TAG = CurrentClickersView.class.getSimpleName();
 	private Button phonebook, facebook;
-
     private TextView back,next,middleBack;
-
-	private View view;
     private ListView listView;
     private CurrentClickersAdapter adapter;
     private ProfileManager profilemanager;
     private AuthManager authManager;
-    Dialog dialog ;
 
-    private NewsFeedManager newsFeedManager;
 
-    private boolean showNextButton = false;
     ArrayList<CurrentClickerBean>tempCurrentClickers;
     public static boolean followReqStatus=false;
 
@@ -61,10 +55,9 @@ public class CurrentClickersView extends Activity implements OnClickListener {
 		phonebook = (Button) findViewById(R.id.btn_phb);
 		facebook = (Button) findViewById(R.id.btn_fb);
 		listView = (ListView)findViewById(R.id.list_current_clickers);
-      back= (TextView) findViewById(R.id.btn_back);
+        back= (TextView) findViewById(R.id.btn_back);
         middleBack=(TextView) findViewById(R.id.btn_middle_back);
         next=(TextView) findViewById(R.id.btn_next);
-	//	toboard = (ImageView) findViewById(R.id.iv_toboard);
 		phonebook.setOnClickListener(this);
 		facebook.setOnClickListener(this);
 
@@ -74,7 +67,7 @@ public class CurrentClickersView extends Activity implements OnClickListener {
 		next.setOnClickListener(this);
 
 
-        showNextButton = getIntent().getExtras().getBoolean("FromMenu");
+        boolean showNextButton = getIntent().getExtras().getBoolean("FromMenu");
         if(showNextButton){
             middleBack.setVisibility(View.VISIBLE);
             back.setVisibility(View.GONE);
@@ -89,9 +82,11 @@ public class CurrentClickersView extends Activity implements OnClickListener {
         authManager = ModelManager.getInstance().getAuthorizationManager();
         profilemanager = ModelManager.getInstance().getProfileManager();
 
-        EventBus.getDefault().register(this);
-        Utils.launchBarDialog(CurrentClickersView.this);
-        new FetchContactFromPhone(CurrentClickersView.this).getClickerList(authManager.getPhoneNo(),authManager.getUsrToken(),1);
+       // EventBus.getDefault().register(this);
+      //  Utils.launchBarDialog(CurrentClickersView.this);
+        tempCurrentClickers=profilemanager.currentClickerList;
+        setlist();
+       // new FetchContactFromPhone(CurrentClickersView.this).getClickerList(authManager.getPhoneNo(),authManager.getUsrToken(),1);
 
 	}
 
@@ -240,7 +235,7 @@ public class CurrentClickersView extends Activity implements OnClickListener {
             final String access_Token = session.getAccessToken();
             Log.d(TAG, access_Token);
 
-            newsFeedManager = ModelManager.getInstance().getNewsFeedManager();
+            NewsFeedManager newsFeedManager = ModelManager.getInstance().getNewsFeedManager();
             authManager = ModelManager.getInstance().getAuthorizationManager();
             newsFeedManager.fetchFbFriends(access_Token,authManager.getPhoneNo(),authManager.getUsrToken());
 
@@ -262,8 +257,11 @@ public class CurrentClickersView extends Activity implements OnClickListener {
             Utils.dismissBarDialog();
         } else if(message.equalsIgnoreCase("CheckFriend Network Error")){
             Utils.dismissBarDialog();
+
             Utils.fromSignalDialog(this,AlertMessage.connectionError);
            // Utils.showAlert(CurrentClickersView.this, AlertMessage.connectionError);
+         Utils.fromSignalDialog(this,AlertMessage.connectionError);
+
         } else if (message.equalsIgnoreCase("FetchFbFriend True")) {
             Utils.dismissBarDialog();
             tempCurrentClickers=profilemanager.currentClickerListFB;
@@ -272,6 +270,7 @@ public class CurrentClickersView extends Activity implements OnClickListener {
             Utils.dismissBarDialog();
         } else if(message.equalsIgnoreCase("FetchFbFriend Network Error")){
             Utils.dismissBarDialog();
+
             Utils.fromSignalDialog(this,AlertMessage.connectionError);
             //Utils.showAlert(CurrentClickersView.this, AlertMessage.connectionError);
         } /*else if (message.equalsIgnoreCase("NewsFeed False")) {
@@ -281,7 +280,11 @@ public class CurrentClickersView extends Activity implements OnClickListener {
             startActivity(intent);
         }*/
 
-    }
+            Utils.fromSignalDialog(this,AlertMessage.connectionError);
+        }
+
+
+
 
     @Override
     public void onStop() {
@@ -295,7 +298,7 @@ public class CurrentClickersView extends Activity implements OnClickListener {
     // Akshit Code Starts
     public void skipDialog(String str){
 
-        dialog = new Dialog(CurrentClickersView.this);
+        final Dialog dialog = new Dialog(CurrentClickersView.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         dialog.setContentView(R.layout.alert_current_clicker);
