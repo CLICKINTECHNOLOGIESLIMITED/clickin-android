@@ -1,20 +1,19 @@
 package com.sourcefuse.clickinandroid.view.adapter;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
@@ -121,9 +120,9 @@ public class DeactivateAccountView extends Activity implements View.OnClickListe
                     Utils.launchBarDialog(DeactivateAccountView.this);
                     settingManager.deactivteAccount(phone_no, user_token, reason_type, other_reason, email_opt_out, password);
                 } else if (password.isEmpty()) {
-                    Utils.showAlert(DeactivateAccountView.this, AlertMessage.DEACTIVATE_ENTER_PASSWORD);
+                    Utils.fromSignalDialog(DeactivateAccountView.this, AlertMessage.DEACTIVATE_ENTER_PASSWORD);
                 } else if (password.length() < 8) {
-                    Utils.showAlert(DeactivateAccountView.this, AlertMessage.DEACTIVATE_PASSWORD);
+                    Utils.fromSignalDialog(DeactivateAccountView.this, AlertMessage.DEACTIVATE_PASSWORD);
                 }
 
 
@@ -166,30 +165,59 @@ public class DeactivateAccountView extends Activity implements View.OnClickListe
     public void onEventMainThread(String message) {
         if (message.equalsIgnoreCase("DeactivteAccount True")) {
             Utils.dismissBarDialog();
-            showAlert(this, AlertMessage.DEACTIVATE_ON_SUCCESS);
+            fromSignalDialog(this, AlertMessage.DEACTIVATE_ON_SUCCESS);
         }
         if (message.equalsIgnoreCase("DeactivteAccount False")) {
             Utils.dismissBarDialog();
-            Utils.showAlert(this, AlertMessage.DEACTIVATE_ON_FALIURE);
+            Utils.fromSignalDialog(this, AlertMessage.DEACTIVATE_ON_FALIURE);
         }
         if (message.equalsIgnoreCase("DeactivteAccount Network Error")) {
             Utils.dismissBarDialog();
-            Utils.showAlert(this,AlertMessage.connectionError);
+            Utils.fromSignalDialog(this, AlertMessage.connectionError);
         }
     }
-    public void showAlert(Activity activity, String masg) {
-        new AlertDialog.Builder(activity).setTitle("Alert").setMessage(masg)
-                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        Intent intent=new Intent(DeactivateAccountView.this, SplashView.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
-                        overridePendingTransition(R.anim.slide_in_right ,R.anim.slide_out_right);
-                        new MyPreference(getApplicationContext()).clearAllPreference();
-                        DeactivateAccountView.this.finish();
 
-                    }
-                }).show();
+    // Akshit Code Starts
+    public  void fromSignalDialog(Activity activity ,String str){
 
+        final Dialog dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.setContentView(R.layout.alert_check_dialogs);
+        dialog.setCancelable(false);
+        TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
+        msgI.setText(str);
+
+
+        Button dismiss = (Button) dialog.findViewById(R.id.coolio);
+        dismiss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                Intent intent=new Intent(DeactivateAccountView.this, SplashView.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right ,R.anim.slide_out_right);
+                new MyPreference(getApplicationContext()).clearAllPreference();
+                DeactivateAccountView.this.finish();
+
+            }
+        });
+        dialog.show();
     }
+    // Ends
+//    public void showAlert(Activity activity, String masg) {
+//        new AlertDialog.Builder(activity).setTitle("Alert").setMessage(masg)
+//                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int whichButton) {
+//                        Intent intent=new Intent(DeactivateAccountView.this, SplashView.class);
+//                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                        startActivity(intent);
+//                        overridePendingTransition(R.anim.slide_in_right ,R.anim.slide_out_right);
+//                        new MyPreference(getApplicationContext()).clearAllPreference();
+//                        DeactivateAccountView.this.finish();
+//
+//                    }
+//                }).show();
+//
+//    }
 }

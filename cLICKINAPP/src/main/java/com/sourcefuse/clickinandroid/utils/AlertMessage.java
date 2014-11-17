@@ -46,7 +46,7 @@ public class AlertMessage {
     public static final String PRIVATE = "Are you sure that you want to make your relationship with ";
     public static final String PUBLICMSG = "Are you sure that you want to make your relationship with ";
 
-    public static final String MAKECLICKWITH = "Are you sure that you want to Click with ";
+    public static final String MAKECLICKWITH = "you want to Click with ";
 
     public static final String SREADTHEWORDMSGON = " has invited you to get Clickin' ";
 

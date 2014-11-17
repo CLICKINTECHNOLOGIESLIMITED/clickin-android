@@ -636,12 +636,12 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         } else if (message.equalsIgnoreCase("SearchResult False")) {
             stopSearch = true;
             Utils.dismissBarDialog();
-            Utils.showAlert(ClickInBaseView.this, authManager.getMessage());
+            Utils.fromSignalDialog(ClickInBaseView.this, authManager.getMessage());
             Log.d("2", "message->" + message);
         } else if (message.equalsIgnoreCase("SearchResult Error")) {
             stopSearch = true;
             Utils.dismissBarDialog();
-            Utils.showAlert(ClickInBaseView.this, AlertMessage.connectionError);
+            Utils.fromSignalDialog(ClickInBaseView.this, AlertMessage.connectionError);
             Log.d("3", "message->" + message);
         }else if (message.equalsIgnoreCase("NewsFeed  True")) {
             Utils.dismissBarDialog();
@@ -654,7 +654,6 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
             stopSearch = true;
             Utils.dismissBarDialog();
             newsFeedManager.userFeed.clear();
-//            Utils.showAlert(ClickInBaseView.this, authManager.getMessage());
             Intent intent = new Intent(ClickInBaseView.this, FeedView.class);
 
             startActivity(intent);
@@ -662,7 +661,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         } else if (message.equalsIgnoreCase("NewsFeed Error")) {
             stopSearch = true;
             Utils.dismissBarDialog();
-            Utils.showAlert(ClickInBaseView.this, AlertMessage.connectionError);
+            Utils.fromSignalDialog(ClickInBaseView.this, AlertMessage.connectionError);
             Log.d("3", "message->" + message);
         }
 

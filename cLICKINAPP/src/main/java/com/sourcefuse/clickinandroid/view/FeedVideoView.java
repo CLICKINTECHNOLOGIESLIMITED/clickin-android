@@ -5,27 +5,14 @@ import android.app.ProgressDialog;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
 import android.view.Window;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.MediaController;
 import android.widget.Toast;
 import android.widget.VideoView;
 
-import com.sourcefuse.clickinandroid.model.AuthManager;
-import com.sourcefuse.clickinandroid.model.ModelManager;
-import com.sourcefuse.clickinandroid.model.NewsFeedManager;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.Utils;
-import com.sourcefuse.clickinandroid.view.adapter.FeedsAdapter;
-import com.sourcefuse.clickinandroid.view.adapter.FeedsStarsAdapter;
-import com.sourcefuse.clickinandroid.view.adapter.SimpleSectionedListAdapter2.Section;
 import com.sourcefuse.clickinapp.R;
-
-import java.util.ArrayList;
-
-import de.greenrobot.event.EventBus;
 
 /**
  * Created by charunigam on 30/10/14.
@@ -112,7 +99,7 @@ public class FeedVideoView extends Activity {
         }
         else
         {
-            Utils.showAlert(this, AlertMessage.connectionError);
+            Utils.fromSignalDialog(this, AlertMessage.connectionError);
             this.finish();        }
     }
 

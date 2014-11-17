@@ -260,9 +260,7 @@ public class CurrentClickersView extends Activity implements OnClickListener {
 
             Utils.fromSignalDialog(this,AlertMessage.connectionError);
            // Utils.showAlert(CurrentClickersView.this, AlertMessage.connectionError);
-         Utils.fromSignalDialog(this,AlertMessage.connectionError);
-
-        } else if (message.equalsIgnoreCase("FetchFbFriend True")) {
+           } else if (message.equalsIgnoreCase("FetchFbFriend True")) {
             Utils.dismissBarDialog();
             tempCurrentClickers=profilemanager.currentClickerListFB;
             setlist();
@@ -270,7 +268,6 @@ public class CurrentClickersView extends Activity implements OnClickListener {
             Utils.dismissBarDialog();
         } else if(message.equalsIgnoreCase("FetchFbFriend Network Error")){
             Utils.dismissBarDialog();
-
             Utils.fromSignalDialog(this,AlertMessage.connectionError);
             //Utils.showAlert(CurrentClickersView.this, AlertMessage.connectionError);
         } /*else if (message.equalsIgnoreCase("NewsFeed False")) {
@@ -280,7 +277,7 @@ public class CurrentClickersView extends Activity implements OnClickListener {
             startActivity(intent);
         }*/
 
-            Utils.fromSignalDialog(this,AlertMessage.connectionError);
+            
         }
 
 

@@ -1,17 +1,10 @@
 package com.sourcefuse.clickinandroid.view;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
@@ -26,10 +19,7 @@ import com.sourcefuse.clickinandroid.view.adapter.SimpleSectionedListAdapter2;
 import com.sourcefuse.clickinandroid.view.adapter.SimpleSectionedListAdapter2.Section;
 import com.sourcefuse.clickinapp.R;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import de.greenrobot.event.EventBus;
 
@@ -189,7 +179,7 @@ public class FeedView extends ClickInBaseView implements View.OnClickListener{
         } else if (message.equalsIgnoreCase("NewsFeed Network Error")) {
             stopSearch = true;
             Utils.dismissBarDialog();
-            Utils.showAlert(FeedView.this, AlertMessage.connectionError);
+            Utils.fromSignalDialog(FeedView.this, AlertMessage.connectionError);
             android.util.Log.d("3", "message->" + message);
         } else if (message.equalsIgnoreCase("NewsFeedDelete False")){
         } else if(message.equalsIgnoreCase("NewsFeedDelete True")){
@@ -197,7 +187,7 @@ public class FeedView extends ClickInBaseView implements View.OnClickListener{
         }else if(message.equalsIgnoreCase("NewsFeedDelete Network Error"))
         {
             Utils.dismissBarDialog();
-            Utils.showAlert(FeedView.this, AlertMessage.connectionError);
+            Utils.fromSignalDialog(FeedView.this, AlertMessage.connectionError);
         }
 
     }

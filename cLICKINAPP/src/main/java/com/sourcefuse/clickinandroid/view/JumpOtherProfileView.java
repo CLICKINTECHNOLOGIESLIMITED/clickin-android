@@ -1,13 +1,13 @@
 package com.sourcefuse.clickinandroid.view;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -19,7 +19,6 @@ import android.widget.TextView;
 
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
-import com.sourcefuse.clickinandroid.model.ProfileManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.Constants;
@@ -178,28 +177,30 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
 			break;
 		case R.id.rl_add_someone:
             if(Utils.isEmptyString(relationManager.getRelationStatus())) {
-                new AlertDialog.Builder(JumpOtherProfileView.this)
-                        .setMessage(AlertMessage.MAKECLICKWITH + authManager.getTmpUserName())
-                        .setPositiveButton("Yes Please",
-                                new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog,
-                                                        int which) {
-                                        authManager = ModelManager.getInstance().getAuthorizationManager();
+                    dialogClickwith();
 
-                                        authManager.sendNewRequest(authManager.getPhoneNo(), phForOtherUser, authManager.getUsrToken());
-
-                                    }
-
-                                }
-                        ).setNegativeButton("No Thanks", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        dialog.dismiss();
-                    }
-
-                }).show();
+//                new AlertDialog.Builder(JumpOtherProfileView.this)
+//                        .setMessage(AlertMessage.MAKECLICKWITH + authManager.getTmpUserName())
+//                        .setPositiveButton("Yes Please",
+//                                new DialogInterface.OnClickListener() {
+//                                    @Override
+//                                    public void onClick(DialogInterface dialog,
+//                                                        int which) {
+//                                        authManager = ModelManager.getInstance().getAuthorizationManager();
+//
+//                                        authManager.sendNewRequest(authManager.getPhoneNo(), phForOtherUser, authManager.getUsrToken());
+//
+//                                    }
+//
+//                                }
+//                        ).setNegativeButton("No Thanks", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//
+//                        dialog.dismiss();
+//                    }
+//
+//                }).show();
             }
 			break;
 		case R.id.iv_notification_other:
@@ -247,13 +248,13 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
             }else if (message.equalsIgnoreCase("ProfileInfo False")) {
 
             }else if (message.equalsIgnoreCase("ProfileInfoNetwork Error")) {
-                Utils.showAlert(this, AlertMessage.connectionError);
+                Utils.fromSignalDialog(this, AlertMessage.connectionError);
 			}else if (message.equalsIgnoreCase("Fetchprofilerelationships True")) {
 				setlist();
             }else if (message.equalsIgnoreCase("Fetchprofilerelationships False")) {
 
             }else if (message.equalsIgnoreCase("Fetchprofilerelationships Network Error")) {
-                Utils.showAlert(this, AlertMessage.connectionError);
+                Utils.fromSignalDialog(this, AlertMessage.connectionError);
 			}else if (message.equalsIgnoreCase("FollowUser True")) {
 				relationManager = ModelManager.getInstance().getRelationManager();
 				follow.setBackgroundResource(R.drawable.requested_grey);
@@ -264,7 +265,7 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
 			}else if (message.equalsIgnoreCase("UnFollowUser True")) {
 				follow.setBackgroundResource(R.drawable.follow);
 				relationManager = ModelManager.getInstance().getRelationManager();
-				Utils.showToast(JumpOtherProfileView.this, relationManager.getStatusMsg());
+				Utils.fromSignalDialog(JumpOtherProfileView.this, relationManager.getStatusMsg());
 			}else if (message.equalsIgnoreCase("UnFollowUser  false")) {
 				relationManager = ModelManager.getInstance().getRelationManager();
 				Utils.showToast(JumpOtherProfileView.this, relationManager.getStatusMsg());
@@ -403,4 +404,39 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
     }
 
 
+   // Akshit Code Starts
+    public void dialogClickwith(){
+
+        final Dialog dialog = new Dialog(JumpOtherProfileView.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.setContentView(R.layout.alert_other_profile_view);
+        dialog.setCancelable(false);
+        TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
+        TextView msgII = (TextView) dialog.findViewById(R.id.alert_msgII);
+//        msgI.setText(str);
+//        msgI.setText(AlertMessage.CURRENTCLICKERPAGE);
+          msgII.setText(AlertMessage.MAKECLICKWITH + authManager.getTmpUserName());
+        Button skip = (Button)dialog.findViewById(R.id.coolio);
+        skip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                authManager = ModelManager.getInstance().getAuthorizationManager();
+
+                authManager.sendNewRequest(authManager.getPhoneNo(), phForOtherUser, authManager.getUsrToken());
+                dialog.dismiss();
+            }
+        });
+
+        Button dismiss = (Button) dialog.findViewById(R.id.coolio1);
+        dismiss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                dialog.dismiss();
+
+            }
+        });
+        dialog.show();
+    }
+// Ends
 }

@@ -1,11 +1,7 @@
 package com.sourcefuse.clickinandroid.view;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -80,7 +76,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.sql.SQLException;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -426,53 +421,92 @@ public class
 
     }
 
-
     public void imageDialog() {
-        String[] addPhoto;
-        addPhoto = new String[]{"Camera", "Gallery"};
-        AlertDialog.Builder dialog = new AlertDialog.Builder(ChatRecordView.this);
-        dialog.setTitle("Select Option");
 
-        dialog.setItems(addPhoto, new DialogInterface.OnClickListener() {
+        final Dialog mdialog = new Dialog(ChatRecordView.this);
+        mdialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        mdialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        mdialog.setContentView(R.layout.alert_take_picture);
+        Button cancel = (Button) mdialog.findViewById(R.id.dialog_cancel);
+        TextView textcamera = (TextView) mdialog.findViewById(R.id.take_picture);
+        TextView textgallery = (TextView) mdialog.findViewById(R.id.from_gallery);
+        textcamera.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int id) {
-                if (id == 0) {
+            public void onClick(View view) {
+                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                mImageCaptureUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
+                cameraIntent.putExtra("return-data", true);
+                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
+                startActivityForResult(cameraIntent, Constants.CAMERA_REQUEST);
 
-                    Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    mImageCaptureUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
-                    cameraIntent.putExtra("return-data", true);
-                    cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
-                    startActivityForResult(cameraIntent, Constants.CAMERA_REQUEST);
-
-
-                  /*  Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                    cameraIntent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
-                    try {
-                        cameraIntent.putExtra("return-data", true);
-                        startActivityForResult(cameraIntent, Constants.CAMERA_REQUEST);
-                    } catch (ActivityNotFoundException e) {
-                    }*/
-                    dialog.dismiss();
-                } else if (id == 1) {
-
-                    Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(pickPhoto, Constants.SELECT_PICTURE);
-                    dialog.dismiss();
-                }
+                mdialog.dismiss();
+            }
+        });
+        textgallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(pickPhoto, Constants.SELECT_PICTURE);
+                mdialog.dismiss();
             }
         });
 
-        dialog.setNeutralButton("Cancel",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        dialog.dismiss();
-                    }
-                }
-        );
-        dialog.show();
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mdialog.dismiss();
+            }
+        });
+        mdialog.show();
     }
+
+
+//    public void imageDialog() {
+//        String[] addPhoto;
+//        addPhoto = new String[]{"Camera", "Gallery"};
+//        AlertDialog.Builder dialog = new AlertDialog.Builder(ChatRecordView.this);
+//        dialog.setTitle("Select Option");
+//
+//        dialog.setItems(addPhoto, new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int id) {
+//                if (id == 0) {
+//
+//                    Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                    mImageCaptureUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
+//                    cameraIntent.putExtra("return-data", true);
+//                    cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
+//                    startActivityForResult(cameraIntent, Constants.CAMERA_REQUEST);
+//
+//
+//                  /*  Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+//                    cameraIntent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
+//                    try {
+//                        cameraIntent.putExtra("return-data", true);
+//                        startActivityForResult(cameraIntent, Constants.CAMERA_REQUEST);
+//                    } catch (ActivityNotFoundException e) {
+//                    }*/
+//                    dialog.dismiss();
+//                } else if (id == 1) {
+//
+//                    Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//                    startActivityForResult(pickPhoto, Constants.SELECT_PICTURE);
+//                    dialog.dismiss();
+//                }
+//            }
+//        });
+//
+//        dialog.setNeutralButton("Cancel",
+//                new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//
+//                        dialog.dismiss();
+//                    }
+//                }
+//        );
+//        dialog.show();
+//    }
 
 
     public void alertDialog() {
@@ -1157,7 +1191,7 @@ public class
             Utils.dismissBarDialog();
             android.util.Log.d("2", "message->" + message);
         } else if (message.equalsIgnoreCase("FecthChat NetworkchatType Error")) {
-            Utils.showAlert(ChatRecordView.this, AlertMessage.connectionError);
+            Utils.fromSignalDialog(ChatRecordView.this, AlertMessage.connectionError);
             android.util.Log.d("3", "message->" + message);
         }
     }

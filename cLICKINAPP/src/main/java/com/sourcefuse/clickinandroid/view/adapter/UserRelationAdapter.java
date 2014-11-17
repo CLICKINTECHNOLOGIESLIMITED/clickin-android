@@ -1,14 +1,14 @@
 package com.sourcefuse.clickinandroid.view.adapter;
 
 import android.app.Activity;
-import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -38,6 +38,8 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
 	private RelationManager relationManager;
 	private Typeface typeface;
 	private boolean showpending = false;
+    RecordHolder rholder;
+   GetrelationshipsBean item;
 
 	public UserRelationAdapter(Context context, int layoutResourceId,
 			List<GetrelationshipsBean> item) {
@@ -50,7 +52,7 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		View row = convertView;
-		final GetrelationshipsBean item = getItem(position);
+		item = getItem(position);
 		relationManager = ModelManager.getInstance().getRelationManager();
 		RecordHolder holder = null;
 		if (row == null) {
@@ -75,7 +77,7 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
 			holder = (RecordHolder) row.getTag();
 		}
 		
-		final RecordHolder rholder = (RecordHolder) row.getTag();
+		rholder = (RecordHolder) row.getTag();
 		rholder.usr_name.setText(item.getPartnerName());
 		
 		if(item.getStatusAccepted().matches("true") && (item.getmStatuspublic().matches("false") || Utils.isEmptyString(item.getmStatuspublic()))){
@@ -162,51 +164,53 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
 
                 if(item.getStatusAccepted().matches("true") && item.getmStatuspublic().matches("true")){
                     Log.e("1","2");
-                    new AlertDialog.Builder(context)
-                            .setMessage(AlertMessage.PUBLICMSG+item.getPartnerName()+" private?")
-                            .setPositiveButton("Ok",
-                                    new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            item.setmStatuspublic("false");
-                                            relationManager.changeUserVisibility(item.getRelationshipId(), "false", authManager.getPhoneNo(), authManager.getUsrToken());
-                                            rholder.privacy.setBackgroundResource(R.drawable.owner_profile_eye_cross_icon);
-
-                                        }
-
-                                    }
-                            ).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-
-                            dialog.dismiss();
-                        }
-
-                    }).show();
+                    relationDialog(AlertMessage.PUBLICMSG+item.getPartnerName()+ " private?");//request normal dialog to custom dialog
+//                    new AlertDialog.Builder(context)
+//                            .setMessage(AlertMessage.PUBLICMSG+item.getPartnerName()+" private?")
+//                            .setPositiveButton("Ok",
+//                                    new DialogInterface.OnClickListener() {
+//                                        @Override
+//                                        public void onClick(DialogInterface dialog, int which) {
+//                                            item.setmStatuspublic("false");
+//                                            relationManager.changeUserVisibility(item.getRelationshipId(), "false", authManager.getPhoneNo(), authManager.getUsrToken());
+//                                            rholder.privacy.setBackgroundResource(R.drawable.owner_profile_eye_cross_icon);
+//
+//                                        }
+//
+//                                    }
+//                            ).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//
+//                            dialog.dismiss();
+//                        }
+//
+//                    }).show();
 
         		}else if(item.getStatusAccepted().matches("true") && (item.getmStatuspublic().matches("false") || Utils.isEmptyString(item.getmStatuspublic()))){
                     Log.e("1","3");
-                    new AlertDialog.Builder(context)
-                            .setMessage(AlertMessage.PRIVATE+item.getPartnerName()+" public?")
-                            .setPositiveButton("Ok",
-                                    new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog,
-                                                            int which) {
-                                            item.setmStatuspublic("true");
-                                            relationManager.changeUserVisibility(item.getRelationshipId(),"true",authManager.getPhoneNo(),authManager.getUsrToken());
-                                            rholder.privacy.setBackgroundResource(R.drawable.owner_profile_eye_icon);
-
-                                        }
-
-                                    }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-
-                            dialog.dismiss();
-                        }
-
-                    }).show();
+                    relationDialogprivate(AlertMessage.PRIVATE+item.getPartnerName()+" public?");//replace Normal Dialog to custom dialog
+//                    new AlertDialog.Builder(context)
+//                            .setMessage(AlertMessage.PRIVATE+item.getPartnerName()+" public?")
+//                            .setPositiveButton("Ok",
+//                                    new DialogInterface.OnClickListener() {
+//                                        @Override
+//                                        public void onClick(DialogInterface dialog,
+//                                                            int which) {
+//                                            item.setmStatuspublic("true");
+//                                            relationManager.changeUserVisibility(item.getRelationshipId(),"true",authManager.getPhoneNo(),authManager.getUsrToken());
+//                                            rholder.privacy.setBackgroundResource(R.drawable.owner_profile_eye_icon);
+//
+//                                        }
+//
+//                                    }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//
+//                            dialog.dismiss();
+//                        }
+//
+//                    }).show();
 
 
         		}else if (Utils.isEmptyString(item.getStatusAccepted())&& item.getRequestInitiator().matches("true")){
@@ -257,4 +261,78 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
 		View whiteview;
 
 	}
+
+    // Akshit Code Starts to show pop-up to make relation ship private
+    public void relationDialog(String str){
+
+        final Dialog dialog = new Dialog(((Activity)context));
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.setContentView(R.layout.alert_relationship);
+        dialog.setCancelable(false);
+        TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
+
+        msgI.setText(str);
+
+        Button skip = (Button)dialog.findViewById(R.id.coolio);
+        skip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                item.setmStatuspublic("false");
+                relationManager.changeUserVisibility(item.getRelationshipId(), "false", authManager.getPhoneNo(), authManager.getUsrToken());
+                rholder.privacy.setBackgroundResource(R.drawable.owner_profile_eye_cross_icon);
+
+                dialog.dismiss();
+            }
+        });
+
+        Button dismiss = (Button) dialog.findViewById(R.id.coolio1);
+        dismiss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                dialog.dismiss();
+
+            }
+        });
+        dialog.show();
+    }
+// Ends
+//akshit code to show pop-up to make relationship public
+    public void relationDialogprivate(String str){
+
+        final Dialog dialog = new Dialog(((Activity)context));
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.setContentView(R.layout.alert_relationship);
+        dialog.setCancelable(false);
+        TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
+
+        msgI.setText(str);
+
+        Button skip = (Button)dialog.findViewById(R.id.coolio);
+        skip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                item.setmStatuspublic("true");
+                relationManager.changeUserVisibility(item.getRelationshipId(),"true",authManager.getPhoneNo(),authManager.getUsrToken());
+                rholder.privacy.setBackgroundResource(R.drawable.owner_profile_eye_icon);
+
+                dialog.dismiss();
+            }
+        });
+
+        Button dismiss = (Button) dialog.findViewById(R.id.coolio1);
+        dismiss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                dialog.dismiss();
+
+            }
+        });
+        dialog.show();
+    }
+// Ends
+
 }
