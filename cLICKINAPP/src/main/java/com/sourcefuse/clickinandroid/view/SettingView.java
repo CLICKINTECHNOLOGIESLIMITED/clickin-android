@@ -266,10 +266,11 @@ public class SettingView extends Activity implements View.OnClickListener {
                         editor.apply();
                         QBChatService.getInstance().logout();
                         Log.e("", "holder.logoutYes");
-                        Intent intent5 = new Intent(SettingView.this, SplashView.class);
+                        Intent intent5 = new Intent(getApplicationContext(), SplashView.class);
                         intent5.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent5);
                         SettingView.this.finish();
+                    //  this.finishAndRemoveTask();
                         break;
                   case R.id.btn_logout_no:
                         MyCustomAnimation a = new MyCustomAnimation(logout_layout, 300, MyCustomAnimation.COLLAPSE);
@@ -448,5 +449,11 @@ public class SettingView extends Activity implements View.OnClickListener {
             super.onActivityResult(requestCode, resultCode, data);
             uiHelper.onActivityResult(requestCode, resultCode, data, dialogCallback);
       }
+
+    public void onDestroy(){
+        super.onDestroy();
+        Log.e("SettingsView","Destroy");
+    }
+
 
 }

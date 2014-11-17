@@ -76,6 +76,13 @@ public class SpreadWordView extends Activity implements OnClickListener {
         //Utils.launchBarDialog(this);
       //  new FetchContactFromPhone(SpreadWordView.this).getClickerList(authManager.getPhoneNo(),authManager.getUsrToken(),1);
         //   setlist();
+        profilemanager=ModelManager.getInstance().getProfileManager();
+
+        if(profilemanager.spreadTheWorldList!=null){
+            for(ContactBean temp:profilemanager.spreadTheWorldList){
+                temp.setChecked(false);
+            }
+        }
         setlist();
 
     }

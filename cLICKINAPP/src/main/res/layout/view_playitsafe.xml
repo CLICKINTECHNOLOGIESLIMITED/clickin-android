@@ -106,7 +106,7 @@
 
     <Button
         android:id="@+id/btn_done_play"
-        android:layout_width="wrap_content"
+        android:layout_width="315dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rr_re_enterpassword"
         android:layout_centerHorizontal="true"

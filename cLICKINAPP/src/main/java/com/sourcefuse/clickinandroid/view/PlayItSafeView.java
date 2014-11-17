@@ -23,7 +23,9 @@ import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.Constants;
+import com.sourcefuse.clickinandroid.utils.FetchContactFromPhone;
 import com.sourcefuse.clickinandroid.utils.Utils;
+import com.sourcefuse.clickinandroid.view.adapter.ContactAdapter;
 import com.sourcefuse.clickinapp.R;
 
 import de.greenrobot.event.EventBus;
@@ -109,14 +111,28 @@ public class PlayItSafeView extends Activity implements View.OnClickListener,Tex
         Log.d(TAG, "onEventMainThread->"+message);
 			authManager = ModelManager.getInstance().getAuthorizationManager();
 			if (message.equalsIgnoreCase("PlayItSafe True")) {
-                switchView();
+                new FetchContactFromPhone(this).getClickerList(authManager.getPhoneNo(), authManager.getUsrToken(), 1);
+
 			} else if (message.equalsIgnoreCase("PlayItSafe False")) {
 				Utils.dismissBarDialog();
                 alertDialog(authManager.getMessage());
 			} else if(message.equalsIgnoreCase("PlayItSafe Network Error")){
 				Utils.dismissBarDialog();
                 alertDialog(AlertMessage.connectionError);
-			}
+			}else if (message.equalsIgnoreCase("CheckFriend True")) {
+            Utils.dismissBarDialog();
+                switchView();
+          } else if (message.equalsIgnoreCase("CheckFriend False")) {
+            Utils.dismissBarDialog();
+              Utils.showAlert(this,authManager.getMessage());
+                switchView();
+          //  fromSignalDialog(authManager.getMessage());
+         } else if(message.equalsIgnoreCase("CheckFriend Network Error")){
+            Utils.dismissBarDialog();
+                Utils.showAlert(this, AlertMessage.connectionError);
+                switchView();
+           // fromSignalDialog( AlertMessage.connectionError);
+        }
 			
 		}
 	private void switchView() {

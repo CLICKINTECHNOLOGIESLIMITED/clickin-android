@@ -125,6 +125,9 @@ public class AddSomeoneView extends Activity implements
             }
         });
 
+        adapter = new ContactAdapter(this, R.layout.row_contacts,Utils.itData);
+        listView.setAdapter(adapter);
+
 
 	}
 

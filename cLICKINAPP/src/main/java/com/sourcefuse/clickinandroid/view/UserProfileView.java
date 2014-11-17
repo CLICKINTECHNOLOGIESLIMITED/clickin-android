@@ -33,8 +33,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 
-public class
-        UserProfileView extends ClickInBaseView implements View.OnClickListener {
+public class UserProfileView extends ClickInBaseView implements View.OnClickListener {
     private static final String TAG = UserProfileView.class.getSimpleName();
 	private Button follower, following,btnAddSomeone,EditProfile;
 	private TextView profileHeader;
@@ -326,7 +325,16 @@ public class
 
                 }//if gender null
                 else {
-                    userimage.setImageResource(R.drawable.male_user);
+                    if(authManager.getUserPic()!=null){
+                        Picasso.with(UserProfileView.this)
+                                .load(authManager.getUserPic())
+                                .skipMemoryCache()
+
+                                .error(R.drawable.male_user)
+                                .into(userimage);
+                    }else {
+                        userimage.setImageResource(R.drawable.male_user);
+                    }
 
                 }
 
@@ -549,5 +557,11 @@ public class
         super.onNewIntent(intent);
         relationManager = ModelManager.getInstance().getRelationManager();
         relationManager.getRelationShips(authManager.getPhoneNo(), authManager.getUsrToken());
+    }
+
+    public void onDestroy(){
+        super.onDestroy();
+
+        Log.e("UserprofileView","Destroy");
     }
 }

@@ -149,7 +149,7 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
 
 
           // akshit code for closing keypad if touched anywhere outside
-          ((RelativeLayout) findViewById(R.id.relative_layout_root_profile)).setOnClickListener(new View.OnClickListener() {
+          ((RelativeLayout) findViewById(R.id.relative_layout_root_profile)).setOnClickListener(new OnClickListener() {
 
               @Override
               public void onClick(View arg0) {
@@ -168,8 +168,6 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
 
           });
 //ends
-
-
       }
 
       @Override
@@ -218,11 +216,12 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
                   switchView();
             } else if (message.equalsIgnoreCase("UpdateProfile False")) {
                   Utils.dismissBarDialog();
-                  alertDialog(authManager.getMessage());
+                  Utils.fromSignalDialog(this,authManager.getMessage());
                   //Utils.showAlert(ProfileView.this, authManager.getMessage());
             } else if (message.equalsIgnoreCase("UpdateProfile Network Error")) {
                   Utils.dismissBarDialog();
-                  alertDialog(AlertMessage.connectionError);
+                Utils.fromSignalDialog(this,AlertMessage.connectionError);
+                  //alertDialog(AlertMessage.connectionError);
                   //Utils.showAlert(this, AlertMessage.connectionError);
             }
 
@@ -280,7 +279,8 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
                                           profileManager.setProfile(fname.getText().toString(), lname.getText().toString(), authManager.getPhoneNo(),
                                                                            authManager.getUsrToken(), gender_var, "" + day + month + year, cityStr, countryStr, email.getText().toString(), "", Utils.encodeTobase64(bitmapImage));
                                     } else {
-                                          alertDialog(AlertMessage.vEmailid);
+                                        Utils.fromSignalDialog(this,AlertMessage.vEmailid);
+                                          //alertDialog(AlertMessage.vEmailid);
                                           //Utils.showAlert(ProfileView.this, AlertMessage.vEmailid);
                                     }
                               } else {
@@ -307,7 +307,8 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
                                           profileManager.setProfile(fname.getText().toString(), lname.getText().toString(), authManager.getPhoneNo(),
                                                                            authManager.getUsrToken(), gender_var, "" + day + month + year, cityStr, countryStr, email.getText().toString(), "", Utils.encodeTobase64(bitmap));
                                     } else {
-                                          alertDialog(AlertMessage.vEmailid);
+
+                                          Utils.fromSignalDialog(this,AlertMessage.vEmailid);
                                           //Utils.showAlert(ProfileView.this, AlertMessage.vEmailid);
                                     }
 
@@ -647,8 +648,14 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
 //                        mImageCaptureUri = data.getData();
 //                        bitmapImage = Utils.decodeUri(mImageCaptureUri, ProfileView.this);
 //                        profileimg.setImageBitmap(bitmapImage);
-/*test code akshit */
-                                    bitmapImage = BitmapFactory.decodeFile(mImageCaptureUri.getPath(), new BitmapFactory.Options());
+/*test code akshit */               Bitmap bitmap = BitmapFactory.decodeFile(mImageCaptureUri.getPath(), new BitmapFactory.Options());
+                                    BitmapFactory.Options bmpFactoryOptions = new BitmapFactory.Options();
+                                    Bitmap bitmap1;
+                                    bmpFactoryOptions.inSampleSize = 2;
+                                    bmpFactoryOptions.outWidth = bitmap.getWidth();
+                                    bmpFactoryOptions.outHeight = bitmap.getHeight();
+                                    bmpFactoryOptions.inJustDecodeBounds = false;
+                                    bitmapImage = BitmapFactory.decodeFile(mImageCaptureUri.getPath(), bmpFactoryOptions);
 
                                     try {
                                           ExifInterface ei = new ExifInterface(mImageCaptureUri.getPath());
@@ -669,7 +676,7 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
                               /*bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), mat, true);*/
 
 
-                                          Bitmap resized;
+                                          /*Bitmap resized;
                                           if (bitmapImage.getWidth() >= bitmapImage.getHeight()) {
 
                                                 resized = Bitmap.createBitmap(
@@ -689,18 +696,49 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
                                                                                      bitmapImage.getWidth(),
                                                                                      bitmapImage.getWidth(), mat, true
                                                 );
+                                          }*/
+
+
+                                          Bitmap resize;
+                                          resize = Bitmap.createBitmap(bitmapImage, 0, 0, bitmapImage.getWidth(), bitmapImage.getHeight(), mat, true);
+                                          if (resize != null) {
+
+                                                try {
+                                                      authManager.setOrginalBitmap(resize);
+                                                      Intent intent = new Intent(ProfileView.this, CropView.class);
+                                                      intent.putExtra("from", "fromcamera");
+                                                      intent.putExtra("uri",mImageCaptureUri.toString());
+                                                      startActivityForResult(intent, Constants.CROP_PICTURE);
+                                                } catch (Exception e) {
+                                                      e.printStackTrace();
+                                                      Log.e("exception--->", "exception--->");
+                                                }
                                           }
-                                          bitmapImage.recycle();
+                                          /*bitmapImage.recycle();
                                           profileimg.setImageBitmap(resized);
                                           userImageUri = mImageCaptureUri;
-                                          mImageCaptureUri = null;
+                                          mImageCaptureUri = null;*/
 
                                     } catch (Exception e) {
                                           e.printStackTrace();
                                     }
                                     break;
                               case Constants.SELECT_PICTURE:
-                                    bitmapImage = getBitmapFromCameraData(data, getApplicationContext());
+
+
+                                    Bitmap bitmap12 = getBitmapFromCameraData(data, getApplicationContext());
+
+
+                 /*    pick image from gallery  */
+                                    BitmapFactory.Options bmpFactoryOptions1 = new BitmapFactory.Options();
+                                    Bitmap bitmap11;
+                                    bmpFactoryOptions1.inSampleSize = 2;
+                                    bmpFactoryOptions1.outWidth = bitmap12.getWidth();
+                                    bmpFactoryOptions1.outHeight = bitmap12.getHeight();
+                                    bmpFactoryOptions1.inJustDecodeBounds = false;
+                                    bitmapImage = BitmapFactory.decodeFile(getRealPathFromURI(data.getData()), bmpFactoryOptions1);
+
+                                    /*bitmapImage = getBitmapFromCameraData(data, getApplicationContext());*/
 
 /*test code akshit */
                  /*    pick image from gallery  */
@@ -727,15 +765,28 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
 
                               /*bitmap1 = Bitmap.createBitmap(bitmap1, 0, 0, bitmap1.getWidth(), bitmap1.getHeight(), mat, true);*/
 
+                                          bitmapImage = Bitmap.createBitmap(bitmapImage, 0, 0, bitmapImage.getWidth(), bitmapImage.getHeight(), mat, true);
 
-
-
+                                          userImageUri = data.getData();
+                                          if (bitmapImage != null) {
+                                                try {
+                                                      authManager.setOrginalBitmap(null);
+                                                      authManager.setOrginalBitmap(bitmapImage);
+                                                      Intent intent = new Intent(ProfileView.this, CropView.class);
+                                                      intent.putExtra("from", "fromgallery");
+                                                      intent.putExtra("uri",userImageUri.toString());
+                                                      startActivityForResult(intent, Constants.CROP_PICTURE);
+                                                } catch (Exception e) {
+                                                      e.printStackTrace();
+                                                      Log.e("exception--->", "exception--->");
+                                                }
+                                          }
 
 
                   /*      pick image from gallery    */
 
 
-                                          Bitmap resized1;
+                                          /*Bitmap resized1;
                                           if (bitmapImage.getWidth() >= bitmapImage.getHeight()) {
 
                                                 resized1 = Bitmap.createBitmap(
@@ -760,7 +811,7 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
 
                                           profileimg.setImageBitmap(resized1);
 
-                                          userImageUri = data.getData();
+                                          userImageUri = data.getData();*/
                                           //    authManager.setUserImageUri(userImageUri);
                                           //  authManager.setUserbitmap(resized1);
 
@@ -768,6 +819,34 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
                                     } catch (Exception e) {
                                           e.printStackTrace();
                                     }
+                                    break;
+
+
+                              case Constants.CROP_PICTURE:
+
+                                    if (data.getStringExtra("retake").equalsIgnoreCase("camare")) {
+                                          Intent intent1 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                                          mImageCaptureUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
+                                          intent1.putExtra("return-data", true);
+                                          intent1.putExtra(MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
+                                          startActivityForResult(intent1, Constants.CAMERA_REQUEST);
+                                    } else if (data.getStringExtra("retake").equalsIgnoreCase("gallery")) {
+                                          Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                                          startActivityForResult(pickPhoto, Constants.SELECT_PICTURE);
+                                    } else if (authManager.getmResizeBitmap() != null) {
+                                          profileimg.setImageBitmap(authManager.getmResizeBitmap());
+
+                                          authManager.setUserImageUri(userImageUri);
+                                          authManager.setUserbitmap(authManager.getmResizeBitmap());
+                                          authManager.setOrginalBitmap(null);
+                                          authManager.setmResizeBitmap(null);
+
+                                     /*Bitmap imageBitmap = authManager.getmResizeBitmap();
+                                          authManager.setUserbitmap(authManager.getmResizeBitmap());
+                                          authManager.setOrginalBitmap(null);
+                                          authManager.setmResizeBitmap(null);*/
+                                    }
+                                    break;
                               default:
                                     break;
                         }
@@ -843,8 +922,6 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
                   long present = System.currentTimeMillis();
                   diffrence_in_mills = Math.abs(time - present);
 
-                  Log.e(TAG+"--------------->", "Diffrence in Mills " + diffrence_in_mills);
-
       /* code for age prafull */
 
                   age = getAge(selectedYear,selectedMonth,selectedDay);
@@ -886,26 +963,26 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
       public boolean updateProfileValidation() {
             Log.e(TAG, "mCurrentyear" + mCurrentyear + "  year " + year);
             if (fname.getText().toString().length() < 1) {
-                  alertDialog(AlertMessage.fname);
+                  Utils.fromSignalDialog(this,AlertMessage.fname);
                   // Utils.showAlert(ProfileView.this, AlertMessage.fname);
                   return false;
             } else if (lname.getText().toString().length() < 1) {
-                  alertDialog(AlertMessage.lname);
+                  Utils.fromSignalDialog(this,AlertMessage.lname);
                   // Utils.showAlert(ProfileView.this, AlertMessage.lname);
                   return false;
             } else if (email.getText().toString().length() < 1) {
-                  alertDialog(AlertMessage.emailid);
+                  Utils.fromSignalDialog(this,AlertMessage.emailid);
                   //   Utils.showAlert(ProfileView.this, AlertMessage.emailid);
                   return false;
             } else if ((mCurrentyear - year) == 0) {
                   Log.e(TAG, "mCurrentyear" + mCurrentyear + "  year " + year);
-                  alertDialog(AlertMessage.ageValid);
+                  Utils.fromSignalDialog(this,AlertMessage.ageValid);
                   // Utils.showAlert(ProfileView.this, AlertMessage.ageValid);
                   return false;
             }  // else if (periods_years.isLessThan(Years.years(17))) {
             else if (age < 17) {
                   Log.e(TAG, "mCurrentyear" + diffrence_in_mills + "  year " + mills_in_17yrs);
-                  alertDialog(AlertMessage.UDERAGEMSGII);
+                  Utils.fromSignalDialog(this,AlertMessage.UDERAGEMSGII);
                   //   Utils.showAlert(ProfileView.this, AlertMessage.UDERAGEMSGII);
                   return false;
             }
@@ -921,27 +998,6 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
             return period;
       }
 
-      public void alertDialog(String msgStrI) {
-          final Dialog dialog = new Dialog(ProfileView.this);
-            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-            dialog.setContentView(R.layout.alert_check_dialogs);
 
-            TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
-//        TextView msgII = (TextView) dialog.findViewById(R.id.alert_msgII);
-            msgI.setText(msgStrI);
-
-
-            // dialog.setCancelable(true);
-            Button dismiss = (Button) dialog.findViewById(R.id.coolio);
-
-            dismiss.setOnClickListener(new OnClickListener() {
-                  @Override
-                  public void onClick(View arg0) {
-                        dialog.dismiss();
-                  }
-            });
-            dialog.show();
-      }
 
 }

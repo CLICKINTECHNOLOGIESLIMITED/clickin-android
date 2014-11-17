@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Telephony;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -21,6 +23,7 @@ import com.sourcefuse.clickinandroid.model.RelationManager;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.FetchContactFromPhone;
+import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
 
@@ -213,11 +216,45 @@ public class AddViaNumberView extends Activity implements View.OnClickListener,T
 				//	Utils.showAlert(AddViaNumberView.this, AlertMessage.connectionError);
                     //finish();
 				}else if(message.equalsIgnoreCase("Num Not Registered")){
-                    Intent smsIntent = new Intent(Intent.ACTION_VIEW);
+
+                    /* send sms if not not register */
+                 /*  send sms for nexus 5 check build version*/
+                 /* prafull code */
+                    try {
+
+
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) //At least KitKat
+                        {
+                            String defaultSmsPackageName = Telephony.Sms.getDefaultSmsPackage(AddViaNumberView.this); //Need to change the build to API 19
+
+                            Intent sendIntent = new Intent(Intent.ACTION_SEND);
+                            sendIntent.setType("text/plain");
+                            sendIntent.putExtra(Intent.EXTRA_TEXT, Constants.SEND_REQUEST_WITH_SMS_MESSAGE);
+
+                            if (defaultSmsPackageName != null)//Can be null in case that there is no default, then the user would be able to choose any app that support this intent.
+                            {
+                                sendIntent.setPackage(defaultSmsPackageName);
+                            }
+                            startActivity(sendIntent);
+
+                        } else //For early versions, do what worked for you before.
+                        {
+                            Intent smsIntent = new Intent(Intent.ACTION_VIEW);
+                            smsIntent.putExtra("sms_body", Constants.SEND_REQUEST_WITH_SMS_MESSAGE);
+                            smsIntent.putExtra("address", mPhNo);
+                            smsIntent.setType("vnd.android-dir/mms-sms");
+                            startActivity(smsIntent);
+                        }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Log.e("Exception to send sms--->", "" + e.toString());
+                    }
+                    /*Intent smsIntent = new Intent(Intent.ACTION_VIEW);
                     smsIntent.putExtra("sms_body", Constants.SEND_REQUEST_WITH_SMS_MESSAGE);
                     smsIntent.putExtra("address", mPhNo);
                     smsIntent.setType("vnd.android-dir/mms-sms");
-                    startActivity(smsIntent);
+                    startActivity(smsIntent);*/
                 }else if(message.equalsIgnoreCase("Num Registered")){
                     Utils.launchBarDialog(this);
                     authManager = ModelManager.getInstance().getAuthorizationManager();

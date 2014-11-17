@@ -10,6 +10,7 @@ public class Constants {
 	public static final  int CROP_PROFILE_PIC=3;
 	public static final int CAMERA_REQUEST = 1888;
 	public static final int SELECT_PICTURE = 1;
+	public static final int CROP_PICTURE = 12;
 	public static final int  CALL_CHAT_INSTANC = 45*1000;
 
     public static  boolean  addChatMessageListener = false;
@@ -45,8 +46,8 @@ public class Constants {
 	public static final String FONT_FILE_PATH_AVENIRNEXTLTPRO_BOLD= "fonts/AvenirNextLTPro-BoldCn_0.otf";
     public static final String FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN= "fonts/AvenirNextLTPro-MediumCn_0.otf";
 
-    public static final String SEND_REQUEST_WITH_SMS_MESSAGE= "Hey ! Lets you and I get Clickin' ! Download now - https://play.google.com/store/apps/details?id=com.sourcefuse.clickinapp";
-    public static final String SEND_REQUEST_WITH_SMS_MESSAGE_SPREAD= "Hey! Come join us on Clickin' - Dowload Now - https://play.google.com/store/apps/details?id=com.sourcefuse.clickinapp";
+    public static final String SEND_REQUEST_WITH_SMS_MESSAGE= "Hey ! Lets you and I get Clickin' ! Download now - http://www.clickinapp.com/";
+    public static final String SEND_REQUEST_WITH_SMS_MESSAGE_SPREAD= "Hey! Come join us on Clickin' - Dowload Now - http://www.clickinapp.com/";
 	
 	public static final String PRIVACY_LINK_URL="https://api.clickinapp.com/pages/privacy-policy";
 	public static final String TERMS_LINK_URL="https://api.clickinapp.com/pages/term-of-use";

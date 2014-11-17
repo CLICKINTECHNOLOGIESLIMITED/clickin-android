@@ -53,7 +53,7 @@ public Boolean deviceRegistered;
 
     private String following;
     private String isFollowing;
-    private String gender;
+    private String gender="";
     private String dOB;
     private String deviceRegistereId;
     private String userCity;
@@ -61,12 +61,14 @@ public Boolean deviceRegistered;
     private Uri userImageUri=null;
     private Bitmap userbitmap;
 
+private Bitmap mResizeBitmap;
 
     private String tmpCity;
     private String tmpCountry;
     private String tmpFollowId;
     private int tmpIsFollowingRequested;
 
+      private Bitmap mOrginalBitmap;
     private boolean editProfileFlag = false;
 
     private String tmpQBId;
@@ -531,6 +533,25 @@ public Boolean deviceRegistered;
     {
         return this.userbitmap;
     }
+
+//praful code
+  /* resize bit map*/
+      public Bitmap getmResizeBitmap() {
+            return mResizeBitmap;
+      }
+
+      public void setmResizeBitmap(Bitmap mResizeBitmap) {
+            this.mResizeBitmap = mResizeBitmap;
+      }
+
+      public Bitmap getOrginalBitmap() {
+            return mOrginalBitmap;
+      }
+
+      public void setOrginalBitmap(Bitmap mOrginalBitmap) {
+            this.mOrginalBitmap = mOrginalBitmap;
+      }
+
 
     public void signIn(String username, String password, String deviceToken,
                        String deviceType) {
