@@ -15,6 +15,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.IBinder;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -56,7 +57,9 @@ import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ChatManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
+import com.sourcefuse.clickinandroid.model.bean.ChatMessageBody;
 import com.sourcefuse.clickinandroid.model.bean.ChatRecordBeen;
+import com.sourcefuse.clickinandroid.services.MyQbChatService;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.AudioUtil;
 import com.sourcefuse.clickinandroid.utils.Constants;
@@ -73,7 +76,7 @@ import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smack.packet.PacketExtension;
 import org.json.JSONObject;
 import org.json.XML;
-
+import android.content.ServiceConnection;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -134,7 +137,7 @@ public class
       private Uri mImageCaptureUri = null;
       private String path, uploadedImgUrl, currentImagepath;
       private String videofilePath = null;
-
+ 	  public MyQbChatService myQbChatService;
       private Dialog dialog;
       private Handler myHandler;
       private String audioFilePath;
@@ -150,7 +153,7 @@ public class
 
             }
       };
-
+ private boolean mIsBound;
 
       private ClickinDbHelper dbHelper;
 
@@ -158,8 +161,10 @@ public class
       protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.view_chat_layout);
+  		Intent i=new Intent(this,MyQbChatService.class);
+        bindService(i,mConnection,Context.BIND_AUTO_CREATE);
             addMenu(false);
-            loginToQuickBlox();
+           // loginToQuickBlox();
             typeface = Typeface.createFromAsset(ChatRecordView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
             send = (Button) findViewById(R.id.btn_send);
             chatListView = (PullToRefreshListView) findViewById(R.id.chat_list);
@@ -538,8 +543,8 @@ public class
             } catch (Exception e) {
                   e.printStackTrace();
                   try {
-                        chatObject.removeChatMessageListener(this);
-                        chatObject.addChatMessageListener(this);
+                      //  chatObject.removeChatMessageListener(this);
+                      //  chatObject.addChatMessageListener(this);
                   } catch (Exception e1) {
                   }
                   Log.e(TAG, "Exception----> " + e.toString());
@@ -584,208 +589,214 @@ public class
       public void onClick(View v) {
             switch (v.getId()) {
                   case R.id.btn_send:
-                        ((RelativeLayout) findViewById(R.id.rl_flipper)).setVisibility(View.GONE);
-                        chatString = "" + chatText.getText().toString();
-                        String clicksValue = null;
-                        ChatRecordBeen addChat = new ChatRecordBeen();
-                        addChat.setSenderQbId(authManager.getQBId());
-                        addChat.setRecieverQbId(qBId);
-                        sentOn = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis();
-                        chatId = authManager.getQBId() + qBId + sentOn;
-                        Log.e(TAG, "chatId" + chatId);
+                ChatMessageBody temp=new ChatMessageBody();
+                temp.textMsg="" + chatText.getText().toString();
+                temp.partnerQbId=qBId;
+                temp.chatType=Constants.CHAT_TYPE_TEXT;
+                temp.clicks="no";
+                myQbChatService.sendMessage(temp);
+           /*     ((RelativeLayout) findViewById(R.id.rl_flipper)).setVisibility(View.GONE);
+                chatString = "" + chatText.getText().toString();
+                String clicksValue = null;
+               ChatRecordBeen addChat = new ChatRecordBeen();
+                addChat.setSenderQbId(authManager.getQBId());
+                addChat.setRecieverQbId(qBId);
+                sentOn = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis();
+                chatId = authManager.getQBId() + qBId + sentOn;
+                Log.e(TAG, "chatId" + chatId);
 
-                        if ((chatString.length() > 0 || isClicks() == true || mImageCaptureUri != null || audioFilePath != null || videofilePath != null)) {
-                              try {
-                                    if (mImageCaptureUri == null && audioFilePath == null && videofilePath == null) {
-                                          Log.e(TAG, "NO Image- AND CLICKS--> ");
+                if ((chatString.length() > 0 || isClicks() == true || mImageCaptureUri != null || audioFilePath != null || videofilePath != null)) {
+                    try {
+                        if (mImageCaptureUri == null && audioFilePath == null && videofilePath == null) {
+                            Log.e(TAG, "NO Image- AND CLICKS--> ");
 
-                                          addChat.setChatType("1");
-                                          if (isClicks()) {
-                                                clicksValue = convertClicks(seekValue).trim();
-                                          } else {
-                                                clicksValue = "no";
-                                          }
+                            addChat.setChatType("1");
+                            if (isClicks()) {
+                                clicksValue = convertClicks(seekValue).trim();
+                            } else {
+                                clicksValue = "no";
+                            }
 
-                                          if (!Utils.isEmptyString(chatString)) {
-                                                addChat.setChatText("" + chatString);
-                                          } else {
-                                                addChat.setChatText(chatString);
-                                                chatString = "";
-                                          }
-                                          addChat.setSenderQbId(authManager.getQBId());
-                                          addChat.setRecieverQbId(qBId);
-                                          addChat.setUserId(authManager.getUserId());
-                                          addChat.setClicks(clicksValue);
-                                          addChat.setTimeStamp(String.valueOf(sentOn));
-                                          addChat.setChatId(chatId);
-
-
-                                          if (clicksValue.equalsIgnoreCase("no") && !Utils.isEmptyString(chatString)) {
-                                                sendWithExtension(chatString, "no");
-                                                clicksValue = null;
-                                          } else if (Utils.isEmptyString(chatString) && !clicksValue.equalsIgnoreCase("no")) {
-                                                sendWithExtension(clicksValue + "   ", clicksValue + "   ");
-                                          } else if (!Utils.isEmptyString(chatString) && !clicksValue.equalsIgnoreCase("no")) {
-                                                sendWithExtension(clicksValue + "      " + chatString, clicksValue);
-                                          }
-
-                                          createRfecordOnQuickBlox(chatString, clicksValue, null, rId, authManager.getUserId(), authManager.getUsrToken(), "" + sentOn, chatId, "1", null, null, null, null, null, null);
-                                          chatManager.chatListFromServer.add(addChat);
-                                          adapter.notifyDataSetChanged();
-                                          //chatText.setText("");
+                            if (!Utils.isEmptyString(chatString)) {
+                                addChat.setChatText("" + chatString);
+                            } else {
+                                addChat.setChatText(chatString);
+                                chatString = "";
+                            }
+                            addChat.setSenderQbId(authManager.getQBId());
+                            addChat.setRecieverQbId(qBId);
+                            addChat.setUserId(authManager.getUserId());
+                            addChat.setClicks(clicksValue);
+                            addChat.setTimeStamp(String.valueOf(sentOn));
+                            addChat.setChatId(chatId);
 
 
-                                          attachBtn.setImageDrawable(getResources().getDrawable(R.drawable.attach_icon));
-                                          //attachBtn.setBackgroundResource(R.drawable.attach_icon);
-                                    } else if (mImageCaptureUri != null && audioFilePath == null && videofilePath == null) {
+                            if (clicksValue.equalsIgnoreCase("no") && !Utils.isEmptyString(chatString)) {
+                                sendWithExtension(chatString, "no");
+                                clicksValue = null;
+                            } else if (Utils.isEmptyString(chatString) && !clicksValue.equalsIgnoreCase("no")) {
+                                sendWithExtension(clicksValue + "   ", clicksValue + "   ");
+                            } else if (!Utils.isEmptyString(chatString) && !clicksValue.equalsIgnoreCase("no")) {
+                                sendWithExtension(clicksValue + "      " + chatString, clicksValue);
+                            }
 
-                                          addChat.setChatType("2");
-
-                                          if (!Utils.isEmptyString(chatString)) {
-                                                addChat.setChatText("" + chatString);
-                                          } else {
-                                                addChat.setChatText("");
-                                                chatString = "";
-                                          }
-
-                                          if (isClicks()) {
-                                                clicksValue = convertClicks(seekValue).trim();
-                                                addChat.setClicks(clicksValue);
-                                          } else {
-                                                clicksValue = "no";
-                                                addChat.setClicks(null);
-                                          }
-
-                                          addChat.setUserId(authManager.getUserId());
-                                          addChat.setTimeStamp(String.valueOf(sentOn));
-                                          addChat.setChatImageUrl(currentImagepath);
-                                          addChat.setChatText("" + chatString);
-                                          addChat.setChatId(chatId);
+                            createRfecordOnQuickBlox(chatString, clicksValue, null, rId, authManager.getUserId(), authManager.getUsrToken(), "" + sentOn, chatId, "1", null, null, null, null, null, null);
+                            chatManager.chatListFromServer.add(addChat);
+                            adapter.notifyDataSetChanged();
+                            //chatText.setText("");
 
 
-                                          uploadImageOnQuickBlox(path.toString(), chatString, clicksValue, chatId);
+                            attachBtn.setImageDrawable(getResources().getDrawable(R.drawable.attach_icon));
+                            //attachBtn.setBackgroundResource(R.drawable.attach_icon);
+                        } else if (mImageCaptureUri != null && audioFilePath == null && videofilePath == null) {
 
-                                          chatManager.chatListFromServer.add(addChat);
-                                          adapter.notifyDataSetChanged();
+                            addChat.setChatType("2");
 
+                            if (!Utils.isEmptyString(chatString)) {
+                                addChat.setChatText("" + chatString);
+                            } else {
+                                addChat.setChatText("");
+                                chatString = "";
+                            }
 
-                                          attachBtn.setImageDrawable(getResources().getDrawable(R.drawable.attach_icon));
+                            if (isClicks()) {
+                                clicksValue = convertClicks(seekValue).trim();
+                                addChat.setClicks(clicksValue);
+                            } else {
+                                clicksValue = "no";
+                                addChat.setClicks(null);
+                            }
 
-                                    } else if (mImageCaptureUri == null && audioFilePath != null && videofilePath == null) {
-
-                                          addChat.setChatType("3");
-                                          if (!Utils.isEmptyString(chatString)) {
-                                                addChat.setChatText("" + chatString);
-                                          } else {
-                                                addChat.setChatText("");
-                                                chatString = "";
-                                          }
-
-                                          if (isClicks()) {
-                                                clicksValue = convertClicks(seekValue).trim();
-                                                addChat.setClicks(clicksValue);
-                                          } else {
-                                                clicksValue = "no";
-                                                addChat.setClicks(null);
-                                          }
-
-                                          addChat.setUserId(authManager.getUserId());
-                                          addChat.setTimeStamp(String.valueOf(sentOn));
-                                          addChat.setChatImageUrl(audioFilePath);
-                                          addChat.setChatText("" + chatString);
-
-                                          uploadAudioOnQuickBlox(audioFilePath.toString(), chatString, clicksValue);
-                                          chatManager.chatListFromServer.add(addChat);
-                                          adapter.notifyDataSetChanged();
-                                          audioFilePath = null;
-
-                                          adapter.notifyDataSetChanged();
-                                          attachBtn.setImageDrawable(getResources().getDrawable(R.drawable.attach_icon));
-
-                                    } else if (videofilePath != null && mImageCaptureUri == null && audioFilePath == null) {
-                                          Log.e(TAG, "" + "Attach Video file");
-                                          addChat.setChatType("4");
-                                          if (!Utils.isEmptyString(chatString)) {
-                                                addChat.setChatText("" + chatString);
-                                          } else {
-                                                addChat.setChatText("");
-                                                chatString = "";
-                                          }
-
-                                          if (isClicks()) {
-                                                clicksValue = convertClicks(seekValue).trim();
-                                                addChat.setClicks(clicksValue);
-                                          } else {
-                                                clicksValue = "no";
-                                                addChat.setClicks(null);
-                                          }
-
-                                          addChat.setUserId(authManager.getUserId());
-                                          addChat.setTimeStamp(String.valueOf(sentOn));
-                                          addChat.setChatImageUrl(videofilePath);
-                                          addChat.setChatText("" + chatString);
-
-                                          //  uploadAudioOnQuickBlox(videofilePath.toString(), chatString,clicksValue);
-                                          chatManager.chatListFromServer.add(addChat);
-                                          adapter.notifyDataSetChanged();
-                                          videofilePath = null;
-
-                                          adapter.notifyDataSetChanged();
-                                          attachBtn.setImageDrawable(getResources().getDrawable(R.drawable.attach_icon));
-
-                                    } else if (videofilePath == null && mImageCaptureUri == null && audioFilePath == null) {
-                                          Log.e(TAG, "" + "Attach Card file");
-                                          addChat.setChatType("5");
-                                          if (!Utils.isEmptyString(chatString)) {
-                                                addChat.setChatText("" + chatString);
-                                          } else {
-                                                addChat.setChatText("");
-                                                chatString = "";
-                                          }
-                                          if (isClicks()) {
-                                                clicksValue = convertClicks(seekValue).trim();
-                                                addChat.setClicks(clicksValue);
-                                          } else {
-                                                clicksValue = "no";
-                                                addChat.setClicks(null);
-                                          }
-                                          addChat.setUserId(authManager.getUserId());
-                                          addChat.setTimeStamp(String.valueOf(sentOn));
-                                          addChat.setChatImageUrl(videofilePath);
-                                          addChat.setChatText("" + chatString);
-                                          //  uploadAudioOnQuickBlox(videofilePath.toString(), chatString,clicksValue);
-                                          chatManager.chatListFromServer.add(addChat);
-                                          adapter.notifyDataSetChanged();
-                                          videofilePath = null;
-
-                                          adapter.notifyDataSetChanged();
-                                          attachBtn.setImageDrawable(getResources().getDrawable(R.drawable.attach_icon));
-
-                                    }
-
-                              } catch (Exception e) {
-
-                                    e.printStackTrace();
-                              }
-
-                              chatText.setText("");
-                              mImageCaptureUri = null;
-                              chatString = "";
-                              audioFilePath = null;
-                              videofilePath = null;
-
-                              //set user Clicks
-                              userClicks = userClicks + seekValue;
-                              Log.e(TAG, "" + userClicks);
-                              partnerTotalclicks.setText("" + userClicks);
-                              relationManager = ModelManager.getInstance().getRelationManager();
-                              relationManager.acceptedList.get(relationListIndex).setUserClicks(Integer.toString(userClicks));
-                              mybar.setProgress(10);
-                              seekValue = 0;
+                            addChat.setUserId(authManager.getUserId());
+                            addChat.setTimeStamp(String.valueOf(sentOn));
+                            addChat.setChatImageUrl(currentImagepath);
+                            addChat.setChatText("" + chatString);
+                            addChat.setChatId(chatId);
 
 
-                              attachBtn.setImageDrawable(getResources().getDrawable(R.drawable.attach_icon));
+                            uploadImageOnQuickBlox(path.toString(), chatString, clicksValue, chatId);
+
+                            chatManager.chatListFromServer.add(addChat);
+                            adapter.notifyDataSetChanged();
+
+
+                            attachBtn.setImageDrawable(getResources().getDrawable(R.drawable.attach_icon));
+
+                        } else if (mImageCaptureUri == null && audioFilePath != null && videofilePath == null) {
+
+                            addChat.setChatType("3");
+                            if (!Utils.isEmptyString(chatString)) {
+                                addChat.setChatText("" + chatString);
+                            } else {
+                                addChat.setChatText("");
+                                chatString = "";
+                            }
+
+                            if (isClicks()) {
+                                clicksValue = convertClicks(seekValue).trim();
+                                addChat.setClicks(clicksValue);
+                            } else {
+                                clicksValue = "no";
+                                addChat.setClicks(null);
+                            }
+
+                            addChat.setUserId(authManager.getUserId());
+                            addChat.setTimeStamp(String.valueOf(sentOn));
+                            addChat.setChatImageUrl(audioFilePath);
+                            addChat.setChatText("" + chatString);
+
+                            uploadAudioOnQuickBlox(audioFilePath.toString(), chatString, clicksValue);
+                            chatManager.chatListFromServer.add(addChat);
+                            adapter.notifyDataSetChanged();
+                            audioFilePath = null;
+
+                            adapter.notifyDataSetChanged();
+                            attachBtn.setImageDrawable(getResources().getDrawable(R.drawable.attach_icon));
+
+                        } else if (videofilePath != null && mImageCaptureUri == null && audioFilePath == null) {
+                            Log.e(TAG, "" + "Attach Video file");
+                            addChat.setChatType("4");
+                            if (!Utils.isEmptyString(chatString)) {
+                                addChat.setChatText("" + chatString);
+                            } else {
+                                addChat.setChatText("");
+                                chatString = "";
+                            }
+
+                            if (isClicks()) {
+                                clicksValue = convertClicks(seekValue).trim();
+                                addChat.setClicks(clicksValue);
+                            } else {
+                                clicksValue = "no";
+                                addChat.setClicks(null);
+                            }
+
+                            addChat.setUserId(authManager.getUserId());
+                            addChat.setTimeStamp(String.valueOf(sentOn));
+                            addChat.setChatImageUrl(videofilePath);
+                            addChat.setChatText("" + chatString);
+
+                            //  uploadAudioOnQuickBlox(videofilePath.toString(), chatString,clicksValue);
+                            chatManager.chatListFromServer.add(addChat);
+                            adapter.notifyDataSetChanged();
+                            videofilePath = null;
+
+                            adapter.notifyDataSetChanged();
+                            attachBtn.setImageDrawable(getResources().getDrawable(R.drawable.attach_icon));
+
+                        } else if (videofilePath == null && mImageCaptureUri == null && audioFilePath == null) {
+                            Log.e(TAG, "" + "Attach Card file");
+                            addChat.setChatType("5");
+                            if (!Utils.isEmptyString(chatString)) {
+                                addChat.setChatText("" + chatString);
+                            } else {
+                                addChat.setChatText("");
+                                chatString = "";
+                            }
+                            if (isClicks()) {
+                                clicksValue = convertClicks(seekValue).trim();
+                                addChat.setClicks(clicksValue);
+                            } else {
+                                clicksValue = "no";
+                                addChat.setClicks(null);
+                            }
+                            addChat.setUserId(authManager.getUserId());
+                            addChat.setTimeStamp(String.valueOf(sentOn));
+                            addChat.setChatImageUrl(videofilePath);
+                            addChat.setChatText("" + chatString);
+                            //  uploadAudioOnQuickBlox(videofilePath.toString(), chatString,clicksValue);
+                            chatManager.chatListFromServer.add(addChat);
+                            adapter.notifyDataSetChanged();
+                            videofilePath = null;
+
+                            adapter.notifyDataSetChanged();
+                            attachBtn.setImageDrawable(getResources().getDrawable(R.drawable.attach_icon));
+
                         }
+
+                    } catch (Exception e) {
+
+                        e.printStackTrace();
+                    }
+
+                    chatText.setText("");
+                    mImageCaptureUri = null;
+                    chatString = "";
+                    audioFilePath = null;
+                    videofilePath = null;
+
+                    //set user Clicks
+                    userClicks = userClicks + seekValue;
+                    Log.e(TAG, "" + userClicks);
+                    partnerTotalclicks.setText("" + userClicks);
+                    relationManager = ModelManager.getInstance().getRelationManager();
+                    relationManager.acceptedList.get(relationListIndex).setUserClicks(Integer.toString(userClicks));
+                    mybar.setProgress(10);
+                    seekValue = 0;
+
+
+                    attachBtn.setImageDrawable(getResources().getDrawable(R.drawable.attach_icon));
+                }*/
                         break;
                   case R.id.iv_menu_button:
                         hideAttachView();

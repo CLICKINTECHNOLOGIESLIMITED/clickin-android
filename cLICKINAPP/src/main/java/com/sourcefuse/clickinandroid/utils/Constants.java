@@ -46,8 +46,8 @@ public class Constants {
 	public static final String FONT_FILE_PATH_AVENIRNEXTLTPRO_BOLD= "fonts/AvenirNextLTPro-BoldCn_0.otf";
     public static final String FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN= "fonts/AvenirNextLTPro-MediumCn_0.otf";
 
-    public static final String SEND_REQUEST_WITH_SMS_MESSAGE= "Hey ! Lets you and I get Clickin' ! Download now - https://play.google.com/store/apps/details?id=com.sourcefuse.clickinapp";
-    public static final String SEND_REQUEST_WITH_SMS_MESSAGE_SPREAD= "Hey! Come join us on Clickin' - Dowload Now - https://play.google.com/store/apps/details?id=com.sourcefuse.clickinapp";
+    public static final String SEND_REQUEST_WITH_SMS_MESSAGE= "Hey ! Lets you and I get Clickin' ! Download now - http://www.clickinapp.com/";
+    public static final String SEND_REQUEST_WITH_SMS_MESSAGE_SPREAD= "Hey! Come join us on Clickin' - Dowload Now - http://www.clickinapp.com/";
 	
 	public static final String PRIVACY_LINK_URL="https://api.clickinapp.com/pages/privacy-policy";
 	public static final String TERMS_LINK_URL="https://api.clickinapp.com/pages/term-of-use";
@@ -56,5 +56,12 @@ public class Constants {
 	public static boolean comments = false;
 
     public static String CUSTOM_CARD_URL = "https://s3.amazonaws.com/clickin-dev/cards/a/1080/custom_tradecart.jpg";
-	
+    public final static int CHAT_TYPE_TEXT = 1;
+    public final static int CHAT_TYPE_IMAGE = 2;
+    public final static int CHAT_TYPE_AUDIO = 3;
+    public final static int CHAT_TYPE_VIDEO = 4;
+    public final static int CHAT_TYPE_LOCATION= 5;
+    public final static int CHAT_TYPE_CARD = 7;
+
+
 }

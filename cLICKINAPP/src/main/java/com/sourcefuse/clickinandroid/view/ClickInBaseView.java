@@ -917,10 +917,15 @@ public class
 
       }
 
-      @Override
-      public void onClose() {
-            Log.e("y", "if onClose");
 
+    public void onDestroy(){
+        super.onDestroy();
+        Log.e("CLickinbaseview","Destroy");
+    }
+
+    @Override
+    public void onClose() {
+        Log.e("y", "if onClose");
 
       }
 

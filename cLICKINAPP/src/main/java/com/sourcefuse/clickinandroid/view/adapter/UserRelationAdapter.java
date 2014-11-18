@@ -268,7 +268,7 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
         final Dialog dialog = new Dialog(((Activity)context));
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        dialog.setContentView(R.layout.alert_relationship);
+     //   dialog.setContentView(R.layout.alert_relationship);
         dialog.setCancelable(false);
         TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
 
@@ -304,7 +304,7 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
         final Dialog dialog = new Dialog(((Activity)context));
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        dialog.setContentView(R.layout.alert_relationship);
+      //  dialog.setContentView(R.layout.alert_relationship);
         dialog.setCancelable(false);
         TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
 

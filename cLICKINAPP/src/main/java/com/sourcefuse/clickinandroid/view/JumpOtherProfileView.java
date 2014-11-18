@@ -410,7 +410,7 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
         final Dialog dialog = new Dialog(JumpOtherProfileView.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        dialog.setContentView(R.layout.alert_other_profile_view);
+    //    dialog.setContentView(R.layout.alert_other_profile_view);
         dialog.setCancelable(false);
         TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
         TextView msgII = (TextView) dialog.findViewById(R.id.alert_msgII);

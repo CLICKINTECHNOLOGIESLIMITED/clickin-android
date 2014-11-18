@@ -21,6 +21,7 @@ import com.quickblox.module.chat.xmpp.QBPrivateChat;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.ProfileManager;
+import com.sourcefuse.clickinandroid.model.bean.ContactBean;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.FetchContactFromPhone;
@@ -69,6 +70,13 @@ public class SpreadWordView extends Activity implements OnClickListener {
         //Utils.launchBarDialog(this);
         //  new FetchContactFromPhone(SpreadWordView.this).getClickerList(authManager.getPhoneNo(),authManager.getUsrToken(),1);
         //   setlist();
+        profilemanager=ModelManager.getInstance().getProfileManager();
+
+        if(profilemanager.spreadTheWorldList!=null){
+            for(ContactBean temp:profilemanager.spreadTheWorldList){
+                temp.setChecked(false);
+            }
+        }
         setlist();
 
     }
