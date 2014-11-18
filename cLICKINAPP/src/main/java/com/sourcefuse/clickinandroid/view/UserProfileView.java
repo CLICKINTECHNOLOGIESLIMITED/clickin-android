@@ -250,17 +250,18 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         //akshit code start for image and default image at userprofile
         try {
             Uri tempUri = authManager.getUserImageUri();
-            if (tempUri != null) {
+            Bitmap imagebitmap1 = authManager.getUserbitmap();
+            if (imagebitmap1 != null) {
                 imageBitmap = authManager.getUserbitmap();
 
                 if (imageBitmap != null) {   //set image bitmap if not null
                     userimage.setImageBitmap(imageBitmap);
                   //  Log.e("bit map greater than zero->","bit map greater than zero->");
                 } else { ///if image bitmap null
-                    if (!authManager.getGender().equalsIgnoreCase("")) {//gender not null
+                    if (authManager.getGender() != null) {//gender not null
                         if (authManager.getGender().equalsIgnoreCase("guy")) {///if guy
                             try {
-                                if (!authManager.getUserPic().equalsIgnoreCase("")) {
+                                if (authManager.getUserPic() != null) {
                                     Picasso.with(UserProfileView.this)
                                             .load(authManager.getUserPic())
                                             .skipMemoryCache()
@@ -279,7 +280,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
                         } //if guy ends
                         else if (authManager.getGender().equalsIgnoreCase("girl")) {//if girl
                             try {
-                                if (!authManager.getUserPic().equalsIgnoreCase("")) {//with pic
+                                if (authManager.getUserPic()!=null) {//with pic
                                     Picasso.with(UserProfileView.this)
                                             .load(authManager.getUserPic())
                                             .skipMemoryCache()
@@ -305,11 +306,11 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
                 }
 
             } else {//if temp uri null
-                if (!authManager.getGender().equalsIgnoreCase("")) {//gender not null
+                if (authManager.getGender() != null) {//gender not null
 
                     if (authManager.getGender().equalsIgnoreCase("guy")) {//gender guy
                         try {
-                            if (!authManager.getUserPic().equalsIgnoreCase("")) {
+                            if (authManager.getUserPic()!=null) {
                                 Picasso.with(UserProfileView.this)
                                         .load(authManager.getUserPic())
                                         .skipMemoryCache()
@@ -330,7 +331,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
                     } //gender guy ends
                     else if (authManager.getGender().equalsIgnoreCase("girl")) {//gender girl
                         try {
-                            if (!authManager.getUserPic().equalsIgnoreCase("")) {
+                            if (authManager.getUserPic()!=null) {
                                 Picasso.with(UserProfileView.this)
                                         .load(authManager.getUserPic())
                                         .skipMemoryCache()
@@ -372,7 +373,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         } catch (Exception e) {
             e.printStackTrace();
             userimage.setImageResource(R.drawable.male_user);
-            Log.e("total exception->","total exception->");
+            Log.e("User Profile View->","total exception->");
         }
 //
     }

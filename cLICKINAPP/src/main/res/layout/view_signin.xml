@@ -36,13 +36,11 @@
 
         <RelativeLayout
             android:id="@+id/linearLayout1"
-            android:layout_width="wrap_content"
+            android:layout_width="305dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/iv_topicon"
             android:layout_centerHorizontal="true"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="19dp"
             android:background="@drawable/white_border"
             android:padding="15dp">
 
@@ -81,23 +79,16 @@
                 android:textStyle="bold" />
         </RelativeLayout>
 
-        <Button
-            android:id="@+id/btn_get_clickin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/linearLayout1"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/c_getclicin_active" />
+
 
         <RelativeLayout
             android:id="@+id/ll_search"
-            android:layout_width="wrap_content"
+            android:layout_width="305dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/btn_get_clickin"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="5dp">
+            android:layout_below="@+id/linearLayout1"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="12dp">
 
             <com.sourcefuse.clickinandroid.utils.ClickInTextView
                 android:id="@+id/tv_forgot_pwd"
@@ -105,23 +96,35 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:padding="10dp"
+                android:layout_marginLeft="-10dp"
                 android:text="@string/txt_forget_pwd"
                 android:textColor="@color/singn_forg"
                 geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
                 android:textStyle="bold" />
+
 
             <com.sourcefuse.clickinandroid.utils.ClickInTextView
                 android:id="@+id/tv_signup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:gravity="center_vertical|center"
+                android:layout_marginRight="-8dp"
+                android:gravity="right"
                 android:padding="10dp"
                 android:text="@string/txt_signup"
                 geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
                 android:textColor="@color/singn_forg"
                 android:textStyle="bold" />
         </RelativeLayout>
+
+        <Button
+            android:id="@+id/btn_get_clickin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ll_search"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/c_getclicin_active" />
     </RelativeLayout>
 
 </RelativeLayout>
