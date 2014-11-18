@@ -18,7 +18,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Observable;
 
 import de.greenrobot.event.EventBus;
 
@@ -52,8 +51,9 @@ public class ProfileManager {
 
 			userInputDetails.put("phone_no", phone);
 			userInputDetails.put("user_token", usertoken);
-			userInputDetails.put("gender", gender);
-			userInputDetails.put("dob", dob);
+            userInputDetails.put("gender", gender);
+            userInputDetails.put("gender", "");
+            userInputDetails.put("dob", dob);
             if(!Utils.isEmptyString(userpic)){
                 userInputDetails.put("user_pic", userpic);
             }else{

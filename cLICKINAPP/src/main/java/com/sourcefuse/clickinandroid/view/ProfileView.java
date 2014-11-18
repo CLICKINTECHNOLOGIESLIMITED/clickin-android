@@ -12,7 +12,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
-import android.graphics.Typeface;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -51,7 +50,6 @@ import com.sourcefuse.clickinapp.R;
 
 import org.joda.time.DateTime;
 import org.joda.time.Period;
-import org.joda.time.Years;
 import org.joda.time.format.PeriodFormatter;
 import org.joda.time.format.PeriodFormatterBuilder;
 
@@ -317,11 +315,13 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
                         break;
                   case R.id.btn_guy:
                         gender_var = "guy";
+                        authManager.setGender("guy");
                         guy.setBackgroundResource(R.drawable.c_pink_guy);
                         girl.setBackgroundResource(R.drawable.c_grey_girl);
                         break;
                   case R.id.btn_girl_btn:
                         gender_var = "girl";
+                        authManager.setGender("girl");
                         guy.setBackgroundResource(R.drawable.c_grey_guy);
                         girl.setBackgroundResource(R.drawable.c_pink_girl);
                         break;
