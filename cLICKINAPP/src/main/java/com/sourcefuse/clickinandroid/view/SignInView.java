@@ -2,10 +2,13 @@ package com.sourcefuse.clickinandroid.view;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -33,11 +36,24 @@ import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
 import com.sourcefuse.clickinandroid.model.SettingManager;
+import com.sourcefuse.clickinandroid.services.MyQbChatService;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.ClickInAlertDialog;
 import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
+
+
+import org.jivesoftware.smack.ConnectionListener;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
+import java.net.URLConnection;
+
 
 import de.greenrobot.event.EventBus;
 
@@ -50,6 +66,8 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
     private boolean activeDone = false;
     private AuthManager authManager;
     private Dialog mDialog;
+    public MyQbChatService myQbChatService;
+    private boolean mIsBound;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -376,12 +394,13 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
 
 
     public void loginToQuickBlox() {
+        authManager = ModelManager.getInstance().getAuthorizationManager();
         SmackAndroid.init(this);
         com.sourcefuse.clickinandroid.utils.Log.e(TAG, "loginToQuickBlox --- getUserId=>" + authManager.getUserId() + ",--getUsrToken-=>" + authManager.getUsrToken());
         QBSettings.getInstance().fastConfigInit(Constants.CLICKIN_APP_ID, Constants.CLICKIN_AUTH_KEY, Constants.CLICKIN_AUTH_SECRET);
-        QBSettings.getInstance().setServerApiDomain("apiclickin.quickblox.com");
-        QBSettings.getInstance().setContentBucketName("qb-clickin");
-        QBSettings.getInstance().setChatServerDomain("chatclickin.quickblox.com");
+       // QBSettings.getInstance().setServerApiDomain("apiclickin.quickblox.com");
+        //QBSettings.getInstance().setContentBucketName("qb-clickin");
+       // QBSettings.getInstance().setChatServerDomain("chatclickin.quickblox.com");
         final QBUser user = new QBUser(authManager.getUserId(), authManager.getUsrToken());
 
         QBAuth.createSession(user, new QBCallbackImpl() {
@@ -396,11 +415,41 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
                     QBChatService.getInstance().loginWithUser(user, new SessionCallback() {
                         @Override
                         public void onLoginSuccess() {
+
+                            callChatService();
+
                             com.sourcefuse.clickinandroid.utils.Log.e(TAG, "Login successfully");
                             QBChatService.getInstance().startAutoSendPresence(5);
+                            ConnectionListener connectionListener = new ConnectionListener() {
+                                @Override
+                                public void connectionClosed() {
+                                    //connection closed
+                                    Log.e(TAG, "connection closed");
+                                }
 
-                            QBPrivateChat chat = QBChatService.getInstance().createChat();
-                            authManager.setqBPrivateChat(chat);
+                                @Override
+                                public void connectionClosedOnError(Exception e) {
+                                    // connection closed on error. It will be established soon
+                                    Log.e(TAG, "connection closed error");
+                                }
+
+                                @Override
+                                public void reconnectingIn(int seconds) {
+                                    Log.e(TAG, "connection closed error");
+                                }
+
+                                @Override
+                                public void reconnectionSuccessful() {
+                                    Log.e(TAG,  "reconnectionSuccessful");
+                                }
+
+                                @Override
+                                public void reconnectionFailed(Exception e) {
+                                    Log.e(TAG,  "reconnectionFailed");
+                                }
+                            };
+
+                            QBChatService.getInstance().addConnectionListener(connectionListener);
                         }
 
                         @Override
@@ -422,6 +471,51 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
 
     }
 
+
+
+    public  void callChatService(){
+        Intent i=new Intent(this,MyQbChatService.class);
+        bindService(i,mConnection,Context.BIND_AUTO_CREATE);
+    }
+
+    private ServiceConnection mConnection = new ServiceConnection() {
+        public void onServiceConnected(ComponentName className, IBinder service) {
+            // This is called when the connection with the service has been
+            // established, giving us the service object we can use to
+            // interact with the service.  Because we have bound to a explicit
+            // service that we know is running in our own process, we can
+            // cast its IBinder to a concrete class and directly access it.
+            myQbChatService = ((MyQbChatService.LocalBinder) service).getService();
+           /* myQbChatService.createRoom(mRoomName);*/
+
+            // showMessages();
+
+            // Tell the user about this for our demo.
+//            Toast.makeText(Binding.this, R.string.local_service_connected,
+//                    Toast.LENGTH_SHORT).show();
+        }
+
+        public void onServiceDisconnected(ComponentName className) {
+            // This is called when the connection with the service has been
+            // unexpectedly disconnected -- that is, its process crashed.
+            // Because it is running in our same process, we should never
+            // see this happen.
+            myQbChatService = null;
+//            Toast.makeText(Binding.this, R.string.local_service_disconnected,
+//                    Toast.LENGTH_SHORT).show();
+        }
+    };
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mIsBound) {
+            // Detach our existing connection.
+            unbindService(mConnection);
+            mIsBound = false;
+        }
+    }
 
 
 
