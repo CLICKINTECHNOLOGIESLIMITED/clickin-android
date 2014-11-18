@@ -184,11 +184,7 @@ public class VerifyView extends Activity implements View.OnClickListener,
         }
 	}
 
-	/*private void switchView() {
-		Intent intent = new Intent(VerifyView.this, ProfileView.class);
-		startActivity(intent);
-	    finish();
-	}*/
+
 
     @Override
     public void onStart() {
@@ -210,6 +206,7 @@ public class VerifyView extends Activity implements View.OnClickListener,
 			if (getMsg.equalsIgnoreCase("Verify True")) {
 				Utils.dismissBarDialog();
                 Intent intent = new Intent(VerifyView.this, ProfileView.class);
+                intent.putExtra("fromsignup",getIntent().getBooleanExtra("fromsignup",false));
                 startActivity(intent);
                 finish();
 			} else if (getMsg.equalsIgnoreCase("Verify False")) {

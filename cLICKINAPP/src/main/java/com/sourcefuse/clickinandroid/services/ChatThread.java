@@ -1,7 +1,7 @@
 package com.sourcefuse.clickinandroid.services;
 
 /**
- * Created by mukesh on 13/10/14.
+ * Created by mukesh on 15/11/14.
  */
 
 
@@ -9,11 +9,13 @@ package com.sourcefuse.clickinandroid.services;
 
 
         import android.app.ActivityManager;
+        import android.app.Application;
         import android.content.ContentValues;
         import android.content.Context;
         import android.content.SharedPreferences;
         import android.database.Cursor;
         import android.database.sqlite.SQLiteDatabase;
+        import android.os.Bundle;
         import android.os.Handler;
         import android.os.Looper;
         import android.util.Log;
@@ -38,6 +40,7 @@ package com.sourcefuse.clickinandroid.services;
 
         import org.jivesoftware.smack.ConnectionListener;
         import org.jivesoftware.smack.XMPPException;
+        import org.jivesoftware.smack.packet.DefaultPacketExtension;
         import org.jivesoftware.smack.packet.Message;
         import org.json.JSONArray;
         import org.json.JSONException;
@@ -54,9 +57,6 @@ package com.sourcefuse.clickinandroid.services;
 
         import de.greenrobot.event.EventBus;
 
-/**
- * Created by amit on 10/10/14.
- */
 public class ChatThread extends Thread implements ChatMessageListener {
 
     private static final String TAG = ChatThread.class.getSimpleName();
@@ -68,15 +68,20 @@ public class ChatThread extends Thread implements ChatMessageListener {
     private QBPrivateChat chat;
     private Handler mMyHandler;
     private JSONObject mRooms = new JSONObject();
+    private QBPrivateChat chatObject;
     private HashMap<String, QBChatRoom> mChatRooms = new HashMap<String, QBChatRoom>();
-
+     Application application;
     Pattern p = Pattern.compile("[\\d]+_(.*?)@.*?");
 
     private AuthManager authManager;
 
-    public ChatThread(Context context, Handler handler) {
-        mContext = context;
+    public ChatThread(Application context, Handler handler) {
+        application = context;
         mHandler = handler;
+        chatObject = QBChatService.getInstance().createChat();
+        chatObject.addChatMessageListener(this);
+
+
     }
 
     public Handler getHandler() {
@@ -87,17 +92,65 @@ public class ChatThread extends Thread implements ChatMessageListener {
     public void run() {
         Looper.prepare();
         EventBus.getDefault().register(this);
-        SmackAndroid.init(mContext);
-        QBSettings.getInstance().fastConfigInit(Constants.CLICKIN_APP_ID, Constants.CLICKIN_AUTH_KEY, Constants.CLICKIN_AUTH_SECRET);
-
+//loginToChat();
         mMyHandler = new Handler() {
             public void handleMessage(android.os.Message msg) {
                 switch (msg.what) {
-                    case SEND_CHAT:
-                        if(QBChatService.getInstance().isLoggedIn()) {
 
+                    case SEND_CHAT:
+                        Bundle data=msg.getData();
+                        if(QBChatService.getInstance().isLoggedIn()) {
+                              DefaultPacketExtension extension = null;
+                              Message message =  null;
+                            switch (data.getInt("ChatType")){
+
+                                case Constants.CHAT_TYPE_TEXT:
+                                    extension = new DefaultPacketExtension("extraParams", "jabber:client");
+                                    message = new Message();
+                                    message.setType(Message.Type.chat); // 1-1 chat message
+
+                                    if(data.getString("clicks").equalsIgnoreCase("no")){
+                                        extension.setValue("clicks","no");
+                                        message.setBody("" + data.getString("textMsg"));
+                                    }else if(data.getString("clicks").equalsIgnoreCase(data.getString("textMsg"))){
+                                        extension.setValue("clicks",data.getString("clicks")+"        ");
+                                        message.setBody(data.getString("textMsg"));
+                                    }else{
+                                        extension.setValue("clicks",data.getString("clicks"));
+                                        message.setBody(data.getString("clicks") + "        " +  data.getString("textMsg"));
+                                    }
+                                    message.addExtension(extension);
+
+                                    try {
+                                        chatObject.sendMessage(Integer.parseInt(data.getString("partnerQBId")), message);
+                                    } catch (XMPPException e) {
+                                        e.printStackTrace();
+                                        //loginToChat();
+                                    }
+
+                                    break;
+                                case Constants.CHAT_TYPE_IMAGE:
+                                    extension = new DefaultPacketExtension("extraParams", "jabber:client");
+                                    message = new Message();
+                                    extension.setValue("Clicks",data.getString("clicks"));
+                                    message.setType(Message.Type.chat); // 1-1 chat message
+                                    message.setBody("" + data.getString("textMsg"));
+                                    message.addExtension(extension);
+
+                                    try {
+                                        chatObject.sendMessage(Integer.parseInt(data.getString("partnerQBId")), message);
+                                    } catch (XMPPException e) {
+                                        e.printStackTrace();
+                                        //loginToChat();
+                                    }
+
+                                    break;
+
+
+
+                            }
                         }else{
-                            loginToChat();
+                           // loginToChat();
                         }
                         break;
 
@@ -109,94 +162,6 @@ public class ChatThread extends Thread implements ChatMessageListener {
         Looper.loop();
 
         EventBus.getDefault().unregister(this);
-    }
-
-    private void loginToChat() {
-        authManager = ModelManager.getInstance().getAuthorizationManager();
-        final QBUser mQBUser = new QBUser(authManager.getUserId(), authManager.getUsrToken());
-
-        QBAuth.createSession(mQBUser, new QBCallbackImpl() {
-            @Override
-            public void onComplete(Result result) {
-                Log.e("amit", result.getRawBody());
-                if (result.isSuccess()) {
-                    QBSessionResult res = (QBSessionResult) result;
-                    QBChatService.getInstance().loginWithUser(mQBUser, new SessionCallback() {
-                        @Override
-                        public void onLoginSuccess() {
-                            Log.e(TAG, "Login was successfully created");
-                            QBChatService.getInstance().startAutoSendPresence(5);
-
-                            ConnectionListener connectionListener = new ConnectionListener() {
-                                @Override
-                                public void connectionClosed() {
-                                    //connection closed
-                                    Log.e(TAG, "connection closed");
-                                }
-
-                                @Override
-                                public void connectionClosedOnError(Exception e) {
-                                    // connection closed on error. It will be established soon
-                                    Log.e(TAG, "connection closed error");
-                                }
-
-                                @Override
-                                public void reconnectingIn(int seconds) {
-                                    Log.e(TAG, "connection closed error");
-                                }
-
-                                @Override
-                                public void reconnectionSuccessful() {
-                                    Log.e(TAG,  "reconnectionSuccessful");
-                                }
-
-                                @Override
-                                public void reconnectionFailed(Exception e) {
-                                    Log.e(TAG,  "reconnectionFailed");
-                                }
-                            };
-
-                            QBChatService.getInstance().addConnectionListener(connectionListener);
-
-//                            EventBus.getDefault().post(new FgEvent(FgEvent.CHAT_LOGGED_IN, true));
-//                            Session.getInstance(ChatService.this).getMessageList();
-                           // Session.getInstance(mContext).getMessageList();
-
-                            chat = QBChatService.getInstance().createChat();
-                            //chat.addChatMessageListener(this);
-                            authManager.setqBPrivateChat(chat);
-
-                        }
-                        @Override
-                        public void onLoginError(String s) {
-                            Log.e(TAG, "onLoginError was successfully created");
-                        }
-                    });
-                    Log.e(TAG, "Session was successfully created");
-                }
-            }
-        });
-    }
-
-
-//    private void sendOutMessages(QBChatRoom qbChatRoom) {
-//        List<String> messages = mChatRooms.get(qbChatRoom.getName());
-//        for(int i = messages.size() - 1; i >=0; i--) {
-//            String message = messages.get(i);
-//            try {
-//                qbChatRoom.sendMessage(message);
-//                messages.remove(i);
-////                mChatRooms.put(qbChatRoom.getName(), messages);
-//            } catch (XMPPException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//    }
-
-
-
-    public void sendMessage(String roomName, String message) {
-
     }
 
 

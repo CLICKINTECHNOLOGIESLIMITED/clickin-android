@@ -227,6 +227,7 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
 
       private void switchView() {
             Intent intent = new Intent(ProfileView.this, PlayItSafeView.class);
+            intent.putExtra("fromsignup",getIntent().getBooleanExtra("fromsignup",false));
             startActivity(intent);
             finish();
       }

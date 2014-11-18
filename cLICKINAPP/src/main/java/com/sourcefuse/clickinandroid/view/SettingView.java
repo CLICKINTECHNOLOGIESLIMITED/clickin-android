@@ -266,10 +266,13 @@ public class SettingView extends Activity implements View.OnClickListener {
                         editor.apply();
                         QBChatService.getInstance().logout();
                         Log.e("", "holder.logoutYes");
-                        Intent intent5 = new Intent(getApplicationContext(), SplashView.class);
+                        Intent intent5 = new Intent(SettingView.this, SplashView.class);
                         intent5.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intent5.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent5.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent5);
-                        SettingView.this.finish();
+                        finish();
+                        overridePendingTransition(R.anim.slide_in_left,R.anim.top_out);
                     //  this.finishAndRemoveTask();
                         break;
                   case R.id.btn_logout_no:

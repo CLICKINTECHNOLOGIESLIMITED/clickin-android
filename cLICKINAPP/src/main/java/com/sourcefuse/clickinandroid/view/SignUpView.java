@@ -145,6 +145,7 @@ public class SignUpView extends Activity implements TextWatcher,OnClickListener 
         if (getMsg.equalsIgnoreCase("SignUp True")) {
             Utils.dismissBarDialog();
             Intent intent = new Intent(this, VerifyView.class);
+              intent.putExtra("fromsignup",true);
             startActivity(intent);
             finish();
         } else if (getMsg.equalsIgnoreCase("SignUp False")) {
