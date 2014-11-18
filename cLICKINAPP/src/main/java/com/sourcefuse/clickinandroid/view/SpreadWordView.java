@@ -77,6 +77,12 @@ public class SpreadWordView extends Activity implements OnClickListener {
                 temp.setChecked(false);
             }
         }
+
+         if(!getIntent().getBooleanExtra("fromsignup",false))
+         {
+               findViewById(R.id.btn_next).setVisibility(View.GONE);
+         }
+
         setlist();
 
     }

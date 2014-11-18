@@ -155,7 +155,7 @@ public class PlayItSafeView extends Activity implements View.OnClickListener,Tex
 
     private void switchView() {
         Intent intent = new Intent(PlayItSafeView.this, AddSomeoneView.class);
-
+          intent.putExtra("fromsignup",getIntent().getBooleanExtra("fromsignup",false));
         intent.putExtra("FromOwnProfile", false);
         startActivity(intent);
         this.finish();
