@@ -18,6 +18,12 @@ import org.json.JSONObject;
 
 import de.greenrobot.event.EventBus;
 
+
+
+
+//praful code
+  /* resize bit map*/
+
 public class AuthManager {
       StringEntity se = null;
       AsyncHttpClient client;
@@ -537,6 +543,7 @@ public class AuthManager {
 
 
       /* resize bit map*/
+
       public Bitmap getmResizeBitmap() {
             return mResizeBitmap;
       }
@@ -552,6 +559,7 @@ public class AuthManager {
       public void setOrginalBitmap(Bitmap mOrginalBitmap) {
             this.mOrginalBitmap = mOrginalBitmap;
       }
+
 
       public void signIn(String username, String password, String deviceToken,
                          String deviceType) {
@@ -576,6 +584,7 @@ public class AuthManager {
                                                            "application/json"));
             } catch (Exception e1) {
                   e1.printStackTrace();
+
             }
             Log.e("SIGNIN url", APIs.SIGNIN);
             client.post(null, APIs.SIGNIN, se, "application/json",

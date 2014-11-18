@@ -149,13 +149,12 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
 
 
           // akshit code for closing keypad if touched anywhere outside
-          ((RelativeLayout) findViewById(R.id.relative_layout_root_profile)).setOnClickListener(new View.OnClickListener() {
+          ((RelativeLayout) findViewById(R.id.relative_layout_root_profile)).setOnClickListener(new OnClickListener() {
 
               @Override
               public void onClick(View arg0) {
 
-                  InputMethodManager imm = (InputMethodManager)getSystemService(
-                          INPUT_METHOD_SERVICE);
+                  InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
                   imm.hideSoftInputFromWindow(fname.getWindowToken(), 0);
                   imm.hideSoftInputFromWindow(lname.getWindowToken(), 0);
                   imm.hideSoftInputFromWindow(city.getWindowToken(), 0);

@@ -66,7 +66,7 @@ public class
       public ClickInWithAdapter clickInadapter;
       private String quickBlockId, partnerPic, partnerName, partnerId, myClicks, userClicks, partnerPh;
       public Boolean stopSearch = true;
-      private EditText edt_search;
+      public EditText edt_search;
       private SearchAdapter searchListadapter;
       private RelativeLayout imageMenuRefresh;
       private int relationListIndex;
@@ -184,6 +184,18 @@ public class
             //slidemenu.setSecondaryShadowDrawable(R.drawable.shadow);
             rightMenuElements();
             setNotificationList();
+
+            slidemenu.setOnClosedListener(new SlidingMenu.OnClosedListener() {
+                  @Override
+                  public void onClosed() {
+                        try {
+                              InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                              imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
+                        } catch (Exception e) {
+                              e.printStackTrace();
+                        }
+                  }
+            });
 
 
       }
@@ -322,6 +334,12 @@ public class
             searchInviteView.setOnClickListener(new View.OnClickListener() {
                   @Override
                   public void onClick(View arg0) {
+                        try {
+                              InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                              imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
+                        } catch (Exception e) {
+                              e.printStackTrace();
+                        }
                         Intent intent = new Intent(ClickInBaseView.this, AddSomeoneView.class);
                         startActivity(intent);
                   }
@@ -329,6 +347,7 @@ public class
             hideSearchlist.setOnClickListener(new View.OnClickListener() {
                   @Override
                   public void onClick(View arg0) {
+
                         searchList.setVisibility(View.GONE);
                         hideSearchlist.setVisibility(View.GONE);
                         edt_search.setText("");
@@ -338,6 +357,12 @@ public class
             findFriend.setOnClickListener(new View.OnClickListener() {
                   @Override
                   public void onClick(View arg0) {
+                        try {
+                              InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                              imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
+                        } catch (Exception e) {
+                              e.printStackTrace();
+                        }
                         Intent intent = new Intent(ClickInBaseView.this, CurrentClickersView.class);
                         intent.putExtra("FromMenu", true);
                         startActivity(intent);
@@ -351,6 +376,12 @@ public class
             inviteF.setOnClickListener(new View.OnClickListener() {
                   @Override
                   public void onClick(View arg0) {
+                        try {
+                              InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                              imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
+                        } catch (Exception e) {
+                              e.printStackTrace();
+                        }
                         Intent intent = new Intent(ClickInBaseView.this, SpreadWordView.class);
                         startActivity(intent);
 
@@ -367,7 +398,12 @@ public class
 //               // newsFeedManager.fetchNewsFeed(lastNewsfeedId, phone, usertoken);
 //                newsFeedManager.fetchNewsFeed("",authManager.getPhoneNo(), authManager.getUsrToken());
 //                Utils.launchBarDialog(ClickInBaseView.this);
-
+                        try {
+                              InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                              imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
+                        } catch (Exception e) {
+                              e.printStackTrace();
+                        }
                         Intent intent = new Intent(ClickInBaseView.this, FeedView.class);
                         startActivity(intent);
 
@@ -380,6 +416,12 @@ public class
             imageMenuRefresh.setOnClickListener(new View.OnClickListener() {
                   @Override
                   public void onClick(View arg0) {
+                        try {
+                              InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                              imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
+                        } catch (Exception e) {
+                              e.printStackTrace();
+                        }
                         Log.e("", "00000000-userPic" + slidemenu);
                         Intent intent = new Intent(ClickInBaseView.this, UserProfileView.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -405,7 +447,7 @@ public class
                               //slidemenu.showContent(true);
                         }
                         // slidemenu.animate();
-                        //  slidemenu.showMenu(true);
+                        //slidemenu.showMenu(true);
                 /*slidemenu.showMenu(true);
                 slidemenu.showMenu();
                 authManager = ModelManager.getInstance().getAuthorizationManager();
@@ -416,6 +458,12 @@ public class
             setting.setOnClickListener(new View.OnClickListener() {
                   @Override
                   public void onClick(View arg0) {
+                        try {
+                              InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                              imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
+                        } catch (Exception e) {
+                              e.printStackTrace();
+                        }
                         Log.e("", "00000000-SettingView Intent");
                         Intent intent = new Intent(ClickInBaseView.this, SettingView.class);
                         startActivity(intent);
@@ -429,6 +477,12 @@ public class
             searchInviteView.setOnClickListener(new View.OnClickListener() {
                   @Override
                   public void onClick(View arg0) {
+                        try {
+                              InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                              imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
+                        } catch (Exception e) {
+                              e.printStackTrace();
+                        }
                         Intent intent = new Intent(ClickInBaseView.this, AddSomeoneView.class);
                         intent.putExtra("FromOwnProfile", true);
                         startActivity(intent);
@@ -450,6 +504,12 @@ public class
                   public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
                         if (relationManager.fetchUsersByNameData.size() > 0) {
                               try {
+                                    try {
+                                          InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                                          imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
+                                    } catch (Exception e) {
+                                          e.printStackTrace();
+                                    }
                                     Log.e("searchList", "searchList Click-->" + position);
                        /* authManager = ModelManager.getInstance().getAuthorizationManager();
                         String partnerPhone = relationManager.fetchUsersByNameData.get(position).getPhoneNo();
@@ -658,6 +718,12 @@ public class
             } else if (message.equalsIgnoreCase("NewsFeed  True")) {
                   Utils.dismissBarDialog();
                   Log.d("1", "message aya->" + message);
+                  try {
+                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
+                  } catch (Exception e) {
+                        e.printStackTrace();
+                  }
                   Intent intent = new Intent(ClickInBaseView.this, FeedView.class);
                   startActivity(intent);
 
@@ -669,6 +735,14 @@ public class
                   stopSearch = true;
                   Utils.dismissBarDialog();
                   newsFeedManager.userFeed.clear();
+
+                  try {
+                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
+                  } catch (Exception e) {
+                        e.printStackTrace();
+                  }
+
 //            Utils.showAlert(ClickInBaseView.this, authManager.getMessage());
                   Intent intent = new Intent(ClickInBaseView.this, FeedView.class);
 
@@ -843,10 +917,15 @@ public class
 
       }
 
-      @Override
-      public void onClose() {
-            Log.e("y", "if onClose");
 
+    public void onDestroy(){
+        super.onDestroy();
+        Log.e("CLickinbaseview","Destroy");
+    }
+
+    @Override
+    public void onClose() {
+        Log.e("y", "if onClose");
 
       }
 
