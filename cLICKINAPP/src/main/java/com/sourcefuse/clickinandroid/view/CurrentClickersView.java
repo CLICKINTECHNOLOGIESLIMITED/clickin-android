@@ -88,10 +88,11 @@ public class CurrentClickersView extends Activity implements OnClickListener {
             //  Utils.launchBarDialog(CurrentClickersView.this);
             /*tempCurrentClickers = profilemanager.currentClickerList;*/
 
-            for(CurrentClickerBean currentClickerBean : profilemanager.currentClickerList)
+            /*for(CurrentClickerBean currentClickerBean : profilemanager.currentClickerList)
             {
                   tempCurrentClickers.add(currentClickerBean);
-            }
+            }*/
+            tempCurrentClickers = new ArrayList<CurrentClickerBean>(profilemanager.currentClickerList);
 
             setlist();
             // new FetchContactFromPhone(CurrentClickersView.this).getClickerList(authManager.getPhoneNo(),authManager.getUsrToken(),1);
@@ -124,11 +125,12 @@ public class CurrentClickersView extends Activity implements OnClickListener {
                   facebook.setBackgroundResource(R.drawable.c_fb_grey);
                   if (profilemanager.currentClickerList.size() > 0) {
                         tempCurrentClickers.clear();
-                        /*tempCurrentClickers = profilemanager.currentClickerList;*/
+                        /*tempCurrentClickers = profilemanager.currentClickerList;
                         for(CurrentClickerBean currentClickerBean : profilemanager.currentClickerList)
                         {
                               tempCurrentClickers.add(currentClickerBean);
-                        }
+                        }*/
+                        tempCurrentClickers = new ArrayList<CurrentClickerBean>(profilemanager.currentClickerList);
                         setlist();
                   } else {
                         new FetchContactFromPhone(CurrentClickersView.this).getClickerList(authManager.getPhoneNo(), authManager.getUsrToken(), 1);
@@ -269,10 +271,11 @@ public class CurrentClickersView extends Activity implements OnClickListener {
             if (message.equalsIgnoreCase("CheckFriend True")) {
                   Utils.dismissBarDialog();
                   /*tempCurrentClickers = profilemanager.currentClickerList;*/
-                  for(CurrentClickerBean currentClickerBean : profilemanager.currentClickerList)
+                  /*for(CurrentClickerBean currentClickerBean : profilemanager.currentClickerList)
                   {
                         tempCurrentClickers.add(currentClickerBean);
-                  }
+                  }*/
+                  tempCurrentClickers = new ArrayList<CurrentClickerBean>(profilemanager.currentClickerList);
                   setlist();
             } else if (message.equalsIgnoreCase("CheckFriend False")) {
                   Utils.dismissBarDialog();
