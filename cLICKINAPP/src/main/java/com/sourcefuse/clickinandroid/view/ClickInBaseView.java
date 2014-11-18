@@ -50,7 +50,7 @@ import java.util.List;
 import de.greenrobot.event.EventBus;
 
 public class
-        ClickInBaseView extends Activity implements TextWatcher, SlidingMenu.OnOpenListener, SlidingMenu.OnCloseListener {
+ ClickInBaseView extends Activity implements TextWatcher, SlidingMenu.OnOpenListener, SlidingMenu.OnCloseListener {
 
 
       /// Left Menu
@@ -543,12 +543,16 @@ public class
             typeface = Typeface.createFromAsset(ClickInBaseView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
             notificationList = (ListView) slidemenu.findViewById(R.id.list_click_notification);
             backArrowRightSide = (ImageView) slidemenu.findViewById(R.id.iv_back_right);
+
+          //akshit Code starts for closing secondary menu
             backArrowRightSide.setOnClickListener(new View.OnClickListener() {
                   public void onClick(View v) {
-                        slidemenu.showSecondaryMenu(false);
+                      if(slidemenu.isSecondaryMenuShowing() || slidemenu.isMenuShowing()){
+                      slidemenu.toggle();
+                      }
                   }
             });
-
+               //akshit code ends
       }
 
 

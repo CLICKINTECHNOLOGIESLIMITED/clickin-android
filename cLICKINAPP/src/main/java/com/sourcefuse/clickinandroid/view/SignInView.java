@@ -229,6 +229,7 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
                 break;
             case R.id.tv_signup:
                 Intent intent = new Intent(SignInView.this, SignUpView.class);
+
              //   intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);

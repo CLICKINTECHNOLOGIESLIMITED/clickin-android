@@ -366,7 +366,6 @@
                 android:layout_height="80dp"
                 android:layout_below="@+id/btn_or"
                 android:layout_marginTop="10dp"
-                android:padding="3dp"
                 android:layout_centerHorizontal="true"
                 android:orientation="horizontal"
                 >
