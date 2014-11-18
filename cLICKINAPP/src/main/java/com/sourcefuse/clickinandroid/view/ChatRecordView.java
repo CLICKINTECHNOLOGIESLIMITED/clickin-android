@@ -1,6 +1,7 @@
 package com.sourcefuse.clickinandroid.view;
 
 import android.app.Dialog;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -42,10 +43,7 @@ import com.quickblox.core.result.Result;
 import com.quickblox.module.auth.QBAuth;
 import com.quickblox.module.auth.result.QBSessionResult;
 import com.quickblox.module.chat.QBChatService;
-import com.quickblox.module.chat.listeners.ChatMessageListener;
-import com.quickblox.module.chat.listeners.SessionCallback;
-import com.quickblox.module.chat.smack.SmackAndroid;
-import com.quickblox.module.chat.xmpp.QBPrivateChat;
+
 import com.quickblox.module.content.QBContent;
 import com.quickblox.module.content.result.QBFileUploadTaskResult;
 import com.quickblox.module.custom.QBCustomObjects;
@@ -92,9 +90,8 @@ import java.util.TimeZone;
 
 import de.greenrobot.event.EventBus;
 
-public class
-        ChatRecordView extends ClickInBaseView implements View.OnClickListener,
-                                                                  TextWatcher, ChatMessageListener, ConnectionListener {
+public class ChatRecordView extends ClickInBaseView implements View.OnClickListener,
+                                                                  TextWatcher {
       private SeekBar mybar;
       private TextView pos, neg, profileName, typingtext, myTotalclicks, partnerTotalclicks;
       int myvalue = 10, min = -10;
@@ -107,7 +104,7 @@ public class
       public static final int MEDIA_TYPE_IMAGE = 1;
       private static final String IMAGE_DIRECTORY_NAME = "Clickin Application";
 
-      private QBPrivateChat chatObject;
+      //private QBPrivateChat chatObject;
 
       private int relationListIndex, myClicks, userClicks;
       private String qBId, rId, partnerPic, partnerName, partnerId, partnerPh, myTotalString, userTotalClicks;
@@ -153,7 +150,36 @@ public class
 
             }
       };
- private boolean mIsBound;
+
+    private ServiceConnection mConnection = new ServiceConnection() {
+        public void onServiceConnected(ComponentName className, IBinder service) {
+            // This is called when the connection with the service has been
+            // established, giving us the service object we can use to
+            // interact with the service.  Because we have bound to a explicit
+            // service that we know is running in our own process, we can
+            // cast its IBinder to a concrete class and directly access it.
+            myQbChatService = ((MyQbChatService.LocalBinder) service).getService();
+           /* myQbChatService.createRoom(mRoomName);*/
+
+            // showMessages();
+
+            // Tell the user about this for our demo.
+//            Toast.makeText(Binding.this, R.string.local_service_connected,
+//                    Toast.LENGTH_SHORT).show();
+        }
+
+        public void onServiceDisconnected(ComponentName className) {
+            // This is called when the connection with the service has been
+            // unexpectedly disconnected -- that is, its process crashed.
+            // Because it is running in our same process, we should never
+            // see this happen.
+            myQbChatService = null;
+//            Toast.makeText(Binding.this, R.string.local_service_disconnected,
+//                    Toast.LENGTH_SHORT).show();
+        }
+    };
+
+    private boolean mIsBound;
 
       private ClickinDbHelper dbHelper;
 
@@ -460,7 +486,7 @@ public class
         textgallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(i, Constants.SELECT_PICTURE);
                 mdialog.dismiss();
             }
@@ -539,7 +565,7 @@ public class
                   messageWithEx.setType(Message.Type.chat);
                   messageWithEx.setBody(messageText);// 1-1 chat message
                   messageWithEx.addExtension(extension);
-                  chatObject.sendMessage(Integer.parseInt(qBId), messageWithEx);
+                 // chatObject.sendMessage(Integer.parseInt(qBId), messageWithEx);
             } catch (Exception e) {
                   e.printStackTrace();
                   try {
@@ -587,14 +613,24 @@ public class
 
       @Override
       public void onClick(View v) {
-            switch (v.getId()) {
-                  case R.id.btn_send:
-                ChatMessageBody temp=new ChatMessageBody();
-                temp.textMsg="" + chatText.getText().toString();
-                temp.partnerQbId=qBId;
-                temp.chatType=Constants.CHAT_TYPE_TEXT;
-                temp.clicks="no";
-                myQbChatService.sendMessage(temp);
+          switch (v.getId()) {
+              case R.id.btn_send:
+                  String chatString = chatText.getText().toString();
+                  ChatMessageBody temp = new ChatMessageBody();
+
+                  if (isClicks() == true) {
+                      temp.clicks = convertClicks(seekValue).trim();
+
+                       temp.textMsg = temp.clicks + "        " + chatString;
+
+                  } else {
+                      temp.clicks = "no";
+                      temp.textMsg = chatString;
+                  }
+                  temp.partnerQbId = qBId;
+                  temp.chatType = Constants.CHAT_TYPE_TEXT;
+                  myQbChatService.sendMessage(temp);
+
            /*     ((RelativeLayout) findViewById(R.id.rl_flipper)).setVisibility(View.GONE);
                 chatString = "" + chatText.getText().toString();
                 String clicksValue = null;
@@ -797,6 +833,8 @@ public class
 
                     attachBtn.setImageDrawable(getResources().getDrawable(R.drawable.attach_icon));
                 }*/
+
+                  chatText.setText("");
                         break;
                   case R.id.iv_menu_button:
                         hideAttachView();
@@ -985,7 +1023,7 @@ public class
                   message.setType(Message.Type.chat); // 1-1 chat message
                   message.setBody("");
                   message.addExtension(extension);
-                  chatObject.sendMessage(Integer.parseInt(qBId), message);
+                 // chatObject.sendMessage(Integer.parseInt(qBId), message);
 
                   ChatRecordBeen addChat = new ChatRecordBeen();
                   addChat.setChatType("5");
@@ -1015,8 +1053,8 @@ public class
 
             } catch (Exception e) {
                   try {
-                        chatObject.removeChatMessageListener(this);
-                        chatObject.addChatMessageListener(this);
+                        //chatObject.removeChatMessageListener(this);
+                       // chatObject.addChatMessageListener(this);
                   } catch (Exception e1) {
                   }
           /*  chatObject = null;
@@ -1058,13 +1096,13 @@ public class
             message.setType(Message.Type.chat); // 1-1 chat message
             message.addExtension(extension);
             try {
-                  chatObject.sendMessage(Integer.parseInt(qBId), message);
+                  //chatObject.sendMessage(Integer.parseInt(qBId), message);
             } catch (Exception e) {
 
                   try {
-                        againLoginToQuickBlox();
-                        chatObject.removeChatMessageListener(this);
-                        chatObject.addChatMessageListener(this);
+                       // againLoginToQuickBlox();
+                       // chatObject.removeChatMessageListener(this);
+                        //chatObject.addChatMessageListener(this);
                   } catch (Exception e1) {
                   }
                   e.printStackTrace();
@@ -1081,14 +1119,7 @@ public class
       @Override
       public void onDestroy() {
             // Unregister since the activity is about to be closed.
-
-            //QBChatService.getInstance().logout();
             super.onDestroy();
-
-            try {
-                  chatObject.removeChatMessageListener(this);
-            } catch (Exception e) {
-            }
 
             try {
                   dbHelper.deleteChat(authManager.getQBId(), qBId);
@@ -1096,6 +1127,13 @@ public class
             } catch (Exception e) {
                   e.printStackTrace();
             }
+
+          if (mIsBound) {
+              // Detach our existing connection.
+              unbindService(mConnection);
+              mIsBound = false;
+          }
+
       }
 
 
@@ -1109,9 +1147,9 @@ public class
 
             try {
                   authManager = ModelManager.getInstance().getAuthorizationManager();
-                  chatObject = authManager.getqBPrivateChat();
-                  chatObject.removeChatMessageListener(this);
-                  chatObject.addChatMessageListener(this);
+                  //chatObject = authManager.getqBPrivateChat();
+                 // chatObject.removeChatMessageListener(this);
+                  //chatObject.addChatMessageListener(this);
             } catch (Exception e) {
             }
 
@@ -1126,7 +1164,7 @@ public class
             }
 
             try {
-                  chatObject.removeChatMessageListener(this);
+                //  chatObject.removeChatMessageListener(this);
             } catch (Exception e) {
             }
 
@@ -1169,7 +1207,7 @@ public class
             }
       }
 
-      @Override
+     /* @Override
       public void processMessage(Message message) {
             //Set typin Status....
             String chatType = "0";
@@ -1363,11 +1401,11 @@ public class
                                     addChat.setUserId(partnerId);
                                     addChat.setClicks(clicks);
                                     addChat.setChatText(body);
-                        /*if( body.equalsIgnoreCase(clicks)){
+                        *//*if( body.equalsIgnoreCase(clicks)){
                             addChat.setClicks(body);
                         }else{
                             addChat.setClicks(body.substring(0, 4));
-                        }*/
+                        }*//*
                                     addChat.setTimeStamp(String.valueOf(sentOn));
                                     chatManager.chatListFromServer.add(addChat);
                                     adapter.notifyDataSetChanged();
@@ -1582,17 +1620,7 @@ public class
             }
       }
 
-      @Override
-      public boolean accept(Message.Type messageType) {
-            switch (messageType) {
-                  case chat:
-                        Log.e(TAG, "Gotit");
-                        return true;
-                  default:
-                        Log.e(TAG, "M Not get");
-                        return false;
-            }
-      }
+     */
       public static Bitmap getBitmapFromCameraData(Intent data, Context context) {
             Uri selectedImage = data.getData();
             String[] filePathColumn =
@@ -1816,11 +1844,11 @@ public class
                   message.setType(Message.Type.chat); // 1-1 chat message
                   message.setBody("" + msg);
                   message.addExtension(extension);
-                  chatObject.sendMessage(Integer.parseInt(qBId), message);
+                 // chatObject.sendMessage(Integer.parseInt(qBId), message);
             } catch (Exception e) {
                   try {
-                        chatObject.removeChatMessageListener(this);
-                        chatObject.addChatMessageListener(this);
+                        //chatObject.removeChatMessageListener(this);
+                       // chatObject.addChatMessageListener(this);
                   } catch (Exception e1) {
                   }
           /*  chatObject = null;
@@ -1870,10 +1898,10 @@ public class
                   message.setType(Message.Type.chat); // 1-1 chat message
                   message.setBody("" + msg);
                   message.addExtension(extension);
-                  chatObject.sendMessage(Integer.parseInt(qBId), message);
+                 // chatObject.sendMessage(Integer.parseInt(qBId), message);
 
             } catch (Exception e) {
-                  againLoginToQuickBlox();
+                 // againLoginToQuickBlox();
             /*chatObject = null;
             authManager = ModelManager.getInstance().getAuthorizationManager();
             chatObject = authManager.getqBPrivateChat();
@@ -1890,15 +1918,15 @@ public class
       private void loginToQuickBlox() {
 
             try {
-                  chatObject = null;
+                 // chatObject = null;
                   authManager = ModelManager.getInstance().getAuthorizationManager();
-                  chatObject = authManager.getqBPrivateChat();
-                  chatObject.addChatMessageListener(this);
+                 // chatObject = authManager.getqBPrivateChat();
+                 // chatObject.addChatMessageListener(this);
                   //chatObject.notifyAll();
             } catch (Exception e) {
                   // authManager = ModelManager.getInstance().getAuthorizationManager();
                   //chatObject = authManager.getqBPrivateChat();
-                  againLoginToQuickBlox();
+                  //againLoginToQuickBlox();
                   e.printStackTrace();
             }
       }
@@ -2131,32 +2159,6 @@ public class
       }
 
 
-      @Override
-      public void connectionClosed() {
-            Log.e(TAG, "connection closed");
-      }
-
-      @Override
-      public void connectionClosedOnError(Exception e) {
-            Log.e(TAG, "connection closed on error. It will be established soon");
-      }
-
-      @Override
-      public void reconnectingIn(int i) {
-            Log.e(TAG, "reconnectingIn");
-
-            againLoginToQuickBlox();
-      }
-
-      @Override
-      public void reconnectionSuccessful() {
-            Log.e(TAG, "reconnectionSuccessful");
-      }
-
-      @Override
-      public void reconnectionFailed(Exception e) {
-            Log.e(TAG, "reconnectionFailed");
-      }
 
 
       private void createRfecordOnQuickBlox(String messageText, String clicks, String content, String relationshipId, String userId, String senderUserToken,
@@ -2229,50 +2231,11 @@ public class
       }
 
 
-      public void againLoginToQuickBlox() {
-            SmackAndroid.init(this);
-            Log.e(TAG, "loginToQuickBlox --- getUserId=>" + authManager.getUserId() + ",--getUsrToken-=>" + authManager.getUsrToken());
-            QBSettings.getInstance().fastConfigInit(Constants.CLICKIN_APP_ID, Constants.CLICKIN_AUTH_KEY, Constants.CLICKIN_AUTH_SECRET);
-            QBSettings.getInstance().setServerApiDomain("apiclickin.quickblox.com");
-            QBSettings.getInstance().setContentBucketName("qb-clickin");
-            QBSettings.getInstance().setChatServerDomain("chatclickin.quickblox.com");
-            final QBUser user = new QBUser(authManager.getUserId(), authManager.getUsrToken());
-
-            QBAuth.createSession(user, new QBCallbackImpl() {
 
 
-                  @Override
-                  public void onComplete(Result result) {
-                        if (result.isSuccess()) {
-                              QBSessionResult res = (QBSessionResult) result;
-                              user.setId(res.getSession().getUserId());
-                              //
-                              QBChatService.getInstance().loginWithUser(user, new SessionCallback() {
-                                    @Override
-                                    public void onLoginSuccess() {
-                                          Log.e(TAG, "Login successfully");
-                                          QBChatService.getInstance().startAutoSendPresence(5);
-
-                                          QBPrivateChat chat = QBChatService.getInstance().createChat();
-                                          authManager.setqBPrivateChat(chat);
-                                    }
-
-                                    @Override
-                                    public void onLoginError(String s) {
-                                          Log.e(TAG, "onLoginError");
-                                          againLoginToQuickBlox();
-                                    }
 
 
-                              });
-                              android.util.Log.e(TAG, "Session was successfully created");
 
-                        } else {
-                              android.util.Log.e(TAG, "Errors " + result.getErrors().toString() + "result" + result);
-                        }
-                  }
-            });
-      }
 
 
       private void updateValues(Intent intent) {
@@ -2464,9 +2427,12 @@ public class
             }
 
             return mediaFile;
-
-
       }
+
+
+
+
+
 }
 
 

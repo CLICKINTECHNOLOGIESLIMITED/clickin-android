@@ -236,9 +236,7 @@
             android:screenOrientation="portrait">
         </activity>
 
-        <service
-            android:name="com.sourcefuse.clickinandroid.services.QbChatService"
-            android:enabled="true" />
+       <service android:name="com.sourcefuse.clickinandroid.services.MyQbChatService"></service>
 
         <activity
             android:name="com.sourcefuse.clickinandroid.view.Feed_large_img"

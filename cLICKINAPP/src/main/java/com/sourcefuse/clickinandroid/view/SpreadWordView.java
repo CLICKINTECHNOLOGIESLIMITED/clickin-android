@@ -17,7 +17,7 @@ import com.facebook.FacebookException;
 import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.widget.WebDialog;
-import com.quickblox.module.chat.xmpp.QBPrivateChat;
+
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.ProfileManager;
@@ -40,7 +40,7 @@ import de.greenrobot.event.EventBus;
 public class SpreadWordView extends Activity implements OnClickListener {
 
     private Button phonebook, facebook;
-    private QBPrivateChat chat;
+
     Dialog dialog;
     private AuthManager authManager;
     private ProfileManager profilemanager;

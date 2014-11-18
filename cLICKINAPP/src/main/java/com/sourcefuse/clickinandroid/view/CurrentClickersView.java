@@ -84,7 +84,8 @@ public class CurrentClickersView extends Activity implements OnClickListener {
 
        // EventBus.getDefault().register(this);
       //  Utils.launchBarDialog(CurrentClickersView.this);
-        tempCurrentClickers=profilemanager.currentClickerList;
+      //  tempCurrentClickers=profilemanager.currentClickerList;
+        tempCurrentClickers=new ArrayList<CurrentClickerBean>(profilemanager.currentClickerList);
         setlist();
        // new FetchContactFromPhone(CurrentClickersView.this).getClickerList(authManager.getPhoneNo(),authManager.getUsrToken(),1);
 
@@ -115,7 +116,7 @@ public class CurrentClickersView extends Activity implements OnClickListener {
             facebook.setBackgroundResource(R.drawable.c_fb_grey);
             if(profilemanager.currentClickerList.size()>0) {
                 tempCurrentClickers.clear();
-                tempCurrentClickers = profilemanager.currentClickerList;
+                tempCurrentClickers = new ArrayList<CurrentClickerBean>(profilemanager.currentClickerList);
                 setlist();
             }else{
                 new FetchContactFromPhone(CurrentClickersView.this).getClickerList(authManager.getPhoneNo(),authManager.getUsrToken(),1);
