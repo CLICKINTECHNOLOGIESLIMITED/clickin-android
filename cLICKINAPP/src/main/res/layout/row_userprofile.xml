@@ -87,7 +87,6 @@
         android:background="@drawable/owner_list_roundedview"
         android:gravity="center_horizontal"
         android:text="PENDING"
-        android:visibility="gone"
         android:paddingBottom="10dp"
         android:textColor="@color/profile_details"
         geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"

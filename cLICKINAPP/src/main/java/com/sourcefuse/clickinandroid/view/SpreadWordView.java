@@ -72,18 +72,22 @@ public class SpreadWordView extends Activity implements OnClickListener {
         //   setlist();
         profilemanager=ModelManager.getInstance().getProfileManager();
 
-        if(profilemanager.spreadTheWorldList!=null){
-            for(ContactBean temp:profilemanager.spreadTheWorldList){
+        if(profilemanager.spreadTheWorldList!=null && profilemanager.spreadTheWorldList.size()!=0){
+            for(ContactBean temp:profilemanager.spreadTheWorldList ){
                 temp.setChecked(false);
             }
-        }
+              setlist();
+        }else{
+              Utils.launchBarDialog(this);
+              new FetchContactFromPhone(this).getClickerList(authManager.getPhoneNo(), authManager.getUsrToken(), 1);
+          }
 
          if(!getIntent().getBooleanExtra("fromsignup",false))
          {
                findViewById(R.id.btn_next).setVisibility(View.GONE);
          }
 
-        setlist();
+
 
     }
 

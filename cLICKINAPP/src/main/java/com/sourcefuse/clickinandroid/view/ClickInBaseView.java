@@ -403,10 +403,7 @@ public class
                   @Override
                   public void onClick(View arg0) {
 
-//                newsFeedManager = ModelManager.getInstance().getNewsFeedManager();
-//               // newsFeedManager.fetchNewsFeed(lastNewsfeedId, phone, usertoken);
-//                newsFeedManager.fetchNewsFeed("",authManager.getPhoneNo(), authManager.getUsrToken());
-//                Utils.launchBarDialog(ClickInBaseView.this);
+
                         try {
                               InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                               imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
