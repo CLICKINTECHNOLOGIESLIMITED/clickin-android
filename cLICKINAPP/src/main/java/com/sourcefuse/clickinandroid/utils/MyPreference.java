@@ -61,7 +61,7 @@ public class MyPreference {
     public void clearAllPreference() {
         setToken("");
         setmyPhoneNo("");
-        QBChatService.getInstance().logout();
+
     }
 
 

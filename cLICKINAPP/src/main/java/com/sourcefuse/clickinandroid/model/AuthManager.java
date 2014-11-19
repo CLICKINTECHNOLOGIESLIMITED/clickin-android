@@ -5,7 +5,8 @@ import android.net.Uri;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.quickblox.module.chat.xmpp.QBPrivateChat;
+
+import com.quickblox.module.chat.QBPrivateChat;
 import com.sourcefuse.clickinandroid.utils.APIs;
 import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinandroid.utils.Utils;

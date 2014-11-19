@@ -34,6 +34,8 @@ import de.greenrobot.event.EventBus;
  * Created by mukesh on 22/4/14.
  */
 public class CurrentClickersView extends Activity implements OnClickListener {
+
+
       private static final String TAG = CurrentClickersView.class.getSimpleName();
       private Button phonebook, facebook;
       private TextView back, next, middleBack;
@@ -41,6 +43,7 @@ public class CurrentClickersView extends Activity implements OnClickListener {
       private CurrentClickersAdapter adapter;
       private ProfileManager profilemanager;
       private AuthManager authManager;
+
 
 
       ArrayList<CurrentClickerBean> tempCurrentClickers;

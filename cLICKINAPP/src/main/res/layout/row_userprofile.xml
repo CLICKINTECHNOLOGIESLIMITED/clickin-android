@@ -1,38 +1,42 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+                xmlns:geekui="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+    >
 
     <RelativeLayout
         android:id="@+id/rl_jk"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white">
+        >
 
         <TextView
             android:id="@+id/tv_usr_name"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
+            android:background="@color/white"
             android:ellipsize="end"
-            android:gravity="center_vertical"
+            android:gravity="center_horizontal"
             android:maxLines="1"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
+            android:paddingTop="10dp"
             android:singleLine="true"
             android:text="Bregenja"
             android:textColor="@color/owner_relation_partner_name"
-            android:textSize="18sp" />
+            android:textSize="18sp"/>
 
         <RelativeLayout
             android:id="@+id/rl_kl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_usr_name"
-            android:layout_marginBottom="2dp"
-            android:layout_marginLeft="2dp"
-            android:layout_marginRight="2dp"
-            android:layout_marginTop="2dp">
+            android:background="@color/white"
+            android:paddingBottom="2dp"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
+            android:paddingTop="2dp">
 
             <RelativeLayout
                 android:id="@+id/rl_m"
@@ -47,7 +51,7 @@
                     android:layout_height="90dp"
                     android:layout_marginLeft="45dp"
                     android:layout_marginRight="-8dp"
-                    android:src="@drawable/female_crt" />
+                    android:src="@drawable/female_crt"/>
 
                 <Button
                     android:id="@+id/btn_privacy"
@@ -55,7 +59,7 @@
                     android:layout_height="45dp"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/iv_usr_pic"
-                    android:background="@drawable/owner_profile_eye_icon" />
+                    android:background="@drawable/owner_profile_eye_icon"/>
             </RelativeLayout>
 
             <Button
@@ -63,7 +67,7 @@
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:layout_centerVertical="true"
-                android:background="@drawable/owner_side_icon_cross" />
+                android:background="@drawable/owner_side_icon_cross"/>
         </RelativeLayout>
 
         <View
@@ -72,25 +76,43 @@
             android:layout_height="5dp"
             android:layout_below="@+id/rl_kl"
             android:background="@color/white"
-            android:visibility="gone" />
+            android:visibility="gone"/>
     </RelativeLayout>
 
-    <TextView
+    <com.sourcefuse.clickinandroid.utils.ClickInTextView
         android:id="@+id/tv_pending"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rl_jk"
         android:background="@drawable/owner_list_roundedview"
         android:gravity="center_horizontal"
-        android:text="Pending"
+        android:text="PENDING"
+        android:visibility="gone"
+        android:paddingBottom="10dp"
         android:textColor="@color/profile_details"
-        android:visibility="gone" />
+        geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"
+        />
 
     <View
         android:id="@+id/v_devider"
         android:layout_width="wrap_content"
         android:layout_height="18dp"
         android:layout_below="@+id/tv_pending"
-        android:background="@color/transparent" />
+        android:background="@color/transparent"/>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_below="@+id/v_devider"
+        android:background="@color/white"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/btm_divider"
+            android:layout_width="fill_parent"
+            android:layout_height="3dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/owner_profile_side_line"/>
+    </LinearLayout>
 
 </RelativeLayout>

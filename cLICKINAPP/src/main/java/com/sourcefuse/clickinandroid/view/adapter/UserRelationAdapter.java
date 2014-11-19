@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,308 +32,258 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
-	Context context;
-	int layoutResourceId;
-	private AuthManager authManager;
-	private ProfileManager profileManager;
-	private RelationManager relationManager;
-	private Typeface typeface;
-	private boolean showpending = false;
-    RecordHolder rholder;
-   GetrelationshipsBean item;
+      Context context;
+      int layoutResourceId;
+      private AuthManager authManager;
+      private ProfileManager profileManager;
+      private RelationManager relationManager;
+      private Typeface typeface;
+      private boolean showpending = false;
+      /*RecordHolder rholder;*/
+      GetrelationshipsBean item;
 
-	public UserRelationAdapter(Context context, int layoutResourceId,
-			List<GetrelationshipsBean> item) {
-		super(context, layoutResourceId, item);
-		this.layoutResourceId = layoutResourceId;
-		this.context = context;
+      public UserRelationAdapter(Context context, int layoutResourceId,
+                                 List<GetrelationshipsBean> item) {
+            super(context, layoutResourceId, item);
+            this.layoutResourceId = layoutResourceId;
+            this.context = context;
 
-	}
+      }
 
-	@Override
-	public View getView(final int position, View convertView, ViewGroup parent) {
-		View row = convertView;
-		item = getItem(position);
-		relationManager = ModelManager.getInstance().getRelationManager();
-		RecordHolder holder = null;
-		if (row == null) {
-			LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-			row = inflater.inflate(layoutResourceId, parent, false);
-			holder = new RecordHolder();
-			holder.usr_name = (TextView) row.findViewById(R.id.tv_usr_name);
-			holder.pending = (TextView) row.findViewById(R.id.tv_pending);
-			holder.usrimg = (ImageView) row.findViewById(R.id.iv_usr_pic);
-			holder.privacy = (Button) row.findViewById(R.id.btn_privacy);
-			holder.whiteview = (View) row.findViewById(R.id.v_whiteview);
-			holder.devider = (View) row.findViewById(R.id.v_devider);
-			
-			holder.delete = (Button) row.findViewById(R.id.btn_delete_item);
-			holder.usrimg.setScaleType(ScaleType.FIT_XY);
+      Button privacy;
 
-			typeface = Typeface.createFromAsset(context.getAssets(),Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
-			holder.usr_name.setTypeface(typeface,typeface.BOLD);
-			
-			row.setTag(holder);
-		} else {
-			holder = (RecordHolder) row.getTag();
-		}
-		
-		rholder = (RecordHolder) row.getTag();
-		rholder.usr_name.setText(item.getPartnerName());
-		
-		if(item.getStatusAccepted().matches("true") && (item.getmStatuspublic().matches("false") || Utils.isEmptyString(item.getmStatuspublic()))){
-            showpending =false;
-			rholder.privacy.setBackgroundResource(R.drawable.owner_profile_eye_cross_icon );
-		}else if(item.getStatusAccepted().matches("true") && item.getmStatuspublic().matches("true")){
-            showpending =false;
-			rholder.privacy.setBackgroundResource(R.drawable.owner_profile_eye_icon);
-		}else if(Utils.isEmptyString(item.getStatusAccepted()) && item.getRequestInitiator().matches("true")){
-
-            android.util.Log.e("getRequestInitiator","getRequestInitiator");
-			//sent request ClickIcon
-			showpending =true;
-			rholder.privacy.setBackgroundResource(R.drawable.pending_status);
-		}else if(Utils.isEmptyString(item.getStatusAccepted())){
-            showpending =false;
-			//Coming request
-			rholder.privacy.setBackgroundResource(R.drawable.requested_statuts);
-		}
-		
-		if(showpending){
-            rholder.pending.setVisibility(View.GONE);
-			//holder.pending.setBackgroundResource(R.drawable.white_view);
-		}else{
-            rholder.pending.setVisibility(View.GONE);
-		}
+      @Override
+      public View getView(final int position, View convertView, ViewGroup parent) {
+            View row = convertView;
+            item = getItem(position);
+            relationManager = ModelManager.getInstance().getRelationManager();
+            /*RecordHolder holder = null;*/
+            /*if (row == null) {*/
+            LayoutInflater inflater = ((Activity) context).getLayoutInflater();
+            row = inflater.inflate(layoutResourceId, parent, false);
+                  /*holder = new RecordHolder();*/
+            TextView usr_name = (TextView) row.findViewById(R.id.tv_usr_name);
+            TextView pending = (TextView) row.findViewById(R.id.tv_pending);
+            ImageView usrimg = (ImageView) row.findViewById(R.id.iv_usr_pic);
+            privacy = (Button) row.findViewById(R.id.btn_privacy);
+            View whiteview = (View) row.findViewById(R.id.v_whiteview);
+            View devider = (View) row.findViewById(R.id.v_devider);
+            ImageView btm_divider=(ImageView) row.findViewById(R.id.btm_divider);
 
 
+            Button delete = (Button) row.findViewById(R.id.btn_delete_item);
+            usrimg.setScaleType(ScaleType.FIT_XY);
 
-		if(position==relationManager.requestedList.size()-1){
-            Log.e("1","1");
-			//holder.whiteview.setVisibility(View.VISIBLE);
-           // holder.whiteview.setBackgroundResource(R.drawable.owner_list_roundedview);
-			//rholder.devider.setVisibility(View.VISIBLE);
-			//holder.pending.setBackgroundResource(R.drawable.white_view);
-           // rholder.pending.setVisibility(View.VISIBLE);
-			rholder.devider.setBackgroundColor(0x00000000);
-		}else if(position==(relationManager.acceptedList.size()+relationManager.requestedList.size())-1){
-            Log.e("2","2");
-			//holder.whiteview.setVisibility(View.VISIBLE);
-           // holder.whiteview.setBackgroundResource(R.drawable.owner_list_roundedview);
-           /// rholder.pending.setVisibility(View.VISIBLE);
-            rholder.whiteview.setVisibility(View.VISIBLE);
-            rholder.whiteview.setBackgroundResource(R.drawable.owner_list_roundedview);
+            typeface = Typeface.createFromAsset(context.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
+            usr_name.setTypeface(typeface, typeface.BOLD);
 
-			rholder.devider.setVisibility(View.VISIBLE);
-			rholder.devider.setBackgroundColor(0x00000000);
-           // holder.pending.setBackgroundResource(R.drawable.white_view);
-		}else if(position==(relationManager.acceptedList.size())){
-            Log.e("3","3");
-            rholder.devider.setVisibility(View.VISIBLE);
-            rholder.devider.setBackgroundColor(0x00000000);
-            rholder.pending.setBackgroundResource(R.drawable.white_view);
-        }
-        else{
-            Log.e("4","4");
-            rholder.whiteview.setVisibility(View.GONE);
-            rholder.devider.setVisibility(View.GONE);
-		}
+                  /*row.setTag(holder);
+            } else {
+                  holder = (RecordHolder) row.getTag();
+            }*/
 
-		showpending =false;
-		
-		
-	 if(!item.getPartnerPic().equalsIgnoreCase("")) {
-            try {
-                Picasso.with(context).load(item.getPartnerPic())
-                        .skipMemoryCache()
-                        .error(R.drawable.male_user)
-                        .into(rholder.usrimg);
+            /*rholder = (RecordHolder) row.getTag();
+            rholder.usr_name.setText(item.getPartnerName());*/
+
+            if (item.getStatusAccepted().matches("true") && (item.getmStatuspublic().matches("false") || Utils.isEmptyString(item.getmStatuspublic()))) {
+                  showpending = false;
+                  privacy.setBackgroundResource(R.drawable.owner_profile_eye_cross_icon);
+            } else if (item.getStatusAccepted().matches("true") && item.getmStatuspublic().matches("true")) {
+                  showpending = false;
+                  privacy.setBackgroundResource(R.drawable.owner_profile_eye_icon);
+            } else if (Utils.isEmptyString(item.getStatusAccepted()) && item.getRequestInitiator().matches("true")) {
+
+                  android.util.Log.e("getRequestInitiator", "getRequestInitiator");
+                  //sent request ClickIcon
+                  showpending = true;
+                  privacy.setBackgroundResource(R.drawable.pending_status);
+
+
+            } else if (Utils.isEmptyString(item.getStatusAccepted())) {
+                  showpending = false;
+                  //Coming request
+                  privacy.setBackgroundResource(R.drawable.requested_statuts);
             }
-            catch (Exception e)
+
+
+
+
+            if (position == relationManager.requestedList.size() - 1) {
+                  devider.setVisibility(View.VISIBLE);
+                  whiteview.setBackgroundResource(R.drawable.owner_list_roundedview);
+                  whiteview.setVisibility(View.VISIBLE);
+                  btm_divider.setVisibility(View.GONE);
+            } else if (position == (relationManager.acceptedList.size() + relationManager.requestedList.size()) - 1) {
+                  devider.setVisibility(View.VISIBLE);
+                  whiteview.setBackgroundResource(R.drawable.owner_list_roundedview);
+                  whiteview.setVisibility(View.VISIBLE);
+                  btm_divider.setVisibility(View.GONE);
+            } else {
+                  devider.setVisibility(View.GONE);
+                  whiteview.setVisibility(View.GONE);
+            }
+
+
+            if(showpending)
             {
-                holder.usrimg.setImageResource(R.drawable.male_user);
+                  pending.setVisibility(View.VISIBLE);
+                  pending.setBackgroundColor(getContext().getResources().getColor(R.color.white));
             }
-        }
-        else
-        {
-            holder.usrimg.setImageResource(R.drawable.male_user);
-        }		holder.privacy.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-            	authManager = ModelManager.getInstance().getAuthorizationManager();
-    			relationManager = ModelManager.getInstance().getRelationManager();
-                Log.e("1","1"+item.getmStatuspublic());
-
-                if(item.getStatusAccepted().matches("true") && item.getmStatuspublic().matches("true")){
-                    Log.e("1","2");
-                    relationDialog(AlertMessage.PUBLICMSG+item.getPartnerName()+ " private?");//request normal dialog to custom dialog
-//                    new AlertDialog.Builder(context)
-//                            .setMessage(AlertMessage.PUBLICMSG+item.getPartnerName()+" private?")
-//                            .setPositiveButton("Ok",
-//                                    new DialogInterface.OnClickListener() {
-//                                        @Override
-//                                        public void onClick(DialogInterface dialog, int which) {
-//                                            item.setmStatuspublic("false");
-//                                            relationManager.changeUserVisibility(item.getRelationshipId(), "false", authManager.getPhoneNo(), authManager.getUsrToken());
-//                                            rholder.privacy.setBackgroundResource(R.drawable.owner_profile_eye_cross_icon);
-//
-//                                        }
-//
-//                                    }
-//                            ).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-//                        @Override
-//                        public void onClick(DialogInterface dialog, int which) {
-//
-//                            dialog.dismiss();
-//                        }
-//
-//                    }).show();
-
-        		}else if(item.getStatusAccepted().matches("true") && (item.getmStatuspublic().matches("false") || Utils.isEmptyString(item.getmStatuspublic()))){
-                    Log.e("1","3");
-                    relationDialogprivate(AlertMessage.PRIVATE+item.getPartnerName()+" public?");//replace Normal Dialog to custom dialog
-//                    new AlertDialog.Builder(context)
-//                            .setMessage(AlertMessage.PRIVATE+item.getPartnerName()+" public?")
-//                            .setPositiveButton("Ok",
-//                                    new DialogInterface.OnClickListener() {
-//                                        @Override
-//                                        public void onClick(DialogInterface dialog,
-//                                                            int which) {
-//                                            item.setmStatuspublic("true");
-//                                            relationManager.changeUserVisibility(item.getRelationshipId(),"true",authManager.getPhoneNo(),authManager.getUsrToken());
-//                                            rholder.privacy.setBackgroundResource(R.drawable.owner_profile_eye_icon);
-//
-//                                        }
-//
-//                                    }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-//                        @Override
-//                        public void onClick(DialogInterface dialog, int which) {
-//
-//                            dialog.dismiss();
-//                        }
-//
-//                    }).show();
 
 
-        		}else if (Utils.isEmptyString(item.getStatusAccepted())&& item.getRequestInitiator().matches("true")){
-                    Log.e("1","4");
-        		}else if (Utils.isEmptyString(item.getStatusAccepted())){
-                    Log.e("1","5");
-                    Utils.launchBarDialog((Activity)context);
-                    relationManager.updateStatus(item.getRelationshipId(),authManager.getPhoneNo(),authManager.getUsrToken(),"true");
-                	item.setStatusAccepted("true");
-        		}
+
+            showpending = false;
+
+
+            if (!item.getPartnerPic().equalsIgnoreCase("")) {
+                  try {
+                        Picasso.with(context).load(item.getPartnerPic())
+                                .skipMemoryCache()
+                                .error(R.drawable.male_user)
+                                .into(usrimg);
+                  } catch (Exception e) {
+                        usrimg.setImageResource(R.drawable.male_user);
+                  }
+            } else {
+                  usrimg.setImageResource(R.drawable.male_user);
             }
-        });
-		
-		    holder.usrimg.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) { 
-            	if(item.getStatusAccepted()=="true") {
-                    Intent intent = new Intent(context, JumpOtherProfileView.class);
-                //    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.putExtra("FromOwnProfile", true);
-                    intent.putExtra("phNumber", item.getPhoneNo());
-                    ((Activity) context).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
-                    context.startActivity(intent);
-                    Log.e("", "holder.usrimg");
-                }
-                }
-        });
-		    holder.delete.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+            privacy.setOnClickListener(new View.OnClickListener() {
+                  public void onClick(View v) {
+                        authManager = ModelManager.getInstance().getAuthorizationManager();
+                        relationManager = ModelManager.getInstance().getRelationManager();
+                        Log.e("1", "1" + item.getmStatuspublic());
 
-            	authManager = ModelManager.getInstance().getAuthorizationManager();
-    			relationManager = ModelManager.getInstance().getRelationManager();
-                Constants.itemPosition = position;
-                Utils.launchBarDialog((Activity)context);
-                relationManager.deleteRelationship(item.getRelationshipId(),authManager.getPhoneNo(),authManager.getUsrToken());
+                        if (item.getStatusAccepted().matches("true") && item.getmStatuspublic().matches("true")) {
+                              Log.e("1", "2");
+                              relationDialog(AlertMessage.PUBLICMSG + item.getPartnerName() + " private?");//request normal dialog to custom dialog
 
-            }
-        });
-		
-		return row;
-	}
 
-	static class RecordHolder {
-		TextView usr_name,pending;
-		ImageView usrimg;
-		Button delete;
-		Button privacy;
-		View devider;
-		View whiteview;
+                        } else if (item.getStatusAccepted().matches("true") && (item.getmStatuspublic().matches("false") || Utils.isEmptyString(item.getmStatuspublic()))) {
+                              Log.e("1", "3");
+                              relationDialogprivate(AlertMessage.PRIVATE + item.getPartnerName() + " public?");//replace Normal Dialog to custom dialog
 
-	}
 
-    // Akshit Code Starts to show pop-up to make relation ship private
-    public void relationDialog(String str){
+                        } else if (Utils.isEmptyString(item.getStatusAccepted()) && item.getRequestInitiator().matches("true")) {
+                              Log.e("1", "4");
+                        } else if (Utils.isEmptyString(item.getStatusAccepted())) {
+                              Log.e("1", "5");
+                              Utils.launchBarDialog((Activity) context);
+                              relationManager.updateStatus(item.getRelationshipId(), authManager.getPhoneNo(), authManager.getUsrToken(), "true");
+                              item.setStatusAccepted("true");
+                        }
+                  }
+            });
 
-        final Dialog dialog = new Dialog(((Activity)context));
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-     //   dialog.setContentView(R.layout.alert_relationship);
-        dialog.setCancelable(false);
-        TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
+            usrimg.setOnClickListener(new View.OnClickListener() {
+                  public void onClick(View v) {
+                        if (item.getStatusAccepted() == "true") {
+                              Intent intent = new Intent(context, JumpOtherProfileView.class);
+                              //    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                              intent.putExtra("FromOwnProfile", true);
+                              intent.putExtra("phNumber", item.getPhoneNo());
+                              ((Activity) context).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+                              context.startActivity(intent);
+                              Log.e("", "holder.usrimg");
+                        }
+                  }
+            });
+            delete.setOnClickListener(new View.OnClickListener() {
+                  public void onClick(View v) {
 
-        msgI.setText(str);
+                        authManager = ModelManager.getInstance().getAuthorizationManager();
+                        relationManager = ModelManager.getInstance().getRelationManager();
+                        Constants.itemPosition = position;
+                        Utils.launchBarDialog((Activity) context);
+                        relationManager.deleteRelationship(item.getRelationshipId(), authManager.getPhoneNo(), authManager.getUsrToken());
 
-        Button skip = (Button)dialog.findViewById(R.id.coolio);
-        skip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+                  }
+            });
 
-                item.setmStatuspublic("false");
-                relationManager.changeUserVisibility(item.getRelationshipId(), "false", authManager.getPhoneNo(), authManager.getUsrToken());
-                rholder.privacy.setBackgroundResource(R.drawable.owner_profile_eye_cross_icon);
+            return row;
+      }
 
-                dialog.dismiss();
-            }
-        });
+      /*static class RecordHolder {
+            TextView usr_name, pending;
+            ImageView usrimg;
+            Button delete;
+            Button privacy;
+            View devider;
+            View whiteview;
 
-        Button dismiss = (Button) dialog.findViewById(R.id.coolio1);
-        dismiss.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                dialog.dismiss();
+      }*/
 
-            }
-        });
-        dialog.show();
-    }
-// Ends
+      // Akshit Code Starts to show pop-up to make relation ship private
+      public void relationDialog(String str) {
+
+            final Dialog dialog = new Dialog(((Activity) context));
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+            //   dialog.setContentView(R.layout.alert_relationship);
+            dialog.setCancelable(false);
+            TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
+
+            msgI.setText(str);
+
+            Button skip = (Button) dialog.findViewById(R.id.coolio);
+            skip.setOnClickListener(new View.OnClickListener() {
+                  @Override
+                  public void onClick(View view) {
+
+                        item.setmStatuspublic("false");
+                        relationManager.changeUserVisibility(item.getRelationshipId(), "false", authManager.getPhoneNo(), authManager.getUsrToken());
+                        privacy.setBackgroundResource(R.drawable.owner_profile_eye_cross_icon);
+
+                        dialog.dismiss();
+                  }
+            });
+
+            Button dismiss = (Button) dialog.findViewById(R.id.coolio1);
+            dismiss.setOnClickListener(new View.OnClickListener() {
+                  @Override
+                  public void onClick(View arg0) {
+                        dialog.dismiss();
+
+                  }
+            });
+            dialog.show();
+      }
+
+      // Ends
 //akshit code to show pop-up to make relationship public
-    public void relationDialogprivate(String str){
+      public void relationDialogprivate(String str) {
 
-        final Dialog dialog = new Dialog(((Activity)context));
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-      //  dialog.setContentView(R.layout.alert_relationship);
-        dialog.setCancelable(false);
-        TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
+            final Dialog dialog = new Dialog(((Activity) context));
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+            //  dialog.setContentView(R.layout.alert_relationship);
+            dialog.setCancelable(false);
+            TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
 
-        msgI.setText(str);
+            msgI.setText(str);
 
-        Button skip = (Button)dialog.findViewById(R.id.coolio);
-        skip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+            Button skip = (Button) dialog.findViewById(R.id.coolio);
+            skip.setOnClickListener(new View.OnClickListener() {
+                  @Override
+                  public void onClick(View view) {
 
-                item.setmStatuspublic("true");
-                relationManager.changeUserVisibility(item.getRelationshipId(),"true",authManager.getPhoneNo(),authManager.getUsrToken());
-                rholder.privacy.setBackgroundResource(R.drawable.owner_profile_eye_icon);
+                        item.setmStatuspublic("true");
+                        relationManager.changeUserVisibility(item.getRelationshipId(), "true", authManager.getPhoneNo(), authManager.getUsrToken());
+                        privacy.setBackgroundResource(R.drawable.owner_profile_eye_icon);
 
-                dialog.dismiss();
-            }
-        });
+                        dialog.dismiss();
+                  }
+            });
 
-        Button dismiss = (Button) dialog.findViewById(R.id.coolio1);
-        dismiss.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                dialog.dismiss();
+            Button dismiss = (Button) dialog.findViewById(R.id.coolio1);
+            dismiss.setOnClickListener(new View.OnClickListener() {
+                  @Override
+                  public void onClick(View arg0) {
+                        dialog.dismiss();
 
-            }
-        });
-        dialog.show();
-    }
+                  }
+            });
+            dialog.show();
+      }
 // Ends
 
 }
