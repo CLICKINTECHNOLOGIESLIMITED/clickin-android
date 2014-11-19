@@ -26,7 +26,7 @@
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
                 android:text="SIGN IN"
-                android:textColor="@color/profile_usr_name"
+                android:textColor="@color/screen_header"
                 android:textSize="60sp"
                 android:textStyle="bold"
                 geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />

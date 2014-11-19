@@ -24,7 +24,7 @@
             android:gravity="center"
             android:layout_marginTop="-5dp"
             android:text="ADD A"
-            android:textColor="@color/profile_usr_name"
+            android:textColor="@color/screen_header"
             android:textSize="43sp"
             android:textStyle="bold"
 
@@ -37,7 +37,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="PARTNER"
-            android:textColor="@color/profile_usr_name"
+            android:textColor="@color/screen_header"
             android:textSize="43sp"
             android:textStyle="bold"
 
