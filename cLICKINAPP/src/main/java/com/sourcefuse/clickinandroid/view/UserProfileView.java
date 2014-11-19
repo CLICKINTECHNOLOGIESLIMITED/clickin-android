@@ -74,7 +74,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         EditProfile = (Button) findViewById(R.id.btn_edit_profile);
 
         mUserRelationlistView = (ListView) findViewById(R.id.list_click_with_profile);
-        
+
 
 
 //        // akshit code for closing keypad if touched anywhere outside
