@@ -87,7 +87,6 @@
                         android:layout_marginLeft="10dp"
                         android:paddingBottom="2dp"
                         android:paddingTop="5dp"
-
                         android:textColor="@color/owner_profile_name_b"
                         android:textSize="20sp"
                         android:textStyle="bold"
@@ -111,8 +110,8 @@
                         android:layout_below="@+id/iv_usr_icon"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="8dp"
+                        android:paddingBottom="15dp"
                         android:singleLine="false"
-
                         android:textColor="@color/owner_profile_address_m"
                         android:textSize="16sp"/>
 

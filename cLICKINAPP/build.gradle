@@ -61,11 +61,9 @@ dependencies {
     compile 'de.greenrobot:eventbus:2.2.0'
     compile 'com.google.android.gms:play-services:3.1+'
     compile 'com.viewpagerindicator:library:2.4.1@aar'
-<<<<<<< HEAD
-=======
-    compile files('libs/java-json.jar')
-    compile files ('libs/joda-time-2.5.jar')
->>>>>>> 5afefc963f4899545e58311026d53751c3b06eb2
+
+
+
 
 //    repositories {
 //        mavenCentral()
