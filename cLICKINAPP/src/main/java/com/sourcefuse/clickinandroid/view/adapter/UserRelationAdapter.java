@@ -176,14 +176,14 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
                         } else if (viewtag.equalsIgnoreCase("noaction")) {
                               Log.e("no action--->", "no action--->");
                         }*/
-
+                        v.setBackgroundResource(R.drawable.owner_profile_eye_icon);
 
                         int position = (Integer) v.getTag();
 
                         if (itemList.get(position).getStatusAccepted().matches("true") && itemList.get(position).getmStatuspublic().matches("true")) {
                               Log.e("in public true ---->","in public true ---->");
                               Log.e("1", "2");
-                              v.setBackgroundResource(R.drawable.owner_profile_eye_icon);
+
                               relationDialog(AlertMessage.PUBLICMSG + itemList.get(position).getPartnerName() + " private?", position);//request normal dialog to custom dialog
 
                         } else if (itemList.get(position).getStatusAccepted().matches("true") && (itemList.get(position).getmStatuspublic().matches("false") || Utils.isEmptyString(itemList.get(position).getmStatuspublic()))) {
