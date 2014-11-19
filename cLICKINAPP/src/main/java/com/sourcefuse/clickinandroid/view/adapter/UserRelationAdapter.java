@@ -68,7 +68,7 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
             privacy = (Button) row.findViewById(R.id.btn_privacy);
             View whiteview = (View) row.findViewById(R.id.v_whiteview);
             View devider = (View) row.findViewById(R.id.v_devider);
-            ImageView btm_divider=(ImageView) row.findViewById(R.id.btm_divider);
+            ImageView btm_divider = (ImageView) row.findViewById(R.id.btm_divider);
 
 
             Button delete = (Button) row.findViewById(R.id.btn_delete_item);
@@ -88,24 +88,23 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
             if (item.getStatusAccepted().matches("true") && (item.getmStatuspublic().matches("false") || Utils.isEmptyString(item.getmStatuspublic()))) {
                   showpending = false;
                   privacy.setBackgroundResource(R.drawable.owner_profile_eye_cross_icon);
+                  privacy.setTag("public");
             } else if (item.getStatusAccepted().matches("true") && item.getmStatuspublic().matches("true")) {
                   showpending = false;
                   privacy.setBackgroundResource(R.drawable.owner_profile_eye_icon);
+                  privacy.setTag("private");
             } else if (Utils.isEmptyString(item.getStatusAccepted()) && item.getRequestInitiator().matches("true")) {
-
                   android.util.Log.e("getRequestInitiator", "getRequestInitiator");
                   //sent request ClickIcon
                   showpending = true;
                   privacy.setBackgroundResource(R.drawable.pending_status);
-
-
+                  privacy.setTag("noaction");
             } else if (Utils.isEmptyString(item.getStatusAccepted())) {
                   showpending = false;
                   //Coming request
                   privacy.setBackgroundResource(R.drawable.requested_statuts);
+                  privacy.setTag("empty");
             }
-
-
 
 
             if (position == relationManager.requestedList.size() - 1) {
@@ -124,12 +123,14 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
             }
 
 
-            if(showpending)
-            {
+            if (showpending) {
                   pending.setVisibility(View.VISIBLE);
+                  whiteview.setBackgroundColor(context.getResources().getColor(R.color.white));
                   pending.setBackgroundColor(getContext().getResources().getColor(R.color.white));
-            }
+            } else {
+                  pending.setVisibility(View.GONE);
 
+            }
 
 
             showpending = false;
@@ -153,7 +154,26 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
                         relationManager = ModelManager.getInstance().getRelationManager();
                         Log.e("1", "1" + item.getmStatuspublic());
 
-                        if (item.getStatusAccepted().matches("true") && item.getmStatuspublic().matches("true")) {
+                        String viewtag = (String) v.getTag();
+                        Log.e("view tag---->", "view tag---->" + viewtag);
+
+
+                        if (viewtag.equalsIgnoreCase("public")) {
+                              relationDialogprivate(AlertMessage.PRIVATE + item.getPartnerName() + " public?");//replace Normal Dialog to custom dialog
+                        } else if (viewtag.equalsIgnoreCase("private")) {
+                              relationDialog(AlertMessage.PUBLICMSG + item.getPartnerName() + " private?");//request normal dialog to custom dialog
+                        } else if (viewtag.equalsIgnoreCase("empty")) {
+                              Utils.launchBarDialog((Activity) context);
+                              relationManager.updateStatus(item.getRelationshipId(), authManager.getPhoneNo(), authManager.getUsrToken(), "true");
+                              item.setStatusAccepted("true");
+                        } else if (viewtag.equalsIgnoreCase("noaction")) {
+                              Log.e("no action--->", "no action--->");
+                        }
+
+
+
+
+                        /*if (item.getStatusAccepted().matches("true") && item.getmStatuspublic().matches("true")) {
                               Log.e("1", "2");
                               relationDialog(AlertMessage.PUBLICMSG + item.getPartnerName() + " private?");//request normal dialog to custom dialog
 
@@ -170,7 +190,7 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
                               Utils.launchBarDialog((Activity) context);
                               relationManager.updateStatus(item.getRelationshipId(), authManager.getPhoneNo(), authManager.getUsrToken(), "true");
                               item.setStatusAccepted("true");
-                        }
+                        }*/
                   }
             });
 
@@ -218,13 +238,22 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
             final Dialog dialog = new Dialog(((Activity) context));
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-            //   dialog.setContentView(R.layout.alert_relationship);
+            dialog.setContentView(R.layout.alert_relationship);
             dialog.setCancelable(false);
             TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
 
+            Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "fonts/AvenirNextLTPro-MediumCn_0.otf");
+
+
+            msgI.setTypeface(tf);
             msgI.setText(str);
 
+
             Button skip = (Button) dialog.findViewById(R.id.coolio);
+            skip.setTypeface(tf);
+            Button dismiss = (Button) dialog.findViewById(R.id.coolio1);
+            dismiss.setTypeface(tf);
+
             skip.setOnClickListener(new View.OnClickListener() {
                   @Override
                   public void onClick(View view) {
@@ -237,7 +266,7 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
                   }
             });
 
-            Button dismiss = (Button) dialog.findViewById(R.id.coolio1);
+
             dismiss.setOnClickListener(new View.OnClickListener() {
                   @Override
                   public void onClick(View arg0) {
@@ -255,13 +284,19 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
             final Dialog dialog = new Dialog(((Activity) context));
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-            //  dialog.setContentView(R.layout.alert_relationship);
+            dialog.setContentView(R.layout.alert_relationship);
             dialog.setCancelable(false);
             TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
+            Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "fonts/AvenirNextLTPro-MediumCn_0.otf");
 
             msgI.setText(str);
-
             Button skip = (Button) dialog.findViewById(R.id.coolio);
+            Button dismiss = (Button) dialog.findViewById(R.id.coolio1);
+
+            msgI.setTypeface(tf);
+            skip.setTypeface(tf);
+            dismiss.setTypeface(tf);
+
             skip.setOnClickListener(new View.OnClickListener() {
                   @Override
                   public void onClick(View view) {
@@ -274,7 +309,7 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
                   }
             });
 
-            Button dismiss = (Button) dialog.findViewById(R.id.coolio1);
+
             dismiss.setOnClickListener(new View.OnClickListener() {
                   @Override
                   public void onClick(View arg0) {
