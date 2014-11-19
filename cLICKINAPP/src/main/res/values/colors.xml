@@ -30,6 +30,7 @@
     <color name="fill_edt">#00b0c7</color>
     <color name="empt_edt">#f0f0f0</color>
     <color name="profile_usr_name">#01DFD7</color>
+    <color name="screen_header">#00B0C7</color>
     <color name="usr_name">#F5A9D0</color>
     <color name="clickin_with_list">#E0ECF8</color>
     <color name="white_with_transparent">#CCFFFFFF</color>

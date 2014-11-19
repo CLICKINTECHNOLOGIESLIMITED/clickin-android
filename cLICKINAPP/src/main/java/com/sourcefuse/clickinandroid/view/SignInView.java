@@ -22,15 +22,6 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.quickblox.core.QBCallbackImpl;
-import com.quickblox.core.QBSettings;
-import com.quickblox.core.result.Result;
-import com.quickblox.module.auth.QBAuth;
-import com.quickblox.module.auth.result.QBSessionResult;
-import com.quickblox.module.chat.QBChatService;
-
-
-import com.quickblox.module.users.model.QBUser;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
@@ -41,18 +32,6 @@ import com.sourcefuse.clickinandroid.utils.ClickInAlertDialog;
 import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
-
-
-import org.jivesoftware.smack.ConnectionListener;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URL;
-import java.net.URLConnection;
-
 
 import de.greenrobot.event.EventBus;
 
@@ -210,12 +189,13 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
 
                 InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(layout.getWindowToken(), 0);
-
-                if (activeDone && ephone.getText().toString().length() >0 && ephone.getText().toString() != "+null" && ePwd.getText().toString().length()>0) {
+//                Log.e(TAG,"ephone ewithout" +ephone.getText().toString());
+                if (activeDone && ephone.getText().toString().trim().length() >0 && ephone.getText().toString() != "+null" && ePwd.getText().toString().length()>0) {
                     getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
                     authManager = ModelManager.getInstance().getAuthorizationManager();
                     Utils.launchBarDialog(SignInView.this);
-                    authManager.signIn(ephone.getText().toString(), ePwd.getText().toString(), authManager.getDeviceRegistereId(), Constants.DEVICETYPE);
+                    authManager.signIn(ephone.getText().toString().trim(), ePwd.getText().toString().trim(), authManager.getDeviceRegistereId(), Constants.DEVICETYPE);
+//                    Log.e(TAG,"Phone no without space" +ephone.getText().toString().trim());
                 }
                 else if(ephone.getText().toString().length() ==0){
                     Utils.fromSignalDialog(this,AlertMessage.enterPhoneEmail);

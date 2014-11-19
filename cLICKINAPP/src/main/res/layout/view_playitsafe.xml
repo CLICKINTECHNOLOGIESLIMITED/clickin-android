@@ -22,7 +22,7 @@
             android:layout_weight="0.8"
             android:gravity="center"
             android:text="PLAY IT"
-            android:textColor="@color/profile_usr_name"
+            android:textColor="@color/screen_header"
             android:textSize="45sp"
             android:textStyle="bold"
 
@@ -37,7 +37,7 @@
             android:layout_weight="0.8"
             android:gravity="top"
             android:text="SAFE"
-            android:textColor="@color/profile_usr_name"
+            android:textColor="@color/screen_header"
             android:textSize="67sp"
             android:textStyle="bold"
             android:layout_marginTop="-28dp"
