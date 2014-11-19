@@ -40,11 +40,13 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
       private Typeface typeface;
       private boolean showpending = false;
       /*RecordHolder rholder;*/
-      GetrelationshipsBean item;
 
+
+      List<GetrelationshipsBean> itemList;
       public UserRelationAdapter(Context context, int layoutResourceId,
                                  List<GetrelationshipsBean> item) {
             super(context, layoutResourceId, item);
+            itemList = item;
             this.layoutResourceId = layoutResourceId;
             this.context = context;
 
@@ -55,7 +57,7 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
       @Override
       public View getView(final int position, View convertView, ViewGroup parent) {
             View row = convertView;
-            item = getItem(position);
+
             relationManager = ModelManager.getInstance().getRelationManager();
             /*RecordHolder holder = null;*/
             /*if (row == null) {*/
@@ -72,7 +74,10 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
 
 
             Button delete = (Button) row.findViewById(R.id.btn_delete_item);
+            delete.setTag(position);
             usrimg.setScaleType(ScaleType.FIT_XY);
+
+            usrimg.setTag(position);
 
             typeface = Typeface.createFromAsset(context.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
             usr_name.setTypeface(typeface, typeface.BOLD);
@@ -82,28 +87,30 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
                   holder = (RecordHolder) row.getTag();
             }*/
 
-            /*rholder = (RecordHolder) row.getTag();
-            rholder.usr_name.setText(item.getPartnerName());*/
 
-            if (item.getStatusAccepted().matches("true") && (item.getmStatuspublic().matches("false") || Utils.isEmptyString(item.getmStatuspublic()))) {
+            usr_name.setText(itemList.get(position).getPartnerName());
+
+            if (itemList.get(position).getStatusAccepted().matches("true") && (itemList.get(position).getmStatuspublic().matches("false") || Utils.isEmptyString(itemList.get(position).getmStatuspublic()))) {
                   showpending = false;
                   privacy.setBackgroundResource(R.drawable.owner_profile_eye_cross_icon);
-                  privacy.setTag("public");
-            } else if (item.getStatusAccepted().matches("true") && item.getmStatuspublic().matches("true")) {
+
+                  privacy.setTag(position);
+
+            } else if (itemList.get(position).getStatusAccepted().matches("true") && itemList.get(position).getmStatuspublic().matches("true")) {
                   showpending = false;
                   privacy.setBackgroundResource(R.drawable.owner_profile_eye_icon);
-                  privacy.setTag("private");
-            } else if (Utils.isEmptyString(item.getStatusAccepted()) && item.getRequestInitiator().matches("true")) {
-                  android.util.Log.e("getRequestInitiator", "getRequestInitiator");
+                  privacy.setTag(position);
+            } else if (Utils.isEmptyString(itemList.get(position).getStatusAccepted()) && itemList.get(position).getRequestInitiator().matches("true")) {
+                  /*android.util.Log.e("getRequestInitiator", "getRequestInitiator");*/
                   //sent request ClickIcon
                   showpending = true;
                   privacy.setBackgroundResource(R.drawable.pending_status);
-                  privacy.setTag("noaction");
-            } else if (Utils.isEmptyString(item.getStatusAccepted())) {
+                  privacy.setTag(position);
+            } else if (Utils.isEmptyString(itemList.get(position).getStatusAccepted())) {
                   showpending = false;
                   //Coming request
                   privacy.setBackgroundResource(R.drawable.requested_statuts);
-                  privacy.setTag("empty");
+                  privacy.setTag(position);
             }
 
 
@@ -136,9 +143,9 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
             showpending = false;
 
 
-            if (!item.getPartnerPic().equalsIgnoreCase("")) {
+            if (!itemList.get(position).getPartnerPic().equalsIgnoreCase("")) {
                   try {
-                        Picasso.with(context).load(item.getPartnerPic())
+                        Picasso.with(context).load(itemList.get(position).getPartnerPic())
                                 .skipMemoryCache()
                                 .error(R.drawable.male_user)
                                 .into(usrimg);
@@ -152,55 +159,61 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
                   public void onClick(View v) {
                         authManager = ModelManager.getInstance().getAuthorizationManager();
                         relationManager = ModelManager.getInstance().getRelationManager();
-                        Log.e("1", "1" + item.getmStatuspublic());
+                        Log.e("1", "1" + itemList.get(position).getmStatuspublic());
 
-                        String viewtag = (String) v.getTag();
-                        Log.e("view tag---->", "view tag---->" + viewtag);
+                        /*String viewtag = (String) v.getTag();*/
+                        /*Log.e("view tag---->", "view tag---->" + viewtag);*/
 
 
-                        if (viewtag.equalsIgnoreCase("public")) {
-                              relationDialogprivate(AlertMessage.PRIVATE + item.getPartnerName() + " public?");//replace Normal Dialog to custom dialog
+                        /*if (viewtag.equalsIgnoreCase("public")) {
+                              relationDialogprivate(AlertMessage.PRIVATE + itemList.get(position).getPartnerName() + " public?");//replace Normal Dialog to custom dialog
                         } else if (viewtag.equalsIgnoreCase("private")) {
-                              relationDialog(AlertMessage.PUBLICMSG + item.getPartnerName() + " private?");//request normal dialog to custom dialog
+                              relationDialog(AlertMessage.PUBLICMSG + itemList.get(position).getPartnerName() + " private?");//request normal dialog to custom dialog
                         } else if (viewtag.equalsIgnoreCase("empty")) {
                               Utils.launchBarDialog((Activity) context);
-                              relationManager.updateStatus(item.getRelationshipId(), authManager.getPhoneNo(), authManager.getUsrToken(), "true");
-                              item.setStatusAccepted("true");
+                              relationManager.updateStatus(itemList.get(position).getRelationshipId(), authManager.getPhoneNo(), authManager.getUsrToken(), "true");
+                              itemList.get(position).setStatusAccepted("true");
                         } else if (viewtag.equalsIgnoreCase("noaction")) {
                               Log.e("no action--->", "no action--->");
-                        }
-
-
-
-
-                        /*if (item.getStatusAccepted().matches("true") && item.getmStatuspublic().matches("true")) {
-                              Log.e("1", "2");
-                              relationDialog(AlertMessage.PUBLICMSG + item.getPartnerName() + " private?");//request normal dialog to custom dialog
-
-
-                        } else if (item.getStatusAccepted().matches("true") && (item.getmStatuspublic().matches("false") || Utils.isEmptyString(item.getmStatuspublic()))) {
-                              Log.e("1", "3");
-                              relationDialogprivate(AlertMessage.PRIVATE + item.getPartnerName() + " public?");//replace Normal Dialog to custom dialog
-
-
-                        } else if (Utils.isEmptyString(item.getStatusAccepted()) && item.getRequestInitiator().matches("true")) {
-                              Log.e("1", "4");
-                        } else if (Utils.isEmptyString(item.getStatusAccepted())) {
-                              Log.e("1", "5");
-                              Utils.launchBarDialog((Activity) context);
-                              relationManager.updateStatus(item.getRelationshipId(), authManager.getPhoneNo(), authManager.getUsrToken(), "true");
-                              item.setStatusAccepted("true");
                         }*/
+
+
+                        int position = (Integer) v.getTag();
+
+                        if (itemList.get(position).getStatusAccepted().matches("true") && itemList.get(position).getmStatuspublic().matches("true")) {
+                              Log.e("in public true ---->","in public true ---->");
+                              Log.e("1", "2");
+                              v.setBackgroundResource(R.drawable.owner_profile_eye_icon);
+                              relationDialog(AlertMessage.PUBLICMSG + itemList.get(position).getPartnerName() + " private?", position);//request normal dialog to custom dialog
+
+                        } else if (itemList.get(position).getStatusAccepted().matches("true") && (itemList.get(position).getmStatuspublic().matches("false") || Utils.isEmptyString(itemList.get(position).getmStatuspublic()))) {
+                              Log.e("1", "3");
+                              Log.e("in private ---->","in private  ---->");
+                              v.setBackgroundResource(R.drawable.owner_profile_eye_cross_icon);
+                              relationDialogprivate(AlertMessage.PRIVATE + itemList.get(position).getPartnerName() + " public?",position);//replace Normal Dialog to custom dialog
+                        } else if (Utils.isEmptyString(itemList.get(position).getStatusAccepted()) && itemList.get(position).getRequestInitiator().matches("true")) {
+                              Log.e("1", "4");
+                              Log.e("in no action ---->", "in no action   ---->");
+                        } else if (Utils.isEmptyString(itemList.get(position).getStatusAccepted())) {
+                              Log.e("1", "5");
+                              Log.e("in empty ---->","in empty ---->");
+                              Utils.launchBarDialog((Activity) context);
+                              relationManager.updateStatus(itemList.get(position).getRelationshipId(), authManager.getPhoneNo(), authManager.getUsrToken(), "true");
+                              itemList.get(position).setStatusAccepted("true");
+                        }
                   }
             });
 
             usrimg.setOnClickListener(new View.OnClickListener() {
                   public void onClick(View v) {
-                        if (item.getStatusAccepted() == "true") {
+
+                        int position = (Integer) v.getTag();
+
+                        if (itemList.get(position).getStatusAccepted() == "true") {
                               Intent intent = new Intent(context, JumpOtherProfileView.class);
                               //    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                               intent.putExtra("FromOwnProfile", true);
-                              intent.putExtra("phNumber", item.getPhoneNo());
+                              intent.putExtra("phNumber", itemList.get(position).getPhoneNo());
                               ((Activity) context).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
                               context.startActivity(intent);
                               Log.e("", "holder.usrimg");
@@ -210,11 +223,14 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
             delete.setOnClickListener(new View.OnClickListener() {
                   public void onClick(View v) {
 
+
+                        int position = (Integer) v.getTag();
+
                         authManager = ModelManager.getInstance().getAuthorizationManager();
                         relationManager = ModelManager.getInstance().getRelationManager();
                         Constants.itemPosition = position;
                         Utils.launchBarDialog((Activity) context);
-                        relationManager.deleteRelationship(item.getRelationshipId(), authManager.getPhoneNo(), authManager.getUsrToken());
+                        relationManager.deleteRelationship(itemList.get(position).getRelationshipId(), authManager.getPhoneNo(), authManager.getUsrToken());
 
                   }
             });
@@ -233,7 +249,7 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
       }*/
 
       // Akshit Code Starts to show pop-up to make relation ship private
-      public void relationDialog(String str) {
+      public void relationDialog(String str , final int position1) {
 
             final Dialog dialog = new Dialog(((Activity) context));
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -258,8 +274,8 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
                   @Override
                   public void onClick(View view) {
 
-                        item.setmStatuspublic("false");
-                        relationManager.changeUserVisibility(item.getRelationshipId(), "false", authManager.getPhoneNo(), authManager.getUsrToken());
+                        itemList.get(position1).setmStatuspublic("false");
+                        relationManager.changeUserVisibility(itemList.get(position1).getRelationshipId(), "false", authManager.getPhoneNo(), authManager.getUsrToken());
                         privacy.setBackgroundResource(R.drawable.owner_profile_eye_cross_icon);
 
                         dialog.dismiss();
@@ -279,7 +295,7 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
 
       // Ends
 //akshit code to show pop-up to make relationship public
-      public void relationDialogprivate(String str) {
+      public void relationDialogprivate(String str , final int position1) {
 
             final Dialog dialog = new Dialog(((Activity) context));
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -301,8 +317,8 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
                   @Override
                   public void onClick(View view) {
 
-                        item.setmStatuspublic("true");
-                        relationManager.changeUserVisibility(item.getRelationshipId(), "true", authManager.getPhoneNo(), authManager.getUsrToken());
+                        itemList.get(position1).setmStatuspublic("true");
+                        relationManager.changeUserVisibility(itemList.get(position1).getRelationshipId(), "true", authManager.getPhoneNo(), authManager.getUsrToken());
                         privacy.setBackgroundResource(R.drawable.owner_profile_eye_icon);
 
                         dialog.dismiss();
