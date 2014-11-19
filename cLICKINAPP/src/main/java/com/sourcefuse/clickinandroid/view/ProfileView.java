@@ -239,8 +239,10 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
             authManager = ModelManager.getInstance().getAuthorizationManager();
             switch (v.getId()) {
                   case R.id.btn_done:
+                      String name = fname.getText().toString()+ " " + lname.getText().toString();
                         Bitmap bitmap;
                         if (updateProfileValidation()) {
+                            authManager.setUserName(name);
 
 
                             //akshit code start to set default pics for male,female and if no gender
