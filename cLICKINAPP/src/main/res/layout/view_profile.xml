@@ -22,7 +22,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="GOT YOUR NUMBER!"
-            android:textColor="@color/profile_usr_name"
+            android:textColor="@color/screen_header"
             android:textSize="28sp"
             android:textStyle="bold"
 
@@ -35,7 +35,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="GIMME SOME"
-            android:textColor="@color/profile_usr_name"
+            android:textColor="@color/screen_header"
             android:textSize="41sp"
             android:textStyle="bold"
             android:layout_marginLeft="37dp"
@@ -50,7 +50,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="MORE"
-            android:textColor="@color/profile_usr_name"
+            android:textColor="@color/screen_header"
             android:textSize="41sp"
             android:textStyle="bold"
 
