@@ -264,7 +264,7 @@ public class SettingView extends Activity implements View.OnClickListener {
                         SharedPreferences.Editor editor = preferences.edit();
                         editor.clear();
                         editor.apply();
-                        QBChatService.getInstance().logout();
+
                         Log.e("", "holder.logoutYes");
                         Intent intent5 = new Intent(SettingView.this, SplashView.class);
                         intent5.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

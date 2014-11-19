@@ -28,9 +28,8 @@ import com.quickblox.core.result.Result;
 import com.quickblox.module.auth.QBAuth;
 import com.quickblox.module.auth.result.QBSessionResult;
 import com.quickblox.module.chat.QBChatService;
-import com.quickblox.module.chat.listeners.SessionCallback;
-import com.quickblox.module.chat.smack.SmackAndroid;
-import com.quickblox.module.chat.xmpp.QBPrivateChat;
+
+
 import com.quickblox.module.users.model.QBUser;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
@@ -278,7 +277,7 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
           //  new MyPreference(SignInView.this).setToken(authManager.getUsrToken());
             //new MyPreference(SignInView.this).setmyPhoneNo(authManager.getPhoneNo());
 
-            loginToQuickBlox();
+
             authManager.getProfileInfo("", authManager.getPhoneNo(), authManager.getUsrToken());
         } else if (getMsg.equalsIgnoreCase("SignIn False")) {
             Utils.dismissBarDialog();
@@ -394,83 +393,6 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
 
 
 
-    public void loginToQuickBlox() {
-        authManager = ModelManager.getInstance().getAuthorizationManager();
-        SmackAndroid.init(this);
-        com.sourcefuse.clickinandroid.utils.Log.e(TAG, "loginToQuickBlox --- getUserId=>" + authManager.getUserId() + ",--getUsrToken-=>" + authManager.getUsrToken());
-        QBSettings.getInstance().fastConfigInit(Constants.CLICKIN_APP_ID, Constants.CLICKIN_AUTH_KEY, Constants.CLICKIN_AUTH_SECRET);
-       // QBSettings.getInstance().setServerApiDomain("apiclickin.quickblox.com");
-        //QBSettings.getInstance().setContentBucketName("qb-clickin");
-       // QBSettings.getInstance().setChatServerDomain("chatclickin.quickblox.com");
-        final QBUser user = new QBUser(authManager.getUserId(), authManager.getUsrToken());
-
-        QBAuth.createSession(user, new QBCallbackImpl() {
-
-
-            @Override
-            public void onComplete(Result result) {
-                if (result.isSuccess()) {
-                    QBSessionResult res = (QBSessionResult) result;
-                    user.setId(res.getSession().getUserId());
-                    //
-                    QBChatService.getInstance().loginWithUser(user, new SessionCallback() {
-                        @Override
-                        public void onLoginSuccess() {
-
-                            callChatService();
-
-                            com.sourcefuse.clickinandroid.utils.Log.e(TAG, "Login successfully");
-                            QBChatService.getInstance().startAutoSendPresence(5);
-                            ConnectionListener connectionListener = new ConnectionListener() {
-                                @Override
-                                public void connectionClosed() {
-                                    //connection closed
-                                    Log.e(TAG, "connection closed");
-                                }
-
-                                @Override
-                                public void connectionClosedOnError(Exception e) {
-                                    // connection closed on error. It will be established soon
-                                    Log.e(TAG, "connection closed error");
-                                }
-
-                                @Override
-                                public void reconnectingIn(int seconds) {
-                                    Log.e(TAG, "connection closed error");
-                                }
-
-                                @Override
-                                public void reconnectionSuccessful() {
-                                    Log.e(TAG,  "reconnectionSuccessful");
-                                }
-
-                                @Override
-                                public void reconnectionFailed(Exception e) {
-                                    Log.e(TAG,  "reconnectionFailed");
-                                }
-                            };
-
-                            QBChatService.getInstance().addConnectionListener(connectionListener);
-                        }
-
-                        @Override
-                        public void onLoginError(String s) {
-                            com.sourcefuse.clickinandroid.utils.Log.e(TAG, "onLoginError");
-                            loginToQuickBlox();
-                        }
-
-
-                    });
-                    Log.e(TAG, "Session was successfully created");
-
-                } else {
-                    Log.e(TAG, "Errors " + result.getErrors().toString() + "result" + result);
-                }
-            }
-        });
-
-
-    }
 
 
 
