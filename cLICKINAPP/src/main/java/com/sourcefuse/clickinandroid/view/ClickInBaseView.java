@@ -243,6 +243,8 @@ public class
                               dtails = "Female";
                         } else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().matches("guy")) {
                               dtails = "Male";
+                        }else{
+                            dtails = " ";
                         }
                   } catch (Exception e) {
                   }
@@ -251,8 +253,10 @@ public class
             }
 
             try {
-                  Uri tempUri = authManager.getUserImageUri();
-                  if (tempUri != null) {
+//                  Uri tempUri = authManager.getUserImageUri();
+//                  if (tempUri != null)
+                      Bitmap imageBitmap1 = authManager.getUserbitmap();
+                        if (imageBitmap1 != null){
                         imageBitmap = authManager.getUserbitmap();
                         if (imageBitmap != null)
                               userPic.setImageBitmap(imageBitmap);
@@ -272,6 +276,8 @@ public class
 
                                                   .error(R.drawable.female_user)
                                                   .into(userPic);
+                                    }else{
+                                        userPic.setImageResource(R.drawable.male_user);
                                     }
 
                               } catch (Exception e) {
@@ -295,6 +301,9 @@ public class
 
                                             .error(R.drawable.female_user)
                                             .into(userPic);
+                              }
+                            else{
+                                  userPic.setImageResource(R.drawable.male_user);
                               }
 
                         } catch (Exception e) {
@@ -666,7 +675,7 @@ public class
                   if (authManager.getGender().matches("guy")) {
 
                         try {
-                              if (!authManager.getUserPic().equalsIgnoreCase("")) {
+                              if (authManager.getUserPic() != null) {
                                     Picasso.with(ClickInBaseView.this)
                                             .load(authManager.getUserPic())
                                             .skipMemoryCache()
@@ -680,7 +689,7 @@ public class
                         }
                   } else {
                         try {
-                              if (!authManager.getUserPic().equalsIgnoreCase("")) {
+                              if (authManager.getUserPic() != null) {
                                     Picasso.with(ClickInBaseView.this)
                                             .load(authManager.getUserPic())
                                             .skipMemoryCache()
