@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.sourcefuse.clickinandroid.model.AuthManager;
@@ -161,24 +162,12 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
                         relationManager = ModelManager.getInstance().getRelationManager();
                         Log.e("1", "1" + itemList.get(position).getmStatuspublic());
 
-                        /*String viewtag = (String) v.getTag();*/
-                        /*Log.e("view tag---->", "view tag---->" + viewtag);*/
 
-
-                        /*if (viewtag.equalsIgnoreCase("public")) {
-                              relationDialogprivate(AlertMessage.PRIVATE + itemList.get(position).getPartnerName() + " public?");//replace Normal Dialog to custom dialog
-                        } else if (viewtag.equalsIgnoreCase("private")) {
-                              relationDialog(AlertMessage.PUBLICMSG + itemList.get(position).getPartnerName() + " private?");//request normal dialog to custom dialog
-                        } else if (viewtag.equalsIgnoreCase("empty")) {
-                              Utils.launchBarDialog((Activity) context);
-                              relationManager.updateStatus(itemList.get(position).getRelationshipId(), authManager.getPhoneNo(), authManager.getUsrToken(), "true");
-                              itemList.get(position).setStatusAccepted("true");
-                        } else if (viewtag.equalsIgnoreCase("noaction")) {
-                              Log.e("no action--->", "no action--->");
-                        }*/
-                        v.setBackgroundResource(R.drawable.owner_profile_eye_icon);
-
+                        RelativeLayout layout = (RelativeLayout) v.getParent();
+                        Button button = (Button) layout.getChildAt(1);
+                        button.setBackgroundResource(R.drawable.owner_profile_eye_icon);
                         int position = (Integer) v.getTag();
+
 
                         if (itemList.get(position).getStatusAccepted().matches("true") && itemList.get(position).getmStatuspublic().matches("true")) {
                               Log.e("in public true ---->","in public true ---->");
@@ -189,7 +178,7 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
                         } else if (itemList.get(position).getStatusAccepted().matches("true") && (itemList.get(position).getmStatuspublic().matches("false") || Utils.isEmptyString(itemList.get(position).getmStatuspublic()))) {
                               Log.e("1", "3");
                               Log.e("in private ---->","in private  ---->");
-                              v.setBackgroundResource(R.drawable.owner_profile_eye_cross_icon);
+
                               relationDialogprivate(AlertMessage.PRIVATE + itemList.get(position).getPartnerName() + " public?",position);//replace Normal Dialog to custom dialog
                         } else if (Utils.isEmptyString(itemList.get(position).getStatusAccepted()) && itemList.get(position).getRequestInitiator().matches("true")) {
                               Log.e("1", "4");
@@ -261,6 +250,7 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
             Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "fonts/AvenirNextLTPro-MediumCn_0.otf");
 
 
+
             msgI.setTypeface(tf);
             msgI.setText(str);
 
@@ -279,6 +269,7 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
                         privacy.setBackgroundResource(R.drawable.owner_profile_eye_cross_icon);
 
                         dialog.dismiss();
+
                   }
             });
 
