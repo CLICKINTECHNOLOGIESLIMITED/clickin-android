@@ -53,7 +53,7 @@
     <color name="card_click_color">#fafafa</color>
     <color name="card_click_color_pressed">#333333</color>
     <color name="defult_hint_clr">#808080</color>
-    <color name="phone_no_clr">#364566</color>
+    <color name="phone_no_clr">#999999</color>
     <color name="chat_notification">#f29691</color>
     <color name="menu_footer">#64718f</color>
 
