@@ -13,7 +13,6 @@
         android:text="@string/txt_follower"
         android:textColor="@color/dark_gray"
         android:textSize="20sp"
-        android:visibility="gone"
         geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"/>
 
     <com.sourcefuse.clickinandroid.utils.ClickInTextView
@@ -26,7 +25,6 @@
         android:text="@string/txt_follower"
         android:textColor="@color/dark_gray"
         android:textSize="20sp"
-        android:visibility="gone"
         geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"/>
 
 
