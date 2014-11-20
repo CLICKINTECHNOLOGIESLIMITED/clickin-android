@@ -74,7 +74,7 @@
             <com.sourcefuse.clickinandroid.utils.ClickInEditBox
                 android:id="@+id/edt_search_ph"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:background="@drawable/searchboxtxtfield"
                 android:ems="10"
                 android:hint="@string/txt_search_phonebook"
@@ -83,14 +83,14 @@
 
                 android:layout_marginTop="11.65dp"
                 geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
-                android:textColor="@color/phone_no_clr"
-                android:textColorHint="@color/sign_hint"
+                android:textColor="@color/black"
+                android:textColorHint="@color/phone_no_clr"
                 android:textSize="14sp"/>
 
             <ImageView
                 android:id="@+id/iv_keypad"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:layout_marginLeft="2dp"
                 android:layout_marginTop="11.65dp"
                 android:background="@drawable/keyboard" />

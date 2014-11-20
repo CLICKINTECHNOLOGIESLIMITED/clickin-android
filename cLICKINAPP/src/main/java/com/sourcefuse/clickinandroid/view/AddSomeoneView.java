@@ -93,12 +93,12 @@ public class AddSomeoneView extends Activity implements
             });
 
 
-            boolean mFrom = getIntent().getExtras().getBoolean("FromOwnProfile");
-            if (mFrom) {
-                  do_latter.setVisibility(View.GONE);
-            } else {
-                  do_latter.setVisibility(View.VISIBLE);
-            }
+//            boolean mFrom = getIntent().getExtras().getBoolean("FromOwnProfile");
+//            if (mFrom) {
+//                  do_latter.setVisibility(View.GONE);
+//            } else {
+//                  do_latter.setVisibility(View.VISIBLE);
+//            }
 
 
             ((ImageView) findViewById(R.id.iv_keypad)).setOnClickListener(new View.OnClickListener() {
