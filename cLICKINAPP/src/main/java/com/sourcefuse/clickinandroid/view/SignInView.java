@@ -28,7 +28,6 @@ import com.sourcefuse.clickinandroid.model.RelationManager;
 import com.sourcefuse.clickinandroid.model.SettingManager;
 import com.sourcefuse.clickinandroid.services.MyQbChatService;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
-import com.sourcefuse.clickinandroid.utils.ClickInAlertDialog;
 import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
@@ -75,7 +74,11 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
         ephone.setOnClickListener(this);
         ePwd.setOnClickListener(this);
 
-
+        /*ephone.setTypeface(typefaceBold);
+        ePwd.setTypeface(typefaceBold);
+        forgotPwd.setTypeface(typeface);
+        signUp.setTypeface(typeface);
+        signUp.setTypeface(typeface);*/
 
 
         // akshit code for closing keypad if touched anywhere outside
@@ -95,7 +98,18 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
 
 //ends
 
-//
+//        ePwd.setOnKeyListener(new View.OnKeyListener() {
+//            @Override
+//            public boolean onKey(View v, int keyCode, KeyEvent event) {
+//                if (keyCode == KeyEvent.KEYCODE_ENTER ) {
+//                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+//                    imm.hideSoftInputFromWindow(ePwd.getWindowToken(), 0);
+//                }
+//                return false;
+//            }
+//        });
+
+
 //            //akshit code for country Code
         try {
             String countryCode = Utils.getCountryCodeFromSim(this);
@@ -111,12 +125,39 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
 
 
 
-        ephone.setText("+91707070");
+
         ephone.setSelection(ephone.getText().toString().length());
         //No need For this akshit
 
 
-
+//        ephone.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//
+//           InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+//            inputMethodManager.showSoftInput(ephone, 0);
+//
+//
+//                if(ephone.getText().toString().contains("null"))
+//                {
+//                    if (ephone.getSelectionStart() <= 6) {
+//                        return false;
+//                    } else {
+//                        return true;
+//                    }
+//                }
+//
+//                else {
+//                    if (ephone.getSelectionStart() <= 2) {
+//                        return false;
+//                    } else {
+//                        return true;
+//                    }
+//                }
+//            }
+//        });
+//
+//    }
 
 
     }
@@ -136,7 +177,13 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
         if (ephone.getText().toString().length() > 0 && ePwd.getText().toString().length() > 0) {
             activeDone = true;
             do_latter.setBackgroundResource(R.drawable.c_getclicin_active);
-
+//        } else if(ephone.getText().toString().length()==0){
+//            Utils.fromSignalDialog(this,AlertMessage.enterPhoneEmail);
+//
+////            activeDone = false;ep
+////            do_latter.setBackgroundResource(R.drawable.c_getclicin_deactive);
+//        }
+//       }
         }
 
     }
@@ -219,9 +266,8 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
 
           //  new MyPreference(SignInView.this).setToken(authManager.getUsrToken());
             //new MyPreference(SignInView.this).setmyPhoneNo(authManager.getPhoneNo());
-
-
             authManager.getProfileInfo("", authManager.getPhoneNo(), authManager.getUsrToken());
+
         } else if (getMsg.equalsIgnoreCase("SignIn False")) {
             Utils.dismissBarDialog();
            Utils.fromSignalDialog(this,AlertMessage.wrong_signIn_details);
@@ -253,7 +299,6 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
 
         } else if (getMsg.equalsIgnoreCase("ProfileInfo False")) {
             Utils.dismissBarDialog();
-
             Utils.fromSignalDialog(this,authManager.getMessage());
           // Utils.showAlert(SignInView.this, authManager.getMessage());
         } else if (getMsg.equalsIgnoreCase("ProfileInfo Network Error")) {
@@ -261,13 +306,16 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
             Utils.fromSignalDialog(this,AlertMessage.connectionError);
             //Utils.showAlert(act, AlertMessage.connectionError);
         } else if (getMsg.equalsIgnoreCase("ForgotPassword True")) {
+
             mDialog.dismiss();
-            ClickInAlertDialog.clickInAlert(SignInView.this,authManager.getMessage(),"",false);
+            Utils.fromSignalDialog(this,AlertMessage.password_recovey);
+           // ClickInAlertDialog.clickInAlert(SignInView.this, authManager.getMessage(), "", false);
             authManager.getMessage();
             Utils.dismissBarDialog();
         } else if (getMsg.equalsIgnoreCase("ForgotPassword False")) {
             Utils.dismissBarDialog();
             mDialog.dismiss();
+            Utils.fromSignalDialog(this,"Email not registered");
         } else if (getMsg.equalsIgnoreCase("ForgotPassword Network Error")) {
             mDialog.dismiss();
             Utils.dismissBarDialog();
@@ -290,7 +338,7 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
 
 
 
-    public void forgetPasswordAlert(Activity contex) {
+    public void forgetPasswordAlert(final Activity contex) {
 
         // custom dialog
         mDialog = new Dialog(contex);
@@ -310,7 +358,13 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
         dialogButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+              //akshit code to hide keyboard
+                InputMethodManager imm = (InputMethodManager)getSystemService(contex.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(getemailid.getWindowToken(), 0);
                 mDialog.dismiss();
+
             }
         });
 
@@ -321,11 +375,17 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
             @Override
             public void onClick(View v) {
                 if (Utils.isEmailValid(getemailid.getText().toString())) {
-
+                    Utils.launchBarDialog(SignInView.this);
                     SettingManager settingManager = ModelManager.getInstance().getSettingManager();
                     settingManager.forgotYourPassword(getemailid.getText().toString());
+
+                    InputMethodManager imm = (InputMethodManager)getSystemService(contex.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(getemailid.getWindowToken(), 0);
+                    mDialog.dismiss();
+
                 }else{
-                    ClickInAlertDialog.clickInAlert(SignInView.this,"Please enter a valid email address","Error",true);
+                    Utils.fromSignalDialog(SignInView.this,AlertMessage.vEmailid);
+                //    ClickInAlertDialog.clickInAlert(SignInView.this,"Please enter a valid email address","Error",true);
                 }
             }
         });

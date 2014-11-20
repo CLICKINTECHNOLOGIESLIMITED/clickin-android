@@ -58,6 +58,7 @@ public class NotificationAdapter extends ArrayAdapter<NotificationBean> {
             rholder.notificationType.setBackgroundResource(R.drawable.c_noti_relationstatus);
         }else  if(item.getNotificationType().matches(context.getResources().getString(R.string.txt_relationdelete))){
            // rholder.notificationType.setBackgroundResource(R.drawable.c_noti_request);
+            rholder.notificationType.setBackgroundResource(R.drawable.c_noti_request);
         }else{
             rholder.notificationType.setBackgroundResource(R.drawable.c_noti_request);
         }

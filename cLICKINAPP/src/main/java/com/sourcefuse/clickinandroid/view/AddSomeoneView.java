@@ -2,7 +2,6 @@ package com.sourcefuse.clickinandroid.view;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -20,7 +19,6 @@ import android.widget.RelativeLayout;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
-import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.FetchContactFromPhone;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.adapter.ContactAdapter;
@@ -31,7 +29,7 @@ import de.greenrobot.event.EventBus;
 public class AddSomeoneView extends Activity implements
         TextWatcher {
 
-      private Button do_latter;
+      private Button do_latter,do_invited;
       private EditText search_phbook;
       private ListView listView;
       private ContactAdapter adapter;
@@ -48,6 +46,7 @@ public class AddSomeoneView extends Activity implements
 
 
             do_latter = (Button) findViewById(R.id.btn_do_itlatter);
+            do_invited = (Button) findViewById(R.id.btn_been_invited);
             search_phbook = (EditText) findViewById(R.id.edt_search_ph);
             listView = (ListView) findViewById(R.id.list_contact);
             showContactlist = (RelativeLayout) findViewById(R.id.rr_con_list);
@@ -110,6 +109,8 @@ public class AddSomeoneView extends Activity implements
                         startActivity(intent);
                   }
             });
+
+
             do_latter.setOnClickListener(new View.OnClickListener() {
                   @Override
                   public void onClick(View v) {
@@ -120,6 +121,21 @@ public class AddSomeoneView extends Activity implements
                         startActivity(clickersView);
                   }
             });
+
+          //akshit code for invited button
+          do_invited.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View view) {
+
+                  Intent clickersView = new Intent(AddSomeoneView.this, CurrentClickersView.class);
+                  clickersView.putExtra("FromSignup", true);
+                  clickersView.putExtra("fromsignup", getIntent().getBooleanExtra("fromsignup", false));
+                  clickersView.putExtra("FromMenu", false);
+                  startActivity(clickersView);
+
+              }
+          });
+          //akshit code end
 
             adapter = new ContactAdapter(this, R.layout.row_contacts, Utils.itData);
             listView.setAdapter(adapter);

@@ -20,6 +20,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
@@ -70,6 +71,7 @@ public class
       private SearchAdapter searchListadapter;
       private RelativeLayout imageMenuRefresh;
       private int relationListIndex;
+      public ImageButton clear ;
       //Right Menu.....
       public ListView notificationList;
       private ImageView backArrowRightSide;
@@ -78,6 +80,7 @@ public class
       private Bitmap imageBitmap = null;
       SlidingMenu slidemenu;
       private ChatManager chatManager;
+
 
       @Override
       protected void onCreate(Bundle savedInstanceState) {
@@ -378,7 +381,13 @@ public class
 
                         /* code for animation prafull*/
 
+
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+
+//akshit code for closing menu
+//                      if(slidemenu.isSecondaryMenuShowing() || slidemenu.isMenuShowing()){
+//                          slidemenu.toggle();
+//                      }
                   }
             });
 

@@ -10,7 +10,8 @@ public class AlertMessage {
     public static final String enterPassword = "Please enter password";
     public static final String eMailAlreadyExist = "This email already exists. Please check and try again";
     public static final String unFollowselecteduser = "Do you want unfollow the selected user." ;
-
+    public static final String InternetConnection = "Please Check Your Internet Connection" ;
+    public static final String password_recovey = "Password recover link has been sent to your email.";
 
 
 

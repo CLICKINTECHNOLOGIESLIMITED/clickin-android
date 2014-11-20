@@ -92,6 +92,9 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
             });
 
 
+            ((TextView)findViewById(R.id.tv_profile_txt)).setText("PROFILE");
+
+
             userimage = (ImageView) findViewById(R.id.iv_usr_icon);
             userimage.setScaleType(ScaleType.FIT_XY);
 
@@ -421,6 +424,9 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
                   case R.id.btn_edit_profile:
                         Intent editProfile = new Intent(UserProfileView.this, EditMyProfileView.class);
                         startActivity(editProfile);
+                      //akshit code for animation
+                    //  overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_right);
+                      overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         break;
             }
       }

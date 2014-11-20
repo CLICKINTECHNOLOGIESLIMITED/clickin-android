@@ -21,8 +21,10 @@
             android:layout_weight="1"
             android:gravity="bottom"
             android:text="ENTER YOUR"
+                android:layout_centerHorizontal="true"
             android:textColor="@color/screen_header"
             android:textSize="30sp"
+            android:layout_marginRight="1dp"
             android:textStyle="bold"
             geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
             android:paddingTop="10dp"
@@ -36,12 +38,13 @@
                 android:layout_weight="1"
                 android:gravity="top"
                 android:text="DIGITS!"
+                android:layout_centerHorizontal="true"
                 android:textColor="@color/screen_header"
                 android:textSize="51sp"
                 android:textStyle="bold"
                 geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
                 android:layout_marginTop="-16dp"
-                android:layout_marginLeft="75dp"
+                android:layout_marginLeft="76dp"
                />
 
            </LinearLayout>

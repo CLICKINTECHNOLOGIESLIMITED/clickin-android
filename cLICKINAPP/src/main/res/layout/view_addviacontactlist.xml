@@ -116,12 +116,12 @@
         android:id="@+id/edt_cntry_cd"
         android:layout_width="fill_parent"
         android:layout_height="45dp"
-        android:background="@color/dark_gray"
+        android:background="@color/background_grey"
         android:ems="10"
         android:singleLine="true"
 
         android:padding="10dp"
-        android:textColor="@color/black"
+        android:textColor="@color/dark_gray"
         android:textSize="16sp"
         android:textStyle="bold"></EditText>
 
@@ -144,11 +144,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:layout_marginLeft="4dp"
-                android:background="@color/dark_gray"
+                android:background="@color/background_grey"
                 android:ems="12"
                 android:inputType="phone"
                 android:padding="10dp"
-                android:textColor="@color/black"
+                android:textColor="@color/dark_gray"
                 android:textSize="16sp"
                 android:textStyle="bold">
 
@@ -174,15 +174,34 @@
         </RelativeLayout>
     </RelativeLayout>
 
-    <Button
-        android:id="@+id/btn_go_back"
+    <RelativeLayout
+        android:id="@+id/rl_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/c_back_footer"
-        android:text="BACK"
-        android:textColor="@color/white"
-        android:textStyle="bold" />
+        android:layout_marginTop="400dp"
+        android:background="@drawable/c_back_footer">
 
+        <TextView
+            android:id="@+id/btn_go_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+
+            android:layout_marginTop="30dp"
+            android:background="@drawable/c_back"
+            android:gravity="bottom" />
+        <!--<Button-->
+        <!--android:id="@+id/btn_go_back_num"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"       -->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:background="@drawable/c_back"-->
+        <!--android:layout_marginTop="5dp"-->
+        <!--android:gravity="center"-->
+        <!---->
+        <!--android:textColor="@color/white"-->
+        <!--android:textStyle="bold" />-->
+    </RelativeLayout>
 </RelativeLayout>

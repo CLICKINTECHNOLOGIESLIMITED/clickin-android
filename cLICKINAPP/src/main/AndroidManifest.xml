@@ -64,11 +64,13 @@
             android:name="com.sourcefuse.clickinandroid.view.SplashView"
             android:launchMode="standard"
             android:screenOrientation="portrait">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
 
 
@@ -120,7 +122,11 @@
         <activity
             android:name="com.sourcefuse.clickinandroid.view.AddSomeoneView"
 
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait">
+
+
+
+            </activity>
         <activity
             android:name="com.sourcefuse.clickinandroid.view.CurrentClickersView"
 

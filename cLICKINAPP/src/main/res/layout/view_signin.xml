@@ -23,6 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:layout_centerHorizontal="true"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
                 android:text="SIGN IN"
@@ -51,13 +52,17 @@
                 android:background="@drawable/input_field"
                 android:hint="@string/hint_email_no"
                 android:inputType="text"
+                android:layout_marginLeft="9dp"
                 android:paddingLeft="10dp"
+                android:ems="12"
+                android:maxLength="15"
                 android:text="@string/plus"
                 android:textColor="@color/signup_contry_code"
                 android:textColorHint="@color/singn_forg"
                 android:textSize="16sp"
                 geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
-                android:textStyle="bold">
+                android:textStyle="bold"
+                android:imeOptions="actionNext">
                 </com.sourcefuse.clickinandroid.utils.ClickInEditBox>
 
 
@@ -67,11 +72,14 @@
                 android:layout_height="50dp"
                 android:layout_below="@+id/edt_email_phoneno"
                 android:layout_marginTop="5dp"
+                android:layout_marginLeft="9dp"
                 android:background="@drawable/input_field"
                 android:hint="@string/hint_pwd"
                 android:inputType="textPassword"
                 android:paddingLeft="10dp"
-                android:text="12345678"
+                android:ems="12"
+                android:text=""
+                android:imeOptions="actionDone"
                 android:textColor="@color/signup_contry_code"
                 android:textColorHint="@color/singn_forg"
                 android:textSize="16sp"
