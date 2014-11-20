@@ -38,7 +38,6 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
       private AuthManager authManager;
       private ProfileManager profileManager;
       private RelationManager relationManager;
-      private Typeface typeface;
       private boolean showpending = false;
       /*RecordHolder rholder;*/
 
@@ -53,7 +52,7 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
 
       }
 
-      Button privacy;
+      TextView privacy;
 
       @Override
       public View getView(final int position, View convertView, ViewGroup parent) {
@@ -68,28 +67,22 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
             TextView usr_name = (TextView) row.findViewById(R.id.tv_usr_name);
             TextView pending = (TextView) row.findViewById(R.id.tv_pending);
             ImageView usrimg = (ImageView) row.findViewById(R.id.iv_usr_pic);
-            privacy = (Button) row.findViewById(R.id.btn_privacy);
+            privacy = (TextView) row.findViewById(R.id.btn_privacy);
             View whiteview = (View) row.findViewById(R.id.v_whiteview);
             View devider = (View) row.findViewById(R.id.v_devider);
             ImageView btm_divider = (ImageView) row.findViewById(R.id.btm_divider);
 
 
-            Button delete = (Button) row.findViewById(R.id.btn_delete_item);
+            TextView delete = (TextView) row.findViewById(R.id.btn_delete_item);
             delete.setTag(position);
             usrimg.setScaleType(ScaleType.FIT_XY);
 
             usrimg.setTag(position);
 
-            typeface = Typeface.createFromAsset(context.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
-            usr_name.setTypeface(typeface, typeface.BOLD);
-
-                  /*row.setTag(holder);
-            } else {
-                  holder = (RecordHolder) row.getTag();
-            }*/
-
 
             usr_name.setText(itemList.get(position).getPartnerName());
+
+
 
             if (itemList.get(position).getStatusAccepted().matches("true") && (itemList.get(position).getmStatuspublic().matches("false") || Utils.isEmptyString(itemList.get(position).getmStatuspublic()))) {
                   showpending = false;
@@ -115,11 +108,13 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
             }
 
 
+            boolean last =false;
             if (position == relationManager.requestedList.size() - 1) {
                   devider.setVisibility(View.VISIBLE);
                   whiteview.setBackgroundResource(R.drawable.owner_list_roundedview);
                   whiteview.setVisibility(View.VISIBLE);
                   btm_divider.setVisibility(View.GONE);
+                  last = true;
             } else if (position == (relationManager.acceptedList.size() + relationManager.requestedList.size()) - 1) {
                   devider.setVisibility(View.VISIBLE);
                   whiteview.setBackgroundResource(R.drawable.owner_list_roundedview);
@@ -132,9 +127,17 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
 
 
             if (showpending) {
-                  pending.setVisibility(View.VISIBLE);
-                  whiteview.setBackgroundColor(context.getResources().getColor(R.color.white));
-                  pending.setBackgroundColor(getContext().getResources().getColor(R.color.white));
+                  if(last)
+                  {
+                        pending.setVisibility(View.VISIBLE);
+                        whiteview.setBackgroundColor(context.getResources().getColor(R.color.white));
+                  }else {
+                        pending.setVisibility(View.VISIBLE);
+                        whiteview.setBackgroundColor(context.getResources().getColor(R.color.white));
+                        pending.setBackgroundColor(getContext().getResources().getColor(R.color.white));
+                  }
+
+
             } else {
                   pending.setVisibility(View.GONE);
 
@@ -164,25 +167,22 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
 
 
                         RelativeLayout layout = (RelativeLayout) v.getParent();
-                        Button button = (Button) layout.getChildAt(1);
-                        button.setBackgroundResource(R.drawable.owner_profile_eye_icon);
+
+
                         int position = (Integer) v.getTag();
 
 
                         if (itemList.get(position).getStatusAccepted().matches("true") && itemList.get(position).getmStatuspublic().matches("true")) {
-                              Log.e("in public true ---->","in public true ---->");
-                              Log.e("1", "2");
 
-                              relationDialog(AlertMessage.PUBLICMSG + itemList.get(position).getPartnerName() + " private?", position);//request normal dialog to custom dialog
+                              Log.e("1", "2");
+                              relationDialog(AlertMessage.PUBLICMSG + itemList.get(position).getPartnerName() + " private?", position,layout);//request normal dialog to custom dialog
 
                         } else if (itemList.get(position).getStatusAccepted().matches("true") && (itemList.get(position).getmStatuspublic().matches("false") || Utils.isEmptyString(itemList.get(position).getmStatuspublic()))) {
                               Log.e("1", "3");
-                              Log.e("in private ---->","in private  ---->");
 
-                              relationDialogprivate(AlertMessage.PRIVATE + itemList.get(position).getPartnerName() + " public?",position);//replace Normal Dialog to custom dialog
+                              relationDialogprivate(AlertMessage.PRIVATE + itemList.get(position).getPartnerName() + " public?",position,layout);//replace Normal Dialog to custom dialog
                         } else if (Utils.isEmptyString(itemList.get(position).getStatusAccepted()) && itemList.get(position).getRequestInitiator().matches("true")) {
                               Log.e("1", "4");
-                              Log.e("in no action ---->", "in no action   ---->");
                         } else if (Utils.isEmptyString(itemList.get(position).getStatusAccepted())) {
                               Log.e("1", "5");
                               Log.e("in empty ---->","in empty ---->");
@@ -238,7 +238,7 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
       }*/
 
       // Akshit Code Starts to show pop-up to make relation ship private
-      public void relationDialog(String str , final int position1) {
+      public void relationDialog(String str , final int position1,View view) {
 
             final Dialog dialog = new Dialog(((Activity) context));
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -251,6 +251,9 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
 
 
 
+            RelativeLayout relativeLayout = (RelativeLayout) view;
+            TextView button = (TextView) relativeLayout.getChildAt(1);
+
             msgI.setTypeface(tf);
             msgI.setText(str);
 
@@ -259,15 +262,16 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
             skip.setTypeface(tf);
             Button dismiss = (Button) dialog.findViewById(R.id.coolio1);
             dismiss.setTypeface(tf);
+            skip.setTag(button);
 
             skip.setOnClickListener(new View.OnClickListener() {
                   @Override
                   public void onClick(View view) {
 
+                        TextView button1 = (TextView) view.getTag();
+                        button1.setBackgroundResource(R.drawable.owner_profile_eye_cross_icon);
                         itemList.get(position1).setmStatuspublic("false");
                         relationManager.changeUserVisibility(itemList.get(position1).getRelationshipId(), "false", authManager.getPhoneNo(), authManager.getUsrToken());
-                        privacy.setBackgroundResource(R.drawable.owner_profile_eye_cross_icon);
-
                         dialog.dismiss();
 
                   }
@@ -286,7 +290,7 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
 
       // Ends
 //akshit code to show pop-up to make relationship public
-      public void relationDialogprivate(String str , final int position1) {
+      public void relationDialogprivate(String str , final int position1 ,View view) {
 
             final Dialog dialog = new Dialog(((Activity) context));
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -304,14 +308,20 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
             skip.setTypeface(tf);
             dismiss.setTypeface(tf);
 
+
+
+            RelativeLayout relativeLayout = (RelativeLayout) view;
+            TextView button = (TextView) relativeLayout.getChildAt(1);
+            skip.setTag(button);
+
             skip.setOnClickListener(new View.OnClickListener() {
                   @Override
                   public void onClick(View view) {
 
+                        TextView button1 = (TextView) view.getTag();
+                        button1.setBackgroundResource(R.drawable.owner_profile_eye_icon);
                         itemList.get(position1).setmStatuspublic("true");
                         relationManager.changeUserVisibility(itemList.get(position1).getRelationshipId(), "true", authManager.getPhoneNo(), authManager.getUsrToken());
-                        privacy.setBackgroundResource(R.drawable.owner_profile_eye_icon);
-
                         dialog.dismiss();
                   }
             });

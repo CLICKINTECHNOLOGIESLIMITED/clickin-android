@@ -403,10 +403,7 @@ public class
                   @Override
                   public void onClick(View arg0) {
 
-//                newsFeedManager = ModelManager.getInstance().getNewsFeedManager();
-//               // newsFeedManager.fetchNewsFeed(lastNewsfeedId, phone, usertoken);
-//                newsFeedManager.fetchNewsFeed("",authManager.getPhoneNo(), authManager.getUsrToken());
-//                Utils.launchBarDialog(ClickInBaseView.this);
+
                         try {
                               InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                               imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
@@ -455,12 +452,7 @@ public class
                               overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
                               //slidemenu.showContent(true);
                         }
-                        // slidemenu.animate();
-                        //slidemenu.showMenu(true);
-                /*slidemenu.showMenu(true);
-                slidemenu.showMenu();
-                authManager = ModelManager.getInstance().getAuthorizationManager();
-                authManager.getProfileInfo("",authManager.getPhoneNo(),authManager.getUsrToken());*/
+
                   }
             });
 
@@ -510,7 +502,7 @@ public class
 
                   @SuppressWarnings("static-access")
                   @Override
-                  public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+                  public void onItemClick(AdapterView<?> arg0, View view, int position, long id) {
                         if (relationManager.fetchUsersByNameData.size() > 0) {
                               try {
                                     try {
@@ -520,10 +512,7 @@ public class
                                           e.printStackTrace();
                                     }
                                     Log.e("searchList", "searchList Click-->" + position);
-                       /* authManager = ModelManager.getInstance().getAuthorizationManager();
-                        String partnerPhone = relationManager.fetchUsersByNameData.get(position).getPhoneNo();
-                        Log.e("searchList", "searchList Click-->" + partnerPhone);
-                        authManager.sendNewRequest(authManager.getPhoneNo(), partnerPhone, authManager.getUsrToken());*/
+
                                     String partnerPhone = relationManager.fetchUsersByNameData.get(position).getPhoneNo();
                                     Intent intent = new Intent(ClickInBaseView.this, JumpOtherProfileView.class);
                                     //     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -596,21 +585,7 @@ public class
 
 
 
-       /* if (new MyPreference(getApplicationContext()).isLogin()) {
 
-            Log.e("ClickInBaseView1", "MyPreference");
-            if (ModelManager.getInstance() == null) {
-                Log.e("ClickInBaseView1", "getInstance");
-                authManager = ModelManager.getInstance().getAuthorizationManager();
-                authManager.setUsrToken(new MyPreference(ClickInBaseView.this).getToken());
-                authManager.setPhoneNo(new MyPreference(ClickInBaseView.this).getmyPhoneNo());
-                Intent intent = new Intent(ClickInBaseView.this, UserProfileView.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                //this.finish();
-            }
-
-        }*/
 
 
       }

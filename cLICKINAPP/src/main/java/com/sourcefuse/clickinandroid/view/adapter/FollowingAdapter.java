@@ -29,164 +29,147 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 public class FollowingAdapter extends ArrayAdapter<FollowerFollowingBean> {
-    private static final String TAG = FollowingAdapter.class.getSimpleName();
-	Context context;
-	int layoutResourceId;
-    private AuthManager authManager;
-    private RelationManager relationManager;
-    RecordHolder rholder ;
-    FollowerFollowingBean item;
+      private static final String TAG = FollowingAdapter.class.getSimpleName();
+      Context context;
+      int layoutResourceId;
+      private AuthManager authManager;
+      private RelationManager relationManager;
+      RecordHolder rholder;
+      List<FollowerFollowingBean> item;
       private Typeface typeface;
-	public FollowingAdapter(Context context, int layoutResourceId,
-			List<FollowerFollowingBean> item) {
-		super(context, layoutResourceId, item);
-		this.layoutResourceId = layoutResourceId;
-		this.context = context;
 
-	}
+      public FollowingAdapter(Context context, int layoutResourceId,
+                              List<FollowerFollowingBean> item1) {
+            super(context, layoutResourceId, item1);
+            this.layoutResourceId = layoutResourceId;
+            this.context = context;
+            this.item = item1;
+      }
 
-	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
-		item = getItem(position);
-		View row = convertView;
-		RecordHolder holder = null;
-		if (row == null) {
-			LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-			row = inflater.inflate(layoutResourceId, parent, false);
-			holder = new RecordHolder();
+      @Override
+      public View getView(int position, View convertView, ViewGroup parent) {
+
+            View row = convertView;
+            RecordHolder holder = null;
+            if (row == null) {
+                  LayoutInflater inflater = ((Activity) context).getLayoutInflater();
+                  row = inflater.inflate(layoutResourceId, parent, false);
+                  holder = new RecordHolder();
 
                   typeface = Typeface.createFromAsset(context.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_BOLD);
 
-			holder.usr_name = (TextView) row .findViewById(R.id.tv_clickers_name);
-			holder.hfollowersRequest = (TextView) row .findViewById(R.id.tv_heading_rfollowers);
-			holder.hfollowers = (TextView) row .findViewById(R.id.tv_heading_followers);
-			holder.usrimg = (ImageView) row.findViewById(R.id.iv_usr);
-			holder.usrimg.setScaleType(ScaleType.FIT_XY);
-			holder.reqbtn = (Button) row.findViewById(R.id.btn_actions);
+                  holder.usr_name = (TextView) row.findViewById(R.id.tv_clickers_name);
+                  holder.hfollowersRequest = (TextView) row.findViewById(R.id.tv_heading_rfollowers);
+                  holder.hfollowers = (TextView) row.findViewById(R.id.tv_heading_followers);
+                  holder.usrimg = (ImageView) row.findViewById(R.id.iv_usr);
+                  holder.usrimg.setScaleType(ScaleType.FIT_XY);
+                  holder.reqbtn = (Button) row.findViewById(R.id.btn_actions);
                   /*holder.hfollowersRequest.setTypeface(typeface);
                   holder.hfollowers.setTypeface(typeface);*/
 
-			row.setTag(holder);
-		} else {
-			holder = (RecordHolder) row.getTag();
-		}
-
-        rholder = (RecordHolder) row.getTag();
-
-        if(FollowingListView.fromOwnProfile==true){
-            holder.reqbtn.setVisibility(View.VISIBLE);
-        }else{
-            holder.reqbtn.setVisibility(View.GONE);
-        }
-
-		if(!Utils.isEmptyString(item.getAccepted()) && item.getAccepted().matches("true")){
-			rholder.reqbtn.setBackgroundResource(R.drawable.following);
-		}else{
-			rholder.reqbtn.setBackgroundResource(R.drawable.requested_grey);
-		}
-		rholder.usr_name.setText(item.getFolloweeName());
-        if(!item.getFolloweePic().equalsIgnoreCase("")) {
-            try {
-                Picasso.with(context).load(item.getFolloweePic())
-                        .skipMemoryCache()
-                        .error(R.drawable.male_user)
-                        .into(rholder.usrimg);
+                  row.setTag(holder);
+            } else {
+                  holder = (RecordHolder) row.getTag();
             }
-            catch (Exception e)
-            {
-                holder.usrimg.setImageResource(R.drawable.male_user);
+
+            rholder = (RecordHolder) row.getTag();
+
+            if (FollowingListView.fromOwnProfile == true) {
+                  holder.reqbtn.setVisibility(View.VISIBLE);
+            } else {
+                  holder.reqbtn.setVisibility(View.GONE);
             }
-        }
-        else
-        {
-            holder.usrimg.setImageResource(R.drawable.male_user);
-        }
 
-
-        rholder.reqbtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                authManager = ModelManager.getInstance().getAuthorizationManager();
-                relationManager = ModelManager.getInstance().getRelationManager();
-
-                if(item.getAccepted().matches("true") && item.getIsFollowing().matches("false")){
-                    unfallowingDialog();
-//                    new AlertDialog.Builder(context).setMessage(AlertMessage.UNFOLLOWUSER).setPositiveButton("Ok",
-//                            new DialogInterface.OnClickListener() {
-//                                @Override
-//                                public void onClick(DialogInterface dialog, int which) {
-//
-//                                    rholder.reqbtn.setBackgroundResource(R.drawable.follow);
-//                                    relationManager.unFollowUser(item.getrFollowerId(),"true", authManager.getPhoneNo(), authManager.getUsrToken());
-//                                    item.setIsFollowing("true");
-//                                    //FollowerList.adapter.notifyDataSetChanged();
-//                                    Log.e(TAG, "Click - holder.Unfollow=");
-//                                }
-//
-//                            }
-//                    ).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-//                        @Override
-//                        public void onClick(DialogInterface dialog, int which) {
-//                            dialog.dismiss();
-//                        }
-//
-//                    }).show();
-                }else if(item.getIsFollowing().matches("true")){
-                    rholder.reqbtn.setBackgroundResource(R.drawable.requested_grey);
-                    relationManager.followUser(item.getPhoneNo(), authManager.getPhoneNo(), authManager.getUsrToken());
-                    item.setIsFollowing("false");
-                    //FollowerList.adapter.notifyDataSetChanged();
-                    Log.e(TAG, "Click - holder.follow=");
-                }
-
+            if (!Utils.isEmptyString(item.get(position).getAccepted()) && item.get(position).getAccepted().matches("true")) {
+                  rholder.reqbtn.setBackgroundResource(R.drawable.following);
+            } else {
+                  rholder.reqbtn.setBackgroundResource(R.drawable.requested_grey);
             }
-        });
-
-
-		return row;
-	}
-
-	static class RecordHolder {
-		TextView usr_name,hfollowersRequest,hfollowers;
-		ImageView usrimg;
-        Button reqbtn;
-
-	}
-
-    // Akshit Code Starts to show pop-up for unfollowing friend
-    public void unfallowingDialog(){
-
-        final Dialog dialog = new Dialog(((Activity)context));
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-       // dialog.setContentView(R.layout.alert_follower_adapter);
-        dialog.setCancelable(false);
-        TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
-
-        msgI.setText(AlertMessage.unFollowselecteduser);
-
-        Button skip = (Button)dialog.findViewById(R.id.coolio);
-        skip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                rholder.reqbtn.setBackgroundResource(R.drawable.follow);
-                relationManager.unFollowUser(item.getrFollowerId(),"true", authManager.getPhoneNo(), authManager.getUsrToken());
-                item.setIsFollowing("true");
-                //FollowerList.adapter.notifyDataSetChanged();
-                Log.e(TAG, "Click - holder.Unfollow=");
-                dialog.dismiss();
+            rholder.usr_name.setText(item.get(position).getFolloweeName());
+            if (!item.get(position).getFolloweePic().equalsIgnoreCase("")) {
+                  try {
+                        Picasso.with(context).load(item.get(position).getFolloweePic())
+                                .skipMemoryCache()
+                                .error(R.drawable.male_user)
+                                .into(rholder.usrimg);
+                  } catch (Exception e) {
+                        holder.usrimg.setImageResource(R.drawable.male_user);
+                  }
+            } else {
+                  holder.usrimg.setImageResource(R.drawable.male_user);
             }
-        });
 
-        Button dismiss = (Button) dialog.findViewById(R.id.coolio1);
-        dismiss.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                dialog.dismiss();
+            rholder.reqbtn.setTag(position);
+            rholder.reqbtn.setOnClickListener(new View.OnClickListener() {
+                  public void onClick(View v) {
 
-            }
-        });
-        dialog.show();
-    }
+                       int position = (Integer) v.getTag();
+
+                        authManager = ModelManager.getInstance().getAuthorizationManager();
+                        relationManager = ModelManager.getInstance().getRelationManager();
+
+                        if (item.get(position).getAccepted().matches("true") && item.get(position).getIsFollowing().matches("false")) {
+                              unfallowingDialog(position);
+
+                        } else if (item.get(position).getIsFollowing().matches("true")) {
+                              rholder.reqbtn.setBackgroundResource(R.drawable.requested_grey);
+                              relationManager.followUser(item.get(position).getPhoneNo(), authManager.getPhoneNo(), authManager.getUsrToken());
+                              item.get(position).setIsFollowing("false");
+                              //FollowerList.adapter.notifyDataSetChanged();
+                              Log.e(TAG, "Click - holder.follow=");
+                        }
+
+                  }
+            });
+
+
+            return row;
+      }
+
+      static class RecordHolder {
+            TextView usr_name, hfollowersRequest, hfollowers;
+            ImageView usrimg;
+            Button reqbtn;
+
+      }
+
+      // Akshit Code Starts to show pop-up for unfollowing friend
+      public void unfallowingDialog(int position) {
+
+            final Dialog dialog = new Dialog(((Activity) context));
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+            // dialog.setContentView(R.layout.alert_follower_adapter);
+            dialog.setCancelable(false);
+            TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
+
+            msgI.setText(AlertMessage.unFollowselecteduser);
+
+            Button skip = (Button) dialog.findViewById(R.id.coolio);
+            skip.setTag(position);
+            skip.setOnClickListener(new View.OnClickListener() {
+                  @Override
+                  public void onClick(View view) {
+                        int position = (Integer) view.getTag();
+                        rholder.reqbtn.setBackgroundResource(R.drawable.follow);
+                        relationManager.unFollowUser(item.get(position).getrFollowerId(), "true", authManager.getPhoneNo(), authManager.getUsrToken());
+                        item.get(position).setIsFollowing("true");
+                        //FollowerList.adapter.notifyDataSetChanged();
+                        Log.e(TAG, "Click - holder.Unfollow=");
+                        dialog.dismiss();
+                  }
+            });
+
+            Button dismiss = (Button) dialog.findViewById(R.id.coolio1);
+            dismiss.setOnClickListener(new View.OnClickListener() {
+                  @Override
+                  public void onClick(View arg0) {
+                        dialog.dismiss();
+
+                  }
+            });
+            dialog.show();
+      }
 // Ends
 
 }

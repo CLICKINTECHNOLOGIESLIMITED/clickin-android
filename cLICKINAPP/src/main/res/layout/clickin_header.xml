@@ -24,7 +24,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="8dp"
         android:ellipsize="end"
-        android:text=""
         android:textColor="@color/owner_profile_header_b"
         android:textSize="20sp"
         android:textStyle="bold" />

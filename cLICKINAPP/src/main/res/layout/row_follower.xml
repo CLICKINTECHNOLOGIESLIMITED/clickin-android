@@ -13,7 +13,6 @@
         android:text="@string/txt_follower"
         android:textColor="@color/dark_gray"
         android:textSize="20sp"
-        android:visibility="gone"
         geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"/>
 
     <com.sourcefuse.clickinandroid.utils.ClickInTextView
@@ -26,7 +25,6 @@
         android:text="@string/txt_follower"
         android:textColor="@color/dark_gray"
         android:textSize="20sp"
-        android:visibility="gone"
         geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"/>
 
 
@@ -59,14 +57,14 @@
             geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"/>
 
 
-        <Button
+        <TextView
             android:id="@+id/btn_actions"
-            android:layout_width="100dp"
-            android:layout_height="35dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="5dp"
-            android:background="@drawable/follow_pink"/>
+            android:background="@drawable/c_owner_follow_btn"/>
 
         <LinearLayout
             android:id="@+id/rl_resect_accept"
@@ -77,7 +75,8 @@
             android:layout_marginRight="12dp"
             android:background="@color/white"
             android:orientation="horizontal"
-            android:visibility="gone">
+            android:visibility="gone"
+            >
 
             <Button
                 android:id="@+id/btn_f_accept"
@@ -86,7 +85,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
-                android:background="@drawable/check"/>
+                android:background="@drawable/c_owner_blue_tick"/>
 
             <Button
                 android:id="@+id/btn_f_resect"
@@ -95,7 +94,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
-                android:background="@drawable/owner_side_icon_cross"/>
+                android:background="@drawable/c_owner_grey_corss"/>
         </LinearLayout>
 
     </RelativeLayout>
