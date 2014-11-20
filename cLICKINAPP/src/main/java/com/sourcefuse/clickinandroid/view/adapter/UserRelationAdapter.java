@@ -60,26 +60,26 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
 
             relationManager = ModelManager.getInstance().getRelationManager();
             /*RecordHolder holder = null;*/
-            /*if (row == null) {*/
-            LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-            row = inflater.inflate(layoutResourceId, parent, false);
+           /* if (row == null) {*/
+                  LayoutInflater inflater = ((Activity) context).getLayoutInflater();
+                  row = inflater.inflate(layoutResourceId, parent, false);
                   /*holder = new RecordHolder();*/
-            TextView usr_name = (TextView) row.findViewById(R.id.tv_usr_name);
+                  TextView usr_name = (TextView) row.findViewById(R.id.tv_usr_name);
             TextView pending = (TextView) row.findViewById(R.id.tv_pending);
             ImageView usrimg = (ImageView) row.findViewById(R.id.iv_usr_pic);
-            privacy = (TextView) row.findViewById(R.id.btn_privacy);
             View whiteview = (View) row.findViewById(R.id.v_whiteview);
             View devider = (View) row.findViewById(R.id.v_devider);
             ImageView btm_divider = (ImageView) row.findViewById(R.id.btm_divider);
-
-
             TextView delete = (TextView) row.findViewById(R.id.btn_delete_item);
+
+                  usrimg.setScaleType(ScaleType.FIT_XY);
+
+
+
+            /*}*/
+            privacy = (TextView) row.findViewById(R.id.btn_privacy);
             delete.setTag(position);
-            usrimg.setScaleType(ScaleType.FIT_XY);
-
             usrimg.setTag(position);
-
-
             usr_name.setText(itemList.get(position).getPartnerName());
 
 
@@ -230,11 +230,11 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
       /*static class RecordHolder {
             TextView usr_name, pending;
             ImageView usrimg;
-            Button delete;
+            TextView delete;
             Button privacy;
             View devider;
             View whiteview;
-
+            ImageView btm_divider;
       }*/
 
       // Akshit Code Starts to show pop-up to make relation ship private

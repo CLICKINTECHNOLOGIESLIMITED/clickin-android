@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -22,7 +23,7 @@ import com.sourcefuse.clickinapp.R;
 
 import de.greenrobot.event.EventBus;
 
-public class FollowerList extends Activity implements
+public class FollowerList extends ClickInBaseView implements
         View.OnClickListener {
       private static final String TAG = FollowerList.class.getSimpleName();
       private ImageView back, notification;
@@ -39,9 +40,11 @@ public class FollowerList extends Activity implements
       @Override
       protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            requestWindowFeature(Window.FEATURE_NO_TITLE);
             setContentView(R.layout.view_followerlist);
-            this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+            addMenu(true);
+            slidemenu.setTouchModeAbove(2);
+            /*this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);*/
 
             Bundle bundle = getIntent().getExtras();
             if (bundle != null) {
@@ -60,11 +63,11 @@ public class FollowerList extends Activity implements
             profManager = ModelManager.getInstance().getProfileManager();
             authManager = ModelManager.getInstance().getAuthorizationManager();
             typeface = Typeface.createFromAsset(FollowerList.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
-            profileName.setTypeface(typeface, typeface.BOLD);
 
 
-            ((TextView) findViewById(R.id.tv_follower_msgI)).setTypeface(typeface, typeface.BOLD);
-            ((TextView) findViewById(R.id.tv_follower_msgII)).setTypeface(typeface, typeface.BOLD);
+
+            /*((TextView) findViewById(R.id.tv_follower_msgI)).setTypeface(typeface, typeface.BOLD);
+            ((TextView) findViewById(R.id.tv_follower_msgII)).setTypeface(typeface, typeface.BOLD);*/
 
             fromOwnProfile = getIntent().getExtras().getBoolean("FromOwnProfile");
             if (fromOwnProfile) {
@@ -77,6 +80,13 @@ public class FollowerList extends Activity implements
                   profManager.getFollwer(getIntent().getExtras().getString("phoneNo"), authManager.getPhoneNo(), authManager.getUsrToken());
             }
 
+      }
+
+      @Override
+      public void onBackPressed() {
+            super.onBackPressed();
+            finish();
+            overridePendingTransition(0,R.anim.top_out);
       }
 
       public void setlist() {
@@ -106,9 +116,10 @@ public class FollowerList extends Activity implements
             switch (v.getId()) {
                   case R.id.iv_back:
                         finish();
+                        overridePendingTransition(0,R.anim.top_out);
                         break;
                   case R.id.iv_notification_list:
-                        finish();
+                        slidemenu.showSecondaryMenu(true);
                         break;
             }
 

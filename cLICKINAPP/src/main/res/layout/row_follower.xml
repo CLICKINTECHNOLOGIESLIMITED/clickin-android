@@ -13,6 +13,7 @@
         android:text="@string/txt_follower"
         android:textColor="@color/dark_gray"
         android:textSize="20sp"
+        android:visibility="gone"
         geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"/>
 
     <com.sourcefuse.clickinandroid.utils.ClickInTextView
@@ -25,6 +26,7 @@
         android:text="@string/txt_follower"
         android:textColor="@color/dark_gray"
         android:textSize="20sp"
+        android:visibility="gone"
         geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"/>
 
 
@@ -59,11 +61,11 @@
 
         <TextView
             android:id="@+id/btn_actions"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="90dp"
+            android:layout_height="25dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="5dp"
+            android:layout_marginRight="15dp"
             android:background="@drawable/c_owner_follow_btn"/>
 
         <LinearLayout
@@ -75,7 +77,6 @@
             android:layout_marginRight="12dp"
             android:background="@color/white"
             android:orientation="horizontal"
-            android:visibility="gone"
             >
 
             <Button
