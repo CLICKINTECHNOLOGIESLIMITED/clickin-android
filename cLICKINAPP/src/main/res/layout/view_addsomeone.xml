@@ -12,6 +12,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
         android:orientation="vertical"
         android:background="@drawable/c_header_bg"
         android:weightSum="2">
@@ -55,11 +57,11 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/iv_topicon"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
+
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/gray_border"
+        android:background="@drawable/serachboxbg"
         android:padding="15dp">
 
         <LinearLayout
@@ -71,13 +73,15 @@
 
             <com.sourcefuse.clickinandroid.utils.ClickInEditBox
                 android:id="@+id/edt_search_ph"
-                android:layout_width="240dp"
-                android:layout_height="45dp"
-                android:background="@drawable/edittext_border"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/searchboxtxtfield"
                 android:ems="10"
                 android:hint="@string/txt_search_phonebook"
                 android:padding="10dp"
                 android:singleLine="true"
+
+                android:layout_marginTop="11.65dp"
                 geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
                 android:textColor="@color/phone_no_clr"
                 android:textColorHint="@color/sign_hint"
@@ -85,9 +89,10 @@
 
             <ImageView
                 android:id="@+id/iv_keypad"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:layout_marginLeft="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2dp"
+                android:layout_marginTop="11.65dp"
                 android:background="@drawable/keyboard" />
 
 
@@ -136,15 +141,26 @@
 
     </RelativeLayout>
 
+
     <Button
-        android:id="@+id/btn_do_itlatter"
+        android:id="@+id/btn_been_invited"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/linearLayout1"
         android:layout_centerHorizontal="true"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="40dp"
-        android:background="@drawable/c_do_it_later" />
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="35dp"
+        android:background="@drawable/rejectprofilebtn" />
+    <Button
+        android:id="@+id/btn_do_itlatter"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_been_invited"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/addsomeonelaterbtn" />
 
 </RelativeLayout>

@@ -34,10 +34,19 @@
             android:imeOptions="actionSearch"
             android:paddingLeft="5dp"
             android:singleLine="true"
-            android:textColor="@color/black"
-            android:textColorHint="@color/black"
+            android:textColor="@color/search_text_color"
+            android:textColorHint="@color/search_text_color"
+
             android:textSize="15sp"
             android:hint="SEARCH CLICKIN'"/>
+
+           <ImageButton android:id="@+id/clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@color/black"
+            android:layout_marginTop="11dp"
+            android:layout_marginRight="10dp"
+            android:layout_alignRight="@id/edt_search"/>
 
         <ListView
             android:id="@+id/search_list"

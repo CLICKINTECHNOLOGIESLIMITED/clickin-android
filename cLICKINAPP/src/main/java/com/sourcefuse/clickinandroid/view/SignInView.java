@@ -308,7 +308,7 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
         } else if (getMsg.equalsIgnoreCase("ForgotPassword True")) {
 
             mDialog.dismiss();
-            Utils.fromSignalDialog(this,authManager.getMessage());
+            Utils.fromSignalDialog(this,AlertMessage.password_recovey);
            // ClickInAlertDialog.clickInAlert(SignInView.this, authManager.getMessage(), "", false);
             authManager.getMessage();
             Utils.dismissBarDialog();

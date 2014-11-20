@@ -11,7 +11,6 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.facebook.Session;
 import com.facebook.SessionState;
@@ -166,7 +165,9 @@ public class CurrentClickersView extends Activity implements OnClickListener {
                               }
 
                         } else {
-                              Toast.makeText(getApplicationContext(), "Please Check Your Internet Connection", Toast.LENGTH_SHORT).show();
+                            Utils.dismissBarDialog();
+                            Utils.fromSignalDialog(this,AlertMessage.connectionError);
+                            //  Toast.makeText(getApplicationContext(), "Please Check Your Internet Connection", Toast.LENGTH_SHORT).show();
                         }
                   }
             } else if (i == R.id.btn_back) {
@@ -174,8 +175,8 @@ public class CurrentClickersView extends Activity implements OnClickListener {
                   overridePendingTransition(0, R.anim.top_out);
 
             } else if (i == R.id.btn_middle_back) {
-                  CurrentClickersView.this.finish();
-                  overridePendingTransition(0, R.anim.top_out);
+               CurrentClickersView.this.finish();
+               overridePendingTransition(0, R.anim.top_out);
 
             } else if (i == R.id.btn_next) {
 

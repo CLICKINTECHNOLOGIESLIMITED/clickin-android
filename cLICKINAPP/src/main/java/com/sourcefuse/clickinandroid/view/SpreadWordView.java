@@ -11,13 +11,11 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.facebook.FacebookException;
 import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.widget.WebDialog;
-
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.ProfileManager;
@@ -29,7 +27,6 @@ import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.adapter.SpreadWordAdapter;
 import com.sourcefuse.clickinapp.R;
 
-import java.util.ArrayList;
 import java.util.ListIterator;
 
 import de.greenrobot.event.EventBus;
@@ -153,7 +150,9 @@ public class SpreadWordView extends Activity implements OnClickListener {
                         Session.openActiveSession(this, true, callback);
                     }
                 } else {
-                    Toast.makeText(getApplicationContext(), "Please Check Your Internet Connection", Toast.LENGTH_SHORT).show();
+                    Utils.dismissBarDialog();
+                    Utils.fromSignalDialog(this,AlertMessage.connectionError);
+                  //  Toast.makeText(getApplicationContext(), "Please Check Your Internet Connection", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.btn_back:
