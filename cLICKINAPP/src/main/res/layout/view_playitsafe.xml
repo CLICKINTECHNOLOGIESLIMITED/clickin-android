@@ -22,8 +22,10 @@
             android:layout_weight="0.8"
             android:gravity="center"
             android:text="PLAY IT"
+            android:layout_centerHorizontal="true"
             android:textColor="@color/screen_header"
             android:textSize="45sp"
+            android:layout_marginLeft="2dp"
             android:textStyle="bold"
 
 
@@ -37,6 +39,7 @@
             android:layout_weight="0.8"
             android:gravity="top"
             android:text="SAFE"
+            android:layout_centerHorizontal="true"
             android:textColor="@color/screen_header"
             android:textSize="67sp"
             android:textStyle="bold"
@@ -55,7 +58,7 @@
         android:layout_below="@+id/iv_topicon"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:background="@drawable/white_border"
+        android:background="@drawable/grey_background"
         android:padding="15dp">
 
         <com.sourcefuse.clickinandroid.utils.ClickInEditBox
@@ -84,7 +87,7 @@
         android:layout_below="@+id/linearLayout1"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:background="@drawable/white_border"
+        android:background="@drawable/grey_background"
         android:padding="15dp">
 
         <com.sourcefuse.clickinandroid.utils.ClickInEditBox

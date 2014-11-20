@@ -229,6 +229,7 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
                 break;
             case R.id.iv_menu:
                 finish();
+                overridePendingTransition(0,R.anim.top_out);
                 break;
             case R.id.iv_edit_camera:
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);

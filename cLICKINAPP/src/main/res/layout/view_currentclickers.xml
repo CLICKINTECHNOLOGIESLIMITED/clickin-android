@@ -38,7 +38,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:layout_weight="1"
-
+                android:layout_marginRight="10dp"
                 android:background="@drawable/c_fb_grey" />
 
 
@@ -127,7 +127,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="20dp"
+                android:layout_marginRight="22dp"
                 android:layout_marginTop="33dp"
                 android:background="@drawable/c_next" />
 
@@ -149,6 +149,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
+    android:layout_centerHorizontal="true"
     android:layout_weight="0.9"
     android:gravity="center"
     android:text="FOLLOW"
@@ -165,6 +166,7 @@
     android:layout_gravity="center"
     android:layout_weight="0.9"
     android:gravity="center"
+    android:layout_centerHorizontal="true"
     android:text="FRIENDS"
     android:textColor="@color/screen_header"
     android:textSize="38sp"

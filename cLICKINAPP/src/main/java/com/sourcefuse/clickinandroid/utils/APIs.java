@@ -3,8 +3,8 @@ package com.sourcefuse.clickinandroid.utils;
 public class APIs {
 	
 
-//	public static final String baseurl ="https://api.clickinapp.com";//prod
-   public static final String baseurl = "http://23.21.65.97"; //staging
+	public static final String baseurl ="https://api.clickinapp.com";//prod
+  // public static final String baseurl = "http://23.21.65.97"; //staging
 
 
 

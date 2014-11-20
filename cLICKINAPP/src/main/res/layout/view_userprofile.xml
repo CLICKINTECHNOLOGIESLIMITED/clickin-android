@@ -10,6 +10,7 @@
         layout="@layout/clickin_header"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+
         />
 
     <!--  <RelativeLayout
@@ -133,10 +134,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/rr_profile_pic"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="16dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="7dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="16dp"
                 android:background="@drawable/owner_follower_btn"
                 android:gravity="center"
                 android:text="@string/txt_follower"

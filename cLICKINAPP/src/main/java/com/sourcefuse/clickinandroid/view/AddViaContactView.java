@@ -1,11 +1,7 @@
 package com.sourcefuse.clickinandroid.view;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Intent;
-
-import android.graphics.Bitmap;
-
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Telephony;
@@ -123,7 +119,7 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
             });
 
 
-            ((Button) findViewById(R.id.btn_go_back)).setOnClickListener(new View.OnClickListener() {
+            ((TextView) findViewById(R.id.btn_go_back)).setOnClickListener(new View.OnClickListener() {
                   @Override
                   public void onClick(View v) {
                         finish();

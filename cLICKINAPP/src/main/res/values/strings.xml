@@ -112,11 +112,12 @@
     <string name="txt_share">SHARE</string>
     <string name="txt_trade">TRADE</string>
     <string name="spam_edit_hint">Please provide details.</string>
-
+    <string name="text_add_partner">Loyal lover,casual fling,someone \nyou just met or even a friend </string>
     <!--Notification Type and string-->
     <string name="txt_relationrequest">relationrequest</string>
     <string name="txt_relationstatus">relationstatus</string>
     <string name="txt_relationdelete">relationdelete</string>
+
     <string name="trade_hint">HOW MANY CLICKS ARE YOU WILLING TO OFFER?</string>
     <string name="title_activity_card">Card</string>
     <string name="share_hint">Write your caption here...</string>

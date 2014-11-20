@@ -75,24 +75,8 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
 
         mUserRelationlistView = (ListView) findViewById(R.id.list_click_with_profile);
 
-
-
-//        // akshit code for closing keypad if touched anywhere outside
-//        ((RelativeLayout) findViewById(R.id.rl_usr_profile)).setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View arg0) {
-//
-//                InputMethodManager imm = (InputMethodManager) getSystemService(
-//                        INPUT_METHOD_SERVICE);
-//                imm.hideSoftInputFromWindow(userimage.getWindowToken(), 0);
-//
-//
-//            }
-//
-//        });
-//
-////ends
+        TextView title = (TextView)findViewById(R.id.tv_profile_txt);
+        title.setText("PROFILE");
 
 
         // menu = (ImageView) findViewById(R.id.iv_menu);
@@ -467,6 +451,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         case R.id.btn_edit_profile:
             Intent editProfile = new Intent(UserProfileView.this,EditMyProfileView.class);
             startActivity(editProfile);
+            overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_right);
                 break;
 		}
 	}

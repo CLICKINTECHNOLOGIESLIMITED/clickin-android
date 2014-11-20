@@ -257,7 +257,7 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
                 Utils.fromSignalDialog(this, AlertMessage.connectionError);
 			}else if (message.equalsIgnoreCase("FollowUser True")) {
 				relationManager = ModelManager.getInstance().getRelationManager();
-				follow.setBackgroundResource(R.drawable.requested_grey);
+				follow.setBackgroundResource(R.drawable.requested_otherprofile);
 				//Utils.showToast(JumpOtherProfileView.this, relationManager.getStatusMsg());
 			}else if (message.equalsIgnoreCase("FollowUser  false")) {
 				relationManager = ModelManager.getInstance().getRelationManager();
@@ -339,9 +339,9 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
 			String dtails;
 			
 			if(authManager.getTmpIsFollowingRequested()==1){
-			follow.setBackgroundResource(R.drawable.requested_grey);
+			follow.setBackgroundResource(R.drawable.requested_otherprofile);
 			}else if(authManager.getTmpIsFollowing()==1){
-				follow.setBackgroundResource(R.drawable.following);
+				follow.setBackgroundResource(R.drawable.following_otherprofile);
 			}else{
 				follow.setBackgroundResource(R.drawable.follow);
 			}
