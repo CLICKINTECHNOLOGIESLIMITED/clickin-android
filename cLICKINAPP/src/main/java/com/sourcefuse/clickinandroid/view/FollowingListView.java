@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -22,7 +23,7 @@ import com.sourcefuse.clickinapp.R;
 
 import de.greenrobot.event.EventBus;
 
-public class FollowingListView extends Activity implements
+public class FollowingListView extends ClickInBaseView implements
         View.OnClickListener {
       private static final String TAG = FollowingListView.class.getSimpleName();
       private ImageView back, notification;
@@ -39,9 +40,11 @@ public class FollowingListView extends Activity implements
       @Override
       protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            requestWindowFeature(Window.FEATURE_NO_TITLE);
             setContentView(R.layout.view_followinglist);
-            this.overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_right);
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+            addMenu(true);
+            slidemenu.setTouchModeAbove(2);
+/*            this.overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_right);*/
 
             Bundle bundle = getIntent().getExtras();
             if (bundle != null) {
@@ -62,11 +65,10 @@ public class FollowingListView extends Activity implements
             profManager = ModelManager.getInstance().getProfileManager();
             authManager = ModelManager.getInstance().getAuthorizationManager();
             typeface = Typeface.createFromAsset(FollowingListView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
-            profileName.setTypeface(typeface, typeface.BOLD);
 
 
-            ((TextView) findViewById(R.id.tv_following_msgI)).setTypeface(typeface, typeface.BOLD);
-            ((TextView) findViewById(R.id.tv_following_msgII)).setTypeface(typeface, typeface.BOLD);
+
+
             try {
                   fromOwnProfile = getIntent().getExtras().getBoolean("FromOwnProfile");
                   if (fromOwnProfile) {
@@ -82,7 +84,12 @@ public class FollowingListView extends Activity implements
             }
 
       }
-
+      @Override
+      public void onBackPressed() {
+            super.onBackPressed();
+            finish();
+            overridePendingTransition(0,R.anim.top_out);
+      }
       public void setlist() {
             if (profManager.following.size() > 0) {
 
@@ -107,9 +114,10 @@ public class FollowingListView extends Activity implements
             switch (v.getId()) {
                   case R.id.iv_back_ing:
                         finish();
+                        overridePendingTransition(0,R.anim.top_out);
                         break;
                   case R.id.iv_notification_list_ing:
-                        finish();
+                        slidemenu.showSecondaryMenu(true);
                         break;
             }
 

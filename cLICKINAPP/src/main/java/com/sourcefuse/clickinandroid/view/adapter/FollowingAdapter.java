@@ -63,7 +63,7 @@ public class FollowingAdapter extends ArrayAdapter<FollowerFollowingBean> {
                   holder.hfollowers = (TextView) row.findViewById(R.id.tv_heading_followers);
                   holder.usrimg = (ImageView) row.findViewById(R.id.iv_usr);
                   holder.usrimg.setScaleType(ScaleType.FIT_XY);
-                  holder.reqbtn = (Button) row.findViewById(R.id.btn_actions);
+                  holder.reqbtn = (TextView) row.findViewById(R.id.btn_actions);
                   /*holder.hfollowersRequest.setTypeface(typeface);
                   holder.hfollowers.setTypeface(typeface);*/
 
@@ -81,9 +81,9 @@ public class FollowingAdapter extends ArrayAdapter<FollowerFollowingBean> {
             }
 
             if (!Utils.isEmptyString(item.get(position).getAccepted()) && item.get(position).getAccepted().matches("true")) {
-                  rholder.reqbtn.setBackgroundResource(R.drawable.following);
+                  rholder.reqbtn.setBackgroundResource(R.drawable.following_btn);
             } else {
-                  rholder.reqbtn.setBackgroundResource(R.drawable.requested_grey);
+                  rholder.reqbtn.setBackgroundResource(R.drawable.requested_btn);
             }
             rholder.usr_name.setText(item.get(position).getFolloweeName());
             if (!item.get(position).getFolloweePic().equalsIgnoreCase("")) {
@@ -112,7 +112,7 @@ public class FollowingAdapter extends ArrayAdapter<FollowerFollowingBean> {
                               unfallowingDialog(position);
 
                         } else if (item.get(position).getIsFollowing().matches("true")) {
-                              rholder.reqbtn.setBackgroundResource(R.drawable.requested_grey);
+                              rholder.reqbtn.setBackgroundResource(R.drawable.requested_btn);
                               relationManager.followUser(item.get(position).getPhoneNo(), authManager.getPhoneNo(), authManager.getUsrToken());
                               item.get(position).setIsFollowing("false");
                               //FollowerList.adapter.notifyDataSetChanged();
@@ -129,7 +129,7 @@ public class FollowingAdapter extends ArrayAdapter<FollowerFollowingBean> {
       static class RecordHolder {
             TextView usr_name, hfollowersRequest, hfollowers;
             ImageView usrimg;
-            Button reqbtn;
+            TextView reqbtn;
 
       }
 
@@ -151,7 +151,7 @@ public class FollowingAdapter extends ArrayAdapter<FollowerFollowingBean> {
                   @Override
                   public void onClick(View view) {
                         int position = (Integer) view.getTag();
-                        rholder.reqbtn.setBackgroundResource(R.drawable.follow);
+                        rholder.reqbtn.setBackgroundResource(R.drawable.c_owner_follow_btn);
                         relationManager.unFollowUser(item.get(position).getrFollowerId(), "true", authManager.getPhoneNo(), authManager.getUsrToken());
                         item.get(position).setIsFollowing("true");
                         //FollowerList.adapter.notifyDataSetChanged();

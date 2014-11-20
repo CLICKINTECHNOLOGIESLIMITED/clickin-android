@@ -127,7 +127,7 @@ public class FollowerAdapter extends ArrayAdapter<FollowerFollowingBean> {
                   if (FollowerList.fromOwnProfile == true) {
                         holder.reqbtn.setVisibility(View.VISIBLE);
                         holder.rlResectAccept.setVisibility(View.GONE);
-                        rholder.reqbtn.setBackgroundDrawable(getContext().getResources().getDrawable(R.drawable.following_btn));
+                        rholder.reqbtn.setBackgroundResource(R.drawable.following_btn);
 
                 /*holder.rlResectAccept.setVisibility(View.GONE);*/
                   } else {
@@ -142,7 +142,7 @@ public class FollowerAdapter extends ArrayAdapter<FollowerFollowingBean> {
                   if (FollowerList.fromOwnProfile == true) {
                         holder.reqbtn.setVisibility(View.VISIBLE);
                         holder.rlResectAccept.setVisibility(View.GONE);
-                        rholder.reqbtn.setBackgroundDrawable(getContext().getResources().getDrawable(R.drawable.requested_btn));
+                        rholder.reqbtn.setBackgroundResource(R.drawable.requested_btn);
 
 
                   } else {
@@ -155,7 +155,7 @@ public class FollowerAdapter extends ArrayAdapter<FollowerFollowingBean> {
                   if (FollowerList.fromOwnProfile == true) {
                         holder.reqbtn.setVisibility(View.VISIBLE);
                         holder.rlResectAccept.setVisibility(View.GONE);
-                        rholder.reqbtn.setBackgroundDrawable(getContext().getResources().getDrawable(R.drawable.requested_grey));
+                        rholder.reqbtn.setBackgroundResource(R.drawable.requested_btn);
                   } else {
                         holder.reqbtn.setVisibility(View.GONE);
                         holder.rlResectAccept.setVisibility(View.GONE);
@@ -167,7 +167,7 @@ public class FollowerAdapter extends ArrayAdapter<FollowerFollowingBean> {
                   if (FollowerList.fromOwnProfile == true) {
                         holder.reqbtn.setVisibility(View.VISIBLE);
                         holder.rlResectAccept.setVisibility(View.GONE);
-                        rholder.reqbtn.setBackgroundDrawable(getContext().getResources().getDrawable(R.drawable.c_owner_follow_btn));
+                        rholder.reqbtn.setBackgroundResource(R.drawable.c_owner_follow_btn);
                   } else {
                         holder.reqbtn.setVisibility(View.GONE);
                         holder.rlResectAccept.setVisibility(View.GONE);
@@ -179,7 +179,7 @@ public class FollowerAdapter extends ArrayAdapter<FollowerFollowingBean> {
                   if (FollowerList.fromOwnProfile == true) {
                         holder.reqbtn.setVisibility(View.VISIBLE);
                         holder.rlResectAccept.setVisibility(View.GONE);
-                        rholder.reqbtn.setBackgroundDrawable(getContext().getResources().getDrawable(R.drawable.c_owner_follow_btn));
+                        rholder.reqbtn.setBackgroundResource(R.drawable.c_owner_follow_btn);
 
                   } else {
 
@@ -218,13 +218,13 @@ public class FollowerAdapter extends ArrayAdapter<FollowerFollowingBean> {
                               unfallowDialog(position);
 
                         } else if (!Utils.isEmptyString(item.get(position).getAccepted()) && item.get(position).getAccepted().matches("true") && item.get(position).getIsFollowing().matches("false") && item.get(position).getFollowingAccepted().matches("false")) {
-                              vholder.reqbtn.setBackgroundResource(R.drawable.requested_grey);
+                              vholder.reqbtn.setBackgroundResource(R.drawable.requested_btn);
                               relationManager.followUser(item.get(position).getPhoneNo(), authManager.getPhoneNo(), authManager.getUsrToken());
                               item.get(position).setIsFollowing("true");
                               notifyDataSetChanged();
                               Log.e(TAG, "Click - holder.requested_grey=" + item.get(position).getIsFollowing());
                         } else if (!Utils.isEmptyString(item.get(position).getAccepted()) && item.get(position).getAccepted().matches("false") && item.get(position).getFollowingAccepted().matches("true") && item.get(position).getIsFollowing().matches("true")) {
-                              vholder.reqbtn.setBackgroundResource(R.drawable.requested_grey);
+                              vholder.reqbtn.setBackgroundResource(R.drawable.requested_btn);
                               relationManager.followUser(item.get(position).getPhoneNo(), authManager.getPhoneNo(), authManager.getUsrToken());
                               item.get(position).setIsFollowing("true");
                               notifyDataSetChanged();
@@ -310,7 +310,7 @@ public class FollowerAdapter extends ArrayAdapter<FollowerFollowingBean> {
 
                         int position = (Integer) view.getTag();
 
-                        vholder.reqbtn.setBackgroundResource(R.drawable.follow);
+                        vholder.reqbtn.setBackgroundResource(R.drawable.c_owner_follow_btn);
                         relationManager.unFollowUser(item.get(position).getFollowingId(), "true", authManager.getPhoneNo(), authManager.getUsrToken());
                         item.get(position).setIsFollowing("false");
                         item.get(position).setFollowingAccepted("false");

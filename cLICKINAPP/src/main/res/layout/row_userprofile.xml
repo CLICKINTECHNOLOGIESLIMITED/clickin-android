@@ -117,7 +117,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginTop="2dp"
-            android:background="@drawable/owner_profile_side_line"/>
+            android:background="@color/edit_profile_clr"/>
     </LinearLayout>
 
 </RelativeLayout>

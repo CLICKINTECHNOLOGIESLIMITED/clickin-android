@@ -91,7 +91,6 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
                   }
             });
 
-            ((TextView)findViewById(R.id.tv_profile_txt)).setText("profile");
 
             userimage = (ImageView) findViewById(R.id.iv_usr_icon);
             userimage.setScaleType(ScaleType.FIT_XY);
@@ -396,11 +395,13 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
                         Intent intentFollower = new Intent(UserProfileView.this, FollowerList.class);
                         intentFollower.putExtra("FromOwnProfile", true);
                         startActivity(intentFollower);
+                        this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         break;
                   case R.id.btn_following:
                         Intent intentFollowing = new Intent(UserProfileView.this, FollowingListView.class);
                         intentFollowing.putExtra("FromOwnProfile", true);
                         startActivity(intentFollowing);
+                        this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                         break;
                   case R.id.iv_menu:
                         Log.e("iv_menu", "iv_menu");
