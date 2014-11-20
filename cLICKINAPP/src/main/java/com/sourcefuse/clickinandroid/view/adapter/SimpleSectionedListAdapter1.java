@@ -198,7 +198,6 @@ public class SimpleSectionedListAdapter1 extends BaseAdapter implements PinnedSe
         	typeface = Typeface.createFromAsset(mContext.getAssets(),Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
             view = (TextView) convertView.findViewById(mHeaderTextViewResId);
             view1 = (TextView)convertView.findViewById(mHeaderTextViewResId1);
-            view.setTypeface(typeface, typeface.BOLD);
     		view1.setTypeface(typeface);
 
 

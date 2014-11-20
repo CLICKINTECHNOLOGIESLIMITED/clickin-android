@@ -37,7 +37,8 @@ import java.util.ArrayList;
 
 public class UserProfileView extends ClickInBaseView implements View.OnClickListener {
       private static final String TAG = UserProfileView.class.getSimpleName();
-      private Button follower, following, btnAddSomeone, EditProfile;
+      private Button  btnAddSomeone;
+      TextView EditProfile,follower, following;
       private TextView profileHeader;
       private ListView mUserRelationlistView;
       private ImageView userimage;
@@ -68,33 +69,14 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
             typefaceMedium = Typeface.createFromAsset(UserProfileView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
             typefaceBold = Typeface.createFromAsset(UserProfileView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_BOLD);
 
-            following = (Button) findViewById(R.id.btn_following);
-            follower = (Button) findViewById(R.id.btn_follower);
-            EditProfile = (Button) findViewById(R.id.btn_edit_profile);
+            following = (TextView) findViewById(R.id.btn_following);
+            follower = (TextView) findViewById(R.id.btn_follower);
+            EditProfile = (TextView) findViewById(R.id.btn_edit_profile);
 
             mUserRelationlistView = (ListView) findViewById(R.id.list_click_with_profile);
 
 
-//        // akshit code for closing keypad if touched anywhere outside
-//        ((RelativeLayout) findViewById(R.id.rl_usr_profile)).setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View arg0) {
-//
-//                InputMethodManager imm = (InputMethodManager) getSystemService(
-//                        INPUT_METHOD_SERVICE);
-//                imm.hideSoftInputFromWindow(userimage.getWindowToken(), 0);
-//
-//
-//            }
-//
-//        });
-//
-////ends
 
-
-            // menu = (ImageView) findViewById(R.id.iv_menu);
-            // notification = (ImageView) findViewById(R.id.iv_notification);
 
             ((ImageView) findViewById(R.id.iv_open_left_menu)).setOnClickListener(new View.OnClickListener() {
                   @Override
@@ -109,6 +91,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
                   }
             });
 
+            ((TextView)findViewById(R.id.tv_profile_txt)).setText("profile");
 
             userimage = (ImageView) findViewById(R.id.iv_usr_icon);
             userimage.setScaleType(ScaleType.FIT_XY);
@@ -120,8 +103,6 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
 
             following.setOnClickListener(this);
             follower.setOnClickListener(this);
-            //menu.setOnClickListener(this);
-            // notification.setOnClickListener(this);
             EditProfile.setOnClickListener(this);
 
             name.setTypeface(typefaceBold);
@@ -139,23 +120,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
 
 
 
-/*not required to check whether it is logged in or not.
-    ** Because on this page it always come after loggin in either manual or through auto login
- */
-        /*  if (new MyPreference(UserProfileView.this).isLogin()) {
 
-            Log.e("ClickInBaseView1", "MyPreference");
-
-                Log.e("ClickInBaseView1", "getInstance");
-                authManager = ModelManager.getInstance().getAuthorizationManager();
-                authManager.setUsrToken(new MyPreference(UserProfileView.this).getToken());
-                authManager.setPhoneNo(new MyPreference(UserProfileView.this).getmyPhoneNo());
-
-
-
-
-
-        }*/
 
 
             //    Utils.launchBarDialog(this);
@@ -183,12 +148,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
                   // relationManager.getRelationShips(authManager.getPhoneNo(), authManager.getUsrToken());
             }
             Log.e(TAG, "vv" + authManager.getPhoneNo() + "" + authManager.getUsrToken());
-            //profile information is already set in signIn view or in splash screen for auto login
-            //  authManager.getProfileInfo("", authManager.getPhoneNo(), authManager.getUsrToken());
-            //  relationManager.getRelationShips(authManager.getPhoneNo(), authManager.getUsrToken());
-            //  ModelManager.getInstance().getProfileManager().getFollwer("", authManager.getPhoneNo(), authManager.getUsrToken());
-            // setProfileDataView();
-            //setlist();
+
 
 
             findViewById(R.id.iv_usr_icon).setOnClickListener(new View.OnClickListener() {

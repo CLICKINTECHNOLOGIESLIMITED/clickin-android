@@ -75,11 +75,7 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
         ephone.setOnClickListener(this);
         ePwd.setOnClickListener(this);
 
-        /*ephone.setTypeface(typefaceBold);
-        ePwd.setTypeface(typefaceBold);
-        forgotPwd.setTypeface(typeface);
-        signUp.setTypeface(typeface);
-        signUp.setTypeface(typeface);*/
+
 
 
         // akshit code for closing keypad if touched anywhere outside
@@ -115,39 +111,12 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
 
 
 
-        ephone.setText("+9100007");
+        ephone.setText("+91707070");
         ephone.setSelection(ephone.getText().toString().length());
         //No need For this akshit
 
 
-//        ephone.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//
-//           InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-//            inputMethodManager.showSoftInput(ephone, 0);
-//
-//
-//                if(ephone.getText().toString().contains("null"))
-//                {
-//                    if (ephone.getSelectionStart() <= 6) {
-//                        return false;
-//                    } else {
-//                        return true;
-//                    }
-//                }
-//
-//                else {
-//                    if (ephone.getSelectionStart() <= 2) {
-//                        return false;
-//                    } else {
-//                        return true;
-//                    }
-//                }
-//            }
-//        });
-//
-//    }
+
 
 
     }
@@ -167,13 +136,7 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
         if (ephone.getText().toString().length() > 0 && ePwd.getText().toString().length() > 0) {
             activeDone = true;
             do_latter.setBackgroundResource(R.drawable.c_getclicin_active);
-//        } else if(ephone.getText().toString().length()==0){
-//            Utils.fromSignalDialog(this,AlertMessage.enterPhoneEmail);
-//
-////            activeDone = false;ep
-////            do_latter.setBackgroundResource(R.drawable.c_getclicin_deactive);
-//        }
-//       }
+
         }
 
     }

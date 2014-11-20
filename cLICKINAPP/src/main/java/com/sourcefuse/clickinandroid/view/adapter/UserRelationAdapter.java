@@ -38,7 +38,6 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
       private AuthManager authManager;
       private ProfileManager profileManager;
       private RelationManager relationManager;
-      private Typeface typeface;
       private boolean showpending = false;
       /*RecordHolder rholder;*/
 
@@ -53,7 +52,7 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
 
       }
 
-      Button privacy;
+      TextView privacy;
 
       @Override
       public View getView(final int position, View convertView, ViewGroup parent) {
@@ -68,25 +67,22 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
             TextView usr_name = (TextView) row.findViewById(R.id.tv_usr_name);
             TextView pending = (TextView) row.findViewById(R.id.tv_pending);
             ImageView usrimg = (ImageView) row.findViewById(R.id.iv_usr_pic);
-            privacy = (Button) row.findViewById(R.id.btn_privacy);
+            privacy = (TextView) row.findViewById(R.id.btn_privacy);
             View whiteview = (View) row.findViewById(R.id.v_whiteview);
             View devider = (View) row.findViewById(R.id.v_devider);
             ImageView btm_divider = (ImageView) row.findViewById(R.id.btm_divider);
 
 
-            Button delete = (Button) row.findViewById(R.id.btn_delete_item);
+            TextView delete = (TextView) row.findViewById(R.id.btn_delete_item);
             delete.setTag(position);
             usrimg.setScaleType(ScaleType.FIT_XY);
 
             usrimg.setTag(position);
 
-            typeface = Typeface.createFromAsset(context.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
-            usr_name.setTypeface(typeface, typeface.BOLD);
-
-
-
 
             usr_name.setText(itemList.get(position).getPartnerName());
+
+
 
             if (itemList.get(position).getStatusAccepted().matches("true") && (itemList.get(position).getmStatuspublic().matches("false") || Utils.isEmptyString(itemList.get(position).getmStatuspublic()))) {
                   showpending = false;
@@ -256,7 +252,7 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
 
 
             RelativeLayout relativeLayout = (RelativeLayout) view;
-            Button button = (Button) relativeLayout.getChildAt(1);
+            TextView button = (TextView) relativeLayout.getChildAt(1);
 
             msgI.setTypeface(tf);
             msgI.setText(str);
@@ -272,7 +268,7 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
                   @Override
                   public void onClick(View view) {
 
-                        Button button1 = (Button) view.getTag();
+                        TextView button1 = (TextView) view.getTag();
                         button1.setBackgroundResource(R.drawable.owner_profile_eye_cross_icon);
                         itemList.get(position1).setmStatuspublic("false");
                         relationManager.changeUserVisibility(itemList.get(position1).getRelationshipId(), "false", authManager.getPhoneNo(), authManager.getUsrToken());
@@ -315,14 +311,14 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
 
 
             RelativeLayout relativeLayout = (RelativeLayout) view;
-            Button button = (Button) relativeLayout.getChildAt(1);
+            TextView button = (TextView) relativeLayout.getChildAt(1);
             skip.setTag(button);
 
             skip.setOnClickListener(new View.OnClickListener() {
                   @Override
                   public void onClick(View view) {
 
-                        Button button1 = (Button) view.getTag();
+                        TextView button1 = (TextView) view.getTag();
                         button1.setBackgroundResource(R.drawable.owner_profile_eye_icon);
                         itemList.get(position1).setmStatuspublic("true");
                         relationManager.changeUserVisibility(itemList.get(position1).getRelationshipId(), "true", authManager.getPhoneNo(), authManager.getUsrToken());

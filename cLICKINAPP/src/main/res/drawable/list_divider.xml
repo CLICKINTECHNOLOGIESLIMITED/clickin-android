@@ -6,7 +6,7 @@
     <shape>
         <solid android:color="@color/appclr" />
 
-        <corners android:radius="2.0dip" />
+        <corners android:radius="1.0dip" />
     </shape>
 
 </inset>

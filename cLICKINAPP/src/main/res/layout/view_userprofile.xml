@@ -118,17 +118,17 @@
 
                 </RelativeLayout>
 
-                <Button
+                <TextView
                     android:id="@+id/btn_edit_profile"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignBottom="@+id/rl_uig"
                     android:layout_alignParentRight="true"
-                    android:layout_marginBottom="40dp"
+                    android:layout_marginBottom="45dp"
                     android:background="@drawable/owner_profile_icon"/>
             </RelativeLayout>
 
-            <Button
+            <TextView
                 android:id="@+id/btn_follower"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -141,9 +141,9 @@
                 android:gravity="center"
                 android:text="@string/txt_follower"
                 android:textColor="@color/profile_parter_nmae_b"
-                android:textSize="20sp"/>
+                android:textSize="16sp"/>
 
-            <Button
+            <TextView
                 android:id="@+id/btn_following"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -155,7 +155,7 @@
                 android:gravity="center"
                 android:text="@string/txt_following"
                 android:textColor="@color/profile_name_b"
-                android:textSize="20sp"/>
+                android:textSize="16sp"/>
         </RelativeLayout>
 
         <LinearLayout
@@ -177,18 +177,15 @@
                 android:footerDividersEnabled="false"
                 android:overScrollFooter="@color/transparent"
                 android:scrollbarStyle="outsideInset"
-                android:scrollbars="none"/>
+                android:transcriptMode="alwaysScroll"
+                android:scrollbars="none"
+                android:choiceMode="singleChoice"
+                android:fadingEdge="none"
+                android:listSelector="#00000000"
+                android:overScrollMode="never"
+                />
 
-            <!--<se.emilsjolander.stickylistheaders.StickyListHeadersListView
-                android:id="@+id/list_click_with_profile"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:clipToPadding="false"
-                android:footerDividersEnabled="false"
-                android:overScrollFooter="@android:color/transparent"
-                android:scrollbarStyle="outsideInset"
-                android:scrollbars="none"/>-->
+
 
         </LinearLayout>
     </LinearLayout>
