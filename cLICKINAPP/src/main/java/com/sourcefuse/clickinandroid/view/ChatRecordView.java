@@ -450,7 +450,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                   }
             });
 
-
+            //clear the message list always to initiate a new chat
             ModelManager.getInstance().getChatManager().chatMessageList.clear();
             setlist();
 
@@ -2428,7 +2428,8 @@ private void setValueForHistory(ChatMessageBody obj){
                     .error(R.drawable.male_user).into(partnerPix);
 
 
-            chatData.clear();
+          //clear the message list always to initiate a new chat
+          ModelManager.getInstance().getChatManager().chatMessageList.clear();
           //  setlist();
       }
 
