@@ -165,7 +165,6 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
 //                    } else {
 //                        return true;
 //                    }
-//                }
 //
 //                else {
 //                    if (ephone.getSelectionStart() <= 2) {
@@ -350,7 +349,7 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
          //   Utils.showAlert(act, AlertMessage.connectionError);
         }else if (getMsg.equalsIgnoreCase("GetRelationShips False")) {
             Utils.dismissBarDialog();
-
+            switchView();
 //           setLeftMenuList();
             //         setlist();
         } else if(getMsg.equalsIgnoreCase("GetRelationShips Network Error")){
