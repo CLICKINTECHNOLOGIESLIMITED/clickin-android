@@ -62,12 +62,7 @@ dependencies {
     compile 'com.google.android.gms:play-services:3.1+'
     compile 'com.viewpagerindicator:library:2.4.1@aar'
 
-//    repositories {
-//        mavenCentral()
-//    }
-//    compile 'com.github.chrisbanes.actionbarpulltorefresh:library:+'
 
-//    compile 'com.github.chrisbanes.actionbarpulltorefresh:extra-abc:+'
     compile 'com.crashlytics.android:crashlytics:1.+'
 
 }

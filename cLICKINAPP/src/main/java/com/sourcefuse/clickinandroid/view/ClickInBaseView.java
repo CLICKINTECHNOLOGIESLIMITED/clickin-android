@@ -71,7 +71,7 @@ public class
       private SearchAdapter searchListadapter;
       private RelativeLayout imageMenuRefresh;
       private int relationListIndex;
-      public ImageButton clear ;
+
       //Right Menu.....
       public ListView notificationList;
       private ImageView backArrowRightSide;
@@ -199,7 +199,18 @@ public class
                         }
                   }
             });
-
+            slidemenu.findViewById(R.id.btn_clear).setOnClickListener(new View.OnClickListener() {
+                  @Override
+                  public void onClick(View view) {
+                        edt_search.setText("");
+                        try {
+                              InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                              imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
+                        } catch (Exception e) {
+                              e.printStackTrace();
+                        }
+                  }
+            });
 
       }
 
@@ -210,6 +221,14 @@ public class
             typeface = Typeface.createFromAsset(ClickInBaseView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
             edt_search = (EditText) slidemenu.findViewById(R.id.edt_search);
             searchList = (ListView) slidemenu.findViewById(R.id.search_list);
+
+
+
+
+            searchList.setDivider(getResources().getDrawable(R.drawable.list_divider));
+            searchList.setDividerHeight(2);
+
+
             hideSearchlist = (ImageView) slidemenu.findViewById(R.id.iv_hide_searchlist);
 
             clickWithlistView = (ListView) slidemenu.findViewById(R.id.click_with_list_menu);
@@ -625,7 +644,17 @@ public class
                   } catch (Exception e) {
                   }
             }
-
+            String search_date = edt_search.getText().toString();
+            if (!Utils.isEmptyString(search_date) && search_date.length() < 3) {
+                  slidemenu.findViewById(R.id.btn_clear).setVisibility(View.VISIBLE);
+                  slidemenu.findViewById(R.id.btn_progressBar).setVisibility(View.GONE);
+            } else if (!Utils.isEmptyString(search_date) && search_date.length() > 2) {
+                  slidemenu.findViewById(R.id.btn_clear).setVisibility(View.GONE);
+                  slidemenu.findViewById(R.id.btn_progressBar).setVisibility(View.VISIBLE);
+            }else {
+                  slidemenu.findViewById(R.id.btn_clear).setVisibility(View.GONE);
+                  slidemenu.findViewById(R.id.btn_progressBar).setVisibility(View.GONE);
+            }
             if (edt_search.getText().toString().length() > 2) {
                   hideSearchlist.setVisibility(View.VISIBLE);
                   searchList.setVisibility(View.VISIBLE);

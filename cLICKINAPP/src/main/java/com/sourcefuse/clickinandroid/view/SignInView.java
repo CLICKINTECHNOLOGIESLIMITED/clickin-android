@@ -145,7 +145,7 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
 
 
 
-
+          ephone.setText("+91000007");
         ephone.setSelection(ephone.getText().toString().length());
         //No need For this akshit
 

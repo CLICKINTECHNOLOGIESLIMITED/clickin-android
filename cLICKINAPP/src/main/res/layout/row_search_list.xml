@@ -3,7 +3,7 @@
     android:layout_height="wrap_content"
     android:paddingTop="2dp"
     android:paddingBottom="2dp"
-    android:background="@drawable/chat_box">
+    android:background="@color/notification_background">
 
 
     <ImageView
