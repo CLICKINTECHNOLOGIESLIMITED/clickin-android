@@ -78,7 +78,7 @@
                 android:inputType="textPassword"
                 android:paddingLeft="10dp"
                 android:ems="12"
-                android:text=""
+                android:text="12345678"
                 android:imeOptions="actionDone"
                 android:textColor="@color/signup_contry_code"
                 android:textColorHint="@color/singn_forg"
