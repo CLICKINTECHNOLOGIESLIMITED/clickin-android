@@ -12,8 +12,8 @@ import java.util.ArrayList;
 public interface ChatRecordI {
 
     public int addChatList(ArrayList<ChatMessageBody> chatList) throws SQLException;
-    public ArrayList<ChatMessageBody> getAllChat(String sQbId, String rQbId) throws SQLException;
-    public int deleteChat(String sQbId, String rQbId) throws SQLException;
+    public ArrayList<ChatMessageBody> getAllChat(String sQbId) throws SQLException;
+    public int deleteChat(String sQbId) throws SQLException;
 
 
   /*  public void deleteAll()

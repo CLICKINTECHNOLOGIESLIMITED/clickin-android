@@ -29,6 +29,7 @@ import com.quickblox.module.auth.QBAuth;
 import com.quickblox.module.auth.result.QBSessionResult;
 import com.quickblox.module.chat.QBChatService;
 import com.quickblox.module.users.model.QBUser;
+import com.sourcefuse.clickinandroid.dbhelper.ClickinDbHelper;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
@@ -283,9 +284,9 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
             editor.putString("myPhoneNo",authManager.getPhoneNo());
             editor.commit();
 
-
+            new ClickinDbHelper(this);
             Intent i=new Intent(this,MyQbChatService.class);
-          startService(i);
+            startService(i);
 
 
           //  new MyPreference(SignInView.this).setToken(authManager.getUsrToken());

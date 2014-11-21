@@ -260,7 +260,7 @@ android:layout_height="fill_parent">
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:inputType="textMultiLine|textAutoCorrect"
+
                 android:maxLength="140"
                 android:background="@drawable/r_footer_middle_bg"
                 android:paddingLeft="5dp"
