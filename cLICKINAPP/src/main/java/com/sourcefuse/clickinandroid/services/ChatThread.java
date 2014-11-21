@@ -15,6 +15,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.AvoidXfermode;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -25,6 +26,7 @@ import com.quickblox.core.QBCallbackImpl;
 import com.quickblox.core.QBSettings;
 import com.quickblox.core.result.Result;
 import com.quickblox.module.auth.QBAuth;
+import com.quickblox.module.auth.model.QBSession;
 import com.quickblox.module.auth.result.QBSessionResult;
 import com.quickblox.module.chat.QBChat;
 
@@ -39,6 +41,7 @@ import com.quickblox.module.chat.model.QBChatMessage;
 import com.quickblox.module.users.model.QBUser;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
+import com.sourcefuse.clickinandroid.model.bean.ChatMessageBody;
 import com.sourcefuse.clickinandroid.utils.Constants;
 
 import org.jivesoftware.smack.ConnectionListener;
@@ -49,7 +52,9 @@ import org.jivesoftware.smack.packet.Message;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.XML;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -77,29 +82,18 @@ public class ChatThread extends Thread  {
     Pattern p = Pattern.compile("[\\d]+_(.*?)@.*?");
 
     private AuthManager authManager;
+    private QBUser mUser;
 
     public ChatThread(Application context, Handler handler) {
         application = context;
         mHandler = handler;
         authManager = ModelManager.getInstance().getAuthorizationManager();
-        com.sourcefuse.clickinandroid.utils.Log.e(TAG, "loginToQuickBlox --- getUserId=>" + authManager.getUserId() + ",--getUsrToken-=>" + authManager.getUsrToken());
+
         QBSettings.getInstance().fastConfigInit(Constants.CLICKIN_APP_ID, Constants.CLICKIN_AUTH_KEY, Constants.CLICKIN_AUTH_SECRET);
-
-
-   //     QBChatService.setDebugEnabled(true);
-        if (!QBChatService.getInstance().isInitialized()) {
-            QBChatService.init(application.getApplicationContext());
-        }
-
-//        chatService = QBChatService.getInstance();
-
-        QBUser mUser = new QBUser();
-        mUser.setLogin(authManager.getUserId());
-        mUser.setPassword(authManager.getUsrToken());
-
-
-
-
+        QBSettings.getInstance().setServerApiDomain("apiclickin.quickblox.com");
+        QBSettings.getInstance().setContentBucketName("qb-clickin");
+        QBSettings.getInstance().setChatServerDomain("chatclickin.quickblox.com");
+        QBChatService.setDebugEnabled(true);
     }
 
     public Handler getHandler() {
@@ -109,8 +103,8 @@ public class ChatThread extends Thread  {
     @Override
     public void run() {
         Looper.prepare();
+        loginToChat();
         EventBus.getDefault().register(this);
-//loginToChat();
         mMyHandler = new Handler() {
             public void handleMessage(android.os.Message msg) {
                 switch (msg.what) {
@@ -119,61 +113,96 @@ public class ChatThread extends Thread  {
                         Bundle data=msg.getData();
                         if(QBChatService.getInstance().isLoggedIn()) {
                             int partnerQBId=Integer.parseInt(data.getString("partnerQBId"));
-                            chatObject = QBChatService.getInstance().getPrivateChatManager().createChat(partnerQBId,privateMsgListener);
-                            //DefaultPacketExtension extension = null;
-                            QBChatMessage message =  null;
+                            chatObject=QBChatService.getInstance().getPrivateChatManager().getChat(partnerQBId);
+                            if(chatObject==null)
+                             chatObject=QBChatService.getInstance().getPrivateChatManager().createChat(partnerQBId,privateMsgListener);
+                            QBChatMessage message =  new QBChatMessage();
                             switch (data.getInt("ChatType")){
 
-                                case Constants.CHAT_TYPE_TEXT:
-                                 //   QBChatMessage message = new QBChatMessage();
-                                  //  message.ID = uniqueString;
-                                  //  extension = new DefaultPacketExtension("extraParams", "jabber:client");
-                                    message = new QBChatMessage();
-                                    message.setProperty("clicks",data.getString("clicks"));
-
-
-                                    message.setBody(data.getString("textMsg"));
-
-
+                                case Constants.CHAT_TYPE_CARD:
+                                    if(!data.getBoolean("is_CustomCard")){
+                                        message.setProperty("card_DB_ID",data.getString("card_DB_ID"));
+                                        message.setProperty("card_url",data.getString("card_url"));
+                                        message.setProperty("card_content",data.getString("card_content"));
+                                    }
+                                    message.setProperty("is_CustomCard",String.valueOf(data.getBoolean("is_CustomCard")));
+                                    message.setProperty("card_clicks",data.getString("clicks"));
+                                    message.setProperty("card_owner",data.getString("card_owner"));
+                                    message.setProperty("card_Accepted_Rejected",data.getString("accepted_Rejected"));
+                                    message.setProperty("card_heading",data.getString("card_heading"));
+                                    message.setProperty("card_id",data.getString("card_id"));
+                                    message.setProperty("card_Played_Countered",data.getString("card_Played_Countered"));
+                                    message.setProperty("card_originator",data.getString("card_originator"));
                                     break;
                                 case Constants.CHAT_TYPE_IMAGE:
-                                  //  extension = new DefaultPacketExtension("extraParams", "jabber:client");
-                                    message = new QBChatMessage();
-                                    message.setProperty("clicks",data.getString("clicks"));
-                                    message.setBody("" + data.getString("textMsg"));
 
-                                    try {
-                                        // chatObject.sendMessage();
-                                        try {
-                                            chatObject.sendMessage(message);
-                                        } catch (SmackException.NotConnectedException e) {
-                                            e.printStackTrace();
-                                        }
-                                    } catch (XMPPException e) {
-                                        e.printStackTrace();
-                                        //loginToChat();
-                                    }
-                                    break;
+                                    message.setProperty("fileID",data.getString("FileId"));
+                                    message.setProperty("imageRatio",data.getString("imageRatio"));
+                                   break;
+                            }
+                            if(!(data.getInt("ChatType")==Constants.CHAT_TYPE_CARD))
+                            message.setProperty("clicks",data.getString("clicks"));
+                            message.setBody(data.getString("textMsg"));
 
+                            try {
+                                try {
+                                    chatObject.sendMessage(message);
+                                } catch (SmackException.NotConnectedException e) {
+                                    e.printStackTrace();
+                                }
+                            } catch (XMPPException e) {
+                                e.printStackTrace();
+                                //loginToChat();
                             }
                         }else{
-                            // loginToChat();
+                             loginToChat();
                         }
+                        break;
+                    case CREATE_ROOM:
+                        if(!QBChatService.getInstance().isLoggedIn())
+                            loginToChat();
                         break;
 
                 }
             }
         };
 
-        //loginToChat();
+      //  loginToChat();
         Looper.loop();
 
-        EventBus.getDefault().unregister(this);
+        //
+         EventBus.getDefault().unregister(this);
     }
 
 
 
+    private void loginToChat() {
+        try {
 
+            QBChatService chatService;
+            if (!QBChatService.isInitialized()) {
+                QBChatService.init(application.getApplicationContext());
+            }
+            mUser = new QBUser();
+            authManager=ModelManager.getInstance().getAuthorizationManager();
+            mUser.setLogin(authManager.getUserId());
+           Log.e("ChatThread Login","authManager.getUsrToken()");
+            mUser.setPassword(authManager.getUsrToken());
+            QBSession result = QBAuth.createSession(new QBUser(authManager.getUserId(),authManager.getUsrToken()));
+            mUser.setId(result.getUserId());
+            QBChatService.getInstance().login(mUser);
+            QBChatService.getInstance().startAutoSendPresence(5);
+           // android.os.Message msg = new android.os.Message();
+            //msg.what = 1;
+           // mHandler.sendMessage(msg);
+        } catch (XMPPException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SmackException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 
@@ -188,6 +217,58 @@ public class ChatThread extends Thread  {
 
         @Override
         public void processMessage(QBChat qbChat, QBChatMessage qbChatMessage) {
+            Log.e(TAG,"processMessage--->");
+            JSONObject jSONObj = null;
+
+            Message message = qbChatMessage.getSmackMessage();
+            try {
+                jSONObj = XML.toJSONObject(message.toXML().toString());
+                Log.e(TAG, "--- xmlJSONObj--->" + jSONObj);
+
+                JSONObject messageObj = jSONObj.getJSONObject("message");
+                JSONObject extraParamsObj = messageObj.getJSONObject("extraParams");
+
+                if (extraParamsObj.has("isComposing")) { //means user is composing msg now
+                    if(extraParamsObj.getString("isComposing").equalsIgnoreCase("YES"))
+                        EventBus.getDefault().post("Composing YES");
+                    else
+                    EventBus.getDefault().post("Composing NO");
+
+                }else if(messageObj.getString("body").equalsIgnoreCase("Delivered.")) {//here we sent the msg , its delivr notification only
+                    EventBus.getDefault().post("Msg Delivered");
+                }else {//here we recieved proper chat msg and need to update list
+
+                    ChatMessageBody temp=new ChatMessageBody();
+                    String from = messageObj.getString("from");
+                    String[] words = from.split("-");
+                    temp.senderQbId = words[0];
+                    String body = messageObj.getString("body");
+
+                    if (extraParamsObj.has("clicks")) {
+                        temp.clicks = extraParamsObj.getString("clicks");
+                    }
+                    if (extraParamsObj.has("imageRatio")) {
+                        temp.imageRatio = extraParamsObj.getString("imageRatio");
+                    }
+                    if (extraParamsObj.has("fileID")) {
+                        temp.content_url = extraParamsObj.getString("fileID");
+                    }
+                    if(temp.clicks.equalsIgnoreCase("no")){
+                       temp.textMsg = body;
+                    }else{
+                       // if(!temp.clicks.equalsIgnoreCase(body))
+                        if(temp.textMsg.length()>3)
+                        temp.textMsg=body.substring(2).trim();
+                        else
+                         temp.textMsg=body.trim();
+                    }
+                    ModelManager.getInstance().getChatManager().chatMessageList.add(temp);
+
+                    EventBus.getDefault().post("Chat Message Recieve");
+                }
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
 
         }
 
@@ -198,7 +279,7 @@ public class ChatThread extends Thread  {
 
         @Override
         public void processMessageDelivered(QBChat qbChat, String s) {
-
+            Log.e(TAG,"processMessageDelivered--->");
         }
 
         @Override
