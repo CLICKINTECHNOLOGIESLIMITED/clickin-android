@@ -84,8 +84,8 @@ public class AddSomeoneView extends Activity implements
                   @Override
                   public void onClick(View arg0) {
 
-                        InputMethodManager imm = (InputMethodManager) getSystemService(
-                                                                                              INPUT_METHOD_SERVICE);
+                        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+
                         imm.hideSoftInputFromWindow(search_phbook.getWindowToken(), 0);
 
                   }
