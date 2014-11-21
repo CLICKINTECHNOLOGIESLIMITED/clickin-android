@@ -22,15 +22,35 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.quickblox.core.QBCallbackImpl;
+import com.quickblox.core.QBSettings;
+import com.quickblox.core.result.Result;
+import com.quickblox.module.auth.QBAuth;
+import com.quickblox.module.auth.result.QBSessionResult;
+import com.quickblox.module.chat.QBChatService;
+import com.quickblox.module.users.model.QBUser;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
 import com.sourcefuse.clickinandroid.model.SettingManager;
 import com.sourcefuse.clickinandroid.services.MyQbChatService;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
+import com.sourcefuse.clickinandroid.utils.ClickInAlertDialog;
 import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
+
+
+import org.jivesoftware.smack.ConnectionListener;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
+import java.net.URLConnection;
+
 
 import de.greenrobot.event.EventBus;
 
@@ -264,10 +284,17 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
             editor.putString("myPhoneNo",authManager.getPhoneNo());
             editor.commit();
 
+
+            Intent i=new Intent(this,MyQbChatService.class);
+          startService(i);
+
+
           //  new MyPreference(SignInView.this).setToken(authManager.getUsrToken());
             //new MyPreference(SignInView.this).setmyPhoneNo(authManager.getPhoneNo());
-            authManager.getProfileInfo("", authManager.getPhoneNo(), authManager.getUsrToken());
+          //  authManager.getProfileInfo("", authManager.getPhoneNo(), authManager.getUsrToken());
 
+            //loginToQuickBlox();
+            authManager.getProfileInfo("", authManager.getPhoneNo(), authManager.getUsrToken());
         } else if (getMsg.equalsIgnoreCase("SignIn False")) {
             Utils.dismissBarDialog();
            Utils.fromSignalDialog(this,AlertMessage.wrong_signIn_details);
@@ -436,11 +463,7 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mIsBound) {
-            // Detach our existing connection.
-            unbindService(mConnection);
-            mIsBound = false;
-        }
+
     }
 
 

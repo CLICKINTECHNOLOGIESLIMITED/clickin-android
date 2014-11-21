@@ -20,6 +20,7 @@ import android.os.Binder;
 
 
 import com.sourcefuse.clickinandroid.model.bean.ChatMessageBody;
+import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinapp.R;
 
 import org.jivesoftware.smack.packet.Message;
@@ -120,6 +121,30 @@ public class MyQbChatService extends Service {
         data.putString("textMsg", msgObject.textMsg);
         data.putString("clicks", msgObject.clicks);
         data.putInt("ChatType",msgObject.chatType);
+        switch (msgObject.chatType){
+            case Constants.CHAT_TYPE_CARD:
+                if(!msgObject.is_CustomCard) {
+                    data.putString("card_DB_ID", msgObject.card_DB_ID);
+                    data.putString("card_content",msgObject.card_content);
+                    data.putString("card_url",msgObject.card_url);
+                }
+               // data.putString("card_clicks",msgObject.clicks);
+                data.putString("card_owner",msgObject.card_owner);
+                data.putBoolean("is_CustomCard",msgObject.is_CustomCard);
+                data.putString("accepted_Rejected",msgObject.card_Accepted_Rejected);
+                data.putString("card_heading",msgObject.card_heading);
+                data.putString("card_id",msgObject.card_id);
+                data.putString("card_Played_Countered",msgObject.card_Played_Countered);
+                data.putString("card_originator",msgObject.card_originator);
+                break;
+            case Constants.CHAT_TYPE_IMAGE:
+                data.putString("imageRatio",msgObject.imageRatio);
+                data.putString("FileId",msgObject.content_url);
+                break;
+
+
+        }
+
         msg.setData(data);
         msg.what = ChatThread.SEND_CHAT;
         handler.sendMessage(msg);
@@ -173,6 +198,16 @@ public class MyQbChatService extends Service {
 
         // Send the notification.
         mNM.notify(mId++, mBuilder.build());
+    }
+
+    public void createRoom(String roomName) {
+        Handler handler = mChatThread.getHandler();
+        android.os.Message msg = new android.os.Message();
+        Bundle data = new Bundle();
+        data.putString("room", roomName);
+        msg.setData(data);
+        msg.what = ChatThread.CREATE_ROOM;
+        handler.sendMessage(msg);
     }
 
     public void onEventMainThread(String getMsg) {

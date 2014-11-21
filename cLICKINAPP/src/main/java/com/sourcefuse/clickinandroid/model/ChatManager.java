@@ -3,6 +3,7 @@ package com.sourcefuse.clickinandroid.model;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.sourcefuse.clickinandroid.model.bean.CardBean;
+import com.sourcefuse.clickinandroid.model.bean.ChatMessageBody;
 import com.sourcefuse.clickinandroid.model.bean.ChatRecordBeen;
 import com.sourcefuse.clickinandroid.utils.APIs;
 import com.sourcefuse.clickinandroid.utils.Log;
@@ -38,8 +39,15 @@ public class ChatManager  {
 
     private int partnerTotalClick =0 ;
 
-    public ArrayList<ChatRecordBeen> chatListFromServer = new ArrayList<ChatRecordBeen>();
-    public ArrayList<ChatRecordBeen> refreshivechatList = new ArrayList<ChatRecordBeen>();
+    public ArrayList<ChatMessageBody> chatListFromServer = new ArrayList<ChatMessageBody>();
+    public ArrayList<ChatMessageBody> refreshivechatList = new ArrayList<ChatMessageBody>();
+    public HashMap<String, ArrayList<CardBean>> categories = new HashMap<String, ArrayList<CardBean>>();
+    ArrayList<ArrayList<CardBean>> lists = new ArrayList<ArrayList<CardBean>>();
+    public ArrayList<CardBean> all = new ArrayList<CardBean>();
+
+
+    //this list to maintain current chat list to view in chat record view
+   public ArrayList<ChatMessageBody>chatMessageList=new ArrayList<ChatMessageBody>();
 
 
     public String getRelationshipId() {
@@ -75,9 +83,6 @@ public class ChatManager  {
 
 
 
-    public HashMap<String, ArrayList<CardBean>> categories = new HashMap<String, ArrayList<CardBean>>();
-    ArrayList<ArrayList<CardBean>> lists = new ArrayList<ArrayList<CardBean>>();
-    public ArrayList<CardBean> all = new ArrayList<CardBean>();
 
 
     public void fetchChatRecord(String relationshipId, String phone,String usertoken,String chatId) {
@@ -126,54 +131,58 @@ public class ChatManager  {
                             Log.e(TAG,"response FecthChat ->" + response);
                             state = response.getBoolean("success");
                             if (state) {
-                                chatManager.refreshivechatList.clear();
+                                ChatMessageBody temp=new ChatMessageBody();
+                                refreshivechatList.clear();
                                 Utils.clickCustomLog(response.toString());
                                 JSONArray list = response.getJSONArray("chats");
                                 for (int i = 0; i < list.length(); i++) {
-                                    chatRecordBeen = new ChatRecordBeen();
+
                                     JSONObject data = list.getJSONObject(i);
                                     JSONObject chatObj = data.getJSONObject("Chat");
 
-                                    if (chatObj.has("receiverQB_id"))
-                                        chatRecordBeen.setRecieverQbId(chatObj.getString("receiverQB_id"));
+                                   // if (chatObj.has("receiverQB_id"))
+                                     //   temp.re(chatObj.getString("receiverQB_id"));
                                     if (chatObj.has("sharedMessage"))
-                                        chatRecordBeen.setSharedMessage(chatObj.getString("sharedMessage"));
+                                       temp.sharedMessage=chatObj.getString("sharedMessage");
                                     if (chatObj.has("video_thumb"))
-                                        chatRecordBeen.setVideo_thumb(chatObj.getString("video_thumb"));
+                                        temp.video_thumb=chatObj.getString("video_thumb");
                                     if (chatObj.has("QB_id"))
-                                        chatRecordBeen.setSenderQbId(chatObj.getString("QB_id"));
+                                        temp.senderQbId=chatObj.getString("QB_id");
                                     if (chatObj.has("senderUserToken"))
-                                        chatRecordBeen.setSenderUserToken(chatObj.getString("senderUserToken"));
+                                        temp.senderUserToken = chatObj.getString("senderUserToken");
                                     if (chatObj.has("type"))
-                                        chatRecordBeen.setChatType(chatObj.getString("type"));
+                                        temp.chatType = Integer.parseInt(chatObj.getString("type"));
                                     if (chatObj.has("message"))
-                                        chatRecordBeen.setChatText(chatObj.getString("message"));
+                                       temp.textMsg=chatObj.getString("message");
                                     if (chatObj.has("content"))
-                                       chatRecordBeen.setChatImageUrl(chatObj.getString("content"));
+                                       temp.content_url=chatObj.getString("content");
                                     if (chatObj.has("relationshipId"))
-                                        chatRecordBeen.setRelationshipId(chatObj.getString("relationshipId"));
+                                        temp.relationshipId = chatObj.getString("relationshipId");
                                     if (chatObj.has("_id"))
-                                        chatRecordBeen.set_id(chatObj.getString("_id"));
+                                        temp._id = chatObj.getString("_id");
                                     if (chatObj.has("userId"))
-                                        chatRecordBeen.setUserId(chatObj.getString("userId"));
+                                        temp.userId = chatObj.getString("userId");
                                     if (chatObj.has("location_coordinates"))
-                                        chatRecordBeen.setLocation_coordinates(chatObj.getString("location_coordinates"));
-                                    if (chatObj.has("clicks"))
-                                        chatRecordBeen.setClicks(chatObj.getString("clicks"));
+                                        temp.location_coordinates = chatObj.getString("location_coordinates");
+                                    if (chatObj.has("clicks")) {
+                                        temp.clicks = chatObj.getString("clicks");
+                                        if (Utils.isEmptyString(temp.clicks))
+                                            temp.clicks = "no";
+                                    }
                                     if (chatObj.has("isDelivered"))
-                                        chatRecordBeen.setIsDelivered(chatObj.getString("isDelivered"));
+                                        temp.isDelivered = chatObj.getString("isDelivered");
                                     if (chatObj.has("imageRatio"))
-                                        chatRecordBeen.setImageRatio(chatObj.getString("imageRatio"));
+                                        temp.imageRatio = chatObj.getString("imageRatio");
                                     if (chatObj.has("chatId"))
-                                        chatRecordBeen.setChatId(chatObj.getString("chatId"));
+                                        temp.chatId = chatObj.getString("chatId");
                                     if (chatObj.has("cards"))
-                                        chatRecordBeen.setCards(chatObj.getString("cards"));
+                                       // temp.cardchatObj.getString("cards"));
                                     if (chatObj.has("sentOn"))
-                                        chatRecordBeen.setTimeStamp(chatObj.getString("sentOn"));
-                                    chatManager.refreshivechatList.add(chatRecordBeen);
+                                        temp.sentOn = chatObj.getString("sentOn");
+                                    refreshivechatList.add(temp);
                                 }
 
-                                chatManager.chatListFromServer.addAll(0,chatManager.refreshivechatList);
+                                chatManager.chatMessageList.addAll(0,refreshivechatList);
 
                                 EventBus.getDefault().post("FecthChat True");
                             }else{
