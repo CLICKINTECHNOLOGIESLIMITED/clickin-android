@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
@@ -32,8 +33,9 @@ public class AddSomeoneView extends Activity implements
       private Button do_latter,do_invited;
       private EditText search_phbook;
       private ListView listView;
+      private TextView bottom_text,back,title_top,title_bottom;//akshit code to hide textview
       private ContactAdapter adapter;
-      private RelativeLayout showContactlist;
+      private RelativeLayout showContactlist,layout_back;
       AuthManager authManager;
 
 
@@ -44,9 +46,13 @@ public class AddSomeoneView extends Activity implements
             setContentView(R.layout.view_addsomeone);
             this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
-
+            bottom_text= (TextView)findViewById(R.id.edt_text);//akshit code
+            title_bottom=(TextView)findViewById(R.id.title_text_bottom);
+            title_top=(TextView)findViewById(R.id.title_text_top);
             do_latter = (Button) findViewById(R.id.btn_do_itlatter);
             do_invited = (Button) findViewById(R.id.btn_been_invited);
+            back= (TextView)findViewById(R.id.btn_back);
+            layout_back=(RelativeLayout)findViewById(R.id.rl_back);
             search_phbook = (EditText) findViewById(R.id.edt_search_ph);
             listView = (ListView) findViewById(R.id.list_contact);
             showContactlist = (RelativeLayout) findViewById(R.id.rr_con_list);
@@ -93,21 +99,60 @@ public class AddSomeoneView extends Activity implements
             });
 
 
-            boolean mFrom = getIntent().getExtras().getBoolean("FromOwnProfile");
-            if (mFrom) {
-                  do_latter.setVisibility(View.GONE);
-            } else {
-                  do_latter.setVisibility(View.VISIBLE);
-            }
 
+          // akshit code starts
+
+           Bundle data = getIntent().getExtras();
+           if(data!=null){
+               if(data.containsKey("FromOwnProfile")){
+                   boolean mFrom = data.getBoolean("FromOwnProfile");
+                   if(mFrom){
+                       do_latter.setVisibility(View.GONE);
+                       do_invited.setVisibility(View.GONE);
+                       bottom_text.setVisibility(View.GONE);
+                       layout_back.setVisibility(View.VISIBLE);
+                       back.setVisibility(View.VISIBLE);
+                       title_top.setText("ADD SOMEONE");
+                       title_bottom.setText("TO CLICK WITH");
+
+                   }else{
+                       do_latter.setVisibility(View.VISIBLE);
+                       do_invited.setVisibility(View.VISIBLE);
+                       bottom_text.setVisibility(View.VISIBLE);
+                       layout_back.setVisibility(View.GONE);
+                       back.setVisibility(View.GONE);
+                   }
+               }
+           }
+
+          //akshit code ends
+//          data.containsKey("FromOwnProfile"")
+//                    .getBoolean("FromOwnProfile");
+//            if (mFrom) {
+//                  do_latter.setVisibility(View.GONE);
+//                  do_invited.setVisibility(View.GONE);
+//                  bottom_text.setVisibility(View.GONE);
+//
+//            } else {
+//                  do_latter.setVisibility(View.VISIBLE);
+//                  do_invited.setVisibility(View.VISIBLE);
+//                  bottom_text.setVisibility(View.VISIBLE);
+//            }
+
+          back.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View view) {
+                  finish();
+              }
+          });
 
             ((ImageView) findViewById(R.id.iv_keypad)).setOnClickListener(new View.OnClickListener() {
-                  @Override
-                  public void onClick(View v) {
-                        Intent intent = new Intent(AddSomeoneView.this, AddViaNumberView.class);
-                        intent.putExtra("fromsignup", getIntent().getBooleanExtra("fromsignup", false));
-                        startActivity(intent);
-                  }
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(AddSomeoneView.this, AddViaNumberView.class);
+                    intent.putExtra("fromsignup", getIntent().getBooleanExtra("fromsignup", false));
+                    startActivity(intent);
+                }
             });
 
 

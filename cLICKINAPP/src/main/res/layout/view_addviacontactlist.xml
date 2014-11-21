@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/rl_addvia_contact_action"
-    android:background="@drawable/white_pattern_bg">
+    android:background="@drawable/enterdigitmainbg">
 
     <LinearLayout
         android:id="@+id/iv_topicon"
@@ -22,10 +22,11 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="ADD SOMEONE"
+            android:layout_centerHorizontal="true"
             android:textColor="@color/screen_header"
             android:textSize="43sp"
             android:textStyle="bold"
-
+            android:layout_marginBottom="5dp"
             geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
             />
         <com.sourcefuse.clickinandroid.utils.ClickInTextView
@@ -34,6 +35,7 @@
             android:layout_gravity="top"
             android:layout_weight="1"
             android:gravity="center"
+            android:layout_centerHorizontal="true"
             android:text="TO CLICK WITH"
             android:textColor="@color/screen_header"
             android:textSize="43sp"
@@ -41,6 +43,7 @@
             android:layout_marginLeft="24dp"
             geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
             android:layout_marginTop="-50dp"
+            android:layout_marginBottom="10dp"
             />
 
     </LinearLayout>
@@ -57,11 +60,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/iv_topicon"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/white_border"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="18dp"
+        android:background="@drawable/alert_border_partner"
         android:padding="15dp">
 
         <RelativeLayout
@@ -80,16 +82,19 @@
 
             <TextView
                 android:id="@+id/tv_contact_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:layout_centerHorizontal="true"
+                android:paddingTop="15dp"
                 android:layout_marginBottom="2dp"
                 android:layout_toRightOf="@+id/iv_contact_icon"
                 android:paddingLeft="10dp"
                 android:text="mahendra"
-                android:textColor="@color/dark_gray"
+                android:textColor="@color/black"
                 android:textSize="15sp"
-                android:textStyle="bold"></TextView>
+                android:textStyle="bold"
+                android:background="@drawable/search_bg"
+                ></TextView>
 
         </RelativeLayout>
 <LinearLayout
@@ -121,7 +126,7 @@
         android:singleLine="true"
 
         android:padding="10dp"
-        android:textColor="@color/dark_gray"
+        android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"></EditText>
 
@@ -133,9 +138,8 @@
             android:id="@+id/ll_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="84.1dp"
+            android:layout_marginTop="86dp"
             android:layout_toRightOf="@id/ll2"
-
             android:orientation="horizontal">
 
 
@@ -148,7 +152,9 @@
                 android:ems="12"
                 android:inputType="phone"
                 android:padding="10dp"
-                android:textColor="@color/dark_gray"
+                android:textColor="@color/black"
+                android:hint="Phone Number"
+                android:textColorHint="@color/dark_gray"
                 android:textSize="16sp"
                 android:textStyle="bold">
 
@@ -166,7 +172,7 @@
 
             <Button
                 android:id="@+id/btn_get_clickIn"
-                android:layout_width="wrap_content"
+                android:layout_width="310dp"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"

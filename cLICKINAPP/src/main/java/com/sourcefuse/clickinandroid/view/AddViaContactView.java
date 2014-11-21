@@ -86,17 +86,16 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
                   String image_uri = bundle.getString("ConUri");
                   try {
                         if (!Utils.isEmptyString(image_uri)) {
-                              Picasso.with(AddViaContactView.this).
-                                                                          load(image_uri)
+                              Picasso.with(AddViaContactView.this)
+                                      .load(image_uri)
                                       .skipMemoryCache()
-
                                       .error(R.drawable.male_user)
                                       .into(conIcon);
                         } else {
-                              conIcon.setImageResource(R.drawable.male_user);
+                              conIcon.setImageResource(R.drawable.default_profile);
                         }
                   } catch (Exception e) {
-                        conIcon.setImageResource(R.drawable.male_user);
+                        conIcon.setImageResource(R.drawable.default_profile);
                   }
             } catch (Exception e) {
                   // TODO Auto-generated catch block
