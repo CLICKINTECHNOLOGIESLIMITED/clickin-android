@@ -91,7 +91,7 @@
                 android:layout_marginLeft="2dp"
                 android:inputType="textCapWords"
                 android:textColor="@color/black"
-                android:textColorHint="@color/phone_no_clr"
+                android:textColorHint="@color/sign_hint"
                 android:textSize="14sp"/>
 
             <ImageView
@@ -124,7 +124,7 @@
                 android:layout_centerHorizontal="true"
                 android:text="@string/text_add_partner"
                 geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
-                android:textColor="@color/sign_hint"
+                android:textColor="@color/signin_color"
                 android:textSize="14sp"/>
 
             </LinearLayout>

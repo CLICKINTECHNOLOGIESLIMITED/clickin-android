@@ -2,6 +2,7 @@ package com.sourcefuse.clickinandroid.view;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
+import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.FetchContactFromPhone;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.adapter.ContactAdapter;
@@ -37,29 +39,36 @@ public class AddSomeoneView extends Activity implements
       private ContactAdapter adapter;
       private RelativeLayout showContactlist,layout_back;
       AuthManager authManager;
+      private Typeface typeface, typefaceBold;
+
 
 
       @Override
       protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            requestWindowFeature(Window.FEATURE_NO_TITLE);
-            setContentView(R.layout.view_addsomeone);
-            this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+             super.onCreate(savedInstanceState);
+             requestWindowFeature(Window.FEATURE_NO_TITLE);
+             setContentView(R.layout.view_addsomeone);
+             this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
-            bottom_text= (TextView)findViewById(R.id.edt_text);//akshit code
-            title_bottom=(TextView)findViewById(R.id.title_text_bottom);
-            title_top=(TextView)findViewById(R.id.title_text_top);
-            do_latter = (Button) findViewById(R.id.btn_do_itlatter);
-            do_invited = (Button) findViewById(R.id.btn_been_invited);
-            back= (TextView)findViewById(R.id.btn_back);
-            layout_back=(RelativeLayout)findViewById(R.id.rl_back);
-            search_phbook = (EditText) findViewById(R.id.edt_search_ph);
-            listView = (ListView) findViewById(R.id.list_contact);
-            showContactlist = (RelativeLayout) findViewById(R.id.rr_con_list);
-            search_phbook.addTextChangedListener(this);
-            authManager = ModelManager.getInstance().getAuthorizationManager();
+             typeface = Typeface.createFromAsset(AddSomeoneView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
+             typefaceBold = Typeface.createFromAsset(AddSomeoneView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_BOLD);
 
-            listView.setOnItemClickListener(new OnItemClickListener() {
+
+             bottom_text= (TextView)findViewById(R.id.edt_text);//akshit code
+             bottom_text.setTypeface(typeface);
+             title_bottom=(TextView)findViewById(R.id.title_text_bottom);
+             title_top=(TextView)findViewById(R.id.title_text_top);
+             do_latter = (Button) findViewById(R.id.btn_do_itlatter);
+             do_invited = (Button) findViewById(R.id.btn_been_invited);
+             back= (TextView)findViewById(R.id.btn_back);
+             layout_back=(RelativeLayout)findViewById(R.id.rl_back);
+             search_phbook = (EditText) findViewById(R.id.edt_search_ph);
+             listView = (ListView) findViewById(R.id.list_contact);
+             showContactlist = (RelativeLayout) findViewById(R.id.rr_con_list);
+             search_phbook.addTextChangedListener(this);
+             authManager = ModelManager.getInstance().getAuthorizationManager();
+
+             listView.setOnItemClickListener(new OnItemClickListener() {
                   @Override
                   public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
 

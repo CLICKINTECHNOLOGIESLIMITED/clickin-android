@@ -6,7 +6,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -97,20 +96,15 @@ public class CardView extends FragmentActivity{
             tabHost.addTab(spec1);
             tabHost.setCurrentTab(0);
             tabHost.getTabWidget().setStripEnabled(false);
-//            Typeface localTypeface1 = Typeface.createFromAsset(getAssets(),
-//                    "fonts/AvenirNextLTPro-BoldCn_0.otf");
+
             settabStartup();
-            //setTbWidth();
-           // setTabTextSize();
-
-
-           setabColor();
+            setabColor();
         }
 
 
 
 
-
+//akshit code On tab change listner..
         tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
             public void onTabChanged(String s) {
@@ -119,10 +113,8 @@ public class CardView extends FragmentActivity{
                 bean.setTab_content(chatManager.tabArray.get(pos).getCategoriesName());
                 card = bean.getTab_content();
                 tabHost.getTabWidget().getChildAt(pos);
-                //tabHost.getCurrentTabView().setBackgroundResource();
-               // tabdrawable();
-                 setTabTextColor();
-               if(card.equals("Custom")){
+                setTabTextColor();
+                if(card.equals("Custom")){
 
                    FragmentManager fm = getSupportFragmentManager();
                    FragmentCustomTab cfm = new FragmentCustomTab();
@@ -194,6 +186,8 @@ public class CardView extends FragmentActivity{
 //        }
 //    }
 
+
+     //akshit code
     private void tabdrawable(){
 
         for (int i = 0; i < tabHost.getTabWidget().getChildCount(); i++) {
@@ -202,10 +196,12 @@ public class CardView extends FragmentActivity{
         }
 
         TextView tv = (TextView) tabHost.getCurrentTabView().findViewById(android.R.id.title);
-        tv.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.tab_underline_selector);
-
+        //tv.setCompoundDrawablesRelativeWithIntrinsicBounds(null,null,null,getResources().getDrawable(R.drawable.tabbottomline));
+          tv.setBackgroundDrawable(getResources().getDrawable(R.drawable.tabbottomline));
 
     }
+
+   // akshit code for setting tab background color on selection
     private void setTabTextColor(){
 
 
@@ -217,10 +213,6 @@ public class CardView extends FragmentActivity{
                     TextView tv = (TextView) tabHost.getCurrentTabView().findViewById(android.R.id.title);
                     tv.setTextColor(Color.parseColor("#39cad4"));
 
-                   // tv.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.tabbottomline);
-
-
-
         }
     private void setabColor() {
 
@@ -228,8 +220,6 @@ public class CardView extends FragmentActivity{
         {
             tabHost.getTabWidget().getChildAt(i).setBackgroundColor(Color.parseColor("#f4f4f4"));
         }
-
-
     }
 
     private void settabStartup() {

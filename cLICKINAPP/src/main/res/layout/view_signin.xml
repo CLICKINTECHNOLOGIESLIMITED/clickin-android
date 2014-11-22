@@ -99,7 +99,7 @@
             android:layout_marginTop="39dp"
             android:layout_marginBottom="16dp">
 
-            <com.sourcefuse.clickinandroid.utils.ClickInTextView
+            <TextView
                 android:id="@+id/tv_forgot_pwd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -108,11 +108,12 @@
                 android:layout_marginLeft="-10dp"
                 android:text="@string/txt_forget_pwd"
                 android:textColor="@color/signin_color"
-                geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+
+                />
 
 
-            <com.sourcefuse.clickinandroid.utils.ClickInTextView
+            <TextView
                 android:id="@+id/tv_signup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -121,14 +122,14 @@
                 android:gravity="right"
                 android:padding="10dp"
                 android:text="@string/txt_signup"
-                geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
                 android:textColor="@color/signin_color"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                />
         </RelativeLayout>
 
         <Button
             android:id="@+id/btn_get_clickin"
-            android:layout_width="wrap_content"
+            android:layout_width="310dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/ll_search"
             android:layout_centerHorizontal="true"
