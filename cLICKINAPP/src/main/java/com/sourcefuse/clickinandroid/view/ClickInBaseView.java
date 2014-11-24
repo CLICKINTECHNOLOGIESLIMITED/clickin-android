@@ -13,9 +13,11 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -41,7 +43,8 @@ import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.adapter.ClickInWithAdapter;
 import com.sourcefuse.clickinandroid.view.adapter.NotificationAdapter;
 import com.sourcefuse.clickinandroid.view.adapter.SearchAdapter;
-import com.sourcefuse.clickinandroid.view.adapter.SimpleSectionedListAdapter1;
+
+import com.sourcefuse.clickinandroid.view.adapter.SimpleSectionedListAdapter;
 import com.sourcefuse.clickinapp.R;
 import com.squareup.picasso.Picasso;
 
@@ -51,880 +54,973 @@ import java.util.List;
 import de.greenrobot.event.EventBus;
 
 public class
- ClickInBaseView extends Activity implements TextWatcher, SlidingMenu.OnOpenListener, SlidingMenu.OnCloseListener {
+        ClickInBaseView extends Activity implements TextWatcher, SlidingMenu.OnOpenListener, SlidingMenu.OnCloseListener {
 
 
-      /// Left Menu
-      private TextView userName;
-      private ImageView userPic, hideSearchlist;
-      private AuthManager authManager;
-      private RelationManager relationManager;
-      private ClickInNotificationManager notificationMngr;
-      private Typeface typeface;
-      private Button searchInviteView;
-      private LinearLayout theFeed, inviteF, findFriend, setting;
-      public ListView clickWithlistView, searchList;
-      public ClickInWithAdapter clickInadapter;
-      private String quickBlockId, partnerPic, partnerName, partnerId, myClicks, userClicks, partnerPh;
-      public Boolean stopSearch = true;
-      public EditText edt_search;
-      private SearchAdapter searchListadapter;
-      private RelativeLayout imageMenuRefresh;
-      private int relationListIndex;
-      public ImageButton clear ;
-      //Right Menu.....
-      public ListView notificationList;
-      private ImageView backArrowRightSide;
-      public NotificationAdapter notificationAdapter;
-      public NewsFeedManager newsFeedManager;
-      private Bitmap imageBitmap = null;
-      SlidingMenu slidemenu;
-      private ChatManager chatManager;
+    /// Left Menu
+    private TextView userName;
+    private ImageView userPic, hideSearchlist;
+    private AuthManager authManager;
+    private RelationManager relationManager;
+    private ClickInNotificationManager notificationMngr;
+    private Typeface typeface;
+    private TextView searchInviteView;
+    private LinearLayout theFeed, inviteF, findFriend, setting;
+    public ListView clickWithlistView, searchList;
+    public ClickInWithAdapter clickInadapter;
+    private String quickBlockId, partnerPic, partnerName, partnerId, myClicks, userClicks, partnerPh;
+    public Boolean stopSearch = true;
+    public EditText edt_search;
+    private SearchAdapter searchListadapter;
+    private RelativeLayout imageMenuRefresh;
+    private int relationListIndex;
+
+    //Right Menu.....
+    public ListView notificationList;
+    private ImageView backArrowRightSide;
+    public NotificationAdapter notificationAdapter;
+    public NewsFeedManager newsFeedManager;
+    private Bitmap imageBitmap = null;
+    SlidingMenu slidemenu;
+    private ChatManager chatManager;
 
 
-      @Override
-      protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            requestWindowFeature(Window.FEATURE_NO_TITLE);
-            setContentView(R.layout.view_baseview);
-            Log.e("ClickInBaseView1", "onCreate");
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.view_baseview);
+        Log.e("ClickInBaseView1", "onCreate");
 
-            authManager = ModelManager.getInstance().getAuthorizationManager();
-
-
-      }
-
-      @SuppressWarnings("static-access")
-      public void setLeftMenuList() {
-            clickInadapter = new ClickInWithAdapter(ClickInBaseView.this, R.layout.row_clickin_with, relationManager.acceptedList);
-            String[] mHeaderNames = {"CLICKIN'"};
-            String[] mHeaderNames2 = {" WITH"};
-            Integer[] mHeaderPositions = {0};
-
-            ArrayList<SimpleSectionedListAdapter1.Section> sections = new ArrayList<SimpleSectionedListAdapter1.Section>();
-            SimpleSectionedListAdapter1 simpleSectionedGridAdapter;
-
-            sections.add(new SimpleSectionedListAdapter1.Section(mHeaderPositions[0], mHeaderNames[0], mHeaderNames2[0]));
-            simpleSectionedGridAdapter = new SimpleSectionedListAdapter1(ClickInBaseView.this, clickInadapter, R.layout.header_clickwith, R.id.tv_clickintx, R.id.tv_with);
-            simpleSectionedGridAdapter.setSections(sections.toArray(new SimpleSectionedListAdapter1.Section[0]));
-            clickWithlistView.setAdapter(simpleSectionedGridAdapter);
-      }
-
-      private void switchView(String rid, int relationListIndex) {
-
-            Intent intent = new Intent(ClickInBaseView.this, ChatRecordView.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            intent.setAction("UPDATE");
-            intent.putExtra("quickId", quickBlockId);
-            intent.putExtra("partnerPic", partnerPic);
-            intent.putExtra("partnerName", partnerName);
-            intent.putExtra("rId", rid);
-            intent.putExtra("partnerId", partnerId);
-            intent.putExtra("myClicks", myClicks);
-            intent.putExtra("userClicks", userClicks);
-            intent.putExtra("partnerPh", partnerPh);
-            intent.putExtra("relationListIndex", relationListIndex);
-
-            chatManager = ModelManager.getInstance().getChatManager();
-            chatManager.setrelationshipId(rid);
+        authManager = ModelManager.getInstance().getAuthorizationManager();
 
 
-            ActivityManager am = (ActivityManager) this.getSystemService(ACTIVITY_SERVICE);
-            List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
-            ComponentName componentInfo = taskInfo.get(0).topActivity;
-            String className = componentInfo.getClassName();
-            if (className.equalsIgnoreCase("com.sourcefuse.clickinandroid.view.ChatRecordView")) {
-                  startActivity(intent);
+    }
+
+    @SuppressWarnings("static-access")
+    public void setLeftMenuList() {
+        clickInadapter = new ClickInWithAdapter(ClickInBaseView.this, R.layout.row_clickin_with, relationManager.acceptedList);
+        String[] mHeaderNames = {"CLICKIN'"};
+        String[] mHeaderNames2 = {" WITH"};
+        Integer[] mHeaderPositions = {0};
+
+        ArrayList<SimpleSectionedListAdapter.Section> sections = new ArrayList<SimpleSectionedListAdapter.Section>();
+        SimpleSectionedListAdapter simpleSectionedGridAdapter;
+
+        boolean hidevalue = (relationManager.acceptedList.size() > 0) ? true : false;
+
+        sections.add(new SimpleSectionedListAdapter.Section(mHeaderPositions[0], mHeaderNames[0], mHeaderNames2[0]));
+        simpleSectionedGridAdapter = new SimpleSectionedListAdapter(ClickInBaseView.this, clickInadapter, R.layout.header_clickwith, R.id.tv_clickintx, R.id.tv_with, hidevalue);
+        simpleSectionedGridAdapter.setSections(sections.toArray(new SimpleSectionedListAdapter.Section[0]));
+        clickWithlistView.setAdapter(simpleSectionedGridAdapter);
+    }
+
+    private void switchView(String rid, int relationListIndex) {
+
+        Intent intent = new Intent(ClickInBaseView.this, ChatRecordView.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.setAction("UPDATE");
+        intent.putExtra("quickId", quickBlockId);
+        intent.putExtra("partnerPic", partnerPic);
+        intent.putExtra("partnerName", partnerName);
+        intent.putExtra("rId", rid);
+        intent.putExtra("partnerId", partnerId);
+        intent.putExtra("myClicks", myClicks);
+        intent.putExtra("userClicks", userClicks);
+        intent.putExtra("partnerPh", partnerPh);
+        intent.putExtra("relationListIndex", relationListIndex);
+
+        chatManager = ModelManager.getInstance().getChatManager();
+        chatManager.setrelationshipId(rid);
+
+
+        ActivityManager am = (ActivityManager) this.getSystemService(ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
+        ComponentName componentInfo = taskInfo.get(0).topActivity;
+        String className = componentInfo.getClassName();
+        if (className.equalsIgnoreCase("com.sourcefuse.clickinandroid.view.ChatRecordView")) {
+            startActivity(intent);
 
                   /* for animation prafull */
 
-                  this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
-                  slidemenu.showContent();
-                  //  slidemenu.showContent(true);
-            } else {
-                  startActivity(intent);
+            this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+            slidemenu.showContent();
+            //  slidemenu.showContent(true);
+        } else {
+            startActivity(intent);
                   /* for animation prafull */
 
-                  this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
-                  // slidemenu.showContent(true);
-            }
+            this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+            // slidemenu.showContent(true);
+        }
 
 
-      }
-      /// Left Menu End
+    }
+    /// Left Menu End
 
 
-      public void addMenu(boolean setData) {
-            // TODO Auto-generated method stub
-            slidemenu = new SlidingMenu(this);
-            slidemenu.setMode(SlidingMenu.LEFT_RIGHT);
-            slidemenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
-            slidemenu.setShadowWidthRes(R.dimen.shadow_width);
-            slidemenu.setShadowDrawable(R.drawable.shadow);
-            slidemenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
-            slidemenu.setFadeDegree(0.35f);
-            slidemenu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
+    public void addMenu(boolean setData) {
+        // TODO Auto-generated method stub
+        slidemenu = new SlidingMenu(this);
+        slidemenu.setMode(SlidingMenu.LEFT_RIGHT);
+        slidemenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+        slidemenu.setShadowWidthRes(R.dimen.shadow_width);
+        slidemenu.setShadowDrawable(R.drawable.shadow);
+        slidemenu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+        slidemenu.setFadeDegree(0.35f);
+        slidemenu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
         /*
          * Left Menu
          */
-            slidemenu.setMenu(R.layout.menu_view);
-            leftMenuElements();
+        slidemenu.setMenu(R.layout.menu_view);
+        leftMenuElements();
 
-            if (setData) {
-                  getMenuListData();
-            } else {
-                  setMenuListData();
+        if (setData) {
+            getMenuListData();
+        } else {
+            setMenuListData();
 
-            }
+        }
 
-            slidemenu.setOnCloseListener(ClickInBaseView.this);
-            slidemenu.setOnOpenListener(ClickInBaseView.this);
+        slidemenu.setOnCloseListener(ClickInBaseView.this);
+        slidemenu.setOnOpenListener(ClickInBaseView.this);
         
         /*
          * Right Menu
          */
-            slidemenu.setSecondaryMenu(R.layout.view_notification);
-            //slidemenu.setSecondaryShadowDrawable(R.drawable.shadow);
-            rightMenuElements();
-            setNotificationList();
+        slidemenu.setSecondaryMenu(R.layout.view_notification);
+        //slidemenu.setSecondaryShadowDrawable(R.drawable.shadow);
+        rightMenuElements();
+        setNotificationList();
 
-            slidemenu.setOnClosedListener(new SlidingMenu.OnClosedListener() {
-                  @Override
-                  public void onClosed() {
-                        try {
-                              InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                              imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
-                        } catch (Exception e) {
-                              e.printStackTrace();
-                        }
-                  }
-            });
-
-
-      }
-
-
-      public void leftMenuElements() {
-            authManager = ModelManager.getInstance().getAuthorizationManager();
-            relationManager = ModelManager.getInstance().getRelationManager();
-            typeface = Typeface.createFromAsset(ClickInBaseView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
-            edt_search = (EditText) slidemenu.findViewById(R.id.edt_search);
-            searchList = (ListView) slidemenu.findViewById(R.id.search_list);
-            hideSearchlist = (ImageView) slidemenu.findViewById(R.id.iv_hide_searchlist);
-
-            clickWithlistView = (ListView) slidemenu.findViewById(R.id.click_with_list_menu);
-            clickWithlistView.setDivider(getResources().getDrawable(R.drawable.list_divider));
-            clickWithlistView.setDividerHeight(2);
-            // Adding  header And footer
-            View headerView = ((LayoutInflater) ClickInBaseView.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.menu_header, null, false);
-            View footerView = ((LayoutInflater) ClickInBaseView.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.menu_footer, null, false);
-            View searchfooter = ((LayoutInflater) ClickInBaseView.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.search_list_footer, null, false);
-            clickWithlistView.addHeaderView(headerView);
-            clickWithlistView.addFooterView(footerView);
-            searchList.addFooterView(searchfooter);
-
-            // heater View....
-            userName = (TextView) headerView.findViewById(R.id.iv_usr_name);
-            userPic = (ImageView) headerView.findViewById(R.id.iv_usr_img);
-            imageMenuRefresh = (RelativeLayout) headerView.findViewById(R.id.image_menu_refresh);
-
-            // footer view
-            theFeed = (LinearLayout) footerView.findViewById(R.id.ll_feed);
-            inviteF = (LinearLayout) footerView.findViewById(R.id.ll_invite);
-            findFriend = (LinearLayout) footerView.findViewById(R.id.ll_friend);
-            setting = (LinearLayout) footerView.findViewById(R.id.ll_setting);
-            searchInviteView = (Button) searchfooter.findViewById(R.id.btn_invite_view);
-
-
-            userName.setText(authManager.getUserName());
-            userPic.setScaleType(ScaleType.FIT_XY);
-            String dtails = "";
-            try {
-                  try {
-
-                        if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().matches("girl")) {
-                              dtails = "Female";
-                        } else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().matches("guy")) {
-                              dtails = "Male";
-                        }else{
-                            dtails = " ";
-                        }
-                  } catch (Exception e) {
-                  }
-
-            } catch (Exception e) {
+        slidemenu.setOnClosedListener(new SlidingMenu.OnClosedListener() {
+            @Override
+            public void onClosed() {
+                try {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
-
-            try {
-//                  Uri tempUri = authManager.getUserImageUri();
-//                  if (tempUri != null)
-                      Bitmap imageBitmap1 = authManager.getUserbitmap();
-                        if (imageBitmap1 != null){
-                        imageBitmap = authManager.getUserbitmap();
-                        if (imageBitmap != null)
-                              userPic.setImageBitmap(imageBitmap);
-                        else {
-                              try {
-                                    if (dtails.equalsIgnoreCase("Male")) {
-                                          Picasso.with(this)
-                                                  .load(authManager.getUserPic())
-                                                  .skipMemoryCache()
-
-                                                  .error(R.drawable.male_user)
-                                                  .into(userPic);
-                                    } else if (dtails.equalsIgnoreCase("Female")) {
-                                          Picasso.with(this)
-                                                  .load(authManager.getUserPic())
-                                                  .skipMemoryCache()
-
-                                                  .error(R.drawable.female_user)
-                                                  .into(userPic);
-                                    }else{
-                                        userPic.setImageResource(R.drawable.male_user);
-                                    }
-
-                              } catch (Exception e) {
-                                    e.printStackTrace();
-                              }
-                        }
-
-                  } else {
-                        try {
-                              if (dtails.equalsIgnoreCase("Male")) {
-                                    Picasso.with(this)
-                                            .load(authManager.getUserPic())
-                                            .skipMemoryCache()
-
-                                            .error(R.drawable.male_user)
-                                            .into(userPic);
-                              } else if (dtails.equalsIgnoreCase("Female")) {
-                                    Picasso.with(this)
-                                            .load(authManager.getUserPic())
-                                            .skipMemoryCache()
-
-                                            .error(R.drawable.female_user)
-                                            .into(userPic);
-                              }
-                            else{
-                                  userPic.setImageResource(R.drawable.male_user);
-                              }
-
-                        } catch (Exception e) {
-                              e.printStackTrace();
-                        }
-
-                  }
-
-            } catch (Exception e) {
-                  e.printStackTrace();
+        });
+        slidemenu.findViewById(R.id.btn_clear).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                edt_search.setText("");
+                /*try {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }*/
             }
-            edt_search.addTextChangedListener(this);
+        });
 
-            clickWithlistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                  @Override
-                  public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-                        if (relationManager.acceptedList.size() > 0 && position >= 2) {
-                              try {
-                                    partnerName = relationManager.acceptedList.get(position - 2).getPartnerName();
-                                    String rId = relationManager.acceptedList.get(position - 2).getRelationshipId();
-                                    partnerPic = relationManager.acceptedList.get(position - 2).getPartnerPic();
-                                    quickBlockId = relationManager.acceptedList.get(position - 2).getPartnerQBId();
-                                    partnerId = relationManager.acceptedList.get(position - 2).getPartner_id();
-                                    myClicks = relationManager.acceptedList.get(position - 2).getClicks();
-                                    userClicks = relationManager.acceptedList.get(position - 2).getUserClicks();
-                                    partnerPh = relationManager.acceptedList.get(position - 2).getPhoneNo();
-                                    Log.e("", "position--In..> " + rId);
-                                    relationListIndex = (position - 2);
-                                    switchView(rId, relationListIndex);
+    }
 
-                              } catch (Exception e) {
-                              }
-                        }
-                  }
-            });
 
-            searchInviteView.setOnClickListener(new View.OnClickListener() {
-                  @Override
-                  public void onClick(View arg0) {
-                        try {
-                              InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                              imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
-                        } catch (Exception e) {
-                              e.printStackTrace();
-                        }
-                        Intent intent = new Intent(ClickInBaseView.this, AddSomeoneView.class);
-                        startActivity(intent);
-                  }
-            });
-            hideSearchlist.setOnClickListener(new View.OnClickListener() {
-                  @Override
-                  public void onClick(View arg0) {
+    public void leftMenuElements() {
+        authManager = ModelManager.getInstance().getAuthorizationManager();
+        relationManager = ModelManager.getInstance().getRelationManager();
+        typeface = Typeface.createFromAsset(ClickInBaseView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
+        edt_search = (EditText) slidemenu.findViewById(R.id.edt_search);
+        searchList = (ListView) slidemenu.findViewById(R.id.search_list);
 
-                        searchList.setVisibility(View.GONE);
+
+
+
+        edt_search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+
+
+                //praful code
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    Log.e("00000", "00000000000");
+                    if (!(edt_search.getText().toString().length() > 0)) {
                         hideSearchlist.setVisibility(View.GONE);
-                        edt_search.setText("");
-                  }
-            });
-
-            findFriend.setOnClickListener(new View.OnClickListener() {
-                  @Override
-                  public void onClick(View arg0) {
+                        searchList.setVisibility(View.GONE);
                         try {
-                              InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                              imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
+                            InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                            inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                         } catch (Exception e) {
-                              e.printStackTrace();
                         }
-                        Intent intent = new Intent(ClickInBaseView.this, CurrentClickersView.class);
-                        intent.putExtra("FromMenu", true);
-                        startActivity(intent);
+                    }
+                    String search_date = edt_search.getText().toString();
+                    if (!Utils.isEmptyString(search_date) && search_date.length() < 3) {
+                        slidemenu.findViewById(R.id.btn_clear).setVisibility(View.VISIBLE);
+                        slidemenu.findViewById(R.id.btn_progressBar).setVisibility(View.GONE);
+                    } else if (!Utils.isEmptyString(search_date) && search_date.length() > 2) {
+                        slidemenu.findViewById(R.id.btn_clear).setVisibility(View.GONE);
+                        slidemenu.findViewById(R.id.btn_progressBar).setVisibility(View.VISIBLE);
+                    } else {
+                        slidemenu.findViewById(R.id.btn_clear).setVisibility(View.GONE);
+                        slidemenu.findViewById(R.id.btn_progressBar).setVisibility(View.GONE);
+                    }
+                    if (edt_search.getText().toString().length() > 2) {
+                        hideSearchlist.setVisibility(View.VISIBLE);
+                        searchList.setVisibility(View.VISIBLE);
+                        stopSearch = true;
+                        if (stopSearch) {
+                            stopSearch = false;
+                            relationManager = ModelManager.getInstance().getRelationManager();
+                            authManager = ModelManager.getInstance().getAuthorizationManager();
+                            relationManager.fetchusersbyname(edt_search.getText().toString(), authManager.getPhoneNo(), authManager.getUsrToken());
+                        }
+                    }
+                    handled = true;
+                }
+                return handled;
+            }
+        });
+
+
+
+
+            /*searchList.setDivider(getResources().getDrawable(R.drawable.list_divider));
+            searchList.setDividerHeight(2);*/
+
+
+        hideSearchlist = (ImageView) slidemenu.findViewById(R.id.iv_hide_searchlist);
+
+        clickWithlistView = (ListView) slidemenu.findViewById(R.id.click_with_list_menu);
+           /* clickWithlistView.setDivider(getResources().getDrawable(R.drawable.list_divider__));
+            clickWithlistView.setDividerHeight(4);*/
+            /*clickWithlistView.setFooterDividersEnabled(false);
+            clickWithlistView.setHeaderDividersEnabled(false);*/
+        // Adding  header And footer
+        View headerView = ((LayoutInflater) ClickInBaseView.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.menu_header, null, false);
+        View footerView = ((LayoutInflater) ClickInBaseView.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.menu_footer, null, false);
+        View searchfooter = ((LayoutInflater) ClickInBaseView.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.search_list_footer, null, false);
+        clickWithlistView.addHeaderView(headerView);
+        clickWithlistView.addFooterView(footerView);
+        searchList.addFooterView(searchfooter);
+
+        // heater View....
+        userName = (TextView) headerView.findViewById(R.id.iv_usr_name);
+        userPic = (ImageView) headerView.findViewById(R.id.iv_usr_img);
+        imageMenuRefresh = (RelativeLayout) headerView.findViewById(R.id.image_menu_refresh);
+
+        // footer view
+        theFeed = (LinearLayout) footerView.findViewById(R.id.ll_feed);
+        inviteF = (LinearLayout) footerView.findViewById(R.id.ll_invite);
+        findFriend = (LinearLayout) footerView.findViewById(R.id.ll_friend);
+        setting = (LinearLayout) footerView.findViewById(R.id.ll_setting);
+        searchInviteView = (TextView) searchfooter.findViewById(R.id.btn_invite_view);
+
+
+        userName.setText(authManager.getUserName());
+        userPic.setScaleType(ScaleType.FIT_XY);
+        String dtails = "";
+        try {
+            try {
+
+                if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().matches("girl")) {
+                    dtails = "Female";
+                } else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().matches("guy")) {
+                    dtails = "Male";
+                } else {
+                    dtails = " ";
+                }
+            } catch (Exception e) {
+            }
+
+        } catch (Exception e) {
+        }
+
+        try {
+            Bitmap imageBitmap1 = authManager.getUserbitmap();
+            if (imageBitmap1 != null) {
+                imageBitmap = authManager.getUserbitmap();
+                if (imageBitmap != null)
+                    userPic.setImageBitmap(imageBitmap);
+                else {
+                    try {
+                        if (dtails.equalsIgnoreCase("Male")) {
+                            Picasso.with(this)
+                                    .load(authManager.getUserPic())
+                                    .skipMemoryCache()
+
+                                    .error(R.drawable.male_user)
+                                    .into(userPic);
+                        } else if (dtails.equalsIgnoreCase("Female")) {
+                            Picasso.with(this)
+                                    .load(authManager.getUserPic())
+                                    .skipMemoryCache()
+
+                                    .error(R.drawable.female_user)
+                                    .into(userPic);
+                        } else {
+                            userPic.setImageResource(R.drawable.male_user);
+                        }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            } else {
+                try {
+                    if (dtails.equalsIgnoreCase("Male")) {
+                        Picasso.with(this)
+                                .load(authManager.getUserPic())
+                                .skipMemoryCache()
+
+                                .error(R.drawable.male_user)
+                                .into(userPic);
+                    } else if (dtails.equalsIgnoreCase("Female")) {
+                        Picasso.with(this)
+                                .load(authManager.getUserPic())
+                                .skipMemoryCache()
+
+                                .error(R.drawable.female_user)
+                                .into(userPic);
+                    } else {
+                        userPic.setImageResource(R.drawable.male_user);
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        edt_search.addTextChangedListener(this);
+
+        clickWithlistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+                if (relationManager.acceptedList.size() > 0 && position >= 2) {
+                    try {
+                        partnerName = relationManager.acceptedList.get(position - 2).getPartnerName();
+                        String rId = relationManager.acceptedList.get(position - 2).getRelationshipId();
+                        partnerPic = relationManager.acceptedList.get(position - 2).getPartnerPic();
+                        quickBlockId = relationManager.acceptedList.get(position - 2).getPartnerQBId();
+                        partnerId = relationManager.acceptedList.get(position - 2).getPartner_id();
+                        myClicks = relationManager.acceptedList.get(position - 2).getClicks();
+                        userClicks = relationManager.acceptedList.get(position - 2).getUserClicks();
+                        partnerPh = relationManager.acceptedList.get(position - 2).getPhoneNo();
+                        Log.e("", "position--In..> " + rId);
+                        relationListIndex = (position - 2);
+                        switchView(rId, relationListIndex);
+
+                    } catch (Exception e) {
+                    }
+                }
+            }
+        });
+
+        searchInviteView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                try {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                Intent intent = new Intent(ClickInBaseView.this, AddSomeoneView.class);
+                startActivity(intent);
+            }
+        });
+        hideSearchlist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+
+                searchList.setVisibility(View.GONE);
+                hideSearchlist.setVisibility(View.GONE);
+                edt_search.setText("");
+            }
+        });
+
+        findFriend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                try {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                Intent intent = new Intent(ClickInBaseView.this, CurrentClickersView.class);
+                intent.putExtra("FromMenu", true);
+                startActivity(intent);
 
                         /* code for animation prafull*/
 
 
-                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
 //akshit code for closing menu
 //                      if(slidemenu.isSecondaryMenuShowing() || slidemenu.isMenuShowing()){
 //                          slidemenu.toggle();
 //                      }
-                  }
-            });
+            }
+        });
 
-            inviteF.setOnClickListener(new View.OnClickListener() {
-                  @Override
-                  public void onClick(View arg0) {
-                        try {
-                              InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                              imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
-                        } catch (Exception e) {
-                              e.printStackTrace();
-                        }
-                        Intent intent = new Intent(ClickInBaseView.this, SpreadWordView.class);
-                        startActivity(intent);
-
-                        /* code for animation prafull*/
-
-                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
-                  }
-            });
-            theFeed.setOnClickListener(new View.OnClickListener() {
-                  @Override
-                  public void onClick(View arg0) {
-
-
-                        try {
-                              InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                              imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
-                        } catch (Exception e) {
-                              e.printStackTrace();
-                        }
-                        Intent intent = new Intent(ClickInBaseView.this, FeedView.class);
-                        startActivity(intent);
+        inviteF.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                try {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                Intent intent = new Intent(ClickInBaseView.this, SpreadWordView.class);
+                startActivity(intent);
 
                         /* code for animation prafull*/
 
-                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
-                  }
-            });
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+            }
+        });
+        theFeed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
 
-            imageMenuRefresh.setOnClickListener(new View.OnClickListener() {
-                  @Override
-                  public void onClick(View arg0) {
-                        try {
-                              InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                              imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
-                        } catch (Exception e) {
-                              e.printStackTrace();
-                        }
-                        Log.e("", "00000000-userPic" + slidemenu);
-                        Intent intent = new Intent(ClickInBaseView.this, UserProfileView.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                        ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
-                        List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
-                        //  Log.d("topActivity", "CURRENT Activity ::"
-                        //        + taskInfo.get(0).topActivity.getClassName());
-                        ComponentName componentInfo = taskInfo.get(0).topActivity;
-                        String className = componentInfo.getClassName();
-                        if (className.equalsIgnoreCase("com.sourcefuse.clickinandroid.view.UserProfileView")) {
-                              startActivity(intent);
-                              slidemenu.showContent();
+
+                try {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                Intent intent = new Intent(ClickInBaseView.this, FeedView.class);
+                startActivity(intent);
+
+                        /* code for animation prafull*/
+
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+            }
+        });
+
+        imageMenuRefresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                try {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                Log.e("", "00000000-userPic" + slidemenu);
+                Intent intent = new Intent(ClickInBaseView.this, UserProfileView.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+                List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
+                //  Log.d("topActivity", "CURRENT Activity ::"
+                //        + taskInfo.get(0).topActivity.getClassName());
+                ComponentName componentInfo = taskInfo.get(0).topActivity;
+                String className = componentInfo.getClassName();
+                if (className.equalsIgnoreCase("com.sourcefuse.clickinandroid.view.UserProfileView")) {
+                    startActivity(intent);
+                    slidemenu.showContent();
 
                               /* code for animation prafull*/
 
-                              overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
-                              // slidemenu.showContent(true);
-                        } else {
-                              startActivity(intent);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+                    // slidemenu.showContent(true);
+                } else {
+                    startActivity(intent);
                               /* code for animation prafull*/
 
-                              overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
-                              //slidemenu.showContent(true);
-                        }
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+                    //slidemenu.showContent(true);
+                }
 
-                  }
-            });
+            }
+        });
 
-            setting.setOnClickListener(new View.OnClickListener() {
-                  @Override
-                  public void onClick(View arg0) {
-                        try {
-                              InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                              imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
-                        } catch (Exception e) {
-                              e.printStackTrace();
-                        }
-                        Log.e("", "00000000-SettingView Intent");
-                        Intent intent = new Intent(ClickInBaseView.this, SettingView.class);
-                        startActivity(intent);
+        setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                try {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                Log.e("", "00000000-SettingView Intent");
+                Intent intent = new Intent(ClickInBaseView.this, SettingView.class);
+                startActivity(intent);
 
                         /* code for animation prafull*/
 
-                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
-                  }
-            });
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+            }
+        });
 
-            searchInviteView.setOnClickListener(new View.OnClickListener() {
-                  @Override
-                  public void onClick(View arg0) {
+        searchInviteView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                try {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                Intent intent = new Intent(ClickInBaseView.this, AddSomeoneView.class);
+                intent.putExtra("FromOwnProfile", true);
+                startActivity(intent);
+
+                        /* code for animation prafull*/
+
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+                searchList.setVisibility(View.GONE);
+                hideSearchlist.setVisibility(View.GONE);
+                edt_search.setText("");
+            }
+        });
+
+
+        searchList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @SuppressWarnings("static-access")
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View view, int position, long id) {
+                if (relationManager.fetchUsersByNameData.size() > 0) {
+                    try {
                         try {
-                              InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                              imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
+                            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                            imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
                         } catch (Exception e) {
-                              e.printStackTrace();
+                            e.printStackTrace();
                         }
-                        Intent intent = new Intent(ClickInBaseView.this, AddSomeoneView.class);
+                        Log.e("searchList", "searchList Click-->" + position);
+
+                        String partnerPhone = relationManager.fetchUsersByNameData.get(position).getPhoneNo();
+                        Intent intent = new Intent(ClickInBaseView.this, JumpOtherProfileView.class);
+                        //     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         intent.putExtra("FromOwnProfile", true);
+                        intent.putExtra("phNumber", partnerPhone);
                         startActivity(intent);
-
-                        /* code for animation prafull*/
-
-                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
-                        searchList.setVisibility(View.GONE);
-                        hideSearchlist.setVisibility(View.GONE);
-                        edt_search.setText("");
-                  }
-            });
-
-
-            searchList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-                  @SuppressWarnings("static-access")
-                  @Override
-                  public void onItemClick(AdapterView<?> arg0, View view, int position, long id) {
-                        if (relationManager.fetchUsersByNameData.size() > 0) {
-                              try {
-                                    try {
-                                          InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                                          imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
-                                    } catch (Exception e) {
-                                          e.printStackTrace();
-                                    }
-                                    Log.e("searchList", "searchList Click-->" + position);
-
-                                    String partnerPhone = relationManager.fetchUsersByNameData.get(position).getPhoneNo();
-                                    Intent intent = new Intent(ClickInBaseView.this, JumpOtherProfileView.class);
-                                    //     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    intent.putExtra("FromOwnProfile", true);
-                                    intent.putExtra("phNumber", partnerPhone);
-                                    startActivity(intent);
 
                                     /* code for animation prafull*/
 
-                                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
-                                    hideSearchlist.setVisibility(View.GONE);
-                                    searchList.setVisibility(View.GONE);
-                              } catch (Exception e) {
-                              }
-                        }
-                  }
-            });
-
-
-      }
-
-      public void rightMenuElements() {
-
-            authManager = ModelManager.getInstance().getAuthorizationManager();
-            notificationMngr = ModelManager.getInstance().getNotificationManagerManager();
-            typeface = Typeface.createFromAsset(ClickInBaseView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
-            notificationList = (ListView) slidemenu.findViewById(R.id.list_click_notification);
-            backArrowRightSide = (ImageView) slidemenu.findViewById(R.id.iv_back_right);
-
-          //akshit Code starts for closing secondary menu
-            backArrowRightSide.setOnClickListener(new View.OnClickListener() {
-                  public void onClick(View v) {
-                      if(slidemenu.isSecondaryMenuShowing() || slidemenu.isMenuShowing()){
-                      slidemenu.toggle();
-                      }
-                  }
-            });
-               //akshit code ends
-      }
-
-
-      public void setNotificationList() {
-
-            notificationMngr = ModelManager.getInstance().getNotificationManagerManager();
-            Log.e("NotificationList", "Size" + notificationMngr.notificationData.size());
-            notificationAdapter = new NotificationAdapter(ClickInBaseView.this, R.layout.row_notification, notificationMngr.notificationData);
-            notificationList.setAdapter(notificationAdapter);
-
-      }
-
-
-      @Override
-      protected void onStart() {
-            super.onStart();
-            if (EventBus.getDefault().isRegistered(this)) {
-
-                  EventBus.getDefault().unregister(this);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+                        hideSearchlist.setVisibility(View.GONE);
+                        searchList.setVisibility(View.GONE);
+                    } catch (Exception e) {
+                    }
+                }
             }
-
-            EventBus.getDefault().register(this);
-      }
+        });
 
 
-      @Override
-      protected void onStop() {
-            super.onStop();
-            Log.e("2", "onStopClickInBaseView");
+    }
+
+    public void rightMenuElements() {
+
+        authManager = ModelManager.getInstance().getAuthorizationManager();
+        notificationMngr = ModelManager.getInstance().getNotificationManagerManager();
+        typeface = Typeface.createFromAsset(ClickInBaseView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
+        notificationList = (ListView) slidemenu.findViewById(R.id.list_click_notification);
+        backArrowRightSide = (ImageView) slidemenu.findViewById(R.id.iv_back_right);
+
+        //akshit Code starts for closing secondary menu
+        backArrowRightSide.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                if (slidemenu.isSecondaryMenuShowing() || slidemenu.isMenuShowing()) {
+                    slidemenu.toggle();
+                }
+            }
+        });
+        //akshit code ends
+    }
+
+
+    public void setNotificationList() {
+
+        notificationMngr = ModelManager.getInstance().getNotificationManagerManager();
+        Log.e("NotificationList", "Size" + notificationMngr.notificationData.size());
+        notificationAdapter = new NotificationAdapter(ClickInBaseView.this, R.layout.row_notification, notificationMngr.notificationData);
+        notificationList.setAdapter(notificationAdapter);
+
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (EventBus.getDefault().isRegistered(this)) {
 
             EventBus.getDefault().unregister(this);
+        }
+
+        EventBus.getDefault().register(this);
+    }
 
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.e("2", "onStopClickInBaseView");
+
+        EventBus.getDefault().unregister(this);
 
 
+    }
 
 
-      }
+    @Override
+    public void afterTextChanged(Editable s) {
 
 
-      @Override
-      public void afterTextChanged(Editable s) {
+    }
 
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count,
+                                  int after) {
 
-      }
+    }
 
-      @Override
-      public void beforeTextChanged(CharSequence s, int start, int count,
-                                    int after) {
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-      }
-
-      @Override
-      public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            Log.e("00000", "00000000000");
-            if (!(edt_search.getText().toString().length() > 0)) {
-                  hideSearchlist.setVisibility(View.GONE);
-                  searchList.setVisibility(View.GONE);
-                  try {
-                        InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                        inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-                  } catch (Exception e) {
-                  }
+       /* Log.e("00000", "00000000000");
+        if (!(edt_search.getText().toString().length() > 0)) {
+            hideSearchlist.setVisibility(View.GONE);
+            searchList.setVisibility(View.GONE);
+            try {
+                InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            } catch (Exception e) {
             }
-
-            if (edt_search.getText().toString().length() > 2) {
-                  hideSearchlist.setVisibility(View.VISIBLE);
-                  searchList.setVisibility(View.VISIBLE);
-                  stopSearch = true;
-                  if (stopSearch) {
-                        stopSearch = false;
-                        relationManager = ModelManager.getInstance().getRelationManager();
-                        authManager = ModelManager.getInstance().getAuthorizationManager();
-                        relationManager.fetchusersbyname(edt_search.getText().toString(), authManager.getPhoneNo(), authManager.getUsrToken());
-                  }
+        }
+        String search_date = edt_search.getText().toString();
+        if (!Utils.isEmptyString(search_date) && search_date.length() < 3) {
+            slidemenu.findViewById(R.id.btn_clear).setVisibility(View.VISIBLE);
+            slidemenu.findViewById(R.id.btn_progressBar).setVisibility(View.GONE);
+        } else if (!Utils.isEmptyString(search_date) && search_date.length() > 2) {
+            slidemenu.findViewById(R.id.btn_clear).setVisibility(View.GONE);
+            slidemenu.findViewById(R.id.btn_progressBar).setVisibility(View.VISIBLE);
+        } else {
+            slidemenu.findViewById(R.id.btn_clear).setVisibility(View.GONE);
+            slidemenu.findViewById(R.id.btn_progressBar).setVisibility(View.GONE);
+        }
+        if (edt_search.getText().toString().length() > 2) {
+            hideSearchlist.setVisibility(View.VISIBLE);
+            searchList.setVisibility(View.VISIBLE);
+            stopSearch = true;
+            if (stopSearch) {
+                stopSearch = false;
+                relationManager = ModelManager.getInstance().getRelationManager();
+                authManager = ModelManager.getInstance().getAuthorizationManager();
+                relationManager.fetchusersbyname(edt_search.getText().toString(), authManager.getPhoneNo(), authManager.getUsrToken());
             }
+        }*/
 
 
-      }
+    }
 
 
-      public void getMenuListData() {
-            authManager = ModelManager.getInstance().getAuthorizationManager();
-            relationManager = ModelManager.getInstance().getRelationManager();
-            setLeftMenuList();
-            notificationMngr = ModelManager.getInstance().getNotificationManagerManager();
-            notificationMngr.getNotification("", authManager.getPhoneNo(), authManager.getUsrToken());
-      }
+    public void getMenuListData() {
+        authManager = ModelManager.getInstance().getAuthorizationManager();
+        relationManager = ModelManager.getInstance().getRelationManager();
+        setLeftMenuList();
+        notificationMngr = ModelManager.getInstance().getNotificationManagerManager();
+        notificationMngr.getNotification("", authManager.getPhoneNo(), authManager.getUsrToken());
+    }
 
-      public void setMenuListData() {
-            authManager = ModelManager.getInstance().getAuthorizationManager();
-            relationManager = ModelManager.getInstance().getRelationManager();
-            userName.setText(authManager.getUserName());
-            userPic.setScaleType(ScaleType.FIT_XY);
-            if (authManager.getGender() != null) {
-                  if (authManager.getGender().matches("guy")) {
+    public void setMenuListData() {
+        authManager = ModelManager.getInstance().getAuthorizationManager();
+        relationManager = ModelManager.getInstance().getRelationManager();
+        userName.setText(authManager.getUserName());
+        userPic.setScaleType(ScaleType.FIT_XY);
+        if (authManager.getGender() != null) {
+            if (authManager.getGender().matches("guy")) {
 
-                        try {
-                              if (authManager.getUserPic() != null) {
-                                    Picasso.with(ClickInBaseView.this)
-                                            .load(authManager.getUserPic())
-                                            .skipMemoryCache()
+                try {
+                    if (authManager.getUserPic() != null) {
+                        Picasso.with(ClickInBaseView.this)
+                                .load(authManager.getUserPic())
+                                .skipMemoryCache()
 
-                                            .error(R.drawable.male_user).into(userPic);
-                              } else {
-                                    userPic.setImageResource(R.drawable.male_user);
-                              }
-                        } catch (Exception e) {
-                              userPic.setImageResource(R.drawable.male_user);
-                        }
-                  } else {
-                        try {
-                              if (authManager.getUserPic() != null) {
-                                    Picasso.with(ClickInBaseView.this)
-                                            .load(authManager.getUserPic())
-                                            .skipMemoryCache()
-
-                                            .error(R.drawable.female_user).into(userPic);
-                              } else {
-                                    userPic.setImageResource(R.drawable.female_user);
-                              }
-                        } catch (Exception e) {
-                              userPic.setImageResource(R.drawable.female_user);
-                        }
-                  }
+                                .error(R.drawable.male_user).into(userPic);
+                    } else {
+                        userPic.setImageResource(R.drawable.male_user);
+                    }
+                } catch (Exception e) {
+                    userPic.setImageResource(R.drawable.male_user);
+                }
             } else {
-                  userPic.setImageResource(R.drawable.male_user);
+                try {
+                    if (authManager.getUserPic() != null) {
+                        Picasso.with(ClickInBaseView.this)
+                                .load(authManager.getUserPic())
+                                .skipMemoryCache()
+
+                                .error(R.drawable.female_user).into(userPic);
+                    } else {
+                        userPic.setImageResource(R.drawable.female_user);
+                    }
+                } catch (Exception e) {
+                    userPic.setImageResource(R.drawable.female_user);
+                }
             }
-            setLeftMenuList();
-      }
+        } else {
+            userPic.setImageResource(R.drawable.male_user);
+        }
+        setLeftMenuList();
+    }
 
 
-      public void onEventMainThread(String message) {
-            Log.d("onEventMainThread", "onEventMainThread->");
-            authManager = ModelManager.getInstance().getAuthorizationManager();
-            if (message.equalsIgnoreCase("SearchResult True")) {
-                  stopSearch = true;
-                  Utils.dismissBarDialog();
-                  Log.d("1", "message aya->" + message);
-                  searchList.setVisibility(View.VISIBLE);
-                  setSearchList();
-            } else if (message.equalsIgnoreCase("SearchResult False")) {
-                  stopSearch = true;
-                  Utils.dismissBarDialog();
-                  Utils.fromSignalDialog(ClickInBaseView.this, authManager.getMessage());
-                  Log.d("2", "message->" + message);
-            } else if (message.equalsIgnoreCase("SearchResult Error")) {
-                  stopSearch = true;
-                  Utils.dismissBarDialog();
-                  Utils.fromSignalDialog(ClickInBaseView.this, AlertMessage.connectionError);
-                  Log.d("3", "message->" + message);
-            } else if (message.equalsIgnoreCase("NewsFeed  True")) {
-                  Utils.dismissBarDialog();
-                  Log.d("1", "message aya->" + message);
-                  try {
-                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                        imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
-                  } catch (Exception e) {
-                        e.printStackTrace();
-                  }
-                  Intent intent = new Intent(ClickInBaseView.this, FeedView.class);
-                  startActivity(intent);
+    public void onEventMainThread(String message) {
+        Log.d("onEventMainThread", "onEventMainThread->");
+        authManager = ModelManager.getInstance().getAuthorizationManager();
+        if (message.equalsIgnoreCase("SearchResult True")) {
+            stopSearch = true;
+            Utils.dismissBarDialog();
+            slidemenu.findViewById(R.id.btn_clear).setVisibility(View.VISIBLE);
+            slidemenu.findViewById(R.id.btn_progressBar).setVisibility(View.GONE);
+            try {
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            Log.d("1", "message aya->" + message);
+            searchList.setVisibility(View.VISIBLE);
+            setSearchList();
+        } else if (message.equalsIgnoreCase("SearchResult False")) {
+            stopSearch = true;
+            Utils.dismissBarDialog();
+            slidemenu.findViewById(R.id.btn_clear).setVisibility(View.VISIBLE);
+            slidemenu.findViewById(R.id.btn_progressBar).setVisibility(View.GONE);
+            try {
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            searchList.setVisibility(View.VISIBLE);
+            setSearchList();
+
+            Log.d("2", "message->" + message);
+        } else if (message.equalsIgnoreCase("SearchResult Error")) {
+            stopSearch = true;
+            Utils.dismissBarDialog();
+            Utils.fromSignalDialog(ClickInBaseView.this, AlertMessage.connectionError);
+            Log.d("3", "message->" + message);
+        } else if (message.equalsIgnoreCase("NewsFeed  True")) {
+            Utils.dismissBarDialog();
+            Log.d("1", "message aya->" + message);
+            try {
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            Intent intent = new Intent(ClickInBaseView.this, FeedView.class);
+            startActivity(intent);
 
                   /* code for animation prafull*/
 
-                  this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
-            } else if (message.equalsIgnoreCase("NewsFeed False")) {
-                  Log.d("2", "message->" + message);
-                  stopSearch = true;
-                  Utils.dismissBarDialog();
-                  newsFeedManager.userFeed.clear();
+            this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+        } else if (message.equalsIgnoreCase("NewsFeed False")) {
+            Log.d("2", "message->" + message);
+            stopSearch = true;
+            Utils.dismissBarDialog();
+            newsFeedManager.userFeed.clear();
 
-                  try {
-                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                        imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
-                  } catch (Exception e) {
-                        e.printStackTrace();
-                  }
+            try {
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
 //            Utils.showAlert(ClickInBaseView.this, authManager.getMessage());
-                  Intent intent = new Intent(ClickInBaseView.this, FeedView.class);
+            Intent intent = new Intent(ClickInBaseView.this, FeedView.class);
 
-                  startActivity(intent);
-                  Log.d("2", "message->" + message);
-            } else if (message.equalsIgnoreCase("NewsFeed Error")) {
-                  stopSearch = true;
-                  Utils.dismissBarDialog();
-                  Utils.fromSignalDialog(ClickInBaseView.this, AlertMessage.connectionError);
-                  Log.d("3", "message->" + message);
-            }
+            startActivity(intent);
+            Log.d("2", "message->" + message);
+        } else if (message.equalsIgnoreCase("NewsFeed Error")) {
+            stopSearch = true;
+            Utils.dismissBarDialog();
+            Utils.fromSignalDialog(ClickInBaseView.this, AlertMessage.connectionError);
+            Log.d("3", "message->" + message);
+        }
 
-      }
+    }
 
-      public void setSearchList() {
-            relationManager = ModelManager.getInstance().getRelationManager();
-            searchListadapter = new SearchAdapter(ClickInBaseView.this, R.layout.row_search_list, relationManager.fetchUsersByNameData);
-            searchList.setAdapter(searchListadapter);
+    public void setSearchList() {
+        relationManager = ModelManager.getInstance().getRelationManager();
+        searchListadapter = new SearchAdapter(ClickInBaseView.this, R.layout.row_search_list, relationManager.fetchUsersByNameData);
+        searchList.setAdapter(searchListadapter);
 
-      }
+    }
 
-      @Override
-      public void onOpen() {
-            Log.e("y", "if onOpen");
-            authManager = ModelManager.getInstance().getAuthorizationManager();
-            String dtails = "";
+    @Override
+    public void onOpen() {
+        Log.e("y", "if onOpen");
+        authManager = ModelManager.getInstance().getAuthorizationManager();
+        String dtails = "";
+        try {
             try {
-                  try {
 
-                        if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().matches("girl")) {
-                              dtails = "Female";
-                        } else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().matches("guy")) {
-                              dtails = "Male";
-                        }
-                  } catch (Exception e) {
-                  }
-
+                if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().matches("girl")) {
+                    dtails = "Female";
+                } else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().matches("guy")) {
+                    dtails = "Male";
+                }
             } catch (Exception e) {
             }
 
-            if (authManager.isMenuUserInfoFlag()) {
-                  Log.e("Inside if", "THis time Control is in If <><><><><><><><><");
-                  userName.setText(authManager.getUserName());
-                  userPic.setScaleType(ScaleType.FIT_XY);
+        } catch (Exception e) {
+        }
 
-                  try {
-                        Uri tempUri = authManager.getUserImageUri();
-                        if (tempUri != null) {
-                              imageBitmap = authManager.getUserbitmap();
-                              if (imageBitmap != null)
-                                    userPic.setImageBitmap(imageBitmap);
-                              else {
-                                    try {
-                                          if (dtails.equalsIgnoreCase("Male")) {
-                                                Picasso.with(this)
-                                                        .load(authManager.getUserPic())
-                                                        .skipMemoryCache()
+        if (authManager.isMenuUserInfoFlag()) {
+            Log.e("Inside if", "THis time Control is in If <><><><><><><><><");
+            userName.setText(authManager.getUserName());
+            userPic.setScaleType(ScaleType.FIT_XY);
 
-                                                        .error(R.drawable.male_user)
-                                                        .into(userPic);
-                                          } else if (dtails.equalsIgnoreCase("Female")) {
-                                                Picasso.with(this)
-                                                        .load(authManager.getUserPic())
-                                                        .skipMemoryCache()
-
-                                                        .error(R.drawable.female_user)
-                                                        .into(userPic);
-                                          }
-
-                                    } catch (Exception e) {
-                                          e.printStackTrace();
-                                    }
-                              }
-
-                        } else {
-                              try {
-                                    if (dtails.equalsIgnoreCase("Male")) {
-                                          Picasso.with(this)
-                                                  .load(authManager.getUserPic())
-                                                  .skipMemoryCache()
-
-                                                  .error(R.drawable.male_user)
-                                                  .into(userPic);
-                                    } else if (dtails.equalsIgnoreCase("Female")) {
-                                          Picasso.with(this)
-                                                  .load(authManager.getUserPic())
-                                                  .skipMemoryCache()
-
-                                                  .error(R.drawable.female_user)
-                                                  .into(userPic);
-                                    }
-
-                              } catch (Exception e) {
-                                    e.printStackTrace();
-                              }
-
-                        }
-
-                  } catch (Exception e) {
-                        e.printStackTrace();
-                  }
-                  authManager.setMenuUserInfoFlag(false);
-            } else {
-                  Log.e("Inside Else ", "THis time control is in Else <><><><><><><><><><>");
-                  try {
-                        Uri tempUri = authManager.getUserImageUri();
-                        if (tempUri != null) {
-                              imageBitmap = authManager.getUserbitmap();
-                              if (imageBitmap != null)
-                                    userPic.setImageBitmap(imageBitmap);
-                              else {
-                                    try {
-                                          if (dtails.equalsIgnoreCase("Male")) {
-                                                Picasso.with(this)
-                                                        .load(authManager.getUserPic())
-                                                        .skipMemoryCache()
-
-                                                        .error(R.drawable.male_user)
-                                                        .into(userPic);
-                                          } else if (dtails.equalsIgnoreCase("Female")) {
-                                                Picasso.with(this)
-                                                        .load(authManager.getUserPic())
-                                                        .skipMemoryCache()
-
-                                                        .error(R.drawable.female_user)
-                                                        .into(userPic);
-                                          }
-
-                                    } catch (Exception e) {
-                                          e.printStackTrace();
-                                    }
-                              }
-
-                        } else {
-                              try {
-                                    if (dtails.equalsIgnoreCase("Male")) {
-                                          Picasso.with(this)
-                                                  .load(authManager.getUserPic())
-                                                  .skipMemoryCache()
-
-                                                  .error(R.drawable.male_user)
-                                                  .into(userPic);
-                                    } else if (dtails.equalsIgnoreCase("Female")) {
-                                          Picasso.with(this)
-                                                  .load(authManager.getUserPic())
-                                                  .skipMemoryCache()
-
-                                                  .error(R.drawable.female_user)
-                                                  .into(userPic);
-                                    }
-
-                              } catch (Exception e) {
-                                    e.printStackTrace();
-                              }
-
-                        }
-
-                  } catch (Exception e) {
-                        e.printStackTrace();
-                  }
-            }
             try {
-                  edt_search.setText("");
-                  hideSearchlist.setVisibility(View.GONE);
-                  searchList.setVisibility(View.GONE);
+                Uri tempUri = authManager.getUserImageUri();
+                if (tempUri != null) {
+                    imageBitmap = authManager.getUserbitmap();
+                    if (imageBitmap != null)
+                        userPic.setImageBitmap(imageBitmap);
+                    else {
+                        try {
+                            if (dtails.equalsIgnoreCase("Male")) {
+                                Picasso.with(this)
+                                        .load(authManager.getUserPic())
+                                        .skipMemoryCache()
 
-                  InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                  inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                                        .error(R.drawable.male_user)
+                                        .into(userPic);
+                            } else if (dtails.equalsIgnoreCase("Female")) {
+                                Picasso.with(this)
+                                        .load(authManager.getUserPic())
+                                        .skipMemoryCache()
+
+                                        .error(R.drawable.female_user)
+                                        .into(userPic);
+                            }
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                } else {
+                    try {
+                        if (dtails.equalsIgnoreCase("Male")) {
+                            Picasso.with(this)
+                                    .load(authManager.getUserPic())
+                                    .skipMemoryCache()
+
+                                    .error(R.drawable.male_user)
+                                    .into(userPic);
+                        } else if (dtails.equalsIgnoreCase("Female")) {
+                            Picasso.with(this)
+                                    .load(authManager.getUserPic())
+                                    .skipMemoryCache()
+
+                                    .error(R.drawable.female_user)
+                                    .into(userPic);
+                        }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
             } catch (Exception e) {
+                e.printStackTrace();
             }
+            authManager.setMenuUserInfoFlag(false);
+        } else {
+            Log.e("Inside Else ", "THis time control is in Else <><><><><><><><><><>");
+            try {
+                Uri tempUri = authManager.getUserImageUri();
+                if (tempUri != null) {
+                    imageBitmap = authManager.getUserbitmap();
+                    if (imageBitmap != null)
+                        userPic.setImageBitmap(imageBitmap);
+                    else {
+                        try {
+                            if (dtails.equalsIgnoreCase("Male")) {
+                                Picasso.with(this)
+                                        .load(authManager.getUserPic())
+                                        .skipMemoryCache()
+
+                                        .error(R.drawable.male_user)
+                                        .into(userPic);
+                            } else if (dtails.equalsIgnoreCase("Female")) {
+                                Picasso.with(this)
+                                        .load(authManager.getUserPic())
+                                        .skipMemoryCache()
+
+                                        .error(R.drawable.female_user)
+                                        .into(userPic);
+                            }
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                } else {
+                    try {
+                        if (dtails.equalsIgnoreCase("Male")) {
+                            Picasso.with(this)
+                                    .load(authManager.getUserPic())
+                                    .skipMemoryCache()
+
+                                    .error(R.drawable.male_user)
+                                    .into(userPic);
+                        } else if (dtails.equalsIgnoreCase("Female")) {
+                            Picasso.with(this)
+                                    .load(authManager.getUserPic())
+                                    .skipMemoryCache()
+
+                                    .error(R.drawable.female_user)
+                                    .into(userPic);
+                        }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            edt_search.setText("");
+            hideSearchlist.setVisibility(View.GONE);
+            searchList.setVisibility(View.GONE);
+
+            InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        } catch (Exception e) {
+        }
 
 
-      }
+    }
 
 
-    public void onDestroy(){
+    public void onDestroy() {
         super.onDestroy();
-        Log.e("CLickinbaseview","Destroy");
+        Log.e("CLickinbaseview", "Destroy");
     }
 
     @Override
     public void onClose() {
         Log.e("y", "if onClose");
 
-      }
+    }
 
 
 }

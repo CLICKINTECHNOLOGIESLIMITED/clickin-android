@@ -51,14 +51,14 @@
                 android:layout_height="50dp"
                 android:background="@drawable/input_field"
                 android:hint="@string/hint_email_no"
-                android:inputType="text"
-                android:layout_marginLeft="9dp"
+                android:inputType="text|textNoSuggestions"
+                android:layout_marginLeft="1dp"
                 android:paddingLeft="10dp"
-                android:ems="12"
+                android:ems="15"
                 android:maxLength="15"
                 android:text="@string/plus"
                 android:textColor="@color/signup_contry_code"
-                android:textColorHint="@color/singn_forg"
+                android:textColorHint="@color/sign_hint"
                 android:textSize="16sp"
                 geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
                 android:textStyle="bold"
@@ -71,17 +71,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_below="@+id/edt_email_phoneno"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="9dp"
+                android:layout_marginTop="7dp"
+                android:layout_marginLeft="1dp"
                 android:background="@drawable/input_field"
                 android:hint="@string/hint_pwd"
-                android:inputType="textPassword"
+                android:inputType="textPassword|textNoSuggestions"
                 android:paddingLeft="10dp"
-                android:ems="12"
+                android:ems="15"
                 android:text=""
                 android:imeOptions="actionDone"
                 android:textColor="@color/signup_contry_code"
-                android:textColorHint="@color/singn_forg"
+                android:textColorHint="@color/sign_hint"
                 android:textSize="16sp"
                 geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
                 android:textStyle="bold" />
@@ -96,9 +96,10 @@
             android:layout_below="@+id/linearLayout1"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
-            android:layout_marginTop="12dp">
+            android:layout_marginTop="39dp"
+            android:layout_marginBottom="16dp">
 
-            <com.sourcefuse.clickinandroid.utils.ClickInTextView
+            <TextView
                 android:id="@+id/tv_forgot_pwd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -106,12 +107,13 @@
                 android:padding="10dp"
                 android:layout_marginLeft="-10dp"
                 android:text="@string/txt_forget_pwd"
-                android:textColor="@color/singn_forg"
-                geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
-                android:textStyle="bold" />
+                android:textColor="@color/signin_color"
+                android:textStyle="bold"
+
+                />
 
 
-            <com.sourcefuse.clickinandroid.utils.ClickInTextView
+            <TextView
                 android:id="@+id/tv_signup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -120,14 +122,15 @@
                 android:gravity="right"
                 android:padding="10dp"
                 android:text="@string/txt_signup"
-                geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
-                android:textColor="@color/singn_forg"
-                android:textStyle="bold" />
+
+                android:textColor="@color/signin_color"
+                android:textStyle="bold"
+                />
         </RelativeLayout>
 
         <Button
             android:id="@+id/btn_get_clickin"
-            android:layout_width="wrap_content"
+            android:layout_width="310dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/ll_search"
             android:layout_centerHorizontal="true"

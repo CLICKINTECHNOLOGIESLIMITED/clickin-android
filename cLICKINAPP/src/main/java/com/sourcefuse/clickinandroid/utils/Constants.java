@@ -61,10 +61,11 @@ public class Constants {
     public final static int CHAT_TYPE_AUDIO = 3;
     public final static int CHAT_TYPE_VIDEO = 4;
     public final static int CHAT_TYPE_LOCATION= 5;
-    public final static int CHAT_TYPE_CARD = 7;
 
+	public final static int CHAT_TYPE_CARD = 6;
+    public final static int CHAT_TYPE_NOFITICATION = 7;
     //constant to check length of chat text in adapter
-    public final static int CHAT_LENTH_LIMIT=15;
+    public final static int CHAT_LENTH_LIMIT = 15;
 
 
 }

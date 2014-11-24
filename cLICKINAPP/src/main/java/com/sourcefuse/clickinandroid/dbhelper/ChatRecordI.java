@@ -1,7 +1,6 @@
 package com.sourcefuse.clickinandroid.dbhelper;
 
 import com.sourcefuse.clickinandroid.model.bean.ChatMessageBody;
-import com.sourcefuse.clickinandroid.model.bean.ChatRecordBeen;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -12,7 +11,9 @@ import java.util.ArrayList;
 public interface ChatRecordI {
 
     public int addChatList(ArrayList<ChatMessageBody> chatList) throws SQLException;
+
     public ArrayList<ChatMessageBody> getAllChat(String sQbId) throws SQLException;
+
     public int deleteChat(String sQbId) throws SQLException;
 
 

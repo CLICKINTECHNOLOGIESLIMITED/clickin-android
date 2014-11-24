@@ -2,12 +2,12 @@
     xmlns:geekui="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/white_pattern_bg">
+    android:background="@drawable/enterdigitmainbg">
 
     <LinearLayout
         android:id="@+id/linearLayout_top"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="250dp"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp"
         android:background="@drawable/c_header_bg"
@@ -16,7 +16,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="120dp"
             android:orientation="vertical"
             android:weightSum="2">
 
@@ -28,6 +28,7 @@
                 android:layout_centerHorizontal="true"
                 android:gravity="bottom"
                 android:text="ENTER"
+                android:layout_marginTop="15dp"
                 android:textColor="@color/screen_header"
                 android:textSize="38sp"
                 android:textStyle="bold"
@@ -80,7 +81,7 @@
                     android:background="@drawable/e_v_number_field_empty"
                     android:cursorVisible="false"
                     android:gravity="center"
-                    android:inputType="number"
+                    android:inputType="number|textNoSuggestions"
                     android:maxLength="1"
                     android:padding="10dp"
                     android:textColor="@color/white"
@@ -96,7 +97,7 @@
                     android:background="@drawable/e_v_number_field_empty"
                     android:cursorVisible="false"
                     android:gravity="center"
-                    android:inputType="number"
+                    android:inputType="number|textNoSuggestions"
                     android:maxLength="1"
                     android:padding="10dp"
                     android:textColor="@color/white"
@@ -112,7 +113,7 @@
                     android:background="@drawable/e_v_number_field_empty"
                     android:cursorVisible="false"
                     android:gravity="center"
-                    android:inputType="number"
+                    android:inputType="number|textNoSuggestions"
                     android:maxLength="1"
                     android:padding="10dp"
                     android:textColor="@color/white"
@@ -129,7 +130,7 @@
                     android:cursorVisible="false"
                     android:ems="1"
                     android:gravity="center"
-                    android:inputType="number"
+                    android:inputType="number|textNoSuggestions"
                     android:maxLength="1"
                     android:padding="10dp"
                     android:textColor="@color/white"

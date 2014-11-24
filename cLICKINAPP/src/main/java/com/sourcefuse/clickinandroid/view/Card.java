@@ -59,14 +59,14 @@ public class Card extends Activity implements View.OnClickListener,TextWatcher {
         btnPlay = (ImageView)findViewById(R.id.btn_play);
         btnPlay.setOnClickListener(this);
 
-        LinearLayout back = (LinearLayout)findViewById(R.id.linear_layout_back);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-                overridePendingTransition(R.anim.slide_in_finish_up, R.anim.slide_out_finish_up);
-            }
-        });
+//        LinearLayout back = (LinearLayout)findViewById(R.id.linear_layout_back);
+//        back.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                finish();
+//                overridePendingTransition(R.anim.slide_in_finish_up, R.anim.slide_out_finish_up);
+//            }
+//        });
 
         imageView = (ImageView) findViewById(R.id.trade_image);
         mBackButton = (ImageView) findViewById(R.id.m_back);

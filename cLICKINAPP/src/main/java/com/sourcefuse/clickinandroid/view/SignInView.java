@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
@@ -29,7 +30,6 @@ import com.quickblox.module.auth.QBAuth;
 import com.quickblox.module.auth.result.QBSessionResult;
 import com.quickblox.module.chat.QBChatService;
 import com.quickblox.module.users.model.QBUser;
-import com.sourcefuse.clickinandroid.dbhelper.ClickinDbHelper;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
@@ -66,6 +66,7 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
     private Dialog mDialog;
     public MyQbChatService myQbChatService;
     private boolean mIsBound;
+    private Typeface typeface, typefaceBold;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +75,10 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
         setContentView(R.layout.view_signin);
           getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
+        typeface = Typeface.createFromAsset(SignInView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
+        typefaceBold = Typeface.createFromAsset(SignInView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_BOLD);
+
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
         authManager = ModelManager.getInstance().getAuthorizationManager();
@@ -95,12 +100,10 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
         ephone.setOnClickListener(this);
         ePwd.setOnClickListener(this);
 
-        /*ephone.setTypeface(typefaceBold);
-        ePwd.setTypeface(typefaceBold);
+
         forgotPwd.setTypeface(typeface);
         signUp.setTypeface(typeface);
-        signUp.setTypeface(typeface);*/
-
+        signUp.setTypeface(typeface);
 
         // akshit code for closing keypad if touched anywhere outside
         ((RelativeLayout) findViewById(R.id.relative_layout_root_signin)).setOnClickListener(new View.OnClickListener() {
@@ -146,14 +149,14 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
 
 
 
-
+          
         ephone.setSelection(ephone.getText().toString().length());
         //No need For this akshit
 
 
 //        ephone.setOnTouchListener(new View.OnTouchListener() {
 //            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
+//            public boolean onTouch(Vie9w v, MotionEvent event) {
 //
 //           InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
 //            inputMethodManager.showSoftInput(ephone, 0);
@@ -284,9 +287,9 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
             editor.putString("myPhoneNo",authManager.getPhoneNo());
             editor.commit();
 
-            new ClickinDbHelper(this);
+
             Intent i=new Intent(this,MyQbChatService.class);
-            startService(i);
+          startService(i);
 
 
           //  new MyPreference(SignInView.this).setToken(authManager.getUsrToken());

@@ -89,6 +89,11 @@ public class SearchAdapter extends ArrayAdapter<FetchUsersByNameBean> {
             holder.usrimg.setImageResource(R.drawable.male_user);
         }
 
+        if((item.size()-1) == position)
+            row.findViewById(R.id.divider).setVisibility(View.GONE);
+        else
+            row.findViewById(R.id.divider).setVisibility(View.VISIBLE);
+
         return row;
     }
 

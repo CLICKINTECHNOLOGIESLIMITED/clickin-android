@@ -116,7 +116,7 @@
                 android:maxLength="50"
 
                 android:lines="5"
-                android:inputType="text"
+                android:inputType="text|textNoSuggestions"
                 android:hint="ENTER YOUR TEXT \n HERE"
                 android:padding="8dp"
                 android:singleLine="false" />
