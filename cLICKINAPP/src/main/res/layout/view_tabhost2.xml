@@ -149,18 +149,12 @@
 
                         >
 
-                        <com.sourcefuse.clickinandroid.utils.ClickInTextView
+                        <TextView
                             android:id="@+id/Layout_Tab_2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textStyle="bold"
                             android:gravity="bottom"
-
-                            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
-
-
-                            />
-
+                           />
 
                         <!--<com.sourcefuse.clickinandroid.utils.ClickInTextView-->
                         <!--android:id="@+id/Layout_Tab_2"-->

@@ -171,8 +171,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
             chatParentLayout.setGravity(Gravity.RIGHT);
 
-
-            //temp code -for image
+            //temp code -for image-receiver end
             if(!(Utils.isEmptyString(temp.imageRatio))){
                 //set layout properties for image view
                 ImageView image_attached=(ImageView)row.findViewById(R.id.iv_chat_image);
@@ -193,6 +192,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                         .error(R.drawable.default_profile).into(image_attached);
 
             }
+
 
             //only text-RECEIVER CASE
             if ((!Utils.isEmptyString(temp.textMsg)) && temp.clicks.equalsIgnoreCase("no")) {
@@ -259,21 +259,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
             }//end of click and text -reciver end
 
-            //image attached -receiver end
-            if(!(Utils.isEmptyString(temp.imageRatio))){
-                //set layout properties for image view
-                ImageView image_attached=(ImageView)row.findViewById(R.id.iv_chat_image);
-                RelativeLayout.LayoutParams paramsrr1 = new RelativeLayout.LayoutParams(
-                        RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-                paramsrr1.addRule(RelativeLayout.ABOVE, R.id.parent_clicks_area);
-                image_attached.setLayoutParams(paramsrr1);
-                image_attached.setScaleType(ImageView.ScaleType.FIT_XY);
-                image_attached.setVisibility(View.VISIBLE);
-                Picasso.with(context).load(temp.content_url)
-                        .placeholder(R.drawable.default_profile)
-                        .error(R.drawable.default_profile).into(image_attached);
 
-            }
         }//end of reciver
         //   authManager = ModelManager.getInstance().getAuthorizationManager();
         return row;
