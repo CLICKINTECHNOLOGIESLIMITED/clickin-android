@@ -73,7 +73,7 @@ public class Card extends Activity implements View.OnClickListener,TextWatcher {
             @Override
             public void onClick(View view) {
                 finish();
-                overridePendingTransition(R.anim.slide_in_finish_up, R.anim.slide_out_finish_up);
+                overridePendingTransition(0, R.anim.slide_out_finish_up);
             }
         });
 

@@ -140,7 +140,7 @@ public class CardView extends FragmentActivity{
             @Override
             public void onClick(View arg0) {
                 finish();
-                overridePendingTransition(R.anim.slide_in_finish_up,R.anim.slide_out_finish_up);
+                overridePendingTransition(0,R.anim.slide_out_finish_up);
             }
         });
     }
@@ -237,8 +237,9 @@ public class CardView extends FragmentActivity{
         Log.d(TAG, "onEventMainThread->" + getMsg);
         authManager = ModelManager.getInstance().getAuthorizationManager();
         if (getMsg.equalsIgnoreCase("FetchCard True")) {
-            Utils.dismissBarDialog();
+
             setView();
+            Utils.dismissBarDialog();
         } else if (getMsg.equalsIgnoreCase("FetchCard False")) {
             Utils.dismissBarDialog();
 

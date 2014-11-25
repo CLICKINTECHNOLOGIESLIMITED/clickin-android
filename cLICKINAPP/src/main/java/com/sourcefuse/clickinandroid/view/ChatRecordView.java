@@ -147,7 +147,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     String[] splitted;
     private SeekBar mybar;
     private TextView pos, neg, profileName, typingtext, myTotalclicks, partnerTotalclicks;
-    private Button send, btnToCard;
+    private Button btnToCard;
+    private ImageView send;
     private int relationListIndex, myClicks, userClicks;
     private String qBId, rId, partnerPic, partnerName, partnerId, partnerPh, myTotalString, userTotalClicks;
     private ChatManager chatManager;
@@ -648,7 +649,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         addMenu(false);
         // loginToQuickBlox();
         //  typeface = Typeface.createFromAsset(ChatRecordView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
-        send = (Button) findViewById(R.id.btn_send);
+        send = (ImageView) findViewById(R.id.btn_send);
         chatListView = (PullToRefreshListView) findViewById(R.id.chat_list);
         chatText = (EditText) findViewById(R.id.edit_chatBox);
         mybar = (SeekBar) findViewById(R.id.seekBar1);
@@ -1337,7 +1338,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 Intent intent = new Intent(ChatRecordView.this, CardView.class);
                 intent.putExtra("qBId", qBId);
                 startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+                overridePendingTransition(R.anim.slide_in_up, R.anim.stay);
                 break;
 
             case R.id.iv_attach:
