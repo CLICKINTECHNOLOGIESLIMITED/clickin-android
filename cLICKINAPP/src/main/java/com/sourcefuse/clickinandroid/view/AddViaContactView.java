@@ -51,13 +51,14 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
         getClickIn = (Button) findViewById(R.id.btn_get_clickIn);
         conIcon = (ImageView) findViewById(R.id.iv_contact_icon);
         getClickIn.setOnClickListener(this);
-
+        String countryCode = null;
+        String mlPhNo;
         try {
             Bundle bundle = getIntent().getExtras();
             ((TextView) findViewById(R.id.tv_contact_name)).setText("" + bundle.getString("ConName"));
-            String mlPhNo = bundle.getString("ConNumber");
+             mlPhNo = bundle.getString("ConNumber");
             String onlyPhNo = null;
-            String countryCode = null;
+
 
 
             //first check country code from SIM and compare it with num
@@ -167,11 +168,17 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
         switch (v.getId()) {
 
             case R.id.btn_get_clickIn:
+                String mPhNo;
+                String countryCode=cntry_cd.getText().toString().trim();
+
 
                 if (phoneNo.getText().toString().length() >= 5) {
+                    if(!(countryCode.contains("null"))){
+                        mPhNo = cntry_cd.getText().toString().trim() + phoneNo.getText().toString().trim();
+                    }else{
+                        mPhNo = phoneNo.getText().toString().trim();
+                    }
 
-
-                    String mPhNo = cntry_cd.getText().toString().trim() + phoneNo.getText().toString().trim();
                     ProfileManager prfManager = ModelManager.getInstance().getProfileManager();
                     com.sourcefuse.clickinandroid.utils.Log.e("current clickers list", "" + prfManager.currClickersPhoneNums);
                     if (prfManager.currClickersPhoneNums.contains(mPhNo)) {
