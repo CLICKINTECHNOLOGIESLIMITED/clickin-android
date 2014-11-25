@@ -267,8 +267,7 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
             editor.commit();
 
 
-            Intent i=new Intent(this,MyQbChatService.class);
-          startService(i);
+
 
 
           //  new MyPreference(SignInView.this).setToken(authManager.getUsrToken());
@@ -288,6 +287,8 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
             //Utils.showAlert(act, AlertMessage.connectionError);
         } else if (getMsg.equalsIgnoreCase("ProfileInfo True")) {
             //save values of user in shared prefrence for later use
+            Intent i=new Intent(this,MyQbChatService.class);
+            startService(i);
             SharedPreferences preferences=PreferenceManager.getDefaultSharedPreferences(this);
             SharedPreferences.Editor editor=preferences.edit();
             editor.putString("gender",authManager.getGender());

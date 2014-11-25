@@ -3,6 +3,7 @@ package com.sourcefuse.clickinandroid.view.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.net.Uri;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,6 +60,12 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
             LinearLayout chatClickTextLayout = (LinearLayout) row.findViewById(R.id.parent_clicks_area);
 
 
+
+            //code to set time
+            TextView timeView=(TextView)row.findViewById(R.id.tv_time_text);
+            timeView.setText(temp.sentOn);
+
+
             //temp code -for image
             if(!(Utils.isEmptyString(temp.imageRatio))){
                 //set layout properties for image view
@@ -72,14 +79,27 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     chatClickTextLayout.setLayoutParams(paramsrr);
                 }
 
+                //code to set msg deilvery notification
+                ImageView sendStatusView=(ImageView)row.findViewById(R.id.iv_send_status);
+                if(!(Utils.isEmptyString(temp.isDelivered)) && temp.isDelivered.equalsIgnoreCase(Constants.MSG_SENDING)) {
+                   sendStatusView.setImageResource(R.drawable.r_single_tick);
+                    Uri tempUri=Uri.parse(temp.content_url);
+                    Picasso.with(context).load(tempUri)
+                            .placeholder(R.drawable.default_profile)
+                            .error(R.drawable.default_profile).into(image_attached);
+
+                }else if(!(Utils.isEmptyString(temp.isDelivered))&& temp.isDelivered.equalsIgnoreCase(Constants.MSG_SENT)){
+                    sendStatusView.setImageResource(R.drawable.double_check);
+                    Picasso.with(context).load(temp.content_url)
+                            .placeholder(R.drawable.default_profile)
+                            .error(R.drawable.default_profile).into(image_attached);
+                }
 
                 image_attached.setScaleType(ImageView.ScaleType.FIT_XY);
                 image_attached.setVisibility(View.VISIBLE);
-                Picasso.with(context).load(temp.content_url)
-                        .placeholder(R.drawable.default_profile)
-                        .error(R.drawable.default_profile).into(image_attached);
 
-            }
+
+            }//end of image loop-sender
 
         //only text-SENDER CASE
             if (!Utils.isEmptyString(temp.textMsg) && temp.clicks.equalsIgnoreCase("no")) {
@@ -170,6 +190,10 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
 
             chatParentLayout.setGravity(Gravity.RIGHT);
+
+            //code to set time
+            TextView timeView=(TextView)row.findViewById(R.id.tv_time_text);
+            timeView.setText(temp.sentOn);
 
             //temp code -for image-receiver end
             if(!(Utils.isEmptyString(temp.imageRatio))){

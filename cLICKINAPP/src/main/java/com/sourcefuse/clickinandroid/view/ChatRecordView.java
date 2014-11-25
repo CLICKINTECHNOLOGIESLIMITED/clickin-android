@@ -25,6 +25,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -40,8 +41,10 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.quickblox.core.QBCallbackImpl;
+import com.quickblox.core.QBEntityCallbackImpl;
 import com.quickblox.core.result.Result;
 import com.quickblox.module.content.QBContent;
+import com.quickblox.module.content.model.QBFile;
 import com.quickblox.module.content.result.QBFileUploadTaskResult;
 import com.quickblox.module.custom.QBCustomObjects;
 import com.quickblox.module.custom.model.QBCustomObject;
@@ -82,6 +85,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -169,6 +173,9 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     private String audioFilePath;
     private int CHAT_TYPE;
     private boolean mIsBound;
+
+    //chatId-unquie to chat msg- use to track delivery status
+     Integer msgId;
 
     private ClickinDbHelper dbHelper;
 
@@ -1077,7 +1084,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                         ChatMessageBody temp = new ChatMessageBody();
 
                         if (isClicks() == true) {
-                            temp.clicks = Utils.convertClicks(seekValue).trim();
+                            temp.clicks = Utils.convertClicks(String.valueOf(seekValue)).trim();
                             temp.textMsg = temp.clicks + "        " + chatString;
                         } else {
                             temp.clicks = "no";
@@ -1088,8 +1095,14 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                         temp.chatType = Constants.CHAT_TYPE_TEXT;
                         CHAT_TYPE = Constants.CHAT_TYPE_TEXT;
 
+                        long sentOntime = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis();
+
+                        temp.sentOn = "" + sentOntime;
+                        temp.chatId = authManager.getQBId() + qBId + sentOntime;
+
+                        ShowValueinChat(temp);
                         myQbChatService.sendMessage(temp);
-                        setValueForHistory(temp);
+                        createRecordForHistory(temp);
 
                         chatText.setText("");
                         seekValue = 0;
@@ -1099,7 +1112,9 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                             CHAT_TYPE = Constants.CHAT_TYPE_IMAGE;
                             // new uploadMediaFileOnQb().execute(path.toString());
                             if (path != null)
-                                uploadImageFileOnQB(path.toString());
+                                sendMsgToQB(path);
+                             //   doComposeMediaMsg(path);
+                                //uploadImageFileOnQB(path.toString());
                         }
                     }
 
@@ -1352,19 +1367,18 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         }
     }
 
-    //mukesh/monika chat code
-    private void setValueForHistory(ChatMessageBody obj) {
+   
+
+    //monika- function to show chat in listview
+    private void ShowValueinChat(ChatMessageBody obj) {
 
         authManager = ModelManager.getInstance().getAuthorizationManager();
-        long sentOntime = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis();
 
-        obj.sentOn = "" + sentOntime;
-        obj.chatId = authManager.getQBId() + qBId + sentOntime;
 
         obj.sharedMessage = null;
         //   obj.deliveredChatID=null;
         // obj.cardDetails=null;
-        obj.isDelivered = null;
+        obj.isDelivered = Constants.MSG_SENDING;
         obj.relationshipId = rId;
         obj.userId = authManager.getUserId();
         obj.senderUserToken = authManager.getUsrToken();
@@ -1377,6 +1391,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             } else
                 obj.textMsg = null;
         }
+
         ArrayList<ChatMessageBody> tempChatList = ModelManager.getInstance().getChatManager().chatMessageList;
         tempChatList.add(obj);
 
@@ -1386,9 +1401,11 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         } else {
             adapter.notifyDataSetChanged();
         }
-        createRecordForHistory(obj);
+   //  return obj;
+    //  createRecordForHistory(obj);
 
     }
+
 
     /*  private void sendCardToPartner(String card_url, String cardTittle, String cardDiscription, String card_Id, String clicks, String is_CustomCard, String card_DB_ID, String accepted_Rejected, String played_Countered, String card_originator, String card_owner) {
 
@@ -1503,35 +1520,42 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             }
       }*/
 
-    private void uploadImageFileOnQB(String path) {
+    //monika-fucntion to upload file on Qb
+    private void uploadImageFileOnQB(String path, String msgId) {
         File mfile = new File(path);
-        QBContent.uploadFileTask(mfile, true, new QBCallbackImpl() {
+        final String chatId=msgId;
+        Boolean fileIsPublic = false;
+        QBContent.uploadFileTask(mfile, fileIsPublic, null, new QBEntityCallbackImpl<QBFile>() {
             @Override
-            public void onComplete(Result result) {
-                if (result.isSuccess()) {
-                    QBFileUploadTaskResult res = (QBFileUploadTaskResult) result;
-                    uploadedImgUrl = res.getFile().getPublicUrl().toString();
-                    System.out.println(TAG + "<---onPostExecute--->" + uploadedImgUrl);
-                    sendMsgToQB(uploadedImgUrl);
-                }
+            public void onSuccess(QBFile file, Bundle params) {
+               String fileUrl= file.getId().toString();
+               sendMediaMsgToQB(fileUrl, chatId);
+
+            }
+
+            @Override
+            public void onError(List<String> errors) {
+                // error
             }
         });
 
     }
 
-    private void sendMsgToQB(String result) {
+    //monika- common function to create msg in case of media attachment
+    private void sendMsgToQB(String path) {
         ChatMessageBody temp = new ChatMessageBody();
         String chatString = chatText.getText().toString();
         switch (CHAT_TYPE) {
             case Constants.CHAT_TYPE_IMAGE:
                 temp.imageRatio = "1";
-                temp.content_url = result;
+                temp.content_url = path;
+                temp.isDelivered=Constants.MSG_SENDING;
                 temp.chatType = Constants.CHAT_TYPE_IMAGE;
                 break;
             default:
         }
         if (isClicks() == true) {
-            temp.clicks = Utils.convertClicks(seekValue).trim();
+            temp.clicks = Utils.convertClicks(String.valueOf(seekValue)).trim();
             temp.textMsg = temp.clicks + "        " + chatString;
         } else {
             temp.clicks = "no";
@@ -1540,12 +1564,22 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         temp.partnerQbId = qBId;
         temp.senderQbId = authManager.getQBId();
 
-        myQbChatService.sendMessage(temp);
-        setValueForHistory(temp);
+        long sentOntime = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis();
+
+        temp.sentOn = "" + sentOntime;
+        temp.chatId = authManager.getQBId() + qBId + sentOntime;
+
+   //     setValueForHistory(temp);
+        ShowValueinChat(temp);
         chatText.setText("");
         seekValue = 0;
         mybar.setProgress(10);
-        mImageCaptureUri = null;
+        mImageCaptureUri=null;
+     //   path=null;
+        attachBtn.setImageDrawable(getResources().getDrawable(R.drawable.r_img_icon));
+        uploadImageFileOnQB(path,temp.chatId);
+
+
 
     }
 
@@ -1715,22 +1749,6 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 }
             }
 
-                /*  if (isHistroy && emptyDb == false) {
-                       // setHistoryChat();
-                        isHistroy = false;
-                  } else {*/
-            //chatManager.chatListFromServer.addAll(0, chatManager.refreshivechatList);
-            //  adapter.notifyDataSetChanged();
-            // }
-
-                 /* if (emptyDb) {
-                        //setHistoryChat();
-                        Log.e("emptyDb", "emptyDb->");
-
-                        adapter.notifyDataSetChanged();
-                  }
-
-                  emptyDb = false;*/
 
             Log.e("1", "message->" + message);
         } else if (message.equalsIgnoreCase("FecthChat False")) {
@@ -1749,6 +1767,10 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         } else if (message.equalsIgnoreCase("Composing NO")) {
             typingtext.setVisibility(View.VISIBLE);
             typingtext.setText("online");
+        }else if(message.startsWith("Delivered Msg")){
+            String chatId=message.substring(13);
+            updateChatDeliverStatusInList(chatId);
+
         }
 
     }
@@ -2107,52 +2129,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
     }
 
-    private int grandClicksForSenderEnd(String clicksValue) {
-        int changeClicks = 0;
-        if (clicksValue.equalsIgnoreCase("+01")) {
-            changeClicks = 1;
-        } else if (clicksValue.equalsIgnoreCase("+02")) {
-            changeClicks = 2;
-        } else if (clicksValue.equalsIgnoreCase("+03")) {
-            changeClicks = 3;
-        } else if (clicksValue.equalsIgnoreCase("+04")) {
-            changeClicks = 4;
-        } else if (clicksValue.equalsIgnoreCase("+05")) {
-            changeClicks = 5;
-        } else if (clicksValue.equalsIgnoreCase("+06")) {
-            changeClicks = 6;
-        } else if (clicksValue.equalsIgnoreCase("+07")) {
-            changeClicks = 7;
-        } else if (clicksValue.equalsIgnoreCase("+08")) {
-            changeClicks = 8;
-        } else if (clicksValue.equalsIgnoreCase("+09")) {
-            changeClicks = 9;
-        } else if (clicksValue.equalsIgnoreCase("+10")) {
-            changeClicks = 10;
-        } else if (clicksValue.equalsIgnoreCase("-01")) {
-            changeClicks = 1;
-        } else if (clicksValue.equalsIgnoreCase("-02")) {
-            changeClicks = -2;
-        } else if (clicksValue.equalsIgnoreCase("-03")) {
-            changeClicks = -3;
-        } else if (clicksValue.equalsIgnoreCase("-04")) {
-            changeClicks = -4;
-        } else if (clicksValue.equalsIgnoreCase("-05")) {
-            changeClicks = -5;
-        } else if (clicksValue.equalsIgnoreCase("-06")) {
-            changeClicks = -6;
-        } else if (clicksValue.equalsIgnoreCase("-07")) {
-            changeClicks = -7;
-        } else if (clicksValue.equalsIgnoreCase("-08")) {
-            changeClicks = -8;
-        } else if (clicksValue.equalsIgnoreCase("-09")) {
-            changeClicks = -9;
-        } else if (clicksValue.equalsIgnoreCase("-10")) {
-            changeClicks = -10;
-        }
-        return changeClicks;
 
-    }
 
     private String clickForFlipper(int clicks) {
 
@@ -2220,8 +2197,9 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         return bitmap;
     }
 
-    private void createRecordForHistory(ChatMessageBody obj) {
+    private void createRecordForHistory(final ChatMessageBody obj) {
         HashMap<String, Object> fields = new HashMap<String, Object>();
+
 
         fields.put("message", obj.textMsg);
         fields.put("clicks", obj.clicks);
@@ -2255,19 +2233,22 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         QBCustomObject qbCustomObject = new QBCustomObject();
         qbCustomObject.setClassName("chats");  // your Class name
         qbCustomObject.setFields(fields);
+
         QBCustomObjects.createObject(qbCustomObject, new QBCallbackImpl() {
             @Override
             public void onComplete(Result result) {
                 if (result.isSuccess()) {
                     QBCustomObjectResult qbCustomObjectResult = (QBCustomObjectResult) result;
                     QBCustomObject qbCustomObject = qbCustomObjectResult.getCustomObject();
+               //    int chatIdtemp=qbCustomObject.getId();
+                 //  obj.chatId=String.valueOf(chatIdtemp);
                     Log.e("New record: ", qbCustomObject.toString());
                 } else {
                     Log.e("Errors", result.getErrors().toString());
                 }
             }
         });
-
+           // return String.valueOf(msgId);
     }
 
     private void updateValues(Intent intent) {
@@ -2410,6 +2391,20 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
             //clear the message list always to initiate a new chat
             ModelManager.getInstance().getChatManager().chatMessageList.clear();
+
+            //code to hide keyboard
+            ((RelativeLayout) findViewById(R.id.rr_chat_layout)).setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View arg0) {
+
+                    InputMethodManager imm = (InputMethodManager) getSystemService(
+                            INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(chatText.getWindowToken(), 0);
+
+                }
+
+            });
             setlist();
         }
     }
@@ -2554,6 +2549,40 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         }
     }
 
+    //function to update chatMessagelist for delivered chats
+    private void updateChatDeliverStatusInList(String chatId){
+        for(ChatMessageBody msg:chatManager.chatMessageList){
+            if(msg.chatId.equalsIgnoreCase(chatId)){
+                msg.isDelivered="true";
+                break;
+            }
+        }
+        if(adapter!=null)
+            adapter.notifyDataSetChanged();
+        else{
+            adapter=new ChatRecordAdapter(this,R.layout.view_chat_demo,chatManager.chatMessageList);
+            chatListView.setAdapter(adapter);
+        }
+    }
+
+
+//monika-update the content url for specific chatid and send msg to Qb and create history
+    private void sendMediaMsgToQB(String fileUrl,String tempChatId){
+       // ArrayList<ChatMessageBody> tempChatList=chatManager.chatMessageList;
+        path=null;
+        for(ChatMessageBody temp:chatManager.chatMessageList) {
+            if (!(Utils.isEmptyString(temp.chatId))) {
+                if (temp.chatId.equalsIgnoreCase(tempChatId)) {
+                    temp.content_url = fileUrl;
+                    temp.isDelivered = Constants.MSG_SENT;
+                    myQbChatService.sendMessage(temp);
+                    createRecordForHistory(temp);
+                    adapter.notifyDataSetChanged();
+
+                }
+            }
+        }
+    }
 
 }
 

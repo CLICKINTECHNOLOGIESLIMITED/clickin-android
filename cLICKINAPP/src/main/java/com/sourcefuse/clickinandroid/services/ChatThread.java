@@ -109,11 +109,13 @@ public class ChatThread extends Thread implements QBMessageListener {
                                     message.setProperty("card_id", data.getString("card_id"));
                                     message.setProperty("card_Played_Countered", data.getString("card_Played_Countered"));
                                     message.setProperty("card_originator", data.getString("card_originator"));
+
                                     break;
                                 case Constants.CHAT_TYPE_IMAGE:
 
                                     message.setProperty("fileID", data.getString("FileId"));
                                     message.setProperty("imageRatio", data.getString("imageRatio"));
+
                                     break;
                             }
                             if (!(data.getInt("ChatType") == Constants.CHAT_TYPE_CARD)) {
@@ -124,6 +126,12 @@ public class ChatThread extends Thread implements QBMessageListener {
 
                             if (data.containsKey("textMsg"))
                                 message.setBody(data.getString("textMsg"));
+
+                            //set the delivered notification property in msg
+                            if(!(data.getInt("ChatType")==Constants.CHAT_TYPE_NOFITICATION)) {
+                                message.setMarkable(true);
+                               // message.setProperty("сommon_platform_id",data.getString("ChaidId"));
+                            }
 
                             try {
                                 try {
@@ -314,7 +322,7 @@ public class ChatThread extends Thread implements QBMessageListener {
                         temp.textMsg = body.substring(3).trim();
                     else { //only clicks
                         temp.textMsg = "";
-                        temp.clicks = Utils.convertClicks(Integer.parseInt(temp.clicks)).trim();
+                        temp.clicks = Utils.convertClicks(temp.clicks).trim();
                     }
                 }
                 ModelManager.getInstance().getChatManager().chatMessageList.add(temp);
@@ -334,8 +342,8 @@ public class ChatThread extends Thread implements QBMessageListener {
     }
 
     @Override
-    public void processMessageDelivered(QBChat qbChat, String s) {
-
+    public void processMessageDelivered(QBChat qbChat, String msgId) {
+        EventBus.getDefault().post("Delivered Msg"+ msgId);
     }
 
     @Override
