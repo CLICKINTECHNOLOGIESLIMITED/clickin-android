@@ -1,11 +1,13 @@
 package com.sourcefuse.clickinandroid.view;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -22,12 +24,12 @@ import com.sourcefuse.clickinapp.R;
 
 import de.greenrobot.event.EventBus;
 
-public class FollowingListView extends Activity implements
+public class FollowingListView extends ClickInBaseView implements
         View.OnClickListener {
       private static final String TAG = FollowingListView.class.getSimpleName();
       private ImageView back, notification;
       private ListView listView;
-      private FollowingAdapter adapter;
+      public  FollowingAdapter adapter;
       private ProfileManager profManager;
       private AuthManager authManager;
       private TextView profileName, tagScreen;
@@ -35,13 +37,16 @@ public class FollowingListView extends Activity implements
       public static boolean fromOwnProfile = false;
       private RelativeLayout mFollowingListView, mFollowingListEmpty;
       private String name = "", phNo = "";
+    private boolean isChangeInList = false;
 
       @Override
       protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            requestWindowFeature(Window.FEATURE_NO_TITLE);
             setContentView(R.layout.view_followinglist);
-            this.overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_right);
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+            addMenu(true);
+            slidemenu.setTouchModeAbove(2);
+/*            this.overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_right);*/
 
             Bundle bundle = getIntent().getExtras();
             if (bundle != null) {
@@ -62,15 +67,14 @@ public class FollowingListView extends Activity implements
             profManager = ModelManager.getInstance().getProfileManager();
             authManager = ModelManager.getInstance().getAuthorizationManager();
             typeface = Typeface.createFromAsset(FollowingListView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
-            profileName.setTypeface(typeface, typeface.BOLD);
 
 
-            ((TextView) findViewById(R.id.tv_following_msgI)).setTypeface(typeface, typeface.BOLD);
-            ((TextView) findViewById(R.id.tv_following_msgII)).setTypeface(typeface, typeface.BOLD);
+
+
             try {
                   fromOwnProfile = getIntent().getExtras().getBoolean("FromOwnProfile");
                   if (fromOwnProfile) {
-                        profileName.setText(authManager.getUserName());
+                       // profileName.setText(authManager.getUserName());
                         Utils.launchBarDialog(FollowingListView.this);
                         profManager.getFollwer("", authManager.getPhoneNo(), authManager.getUsrToken());
                   } else {
@@ -82,7 +86,16 @@ public class FollowingListView extends Activity implements
             }
 
       }
-
+      @Override
+      public void onBackPressed() {
+            super.onBackPressed();
+            finish();
+          Intent intent = new Intent(FollowingListView.this, UserProfileView.class);
+          intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+          intent.putExtra("isChangeInList", isChangeInList);
+          startActivity(intent);
+            overridePendingTransition(0,R.anim.top_out);
+      }
       public void setlist() {
             if (profManager.following.size() > 0) {
 
@@ -106,10 +119,14 @@ public class FollowingListView extends Activity implements
       public void onClick(View v) {
             switch (v.getId()) {
                   case R.id.iv_back_ing:
-                        finish();
+                      Intent intent = new Intent(FollowingListView.this, UserProfileView.class);
+                      intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                      intent.putExtra("isChangeInList", isChangeInList);
+                      startActivity(intent);
+                      overridePendingTransition(0,R.anim.top_out);
                         break;
                   case R.id.iv_notification_list_ing:
-                        finish();
+                        slidemenu.showSecondaryMenu(true);
                         break;
             }
 
@@ -144,8 +161,20 @@ public class FollowingListView extends Activity implements
                   Log.d("2", "message->" + getMsg);
             } else if (getMsg.equalsIgnoreCase("GetFollower Network Error")) {
                   Utils.dismissBarDialog();
-                  Utils.showAlert(FollowingListView.this, AlertMessage.connectionError);
+                Utils.fromSignalDialog(this,AlertMessage.connectionError);
+                  //Utils.showAlert(FollowingListView.this, AlertMessage.connectionError);
                   Log.d("3", "message->" + getMsg);
-            }
+            }else if (getMsg.equalsIgnoreCase("UnFollowUser true")) {
+            // adapter.notifyDataSetChanged();
+              Log.d("1", "message->" + getMsg);
+          } else if (getMsg.equalsIgnoreCase("UnFollowUser false")) {
+              Utils.dismissBarDialog();
+              Log.d("2", "message->" + getMsg);
+          } else if (getMsg.equalsIgnoreCase("UnFollowUser Network Error")) {
+              Utils.dismissBarDialog();
+              Utils.fromSignalDialog(this,AlertMessage.connectionError);
+              //Utils.showAlert(FollowingListView.this, AlertMessage.connectionError);
+              Log.d("3", "message->" + getMsg);
+          }
       }
 }

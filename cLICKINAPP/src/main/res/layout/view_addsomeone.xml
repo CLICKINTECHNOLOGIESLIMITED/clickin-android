@@ -5,39 +5,45 @@
 
     android:layout_height="match_parent"
     android:id="@+id/btn_add_someone_action"
-    android:background="@drawable/white_pattern_bg">
+    android:background="@drawable/enterdigitmainbg">
 
     <LinearLayout
         android:id="@+id/iv_topicon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
         android:orientation="vertical"
         android:background="@drawable/c_header_bg"
         android:weightSum="2">
 
         <com.sourcefuse.clickinandroid.utils.ClickInTextView
+            android:id="@+id/title_text_top"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:gravity="center"
             android:layout_marginTop="-5dp"
+            android:layout_centerHorizontal="true"
             android:text="ADD A"
-            android:textColor="@color/profile_usr_name"
+            android:textColor="@color/screen_header"
             android:textSize="43sp"
             android:textStyle="bold"
 
             geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
             />
         <com.sourcefuse.clickinandroid.utils.ClickInTextView
+            android:id="@+id/title_text_bottom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:gravity="center"
+            android:layout_centerHorizontal="true"
             android:text="PARTNER"
-            android:textColor="@color/profile_usr_name"
+            android:textColor="@color/screen_header"
             android:textSize="43sp"
             android:textStyle="bold"
 
@@ -55,31 +61,36 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/iv_topicon"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/gray_border"
-        android:padding="15dp">
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/alert_border_partner"
+        >
 
         <LinearLayout
             android:id="@+id/ll_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_centerHorizontal="true"
+            >
 
             <com.sourcefuse.clickinandroid.utils.ClickInEditBox
                 android:id="@+id/edt_search_ph"
-                android:layout_width="240dp"
+                android:layout_width="wrap_content"
                 android:layout_height="45dp"
-                android:background="@drawable/edittext_border"
+                android:background="@drawable/searchboxtxtfield"
+                android:layout_centerHorizontal="true"
                 android:ems="10"
                 android:hint="@string/txt_search_phonebook"
                 android:padding="10dp"
                 android:singleLine="true"
+                android:layout_marginTop="11.65dp"
                 geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
-                android:textColor="@color/phone_no_clr"
+                android:layout_marginLeft="2dp"
+                android:inputType="textCapWords"
+                android:textColor="@color/black"
                 android:textColorHint="@color/sign_hint"
                 android:textSize="14sp"/>
 
@@ -88,9 +99,35 @@
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:layout_marginLeft="5dp"
+                android:layout_marginTop="11.65dp"
+                android:layout_centerHorizontal="true"
                 android:background="@drawable/keyboard" />
+
+
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ll_search"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="18dp"
+            >
+
+            <com.sourcefuse.clickinandroid.utils.ClickInTextView
+                android:id="@+id/edt_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:maxLines="2"
+                android:layout_centerHorizontal="true"
+                android:text="@string/text_add_partner"
+                geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
+                android:textColor="@color/signin_color"
+                android:textSize="14sp"/>
+
+            </LinearLayout>
         <!-- Contact List Layout Start -->
 
         <RelativeLayout
@@ -114,13 +151,54 @@
 
     </RelativeLayout>
 
+
     <Button
-        android:id="@+id/btn_do_itlatter"
-        android:layout_width="wrap_content"
+        android:id="@+id/btn_been_invited"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/linearLayout1"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
-        android:background="@drawable/c_do_it_later" />
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="35dp"
+        android:background="@drawable/rejectprofilebtn" />
+    <Button
+        android:id="@+id/btn_do_itlatter"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_been_invited"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/addsomeonelaterbtn" />
+
+    <RelativeLayout
+        android:id="@+id/rl_back"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="-10dp"
+        android:background="@drawable/c_back_footer"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="22dp"
+            android:layout_marginTop="27dp"
+            android:background="@drawable/c_back"
+            android:visibility="gone"
+         />
+
+
+    </RelativeLayout>
 
 </RelativeLayout>
+

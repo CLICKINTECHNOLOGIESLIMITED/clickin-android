@@ -3,7 +3,6 @@ package com.sourcefuse.clickinandroid.view;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -11,10 +10,9 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.sourcefuse.clickinandroid.utils.CardDialog;
+import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
@@ -61,14 +59,14 @@ public class Card extends Activity implements View.OnClickListener,TextWatcher {
         btnPlay = (ImageView)findViewById(R.id.btn_play);
         btnPlay.setOnClickListener(this);
 
-        LinearLayout back = (LinearLayout)findViewById(R.id.linear_layout_back);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-                overridePendingTransition(R.anim.slide_in_finish_up, R.anim.slide_out_finish_up);
-            }
-        });
+//        LinearLayout back = (LinearLayout)findViewById(R.id.linear_layout_back);
+//        back.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                finish();
+//                overridePendingTransition(R.anim.slide_in_finish_up, R.anim.slide_out_finish_up);
+//            }
+//        });
 
         imageView = (ImageView) findViewById(R.id.trade_image);
         mBackButton = (ImageView) findViewById(R.id.m_back);
@@ -189,8 +187,7 @@ Log.e(TAG,"Original Url" +url);
 
                 if(trd_clicks_top.getText().equals("  0") && trd_clicks_bottom.getText().equals("0 ")){
 
-                    CardDialog cardDialog = new CardDialog();
-                    cardDialog.popupDialog(Card.this);
+                    Utils.fromSignalDialog(this, AlertMessage.selectClicks);
 
                 }else {
                 Intent i=new Intent();

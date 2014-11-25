@@ -3,7 +3,7 @@
     android:id="@+id/relative_layout_root_editprofile"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/white_pattern_bg">
+    android:background="@drawable/enterdigitmainbg">
 
     <RelativeLayout
         android:id="@+id/rr_header"
@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="4dp"
             android:paddingLeft="50dp"
             android:src="@drawable/owner_profile_hedder_icon"
             />
@@ -52,9 +52,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rr_header"
-        android:layout_marginLeft="35dp"
-        android:layout_marginRight="40dp"
+        android:layout_marginLeft="29dp"
+        android:layout_marginRight="30dp"
         android:layout_marginTop="20dp"
+        android:layout_marginBottom="19dp"
         android:background="@color/edit_profile_clr"
         android:orientation="horizontal">
 
@@ -84,8 +85,9 @@
                 android:layout_gravity="center_horizontal"
                 android:text="ADD YOUR PHOTO"
                 android:textColor="@color/add_your_photo"
-                android:textSize="18sp"
+                android:textSize="17dp"
                 android:textStyle="bold"
+                android:layout_marginTop="2dp"
                 geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
 
 
@@ -96,38 +98,57 @@
                 android:layout_below="@+id/tv"
                 android:layout_centerVertical="true"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="15dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:background="@drawable/c_edit_profile_line"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                />
 
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/line"
                 android:layout_centerHorizontal="true"
-                android:layout_marginRight="-10dp"
+                android:weightSum="3"
                 android:orientation="horizontal">
 
-                <ImageView
-                    android:id="@+id/iv_edit_gallery"
-                    android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="1"
-                    android:src="@drawable/c_gallery_img" />
+                <LinearLayout
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:id="@+id/iv_edit_gallery"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_weight="1"
+                        android:src="@drawable/c_gallery_img" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
+                    </LinearLayout>
+
+                   <ImageView
+                    android:layout_width="1dp"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/c_middle_line" />
+                    android:background="@drawable/c_middle_line"
+                       android:layout_marginBottom="10dp"/>
 
-                <ImageView
-                    android:id="@+id/iv_edit_camera"
-                    android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
-                    android:layout_toRightOf="@+id/iv_gallery"
-                    android:layout_weight="1"
-                    android:src="@drawable/c_picture_img" />
+
+                <LinearLayout
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    >
+                    <ImageView
+                        android:id="@+id/iv_edit_camera"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_toRightOf="@+id/iv_gallery"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:src="@drawable/c_picture_img" />
+
+                </LinearLayout>
+
+
             </LinearLayout>
         </LinearLayout>
 

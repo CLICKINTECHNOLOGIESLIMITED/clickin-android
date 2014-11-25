@@ -1,16 +1,16 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/relative_layout_root_menuview"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/appclr"
-    android:paddingBottom="10dp">
+    android:orientation="vertical"
+    android:background="@color/search_text_color"
+    >
 
-    <RelativeLayout
-        android:id="@+id/rr_search"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="20dp"
+
+    <LinearLayout
+        android:layout_width="fill_parent"
         android:background="@color/appclr"
-        android:paddingBottom="5dp">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/iv_hide_searchlist"
@@ -23,47 +23,82 @@
             android:padding="12dp"
             android:visibility="gone" />
 
-        <EditText
-            android:id="@+id/edt_search"
+        <LinearLayout
+            android:id="@+id/search_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:layout_toRightOf="@+id/iv_hide_searchlist"
             android:background="@drawable/search_bar"
-            android:imeOptions="actionSearch"
             android:paddingLeft="5dp"
-            android:singleLine="true"
+            android:paddingRight="5dp">
 
-            android:textColor="@color/black"
-            android:textSize="15sp"
-            android:hint="SEARCH CLICKIN'"/>
+            <EditText
+                android:id="@+id/edt_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@color/profile_list_bg"
+                android:ellipsize="end"
+                android:hint="SEARCH CLICKIN'"
+                android:imeOptions="actionSearch"
+                android:paddingLeft="5dp"
+                android:inputType="textCapSentences"
+                android:singleLine="true"
+                android:textColor="@color/signup_contry_code"
+                android:textColorHint="@color/signup_contry_code"
+                android:textSize="15sp" />
 
-        <ListView
-            android:id="@+id/search_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/edt_search"
-            android:layout_marginLeft="10dp"
-            android:divider="@drawable/list_divider"
-            android:scrollbars="none"
-            android:visibility="gone" />
+            <TextView
+                android:id="@+id/btn_clear"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_vertical"
+                android:visibility="gone"
+                android:background="@drawable/search_cross" />
 
-    </RelativeLayout>
+            <ProgressBar
+                android:id="@+id/btn_progressBar"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="5dp"
+                android:indeterminateDrawable="@drawable/loading_spinner"
+                android:visibility="gone" />
+        </LinearLayout>
+    </LinearLayout>
 
-    <RelativeLayout
-        android:id="@+id/rr_click_with_list"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rr_search"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/big_user_bg">
+    <ListView
+        android:id="@+id/search_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/search_bar"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:choiceMode="singleChoice"
+        android:divider="@drawable/list_divider"
+        android:fadingEdge="none"
+        android:listSelector="#00000000"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        android:transcriptMode="alwaysScroll"
+        android:visibility="gone" />
 
-        <dev.dworks.libs.astickyheader.ui.PinnedSectionListView
-            android:id="@+id/click_with_list_menu"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:divider="@drawable/list_divider"
-            android:scrollbars="none" />
-    </RelativeLayout>
 
-</RelativeLayout>
+    <com.sourcefuse.clickinandroid.view.adapter.PinnedSectionListViewNew
+        android:id="@+id/click_with_list_menu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/search_text_color"
+        android:choiceMode="singleChoice"
+        android:divider="@null"
+        android:fadingEdge="none"
+        android:listSelector="#00000000"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        android:transcriptMode="alwaysScroll" />
+
+
+</LinearLayout>

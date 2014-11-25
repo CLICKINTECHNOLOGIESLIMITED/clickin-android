@@ -32,18 +32,18 @@ public class SimpleSectionedListAdapter1 extends BaseAdapter implements PinnedSe
 	private Typeface typeface;
 
 	Context mContext;
-	
+
     public static class Section {
         int firstPosition;
         int sectionedPosition;
         CharSequence title;
         CharSequence title2;
-        
+
         public Section(int firstPosition, CharSequence title,CharSequence title2) {
             this.firstPosition = firstPosition;
             this.title = title;
             this.title2 =title2;
-            
+
         }
 
         public CharSequence getTitle() {
@@ -56,7 +56,7 @@ public class SimpleSectionedListAdapter1 extends BaseAdapter implements PinnedSe
         mContext =context;
         mSectionResourceId = sectionResourceId;
         mHeaderTextViewResId = headerTextViewResId;
-        
+
         mHeaderTextViewResId1 = header1;
         mBaseAdapter = baseAdapter;
         mBaseAdapter.registerDataSetObserver(new DataSetObserver() {
@@ -74,7 +74,7 @@ public class SimpleSectionedListAdapter1 extends BaseAdapter implements PinnedSe
         });
     }
 
-    
+
     public void setSections(Section[] sections) {
         mSections.clear();
 
@@ -191,17 +191,16 @@ public class SimpleSectionedListAdapter1 extends BaseAdapter implements PinnedSe
         	}
         	else{
         		if(null == convertView.findViewById(mHeaderTextViewResId)){
-        			convertView = mLayoutInflater.inflate(mSectionResourceId, parent, false);	
+        			convertView = mLayoutInflater.inflate(mSectionResourceId, parent, false);
         		}
-        		
+
         	}
         	typeface = Typeface.createFromAsset(mContext.getAssets(),Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
             view = (TextView) convertView.findViewById(mHeaderTextViewResId);
             view1 = (TextView)convertView.findViewById(mHeaderTextViewResId1);
-            view.setTypeface(typeface, typeface.BOLD);
     		view1.setTypeface(typeface);
-            
-           
+
+
             view.setText(mSections.get(position).title);
             view1.setText(mSections.get(position).title2);
             return convertView;

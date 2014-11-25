@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/rl_main_signup"
-    android:background="@drawable/white_pattern_bg">
+    android:background="@drawable/enterdigitmainbg">
 
     <LinearLayout
         android:id="@+id/iv_topicon"
@@ -21,8 +21,10 @@
             android:layout_weight="1"
             android:gravity="bottom"
             android:text="ENTER YOUR"
-            android:textColor="@color/profile_usr_name"
+                android:layout_centerHorizontal="true"
+            android:textColor="@color/screen_header"
             android:textSize="30sp"
+            android:layout_marginRight="1dp"
             android:textStyle="bold"
             geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
             android:paddingTop="10dp"
@@ -36,12 +38,13 @@
                 android:layout_weight="1"
                 android:gravity="top"
                 android:text="DIGITS!"
-                android:textColor="@color/profile_usr_name"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/screen_header"
                 android:textSize="51sp"
                 android:textStyle="bold"
                 geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
                 android:layout_marginTop="-16dp"
-                android:layout_marginLeft="75dp"
+                android:layout_marginLeft="76dp"
                />
 
            </LinearLayout>
@@ -77,7 +80,7 @@
             android:paddingTop="8dp"
             android:text=""
             geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
-            android:textColor="@color/phone_no_clr"
+            android:textColor="@color/black"
             android:textColorHint="@color/defult_hint_clr"
             android:textSize="16sp"
             android:textStyle="bold"
@@ -101,7 +104,7 @@
             android:paddingLeft="10dp"
             android:paddingTop="8dp"
             geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
-            android:textColor="@color/phone_no_clr"
+            android:textColor="@color/black"
             android:textColorHint="@color/sign_hint"
             android:textSize="16sp">
 

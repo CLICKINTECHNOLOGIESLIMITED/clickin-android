@@ -1,11 +1,13 @@
 package com.sourcefuse.clickinandroid.view;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -22,7 +24,7 @@ import com.sourcefuse.clickinapp.R;
 
 import de.greenrobot.event.EventBus;
 
-public class FollowerList extends Activity implements
+public class FollowerList extends ClickInBaseView implements
         View.OnClickListener {
       private static final String TAG = FollowerList.class.getSimpleName();
       private ImageView back, notification;
@@ -36,12 +38,16 @@ public class FollowerList extends Activity implements
       private RelativeLayout mFollowerListView, mFollowerListEmpty;
       private String name = "", phNo = "";
 
+    private boolean isChangeInList = false;
+
       @Override
       protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            requestWindowFeature(Window.FEATURE_NO_TITLE);
             setContentView(R.layout.view_followerlist);
-            this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+            addMenu(true);
+            slidemenu.setTouchModeAbove(2);
+            /*this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);*/
 
             Bundle bundle = getIntent().getExtras();
             if (bundle != null) {
@@ -60,15 +66,15 @@ public class FollowerList extends Activity implements
             profManager = ModelManager.getInstance().getProfileManager();
             authManager = ModelManager.getInstance().getAuthorizationManager();
             typeface = Typeface.createFromAsset(FollowerList.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
-            profileName.setTypeface(typeface, typeface.BOLD);
 
 
-            ((TextView) findViewById(R.id.tv_follower_msgI)).setTypeface(typeface, typeface.BOLD);
-            ((TextView) findViewById(R.id.tv_follower_msgII)).setTypeface(typeface, typeface.BOLD);
+
+            /*((TextView) findViewById(R.id.tv_follower_msgI)).setTypeface(typeface, typeface.BOLD);
+            ((TextView) findViewById(R.id.tv_follower_msgII)).setTypeface(typeface, typeface.BOLD);*/
 
             fromOwnProfile = getIntent().getExtras().getBoolean("FromOwnProfile");
             if (fromOwnProfile) {
-                  profileName.setText(authManager.getUserName());
+                //  profileName.setText(authManager.getUserName());
                   Utils.launchBarDialog(FollowerList.this);
                   profManager.getFollwer("", authManager.getPhoneNo(), authManager.getUsrToken());
             } else {
@@ -77,6 +83,13 @@ public class FollowerList extends Activity implements
                   profManager.getFollwer(getIntent().getExtras().getString("phoneNo"), authManager.getPhoneNo(), authManager.getUsrToken());
             }
 
+      }
+
+      @Override
+      public void onBackPressed() {
+            super.onBackPressed();
+            finish();
+            overridePendingTransition(0,R.anim.top_out);
       }
 
       public void setlist() {
@@ -106,9 +119,14 @@ public class FollowerList extends Activity implements
             switch (v.getId()) {
                   case R.id.iv_back:
                         finish();
+                        Intent intent = new Intent(FollowerList.this, UserProfileView.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        intent.putExtra("isChangeInList", isChangeInList);
+                        startActivity(intent);
+                        overridePendingTransition(0,R.anim.top_out);
                         break;
                   case R.id.iv_notification_list:
-                        finish();
+                        slidemenu.showSecondaryMenu(true);
                         break;
             }
 
@@ -135,18 +153,21 @@ public class FollowerList extends Activity implements
             Log.d(TAG, "onEventMainThread->" + getMsg);
             authManager = ModelManager.getInstance().getAuthorizationManager();
             if (getMsg.equalsIgnoreCase("UnFollowUser true")) {
+                isChangeInList = true;
                   // profManager.getFollwer("", authManager.getPhoneNo(), authManager.getUsrToken());
                   adapter.notifyDataSetChanged();
             } else if (getMsg.equalsIgnoreCase("UnFollowUser false")) {
-                  Utils.showAlert(FollowerList.this, authManager.getMessage());
+                Utils.fromSignalDialog(this,authManager.getMessage());
+                  //Utils.showAlert(FollowerList.this, authManager.getMessage());
             } else if (getMsg.equalsIgnoreCase("UnFollowUser Network Error")) {
-                  Utils.showAlert(FollowerList.this, AlertMessage.connectionError);
+                  Utils.fromSignalDialog(FollowerList.this, AlertMessage.connectionError);
             } else if (getMsg.equalsIgnoreCase("FollowUser true")) {
+                isChangeInList = true;
                   adapter.notifyDataSetChanged();
             } else if (getMsg.equalsIgnoreCase("FollowUser false")) {
-                  Utils.showAlert(FollowerList.this, authManager.getMessage());
+                  Utils.fromSignalDialog(FollowerList.this, authManager.getMessage());
             } else if (getMsg.equalsIgnoreCase("FollowUser Network Error")) {
-                  Utils.showAlert(FollowerList.this, AlertMessage.connectionError);
+                  Utils.fromSignalDialog(FollowerList.this, AlertMessage.connectionError);
             } else if (getMsg.equalsIgnoreCase("GetFollower True")) {
                   Utils.dismissBarDialog();
                   setlist();
@@ -156,14 +177,15 @@ public class FollowerList extends Activity implements
                   Log.d("2", "message->" + getMsg);
             } else if (getMsg.equalsIgnoreCase("GetFollower Network Error")) {
                   Utils.dismissBarDialog();
-                  Utils.showAlert(FollowerList.this, AlertMessage.connectionError);
+                  Utils.fromSignalDialog(FollowerList.this, AlertMessage.connectionError);
                   Log.d("3", "message->" + getMsg);
             } else if (getMsg.equalsIgnoreCase("followUpdateStatus True")) {
+                isChangeInList = true;
                   adapter.notifyDataSetChanged();
             } else if (getMsg.equalsIgnoreCase("followUpdateStatus False")) {
 
             } else if (getMsg.equalsIgnoreCase("followUpdateStatus Network Error")) {
-                  Utils.showAlert(FollowerList.this, AlertMessage.connectionError);
+                  Utils.fromSignalDialog(FollowerList.this, AlertMessage.connectionError);
             }
 
       }

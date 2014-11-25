@@ -1,11 +1,13 @@
 package com.sourcefuse.clickinandroid.view;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -16,8 +18,9 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.sourcefuse.clickinandroid.utils.CardDialog;
+import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.Log;
+import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
 
 /**
@@ -34,7 +37,7 @@ public class ViewTradeCart extends Activity implements View.OnClickListener
     String clicks,cardTitle,card_id;
     String url ;
     private static final String TAG = "ViewTradeCart";
-
+    Context context ;
 
     boolean forCounter = false;
 
@@ -46,14 +49,14 @@ public class ViewTradeCart extends Activity implements View.OnClickListener
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         layout = (RelativeLayout)findViewById(R.id.rr_send);
-        LinearLayout back = (LinearLayout)findViewById(R.id.linear_layout_back);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-                overridePendingTransition(R.anim.slide_in_finish_up, R.anim.slide_out_finish_up);
-            }
-        });
+//        LinearLayout back = (LinearLayout)findViewById(R.id.linear_layout_back);
+//        back.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                finish();
+//                overridePendingTransition(R.anim.slide_in_finish_up, R.anim.slide_out_finish_up);
+//            }
+//        });
 
         mback = (ImageView)findViewById(R.id.m_back);
         mback.setOnClickListener(new View.OnClickListener() {
@@ -83,6 +86,7 @@ public class ViewTradeCart extends Activity implements View.OnClickListener
 
 //ends
 
+
         trone = (TextView)findViewById(R.id.btn_one);
         trtwo = (TextView)findViewById(R.id.btn_two);
         trthree = (TextView)findViewById(R.id.btn_three);
@@ -98,6 +102,9 @@ public class ViewTradeCart extends Activity implements View.OnClickListener
         trthree.setOnClickListener(this);
         trfour.setOnClickListener(this);
         trfive.setOnClickListener(this);
+        card_text.setOnClickListener(this);
+
+
         btnPlay = (ImageView)findViewById(R.id.btn_play);
         btnPlay.setOnClickListener(this);
 
@@ -214,13 +221,14 @@ public class ViewTradeCart extends Activity implements View.OnClickListener
                 String text = card_text.getText().toString();
                 if (trd_clicks_top.getText().equals(" 0") && trd_clicks_bottom.getText().equals("0 "))
                 {
-                    CardDialog cardDialog = new CardDialog();
-                    cardDialog.popupDialog(ViewTradeCart.this);
+                    Utils.fromSignalDialog(this, AlertMessage.selectClicks);
+//                    CardDialog cardDialog = new CardDialog();
+//                    cardDialog.popupDialog(ViewTradeCart.this);
 
                 }else if((text == null || text.equalsIgnoreCase("null")
-                        || text.equalsIgnoreCase("") || text.length() < 1)){
-                    CardDialog cardDialog = new CardDialog();
-                    cardDialog.popupDialog1(ViewTradeCart.this);
+                        || text.equalsIgnoreCase("") || text.length() < 1)) {
+                    Utils.fromSignalDialog(this, AlertMessage.enterCustomCardtext);
+
                 }
 
                 else {
@@ -249,10 +257,17 @@ public class ViewTradeCart extends Activity implements View.OnClickListener
                    startActivity(i);
 
                 }
+            case R.id.card_text12:
+
+                card_text.requestFocus();
+                card_text.setHint("");
+                card_text.setGravity(Gravity.CENTER);
         }
 
+
+           }
         }
-    }
+
 
 
 

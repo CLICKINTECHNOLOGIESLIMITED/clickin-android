@@ -256,6 +256,7 @@
                     android:background="@drawable/box"
                     android:focusableInTouchMode="true"
                     android:gravity="top"
+                    android:inputType="textNoSuggestions"
                     android:hint="@string/spam_edit_hint"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"

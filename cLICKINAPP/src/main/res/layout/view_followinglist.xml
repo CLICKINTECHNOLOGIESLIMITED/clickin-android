@@ -2,7 +2,7 @@
                 xmlns:geekui="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/white_pattern_bg">
+    android:background="@drawable/enterdigitmainbg">
 
 
     <RelativeLayout
@@ -36,7 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rr_header"
-        android:visibility="gone">
+        >
 
         <com.sourcefuse.clickinandroid.utils.ClickInTextView
             android:id="@+id/tv_tag_screen"
@@ -73,18 +73,19 @@
         android:gravity="center_vertical"
         android:visibility="gone">
 
-        <TextView
+        <com.sourcefuse.clickinandroid.utils.ClickInTextView
             android:id="@+id/tv_following_msgI"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:gravity="center_horizontal"
             android:text="@string/tv_followering_empty_msgI"
-            android:textColor="@color/appclr"
+            android:textColor="@color/signup_contry_code"
             android:textSize="25sp"
-            android:textStyle="bold" />
+            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
+            android:textStyle="bold"/>
 
-        <TextView
+        <com.sourcefuse.clickinandroid.utils.ClickInTextView
             android:id="@+id/tv_following_msgII"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -92,9 +93,10 @@
             android:layout_centerHorizontal="true"
             android:gravity="center_horizontal"
             android:text="@string/tv_followering_empty_msgII"
-            android:textColor="@color/appclr"
+            android:textColor="@color/follower_list_user_txt"
             android:textSize="15sp"
-            android:textStyle="bold" />
+            geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"
+            android:textStyle="bold"/>
     </RelativeLayout>
 
 
@@ -106,17 +108,18 @@
         android:layout_centerHorizontal="true"
         android:background="@drawable/blue_bg">
 
-        <TextView
+        <com.sourcefuse.clickinandroid.utils.ClickInTextView
             android:id="@+id/tv_profile_txt_ing"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
+            android:layout_marginTop="12dp"
             android:text="@string/txt_following"
             android:textColor="@color/white"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textStyle="bold"
-            android:textAllCaps="true"/>
+            android:textAllCaps="true"
+            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"/>
     </RelativeLayout>
 
 </RelativeLayout>

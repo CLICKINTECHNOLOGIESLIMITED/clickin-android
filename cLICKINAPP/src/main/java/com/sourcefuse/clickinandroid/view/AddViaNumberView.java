@@ -1,12 +1,13 @@
 package com.sourcefuse.clickinandroid.view;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Telephony;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
@@ -17,7 +18,6 @@ import android.widget.TextView;
 
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
-import com.sourcefuse.clickinandroid.model.RelationManager;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.FetchContactFromPhone;
@@ -65,7 +65,7 @@ public class AddViaNumberView extends Activity implements View.OnClickListener,T
 
 
 
-        ((Button) findViewById(R.id.btn_go_back_num)).setOnClickListener(new View.OnClickListener() {
+        ((TextView) findViewById(R.id.btn_go_back_num)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -164,11 +164,11 @@ public class AddViaNumberView extends Activity implements View.OnClickListener,T
                     FetchContactFromPhone.checkNumWithClickInDb(mPhNo);
 
                 }else{
-                    fromSignalDialog(AlertMessage.phone);
+                    Utils.fromSignalDialog(this,AlertMessage.phone);
                 }
 
             }else{
-                fromSignalDialog(AlertMessage.country);
+                Utils.fromSignalDialog(this,AlertMessage.country);
             }
 
 			break;
@@ -204,74 +204,63 @@ public class AddViaNumberView extends Activity implements View.OnClickListener,T
 					//switchView();
 				} else if (message.equalsIgnoreCase("RequestSend False")) {
 					Utils.dismissBarDialog();
-                    fromSignalDialog(authManager.getMessage());
+                    Utils.fromSignalDialog(this,authManager.getMessage());
                     //Utils.showAlert(AddViaNumberView.this, authManager.getMessage());
                    // finish();
 				} else if(message.equalsIgnoreCase("RequestSend Network Error")){
 					Utils.dismissBarDialog();
-				      fromSignalDialog(AlertMessage.connectionError);
+				      Utils.fromSignalDialog(this,AlertMessage.connectionError);
 				//	Utils.showAlert(AddViaNumberView.this, AlertMessage.connectionError);
                     //finish();
 				}else if(message.equalsIgnoreCase("Num Not Registered")){
-                    Intent smsIntent = new Intent(Intent.ACTION_VIEW);
-                    smsIntent.putExtra("sms_body", Constants.SEND_REQUEST_WITH_SMS_MESSAGE);
-                    smsIntent.putExtra("address", mPhNo);
-                    smsIntent.setType("vnd.android-dir/mms-sms");
-                    startActivity(smsIntent);
+
+
+                    /* send sms if not not register */
+                 /*  send sms for nexus 5 check build version*/
+                 /* prafull code */
+                    try {
+
+
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) //At least KitKat
+                        {
+                            String defaultSmsPackageName = Telephony.Sms.getDefaultSmsPackage(AddViaNumberView.this); //Need to change the build to API 19
+
+                            Intent sendIntent = new Intent(Intent.ACTION_SEND);
+                            sendIntent.setType("text/plain");
+                            sendIntent.putExtra(Intent.EXTRA_TEXT, Constants.SEND_REQUEST_WITH_SMS_MESSAGE);
+
+                            if (defaultSmsPackageName != null)//Can be null in case that there is no default, then the user would be able to choose any app that support this intent.
+                            {
+                                sendIntent.setPackage(defaultSmsPackageName);
+                            }
+                            startActivity(sendIntent);
+
+                        } else //For early versions, do what worked for you before.
+                        {
+                            Intent smsIntent = new Intent(Intent.ACTION_VIEW);
+                            smsIntent.putExtra("sms_body", Constants.SEND_REQUEST_WITH_SMS_MESSAGE);
+                            smsIntent.putExtra("address", mPhNo);
+                            smsIntent.setType("vnd.android-dir/mms-sms");
+                            startActivity(smsIntent);
+                        }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Log.e("Exception to send sms--->", "" + e.toString());
+                    }
+
+
+
                 }else if(message.equalsIgnoreCase("Num Registered")){
                     Utils.launchBarDialog(this);
                     authManager = ModelManager.getInstance().getAuthorizationManager();
                     authManager.sendNewRequest(authManager.getPhoneNo(), mPhNo, authManager.getUsrToken());
                 }else if(message.equalsIgnoreCase("Num Check False")){
                     Utils.dismissBarDialog();
-                    fromSignalDialog(authManager.getMessage());
+                    Utils.fromSignalDialog(this,authManager.getMessage());
                 }
 		}
 
-// public String GetCountryZipCode(){
-//        String CountryID="";
-//        String CountryZipCode="";
-//        try {
-//            TelephonyManager manager = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
-//            //getNetworkCountryIso
-//            CountryID = manager.getSimCountryIso().toUpperCase();
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
-//
-//        String[] rl=this.getResources().getStringArray(R.array.CountryCodes);
-//        for(int i=0;i<rl.length;i++){
-//            String[] g=rl[i].split(",");
-//            if(g[1].trim().equals(CountryID.trim())){
-//                CountryZipCode=g[0];
-//                Log.e("Code","Tis is Code>>>>>" +CountryZipCode);
-//                break;
-//            }
-//        }
-//        return CountryZipCode;
-//    }
-    // Akshit Code Starts
-    public void fromSignalDialog(String str){
-
-        final Dialog dialog = new Dialog(AddViaNumberView.this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        dialog.setContentView(R.layout.alert_check_dialogs);
-        dialog.setCancelable(false);
-        TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
-        msgI.setText(str);
-
-
-        Button dismiss = (Button) dialog.findViewById(R.id.coolio);
-        dismiss.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                dialog.dismiss();
-
-            }
-        });
-        dialog.show();
-    }
 
     @Override
     public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {

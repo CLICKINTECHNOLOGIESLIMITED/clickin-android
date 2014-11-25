@@ -2,7 +2,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/rl_addvia_no_action"
-    android:background="@drawable/white_pattern_bg"
+    android:background="@drawable/enterdigitmainbg"
     xmlns:geekui="http://schemas.android.com/apk/res-auto"
     >
 
@@ -22,7 +22,8 @@
             android:layout_weight="1"
             android:gravity="bottom"
             android:text="ADD SOMEONE"
-            android:textColor="@color/profile_usr_name"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/screen_header"
             android:textSize="43sp"
             android:textStyle="bold"
             android:layout_marginLeft="2dp"
@@ -35,7 +36,8 @@
             android:layout_weight="1"
             android:gravity="top"
             android:text="TO CLICK WITH"
-            android:textColor="@color/profile_usr_name"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/screen_header"
             android:textSize="43sp"
             android:textStyle="bold"
             android:paddingLeft="28dp"
@@ -59,7 +61,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="18dp"
         android:background="@drawable/white_border"
         android:padding="15dp">
 
@@ -96,7 +98,7 @@
                     android:id="@+id/edt_cntry_cd"
                     android:layout_width="wrap_content"
                     android:layout_height="45dp"
-                    android:background="@color/dark_gray"
+                    android:background="@color/background_grey"
                     android:maxLines="1"
                     android:ems="4"
                     android:inputType="phone"
@@ -118,12 +120,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="45dp"
                     android:layout_marginLeft="4dp"
-                    android:background="@color/dark_gray"
-                    android:ems="11"
+                    android:background="@color/background_grey"
+                    android:ems="10"
                     android:maxLines="1"
                     android:inputType="phone"
+                    android:hint="Phone Number"
                     android:padding="10dp"
                     android:textColor="@color/black"
+                    android:textColorHint="@color/dark_gray"
                     android:textSize="16sp"
                     android:textStyle="bold">
                     <requestFocus />
@@ -152,15 +156,34 @@
         </RelativeLayout>
     </RelativeLayout>
 
-    <Button
-        android:id="@+id/btn_go_back_num"
+    <RelativeLayout
+        android:id="@+id/rl_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/c_back_footer"
-        android:text="BACK"
-        android:textColor="@color/white"
-        android:textStyle="bold" />
+        android:layout_marginTop="400dp"
+        android:background="@drawable/c_back_footer">
 
+        <TextView
+            android:id="@+id/btn_go_back_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+
+            android:layout_marginTop="30dp"
+            android:background="@drawable/c_back"
+            android:gravity="bottom" />
+    <!--<Button-->
+        <!--android:id="@+id/btn_go_back_num"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"       -->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:background="@drawable/c_back"-->
+        <!--android:layout_marginTop="5dp"-->
+        <!--android:gravity="center"-->
+       <!---->
+        <!--android:textColor="@color/white"-->
+        <!--android:textStyle="bold" />-->
+</RelativeLayout>
 </RelativeLayout>

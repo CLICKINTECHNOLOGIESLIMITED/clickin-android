@@ -15,41 +15,51 @@
             android:layout_height="45dp"
             android:background="@color/appclr">
 
-            <LinearLayout
-                android:id="@+id/linear_layout_back"
-                android:orientation="horizontal"
-                android:layout_width="73dp"
-                android:layout_height="fill_parent"
+
+            <ImageView
+                android:id="@+id/m_back"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_alignParentLeft="true"
-                android:onClick="true">
+                android:layout_marginLeft="8dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="5dp"
+                android:src="@drawable/trade_back" />
+            <!--<LinearLayout-->
+                <!--android:id="@+id/linear_layout_back"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:layout_width="73dp"-->
+                <!--android:layout_height="fill_parent"-->
+                <!--android:layout_alignParentLeft="true"-->
+                <!--android:onClick="true">-->
 
-                <ImageView
-                    android:id="@+id/m_back"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="3dp"
+                <!--<ImageView-->
+                    <!--android:id="@+id/m_back"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_alignParentLeft="true"-->
+                    <!--android:layout_marginLeft="3dp"-->
 
-                    android:src="@drawable/back_arrow" />
+                    <!--android:src="@drawable/back_arrow" />-->
 
-                <com.sourcefuse.clickinandroid.utils.ClickInTextView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                <!--<com.sourcefuse.clickinandroid.utils.ClickInTextView-->
+                    <!--android:layout_width="30dp"-->
+                    <!--android:layout_height="30dp"-->
 
-                    android:id="@+id/textView1"
-                    android:gravity="center"
+                    <!--android:id="@+id/textView1"-->
+                    <!--android:gravity="center"-->
 
-                    android:layout_marginRight="2dp"
-                    android:textStyle="bold"
-                    geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
-                    android:layout_gravity="center"
-                    android:textColor="#E0E0E0"
-                    android:text="BACK"
-                    android:textSize="10sp">
+                    <!--android:layout_marginRight="2dp"-->
+                    <!--android:textStyle="bold"-->
+                    <!--geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"-->
+                    <!--android:layout_gravity="center"-->
+                    <!--android:textColor="#E0E0E0"-->
+                    <!--android:text="BACK"-->
+                    <!--android:textSize="10sp">-->
 
-                </com.sourcefuse.clickinandroid.utils.ClickInTextView>
+                <!--</com.sourcefuse.clickinandroid.utils.ClickInTextView>-->
 
-            </LinearLayout>
+            <!--</LinearLayout>-->
 
 
             <LinearLayout
@@ -58,7 +68,8 @@
                 android:layout_height="fill_parent"
                 android:orientation="horizontal"
                 android:layout_alignParentRight="true"
-                android:paddingLeft="40dp">
+                android:layout_marginRight="10dp"
+                >
 
 
                 <com.sourcefuse.clickinandroid.utils.ClickInTextView
@@ -67,7 +78,7 @@
 
                     android:id="@+id/textView"
                     android:gravity="center_horizontal|right"
-                    android:layout_marginBottom="-3dp"
+                    android:layout_marginBottom="1dp"
                     android:layout_marginRight="2dp"
                     android:textStyle="bold"
                     geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
@@ -80,11 +91,12 @@
 
                 <ImageView
                     android:id="@+id/iv_notification"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_alignParentRight="true"
-                    android:src="@drawable/r_click_icon"
+                    android:layout_marginBottom="4dp"
+                    android:src="@drawable/trade_heart"
                     />
             </LinearLayout>
 
@@ -251,6 +263,7 @@
                     android:gravity="center"
                     android:layout_gravity="top"
                     android:text="5"
+                    android:textSize="20sp"
                     android:textColor="@drawable/card_text_color_state"
                     android:clickable="true"
                     geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
@@ -268,6 +281,7 @@
                     android:text="10"
                     android:textColor="@drawable/card_text_color_state"
                     android:layout_gravity="top"
+                    android:textSize="20sp"
                     android:clickable="true"
                     geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
                     android:textStyle="bold"/>
@@ -283,6 +297,7 @@
                     android:text="15"
                     android:textColor="@drawable/card_text_color_state"
                     android:layout_gravity="top"
+                    android:textSize="20sp"
                     android:clickable="true"
                     geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
                     android:textStyle="bold"/>
@@ -297,6 +312,7 @@
                     android:layout_gravity="top"
                     android:gravity="center"
                     android:text="20"
+                    android:textSize="20sp"
                     android:textColor="@drawable/card_text_color_state"
                     android:clickable="true"
                     geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
@@ -311,6 +327,7 @@
                     android:background="@drawable/c_number_background"
                     android:gravity="center"
                     android:text="25"
+                    android:textSize="20sp"
                     android:layout_gravity="top"
                     android:textColor="@drawable/card_text_color_state"
                     android:clickable="true"

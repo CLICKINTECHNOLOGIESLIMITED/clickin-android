@@ -3,7 +3,6 @@ package com.sourcefuse.clickinandroid.view;
 
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -17,13 +16,14 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.Constants;
+import com.sourcefuse.clickinandroid.utils.FetchContactFromPhone;
 import com.sourcefuse.clickinandroid.utils.Utils;
+import com.sourcefuse.clickinandroid.view.adapter.ContactAdapter;
 import com.sourcefuse.clickinapp.R;
 
 import de.greenrobot.event.EventBus;
@@ -33,8 +33,12 @@ public class PlayItSafeView extends Activity implements View.OnClickListener,Tex
     private static final String TAG = PlayItSafeView.class.getSimpleName();
     private Button done;
     private EditText password,rePassword;
+    // private String emailid ,phone,userToken;
+    public static Activity act;
+    public static Context context;
     private AuthManager authManager ;
-    
+    private Typeface typeface,typefaceBold;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,14 +46,27 @@ public class PlayItSafeView extends Activity implements View.OnClickListener,Tex
         setContentView(R.layout.view_playitsafe);
         this.overridePendingTransition(R.anim.slide_in_right ,R.anim.slide_out_right);
         authManager = ModelManager.getInstance().getAuthorizationManager();
-       
+        typeface = Typeface.createFromAsset(PlayItSafeView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
+        typefaceBold = Typeface.createFromAsset(PlayItSafeView.this.getAssets(),Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_BOLD);
+
+
+
         done = (Button) findViewById(R.id.btn_done_play);
         password = (EditText) findViewById(R.id.edt_password);
         rePassword = (EditText) findViewById(R.id.edt_re_password);
         password.addTextChangedListener(this);
         rePassword.addTextChangedListener(this);
 
+        password.setTypeface(typefaceBold);
+        rePassword.setTypeface(typefaceBold);
+
         done.setOnClickListener(this);
+
+//        Utils.prefrences = getSharedPreferences(context.getString(R.string.PREFS_NAME), MODE_PRIVATE);
+//        phone = Utils.prefrences.getString(Constants.PREFS_VALUE_PHONE, "");
+//        userToken = Utils.prefrences.getString(Constants.PREFS_VALUE_USER_TOKEN, "");
+//        emailid =Utils.prefrences.getString(Constants.PREFS_VALUE_USER_EMAILID, "");
+
 
         ((RelativeLayout) findViewById(R.id.rl_playitsafe_action)).setOnClickListener(new View.OnClickListener() {
 
@@ -105,28 +122,46 @@ public class PlayItSafeView extends Activity implements View.OnClickListener,Tex
         }
     }
 
-    public void onEventMainThread(String message){
-        Log.d(TAG, "onEventMainThread->"+message);
-			authManager = ModelManager.getInstance().getAuthorizationManager();
-			if (message.equalsIgnoreCase("PlayItSafe True")) {
-                switchView();
-			} else if (message.equalsIgnoreCase("PlayItSafe False")) {
-				Utils.dismissBarDialog();
-                alertDialog(authManager.getMessage());
-			} else if(message.equalsIgnoreCase("PlayItSafe Network Error")){
-				Utils.dismissBarDialog();
-                alertDialog(AlertMessage.connectionError);
-			}
-			
-		}
-	private void switchView() {
-		Intent intent = new Intent(PlayItSafeView.this, AddSomeoneView.class);
+    public void onEventMainThread(String message) {
+        Log.d(TAG, "onEventMainThread->" + message);
+
+        authManager = ModelManager.getInstance().getAuthorizationManager();
+        if (message.equalsIgnoreCase("PlayItSafe True")) {
+            new FetchContactFromPhone(this).getClickerList(authManager.getPhoneNo(), authManager.getUsrToken(), 1);
+
+
+        } else if (message.equalsIgnoreCase("PlayItSafe False")) {
+            Utils.dismissBarDialog();
+            Utils.fromSignalDialog(this, authManager.getMessage());
+            ;
+            //	Utils.showAlert(PlayItSafeView.this, authManager.getMessage());
+        } else if (message.equalsIgnoreCase("PlayItSafe Network Error")) {
+            Utils.dismissBarDialog();
+            Utils.fromSignalDialog(this, AlertMessage.connectionError);
+        } else if (message.equalsIgnoreCase("CheckFriend True")) {
+            Utils.dismissBarDialog();
+            switchView();
+
+        } else if (message.equalsIgnoreCase("CheckFriend False")) {
+            Utils.dismissBarDialog();
+            //  Utils.showAlert(this,authManager.getMessage());
+            Utils.fromSignalDialog(this, authManager.getMessage());
+        } else if (message.equalsIgnoreCase("CheckFriend Network Error")) {
+            Utils.dismissBarDialog();
+            //    Utils.showAlert(this, AlertMessage.connectionError);
+            Utils.fromSignalDialog(this, AlertMessage.connectionError);
+        }
+    }
+
+    private void switchView() {
+        Intent intent = new Intent(PlayItSafeView.this, AddSomeoneView.class);
+          intent.putExtra("fromsignup",getIntent().getBooleanExtra("fromsignup",false));
         intent.putExtra("FromOwnProfile", false);
-		startActivity(intent);
-		this.finish();
-	}
-	
-	
+        startActivity(intent);
+        this.finish();
+    }
+
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -140,38 +175,16 @@ public class PlayItSafeView extends Activity implements View.OnClickListener,Tex
                         authManager = ModelManager.getInstance().getAuthorizationManager();
                         authManager.playItSafeAuth(pwd, authManager.getPhoneNo(), authManager.getEmailId(), authManager.getUsrToken());
                     } else {
-                        alertDialog(AlertMessage.MATCHPASSWORD);
+                        Utils.fromSignalDialog(this,AlertMessage.MATCHPASSWORD);
+                        //    Utils.showAlert(PlayItSafeView.this, AlertMessage.MATCHPASSWORD);
                     }
                 }else {
-                    alertDialog(AlertMessage.PASSWORDLENGHT);
+                    Utils.fromSignalDialog(this,AlertMessage.PASSWORDLENGHT);
+                    //Utils.showAlert(PlayItSafeView.this, AlertMessage.PASSWORDLENGHT);
                 }
                 break;
         }
     }
 
-    //akshit Code for dialog starts
-    public void alertDialog(String msgStrI) {
-      final Dialog dialog = new Dialog(PlayItSafeView.this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.getWindow().setBackgroundDrawableResource(
-                android.R.color.transparent);
-        dialog.setContentView(R.layout.alert_check_dialogs);
-
-        TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
-//        TextView msgII = (TextView) dialog.findViewById(R.id.alert_msgII);
-        msgI.setText(msgStrI);
-
-
-        // dialog.setCancelable(true);
-        Button dismiss = (Button) dialog.findViewById(R.id.coolio);
-
-        dismiss.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
-    }
 }
 

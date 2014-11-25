@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/white_pattern_bg"
-   >
+    >
 
     <RelativeLayout
         android:id="@+id/relative_layout"
@@ -23,10 +23,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:layout_centerHorizontal="true"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
                 android:text="SIGN IN"
-                android:textColor="@color/profile_usr_name"
+                android:textColor="@color/screen_header"
                 android:textSize="60sp"
                 android:textStyle="bold"
                 geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
@@ -36,13 +37,11 @@
 
         <RelativeLayout
             android:id="@+id/linearLayout1"
-            android:layout_width="wrap_content"
+            android:layout_width="305dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/iv_topicon"
             android:layout_centerHorizontal="true"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="19dp"
             android:background="@drawable/white_border"
             android:padding="15dp">
 
@@ -52,14 +51,18 @@
                 android:layout_height="50dp"
                 android:background="@drawable/input_field"
                 android:hint="@string/hint_email_no"
-                android:inputType="text"
+                android:inputType="text|textNoSuggestions"
+                android:layout_marginLeft="1dp"
                 android:paddingLeft="10dp"
+                android:ems="15"
+                android:maxLength="15"
                 android:text="@string/plus"
                 android:textColor="@color/signup_contry_code"
-                android:textColorHint="@color/singn_forg"
+                android:textColorHint="@color/sign_hint"
                 android:textSize="16sp"
                 geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
-                android:textStyle="bold">
+                android:textStyle="bold"
+                android:imeOptions="actionNext">
                 </com.sourcefuse.clickinandroid.utils.ClickInEditBox>
 
 
@@ -68,60 +71,71 @@
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_below="@+id/edt_email_phoneno"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="7dp"
+                android:layout_marginLeft="1dp"
                 android:background="@drawable/input_field"
                 android:hint="@string/hint_pwd"
-                android:inputType="textPassword"
+                android:inputType="textPassword|textNoSuggestions"
                 android:paddingLeft="10dp"
+                android:ems="15"
                 android:text=""
+                android:imeOptions="actionDone"
                 android:textColor="@color/signup_contry_code"
-                android:textColorHint="@color/singn_forg"
+                android:textColorHint="@color/sign_hint"
                 android:textSize="16sp"
                 geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
                 android:textStyle="bold" />
         </RelativeLayout>
 
-        <Button
-            android:id="@+id/btn_get_clickin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/linearLayout1"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/c_getclicin_deactive" />
+
 
         <RelativeLayout
             android:id="@+id/ll_search"
-            android:layout_width="wrap_content"
+            android:layout_width="305dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/btn_get_clickin"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="5dp">
+            android:layout_below="@+id/linearLayout1"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="39dp"
+            android:layout_marginBottom="16dp">
 
-            <com.sourcefuse.clickinandroid.utils.ClickInTextView
+            <TextView
                 android:id="@+id/tv_forgot_pwd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:padding="10dp"
+                android:layout_marginLeft="-10dp"
                 android:text="@string/txt_forget_pwd"
-                android:textColor="@color/singn_forg"
-                geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
-                android:textStyle="bold" />
+                android:textColor="@color/signin_color"
+                android:textStyle="bold"
 
-            <com.sourcefuse.clickinandroid.utils.ClickInTextView
+                />
+
+
+            <TextView
                 android:id="@+id/tv_signup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:gravity="center_vertical|center"
+                android:layout_marginRight="-8dp"
+                android:gravity="right"
                 android:padding="10dp"
                 android:text="@string/txt_signup"
-                geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
-                android:textColor="@color/singn_forg"
-                android:textStyle="bold" />
+
+                android:textColor="@color/signin_color"
+                android:textStyle="bold"
+                />
         </RelativeLayout>
+
+        <Button
+            android:id="@+id/btn_get_clickin"
+            android:layout_width="310dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ll_search"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/c_getclicin_active" />
     </RelativeLayout>
 
 </RelativeLayout>

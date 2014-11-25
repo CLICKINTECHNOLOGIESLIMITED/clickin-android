@@ -57,7 +57,7 @@ public class VerifyView extends Activity implements View.OnClickListener,
 
 		Utils.prefrences = getSharedPreferences(getString(R.string.PREFS_NAME), MODE_PRIVATE);
 
-        fromSignalertDialog(AlertMessage.SENDVERIFYMSGI,AlertMessage.SENDVERIFYMSGII);
+        Utils.fromSignalDialog1(this,AlertMessage.SENDVERIFYMSGI,AlertMessage.SENDVERIFYMSGII);
 
 
         d_one.setOnKeyListener(new View.OnKeyListener() {
@@ -184,11 +184,7 @@ public class VerifyView extends Activity implements View.OnClickListener,
         }
 	}
 
-	/*private void switchView() {
-		Intent intent = new Intent(VerifyView.this, ProfileView.class);
-		startActivity(intent);
-	    finish();
-	}*/
+
 
     @Override
     public void onStart() {
@@ -210,6 +206,7 @@ public class VerifyView extends Activity implements View.OnClickListener,
 			if (getMsg.equalsIgnoreCase("Verify True")) {
 				Utils.dismissBarDialog();
                 Intent intent = new Intent(VerifyView.this, ProfileView.class);
+                intent.putExtra("fromsignup",getIntent().getBooleanExtra("fromsignup",false));
                 startActivity(intent);
                 finish();
 			} else if (getMsg.equalsIgnoreCase("Verify False")) {
@@ -217,15 +214,19 @@ public class VerifyView extends Activity implements View.OnClickListener,
 				alertDialog(AlertMessage.WRONGVERIFYCODEI,AlertMessage.WRONGVERIFYCODEII);
 			} else if (getMsg.equalsIgnoreCase("Verify Network Error")) {
 				Utils.dismissBarDialog();
-				Utils.showAlert(this, AlertMessage.connectionError);
+                Utils.fromSignalDialog(this,AlertMessage.connectionError);
+				//Utils.showAlert(this, AlertMessage.connectionError);
 			} else if (getMsg.equalsIgnoreCase("ReSendVerifyCode True")) {
 				Utils.dismissBarDialog();
 			}else if (getMsg.equalsIgnoreCase("ReSendVerifyCode False")) {
-				Utils.dismissBarDialog();
-				Utils.showAlert(VerifyView.this, authManager.getMessage());
+
+                Utils.dismissBarDialog();
+				Utils.fromSignalDialog(this,authManager.getMessage());
+				//Utils.showAlert(VerifyView.this, authManager.getMessage());
 			} else if (getMsg.equalsIgnoreCase("ReSendVerifyCode Network Error")) {
 				Utils.dismissBarDialog();
-				Utils.showAlert(this, AlertMessage.connectionError);
+                Utils.fromSignalDialog(this,AlertMessage.connectionError);
+				//Utils.showAlert(this, AlertMessage.connectionError);
 			}
 		}
 
@@ -269,27 +270,5 @@ public class VerifyView extends Activity implements View.OnClickListener,
 		dialog.show();
 	}
 
-
-    public void fromSignalertDialog(String msgStrI, String msgStrII) {
-        final Dialog dialog = new Dialog(VerifyView.this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        dialog.setContentView(R.layout.alert_nocheck);
-        dialog.setCancelable(false);
-        TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
-        TextView msgII = (TextView) dialog.findViewById(R.id.alert_msgII);
-        msgI.setText(msgStrI);
-        msgII.setText(msgStrII);
-
-        Button dismiss = (Button) dialog.findViewById(R.id.coolio);
-        dismiss.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                dialog.dismiss();
-
-            }
-        });
-        dialog.show();
-    }
 
 }

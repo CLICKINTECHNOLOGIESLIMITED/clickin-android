@@ -3,7 +3,7 @@
     android:id="@+id/rl_usr_profile"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/white_pattern_bg">
+    android:background="@drawable/enterdigitmainbg">
 
     <RelativeLayout
         android:id="@+id/rr_header"
@@ -119,13 +119,32 @@
                 android:textColor="@color/profile_name_b"
                 android:textSize="20sp" />
 
-            <Button
-                android:id="@+id/btn_follow"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="155dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/btn_following_other"
                 android:layout_marginLeft="10dp"
-                android:background="@drawable/follow" />
+                >
+
+
+                <Button
+                    android:id="@+id/btn_follow"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+
+                    android:gravity="center"
+                    android:background="@drawable/follow" />
+
+                </LinearLayout>
+            <!--<Button-->
+                <!--android:id="@+id/btn_follow"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_below="@+id/btn_following_other"-->
+                <!--android:layout_marginLeft="10dp"-->
+                <!--android:gravity="center"-->
+
+                <!--android:background="@drawable/follow" />-->
         </RelativeLayout>
 
         <LinearLayout

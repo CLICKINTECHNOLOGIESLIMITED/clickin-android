@@ -76,9 +76,9 @@
     <string name="txt_dateofbirth">DATE OF BIRTH*</string>
     <string name="txt_mandatory">*MANDATORY FIELD</string>
     <string name="tv_follower_empty_msgone">LOOKS LIKE NO ONE IS \nFOLLOWING YOU!</string>
-    <string name="tv_follower_empty_msgtwo">SEARCH FOR FRIENDS ON ClICKIN\' OR \nINVITE SOME THROUGH THE MENU</string>
+    <string name="tv_follower_empty_msgtwo">SEARCH FOR FRIENDS ON CLICKIN\' OR \nINVITE SOME THROUGH THE MENU</string>
     <string name="tv_followering_empty_msgI">LOOKS LIKE YOU AREN\'T \nFOLLOWING ANYONE!</string>
-    <string name="tv_followering_empty_msgII">SEARCH FOR FRIENDS ON ClICKIN\' OR \nINVITE SOME THROUGH THE MENU</string>
+    <string name="tv_followering_empty_msgII">SEARCH FOR FRIENDS ON CLICKIN\' OR \nINVITE SOME THROUGH THE MENU</string>
     <string name="search_message">Could not find the one you are looking for? invite them to join Clickin\'.</string>
     <string name="txt_notification">NOTIFICATIONS</string>
     <string name="txt_phonenumber">Phone Number</string>
@@ -112,11 +112,12 @@
     <string name="txt_share">SHARE</string>
     <string name="txt_trade">TRADE</string>
     <string name="spam_edit_hint">Please provide details.</string>
-
+    <string name="text_add_partner">Loyal lover, casual fling, someone \nyou just met or even a friend. </string>
     <!--Notification Type and string-->
     <string name="txt_relationrequest">relationrequest</string>
     <string name="txt_relationstatus">relationstatus</string>
     <string name="txt_relationdelete">relationdelete</string>
+
     <string name="trade_hint">HOW MANY CLICKS ARE YOU WILLING TO OFFER?</string>
     <string name="title_activity_card">Card</string>
     <string name="share_hint">Write your caption here...</string>
@@ -331,4 +332,10 @@
         <item>260,ZM</item>
         <item>263,ZW</item>
     </string-array>
+
+    <string name="retake">Retake</string>
+    <string name="usephoto">Use Photo</string>
+    <string name="cancel">Cancel</string>
+    <string name="choose">Choose</string>
+
 </resources>

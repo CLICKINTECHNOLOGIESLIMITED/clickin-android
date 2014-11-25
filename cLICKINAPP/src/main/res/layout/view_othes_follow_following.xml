@@ -1,0 +1,90 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:geekui="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/enterdigitmainbg">
+
+
+    <RelativeLayout
+        android:id="@+id/rr_header"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/appclr">
+
+        <ImageView
+            android:id="@+id/iv_back_ing_other"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/back_arrow"
+            android:padding="5dp" />
+
+        <ImageView
+            android:id="@+id/iv_notification_list_ing"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/chat" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_followingdata_other"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rr_header"
+        >
+
+        <com.sourcefuse.clickinandroid.utils.ClickInTextView
+            android:id="@+id/tv_tag_screen_other"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
+            android:textColor="@color/dark_gray"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <ListView
+            android:id="@+id/list_following_other"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_tag_screen_other"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:divider="@null"
+            android:scrollbars="none" />
+
+    </RelativeLayout>
+
+
+
+
+    <RelativeLayout
+        android:id="@+id/iv_profile_other"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/blue_bg">
+
+        <com.sourcefuse.clickinandroid.utils.ClickInTextView
+            android:id="@+id/tv_profile_txt_ing_other"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="12dp"
+            android:text="@string/txt_following"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textAllCaps="true"
+            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"/>
+    </RelativeLayout>
+
+</RelativeLayout>

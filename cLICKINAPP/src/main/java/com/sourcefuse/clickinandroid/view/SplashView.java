@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.animation.Animation;
@@ -19,9 +20,7 @@ import com.quickblox.core.result.Result;
 import com.quickblox.module.auth.QBAuth;
 import com.quickblox.module.auth.result.QBSessionResult;
 import com.quickblox.module.chat.QBChatService;
-import com.quickblox.module.chat.listeners.SessionCallback;
-import com.quickblox.module.chat.smack.SmackAndroid;
-import com.quickblox.module.chat.xmpp.QBPrivateChat;
+
 import com.quickblox.module.users.model.QBUser;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
@@ -122,49 +121,17 @@ public class SplashView extends Activity implements View.OnClickListener {
 
     }
 
-    public void loginToQuickBlox() {
-        final AuthManager authManager = ModelManager.getInstance().getAuthorizationManager();
-        SmackAndroid.init(this);
-        com.sourcefuse.clickinandroid.utils.Log.e(TAG, "loginToQuickBlox --- getUserId=>" + authManager.getUserId() + ",--getUsrToken-=>" + authManager.getUsrToken());
-        QBSettings.getInstance().fastConfigInit(Constants.CLICKIN_APP_ID, Constants.CLICKIN_AUTH_KEY, Constants.CLICKIN_AUTH_SECRET);
-        final QBUser user = new QBUser(authManager.getUserId(), authManager.getUsrToken());
-
-        QBAuth.createSession(user, new QBCallbackImpl() {
 
 
-            @Override
-            public void onComplete(Result result) {
-                if (result.isSuccess()) {
-                    QBSessionResult res = (QBSessionResult) result;
-                    user.setId(res.getSession().getUserId());
-                    //
-                    QBChatService.getInstance().loginWithUser(user, new SessionCallback() {
-                        @Override
-                        public void onLoginSuccess() {
-                            com.sourcefuse.clickinandroid.utils.Log.e(TAG, "Login successfully");
-                            QBChatService.getInstance().startAutoSendPresence(5);
-                             QBPrivateChat chat;
-                            chat = QBChatService.getInstance().createChat();
-                            authManager.setqBPrivateChat(chat);
-                        }
-
-                        @Override
-                        public void onLoginError(String s) {
-                            com.sourcefuse.clickinandroid.utils.Log.e(TAG, "onLoginError");
-                            loginToQuickBlox();
-                        }
 
 
-                    });
-                    android.util.Log.e(TAG, "Session was successfully created");
 
-                } else {
-                    android.util.Log.e(TAG, "Errors " + result.getErrors().toString() + "result" + result);
-                }
-            }
-        });
-
-
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            moveTaskToBack(true);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
 }

@@ -2,6 +2,7 @@ package com.sourcefuse.clickinandroid.view.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,18 +24,20 @@ import java.util.List;
 public class SearchAdapter extends ArrayAdapter<FetchUsersByNameBean> {
     Context context;
     int layoutResourceId;
+      List<FetchUsersByNameBean> item;
 
     public SearchAdapter(Context context, int layoutResourceId,
-                           List<FetchUsersByNameBean> item) {
-        super(context, layoutResourceId, item);
+                           List<FetchUsersByNameBean> item1) {
+        super(context, layoutResourceId, item1);
         this.layoutResourceId = layoutResourceId;
         this.context = context;
+        this.item = item1;
 
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final FetchUsersByNameBean item = getItem(position);
+
         View row = convertView;
         RecordHolder holder = null;
         if (row == null) {
@@ -53,18 +56,25 @@ public class SearchAdapter extends ArrayAdapter<FetchUsersByNameBean> {
         }
 
         RecordHolder rholder = (RecordHolder) row.getTag();
-        if(!Utils.isEmptyString(item.getCity()) && !Utils.isEmptyString(item.getCountry())) {
-            holder.user_address.setText(item.getCity()+","+item.getCountry());
-        }else if (Utils.isEmptyString(item.getCity())) {
-            holder.user_address.setText(item.getCity());
-        }else if (Utils.isEmptyString(item.getCountry())) {
-            holder.user_address.setText(item.getCountry());
+        if(!Utils.isEmptyString(item.get(position).getCity()) && !Utils.isEmptyString(item.get(position).getCountry())) {
+            holder.user_address.setText(item.get(position).getCity()+","+item.get(position).getCountry());
+              Log.e("in 1 --->","in 1 --->");
+        }else if (Utils.isEmptyString(item.get(position).getCity())) {
+            holder.user_address.setText(item.get(position).getCity());
+              Log.e("in 2 --->","in 2 --->");
+              Log.e("name--->",""+item.get(position).getCity());
+        }else if (Utils.isEmptyString(item.get(position).getCountry())) {
+            holder.user_address.setText(item.get(position).getCountry());
+              Log.e("in 3 --->","in 3 --->");
+              Log.e("name--->",""+item.get(position).getCountry());
+        }else{
+              Log.e("in final --->","in final --->");
         }
 
-        rholder.usr_name.setText(item.getName());
-        if(!item.getUserPic().equalsIgnoreCase("")) {
+        rholder.usr_name.setText(item.get(position).getName());
+        if(!item.get(position).getUserPic().equalsIgnoreCase("")) {
             try {
-                Picasso.with(context).load(item.getUserPic())
+                Picasso.with(context).load(item.get(position).getUserPic())
                         .skipMemoryCache()
                         .error(R.drawable.male_user)
                         .into(rholder.usrimg);
@@ -78,6 +88,11 @@ public class SearchAdapter extends ArrayAdapter<FetchUsersByNameBean> {
         {
             holder.usrimg.setImageResource(R.drawable.male_user);
         }
+
+        if((item.size()-1) == position)
+            row.findViewById(R.id.divider).setVisibility(View.GONE);
+        else
+            row.findViewById(R.id.divider).setVisibility(View.VISIBLE);
 
         return row;
     }

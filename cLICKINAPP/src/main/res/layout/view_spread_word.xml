@@ -3,7 +3,7 @@
     xmlns:geekui="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/white_pattern_bg">
+    android:background="@drawable/currentclickermainbg">
 
     <RelativeLayout
         android:id="@+id/rl_laout"
@@ -14,7 +14,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="-50dp"
-        android:background="@drawable/gray_border">
+        android:background="@drawable/inner_background">
 
 
         <LinearLayout
@@ -97,7 +97,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="17dp"
                 android:layout_marginTop="33dp"
                 android:background="@drawable/c_back" />
 
@@ -106,16 +106,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="33dp"
-                android:background="@drawable/invite_button" />
+                android:layout_marginLeft="22dp"
+                android:layout_marginTop="27dp"
+                android:background="@drawable/invitebtnblank" />
 
             <TextView
                 android:id="@+id/btn_next"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="20dp"
+                android:layout_marginRight="17dp"
                 android:layout_marginTop="33dp"
                 android:background="@drawable/c_skip" />
         </RelativeLayout>
@@ -137,9 +137,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="0.9"
+            android:layout_centerHorizontal="true"
             android:gravity="center"
             android:text="SPREAD"
-            android:textColor="@color/profile_usr_name"
+            android:textColor="@color/screen_header"
             android:textSize="49sp"
             android:textStyle="bold"
             geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
@@ -152,8 +153,9 @@
             android:layout_gravity="center"
             android:layout_weight="0.9"
             android:gravity="center"
+            android:layout_centerHorizontal="true"
             android:text="THE WORD"
-            android:textColor="@color/profile_usr_name"
+            android:textColor="@color/screen_header"
             android:textSize="37sp"
             android:textStyle="bold"
             geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
