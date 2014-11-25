@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="set_tag" type="id"></item>
+    <item name="set_relationship_id" type="id"></item>
+    <item name="set_tag_phno" type="id"></item>
+    <item name="set_tag_usr_token" type="id"></item>
+
+
+</resources>
