@@ -54,9 +54,9 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
 		addMenu(false);
 		this.overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_right);
 		typeface = Typeface.createFromAsset(JumpOtherProfileView.this.getAssets(),Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
-
+		
 		authManager = ModelManager.getInstance().getAuthorizationManager();
-
+		
 
 		listView 	  = (ListView) findViewById(R.id.list_click_with_other);
 		following 	  = (Button) findViewById(R.id.btn_following_other);
@@ -93,8 +93,8 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
 		userimage.setScaleType(ScaleType.FIT_XY);
 		tvwith.setTypeface(typeface);
 		userdetails.setTypeface(typeface);
-
-
+		
+	
 		othersUser = getIntent().getExtras().getBoolean("FromOwnProfile");
 		if(othersUser){
             authManager = ModelManager.getInstance().getAuthorizationManager();
@@ -150,29 +150,29 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
 
 	}
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        finish();
-        overridePendingTransition(0,R.anim.top_out);
-    }
-
-    @Override
+	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.btn_follower_other:
-                Intent intentFollower = new Intent(JumpOtherProfileView.this,FollowerList.class);
+                //Intent intentFollower = new Intent(JumpOtherProfileView.this,FollowerList.class);
+                Intent intentFollower = new Intent(JumpOtherProfileView.this,OthersFollowingFollowView.class);
                 intentFollower.putExtra("FromOwnProfile", false);
                 intentFollower.putExtra("phoneNo", phForOtherUser);
+                intentFollower.putExtra("isFollowing", false);
                 intentFollower.putExtra("name", name.getText().toString().substring(0,name.getText().toString().indexOf(" ")));
                 startActivity(intentFollower);
+            finish();
                 break;
             case R.id.btn_following_other:
-                Intent intentFollowing = new Intent(JumpOtherProfileView.this,FollowingListView.class);
+                //Intent intentFollowing = new Intent(JumpOtherProfileView.this,FollowingListView.class);
+                Intent intentFollowing = new Intent(JumpOtherProfileView.this,OthersFollowingFollowView.class);
                 intentFollowing.putExtra("FromOwnProfile", false);
+                intentFollowing.putExtra("isFollowing", true);
                 intentFollowing.putExtra("phoneNo", phForOtherUser);
                 intentFollowing.putExtra("name", name.getText().toString().substring(0,name.getText().toString().indexOf(" ")));
                 startActivity(intentFollowing);
+                finish();
+
                 break;
 		case R.id.btn_follow:
             authManager = ModelManager.getInstance().getAuthorizationManager();
@@ -222,7 +222,7 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
 		Intent intent = new Intent(JumpOtherProfileView.this, FollowerList.class);
 		startActivity(intent);
 	}
-
+	
 	private void switchViewToFollowingList() {
 		Intent intent = new Intent(JumpOtherProfileView.this, FollowingListView.class);
 		startActivity(intent);
@@ -253,13 +253,13 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
 			if (message.equalsIgnoreCase("ProfileInfo True")) {
                 setProfileData();
             }else if (message.equalsIgnoreCase("ProfileInfo False")) {
-
+                Utils.dismissBarDialog();
             }else if (message.equalsIgnoreCase("ProfileInfoNetwork Error")) {
                 Utils.fromSignalDialog(this, AlertMessage.connectionError);
 			}else if (message.equalsIgnoreCase("Fetchprofilerelationships True")) {
 				setlist();
             }else if (message.equalsIgnoreCase("Fetchprofilerelationships False")) {
-
+                Utils.dismissBarDialog();
             }else if (message.equalsIgnoreCase("Fetchprofilerelationships Network Error")) {
                 Utils.fromSignalDialog(this, AlertMessage.connectionError);
 			}else if (message.equalsIgnoreCase("FollowUser True")) {
@@ -293,15 +293,15 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
                 if(Utils.isEmptyString(relationManager.getRelationStatus())){
                     clickwithHead.setVisibility(View.GONE);
                     clickwithNameHead.setText("CLICK WITH\n"+authManager.getTmpUserName());
-                }else if(relationManager.getRelationStatus().matches("accepted")){
+                }else if(relationManager.getRelationStatus().equalsIgnoreCase("accepted")){
                     clickwithHead.setVisibility(View.VISIBLE);
                     clickwithHead.setText("You are already");
                     clickwithNameHead.setText("CLICKIN' WITH\n"+authManager.getTmpUserName());
-                }else if(relationManager.getRelationStatus().matches("requested")){
+                }else if(relationManager.getRelationStatus().equalsIgnoreCase("requested")){
                     clickwithHead.setVisibility(View.VISIBLE);
                     clickwithHead.setText("Requested to");
                     clickwithNameHead.setText("CLICK WITH\n"+authManager.getTmpUserName());
-                }else if(relationManager.getRelationStatus().matches("rejected")){
+                }else if(relationManager.getRelationStatus().equalsIgnoreCase("rejected")){
                     clickwithHead.setVisibility(View.GONE);
                     clickwithNameHead.setText("CLICK WITH\n"+authManager.getTmpUserName());
                 }
@@ -316,12 +316,20 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
 		}
 
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        overridePendingTransition(0,R.anim.top_out);
+    }
+
+
 	private void switchView(String phone) {
 		Intent intent = new Intent(JumpOtherProfileView.this,JumpOtherProfileView.class);
 		intent.putExtra("FromOwnProfile", true);
 		intent.putExtra("phNumber", phone);
 		startActivity(intent);
-		this.finish();
+		finish();
 	}
 
 	private void setProfileData() {
@@ -331,10 +339,10 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
         if(Utils.isEmptyString(relationManager.getRelationStatus())){
             clickwithHead.setVisibility(View.GONE);
             clickwithNameHead.setText("CLICK WITH\n"+authManager.getTmpUserName());
-        }else if(relationManager.getRelationStatus().matches("accepted")){
+        }else if(relationManager.getRelationStatus().equalsIgnoreCase("accepted")){
             clickwithHead.setText("You are already");
             clickwithNameHead.setText("CLICKIN' WITH\n"+authManager.getTmpUserName());
-        }else if(relationManager.getRelationStatus().matches("requested")){
+        }else if(relationManager.getRelationStatus().equalsIgnoreCase("requested")){
             clickwithHead.setText("Requested to");
             clickwithNameHead.setText("CLICK WITH\n"+authManager.getTmpUserName());
         }
@@ -344,7 +352,7 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
 			othesProfileName.setText(authManager.getTmpUserName());
 			name.setText(authManager.getTmpUserName());
 			String dtails;
-
+			
 			if(authManager.getTmpIsFollowingRequested()==1){
 			follow.setBackgroundResource(R.drawable.requested_otherprofile);
 			}else if(authManager.getTmpIsFollowing()==1){
@@ -353,7 +361,7 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
 				follow.setBackgroundResource(R.drawable.follow);
 			}
 
-			if (authManager.getTmpGender().matches("guy")) {
+			if (authManager.getTmpGender().equalsIgnoreCase("girl")) {
 				dtails = getResources().getString(R.string.txt_male)
 						+ Utils.getCurrentYear(authManager.getTmpDOB()) + " "
 						+ getResources().getString(R.string.txt_yold);
@@ -367,13 +375,15 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
 			Utils.getCurrentYear(authManager.getTmpDOB());
 			userdetails.setText(dtails + "\n");
 
+            relationManager = ModelManager.getInstance().getRelationManager();
+
 			String text = "<font color=#cccccc>"+authManager.getTmpFollower()+"</font> <font color=#39cad4>"+getResources().getString(R.string.txt_follower)+"</font>";
 			follower.setText(Html.fromHtml(text));
 			String textfollowing = "<font color=#f29691>"+getResources().getString(R.string.txt_following)+"</font> <font color=#cccccc>"+authManager.getTmpFollowing()+"</font>";
 			following.setText(Html.fromHtml(textfollowing));
 
-   if(authManager.getTmpGender()!=null) {
-                if (authManager.getTmpGender().matches("guy")) {
+   if(!Utils.isEmptyString(authManager.getTmpGender())) {
+                if (authManager.getTmpGender().equalsIgnoreCase("guy")) {
 
                     try {
                         if (!authManager.getTmpUserPic().equalsIgnoreCase("")) {
@@ -393,7 +403,6 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
                             Picasso.with(JumpOtherProfileView.this)
                                     .load(authManager.getTmpUserPic())
                                     .skipMemoryCache()
-
                                     .error(R.drawable.female_user).into(userimage);
                         } else {
                             userimage.setImageResource(R.drawable.female_user);
@@ -405,7 +414,19 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
             }
             else
             {
-                userimage.setImageResource(R.drawable.male_user);
+                String textw = "<font color=#cccccc>"+authManager.getTmpFollower()+"</font> <font color=#39cad4>"+getResources().getString(R.string.txt_follower)+"</font>";
+                follower.setText(Html.fromHtml(textw));
+                String textfollowings = "<font color=#f29691>"+getResources().getString(R.string.txt_following)+"</font> <font color=#cccccc>"+authManager.getTmpFollowing()+"</font>";
+                following.setText(Html.fromHtml(textfollowings));
+
+                if (!authManager.getTmpUserPic().equalsIgnoreCase("")) {
+                    Picasso.with(JumpOtherProfileView.this)
+                            .load(authManager.getTmpUserPic())
+                            .skipMemoryCache()
+                            .error(R.drawable.male_user).into(userimage);
+                } else {
+                    userimage.setImageResource(R.drawable.male_user);
+                }
             }
         }
     }

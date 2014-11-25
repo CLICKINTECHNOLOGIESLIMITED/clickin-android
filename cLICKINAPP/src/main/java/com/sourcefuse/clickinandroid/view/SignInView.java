@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
@@ -24,35 +23,15 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.quickblox.core.QBCallbackImpl;
-import com.quickblox.core.QBSettings;
-import com.quickblox.core.result.Result;
-import com.quickblox.module.auth.QBAuth;
-import com.quickblox.module.auth.result.QBSessionResult;
-import com.quickblox.module.chat.QBChatService;
-import com.quickblox.module.users.model.QBUser;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
 import com.sourcefuse.clickinandroid.model.SettingManager;
 import com.sourcefuse.clickinandroid.services.MyQbChatService;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
-import com.sourcefuse.clickinandroid.utils.ClickInAlertDialog;
 import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
-
-
-import org.jivesoftware.smack.ConnectionListener;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URL;
-import java.net.URLConnection;
-
 
 import de.greenrobot.event.EventBus;
 
@@ -74,7 +53,6 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.view_signin);
-          getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         typeface = Typeface.createFromAsset(SignInView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
         typefaceBold = Typeface.createFromAsset(SignInView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_BOLD);
@@ -150,9 +128,8 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
 
 
 
-        ephone.setText("+9100000");
+          
         ephone.setSelection(ephone.getText().toString().length());
-        ephone.setEllipsize(TextUtils.TruncateAt.END);
         //No need For this akshit
 
 
@@ -253,7 +230,7 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
     }
 
 
-
+    
 
     private void switchView() {
         Intent intent = new Intent(SignInView.this, UserProfileView.class);
@@ -290,8 +267,7 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
             editor.commit();
 
 
-            Intent i=new Intent(this,MyQbChatService.class);
-          startService(i);
+
 
 
           //  new MyPreference(SignInView.this).setToken(authManager.getUsrToken());
@@ -311,6 +287,8 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
             //Utils.showAlert(act, AlertMessage.connectionError);
         } else if (getMsg.equalsIgnoreCase("ProfileInfo True")) {
             //save values of user in shared prefrence for later use
+            Intent i=new Intent(this,MyQbChatService.class);
+            startService(i);
             SharedPreferences preferences=PreferenceManager.getDefaultSharedPreferences(this);
             SharedPreferences.Editor editor=preferences.edit();
             editor.putString("gender",authManager.getGender());

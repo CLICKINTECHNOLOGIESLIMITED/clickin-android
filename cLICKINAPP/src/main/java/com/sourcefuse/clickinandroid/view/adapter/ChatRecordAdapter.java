@@ -3,6 +3,7 @@ package com.sourcefuse.clickinandroid.view.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.net.Uri;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,7 @@ import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -28,7 +30,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
     private static final String TAG = ChatRecordAdapter.class.getSimpleName();
     Context context;
-    ChatRecordBeen item;
+
     ArrayList<ChatMessageBody> currentChatList;
     private AuthManager authManager;
 
@@ -54,24 +56,62 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
 
             RelativeLayout rlTimeStatusSender = (RelativeLayout) row.findViewById(R.id.rl_time_sender);
-            //   RelativeLayout chatParentLayout = (RelativeLayout) row.findViewById(R.id.chat_parent_layout);
+            RelativeLayout parentChatLayout=(RelativeLayout)row.findViewById(R.id.chat_parent_layout);
             LinearLayout chatClickTextLayout = (LinearLayout) row.findViewById(R.id.parent_clicks_area);
 
 
-            chatClickTextLayout.setVisibility(View.VISIBLE);
+
+            //code to set time
+            TextView timeView=(TextView)row.findViewById(R.id.tv_time_text);
+            timeView.setText(temp.sentOn);
 
 
-            //only text-SENDER CASE
-            if (!Utils.isEmptyString(temp.textMsg) && Utils.isEmptyString(temp.content_url) && temp.clicks.equalsIgnoreCase("no")) {
+            //temp code -for image
+            if(!(Utils.isEmptyString(temp.imageRatio))){
+                //set layout properties for image view
+                ImageView image_attached=(ImageView)row.findViewById(R.id.iv_chat_image);
+
+                if(!(Utils.isEmptyString(temp.textMsg)) || (!(temp.clicks.equalsIgnoreCase("no")))){
+                    chatClickTextLayout.setVisibility(View.VISIBLE);
+                    RelativeLayout.LayoutParams paramsrr = new RelativeLayout.LayoutParams(
+                            RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+                    paramsrr.addRule(RelativeLayout.BELOW, R.id.iv_chat_image);
+                    chatClickTextLayout.setLayoutParams(paramsrr);
+                }
+
+                //code to set msg deilvery notification
+                ImageView sendStatusView=(ImageView)row.findViewById(R.id.iv_send_status);
+                if(!(Utils.isEmptyString(temp.isDelivered)) && temp.isDelivered.equalsIgnoreCase(Constants.MSG_SENDING)) {
+                   sendStatusView.setImageResource(R.drawable.r_single_tick);
+                    Uri tempUri=Uri.parse(temp.content_url);
+                    Picasso.with(context).load(tempUri)
+                            .placeholder(R.drawable.default_profile)
+                            .error(R.drawable.default_profile).into(image_attached);
+
+                }else if(!(Utils.isEmptyString(temp.isDelivered))&& temp.isDelivered.equalsIgnoreCase(Constants.MSG_SENT)){
+                    sendStatusView.setImageResource(R.drawable.double_check);
+                    Picasso.with(context).load(temp.content_url)
+                            .placeholder(R.drawable.default_profile)
+                            .error(R.drawable.default_profile).into(image_attached);
+                }
+
+                image_attached.setScaleType(ImageView.ScaleType.FIT_XY);
+                image_attached.setVisibility(View.VISIBLE);
+
+
+            }//end of image loop-sender
+
+        //only text-SENDER CASE
+            if (!Utils.isEmptyString(temp.textMsg) && temp.clicks.equalsIgnoreCase("no")) {
                 //  RelativeLayout textViewLayout = (RelativeLayout) row.findViewById(R.id.chat_parent_layout);
-
+                chatClickTextLayout.setVisibility(View.VISIBLE);
                 LinearLayout clicksArea = (LinearLayout) row.findViewById(R.id.clicks_area);
                 clicksArea.setVisibility(View.VISIBLE);
 
                 TextView chatText = (TextView) row.findViewById(R.id.chat_text);
                 chatText.setVisibility(View.VISIBLE);
                 chatText.setTextColor(context.getResources().getColor(R.color.black));
-                //code to checck for long chat text
+                //code to check for long chat text
                 if (temp.textMsg.length() > Constants.CHAT_LENTH_LIMIT) {
                     chatText.setText(temp.textMsg.substring(0, 14));
                     //temp code to set width of long chat text view
@@ -88,8 +128,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
             }
 
             //CLICKS AND TEXT- SENDER CASE
-            if (!(temp.clicks.equalsIgnoreCase("no")) && Utils.isEmptyString(temp.content_url)) {
-                chatClickTextLayout.setBackgroundResource(R.drawable.c_clicks_s_bgpink);
+            if (!(temp.clicks.equalsIgnoreCase("no")) ) {
+                chatClickTextLayout.setVisibility(View.VISIBLE);
+                parentChatLayout.setBackgroundResource(R.drawable.c_clicks_s_bgpink);
                 LinearLayout clicksArea = (LinearLayout) row.findViewById(R.id.clicks_area);
                 clicksArea.setVisibility(View.VISIBLE);
                 //  clicksArea.setBackgroundResource(R.drawable.c_clicks_s_bgpink);
@@ -123,9 +164,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                         chatText.setText(temp.textMsg);
                     }
                 }
+            }//enf of click and text sender loop
 
 
-            }
 
         }//end of sender loop
         else {
@@ -133,30 +174,56 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
             RelativeLayout rlTimeStatusSender = (RelativeLayout) row.findViewById(R.id.rl_time_sender);
             row.findViewById(R.id.iv_send_status).setVisibility(View.GONE);
-            // RelativeLayout chatParentLayout = (RelativeLayout) row.findViewById(R.id.chat_parent_layout);
+             RelativeLayout chatParentLayout = (RelativeLayout) row.findViewById(R.id.chat_parent_layout);
 
             LinearLayout chatClickTextLayout = (LinearLayout) row.findViewById(R.id.parent_clicks_area);
             RelativeLayout.LayoutParams paramsrr = new RelativeLayout.LayoutParams(
                     RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-            paramsrr.addRule(RelativeLayout.LEFT_OF, R.id.parent_clicks_area);
-            paramsrr.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.parent_clicks_area);
+            paramsrr.addRule(RelativeLayout.LEFT_OF, R.id.chat_parent_layout);
+            paramsrr.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.chat_parent_layout);
             rlTimeStatusSender.setLayoutParams(paramsrr);
 
             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                     RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
             params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, 1);
-            chatClickTextLayout.setLayoutParams(params);
+            chatParentLayout.setLayoutParams(params);
 
 
-            chatClickTextLayout.setGravity(Gravity.RIGHT);
-            chatClickTextLayout.setVisibility(View.VISIBLE);
+            chatParentLayout.setGravity(Gravity.RIGHT);
+
+            //code to set time
+            TextView timeView=(TextView)row.findViewById(R.id.tv_time_text);
+            timeView.setText(temp.sentOn);
+
+            //temp code -for image-receiver end
+            if(!(Utils.isEmptyString(temp.imageRatio))){
+                //set layout properties for image view
+                ImageView image_attached=(ImageView)row.findViewById(R.id.iv_chat_image);
+
+                if(!(Utils.isEmptyString(temp.textMsg)) || (!(temp.clicks.equalsIgnoreCase("no")))){
+                    chatClickTextLayout.setVisibility(View.VISIBLE);
+                    RelativeLayout.LayoutParams paramsr2 = new RelativeLayout.LayoutParams(
+                            RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+                    paramsr2.addRule(RelativeLayout.BELOW, R.id.iv_chat_image);
+                    chatClickTextLayout.setLayoutParams(paramsr2);
+                }
+
+
+                image_attached.setScaleType(ImageView.ScaleType.FIT_XY);
+                image_attached.setVisibility(View.VISIBLE);
+                Picasso.with(context).load(temp.content_url)
+                        .placeholder(R.drawable.default_profile)
+                        .error(R.drawable.default_profile).into(image_attached);
+
+            }
+
 
             //only text-RECEIVER CASE
-            if ((!Utils.isEmptyString(temp.textMsg)) && Utils.isEmptyString(temp.content_url) && temp.clicks.equalsIgnoreCase("no")) {
-
+            if ((!Utils.isEmptyString(temp.textMsg)) && temp.clicks.equalsIgnoreCase("no")) {
+                chatClickTextLayout.setVisibility(View.VISIBLE);
                 TextView chatText = (TextView) row.findViewById(R.id.chat_text);
                 LinearLayout clicksArea = (LinearLayout) row.findViewById(R.id.clicks_area);
-                chatClickTextLayout.setBackgroundResource(R.drawable.whitechatbg);
+                chatParentLayout.setBackgroundResource(R.drawable.whitechatbg);
                 clicksArea.setVisibility(View.VISIBLE);
 
                 chatText.setVisibility(View.VISIBLE);
@@ -178,12 +245,12 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
             }//end of text- receiver end
 
             //clicks and text- receiver end
-            //temp code
-            String clicks = temp.clicks;
-            if (!(temp.clicks.equalsIgnoreCase("no")) && Utils.isEmptyString(temp.content_url)) {
+
+            if (!(temp.clicks.equalsIgnoreCase("no")) ) {
+                chatClickTextLayout.setVisibility(View.VISIBLE);
                 LinearLayout clicksArea = (LinearLayout) row.findViewById(R.id.clicks_area);
                 clicksArea.setVisibility(View.VISIBLE);
-                chatClickTextLayout.setBackgroundResource(R.drawable.c_clicks_r_bgpink);
+                chatParentLayout.setBackgroundResource(R.drawable.c_clicks_r_bgpink);
 
                 TextView clicksText = (TextView) row.findViewById(R.id.clicks_text);
                 clicksText.setVisibility(View.VISIBLE);
@@ -215,6 +282,8 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 }
 
             }//end of click and text -reciver end
+
+
         }//end of reciver
         //   authManager = ModelManager.getInstance().getAuthorizationManager();
         return row;

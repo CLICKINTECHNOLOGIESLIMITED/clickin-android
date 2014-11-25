@@ -98,7 +98,7 @@ public class SimpleSectionedGridAdapter extends BaseAdapter implements PinnedSec
             }
         });
     }
-
+    
     public void setGridView(GridView gridView){
     	if(!(gridView instanceof PinnedSectionGridView)){
     		throw new IllegalArgumentException("Does your grid view extends PinnedSectionGridView?");
@@ -110,7 +110,7 @@ public class SimpleSectionedGridAdapter extends BaseAdapter implements PinnedSec
         requestedColumnWidth = ((PinnedSectionGridView)gridView).getColumnWidth();
     	requestedHorizontalSpacing = ((PinnedSectionGridView)gridView).getHorizontalSpacing();
     }
-
+    
     private int getHeaderSize(){
     	if(mHeaderWidth > 0){
     		return mHeaderWidth;
@@ -122,7 +122,7 @@ public class SimpleSectionedGridAdapter extends BaseAdapter implements PinnedSec
 	        requestedColumnWidth = ((PinnedSectionGridView)mGridView).getColumnWidth();
 	    	requestedHorizontalSpacing = ((PinnedSectionGridView)mGridView).getHorizontalSpacing();
     	}
-
+    	
         int spaceLeftOver = mWidth - (mNumColumns * requestedColumnWidth) -
                 ((mNumColumns - 1) * requestedHorizontalSpacing);
         switch (mStrechMode) {
@@ -140,7 +140,7 @@ public class SimpleSectionedGridAdapter extends BaseAdapter implements PinnedSec
         case GridView.STRETCH_SPACING:
             mColumnWidth = requestedColumnWidth;
             if (mNumColumns > 1) {
-                mHorizontalSpacing = requestedHorizontalSpacing +
+                mHorizontalSpacing = requestedHorizontalSpacing + 
                     spaceLeftOver / (mNumColumns - 1);
             } else {
                 mHorizontalSpacing = requestedHorizontalSpacing + spaceLeftOver;
@@ -156,7 +156,7 @@ public class SimpleSectionedGridAdapter extends BaseAdapter implements PinnedSec
         mHeaderWidth = mWidth + ((mNumColumns - 1) * (mColumnWidth + mHorizontalSpacing)) ;
         return mHeaderWidth;
     }
-
+    
 
     public void setSections(Section[] sections) {
     	mInitialSections = sections;
@@ -180,7 +180,7 @@ public class SimpleSectionedGridAdapter extends BaseAdapter implements PinnedSec
         for (int i = 0; i < mInitialSections.length; i++) {
 			Section section = mInitialSections[i];
     		Section sectionAdd;
-
+ 
         	for (int j = 0; j < mNumColumns - 1; j++) {
         		sectionAdd = new Section(section.firstPosition, section.title);
         		sectionAdd.type = TYPE_HEADER_FILLER;
@@ -188,13 +188,13 @@ public class SimpleSectionedGridAdapter extends BaseAdapter implements PinnedSec
                 mSections.append(sectionAdd.sectionedPosition, sectionAdd);
                 ++offset;
 			}
-
+    		
     		sectionAdd = new Section(section.firstPosition, section.title);
     		sectionAdd.type = TYPE_HEADER;
     		sectionAdd.sectionedPosition = sectionAdd.firstPosition + offset;
             mSections.append(sectionAdd.sectionedPosition, sectionAdd);
             ++offset;
-
+        	
             if(i < mInitialSections.length - 1){
             	int nextPos = mInitialSections[i+1].firstPosition;
             	int itemsCount = nextPos - section.firstPosition;
@@ -328,11 +328,11 @@ public class SimpleSectionedGridAdapter extends BaseAdapter implements PinnedSec
 			}
         } else {
             convertView = mBaseAdapter.getView(sectionedPositionToPosition(position), convertView, parent);
-        	mLastViewSeen = convertView;
+        	mLastViewSeen = convertView; 
         }
         return convertView;
     }
-
+    
 	private FillerView getFillerView(final View lastViewSeen) {
 		final FillerView fillerView = new FillerView(mContext);
 		fillerView.setMeasureTarget(lastViewSeen);
@@ -341,7 +341,7 @@ public class SimpleSectionedGridAdapter extends BaseAdapter implements PinnedSec
 
 	@Override
 	public boolean isItemViewTypePinned(int position) {
-		Section section = mSections.get(position);
+		Section section = mSections.get(position); 
 		return isSectionHeaderPosition(position) && section.type != TYPE_FILLER;
 	}
 

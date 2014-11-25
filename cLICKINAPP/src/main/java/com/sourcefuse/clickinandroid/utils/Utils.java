@@ -772,51 +772,53 @@ public class Utils {
 
       }
 
-    public static String convertClicks(int clicks) {
+
+    public static String convertClicks(String clicks) {
 
         String changeClicks = "";
 
-        if (clicks == 1) {
+        if (clicks.equalsIgnoreCase("1") || clicks.equalsIgnoreCase("+01") ) {
             changeClicks = "+01       ";
-        } else if (clicks == 2) {
+        } else if (clicks.equalsIgnoreCase("2") || clicks.equalsIgnoreCase("+02")) {
             changeClicks = "+02       ";
-        } else if (clicks == 3) {
+        } else if (clicks.equalsIgnoreCase("3") || clicks.equalsIgnoreCase("+03")) {
             changeClicks = "+03       ";
-        } else if (clicks == 4) {
+        } else if (clicks.equalsIgnoreCase("4") || clicks.equalsIgnoreCase("+04")) {
             changeClicks = "+04       ";
-        } else if (clicks == 5) {
+        } else if (clicks.equalsIgnoreCase("5") || clicks.equalsIgnoreCase("+05")){
             changeClicks = "+05       ";
-        } else if (clicks == 6) {
+        } else if (clicks.equalsIgnoreCase("6") || clicks.equalsIgnoreCase("+06")) {
             changeClicks = "+06       ";
-        } else if (clicks == 7) {
+        } else if (clicks.equalsIgnoreCase("7")|| clicks.equalsIgnoreCase("+07"))  {
             changeClicks = "+07       ";
-        } else if (clicks == 8) {
+        } else if (clicks.equalsIgnoreCase("8") || clicks.equalsIgnoreCase("+08")) {
             changeClicks = "+08       ";
-        } else if (clicks == 9) {
+        } else if (clicks.equalsIgnoreCase("9") || clicks.equalsIgnoreCase("+09"))  {
             changeClicks = "+09       ";
-        } else if (clicks == 10) {
+        } else if (clicks.equalsIgnoreCase("10")|| clicks.equalsIgnoreCase("+10"))  {
             changeClicks = "+10       ";
-        } else if (clicks == -1) {
+        } else if (clicks.equalsIgnoreCase("-1")) {
             changeClicks = "-01       ";
-        } else if (clicks == -2) {
+        } else if (clicks.equalsIgnoreCase("-2")) {
             changeClicks = "-02       ";
-        } else if (clicks == -3) {
+        } else if (clicks.equalsIgnoreCase("-3")) {
             changeClicks = "-03       ";
-        } else if (clicks == -4) {
+        } else if (clicks.equalsIgnoreCase("-4")) {
             changeClicks = "-04       ";
-        } else if (clicks == -5) {
+        } else if (clicks.equalsIgnoreCase("-5")) {
             changeClicks = "-05       ";
-        } else if (clicks == -6) {
+        } else if (clicks.equalsIgnoreCase("-6")) {
             changeClicks = "-06       ";
-        } else if (clicks == -7) {
+        } else if (clicks.equalsIgnoreCase("-7")) {
             changeClicks = "-07       ";
-        } else if (clicks == -8) {
+        } else if (clicks.equalsIgnoreCase("-8")) {
             changeClicks = "-08       ";
-        } else if (clicks == -9) {
+        } else if (clicks.equalsIgnoreCase("-9")) {
             changeClicks = "-09       ";
-        } else if (clicks == -10) {
+        } else if (clicks.equalsIgnoreCase("-10")) {
             changeClicks = "-10       ";
-        } else if (clicks == 0) {
+        } else if (clicks.equalsIgnoreCase("0")) {
+
             changeClicks = "";
         }
         return changeClicks;

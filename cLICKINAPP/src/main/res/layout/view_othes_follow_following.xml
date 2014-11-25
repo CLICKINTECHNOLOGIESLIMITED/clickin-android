@@ -45,7 +45,6 @@
             android:paddingBottom="5dp"
             android:paddingLeft="10dp"
             android:paddingTop="10dp"
-            android:text="@string/txt_following"
             geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
             android:textColor="@color/dark_gray"
             android:textSize="20sp"

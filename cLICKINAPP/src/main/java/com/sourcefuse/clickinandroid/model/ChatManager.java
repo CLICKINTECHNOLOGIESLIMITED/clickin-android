@@ -131,7 +131,7 @@ public class ChatManager  {
                             Log.e(TAG,"response FecthChat ->" + response);
                             state = response.getBoolean("success");
                             if (state) {
-
+                            
                                 refreshivechatList.clear();
                                 Utils.clickCustomLog(response.toString());
                                 JSONArray list = response.getJSONArray("chats");

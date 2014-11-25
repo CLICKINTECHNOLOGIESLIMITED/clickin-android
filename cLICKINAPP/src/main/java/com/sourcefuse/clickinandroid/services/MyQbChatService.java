@@ -119,6 +119,7 @@ public class MyQbChatService extends Service {
         data.putString("textMsg", msgObject.textMsg);
         data.putString("clicks", msgObject.clicks);
         data.putInt("ChatType", msgObject.chatType);
+      //  data.putString("ChaidId",msgObject.chatId);
         switch (msgObject.chatType) {
             case Constants.CHAT_TYPE_CARD:
                 if (!msgObject.is_CustomCard) {

@@ -24,8 +24,7 @@ import com.sourcefuse.clickinapp.R;
 
 import de.greenrobot.event.EventBus;
 
-public class FollowingListView extends ClickInBaseView implements
-        View.OnClickListener {
+public class FollowingListView extends ClickInBaseView implements View.OnClickListener {
     private static final String TAG = FollowingListView.class.getSimpleName();
     private ImageView back, notification;
     private ListView listView;

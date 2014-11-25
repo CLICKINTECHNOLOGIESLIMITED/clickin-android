@@ -3,48 +3,57 @@
     xmlns:geekui="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:paddingTop="5dp"
     android:layout_marginTop="10dp">
+
+    <!--
+     chat_parent_layout  need to set gravity left or right according need
+     -->
+
+    <!--
+    rr_main_l layout need to set android:layout_toRightOf="@+id/rl_time_status_sender"
+        IF IT IS SENDER LAYOUT
+
+        OTHER WISE NO NEED TO SET android:layout_toRightOf="@+id/rl_time_status_sender"
+    -->
 
     <RelativeLayout
         android:id="@+id/chat_parent_layout"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="10dp"
+        android:background="@drawable/newbg"
         android:visibility="visible">
 
-        <!--
-        chat_parent_layout  need to set gravity left or right according need
-        -->
 
-        <!--
-        rr_main_l layout need to set android:layout_toRightOf="@+id/rl_time_status_sender"
-            IF IT IS SENDER LAYOUT
 
-            OTHER WISE NO NEED TO SET android:layout_toRightOf="@+id/rl_time_status_sender"
-        -->
-
+        <ImageView
+            android:id="@+id/iv_chat_image"
+            android:layout_width="200dp"
+            android:layout_height="180dp"
+            android:adjustViewBounds="true"
+            android:visibility="gone"
+            />
 
         <!-- layout for clicks and text -Type 1-->
         <LinearLayout
             android:id="@+id/parent_clicks_area"
+            android:layout_below="@+id/iv_chat_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:background="@drawable/newbg"
             android:gravity="center_vertical"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:visibility="gone"
+            >
 
             <LinearLayout
                 android:id="@+id/clicks_area"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:visibility="gone">
+                >
 
                 <TextView
                     android:id="@+id/clicks_text"
@@ -53,6 +62,7 @@
                     android:gravity="top"
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
+                    android:paddingTop="6dp"
                     android:text="+10"
                     android:textColor="@color/white"
                     android:textSize="18sp"
@@ -63,6 +73,7 @@
                     android:id="@+id/iv_clicks_heart"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
                     android:background="@drawable/c_clicks_heart"
                     android:gravity="center_vertical"
                     android:visibility="gone" />
@@ -71,14 +82,15 @@
                     android:id="@+id/chat_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/iv_chat_image"
+                    android:visibility="gone"
                     android:gravity="center_vertical"
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
+                    android:paddingTop="6dp"
                     android:text="TEXT CODE "
                     android:textColor="@color/black"
                     android:textSize="14sp"
-                    android:visibility="gone" />
+                     />
 
             </LinearLayout>
 
@@ -86,10 +98,7 @@
                 android:id="@+id/long_chat_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
-
                 android:layout_marginTop="2dp"
-
                 android:gravity="center_vertical"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
@@ -101,7 +110,7 @@
             <!--This textView for extra chat text to display in second line -->
 
         </LinearLayout>
-
+</RelativeLayout>
         <!--
 
        layout for time, share and loading icon
@@ -112,29 +121,42 @@
             android:id="@+id/rl_time_sender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/parent_clicks_area"
-
+            android:layout_alignBottom="@+id/chat_parent_layout"
             android:layout_marginLeft="2dp"
             android:layout_marginRight="2dp"
-            android:layout_toRightOf="@+id/parent_clicks_area"
+            android:layout_toRightOf="@+id/chat_parent_layout"
             android:visibility="visible">
 
-            <ImageView
-                android:id="@+id/iv_type_two_share_icon_r"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="5dp"
-                android:layout_marginRight="5dp"
-                android:background="@drawable/share_btn"
-                android:padding="10dp"
-                android:visibility="visible" />
+            <LinearLayout
+             android:layout_width="wrap_content"
+             android:id="@+id/ll_for_share_icon"
+             android:layout_height="wrap_content">
+                <ProgressBar
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:visibility="gone"/>
 
+
+                <ImageView
+                    android:id="@+id/iv_type_two_share_icon_r"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/share_btn"
+                    android:padding="10dp"
+                    android:visibility="visible"
+                   />
+            </LinearLayout>
             <LinearLayout
                 android:id="@+id/ll_sr_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/iv_type_two_share_icon_r"
+                android:layout_below="@+id/ll_for_share_icon"
                 android:layout_marginLeft="5dp"
                 android:orientation="horizontal"
                 android:visibility="visible">
@@ -159,351 +181,5 @@
         </RelativeLayout>
     </RelativeLayout>
 
-    <!--Card Counter end-->
-    <LinearLayout
-        android:id="@+id/card_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:gravity="right"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        <LinearLayout
-            android:id="@+id/card_view_cards"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:layout_marginLeft="5dp"
-            android:background="@drawable/newbg"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <RelativeLayout
-                android:id="@+id/rl_card"
-                android:layout_width="300dp"
-                android:layout_height="400dp"
-                android:orientation="vertical"
-                android:padding="5dp"
-                android:visibility="gone">
-
-                <ImageView
-                    android:id="@+id/trade_image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/crh"
-                    android:visibility="gone" />
-
-                <TextView
-                    android:id="@+id/trd_clicks_top"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="10dp"
-                    android:paddingRight="5dp"
-                    android:text="10"
-                    android:textColor="@color/white"
-                    android:textSize="35sp"
-                    android:textStyle="bold"
-                    android:visibility="gone" />
-
-                <TextView
-                    android:id="@+id/trd_custom_heading"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
-                    android:layout_marginLeft="40dp"
-                    android:layout_marginTop="80dp"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:textColor="@color/white"
-                    android:textSize="35sp"
-                    android:textStyle="bold"
-                    android:visibility="gone" />
 
 
-                <TextView
-                    android:id="@+id/trd_clicks_bottom"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginRight="45dp"
-                    android:text="10 "
-                    android:textColor="@color/white"
-                    android:textSize="35sp"
-                    android:textStyle="bold"
-                    android:visibility="gone" />
-
-            </RelativeLayout>
-
-            <LinearLayout
-                android:id="@+id/iv_card_action"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="5dp"
-                android:visibility="gone">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:id="@+id/card_partner_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Mukesh"
-                        android:visibility="gone" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
-                        android:text="will offer you clicks for "
-                        android:textStyle="bold"
-                        android:visibility="gone" />
-                </LinearLayout>
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="3dp"
-                    android:layout_marginTop="2dp"
-                    android:background="@drawable/c_middle_line"
-                    android:visibility="gone" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="8dp"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
-
-                    <ImageView
-                        android:id="@+id/iv_accept_card"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginRight="10dp"
-                        android:background="@drawable/c_card_accepted"
-                        android:visibility="gone" />
-
-                    <ImageView
-                        android:id="@+id/iv_resect_card"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginRight="10dp"
-                        android:background="@drawable/c_card_reject"
-                        android:visibility="gone" />
-
-                    <com.sourcefuse.clickinandroid.utils.ClickInTextView
-                        android:id="@+id/tv_counter_card"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginRight="10dp"
-                        android:background="@drawable/c_card_countor"
-                        android:gravity="center"
-                        android:text="COUNTER"
-                        android:textColor="@color/white"
-                        android:textStyle="bold"
-                        android:visibility="gone"
-                        geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
-                </LinearLayout>
-            </LinearLayout>
-        </LinearLayout>
-    </LinearLayout>
-
-    <!--Card Counter end-->
-
-
-    <!--Accepted Resected stamp start-->
-    <LinearLayout
-        android:id="@+id/card_view_cc"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/card_view"
-        android:layout_marginLeft="5dp"
-        android:gravity="left"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        <RelativeLayout
-            android:id="@+id/rl_acc_res_bg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/newbg"
-            android:orientation="vertical"
-            android:padding="10dp"
-            android:visibility="gone">
-            <!--<ImageView
-                android:id="@+id/iv_card_counter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
-                android:src="@drawable/bh" />-->
-
-            <RelativeLayout
-                android:id="@+id/rl_acc_rej_card"
-                android:layout_width="150dp"
-                android:layout_height="200dp"
-                android:orientation="vertical"
-                android:padding="5dp"
-                android:visibility="gone">
-
-                <ImageView
-                    android:id="@+id/iv_card_counter"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/bh"
-                    android:visibility="gone" />
-
-
-                <TextView
-                    android:id="@+id/trd_custom_ar_heading"
-                    android:layout_width="100dp"
-                    android:layout_height="110dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="40dp"
-                    android:gravity="center_horizontal|center_vertical"
-                    android:paddingRight="5dp"
-                    android:text="scsud busc scg sxhsa "
-                    android:textColor="@color/white"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:visibility="gone" />
-
-
-                <TextView
-                    android:id="@+id/trd_clicks_top_ar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="8dp"
-                    android:paddingRight="5dp"
-                    android:text="10"
-                    android:textColor="@color/white"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:visibility="gone" />
-
-                <TextView
-                    android:id="@+id/trd_clicks_bottom_ar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginRight="25dp"
-                    android:text="10 "
-                    android:textColor="@color/white"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:visibility="gone" />
-
-            </RelativeLayout>
-
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/rl_acc_rej_card"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <TextView
-                    android:id="@+id/tv_acc_res_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:text="Toby made a"
-                    android:visibility="gone" />
-
-                <TextView
-                    android:id="@+id/tv_acc_res_status"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:text="Counter offer"
-                    android:textStyle="bold"
-                    android:visibility="gone" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="3dp"
-                    android:background="@drawable/c_middle_line"
-                    android:visibility="gone" />
-
-                <LinearLayout
-                    android:id="@+id/ll_cc_action"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="10dp"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-
-                    <LinearLayout
-                        android:id="@+id/ll_again_counter"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:visibility="gone">
-
-                        <ImageView
-                            android:id="@+id/iv_again_counter_acc"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="15dp"
-                            android:background="@drawable/c_card_accepted"
-                            android:visibility="gone" />
-
-                        <ImageView
-                            android:id="@+id/iv_again_counter_rej"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:background="@drawable/c_card_reject"
-                            android:visibility="gone" />
-                    </LinearLayout>
-
-                    <com.sourcefuse.clickinandroid.utils.ClickInTextView
-                        android:id="@+id/tv_counter_card_action"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginTop="10dp"
-                        android:background="@drawable/c_card_countor"
-                        android:gravity="center"
-                        android:text="COUNTER"
-                        android:textColor="@color/white"
-                        android:textStyle="bold"
-                        android:visibility="gone"
-                        geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
-                </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/iv_acc_rec"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/c_card_accept"
-                    android:visibility="gone" />
-            </LinearLayout>
-        </RelativeLayout>
-    </LinearLayout>
-    <!--Accepted Resected end-->
-
-</RelativeLayout>

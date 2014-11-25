@@ -25,6 +25,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -40,8 +41,10 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.quickblox.core.QBCallbackImpl;
+import com.quickblox.core.QBEntityCallbackImpl;
 import com.quickblox.core.result.Result;
 import com.quickblox.module.content.QBContent;
+import com.quickblox.module.content.model.QBFile;
 import com.quickblox.module.content.result.QBFileUploadTaskResult;
 import com.quickblox.module.custom.QBCustomObjects;
 import com.quickblox.module.custom.model.QBCustomObject;
@@ -82,6 +85,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -170,9 +174,425 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     private int CHAT_TYPE;
     private boolean mIsBound;
 
+    //chatId-unquie to chat msg- use to track delivery status
+     Integer msgId;
+
     private ClickinDbHelper dbHelper;
 
+    /* @Override
+     public void processMessage(Message message) {
+           //Set typin Status....
+           String chatType = "0";
+           String fileID = null;
+           String body = null;
+           String clicks = null;
+           String toUserId = null;
+           String fromUserId = null;
 
+           //Card DS
+           String card_clicks = null;
+           String card_owner = null;
+           String card_content = null;
+           String is_CustomCard = null;
+           String card_DB_ID = null;
+           String card_heading = null;
+           String card_Accepted_Rejected = null;
+           String card_url = null;
+           String card_id = null;
+           String card_Played_Countered = null;
+           String card_originator = null;
+
+           // Card DE
+
+
+           long sentOn = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis();
+           try {
+                 PacketExtension extension = message.getExtension("extraParams", "jabber:client");
+                 if (extension != null) {
+                       try {
+                             String value = ((DefaultPacketExtension) extension).getValue("isComposing");
+                             if (value.equals("YES")) {
+                                   typingtext.setVisibility(View.VISIBLE);
+                                   chatType = "0";
+                                   typingtext.setText("Typing...");
+                             } else if (value.equals("NO")) {
+                                   chatType = "0";
+                                   typingtext.setVisibility(View.GONE);
+                             }
+                       } catch (Exception f) {
+                       }
+                 }
+
+// Get message in XML and convert in JSON OBJECT
+
+
+                 try {
+                       ChatRecordBeen addChat = new ChatRecordBeen();
+                       String messageBody = message.getBody();
+                       JSONObject xmlJSONObj = XML.toJSONObject(message.toXML().toString());
+                       Log.e(TAG, "--- xmlJSONObj--->" + xmlJSONObj);
+
+
+                       if (!Utils.isEmptyString(xmlJSONObj.getJSONObject("message").getString("body")) && xmlJSONObj.getJSONObject("message").getJSONObject("extraParams").has("clicks") && !xmlJSONObj.getJSONObject("message").getJSONObject("extraParams").has("fileID") && !xmlJSONObj.getJSONObject("message").getJSONObject("extraParams").has("audioID")) {
+                             Log.e(TAG, "Chattype--1");
+                             body = xmlJSONObj.getJSONObject("message").getString("body");
+                             clicks = xmlJSONObj.getJSONObject("message").getJSONObject("extraParams").getString("clicks");
+                             chatType = "1";
+                       }
+                       if (xmlJSONObj.getJSONObject("message").getJSONObject("extraParams").has("fileID")) {
+                             fileID = xmlJSONObj.getJSONObject("message").getJSONObject("extraParams").getString("fileID");
+                             chatType = "2";
+
+                             body = xmlJSONObj.getJSONObject("message").getString("body");
+
+                             clicks = xmlJSONObj.getJSONObject("message").getJSONObject("extraParams").getString("clicks");
+                             fileID = xmlJSONObj.getJSONObject("message").getJSONObject("extraParams").getString("fileID");
+
+                             Log.e(TAG, "Chattype--2");
+                       }
+                       if (xmlJSONObj.getJSONObject("message").getJSONObject("extraParams").has("audioID")) {
+                             fileID = xmlJSONObj.getJSONObject("message").getJSONObject("extraParams").getString("audioID");
+                             chatType = "3";
+
+                             body = xmlJSONObj.getJSONObject("message").getString("body");
+
+                             clicks = xmlJSONObj.getJSONObject("message").getJSONObject("extraParams").getString("clicks");
+                             fileID = xmlJSONObj.getJSONObject("message").getJSONObject("extraParams").getString("audioID");
+
+                             Log.e(TAG, "Chattype--3");
+                       }
+                       if (xmlJSONObj.getJSONObject("message").getJSONObject("extraParams").has("locationID")) {
+                             fileID = xmlJSONObj.getJSONObject("message").getJSONObject("extraParams").getString("locationID");
+                             chatType = "2";
+                             Log.e(TAG, "Chattype--6");
+                       }
+                       if (xmlJSONObj.getJSONObject("message").getJSONObject("extraParams").has("videoID")) {
+                             fileID = xmlJSONObj.getJSONObject("message").getJSONObject("extraParams").getString("videoID");
+                             chatType = "4";
+                             Log.e(TAG, "Chattype--4");
+                       }
+                       if (xmlJSONObj.getJSONObject("message").getJSONObject("extraParams").has("card_url")) {
+
+
+                             card_url = xmlJSONObj.getJSONObject("message").getJSONObject("extraParams").getString("card_url");
+
+                             if (xmlJSONObj.getJSONObject("message").getJSONObject("extraParams").has("card_clicks"))
+                                   card_clicks = xmlJSONObj.getJSONObject("message").getJSONObject("extraParams").getString("card_clicks");
+
+                             if (xmlJSONObj.getJSONObject("message").getJSONObject("extraParams").has("card_owner"))
+                                   card_owner = xmlJSONObj.getJSONObject("message").getJSONObject("extraParams").getString("card_owner");
+
+                             if (xmlJSONObj.getJSONObject("message").getJSONObject("extraParams").has("card_content"))
+                                   card_content = xmlJSONObj.getJSONObject("message").getJSONObject("extraParams").getString("card_content");
+
+                             if (xmlJSONObj.getJSONObject("message").getJSONObject("extraParams").has("is_CustomCard"))
+                                   is_CustomCard = xmlJSONObj.getJSONObject("message").getJSONObject("extraParams").getString("is_CustomCard");
+
+                             if (xmlJSONObj.getJSONObject("message").getJSONObject("extraParams").has("card_DB_ID"))
+                                   card_DB_ID = xmlJSONObj.getJSONObject("message").getJSONObject("extraParams").getString("card_DB_ID");
+
+                             if (xmlJSONObj.getJSONObject("message").getJSONObject("extraParams").has("card_heading"))
+                                   card_heading = xmlJSONObj.getJSONObject("message").getJSONObject("extraParams").getString("card_heading");
+
+                             if (xmlJSONObj.getJSONObject("message").getJSONObject("extraParams").has("card_Accepted_Rejected"))
+                                   card_Accepted_Rejected = xmlJSONObj.getJSONObject("message").getJSONObject("extraParams").getString("card_Accepted_Rejected");
+
+                             if (xmlJSONObj.getJSONObject("message").getJSONObject("extraParams").has("card_id"))
+                                   card_id = xmlJSONObj.getJSONObject("message").getJSONObject("extraParams").getString("card_id");
+
+                             if (xmlJSONObj.getJSONObject("message").getJSONObject("extraParams").has("card_Played_Countered"))
+                                   xmlJSONObj.getJSONObject("message").getJSONObject("extraParams").getString("card_Played_Countered");
+
+                             if (xmlJSONObj.getJSONObject("message").getJSONObject("extraParams").has("card_originator"))
+                                   card_originator = xmlJSONObj.getJSONObject("message").getJSONObject("extraParams").getString("card_originator");
+
+                             chatType = "5";
+                             Log.e(TAG, "Chattype--5");
+                       }
+
+                       Log.e(TAG, "--- xmlJSONObj--->" + "body--> " + body + " , clicks--> " + clicks + " , fileID--> " + fileID);
+
+                       chatManager = ModelManager.getInstance().getChatManager();
+                       if (chatType.equalsIgnoreCase("1")) {
+
+                             //chatManager = ModelManager.getInstance().getChatManager();
+                             addChat.setSenderQbId(authManager.getQBId());
+                             addChat.setRecieverQbId(qBId);
+                             Log.e(TAG, "-TYPE ONE --");
+                             if (clicks.equalsIgnoreCase("no")) {
+                                   addChat.setChatType(chatType);
+                                   addChat.setUserId(partnerId);
+                                   Log.e(TAG, "body-w---> " + body);
+                                   addChat.setChatText("" + body);
+                                   addChat.setClicks(null);
+                                   addChat.setTimeStamp(String.valueOf(sentOn));
+
+                                   chatManager.chatListFromServer.add(addChat);
+                                   adapter.notifyDataSetChanged();
+
+                             } else {
+                                   addChat.setChatType(chatType);
+                                   addChat.setUserId(partnerId);
+                                   if (body.equalsIgnoreCase(clicks)) {
+                                         addChat.setClicks(clicks);
+                                         addChat.setChatText("");
+                                   } else {
+                                         addChat.setClicks(clicks);
+                                         addChat.setChatText(body.substring(4));
+                                   }
+                                   addChat.setTimeStamp(String.valueOf(sentOn));
+                                   chatManager.chatListFromServer.add(addChat);
+                                   adapter.notifyDataSetChanged();
+                             }
+                       } else if (chatType.equalsIgnoreCase("2")) {
+                             addChat.setSenderQbId(authManager.getQBId());
+                             addChat.setRecieverQbId(qBId);
+                             if (clicks.equalsIgnoreCase("no") && Utils.isEmptyString(body)) {
+                                   Log.e(TAG, "Chattype 2 --2");
+                                   addChat.setChatType(chatType);
+                                   addChat.setChatImageUrl(fileID);
+                                   addChat.setUserId(partnerId);
+                                   addChat.setChatText(null);
+                                   addChat.setClicks(null);
+                                   addChat.setTimeStamp(String.valueOf(sentOn));
+
+                                   chatManager.chatListFromServer.add(addChat);
+                                   adapter.notifyDataSetChanged();
+                             } else if (clicks.equalsIgnoreCase("no") && !Utils.isEmptyString(body)) {
+                                   addChat.setChatType(chatType);
+                                   addChat.setChatImageUrl(fileID);
+                                   addChat.setUserId(partnerId);
+                                   addChat.setClicks(null);
+                                   addChat.setChatText(body);
+                                   addChat.setTimeStamp(String.valueOf(sentOn));
+                                   chatManager.chatListFromServer.add(addChat);
+                                   adapter.notifyDataSetChanged();
+                             } else if (!clicks.equalsIgnoreCase("no") && !Utils.isEmptyString(body)) {
+                                   addChat.setChatType(chatType);
+                                   addChat.setChatImageUrl(fileID);
+                                   addChat.setUserId(partnerId);
+                                   addChat.setClicks(clicks);
+                                   addChat.setChatText(body);
+                       *//*if( body.equalsIgnoreCase(clicks)){
+                            addChat.setClicks(body);
+                        }else{
+                            addChat.setClicks(body.substring(0, 4));
+                        }*//*
+                                    addChat.setTimeStamp(String.valueOf(sentOn));
+                                    chatManager.chatListFromServer.add(addChat);
+                                    adapter.notifyDataSetChanged();
+                              }
+
+                        } else if (chatType.equalsIgnoreCase("3")) {
+                              addChat.setSenderQbId(authManager.getQBId());
+                              addChat.setRecieverQbId(qBId);
+                              if (clicks.equalsIgnoreCase("no") && Utils.isEmptyString(body)) {
+                                    Log.e(TAG, "Chattype 3 Only Audio File");
+
+                                    addChat.setChatType(chatType);
+                                    addChat.setChatImageUrl(fileID);
+                                    addChat.setUserId(partnerId);
+                                    addChat.setChatText(null);
+                                    addChat.setClicks(null);
+                                    addChat.setTimeStamp(String.valueOf(sentOn));
+                                    chatManager.chatListFromServer.add(addChat);
+                                    adapter.notifyDataSetChanged();
+
+                              } else if (clicks.equalsIgnoreCase("no") && !Utils.isEmptyString(body)) {
+
+                                    addChat.setChatType(chatType);
+                                    addChat.setChatImageUrl(fileID);
+                                    addChat.setUserId(partnerId);
+                                    addChat.setClicks(null);
+                                    addChat.setChatText(body);
+                                    addChat.setTimeStamp(String.valueOf(sentOn));
+                                    chatManager.chatListFromServer.add(addChat);
+                                    adapter.notifyDataSetChanged();
+
+                              } else if (!clicks.equalsIgnoreCase("no") && !Utils.isEmptyString(body)) {
+
+                                    addChat.setChatType(chatType);
+                                    addChat.setChatImageUrl(fileID);
+                                    addChat.setUserId(partnerId);
+                                    addChat.setClicks(clicks);
+                                    addChat.setChatText(body);
+                                    addChat.setTimeStamp(String.valueOf(sentOn));
+                                    chatManager.chatListFromServer.add(addChat);
+                                    adapter.notifyDataSetChanged();
+
+                              }
+
+                        } else if (chatType.equalsIgnoreCase("5")) {
+                              String firstname1 = firstname + " ";
+                              addChat.setSenderQbId(authManager.getQBId());
+                              addChat.setRecieverQbId(qBId);
+
+                              if (card_Accepted_Rejected.equalsIgnoreCase("accepted")) {
+
+                                    Log.e(TAG, "Chattype 5 accepted Only Card File");
+
+                                    addChat.setChatType(chatType);
+                                    addChat.setUserId(card_originator);
+                                    addChat.setCard_clicks(card_clicks);
+                                    addChat.setCard_owner(card_owner);
+                                    addChat.setCard_content(card_content);
+                                    addChat.setIs_CustomCard(is_CustomCard);
+                                    addChat.setCard_DB_ID(card_DB_ID);
+                                    addChat.setCard_heading(card_heading);
+                                    addChat.setCard_Accepted_Rejected(card_Accepted_Rejected);
+                                    addChat.setCard_url(card_url);
+                                    addChat.setCard_id(card_id);
+                                    addChat.setCard_Played_Countered(card_Played_Countered);
+                                    addChat.setCard_originator(card_originator);
+                                    addChat.setCardPartnerName(firstname1);
+
+                                    addChat.setTimeStamp(String.valueOf(sentOn));
+                                    chatManager.chatListFromServer.add(addChat);
+
+                                    if (card_originator.equalsIgnoreCase(authManager.getUserId())) {
+
+                                          myClicks = (myClicks - (Integer.parseInt(card_clicks)));
+                                          myTotalclicks.setText("" + myClicks);
+                                          relationManager = ModelManager.getInstance().getRelationManager();
+                                          relationManager.acceptedList.get(relationListIndex).setClicks(Integer.toString(myClicks));
+
+                                          userClicks = (userClicks + (Integer.parseInt(card_clicks)));
+                                          partnerTotalclicks.setText("" + userClicks);
+                                          relationManager = ModelManager.getInstance().getRelationManager();
+                                          relationManager.acceptedList.get(relationListIndex).setUserClicks(Integer.toString(userClicks));
+                                    } else {
+                                          myClicks = (myClicks + (Integer.parseInt(card_clicks)));
+                                          myTotalclicks.setText("" + myClicks);
+                                          relationManager = ModelManager.getInstance().getRelationManager();
+                                          relationManager.acceptedList.get(relationListIndex).setClicks(Integer.toString(myClicks));
+
+                                          userClicks = (userClicks - (Integer.parseInt(card_clicks)));
+                                          partnerTotalclicks.setText("" + userClicks);
+                                          relationManager = ModelManager.getInstance().getRelationManager();
+                                          relationManager.acceptedList.get(relationListIndex).setUserClicks(Integer.toString(userClicks));
+                                    }
+                                    adapter.notifyDataSetChanged();
+
+                              } else if (card_Accepted_Rejected.equalsIgnoreCase("rejected")) {
+
+                                    Log.e(TAG, "Chattype 5 rejected Only Card File");
+
+                                    addChat.setChatType(chatType);
+                                    addChat.setUserId(partnerId);
+                                    addChat.setCard_clicks(card_clicks);
+                                    addChat.setCard_owner(card_owner);
+                                    addChat.setCard_content(card_content);
+                                    addChat.setIs_CustomCard(is_CustomCard);
+                                    addChat.setCard_DB_ID(card_DB_ID);
+                                    addChat.setCard_heading(card_heading);
+                                    addChat.setCard_Accepted_Rejected(card_Accepted_Rejected);
+                                    addChat.setCard_url(card_url);
+                                    addChat.setCard_id(card_id);
+                                    addChat.setCard_Played_Countered(card_Played_Countered);
+                                    addChat.setCard_originator(card_originator);
+                                    addChat.setCardPartnerName(firstname1);
+
+                                    addChat.setTimeStamp(String.valueOf(sentOn));
+                                    chatManager.chatListFromServer.add(addChat);
+                                    adapter.notifyDataSetChanged();
+                              } else if (card_Accepted_Rejected.equalsIgnoreCase("countered")) {
+                                    Log.e(TAG, "Chattype 5 Only Card File");
+
+                                    addChat.setChatType(chatType);
+                                    addChat.setUserId(partnerId);
+                                    addChat.setCard_clicks(card_clicks);
+                                    addChat.setCard_owner(card_owner);
+                                    addChat.setCard_content(card_content);
+                                    addChat.setIs_CustomCard(is_CustomCard);
+                                    if (is_CustomCard.equalsIgnoreCase("true")) {
+                                          addChat.setCard_url(card_url);
+                                    } else {
+                                          addChat.setCard_url("");
+                                    }
+                                    addChat.setCard_DB_ID(card_DB_ID);
+                                    addChat.setCard_heading(card_heading);
+                                    addChat.setCard_Accepted_Rejected(card_Accepted_Rejected);
+                                    addChat.setCard_url(card_url);
+                                    addChat.setCard_id(card_id);
+                                    addChat.setCard_Played_Countered(card_Played_Countered);
+                                    addChat.setCard_originator(card_originator);
+                                    addChat.setCardPartnerName(firstname1);
+
+                                    addChat.setTimeStamp(String.valueOf(sentOn));
+                                    chatManager.chatListFromServer.add(addChat);
+                                    adapter.notifyDataSetChanged();
+                              } else if (card_Accepted_Rejected.equalsIgnoreCase("nil") && !is_CustomCard.equalsIgnoreCase("true")) {
+                                    Log.e(TAG, "Chattype 5 Only Card File");
+
+                                    addChat.setChatType(chatType);
+                                    addChat.setUserId(partnerId);
+                                    addChat.setCard_clicks(card_clicks);
+                                    addChat.setCard_owner(card_owner);
+                                    addChat.setCard_content(card_content);
+                                    addChat.setIs_CustomCard(is_CustomCard);
+                                    addChat.setCard_DB_ID(card_DB_ID);
+                                    addChat.setCard_heading(card_heading);
+                                    addChat.setCard_Accepted_Rejected(card_Accepted_Rejected);
+                                    addChat.setCard_url(card_url);
+                                    addChat.setCard_id(card_id);
+                                    addChat.setCard_Played_Countered(card_Played_Countered);
+                                    addChat.setCard_originator(card_originator);
+                                    addChat.setCardPartnerName(partnerName);
+
+                                    addChat.setTimeStamp(String.valueOf(sentOn));
+                                    chatManager.chatListFromServer.add(addChat);
+                                    adapter.notifyDataSetChanged();
+                              } else if (is_CustomCard.equalsIgnoreCase("true")) {
+                                    Log.e(TAG, "Chattype 5 Only Card Custom");
+
+                                    addChat.setChatType(chatType);
+                                    addChat.setUserId(partnerId);
+                                    addChat.setCard_clicks(card_clicks);
+                                    addChat.setCard_owner(card_owner);
+                                    addChat.setCard_content(card_content);
+                                    addChat.setIs_CustomCard(is_CustomCard);
+                                    addChat.setCard_DB_ID(card_DB_ID);
+                                    addChat.setCard_heading(card_heading);
+                                    addChat.setCard_Accepted_Rejected(card_Accepted_Rejected);
+                                    addChat.setCard_url("");
+                                    addChat.setCard_id(card_id);
+                                    addChat.setCard_Played_Countered(card_Played_Countered);
+                                    addChat.setCard_originator(card_originator);
+                                    addChat.setCardPartnerName(partnerName);
+
+                                    addChat.setTimeStamp(String.valueOf(sentOn));
+                                    chatManager.chatListFromServer.add(addChat);
+                                    adapter.notifyDataSetChanged();
+                              }
+
+                        }
+
+
+                        //Set myclicks on top
+                        if (!Utils.isEmptyString(clicks)) {
+                              myClicks = myClicks + grandClicksForReceiverEndInt(clicks);
+                              myTotalclicks.setText("" + myClicks);
+                              relationManager = ModelManager.getInstance().getRelationManager();
+                              relationManager.acceptedList.get(relationListIndex).setClicks(Integer.toString(myClicks));
+                        }
+
+                        fileID = null;
+                        body = null;
+                        clicks = null;
+                        toUserId = null;
+                        fromUserId = null;
+
+
+                  } catch (Exception e) {
+                        e.printStackTrace();
+                  }
+
+            } catch (Exception f) {
+                  f.printStackTrace();
+            }
+      }
+
+     */
     public static Bitmap getBitmapFromCameraData(Intent data, Context context) {
         Uri selectedImage = data.getData();
         String[] filePathColumn =
@@ -225,7 +645,9 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         Utils.launchBarDialog(this);
         Intent i = new Intent(this, MyQbChatService.class);
         bindService(i, mConnection, Context.BIND_AUTO_CREATE);
-        addMenu(true);
+        addMenu(false);
+        // loginToQuickBlox();
+        //  typeface = Typeface.createFromAsset(ChatRecordView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
         send = (Button) findViewById(R.id.btn_send);
         chatListView = (PullToRefreshListView) findViewById(R.id.chat_list);
         chatText = (EditText) findViewById(R.id.edit_chatBox);
@@ -662,7 +1084,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                         ChatMessageBody temp = new ChatMessageBody();
 
                         if (isClicks() == true) {
-                            temp.clicks = Utils.convertClicks(seekValue).trim();
+                            temp.clicks = Utils.convertClicks(String.valueOf(seekValue)).trim();
                             temp.textMsg = temp.clicks + "        " + chatString;
                         } else {
                             temp.clicks = "no";
@@ -673,8 +1095,14 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                         temp.chatType = Constants.CHAT_TYPE_TEXT;
                         CHAT_TYPE = Constants.CHAT_TYPE_TEXT;
 
+                        long sentOntime = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis();
+
+                        temp.sentOn = "" + sentOntime;
+                        temp.chatId = authManager.getQBId() + qBId + sentOntime;
+
+                        ShowValueinChat(temp);
                         myQbChatService.sendMessage(temp);
-                        setValueForHistory(temp);
+                        createRecordForHistory(temp);
 
                         chatText.setText("");
                         seekValue = 0;
@@ -684,7 +1112,9 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                             CHAT_TYPE = Constants.CHAT_TYPE_IMAGE;
                             // new uploadMediaFileOnQb().execute(path.toString());
                             if (path != null)
-                                uploadImageFileOnQB(path.toString());
+                                sendMsgToQB(path);
+                             //   doComposeMediaMsg(path);
+                                //uploadImageFileOnQB(path.toString());
                         }
                     }
 
@@ -937,19 +1367,18 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         }
     }
 
-    //mukesh/monika chat code
-    private void setValueForHistory(ChatMessageBody obj) {
+   
+
+    //monika- function to show chat in listview
+    private void ShowValueinChat(ChatMessageBody obj) {
 
         authManager = ModelManager.getInstance().getAuthorizationManager();
-        long sentOntime = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis();
 
-        obj.sentOn = "" + sentOntime;
-        obj.chatId = authManager.getQBId() + qBId + sentOntime;
 
         obj.sharedMessage = null;
         //   obj.deliveredChatID=null;
         // obj.cardDetails=null;
-        obj.isDelivered = null;
+        obj.isDelivered = Constants.MSG_SENDING;
         obj.relationshipId = rId;
         obj.userId = authManager.getUserId();
         obj.senderUserToken = authManager.getUsrToken();
@@ -962,6 +1391,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             } else
                 obj.textMsg = null;
         }
+
         ArrayList<ChatMessageBody> tempChatList = ModelManager.getInstance().getChatManager().chatMessageList;
         tempChatList.add(obj);
 
@@ -971,9 +1401,11 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         } else {
             adapter.notifyDataSetChanged();
         }
-        createRecordForHistory(obj);
+   //  return obj;
+    //  createRecordForHistory(obj);
 
     }
+
 
     /*  private void sendCardToPartner(String card_url, String cardTittle, String cardDiscription, String card_Id, String clicks, String is_CustomCard, String card_DB_ID, String accepted_Rejected, String played_Countered, String card_originator, String card_owner) {
 
@@ -1088,47 +1520,66 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             }
       }*/
 
-    private void uploadImageFileOnQB(String path) {
+    //monika-fucntion to upload file on Qb
+    private void uploadImageFileOnQB(String path, String msgId) {
         File mfile = new File(path);
-        QBContent.uploadFileTask(mfile, true, new QBCallbackImpl() {
+        final String chatId=msgId;
+        Boolean fileIsPublic = false;
+        QBContent.uploadFileTask(mfile, fileIsPublic, null, new QBEntityCallbackImpl<QBFile>() {
             @Override
-            public void onComplete(Result result) {
-                if (result.isSuccess()) {
-                    QBFileUploadTaskResult res = (QBFileUploadTaskResult) result;
-                    uploadedImgUrl = res.getFile().getPublicUrl().toString();
-                    System.out.println(TAG + "<---onPostExecute--->" + uploadedImgUrl);
-                    sendMsgToQB(uploadedImgUrl);
-                }
+            public void onSuccess(QBFile file, Bundle params) {
+               String fileUrl= file.getId().toString();
+               sendMediaMsgToQB(fileUrl, chatId);
+
+            }
+
+            @Override
+            public void onError(List<String> errors) {
+                // error
             }
         });
 
     }
 
-    private void sendMsgToQB(String result) {
+    //monika- common function to create msg in case of media attachment
+    private void sendMsgToQB(String path) {
         ChatMessageBody temp = new ChatMessageBody();
         String chatString = chatText.getText().toString();
         switch (CHAT_TYPE) {
             case Constants.CHAT_TYPE_IMAGE:
                 temp.imageRatio = "1";
-                temp.content_url = result;
+                temp.content_url = path;
+                temp.isDelivered=Constants.MSG_SENDING;
                 temp.chatType = Constants.CHAT_TYPE_IMAGE;
                 break;
             default:
         }
         if (isClicks() == true) {
-            temp.clicks = Utils.convertClicks(seekValue).trim();
+            temp.clicks = Utils.convertClicks(String.valueOf(seekValue)).trim();
             temp.textMsg = temp.clicks + "        " + chatString;
         } else {
             temp.clicks = "no";
             temp.textMsg = chatString;
         }
         temp.partnerQbId = qBId;
+        temp.senderQbId = authManager.getQBId();
 
+        long sentOntime = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis();
 
-        myQbChatService.sendMessage(temp);
+        temp.sentOn = "" + sentOntime;
+        temp.chatId = authManager.getQBId() + qBId + sentOntime;
+
+   //     setValueForHistory(temp);
+        ShowValueinChat(temp);
         chatText.setText("");
         seekValue = 0;
-        mImageCaptureUri = null;
+        mybar.setProgress(10);
+        mImageCaptureUri=null;
+     //   path=null;
+        attachBtn.setImageDrawable(getResources().getDrawable(R.drawable.r_img_icon));
+        uploadImageFileOnQB(path,temp.chatId);
+
+
 
     }
 
@@ -1285,7 +1736,6 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     }
 
     public void onEventMainThread(String message) {
-        super.onEventMainThread(message);
         android.util.Log.d(TAG, "onEventMainThread->" + message);
         authManager = ModelManager.getInstance().getAuthorizationManager();
         if (message.equalsIgnoreCase("FecthChat True")) {
@@ -1298,7 +1748,6 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                     adapter.notifyDataSetChanged();
                 }
             }
-
 
 
             Log.e("1", "message->" + message);
@@ -1318,6 +1767,10 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         } else if (message.equalsIgnoreCase("Composing NO")) {
             typingtext.setVisibility(View.VISIBLE);
             typingtext.setText("online");
+        }else if(message.startsWith("Delivered Msg")){
+            String chatId=message.substring(13);
+            updateChatDeliverStatusInList(chatId);
+
         }
 
     }
@@ -1676,52 +2129,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
     }
 
-    private int grandClicksForSenderEnd(String clicksValue) {
-        int changeClicks = 0;
-        if (clicksValue.equalsIgnoreCase("+01")) {
-            changeClicks = 1;
-        } else if (clicksValue.equalsIgnoreCase("+02")) {
-            changeClicks = 2;
-        } else if (clicksValue.equalsIgnoreCase("+03")) {
-            changeClicks = 3;
-        } else if (clicksValue.equalsIgnoreCase("+04")) {
-            changeClicks = 4;
-        } else if (clicksValue.equalsIgnoreCase("+05")) {
-            changeClicks = 5;
-        } else if (clicksValue.equalsIgnoreCase("+06")) {
-            changeClicks = 6;
-        } else if (clicksValue.equalsIgnoreCase("+07")) {
-            changeClicks = 7;
-        } else if (clicksValue.equalsIgnoreCase("+08")) {
-            changeClicks = 8;
-        } else if (clicksValue.equalsIgnoreCase("+09")) {
-            changeClicks = 9;
-        } else if (clicksValue.equalsIgnoreCase("+10")) {
-            changeClicks = 10;
-        } else if (clicksValue.equalsIgnoreCase("-01")) {
-            changeClicks = 1;
-        } else if (clicksValue.equalsIgnoreCase("-02")) {
-            changeClicks = -2;
-        } else if (clicksValue.equalsIgnoreCase("-03")) {
-            changeClicks = -3;
-        } else if (clicksValue.equalsIgnoreCase("-04")) {
-            changeClicks = -4;
-        } else if (clicksValue.equalsIgnoreCase("-05")) {
-            changeClicks = -5;
-        } else if (clicksValue.equalsIgnoreCase("-06")) {
-            changeClicks = -6;
-        } else if (clicksValue.equalsIgnoreCase("-07")) {
-            changeClicks = -7;
-        } else if (clicksValue.equalsIgnoreCase("-08")) {
-            changeClicks = -8;
-        } else if (clicksValue.equalsIgnoreCase("-09")) {
-            changeClicks = -9;
-        } else if (clicksValue.equalsIgnoreCase("-10")) {
-            changeClicks = -10;
-        }
-        return changeClicks;
 
-    }
 
     private String clickForFlipper(int clicks) {
 
@@ -1789,8 +2197,9 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         return bitmap;
     }
 
-    private void createRecordForHistory(ChatMessageBody obj) {
+    private void createRecordForHistory(final ChatMessageBody obj) {
         HashMap<String, Object> fields = new HashMap<String, Object>();
+
 
         fields.put("message", obj.textMsg);
         fields.put("clicks", obj.clicks);
@@ -1824,19 +2233,22 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         QBCustomObject qbCustomObject = new QBCustomObject();
         qbCustomObject.setClassName("chats");  // your Class name
         qbCustomObject.setFields(fields);
+
         QBCustomObjects.createObject(qbCustomObject, new QBCallbackImpl() {
             @Override
             public void onComplete(Result result) {
                 if (result.isSuccess()) {
                     QBCustomObjectResult qbCustomObjectResult = (QBCustomObjectResult) result;
                     QBCustomObject qbCustomObject = qbCustomObjectResult.getCustomObject();
+               //    int chatIdtemp=qbCustomObject.getId();
+                 //  obj.chatId=String.valueOf(chatIdtemp);
                     Log.e("New record: ", qbCustomObject.toString());
                 } else {
                     Log.e("Errors", result.getErrors().toString());
                 }
             }
         });
-
+           // return String.valueOf(msgId);
     }
 
     private void updateValues(Intent intent) {
@@ -1979,6 +2391,20 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
             //clear the message list always to initiate a new chat
             ModelManager.getInstance().getChatManager().chatMessageList.clear();
+
+            //code to hide keyboard
+            ((RelativeLayout) findViewById(R.id.rr_chat_layout)).setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View arg0) {
+
+                    InputMethodManager imm = (InputMethodManager) getSystemService(
+                            INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(chatText.getWindowToken(), 0);
+
+                }
+
+            });
             setlist();
         }
     }
@@ -2123,6 +2549,40 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         }
     }
 
+    //function to update chatMessagelist for delivered chats
+    private void updateChatDeliverStatusInList(String chatId){
+        for(ChatMessageBody msg:chatManager.chatMessageList){
+            if(msg.chatId.equalsIgnoreCase(chatId)){
+                msg.isDelivered="true";
+                break;
+            }
+        }
+        if(adapter!=null)
+            adapter.notifyDataSetChanged();
+        else{
+            adapter=new ChatRecordAdapter(this,R.layout.view_chat_demo,chatManager.chatMessageList);
+            chatListView.setAdapter(adapter);
+        }
+    }
+
+
+//monika-update the content url for specific chatid and send msg to Qb and create history
+    private void sendMediaMsgToQB(String fileUrl,String tempChatId){
+       // ArrayList<ChatMessageBody> tempChatList=chatManager.chatMessageList;
+        path=null;
+        for(ChatMessageBody temp:chatManager.chatMessageList) {
+            if (!(Utils.isEmptyString(temp.chatId))) {
+                if (temp.chatId.equalsIgnoreCase(tempChatId)) {
+                    temp.content_url = fileUrl;
+                    temp.isDelivered = Constants.MSG_SENT;
+                    myQbChatService.sendMessage(temp);
+                    createRecordForHistory(temp);
+                    adapter.notifyDataSetChanged();
+
+                }
+            }
+        }
+    }
 
 }
 
