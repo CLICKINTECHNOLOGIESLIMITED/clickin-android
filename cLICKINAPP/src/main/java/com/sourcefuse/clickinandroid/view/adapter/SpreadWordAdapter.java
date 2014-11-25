@@ -49,7 +49,7 @@ public class SpreadWordAdapter extends ArrayAdapter<ContactBean> {
             row.setTag(holder);
         } else {
             holder = (RecordHolder) row.getTag();
-           
+
         }
 
 
@@ -83,8 +83,8 @@ public class SpreadWordAdapter extends ArrayAdapter<ContactBean> {
 			e.printStackTrace();
 		}
 		rholder.clickers.setText(item.getConName());
-        
-	
+
+
         holder.follow.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if(item.isChecked()){
@@ -101,7 +101,7 @@ public class SpreadWordAdapter extends ArrayAdapter<ContactBean> {
 
             }
         });
-        
+
         return row;
     }
 

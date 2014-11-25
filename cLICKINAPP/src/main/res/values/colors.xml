@@ -88,4 +88,9 @@
     <color name="owner_relation_header_with_m">#b3b3b3</color>
     <color name="owner_relation_partner_name">#39cad4</color>
 
+
+
+    <color name="profile_border">#364566</color>
+    <color name="some_back">#4d5b7b</color>
+    <color name="click_in">#5d6a88</color>
 </resources>

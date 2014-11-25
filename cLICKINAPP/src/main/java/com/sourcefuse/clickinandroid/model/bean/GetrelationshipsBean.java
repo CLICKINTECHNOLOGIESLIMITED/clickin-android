@@ -13,7 +13,7 @@ public class GetrelationshipsBean {
 	private String partnerQBId;
 	private String deleted;
 	private String lastChatId;
-	
+
 
 	/**
 	 * @return the partner_id

@@ -34,21 +34,21 @@ public class Constants {
 
 
 	public static int itemPosition = 0;
-	
+
 	public static final String PREFS_VALUE_PHONE = "phone";
 	public static final String PREFS_VALUE_USER_TOKEN = "user-token";
 	public static final String PREFS_VALUE_FBTOKEN = "fb-token";
 	public static final String PREFS_VALUE_USER_EMAILID = "email-id";
 	public static final String PREFS_VALUE_QB_ID = "qb-id";
 	public static final String PREFS_VALUE_USER_ID = "user-id";
-	
-	
+
+
 	public static final String FONT_FILE_PATH_AVENIRNEXTLTPRO_BOLD= "fonts/AvenirNextLTPro-BoldCn_0.otf";
     public static final String FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN= "fonts/AvenirNextLTPro-MediumCn_0.otf";
 
     public static final String SEND_REQUEST_WITH_SMS_MESSAGE= "Hey ! Lets you and I get Clickin' ! Download now - http://www.clickinapp.com/";
     public static final String SEND_REQUEST_WITH_SMS_MESSAGE_SPREAD= "Hey! Come join us on Clickin' - Dowload Now - http://www.clickinapp.com/";
-	
+
 	public static final String PRIVACY_LINK_URL="https://api.clickinapp.com/pages/privacy-policy";
 	public static final String TERMS_LINK_URL="https://api.clickinapp.com/pages/term-of-use";
     public static final String APP_LINK_URL="http://www.clickinapp.com/";
@@ -66,6 +66,9 @@ public class Constants {
     public final static int CHAT_TYPE_NOFITICATION = 7;
     //constant to check length of chat text in adapter
     public final static int CHAT_LENTH_LIMIT = 15;
+
+
+
 
     //constants for media delivery status
     public static final String MSG_SENDING="SENDING";

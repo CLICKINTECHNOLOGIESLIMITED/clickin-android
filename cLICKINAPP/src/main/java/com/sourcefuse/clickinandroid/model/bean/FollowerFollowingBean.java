@@ -8,6 +8,13 @@ public class FollowerFollowingBean {
     private String followeeName;
     private String followeePic;
 
+
+    private String phoneNo;
+    private String isFollowing;
+    private String followingAccepted;
+    private String followingId;
+
+
     public String getFollowingId() {
         return followingId;
     }
@@ -16,10 +23,7 @@ public class FollowerFollowingBean {
         this.followingId = followingId;
     }
 
-    private String phoneNo;
-    private String isFollowing;
-    private String followingAccepted;
-    private String followingId;
+
 
     public String getrFollowerId() {
         return rFollowerId;
@@ -112,5 +116,5 @@ public class FollowerFollowingBean {
 	public void setIsFollowing(String isFollowing) {
 		this.isFollowing = isFollowing;
 	}
-	
+
 }

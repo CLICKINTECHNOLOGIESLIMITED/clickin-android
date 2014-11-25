@@ -19,5 +19,5 @@ public class Contacts {
 		return this.pic;
 	}
 
-	
+
 }

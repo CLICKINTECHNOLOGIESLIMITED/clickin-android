@@ -1,7 +1,7 @@
 package com.sourcefuse.clickinandroid.utils;
 
 public class APIs {
-	
+
 
 //	public static final String baseurl ="https://api.clickinapp.com";//prod
    public static final String baseurl = "http://54.84.227.0/"; //staging
@@ -45,7 +45,7 @@ public class APIs {
 
 	// Fetch Notifications
 	public static final String FETCHNOTIFICATIONS = baseurl+"/notification/fetchnotifications/";
-	
+
 	//Fetch Newsfeed
     public static final String REPORTINAPPROPRIATE = baseurl+"/newsfeed/reportinappropriate/";
     public static final String UNSTARRENDNEWSFEED = baseurl+"/newsfeed/unstarrednewsfeed/";

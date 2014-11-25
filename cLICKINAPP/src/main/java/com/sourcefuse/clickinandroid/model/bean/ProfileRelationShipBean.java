@@ -1,8 +1,8 @@
 package com.sourcefuse.clickinandroid.model.bean;
 
 public class ProfileRelationShipBean {
-	
-	
+
+
 	private String partner_id ;
 	private String statusAccepted ;
 	private String userClicks ;
@@ -150,6 +150,6 @@ public class ProfileRelationShipBean {
 	public void setRelationshipId(String relationshipId) {
 		this.relationshipId = relationshipId;
 	}
-	
-	
+
+
 }
