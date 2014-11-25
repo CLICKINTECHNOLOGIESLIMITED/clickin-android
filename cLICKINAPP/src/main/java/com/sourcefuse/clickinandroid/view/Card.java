@@ -73,7 +73,7 @@ public class Card extends Activity implements View.OnClickListener,TextWatcher {
             @Override
             public void onClick(View view) {
                 finish();
-                overridePendingTransition(R.anim.slide_in_finish_up, R.anim.slide_out_finish_up);
+                overridePendingTransition(0, R.anim.slide_out_finish_up);
             }
         });
 
@@ -133,6 +133,7 @@ Log.e(TAG,"Original Url" +url);
 
             case R.id.btn_one:
   				clicks = "05";
+                btnPlay.setBackgroundDrawable(getResources().getDrawable(R.drawable.btn_play_white));
                 trone.setSelected(true);
                 trtwo.setSelected(false);
                 trthree.setSelected(false);
@@ -144,6 +145,7 @@ Log.e(TAG,"Original Url" +url);
                 break;
             case R.id.btn_two:
 				clicks = "10";
+                btnPlay.setBackgroundDrawable(getResources().getDrawable(R.drawable.btn_play_white));
                 trone.setSelected(false);
                 trtwo.setSelected(true);
                 trthree.setSelected(false);
@@ -154,6 +156,7 @@ Log.e(TAG,"Original Url" +url);
                 break;
             case R.id.btn_three:
  				clicks = "15";
+                btnPlay.setBackgroundDrawable(getResources().getDrawable(R.drawable.btn_play_white));
                 trone.setSelected(false);
                 trtwo.setSelected(false);
                 trthree.setSelected(true);
@@ -164,6 +167,7 @@ Log.e(TAG,"Original Url" +url);
                 break;
             case R.id.btn_four:
                 clicks="20";
+                btnPlay.setBackgroundDrawable(getResources().getDrawable(R.drawable.btn_play_white));
                 trone.setSelected(false);
                 trtwo.setSelected(false);
                 trthree.setSelected(false);
@@ -174,6 +178,7 @@ Log.e(TAG,"Original Url" +url);
                 break;
             case R.id.btn_five:
                 clicks = "25";
+                btnPlay.setBackgroundDrawable(getResources().getDrawable(R.drawable.btn_play_white));
                 trone.setSelected(false);
                 trtwo.setSelected(false);
                 trthree.setSelected(false);

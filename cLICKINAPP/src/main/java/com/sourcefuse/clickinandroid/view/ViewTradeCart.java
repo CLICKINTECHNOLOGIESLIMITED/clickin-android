@@ -8,6 +8,7 @@ import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -49,14 +50,7 @@ public class ViewTradeCart extends Activity implements View.OnClickListener
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         layout = (RelativeLayout)findViewById(R.id.rr_send);
-//        LinearLayout back = (LinearLayout)findViewById(R.id.linear_layout_back);
-//        back.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                finish();
-//                overridePendingTransition(R.anim.slide_in_finish_up, R.anim.slide_out_finish_up);
-//            }
-//        });
+
 
         mback = (ImageView)findViewById(R.id.m_back);
         mback.setOnClickListener(new View.OnClickListener() {
@@ -64,7 +58,7 @@ public class ViewTradeCart extends Activity implements View.OnClickListener
             public void onClick(View view) {
                 finish();
 
-                overridePendingTransition(R.anim.slide_in_finish_up, R.anim.slide_out_finish_up);
+                overridePendingTransition(0, R.anim.slide_out_finish_up);
 
             }
         });
@@ -85,7 +79,6 @@ public class ViewTradeCart extends Activity implements View.OnClickListener
         });
 
 //ends
-
 
         trone = (TextView)findViewById(R.id.btn_one);
         trtwo = (TextView)findViewById(R.id.btn_two);
@@ -137,6 +130,7 @@ public class ViewTradeCart extends Activity implements View.OnClickListener
 
 
 
+
         card_text.setMaxLines(5);
         card_text.addTextChangedListener(new TextWatcher() {
             @Override
@@ -159,8 +153,21 @@ public class ViewTradeCart extends Activity implements View.OnClickListener
         });
 
 
+        card_text.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(card_text.getWindowToken(), 0);
+                }
+                return false;
+            }
+        });
 
     }
+
+
+
 
     @Override
     public void onClick(View view) {
@@ -168,7 +175,9 @@ public class ViewTradeCart extends Activity implements View.OnClickListener
         {
 
             case R.id.btn_one:
+
                 clicks = "05";
+                btnPlay.setBackgroundDrawable(getResources().getDrawable(R.drawable.btn_play_white));
                 trone.setSelected(true);
                 trtwo.setSelected(false);
                 trthree.setSelected(false);
@@ -179,6 +188,7 @@ public class ViewTradeCart extends Activity implements View.OnClickListener
                 break;
             case R.id.btn_two:
                 clicks = "10";
+                btnPlay.setBackgroundDrawable(getResources().getDrawable(R.drawable.btn_play_white));
                 trone.setSelected(false);
                 trtwo.setSelected(true);
                 trthree.setSelected(false);
@@ -189,6 +199,7 @@ public class ViewTradeCart extends Activity implements View.OnClickListener
                 break;
             case R.id.btn_three:
                 clicks = "15";
+                btnPlay.setBackgroundDrawable(getResources().getDrawable(R.drawable.btn_play_white));
                 trone.setSelected(false);
                 trtwo.setSelected(false);
                 trthree.setSelected(true);
@@ -199,6 +210,7 @@ public class ViewTradeCart extends Activity implements View.OnClickListener
                 break;
             case R.id.btn_four:
                 clicks = "20";
+                btnPlay.setBackgroundDrawable(getResources().getDrawable(R.drawable.btn_play_white));
                 trone.setSelected(false);
                 trtwo.setSelected(false);
                 trthree.setSelected(false);
@@ -209,6 +221,7 @@ public class ViewTradeCart extends Activity implements View.OnClickListener
                 break;
             case R.id.btn_five:
                 clicks = "25";
+                btnPlay.setBackgroundDrawable(getResources().getDrawable(R.drawable.btn_play_white));
                 trone.setSelected(false);
                 trtwo.setSelected(false);
                 trthree.setSelected(false);
@@ -222,9 +235,6 @@ public class ViewTradeCart extends Activity implements View.OnClickListener
                 if (trd_clicks_top.getText().equals(" 0") && trd_clicks_bottom.getText().equals("0 "))
                 {
                     Utils.fromSignalDialog(this, AlertMessage.selectClicks);
-//                    CardDialog cardDialog = new CardDialog();
-//                    cardDialog.popupDialog(ViewTradeCart.this);
-
                 }else if((text == null || text.equalsIgnoreCase("null")
                         || text.equalsIgnoreCase("") || text.length() < 1)) {
                     Utils.fromSignalDialog(this, AlertMessage.enterCustomCardtext);
@@ -258,7 +268,7 @@ public class ViewTradeCart extends Activity implements View.OnClickListener
 
                 }
             case R.id.card_text12:
-
+                card_text.setCursorVisible(true);
                 card_text.requestFocus();
                 card_text.setHint("");
                 card_text.setGravity(Gravity.CENTER);

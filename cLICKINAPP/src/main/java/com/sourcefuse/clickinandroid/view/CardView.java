@@ -2,6 +2,7 @@ package com.sourcefuse.clickinandroid.view;
 
 import android.annotation.TargetApi;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -23,6 +24,7 @@ import com.sourcefuse.clickinandroid.model.ChatManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.bean.TabBean;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
+import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
 
@@ -43,7 +45,9 @@ public class CardView extends FragmentActivity{
     private ChatManager chatManager;
     private AuthManager authManager;
     private TabBean bean;
+    TabWidget tabWidget;
     String card ;
+    private Typeface typeface, typefaceBold;
 
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     @Override
@@ -53,6 +57,9 @@ public class CardView extends FragmentActivity{
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         bean = new TabBean();
+
+        typeface = Typeface.createFromAsset(CardView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
+        typefaceBold = Typeface.createFromAsset(CardView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_BOLD);
 
         chatManager = ModelManager.getInstance().getChatManager();
         authManager = ModelManager.getInstance().getAuthorizationManager();
@@ -64,10 +71,9 @@ public class CardView extends FragmentActivity{
 
     private  void  setView(){
         setContentView(R.layout.view_tabhost2);
-
         mBackButton = (ImageView) findViewById(R.id.iv_back_trade);
         final LinearLayout l = (LinearLayout)findViewById(R.id.Linear_layout);
-        final TabWidget tabWidget = (TabWidget)findViewById(android.R.id.tabs);
+        tabWidget = (TabWidget)findViewById(android.R.id.tabs);
 
         final HorizontalScrollView horizontalScrollView = (HorizontalScrollView) findViewById(R.id.H_view);
         text = (TextView) findViewById(R.id.Layout_Tab_2);
@@ -80,15 +86,11 @@ public class CardView extends FragmentActivity{
         });
 
 
-
+// akshit code for adding tabs from tab array
         tabHost = (TabHost)findViewById(R.id.tabHost);
         tabHost.setup();
         // Adding Tabs
         for (int i =0;i<chatManager.tabArray.size(); i++) {
-
-            //actionBar.addTab(actionBar.newTab().setText(chatManager.tabArray.get(i).getCategoriesName())
-            //      .setTabListener(this));
-
             TabHost.TabSpec spec1 = tabHost.newTabSpec("TAB" + i);
             spec1.setContent(R.id.Layout_Tab_2);
             spec1.setIndicator(chatManager.tabArray.get(i).getCategoriesName());
@@ -96,13 +98,9 @@ public class CardView extends FragmentActivity{
             tabHost.addTab(spec1);
             tabHost.setCurrentTab(0);
             tabHost.getTabWidget().setStripEnabled(false);
-
+            setabColor();
             settabStartup();
-            //setTbWidth();
-           // setTabTextSize();
 
-
-           setabColor();
         }
 
 
@@ -117,9 +115,9 @@ public class CardView extends FragmentActivity{
                 bean.setTab_content(chatManager.tabArray.get(pos).getCategoriesName());
                 card = bean.getTab_content();
                 tabHost.getTabWidget().getChildAt(pos);
-                //tabHost.getCurrentTabView().setBackgroundResource();
-               // tabdrawable();
-                 setTabTextColor();
+                setTabindicator();
+                setTabTextColor();
+                setTabFont();
                if(card.equals("Custom")){
 
                    FragmentManager fm = getSupportFragmentManager();
@@ -138,71 +136,14 @@ public class CardView extends FragmentActivity{
 
         });
 
-
-        /**
-         * on swiping the viewpager make respective tab selected
-//         * */
-//        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-//
-//            @Override
-//            public void onPageSelected(int pos) {
-//                // on changing the page
-//                // make respected tab selected
-//                // main.scrollTo(l.getLeft(),0);
-//
-//                tabHost.setCurrentTab(pos);
-//            }
-//
-//            @Override
-//            public void onPageScrolled(int pos, float positionOffset, int positionOffsetPixels) {
-//
-//                View tabview = tabHost.getTabWidget().getChildAt(pos);
-//                if(tabview!=null){
-//                    final int width = horizontalScrollView.getWidth();
-//                    final int scrollposition = tabview.getLeft()-(width - tabview.getWidth())/2 ;
-//                    horizontalScrollView.smoothScrollTo(scrollposition, 0);
-//                }
-//                else{
-//                    horizontalScrollView.scrollBy(positionOffsetPixels, 0);
-//
-//                }
-//
-//            }
-//            @Override
-//            public void onPageScrollStateChanged(int arg0) {
-//            }
-//        });
-
-
         mBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 finish();
-                overridePendingTransition(R.anim.slide_in_finish_up,R.anim.slide_out_finish_up);
+                overridePendingTransition(0,R.anim.slide_out_finish_up);
             }
         });
     }
-
-
-//    private void setTbWidth() {
-//        for(int i=0;i<tabHost.getTabWidget().getChildCount();i++)
-//        {
-//            tabHost.getTabWidget().getChildAt(i).getLayoutParams().width = 145 ;
-//
-//        }
-//    }
-
-
-//     //akshit code
-//    private void tabdrawable(){
-//
-//        for (int i = 0; i < tabHost.getTabWidget().getChildCount(); i++) {
-//            TextView tv = (TextView) tabHost.getTabWidget().getChildAt(i).findViewById(android.R.id.title);
-//
-//        }
-//
-//        TextView tv = (TextView) tabHost.getCurrentTabView().findViewById(android.R.id.title);
-//        tv.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.tab_underline_selector);
 
 
    // akshit code for setting tab background color on selection
@@ -219,28 +160,56 @@ public class CardView extends FragmentActivity{
 
                    // tv.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.tabbottomline);
 
-
-
         }
-    private void setabColor() {
+
+    // akshit code for setting tab underline
+    private void setTabindicator() {
+
+       int pos = tabHost.getCurrentTab();
+       for(int i =0 ;i< tabHost.getTabWidget().getChildCount();i++){
+           View tab = tabWidget.getChildAt(i);
+           tab.setBackgroundDrawable(getResources().getDrawable(R.drawable.tab_bottom_line_unselected));
+
+       }
+        View tab = tabWidget.getChildAt(pos);
+        tab.setBackgroundDrawable(getResources().getDrawable(R.drawable.tab_underline));
+
+
+
+    }
+    //akshit code for setting tab color
+     private void setabColor() {
 
         for(int i=0;i<tabHost.getTabWidget().getChildCount();i++)
         {
             tabHost.getTabWidget().getChildAt(i).setBackgroundColor(Color.parseColor("#f4f4f4"));
         }
-
-
     }
 
+    //akshit to set Tabfont on select
+    private void setTabFont(){
+
+        for (int i = 0; i < tabHost.getTabWidget().getChildCount(); i++) {
+            TextView tv = (TextView) tabHost.getTabWidget().getChildAt(i).findViewById(android.R.id.title);
+            tv.setTypeface(typeface);
+        }
+
+        TextView tv = (TextView) tabHost.getCurrentTabView().findViewById(android.R.id.title);
+        tv.setTypeface(typefaceBold);
+
+    }
+  //akshit code for setting first tab selected by default
     private void settabStartup() {
-        //tabHost.getTabWidget().setBackgroundDrawable( getResources().getDrawable(R.drawable.underline));
         setTabTextColor();
+        setTabFont();
         TextView tv = (TextView) tabHost.getCurrentTabView().findViewById(android.R.id.title); //for Selected Tab
         tv.setTextColor(Color.parseColor("#40e0d0"));
         bean.setTab_content(chatManager.tabArray.get(0).getCategoriesName());
         FragmentManager fm = getSupportFragmentManager();
         PartyCardFragment pf = new PartyCardFragment();
         fm.beginTransaction().replace(R.id.framelayout,pf).commit();
+
+        setTabindicator();
     }
 
     @Override
@@ -268,8 +237,9 @@ public class CardView extends FragmentActivity{
         Log.d(TAG, "onEventMainThread->" + getMsg);
         authManager = ModelManager.getInstance().getAuthorizationManager();
         if (getMsg.equalsIgnoreCase("FetchCard True")) {
-            Utils.dismissBarDialog();
+
             setView();
+            Utils.dismissBarDialog();
         } else if (getMsg.equalsIgnoreCase("FetchCard False")) {
             Utils.dismissBarDialog();
 

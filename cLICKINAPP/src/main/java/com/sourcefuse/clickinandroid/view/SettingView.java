@@ -17,14 +17,13 @@ import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
 import com.facebook.widget.FacebookDialog;
-import com.quickblox.module.chat.QBChatService;
-import com.sourcefuse.clickinandroid.utils.MyCustomAnimation;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.SettingManager;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.Log;
+import com.sourcefuse.clickinandroid.utils.MyCustomAnimation;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.adapter.DeactivateAccountView;
 import com.sourcefuse.clickinapp.R;
@@ -329,12 +328,16 @@ public class SettingView extends Activity implements View.OnClickListener {
 
 // Not working problem
 
-                  case R.id.btn_send_not_working:
+                case R.id.btn_send_not_working:
                         String mphone_no, muser_token, problem_type, spam_or_abuse_type, comment;
                         mphone_no = authManager.getPhoneNo();
                         muser_token = authManager.getUsrToken();
                         problem_type = "notworking";
-                        comment = ((EditText) findViewById(R.id.problem_text)).getText().toString();
+                        EditText text = (EditText)findViewById(R.id.problem_text);
+
+
+                       comment = ((EditText) findViewById(R.id.problem_text)).getText().toString();
+
                         spam_or_abuse_type = "";
                         if (Utils.isEmptyString(comment)) {
                               comment = "";
@@ -342,6 +345,7 @@ public class SettingView extends Activity implements View.OnClickListener {
 
 
                         settingManager.reportaproblem(mphone_no, muser_token, problem_type, spam_or_abuse_type, comment);
+                        text.setHint("Briefly explain what happened.");
 
                         break;
 

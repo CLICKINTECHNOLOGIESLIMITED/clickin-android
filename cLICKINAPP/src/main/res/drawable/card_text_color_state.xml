@@ -6,5 +6,5 @@
     <item android:state_pressed="true" android:color="@color/card_click_color_pressed"/>
     <item android:state_long_pressable="true" android:color="@color/card_click_color_pressed"/>
 
-        <item android:color="@color/profile_usr_name"/> <!-- default -->
+        <item android:color="@color/click_default_btn"/> <!-- default -->
 </selector>
