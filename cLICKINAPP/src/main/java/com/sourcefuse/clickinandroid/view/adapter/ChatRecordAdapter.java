@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.bean.ChatMessageBody;
+import com.sourcefuse.clickinandroid.model.bean.ChatRecordBeen;
 import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinandroid.utils.Utils;

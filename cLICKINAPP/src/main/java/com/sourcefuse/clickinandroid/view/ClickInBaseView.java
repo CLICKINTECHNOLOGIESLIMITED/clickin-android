@@ -511,6 +511,7 @@ public class
                 }
                 Log.e("", "00000000-userPic" + slidemenu);
                 Intent intent = new Intent(ClickInBaseView.this, UserProfileView.class);
+                intent.putExtra("isChangeInList", true);
                 intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
                 List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);

@@ -259,7 +259,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
                         }
 
                   } else {//if temp uri null
-                        if (authManager.getGender() != null) {//gender not null
+                        if (!Utils.isEmptyString(authManager.getGender())) {//gender not null
 
                               if (authManager.getGender().equalsIgnoreCase("guy")) {//gender guy
                                     try {
