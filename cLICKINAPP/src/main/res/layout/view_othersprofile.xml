@@ -70,8 +70,7 @@
                     android:layout_width="150dp"
                     android:layout_height="150dp"
                     android:layout_below="@+id/tv_name_other"
-                    android:layout_marginLeft="10dp"
-                    />
+                    android:layout_marginLeft="10dp" />
 
                 <TextView
                     android:id="@+id/tv_user_details_other"
@@ -92,7 +91,7 @@
                     android:visibility="gone" />
             </RelativeLayout>
 
-            <Button
+            <TextView
                 android:id="@+id/btn_follower_other"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -100,51 +99,45 @@
                 android:layout_marginBottom="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/light_grey_bg"
+                android:background="@drawable/light_grey_bg_new"
                 android:gravity="center"
                 android:text="@string/txt_follower"
                 android:textColor="@color/profile_parter_nmae_b"
                 android:textSize="20sp" />
 
-            <Button
+            <TextView
                 android:id="@+id/btn_following_other"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/btn_follower_other"
                 android:layout_marginBottom="10dp"
                 android:layout_marginLeft="10dp"
-                android:background="@drawable/light_grey_bg"
+                android:background="@drawable/light_grey_bg_new"
                 android:gravity="center"
                 android:text="@string/txt_following"
                 android:textColor="@color/profile_name_b"
                 android:textSize="20sp" />
 
-            <LinearLayout
-                android:layout_width="155dp"
+
+            <TextView
+                android:id="@+id/btn_follow"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/btn_following_other"
                 android:layout_marginLeft="10dp"
-                >
+                android:background="@drawable/follow_other_profile"
+                android:gravity="center" />
 
 
-                <Button
-                    android:id="@+id/btn_follow"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-
-                    android:gravity="center"
-                    android:background="@drawable/follow" />
-
-                </LinearLayout>
             <!--<Button-->
-                <!--android:id="@+id/btn_follow"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_below="@+id/btn_following_other"-->
-                <!--android:layout_marginLeft="10dp"-->
-                <!--android:gravity="center"-->
+            <!--android:id="@+id/btn_follow"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_below="@+id/btn_following_other"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:gravity="center"-->
 
-                <!--android:background="@drawable/follow" />-->
+            <!--android:background="@drawable/follow" />-->
         </RelativeLayout>
 
         <LinearLayout
@@ -165,8 +158,8 @@
                 android:layout_marginBottom="10dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
-                android:visibility="visible"
-                android:background="@drawable/clickwith_bg">
+                android:background="@drawable/clickwith_bg"
+                android:visibility="visible">
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -275,10 +268,10 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:text="@string/txt_profile"
+            android:textAllCaps="true"
             android:textColor="@color/white"
             android:textSize="20sp"
-            android:textStyle="bold"
-            android:textAllCaps="true"/>
+            android:textStyle="bold" />
     </RelativeLayout>
 
 </RelativeLayout>

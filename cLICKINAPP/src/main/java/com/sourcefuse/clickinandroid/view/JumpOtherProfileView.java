@@ -31,7 +31,8 @@ import de.greenrobot.event.EventBus;
 
 public class JumpOtherProfileView extends ClickInBaseView implements View.OnClickListener {
 
-	private Button follower, following,follow;
+	private TextView follower, following;
+    TextView follow;
 	private TextView profileHeader, tvclickintx, tvwith,othesProfileName,clickwithHead ,clickwithNameHead;
 	private ListView listView;
 	private ImageView userimage;
@@ -59,9 +60,9 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
 		
 
 		listView 	  = (ListView) findViewById(R.id.list_click_with_other);
-		following 	  = (Button) findViewById(R.id.btn_following_other);
-		follower 	  = (Button) findViewById(R.id.btn_follower_other);
-		follow        = (Button) findViewById(R.id.btn_follow);
+		following 	  = (TextView) findViewById(R.id.btn_following_other);
+		follower 	  = (TextView) findViewById(R.id.btn_follower_other);
+		follow        = (TextView) findViewById(R.id.btn_follow);
 		menu		  = (ImageView) findViewById(R.id.iv_menu_other);
 		noti_other    = (ImageView) findViewById(R.id.iv_notification_other);
 		userimage	  = (ImageView) findViewById(R.id.iv_usr_icon);
@@ -264,13 +265,13 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
                 Utils.fromSignalDialog(this, AlertMessage.connectionError);
 			}else if (message.equalsIgnoreCase("FollowUser True")) {
 				relationManager = ModelManager.getInstance().getRelationManager();
-				follow.setBackgroundResource(R.drawable.requested_otherprofile);
+				follow.setBackgroundResource(R.drawable.requested_otherprofile_new);
 				//Utils.showToast(JumpOtherProfileView.this, relationManager.getStatusMsg());
 			}else if (message.equalsIgnoreCase("FollowUser  false")) {
 				relationManager = ModelManager.getInstance().getRelationManager();
 				Utils.showToast(JumpOtherProfileView.this, relationManager.getStatusMsg());
 			}else if (message.equalsIgnoreCase("UnFollowUser True")) {
-				follow.setBackgroundResource(R.drawable.follow);
+				follow.setBackgroundResource(R.drawable.follow_other_profile);
 				relationManager = ModelManager.getInstance().getRelationManager();
 				Utils.fromSignalDialog(JumpOtherProfileView.this, relationManager.getStatusMsg());
 			}else if (message.equalsIgnoreCase("UnFollowUser  false")) {
@@ -354,11 +355,11 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
 			String dtails;
 			
 			if(authManager.getTmpIsFollowingRequested()==1){
-			follow.setBackgroundResource(R.drawable.requested_otherprofile);
+			follow.setBackgroundResource(R.drawable.requested_otherprofile_new);
 			}else if(authManager.getTmpIsFollowing()==1){
-				follow.setBackgroundResource(R.drawable.following_otherprofile);
+				follow.setBackgroundResource(R.drawable.following_otherprofile_new);
 			}else{
-				follow.setBackgroundResource(R.drawable.follow);
+				follow.setBackgroundResource(R.drawable.follow_other_profile);
 			}
 
 			if (authManager.getTmpGender().equalsIgnoreCase("girl")) {

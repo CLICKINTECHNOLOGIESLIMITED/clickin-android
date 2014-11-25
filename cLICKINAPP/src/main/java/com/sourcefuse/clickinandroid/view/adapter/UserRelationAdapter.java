@@ -86,7 +86,7 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
 
             if (itemList.get(position).getStatusAccepted().matches("true") && (itemList.get(position).getmStatuspublic().matches("false") || Utils.isEmptyString(itemList.get(position).getmStatuspublic()))) {
                   showpending = false;
-                  privacy.setBackgroundResource(R.drawable.owner_profile_eye_cross_icon);
+                  privacy.setBackgroundResource(R.drawable.owner_profile_eye_icon);
 
                   privacy.setTag(position);
 
