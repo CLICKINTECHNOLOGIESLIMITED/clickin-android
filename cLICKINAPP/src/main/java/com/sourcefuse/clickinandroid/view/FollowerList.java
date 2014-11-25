@@ -1,6 +1,7 @@
 package com.sourcefuse.clickinandroid.view;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
@@ -36,6 +37,8 @@ public class FollowerList extends ClickInBaseView implements
       public static boolean fromOwnProfile = false;
       private RelativeLayout mFollowerListView, mFollowerListEmpty;
       private String name = "", phNo = "";
+
+    private boolean isChangeInList = false;
 
       @Override
       protected void onCreate(Bundle savedInstanceState) {
@@ -116,6 +119,10 @@ public class FollowerList extends ClickInBaseView implements
             switch (v.getId()) {
                   case R.id.iv_back:
                         finish();
+                        Intent intent = new Intent(FollowerList.this, UserProfileView.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        intent.putExtra("isChangeInList", isChangeInList);
+                        startActivity(intent);
                         overridePendingTransition(0,R.anim.top_out);
                         break;
                   case R.id.iv_notification_list:
@@ -146,6 +153,7 @@ public class FollowerList extends ClickInBaseView implements
             Log.d(TAG, "onEventMainThread->" + getMsg);
             authManager = ModelManager.getInstance().getAuthorizationManager();
             if (getMsg.equalsIgnoreCase("UnFollowUser true")) {
+                isChangeInList = true;
                   // profManager.getFollwer("", authManager.getPhoneNo(), authManager.getUsrToken());
                   adapter.notifyDataSetChanged();
             } else if (getMsg.equalsIgnoreCase("UnFollowUser false")) {
@@ -154,6 +162,7 @@ public class FollowerList extends ClickInBaseView implements
             } else if (getMsg.equalsIgnoreCase("UnFollowUser Network Error")) {
                   Utils.fromSignalDialog(FollowerList.this, AlertMessage.connectionError);
             } else if (getMsg.equalsIgnoreCase("FollowUser true")) {
+                isChangeInList = true;
                   adapter.notifyDataSetChanged();
             } else if (getMsg.equalsIgnoreCase("FollowUser false")) {
                   Utils.fromSignalDialog(FollowerList.this, authManager.getMessage());
@@ -171,6 +180,7 @@ public class FollowerList extends ClickInBaseView implements
                   Utils.fromSignalDialog(FollowerList.this, AlertMessage.connectionError);
                   Log.d("3", "message->" + getMsg);
             } else if (getMsg.equalsIgnoreCase("followUpdateStatus True")) {
+                isChangeInList = true;
                   adapter.notifyDataSetChanged();
             } else if (getMsg.equalsIgnoreCase("followUpdateStatus False")) {
 

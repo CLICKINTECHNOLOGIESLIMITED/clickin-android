@@ -3,65 +3,57 @@
     xmlns:geekui="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:paddingTop="5dp"
     android:layout_marginTop="10dp">
+
+    <!--
+     chat_parent_layout  need to set gravity left or right according need
+     -->
+
+    <!--
+    rr_main_l layout need to set android:layout_toRightOf="@+id/rl_time_status_sender"
+        IF IT IS SENDER LAYOUT
+
+        OTHER WISE NO NEED TO SET android:layout_toRightOf="@+id/rl_time_status_sender"
+    -->
 
     <RelativeLayout
         android:id="@+id/chat_parent_layout"
-        android:layout_width="fill_parent"
-        android:layout_marginTop="10dp"
-        android:visibility="gone"
-        android:layout_height="wrap_content">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/newbg"
+        android:visibility="visible">
 
-        <!--
-        chat_parent_layout  need to set gravity left or right according need
-        -->
 
-        <!--
-        rr_main_l layout need to set android:layout_toRightOf="@+id/rl_time_status_sender"
-            IF IT IS SENDER LAYOUT
 
-            OTHER WISE NO NEED TO SET android:layout_toRightOf="@+id/rl_time_status_sender"
-        -->
-        <RelativeLayout
-            android:id="@+id/rr_main_l"
+        <ImageView
+            android:id="@+id/iv_chat_image"
+            android:layout_width="200dp"
+            android:layout_height="180dp"
+            android:adjustViewBounds="true"
+            android:visibility="gone"
+            />
+
+        <!-- layout for clicks and text -Type 1-->
+        <LinearLayout
+            android:id="@+id/parent_clicks_area"
+            android:layout_below="@+id/iv_chat_image"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:visibility="gone"
+            >
 
-            <LinearLayout
-                android:id="@+id/ll_image_place"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-            <ImageView
-                android:id="@+id/iv_chat_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                />
-
-            <ImageView
-                android:id="@+id/iv_audioView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-               />
-            </LinearLayout>
-            <ImageView
-                android:id="@+id/iv_play_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="60dp"
-                android:visibility="gone"
-                android:background="@drawable/c_playicon"/>
             <LinearLayout
                 android:id="@+id/clicks_area"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/ll_image_place"
-                android:background="@drawable/newbg"
+                android:layout_alignParentLeft="true"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                >
 
                 <TextView
                     android:id="@+id/clicks_text"
@@ -70,6 +62,7 @@
                     android:gravity="top"
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
+                    android:paddingTop="6dp"
                     android:text="+10"
                     android:textColor="@color/white"
                     android:textSize="18sp"
@@ -80,30 +73,47 @@
                     android:id="@+id/iv_clicks_heart"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
                     android:background="@drawable/c_clicks_heart"
-                    android:gravity="center_vertical" />
+                    android:gravity="center_vertical"
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/chat_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/iv_chat_image"
+                    android:visibility="gone"
                     android:gravity="center_vertical"
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
-                    android:text="TEXT CODE"
+                    android:paddingTop="6dp"
+                    android:text="TEXT CODE "
                     android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                     />
 
             </LinearLayout>
-        </RelativeLayout>
 
+            <TextView
+                android:id="@+id/long_chat_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:singleLine="false"
+                android:text="extra TEXT CODE "
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:visibility="gone" />
+            <!--This textView for extra chat text to display in second line -->
+
+        </LinearLayout>
+</RelativeLayout>
         <!--
 
-        rr_main_l layout need to set android:layout_toRightOf="@+id/rr_main_l"
-            IF IT IS reciver LAYOUT
-
-            OTHER WISE NO NEED TO SET android:layout_toRightOf="@+id/rr_main_l"
+       layout for time, share and loading icon
         -->
         -->
 
@@ -111,28 +121,45 @@
             android:id="@+id/rl_time_sender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+            android:layout_alignBottom="@+id/chat_parent_layout"
             android:layout_marginLeft="2dp"
-            android:layout_marginRight="2dp">
+            android:layout_marginRight="2dp"
+            android:layout_toRightOf="@+id/chat_parent_layout"
+            android:visibility="visible">
 
-            <ImageView
-                android:id="@+id/iv_type_two_share_icon_r"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="5dp"
-                android:layout_marginRight="5dp"
-                android:background="@drawable/share_btn"
-                android:padding="10dp"
-                android:visibility="gone" />
+            <LinearLayout
+             android:layout_width="wrap_content"
+             android:id="@+id/ll_for_share_icon"
+             android:layout_height="wrap_content">
+                <ProgressBar
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:visibility="gone"/>
 
+
+                <ImageView
+                    android:id="@+id/iv_type_two_share_icon_r"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/share_btn"
+                    android:padding="10dp"
+                    android:visibility="visible"
+                   />
+            </LinearLayout>
             <LinearLayout
                 android:id="@+id/ll_sr_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/iv_type_two_share_icon_r"
+                android:layout_below="@+id/ll_for_share_icon"
                 android:layout_marginLeft="5dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="visible">
 
                 <TextView
                     android:id="@+id/tv_time_text"
@@ -141,340 +168,18 @@
                     android:layout_marginRight="5dp"
                     android:text="11:28 AM"
                     android:textColor="@color/singn_forg"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    android:visibility="visible" />
 
                 <ImageView
                     android:id="@+id/iv_send_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/double_check" />
+                    android:background="@drawable/double_check"
+                    android:visibility="visible" />
             </LinearLayout>
         </RelativeLayout>
     </RelativeLayout>
 
-    <!--Card Counter end-->
-    <LinearLayout
-        android:id="@+id/card_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:gravity="right"
-        android:visibility="gone"
-        android:orientation="vertical"
-        >
 
-    <LinearLayout
-        android:id="@+id/card_view_cards"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_gravity="left"
-        android:background="@drawable/newbg"
-        android:orientation="vertical"
-        >
-        <RelativeLayout
-            android:layout_width="300dp"
-            android:layout_height="400dp"
-            android:orientation="vertical"
-            android:padding="5dp"
-            android:id="@+id/rl_card"
-            >
-
-                    <ImageView
-                        android:id="@+id/trade_image"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/crh"
-                        />
-
-                    <TextView
-                        android:id="@+id/trd_clicks_top"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginTop="10dp"
-                        android:paddingRight="5dp"
-                        android:text="10"
-                        android:textStyle="bold"
-                        android:textColor="@color/white"
-                        android:textSize="35sp"
-                        />
-
-            <TextView
-                android:id="@+id/trd_custom_heading"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                android:layout_marginLeft="40dp"
-                android:layout_marginTop="80dp"
-                android:gravity="center_horizontal|center_vertical"
-                android:textStyle="bold"
-                android:textColor="@color/white"
-                android:textSize="35sp"
-                />
-
-
-
-                    <TextView
-                        android:id="@+id/trd_clicks_bottom"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                         android:layout_alignParentBottom="true"
-                        android:layout_marginRight="45dp"
-                        android:layout_marginBottom="10dp"
-                        android:text="10 "
-                        android:textStyle="bold"
-                        android:textColor="@color/white"
-                        android:textSize="35sp" />
-
-        </RelativeLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:id="@+id/iv_card_action"
-            android:orientation="vertical">
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:orientation="horizontal">
-                <TextView
-                    android:id="@+id/card_partner_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Mukesh"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:textStyle="bold"
-                    android:text="will offer you clicks for "/>
-                </LinearLayout>
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="3dp"
-                    android:layout_marginTop="2dp"
-                    android:background="@drawable/c_middle_line"
-                    />
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="8dp"
-                android:orientation="horizontal">
-                <ImageView
-                    android:id="@+id/iv_accept_card"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
-                    android:layout_gravity="center_vertical"
-                    android:background="@drawable/c_card_accepted"
-                    />
-                <ImageView
-                    android:id="@+id/iv_resect_card"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="10dp"
-                    android:background="@drawable/c_card_reject"
-                    />
-                <com.sourcefuse.clickinandroid.utils.ClickInTextView
-                    android:id="@+id/tv_counter_card"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="10dp"
-                    android:text="COUNTER"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
-                    android:textColor="@color/white"
-                    android:background="@drawable/c_card_countor"
-                    />
-            </LinearLayout>
-            </LinearLayout>
-        </LinearLayout>
-    </LinearLayout>
-
-    <!--Card Counter end-->
-
-
-<!--Accepted Resected stamp start-->
-    <LinearLayout
-        android:id="@+id/card_view_cc"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/card_view"
-        android:layout_marginLeft="5dp"
-android:visibility="gone"
-        android:gravity="left"
-        android:orientation="vertical"
-        >
-
-    <RelativeLayout
-        android:id="@+id/rl_acc_res_bg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="5dp"
-        android:padding="10dp"
-        android:layout_marginBottom="5dp"
-        android:background="@drawable/newbg"
-        android:orientation="vertical"
-        >
-        <!--<ImageView
-            android:id="@+id/iv_card_counter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
-            android:src="@drawable/bh" />-->
-
-        <RelativeLayout
-            android:layout_width="150dp"
-            android:layout_height="200dp"
-            android:orientation="vertical"
-            android:padding="5dp"
-            android:id="@+id/rl_acc_rej_card"
-            >
-
-            <ImageView
-                android:id="@+id/iv_card_counter"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/bh"
-                />
-
-
-            <TextView
-                android:id="@+id/trd_custom_ar_heading"
-                android:layout_width="100dp"
-                android:layout_height="110dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="40dp"
-                android:gravity="center_horizontal|center_vertical"
-                android:paddingRight="5dp"
-                android:text="scsud busc scg sxhsa "
-                android:textStyle="bold"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                />
-
-
-
-            <TextView
-                android:id="@+id/trd_clicks_top_ar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="8dp"
-                android:paddingRight="5dp"
-                android:text="10"
-                android:textStyle="bold"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                />
-            <TextView
-                android:id="@+id/trd_clicks_bottom_ar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginRight="25dp"
-                android:layout_marginBottom="10dp"
-                android:text="10 "
-                android:textStyle="bold"
-                android:textColor="@color/white"
-                android:textSize="18sp" />
-
-        </RelativeLayout>
-
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/rl_acc_rej_card"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/tv_acc_res_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:text="Toby made a"/>
-            <TextView
-                android:id="@+id/tv_acc_res_status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:textStyle="bold"
-                android:text="Counter offer"/>
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="3dp"
-                android:background="@drawable/c_middle_line"/>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="10dp"
-                android:id="@+id/ll_cc_action"
-                android:orientation="vertical">
-
-            <LinearLayout
-                android:id="@+id/ll_again_counter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                >
-                <ImageView
-                    android:id="@+id/iv_again_counter_acc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="15dp"
-                    android:background="@drawable/c_card_accepted"
-                    />
-                <ImageView
-                    android:id="@+id/iv_again_counter_rej"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:background="@drawable/c_card_reject"
-                    />
-            </LinearLayout>
-                <com.sourcefuse.clickinandroid.utils.ClickInTextView
-                    android:id="@+id/tv_counter_card_action"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginTop="10dp"
-                    android:text="COUNTER"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
-                    android:textColor="@color/white"
-                    android:background="@drawable/c_card_countor"
-                    />
-            </LinearLayout>
-
-            <ImageView
-                android:id="@+id/iv_acc_rec"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="10dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/c_card_accept"
-                />
-            </LinearLayout>
-    </RelativeLayout>
-    </LinearLayout>
-    <!--Accepted Resected end-->
-
-</RelativeLayout>
 

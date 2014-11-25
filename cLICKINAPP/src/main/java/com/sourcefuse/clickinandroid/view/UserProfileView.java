@@ -198,11 +198,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
             } else {
                   userdetails.setText(dtails + "\n");
             }
-            String text = "<font color=#cccccc>" + authManager.getFollower() + "</font> <font color=#oob0c7>" + getResources().getString(R.string.txt_follower) + "</font>";
-            follower.setText(Html.fromHtml(text));
-            String textfollowing = "<font color=#f29691>" + getResources().getString(R.string.txt_following) + "</font> <font color=#cccccc>" + authManager.getFollowing() + "</font>";
-            following.setText(Html.fromHtml(textfollowing));
-
+          setFollowAndFollowingCount();
 
             //akshit code start for image and default image at userprofile
             try {
@@ -337,6 +333,18 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
 //akshit code ends
 
 
+
+    private void setFollowAndFollowingCount  (){
+
+        relationManager = ModelManager.getInstance().getRelationManager();
+        String text = "<font color=#cccccc>" + relationManager.getFollowerListCount() + "</font> <font color=#oob0c7>" + getResources().getString(R.string.txt_follower) + "</font>";
+        follower.setText(Html.fromHtml(text));
+        String textfollowing = "<font color=#f29691>" + getResources().getString(R.string.txt_following) + "</font> <font color=#cccccc>" + relationManager.getFollowingListCount() + "</font>";
+        following.setText(Html.fromHtml(textfollowing));
+
+    }
+
+
       @Override
       protected void onResume() {
             Log.e("onResume", "onResume UserProfile");
@@ -351,6 +359,8 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
       }
 
       public void setlist() {
+
+          setFollowAndFollowingCount();
 
             ArrayList<Section> sections = new ArrayList<Section>();
             SimpleSectionedListAdapter1 simpleSectionedGridAdapter;
@@ -484,7 +494,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
             } else if (message.equalsIgnoreCase("GetrelationShips True")) {
                   Utils.dismissBarDialog();
 
-                  doRestInitialization();
+                  setlist();
             } else if (message.equalsIgnoreCase("ProfileInfo True")) {
                   Log.e(TAG, "ProfileInfo True");
                   //setProfileDataView();
@@ -532,8 +542,12 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
       @Override
       protected void onNewIntent(Intent intent) {
             super.onNewIntent(intent);
-            relationManager = ModelManager.getInstance().getRelationManager();
-            relationManager.getRelationShips(authManager.getPhoneNo(), authManager.getUsrToken());
+          if(intent.getExtras()!=null && intent.getExtras().containsKey("isChangeInList")) {
+              if(intent.getExtras().getBoolean("isChangeInList")) {
+                  relationManager = ModelManager.getInstance().getRelationManager();
+                  relationManager.getRelationShips(authManager.getPhoneNo(), authManager.getUsrToken());
+              }
+          }
       }
 
       public void onDestroy() {

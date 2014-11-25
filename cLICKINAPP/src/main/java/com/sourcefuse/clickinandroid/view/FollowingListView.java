@@ -1,6 +1,7 @@
 package com.sourcefuse.clickinandroid.view;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,7 +29,7 @@ public class FollowingListView extends ClickInBaseView implements
       private static final String TAG = FollowingListView.class.getSimpleName();
       private ImageView back, notification;
       private ListView listView;
-      private FollowingAdapter adapter;
+      public  FollowingAdapter adapter;
       private ProfileManager profManager;
       private AuthManager authManager;
       private TextView profileName, tagScreen;
@@ -36,6 +37,7 @@ public class FollowingListView extends ClickInBaseView implements
       public static boolean fromOwnProfile = false;
       private RelativeLayout mFollowingListView, mFollowingListEmpty;
       private String name = "", phNo = "";
+    private boolean isChangeInList = false;
 
       @Override
       protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +90,10 @@ public class FollowingListView extends ClickInBaseView implements
       public void onBackPressed() {
             super.onBackPressed();
             finish();
+          Intent intent = new Intent(FollowingListView.this, UserProfileView.class);
+          intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+          intent.putExtra("isChangeInList", isChangeInList);
+          startActivity(intent);
             overridePendingTransition(0,R.anim.top_out);
       }
       public void setlist() {
@@ -113,8 +119,11 @@ public class FollowingListView extends ClickInBaseView implements
       public void onClick(View v) {
             switch (v.getId()) {
                   case R.id.iv_back_ing:
-                        finish();
-                        overridePendingTransition(0,R.anim.top_out);
+                      Intent intent = new Intent(FollowingListView.this, UserProfileView.class);
+                      intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                      intent.putExtra("isChangeInList", isChangeInList);
+                      startActivity(intent);
+                      overridePendingTransition(0,R.anim.top_out);
                         break;
                   case R.id.iv_notification_list_ing:
                         slidemenu.showSecondaryMenu(true);
@@ -155,6 +164,17 @@ public class FollowingListView extends ClickInBaseView implements
                 Utils.fromSignalDialog(this,AlertMessage.connectionError);
                   //Utils.showAlert(FollowingListView.this, AlertMessage.connectionError);
                   Log.d("3", "message->" + getMsg);
-            }
+            }else if (getMsg.equalsIgnoreCase("UnFollowUser true")) {
+            // adapter.notifyDataSetChanged();
+              Log.d("1", "message->" + getMsg);
+          } else if (getMsg.equalsIgnoreCase("UnFollowUser false")) {
+              Utils.dismissBarDialog();
+              Log.d("2", "message->" + getMsg);
+          } else if (getMsg.equalsIgnoreCase("UnFollowUser Network Error")) {
+              Utils.dismissBarDialog();
+              Utils.fromSignalDialog(this,AlertMessage.connectionError);
+              //Utils.showAlert(FollowingListView.this, AlertMessage.connectionError);
+              Log.d("3", "message->" + getMsg);
+          }
       }
 }

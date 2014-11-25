@@ -4,6 +4,7 @@ package com.sourcefuse.clickinandroid.view.adapter;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +27,7 @@ import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.FollowerList;
+import com.sourcefuse.clickinandroid.view.JumpOtherProfileView;
 import com.sourcefuse.clickinapp.R;
 import com.squareup.picasso.Picasso;
 
@@ -263,6 +265,22 @@ public class FollowerAdapter extends ArrayAdapter<FollowerFollowingBean> {
                         Log.e(TAG, "Click - holder.resect");
                   }
             });
+
+
+          rholder.usrimg.setTag(position);
+          rholder.usrimg.setOnClickListener(new View.OnClickListener() {
+              public void onClick(View v) {
+                  int position = (Integer) v.getTag();
+                      Intent intent = new Intent(context, JumpOtherProfileView.class);
+                      intent.putExtra("FromOwnProfile", true);
+                      intent.putExtra("phNumber", item.get(position).getPhoneNo());
+                      ((Activity) context).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+                      context.startActivity(intent);
+                      Log.e("", "holder.usrimg");
+
+              }
+          });
+
 
 /*
         if(FollowerList.fromOwnProfile==true){

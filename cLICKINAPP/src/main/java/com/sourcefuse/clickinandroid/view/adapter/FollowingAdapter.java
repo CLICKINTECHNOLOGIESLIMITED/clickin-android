@@ -3,6 +3,7 @@ package com.sourcefuse.clickinandroid.view.adapter;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.sourcefuse.clickinandroid.model.AuthManager;
@@ -23,6 +25,7 @@ import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.FollowingListView;
+import com.sourcefuse.clickinandroid.view.JumpOtherProfileView;
 import com.sourcefuse.clickinapp.R;
 import com.squareup.picasso.Picasso;
 
@@ -104,12 +107,14 @@ public class FollowingAdapter extends ArrayAdapter<FollowerFollowingBean> {
                   public void onClick(View v) {
 
                        int position = (Integer) v.getTag();
-
+                        RelativeLayout layout = (RelativeLayout) v.getParent();
                         authManager = ModelManager.getInstance().getAuthorizationManager();
                         relationManager = ModelManager.getInstance().getRelationManager();
 
                         if (item.get(position).getAccepted().matches("true") && item.get(position).getIsFollowing().matches("false")) {
-                              unfallowingDialog(position);
+                            item.get(position).setIsFollowing("true");
+                            rholder.reqbtn.setBackgroundResource(R.drawable.c_owner_follow_btn);
+                            unfallowingDialog(position,rholder.reqbtn,layout);
 
                         } else if (item.get(position).getIsFollowing().matches("true")) {
                               rholder.reqbtn.setBackgroundResource(R.drawable.requested_btn);
@@ -123,6 +128,21 @@ public class FollowingAdapter extends ArrayAdapter<FollowerFollowingBean> {
             });
 
 
+          rholder.usrimg.setTag(position);
+          rholder.usrimg.setOnClickListener(new View.OnClickListener() {
+              public void onClick(View v) {
+                  int position = (Integer) v.getTag();
+                  Intent intent = new Intent(context, JumpOtherProfileView.class);
+                  intent.putExtra("FromOwnProfile", true);
+                  intent.putExtra("phNumber", item.get(position).getPhoneNo());
+                  ((Activity) context).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+                  context.startActivity(intent);
+                  Log.e("", "holder.usrimg");
+
+              }
+          });
+
+
             return row;
       }
 
@@ -134,27 +154,36 @@ public class FollowingAdapter extends ArrayAdapter<FollowerFollowingBean> {
       }
 
       // Akshit Code Starts to show pop-up for unfollowing friend
-      public void unfallowingDialog(int position) {
+      public void unfallowingDialog(final int position1, final View viewBtn,View view) {
 
             final Dialog dialog = new Dialog(((Activity) context));
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
             dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-            // dialog.setContentView(R.layout.alert_follower_adapter);
+             dialog.setContentView(R.layout.alert_follower_adapter);
             dialog.setCancelable(false);
             TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
 
             msgI.setText(AlertMessage.unFollowselecteduser);
 
+
+            RelativeLayout relativeLayout = (RelativeLayout) view;
+            TextView button = (TextView) relativeLayout.getChildAt(2);
+
+
             Button skip = (Button) dialog.findViewById(R.id.coolio);
-            skip.setTag(position);
+            skip.setTag(button);
+
+
             skip.setOnClickListener(new View.OnClickListener() {
                   @Override
                   public void onClick(View view) {
-                        int position = (Integer) view.getTag();
-                        rholder.reqbtn.setBackgroundResource(R.drawable.c_owner_follow_btn);
-                        relationManager.unFollowUser(item.get(position).getrFollowerId(), "true", authManager.getPhoneNo(), authManager.getUsrToken());
-                        item.get(position).setIsFollowing("true");
-                        //FollowerList.adapter.notifyDataSetChanged();
+
+                        TextView button1 = (TextView) view.getTag();
+                        button1.setBackgroundResource(R.drawable.c_owner_follow_btn);
+
+                        relationManager.unFollowUser(item.get(position1).getrFollowerId(), "true", authManager.getPhoneNo(), authManager.getUsrToken());
+                        item.get(position1).setIsFollowing("true");
+                        //FollowingListView.adapter.notifyDataSetChanged();
                         Log.e(TAG, "Click - holder.Unfollow=");
                         dialog.dismiss();
                   }

@@ -39,36 +39,36 @@ public class AddSomeoneView extends Activity implements
       private ContactAdapter adapter;
       private RelativeLayout showContactlist,layout_back;
       AuthManager authManager;
-      private Typeface typeface, typefaceBold;
+    private Typeface typeface, typefaceBold;
 
 
-
-      @Override
+    @Override
       protected void onCreate(Bundle savedInstanceState) {
-             super.onCreate(savedInstanceState);
-             requestWindowFeature(Window.FEATURE_NO_TITLE);
-             setContentView(R.layout.view_addsomeone);
-             this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
-
-             typeface = Typeface.createFromAsset(AddSomeoneView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
-             typefaceBold = Typeface.createFromAsset(AddSomeoneView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_BOLD);
+            super.onCreate(savedInstanceState);
+            requestWindowFeature(Window.FEATURE_NO_TITLE);
+            setContentView(R.layout.view_addsomeone);
+            this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
 
-             bottom_text= (TextView)findViewById(R.id.edt_text);//akshit code
-             bottom_text.setTypeface(typeface);
-             title_bottom=(TextView)findViewById(R.id.title_text_bottom);
-             title_top=(TextView)findViewById(R.id.title_text_top);
-             do_latter = (Button) findViewById(R.id.btn_do_itlatter);
-             do_invited = (Button) findViewById(R.id.btn_been_invited);
-             back= (TextView)findViewById(R.id.btn_back);
-             layout_back=(RelativeLayout)findViewById(R.id.rl_back);
-             search_phbook = (EditText) findViewById(R.id.edt_search_ph);
-             listView = (ListView) findViewById(R.id.list_contact);
-             showContactlist = (RelativeLayout) findViewById(R.id.rr_con_list);
-             search_phbook.addTextChangedListener(this);
-             authManager = ModelManager.getInstance().getAuthorizationManager();
+          //akshit code for typeface
+          typeface= Typeface.createFromAsset(AddSomeoneView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
+          typefaceBold = Typeface.createFromAsset(AddSomeoneView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_BOLD);
 
-             listView.setOnItemClickListener(new OnItemClickListener() {
+
+          bottom_text= (TextView)findViewById(R.id.edt_text);//akshit code
+            title_bottom=(TextView)findViewById(R.id.title_text_bottom);
+            title_top=(TextView)findViewById(R.id.title_text_top);
+            do_latter = (Button) findViewById(R.id.btn_do_itlatter);
+            do_invited = (Button) findViewById(R.id.btn_been_invited);
+            back= (TextView)findViewById(R.id.btn_back);
+            layout_back=(RelativeLayout)findViewById(R.id.rl_back);
+            search_phbook = (EditText) findViewById(R.id.edt_search_ph);
+            listView = (ListView) findViewById(R.id.list_contact);
+            showContactlist = (RelativeLayout) findViewById(R.id.rr_con_list);
+            search_phbook.addTextChangedListener(this);
+            authManager = ModelManager.getInstance().getAuthorizationManager();
+
+            listView.setOnItemClickListener(new OnItemClickListener() {
                   @Override
                   public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
 
@@ -107,7 +107,7 @@ public class AddSomeoneView extends Activity implements
 
             });
 
-
+             bottom_text.setTypeface(typeface);//akshit:to set typeface
 
           // akshit code starts
 
@@ -198,7 +198,14 @@ public class AddSomeoneView extends Activity implements
       }
 
 
-      @Override
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        overridePendingTransition(0,R.anim.top_out);
+    }
+
+    @Override
       public void afterTextChanged(Editable s) {
       }
 

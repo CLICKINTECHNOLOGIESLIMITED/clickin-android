@@ -53,6 +53,7 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.view_signin);
+          getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         typeface = Typeface.createFromAsset(SignInView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
         typefaceBold = Typeface.createFromAsset(SignInView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_BOLD);
@@ -128,14 +129,14 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
 
 
 
-          ephone.setText("+91000007");
+          
         ephone.setSelection(ephone.getText().toString().length());
         //No need For this akshit
 
 
 //        ephone.setOnTouchListener(new View.OnTouchListener() {
 //            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
+//            public boolean onTouch(Vie9w v, MotionEvent event) {
 //
 //           InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
 //            inputMethodManager.showSoftInput(ephone, 0);

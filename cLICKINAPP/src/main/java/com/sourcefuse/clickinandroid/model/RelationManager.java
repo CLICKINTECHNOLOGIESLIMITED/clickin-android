@@ -50,6 +50,9 @@ public class RelationManager  {
     public ArrayList<GetrelationshipsBean> initiatorList =  new ArrayList<GetrelationshipsBean>();
     public ArrayList<GetrelationshipsBean> requestedList = new ArrayList<GetrelationshipsBean>();
 
+    private String followerListCount = "0";
+    private String followingListCount = "0";;
+
 	String strService = null;
 
 
@@ -99,6 +102,8 @@ public class RelationManager  {
 								acceptedList.clear();
 								initiatorList.clear();
 								requestedList.clear();
+                                relationManager.setFollowerListCount(response.getString("follower"));
+                                relationManager.setFollowingListCount(response.getString("following"));
 								JSONArray list = response.getJSONArray("relationships");
 								getRelationShipArray = new ArrayList<GetrelationshipsBean>();
 								for (int i = 0; i < list.length(); i++) {
@@ -444,8 +449,8 @@ public class RelationManager  {
 					}
 				});
 	}
-	
-	
+
+
 
 	public void updateStatus(String relationshipIid, String phone,
 			String usertoken, String mode) {
@@ -498,7 +503,7 @@ public class RelationManager  {
 					}
 
 				});
-		
+
 	}
 
 	public void deleteRelationship(String relationshipIid, String phone,
@@ -552,7 +557,7 @@ public class RelationManager  {
 					}
 
 				});
-		
+
 	}
 
 
@@ -568,6 +573,8 @@ public class RelationManager  {
 
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
+
+
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,"application/json"));
             Log.e("suserInputDetailse-fetchusersbyname-> ", ""+ userInputDetails);
           } catch (Exception e1) {}
@@ -583,6 +590,13 @@ public class RelationManager  {
                         }else{
 
                         }
+                        try {
+                            fetchUsersByNameData.clear();
+                        }catch (Exception e1)
+                        {
+
+                        }
+                        EventBus.getDefault().post("SearchResult False");
                     }
 
                     @Override
@@ -592,6 +606,7 @@ public class RelationManager  {
                         try {
                             System.out.println("response--> " + response);
                             state = response.getBoolean("success");
+                            fetchUsersByNameData.clear();
                             if (state){
                                 JSONArray list = response.getJSONArray("users");
                                 fetchUsersByNameArray = new ArrayList<FetchUsersByNameBean>();
@@ -612,10 +627,12 @@ public class RelationManager  {
                                    // FetchUsersByNameList.setUserToken(data.getString("user_token"));
                                     fetchUsersByNameArray.add(FetchUsersByNameList);
                                 }
-                                fetchUsersByNameData.clear();
                                 fetchUsersByNameData.addAll(fetchUsersByNameArray);
                                 EventBus.getDefault().post("SearchResult true");
                                 }
+                            else {
+                                EventBus.getDefault().post("SearchResult False");
+                            }
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -712,7 +729,22 @@ public class RelationManager  {
 	}
 	private String successstatus;
 
-	
 
-	
+    public String getFollowerListCount() {
+        return followerListCount;
+    }
+
+    public void setFollowerListCount(String followerListCount) {
+        this.followerListCount = followerListCount;
+    }
+
+    public String getFollowingListCount() {
+        return followingListCount;
+    }
+
+    public void setFollowingListCount(String followingListCount) {
+        this.followingListCount = followingListCount;
+    }
+
+
 }

@@ -1,67 +1,73 @@
-<LinearLayout
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/relative_layout_root_menuview"
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/appclr"
     android:orientation="vertical"
-    android:paddingBottom="10dp">
+    android:background="@color/search_text_color"
+    >
 
-
-    <ImageView
-        android:id="@+id/iv_hide_searchlist"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/back_arrow"
-        android:padding="12dp"
-        android:visibility="gone"/>
 
     <LinearLayout
-        android:id="@+id/search_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:layout_toRightOf="@+id/iv_hide_searchlist"
-        android:background="@drawable/search_bar"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp">
+        android:layout_width="fill_parent"
+        android:background="@color/appclr"
+        android:layout_height="wrap_content">
 
-        <EditText
-            android:id="@+id/edt_search"
+        <ImageView
+            android:id="@+id/iv_hide_searchlist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginRight="10dp"
-            android:layout_weight="1"
-            android:background="@null"
-            android:ellipsize="end"
-            android:hint="SEARCH CLICKIN'"
-            android:imeOptions="actionSearch"
-            android:paddingLeft="5dp"
-            android:singleLine="true"
-            android:textColor="@color/search_text_color"
-            android:textColorHint="@color/search_text_color"
-            android:textSize="15sp"/>
-
-        <TextView
-            android:id="@+id/btn_clear"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/search_cross"
-            />
-
-        <ProgressBar
-            android:id="@+id/btn_progressBar"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:indeterminateDrawable="@drawable/loading_spinner"
-            android:visibility="gone"/>
+            android:layout_marginTop="15dp"
+            android:background="@drawable/back_arrow"
+            android:padding="12dp"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/search_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_toRightOf="@+id/iv_hide_searchlist"
+            android:background="@drawable/search_bar"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp">
+
+            <EditText
+                android:id="@+id/edt_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@color/profile_list_bg"
+                android:ellipsize="end"
+                android:hint="SEARCH CLICKIN'"
+                android:imeOptions="actionSearch"
+                android:paddingLeft="5dp"
+                android:inputType="textCapSentences"
+                android:singleLine="true"
+                android:textColor="@color/signup_contry_code"
+                android:textColorHint="@color/signup_contry_code"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/btn_clear"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_vertical"
+                android:visibility="gone"
+                android:background="@drawable/search_cross" />
+
+            <ProgressBar
+                android:id="@+id/btn_progressBar"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="5dp"
+                android:indeterminateDrawable="@drawable/loading_spinner"
+                android:visibility="gone" />
+        </LinearLayout>
     </LinearLayout>
 
     <ListView
@@ -70,6 +76,7 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/search_bar"
         android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:choiceMode="singleChoice"
         android:divider="@drawable/list_divider"
         android:fadingEdge="none"
@@ -77,23 +84,21 @@
         android:overScrollMode="never"
         android:scrollbars="none"
         android:transcriptMode="alwaysScroll"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
 
-    <dev.dworks.libs.astickyheader.ui.PinnedSectionListView
+    <com.sourcefuse.clickinandroid.view.adapter.PinnedSectionListViewNew
         android:id="@+id/click_with_list_menu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/search_text_color"
         android:choiceMode="singleChoice"
-        android:divider="@drawable/list_divider"
+        android:divider="@null"
         android:fadingEdge="none"
         android:listSelector="#00000000"
         android:overScrollMode="never"
         android:scrollbars="none"
-        android:transcriptMode="alwaysScroll"/>
-
-
+        android:transcriptMode="alwaysScroll" />
 
 
 </LinearLayout>

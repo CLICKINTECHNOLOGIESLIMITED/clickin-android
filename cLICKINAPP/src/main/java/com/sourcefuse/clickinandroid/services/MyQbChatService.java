@@ -4,20 +4,18 @@ package com.sourcefuse.clickinandroid.services;
  * Created by mukesh on 15/11/14.
  */
 
+import android.app.ActivityManager;
+import android.app.NotificationManager;
+import android.app.Service;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Binder;
-
-        import android.app.ActivityManager;
-        import android.app.NotificationManager;
-        import android.app.Service;
-        import android.content.Context;
-        import android.content.Intent;
-        import android.content.SharedPreferences;
-        import android.os.AsyncTask;
-        import android.os.Bundle;
-        import android.os.Handler;
-        import android.os.IBinder;
-        import android.support.v4.app.NotificationCompat;
-
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.IBinder;
+import android.support.v4.app.NotificationCompat;
 
 import com.sourcefuse.clickinandroid.model.bean.ChatMessageBody;
 import com.sourcefuse.clickinandroid.utils.Constants;
@@ -25,13 +23,13 @@ import com.sourcefuse.clickinapp.R;
 
 import org.jivesoftware.smack.packet.Message;
 import org.json.JSONException;
-        import org.json.JSONObject;
+import org.json.JSONObject;
 
-        import java.util.List;
-        import java.util.regex.Matcher;
-        import java.util.regex.Pattern;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-        import de.greenrobot.event.EventBus;
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by amit on 03/10/14.
@@ -80,12 +78,12 @@ public class MyQbChatService extends Service {
                             e.putInt(m.group(1).replaceAll("-", ""), sp.getInt(message.getFrom(), 0) + 1);
                             e.putInt("chat_count", sp.getInt("chat_count", 0) + 1);
                             e.apply();
-                          //  EventBus.getDefault().post(new FgEvent(FgEvent.CHAT_MESSAGE, true, message));
+                            //  EventBus.getDefault().post(new FgEvent(FgEvent.CHAT_MESSAGE, true, message));
                             return null;
                         }
                     }.execute();
                 } else if (msg.what == 1) {
-                   // Session.getInstance(getApplicationContext()).getMessageList();
+                    // Session.getInstance(getApplicationContext()).getMessageList();
                 }
             }
         };
@@ -120,26 +118,27 @@ public class MyQbChatService extends Service {
         data.putString("partnerQBId", msgObject.partnerQbId);
         data.putString("textMsg", msgObject.textMsg);
         data.putString("clicks", msgObject.clicks);
-        data.putInt("ChatType",msgObject.chatType);
-        switch (msgObject.chatType){
+        data.putInt("ChatType", msgObject.chatType);
+      //  data.putString("ChaidId",msgObject.chatId);
+        switch (msgObject.chatType) {
             case Constants.CHAT_TYPE_CARD:
-                if(!msgObject.is_CustomCard) {
+                if (!msgObject.is_CustomCard) {
                     data.putString("card_DB_ID", msgObject.card_DB_ID);
-                    data.putString("card_content",msgObject.card_content);
-                    data.putString("card_url",msgObject.card_url);
+                    data.putString("card_content", msgObject.card_content);
+                    data.putString("card_url", msgObject.card_url);
                 }
-               // data.putString("card_clicks",msgObject.clicks);
-                data.putString("card_owner",msgObject.card_owner);
-                data.putBoolean("is_CustomCard",msgObject.is_CustomCard);
-                data.putString("accepted_Rejected",msgObject.card_Accepted_Rejected);
-                data.putString("card_heading",msgObject.card_heading);
-                data.putString("card_id",msgObject.card_id);
-                data.putString("card_Played_Countered",msgObject.card_Played_Countered);
-                data.putString("card_originator",msgObject.card_originator);
+                // data.putString("card_clicks",msgObject.clicks);
+                data.putString("card_owner", msgObject.card_owner);
+                data.putBoolean("is_CustomCard", msgObject.is_CustomCard);
+                data.putString("accepted_Rejected", msgObject.card_Accepted_Rejected);
+                data.putString("card_heading", msgObject.card_heading);
+                data.putString("card_id", msgObject.card_id);
+                data.putString("card_Played_Countered", msgObject.card_Played_Countered);
+                data.putString("card_originator", msgObject.card_originator);
                 break;
             case Constants.CHAT_TYPE_IMAGE:
-                data.putString("imageRatio",msgObject.imageRatio);
-                data.putString("FileId",msgObject.content_url);
+                data.putString("imageRatio", msgObject.imageRatio);
+                data.putString("FileId", msgObject.content_url);
                 break;
 
 
@@ -150,6 +149,19 @@ public class MyQbChatService extends Service {
         handler.sendMessage(msg);
     }
 
+
+    //function to send typing notification chat to other
+    public void sendTypeNotification(String typeFlag, String partnerQbId) {
+        Handler handler = mChatThread.getHandler();
+        android.os.Message msg = new android.os.Message();
+        Bundle data = new Bundle();
+        data.putString("isComposing", typeFlag);
+        data.putInt("ChatType", Constants.CHAT_TYPE_NOFITICATION);
+        data.putString("partnerQBId", partnerQbId);
+        msg.setData(data);
+        msg.what = ChatThread.SEND_CHAT;
+        handler.sendMessage(msg);
+    }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {

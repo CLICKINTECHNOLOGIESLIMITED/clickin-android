@@ -124,7 +124,7 @@
         android:background="@color/background_grey"
         android:ems="10"
         android:singleLine="true"
-
+          android:inputType="textNoSuggestions"
         android:padding="10dp"
         android:textColor="@color/black"
         android:textSize="16sp"
@@ -150,7 +150,7 @@
                 android:layout_marginLeft="4dp"
                 android:background="@color/background_grey"
                 android:ems="12"
-                android:inputType="phone"
+                android:inputType="phone|textNoSuggestions"
                 android:padding="10dp"
                 android:textColor="@color/black"
                 android:hint="Phone Number"

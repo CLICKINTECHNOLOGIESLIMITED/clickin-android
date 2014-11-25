@@ -108,7 +108,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginLeft="22dp"
                 android:layout_marginTop="27dp"
-                android:background="@drawable/invite_btn" />
+                android:background="@drawable/invitebtnblank" />
 
             <TextView
                 android:id="@+id/btn_next"
