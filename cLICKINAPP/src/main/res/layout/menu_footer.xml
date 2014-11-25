@@ -49,7 +49,7 @@
             android:layout_below="@+id/ll_feed"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:background="@color/dark_gray" />
+            android:background="@color/empty_edt" />
 
         <LinearLayout
             android:id="@+id/ll_friend"
@@ -91,7 +91,7 @@
             android:layout_below="@+id/ll_friend"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:background="@color/dark_gray" />
+            android:background="@color/empty_edt" />
 
 
         <LinearLayout
@@ -132,7 +132,7 @@
             android:layout_below="@+id/ll_invite"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:background="@color/dark_gray" />
+            android:background="@color/empty_edt" />
 
         <LinearLayout
             android:id="@+id/ll_setting"

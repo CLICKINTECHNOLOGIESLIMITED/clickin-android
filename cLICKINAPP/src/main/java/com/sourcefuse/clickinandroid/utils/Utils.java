@@ -197,7 +197,7 @@ public class Utils {
     }
     // Ends
 
- 
+
 
     public static String getCardURLForAndroid(String url) {
 
@@ -772,6 +772,7 @@ public class Utils {
 
       }
 
+
     public static String convertClicks(String clicks) {
 
         String changeClicks = "";
@@ -817,6 +818,7 @@ public class Utils {
         } else if (clicks.equalsIgnoreCase("-10")) {
             changeClicks = "-10       ";
         } else if (clicks.equalsIgnoreCase("0")) {
+
             changeClicks = "";
         }
         return changeClicks;

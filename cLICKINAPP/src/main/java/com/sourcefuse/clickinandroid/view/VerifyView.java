@@ -264,7 +264,7 @@ public class VerifyView extends Activity implements View.OnClickListener,
 				d_two.setText("");
 				d_three.setText("");
 				d_four.setText("");
-				
+
 			}
 		});
 		dialog.show();

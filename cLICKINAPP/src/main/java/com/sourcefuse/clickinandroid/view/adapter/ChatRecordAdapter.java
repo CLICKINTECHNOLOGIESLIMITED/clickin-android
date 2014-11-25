@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -82,13 +83,19 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 //code to set msg deilvery notification
                 ImageView sendStatusView=(ImageView)row.findViewById(R.id.iv_send_status);
                 if(!(Utils.isEmptyString(temp.isDelivered)) && temp.isDelivered.equalsIgnoreCase(Constants.MSG_SENDING)) {
+                    ((ProgressBar)row.findViewById(R.id.pb_loding)).setVisibility(View.VISIBLE);
+                    ((ImageView)row.findViewById(R.id.iv_type_two_share_icon_r)).setVisibility(View.GONE);
+
                    sendStatusView.setImageResource(R.drawable.r_single_tick);
-                    Uri tempUri=Uri.parse(temp.content_url);
-                    Picasso.with(context).load(tempUri)
+                    //Uri tempUri=Uri.parse(temp.content_url);
+                    Picasso.with(context).load(temp.content_url)
+
                             .placeholder(R.drawable.default_profile)
                             .error(R.drawable.default_profile).into(image_attached);
 
                 }else if(!(Utils.isEmptyString(temp.isDelivered))&& temp.isDelivered.equalsIgnoreCase(Constants.MSG_SENT)){
+                    ((ProgressBar)row.findViewById(R.id.pb_loding)).setVisibility(View.GONE);
+                    ((ImageView)row.findViewById(R.id.iv_type_two_share_icon_r)).setVisibility(View.VISIBLE);
                     sendStatusView.setImageResource(R.drawable.double_check);
                     Picasso.with(context).load(temp.content_url)
                             .placeholder(R.drawable.default_profile)

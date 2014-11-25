@@ -469,7 +469,6 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
             } else if (message.equalsIgnoreCase("deleteRelationship False")) {
                   Utils.dismissBarDialog();
                   Utils.fromSignalDialog(this, authManager.getMessage());
-
             } else if (message.equalsIgnoreCase("deleteRelationship Error")) {
                   Utils.dismissBarDialog();
                   Utils.fromSignalDialog(this, AlertMessage.connectionError);

@@ -85,7 +85,7 @@ public class AdapterAll extends ArrayAdapter<CardBean> {
                     Log.e("All Adapter " , "Original URL::>>>>>>>>" +url);
 
 
-					
+
                     String Title = bean.getCardTitle();
                     String Discription = bean.getCardDescription();
 

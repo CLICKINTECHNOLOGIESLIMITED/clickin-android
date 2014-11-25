@@ -942,8 +942,7 @@ public class AuthManager {
                                            super.onSuccess(statusCode, headers, response);
                                            boolean state = false;
                                            try {
-                                                 System.out.println("response-INSERTEMAIL--> "
-                                                                            + response);
+                                                Log.e("respone ----->",""+response);
                                                  state = response.getBoolean("success");
                                                  if (state) {
                                                        EventBus.getDefault().post("RequestSend True");

@@ -3,7 +3,7 @@
     android:id="@+id/image_menu_refresh"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/user_bg">
+    android:background="@color/search_text_color">
 
     <RelativeLayout
         android:id="@+id/rr_user_detail"
@@ -27,7 +27,7 @@
             android:layout_marginLeft="5dp"
             android:layout_toRightOf="@+id/iv_usr_img"
             android:text="Zakaiter"
-            android:textColor="@color/profile_parter_nmae_b"
+            android:textColor="@color/common_header_clr"
             android:textSize="18sp"
             android:textStyle="bold"
             geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
