@@ -3,7 +3,7 @@
     android:id="@+id/relative_layout_root_editprofile"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/white_pattern_bg">
+    android:background="@drawable/enterdigitmainbg">
 
     <RelativeLayout
         android:id="@+id/rr_header"

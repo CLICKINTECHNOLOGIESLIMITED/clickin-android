@@ -10,12 +10,12 @@
         <attr name="textOn" format="reference|string" />
         <!-- Text to use when the switch is in the unchecked/"off" state. -->
         <attr name="textOff" format="reference|string" />
-        
+
         <!-- drawablw to use when the switch is in the checked/"on" state. -->
         <attr name="drawableOn" format="reference" />
         <!-- drawablw to use when the switch is in the unchecked/"off" state. -->
         <attr name="drawableOff" format="reference" />
-        
+
         <!-- if the switch should operate like iOS UISwitch -->
         <attr name="pushStyle" format="boolean" />
         <!-- if text should be drawn on the Thumb or On the track. -->
@@ -34,26 +34,26 @@
         <attr name="switchMinHeight" format="dimension" />
         <!-- Minimum space between the switch and caption text -->
         <attr name="switchPadding" format="dimension" />
-        
+
         <attr name="orientation" >
             <!-- the switch moves only on the x-axis(horizontally) -->
             <enum name="horizontal" value="1" />
             <!-- the switch moves only on the y-axis(vertically) -->
             <enum name="vertical" value="0" />
         </attr>
-        
+
         <!-- the track drawable will be drawn on top of these background. So if
              these back grounds were to be visible, the track has to have transparency -->
         <!-- The background when left side of the switch is visible -->
         <attr name="leftBackground" format="reference"/>
-        
+
         <!-- The background when right side of the switch is visible -->
         <attr name="rightBackground" format="reference"/>
-        
+
         <!-- We need a mask drawable to mask the background, then draw the track -->
         <attr name="backgroundMask" format="reference"/>
     </declare-styleable>
-    
+
     <declare-styleable name="mySwitchTextAppearanceAttrib">
         <!-- Text color. -->
         <attr name="textColor" format="color" />
@@ -65,7 +65,7 @@
             <flag name="bold" value="1" />
             <flag name="italic" value="2" />
         </attr>
-        
+
         <!-- Typeface (normal, sans, serif, monospace) for the text. -->
         <attr name="typeface" format="reference">
             <enum name="normal" value="0" />
@@ -80,7 +80,7 @@
         <!-- Color of the links. -->
         <attr name="textColorLink" format="color" />
         <!-- Present the text in ALL CAPS. This may use a small-caps form when available. -->
-        
+
     </declare-styleable>
     <!-- Default style for the Switch widget. -->
     <attr name="mySwitchStyleAttr" format="reference" />

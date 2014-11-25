@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/rl_main_signup"
-    android:background="@drawable/white_pattern_bg">
+    android:background="@drawable/enterdigitmainbg">
 
     <LinearLayout
         android:id="@+id/iv_topicon"
@@ -80,7 +80,7 @@
             android:paddingTop="8dp"
             android:text=""
             geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
-            android:textColor="@color/phone_no_clr"
+            android:textColor="@color/black"
             android:textColorHint="@color/defult_hint_clr"
             android:textSize="16sp"
             android:textStyle="bold"
@@ -104,7 +104,7 @@
             android:paddingLeft="10dp"
             android:paddingTop="8dp"
             geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
-            android:textColor="@color/phone_no_clr"
+            android:textColor="@color/black"
             android:textColorHint="@color/sign_hint"
             android:textSize="16sp">
 

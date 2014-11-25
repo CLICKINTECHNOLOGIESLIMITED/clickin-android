@@ -197,12 +197,7 @@ public class Utils {
     }
     // Ends
 
- //Akshit Code starts
-    public static void followerAdapterdialog(Activity activity){
 
-
-
-    }
 
     public static String getCardURLForAndroid(String url) {
 
@@ -777,4 +772,53 @@ public class Utils {
 
       }
 
+    public static String convertClicks(int clicks) {
+
+        String changeClicks = "";
+
+        if (clicks == 1) {
+            changeClicks = "+01       ";
+        } else if (clicks == 2) {
+            changeClicks = "+02       ";
+        } else if (clicks == 3) {
+            changeClicks = "+03       ";
+        } else if (clicks == 4) {
+            changeClicks = "+04       ";
+        } else if (clicks == 5) {
+            changeClicks = "+05       ";
+        } else if (clicks == 6) {
+            changeClicks = "+06       ";
+        } else if (clicks == 7) {
+            changeClicks = "+07       ";
+        } else if (clicks == 8) {
+            changeClicks = "+08       ";
+        } else if (clicks == 9) {
+            changeClicks = "+09       ";
+        } else if (clicks == 10) {
+            changeClicks = "+10       ";
+        } else if (clicks == -1) {
+            changeClicks = "-01       ";
+        } else if (clicks == -2) {
+            changeClicks = "-02       ";
+        } else if (clicks == -3) {
+            changeClicks = "-03       ";
+        } else if (clicks == -4) {
+            changeClicks = "-04       ";
+        } else if (clicks == -5) {
+            changeClicks = "-05       ";
+        } else if (clicks == -6) {
+            changeClicks = "-06       ";
+        } else if (clicks == -7) {
+            changeClicks = "-07       ";
+        } else if (clicks == -8) {
+            changeClicks = "-08       ";
+        } else if (clicks == -9) {
+            changeClicks = "-09       ";
+        } else if (clicks == -10) {
+            changeClicks = "-10       ";
+        } else if (clicks == 0) {
+            changeClicks = "";
+        }
+        return changeClicks;
+    }
     }

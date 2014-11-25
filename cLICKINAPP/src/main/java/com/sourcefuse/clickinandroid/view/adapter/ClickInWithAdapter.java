@@ -27,11 +27,12 @@ public class ClickInWithAdapter extends ArrayAdapter<GetrelationshipsBean> {
     int layoutResourceId;
     private Typeface typeface;
 
-
+    List<GetrelationshipsBean> item1;
     public ClickInWithAdapter(Context context, int layoutResourceId,List<GetrelationshipsBean> item) {
         super(context, layoutResourceId, item);
         this.layoutResourceId = layoutResourceId;
         this.context = context;
+        this.item1 = item;
 
     }
 
@@ -82,6 +83,11 @@ public class ClickInWithAdapter extends ArrayAdapter<GetrelationshipsBean> {
            {
                rholder.clickInUsrimg.setImageResource(R.drawable.male_user);
            }
+
+        if(((item1.size()-1) == position))
+        row.findViewById(R.id.clcth_divider).setVisibility(View.GONE);
+        else
+        row.findViewById(R.id.clcth_divider).setVisibility(View.VISIBLE);
 
         return row;
     }

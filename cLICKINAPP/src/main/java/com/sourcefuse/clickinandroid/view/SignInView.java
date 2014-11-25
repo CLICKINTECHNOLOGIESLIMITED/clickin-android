@@ -7,10 +7,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
@@ -65,6 +67,7 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
     private Dialog mDialog;
     public MyQbChatService myQbChatService;
     private boolean mIsBound;
+    private Typeface typeface, typefaceBold;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +76,10 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
         setContentView(R.layout.view_signin);
           getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
+        typeface = Typeface.createFromAsset(SignInView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
+        typefaceBold = Typeface.createFromAsset(SignInView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_BOLD);
+
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
         authManager = ModelManager.getInstance().getAuthorizationManager();
@@ -94,12 +101,10 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
         ephone.setOnClickListener(this);
         ePwd.setOnClickListener(this);
 
-        /*ephone.setTypeface(typefaceBold);
-        ePwd.setTypeface(typefaceBold);
+
         forgotPwd.setTypeface(typeface);
         signUp.setTypeface(typeface);
-        signUp.setTypeface(typeface);*/
-
+        signUp.setTypeface(typeface);
 
         // akshit code for closing keypad if touched anywhere outside
         ((RelativeLayout) findViewById(R.id.relative_layout_root_signin)).setOnClickListener(new View.OnClickListener() {
@@ -145,14 +150,15 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
 
 
 
-
+        ephone.setText("+9100000");
         ephone.setSelection(ephone.getText().toString().length());
+        ephone.setEllipsize(TextUtils.TruncateAt.END);
         //No need For this akshit
 
 
 //        ephone.setOnTouchListener(new View.OnTouchListener() {
 //            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
+//            public boolean onTouch(Vie9w v, MotionEvent event) {
 //
 //           InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
 //            inputMethodManager.showSoftInput(ephone, 0);
@@ -247,7 +253,7 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
     }
 
 
-    
+
 
     private void switchView() {
         Intent intent = new Intent(SignInView.this, UserProfileView.class);

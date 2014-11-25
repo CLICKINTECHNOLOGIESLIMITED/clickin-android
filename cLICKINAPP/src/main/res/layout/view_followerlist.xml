@@ -1,8 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:geekui="http://schemas.android.com/apk/res-auto"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/white_pattern_bg">
+    xmlns:geekui="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/enterdigitmainbg">
 
     <RelativeLayout
         android:id="@+id/rr_header"
@@ -18,7 +18,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="5dp"
             android:background="@drawable/back_arrow"
-            android:padding="5dp"/>
+            android:padding="5dp" />
 
         <ImageView
             android:id="@+id/iv_notification_list"
@@ -27,15 +27,14 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="5dp"
-            android:background="@drawable/chat"/>
+            android:background="@drawable/chat" />
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/rl_followerdata"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rr_header"
-        >
+        android:layout_below="@+id/rr_header">
 
 
         <ListView
@@ -45,8 +44,13 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="5dp"
+            android:choiceMode="singleChoice"
             android:divider="@null"
-            android:scrollbars="none"/>
+            android:fadingEdge="none"
+            android:listSelector="#00000000"
+            android:overScrollMode="never"
+            android:scrollbars="none"
+            android:transcriptMode="alwaysScroll" />
     </RelativeLayout>
 
 
@@ -58,8 +62,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="70dp"
         android:gravity="center_vertical"
-        android:visibility="gone"
-        >
+        android:visibility="gone">
 
         <com.sourcefuse.clickinandroid.utils.ClickInTextView
             android:id="@+id/tv_follower_msgI"
@@ -70,8 +73,8 @@
             android:text="@string/tv_follower_empty_msgone"
             android:textColor="@color/signup_contry_code"
             android:textSize="25sp"
-            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
 
         <com.sourcefuse.clickinandroid.utils.ClickInTextView
             android:id="@+id/tv_follower_msgII"
@@ -83,8 +86,8 @@
             android:text="@string/tv_follower_empty_msgtwo"
             android:textColor="@color/follower_list_user_txt"
             android:textSize="15sp"
-            geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
     </RelativeLayout>
 
 
@@ -107,6 +110,6 @@
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold"
-            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"/>
+            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
     </RelativeLayout>
 </RelativeLayout>

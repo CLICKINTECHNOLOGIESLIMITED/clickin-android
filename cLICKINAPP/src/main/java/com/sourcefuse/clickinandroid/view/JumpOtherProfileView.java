@@ -54,9 +54,9 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
 		addMenu(false);
 		this.overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_right);
 		typeface = Typeface.createFromAsset(JumpOtherProfileView.this.getAssets(),Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
-		
+
 		authManager = ModelManager.getInstance().getAuthorizationManager();
-		
+
 
 		listView 	  = (ListView) findViewById(R.id.list_click_with_other);
 		following 	  = (Button) findViewById(R.id.btn_following_other);
@@ -93,8 +93,8 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
 		userimage.setScaleType(ScaleType.FIT_XY);
 		tvwith.setTypeface(typeface);
 		userdetails.setTypeface(typeface);
-		
-	
+
+
 		othersUser = getIntent().getExtras().getBoolean("FromOwnProfile");
 		if(othersUser){
             authManager = ModelManager.getInstance().getAuthorizationManager();
@@ -150,7 +150,14 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
 
 	}
 
-	@Override
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        overridePendingTransition(0,R.anim.top_out);
+    }
+
+    @Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.btn_follower_other:
@@ -215,7 +222,7 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
 		Intent intent = new Intent(JumpOtherProfileView.this, FollowerList.class);
 		startActivity(intent);
 	}
-	
+
 	private void switchViewToFollowingList() {
 		Intent intent = new Intent(JumpOtherProfileView.this, FollowingListView.class);
 		startActivity(intent);
@@ -337,7 +344,7 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
 			othesProfileName.setText(authManager.getTmpUserName());
 			name.setText(authManager.getTmpUserName());
 			String dtails;
-			
+
 			if(authManager.getTmpIsFollowingRequested()==1){
 			follow.setBackgroundResource(R.drawable.requested_otherprofile);
 			}else if(authManager.getTmpIsFollowing()==1){
@@ -359,7 +366,7 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
 			}
 			Utils.getCurrentYear(authManager.getTmpDOB());
 			userdetails.setText(dtails + "\n");
-			
+
 			String text = "<font color=#cccccc>"+authManager.getTmpFollower()+"</font> <font color=#39cad4>"+getResources().getString(R.string.txt_follower)+"</font>";
 			follower.setText(Html.fromHtml(text));
 			String textfollowing = "<font color=#f29691>"+getResources().getString(R.string.txt_following)+"</font> <font color=#cccccc>"+authManager.getTmpFollowing()+"</font>";

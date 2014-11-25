@@ -2,7 +2,7 @@
     xmlns:geekui="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/appclr"
+    android:background="@color/search_text_color"
     android:paddingBottom="10dp">
 
     <RelativeLayout
@@ -14,7 +14,6 @@
             android:id="@+id/ll_feed"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/menu_selector_color"
             android:clickable="true"
             android:focusable="true"
             android:orientation="horizontal">
@@ -46,18 +45,17 @@
         <View
             android:id="@+id/v_divider_feed"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="2dp"
             android:layout_below="@+id/ll_feed"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:background="@color/dark_gray" />
+            android:background="@color/empty_edt" />
 
         <LinearLayout
             android:id="@+id/ll_friend"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/v_divider_feed"
-            android:background="@drawable/menu_selector_color"
             android:clickable="true"
             android:focusable="true"
             android:orientation="horizontal">
@@ -89,11 +87,11 @@
         <View
             android:id="@+id/v_divider_friend"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="2dp"
             android:layout_below="@+id/ll_friend"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:background="@color/dark_gray" />
+            android:background="@color/empty_edt" />
 
 
         <LinearLayout
@@ -101,7 +99,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/v_divider_friend"
-            android:background="@drawable/menu_selector_color"
             android:clickable="true"
             android:focusable="true"
             android:orientation="horizontal">
@@ -131,18 +128,17 @@
         <View
             android:id="@+id/v_divider_invite"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="2dp"
             android:layout_below="@+id/ll_invite"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:background="@color/dark_gray" />
+            android:background="@color/empty_edt" />
 
         <LinearLayout
             android:id="@+id/ll_setting"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/v_divider_invite"
-            android:background="@drawable/menu_selector_color"
             android:clickable="true"
             android:focusable="true"
             android:orientation="horizontal">

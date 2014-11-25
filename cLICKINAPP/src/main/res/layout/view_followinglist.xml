@@ -1,8 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:geekui="http://schemas.android.com/apk/res-auto"
+    xmlns:geekui="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/white_pattern_bg">
+    android:background="@drawable/enterdigitmainbg">
 
 
     <RelativeLayout
@@ -35,8 +35,7 @@
         android:id="@+id/rl_followingdata"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rr_header"
-        >
+        android:layout_below="@+id/rr_header">
 
         <com.sourcefuse.clickinandroid.utils.ClickInTextView
             android:id="@+id/tv_tag_screen"
@@ -46,10 +45,11 @@
             android:paddingLeft="10dp"
             android:paddingTop="10dp"
             android:text="@string/txt_following"
-            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
             android:textColor="@color/dark_gray"
             android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:visibility="gone"
+            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
 
         <ListView
             android:id="@+id/list_following"
@@ -58,8 +58,15 @@
             android:layout_below="@+id/tv_tag_screen"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
+            android:choiceMode="singleChoice"
+
+
             android:divider="@null"
-            android:scrollbars="none" />
+            android:fadingEdge="none"
+            android:listSelector="#00000000"
+            android:overScrollMode="never"
+            android:scrollbars="none"
+            android:transcriptMode="alwaysScroll" />
 
     </RelativeLayout>
 
@@ -82,8 +89,8 @@
             android:text="@string/tv_followering_empty_msgI"
             android:textColor="@color/signup_contry_code"
             android:textSize="25sp"
-            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
 
         <com.sourcefuse.clickinandroid.utils.ClickInTextView
             android:id="@+id/tv_following_msgII"
@@ -95,8 +102,8 @@
             android:text="@string/tv_followering_empty_msgII"
             android:textColor="@color/follower_list_user_txt"
             android:textSize="15sp"
-            geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
     </RelativeLayout>
 
 
@@ -115,11 +122,11 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="12dp"
             android:text="@string/txt_following"
+            android:textAllCaps="true"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:textAllCaps="true"
-            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"/>
+            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
     </RelativeLayout>
 
 </RelativeLayout>

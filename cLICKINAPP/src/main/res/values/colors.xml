@@ -28,6 +28,7 @@
     <color name="topshade">#0B0B61</color>
     <color name="search_text_color">#364566</color>
 
+    <color name="background_color">#f5f5f5</color>
     <color name="notification_background">#364566</color>
     <color name="appclr">#06163A</color>
     <color name="empty_edt">#64718f</color>
@@ -40,6 +41,8 @@
     <color name="white_with_transparent">#CCFFFFFF</color>
     <color name="sign_hint">#cccccc</color>
     <color name="singn_forg">#808080</color>
+    <color name="signin_color">#808080</color>
+    <color name="signin_hint">#cccccc</color>
     <color name="signup_contry_code">#364566</color>
     <color name="signup_contry_code_txt">#808080</color>
     <color name="search_txt">#999999</color>
@@ -85,4 +88,9 @@
     <color name="owner_relation_header_with_m">#b3b3b3</color>
     <color name="owner_relation_partner_name">#39cad4</color>
 
+
+
+    <color name="profile_border">#364566</color>
+    <color name="some_back">#4d5b7b</color>
+    <color name="click_in">#5d6a88</color>
 </resources>

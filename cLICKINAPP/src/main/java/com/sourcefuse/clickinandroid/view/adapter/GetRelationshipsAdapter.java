@@ -22,7 +22,7 @@ public class GetRelationshipsAdapter extends ArrayAdapter<GetrelationshipsBean> 
 	Context context;
 	int layoutResourceId;
 	private Typeface typeface;
-	
+
 
 	public GetRelationshipsAdapter(Context context, int layoutResourceId,
 			List<GetrelationshipsBean> item) {
@@ -44,16 +44,16 @@ public class GetRelationshipsAdapter extends ArrayAdapter<GetrelationshipsBean> 
 			holder.usrimg = (ImageView) row.findViewById(R.id.iv_usr);
 			holder.usr_name = (TextView) row.findViewById(R.id.tv_clickers_name);
 			holder.chatCount = (TextView) row.findViewById(R.id.tv_unread);
-			
+
 
 			typeface = Typeface.createFromAsset(context.getAssets(),Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
 			holder.usr_name.setTypeface(typeface,typeface.BOLD);
-			
+
 			row.setTag(holder);
 		} else {
 			holder = (RecordHolder) row.getTag();
 		}
-		
+
 		final RecordHolder rholder = (RecordHolder) row.getTag();
 
 		try{
@@ -76,10 +76,10 @@ public class GetRelationshipsAdapter extends ArrayAdapter<GetrelationshipsBean> 
             }
 
         }catch(Exception e){}
-		
-	
-		
-		
+
+
+
+
 		return row;
 	}
 

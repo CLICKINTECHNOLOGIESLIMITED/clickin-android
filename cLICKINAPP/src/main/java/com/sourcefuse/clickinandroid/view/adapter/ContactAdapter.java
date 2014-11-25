@@ -27,14 +27,14 @@ public class ContactAdapter extends ArrayAdapter<ContactBean> {
 
 	private ArrayList<ContactBean> conData ;
 	private List<ContactBean> refreshList = null;
-	
+
 	public ContactAdapter(Context context, int layoutResourceId,
 			List<ContactBean> item) {
 		super(context, layoutResourceId, item);
 		this.refreshList = item;
 		this.layoutResourceId = layoutResourceId;
 		this.context = context;
-		
+
 		this.conData = new ArrayList<ContactBean>();
 		this.conData.addAll(item);
 
@@ -56,7 +56,7 @@ public class ContactAdapter extends ArrayAdapter<ContactBean> {
 		} else {
 			holder = (RecordHolder) row.getTag();
 		}
-		
+
 		 Bitmap bitmap = null;
 		RecordHolder rholder = (RecordHolder) row.getTag();
 		try {
@@ -69,9 +69,9 @@ public class ContactAdapter extends ArrayAdapter<ContactBean> {
 		}
 		rholder.contactName.setText(item.getConName());
         rholder.contactnumber.setText(item.getConNumber());
-		
-		
-		
+
+
+
 		return row;
 	}
 
@@ -83,10 +83,10 @@ public class ContactAdapter extends ArrayAdapter<ContactBean> {
 
 			if (charText.length() == 0) {
 				conData.addAll(Utils.itData);
-			} 
-			else 
+			}
+			else
 			{
-				for (ContactBean wp : conData) 
+				for (ContactBean wp : conData)
 				{
 					//if(wp.getConName()!=null)
 					if (wp.getConName().toLowerCase(Locale.getDefault()).contains(charText) || wp.getConNumber().toLowerCase(Locale.getDefault()).contains(charText))
@@ -99,7 +99,7 @@ public class ContactAdapter extends ArrayAdapter<ContactBean> {
 			}
 			notifyDataSetChanged();
 		}
-	
+
 	static class RecordHolder {
 		TextView contactName;
 		ImageView contactImage;

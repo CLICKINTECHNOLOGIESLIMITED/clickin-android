@@ -11,7 +11,7 @@ import com.sourcefuse.clickinapp.R;
 
 
 
-public class CustomProgressDialog extends AlertDialog 
+public class CustomProgressDialog extends AlertDialog
 {
 	AnimationDrawable mailAnimation;
 	Context _context;
@@ -19,8 +19,8 @@ public class CustomProgressDialog extends AlertDialog
 		super(context);
 		// TODO Auto-generated constructor stub
 		_context = context;
-	
-		
+
+
 	}
 
 	@Override
@@ -28,10 +28,10 @@ public class CustomProgressDialog extends AlertDialog
 
 		super.show();
 
-		
-		
+
+
 		ImageView iv = new ImageView(_context);
-	
+
 		iv.setScaleType(ScaleType.FIT_XY);
 		iv.setBackgroundResource(R.drawable.anim_progress);
 		mailAnimation = (AnimationDrawable) iv.getBackground();
@@ -48,11 +48,11 @@ public class CustomProgressDialog extends AlertDialog
 		WindowManager.LayoutParams lp=getWindow().getAttributes();
 		//set transparency of background
 		lp.dimAmount=0.0f;  // dimAmount between 0.0f and 1.0f, 1.0f is completely dark
-		lp.width = pixels; 
-		lp.height =  pixels; 
+		lp.width = pixels;
+		lp.height =  pixels;
 		getWindow().setAttributes(lp);
 	}
-	
-	
+
+
 
 }

@@ -612,5 +612,14 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
       }
 
 
+    //akshit code starts
+    @Override
+    public void onBackPressed() {
+
+        finish();
+        overridePendingTransition(0,R.anim.top_out);//akshit code for animation
+        super.onBackPressed();
+    }
+    //ends
 }
 
