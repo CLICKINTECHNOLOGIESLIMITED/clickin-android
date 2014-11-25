@@ -249,7 +249,7 @@ public class FollowerAdapter extends ArrayAdapter<FollowerFollowingBean> {
                         notifyDataSetChanged();
                         EventBus.getDefault().post("followUpdateStatus true");
                         relationManager.followupdatestatus(item.get(position).getrFollowerId(), "true", authManager.getPhoneNo(), authManager.getUsrToken());
-                        //Log.e(TAG, "Click - holder.Accept=" + item.get(position).getAccepted());
+                        Log.e(TAG, "Click - holder.Accept=" + item.get(position).getAccepted());
                   }
             });
             rholder.resBtn.setTag(position);

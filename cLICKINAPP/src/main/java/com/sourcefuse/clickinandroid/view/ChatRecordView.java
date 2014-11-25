@@ -41,8 +41,10 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.quickblox.core.QBCallbackImpl;
+import com.quickblox.core.QBEntityCallbackImpl;
 import com.quickblox.core.result.Result;
 import com.quickblox.module.content.QBContent;
+import com.quickblox.module.content.model.QBFile;
 import com.quickblox.module.content.result.QBFileUploadTaskResult;
 import com.quickblox.module.custom.QBCustomObjects;
 import com.quickblox.module.custom.model.QBCustomObject;
@@ -83,6 +85,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -170,6 +173,9 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     private String audioFilePath;
     private int CHAT_TYPE;
     private boolean mIsBound;
+
+    //chatId-unquie to chat msg- use to track delivery status
+     Integer msgId;
 
     private ClickinDbHelper dbHelper;
 
@@ -889,27 +895,14 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             public void onRefresh(PullToRefreshBase<ListView> refreshView) {
                 // Do work to refresh the list here.
                 try {
+                    // int lastIndex = chatManager.chatMessageList.size() - 1;
                     String lastChatId = chatManager.chatMessageList.get(0).chatId;
-                     chatManager.fetchChatRecord(rId, authManager.getPhoneNo(), authManager.getUsrToken(), lastChatId);
-                    //fetchChatRecord(rId, authManager.getPhoneNo(), authManager.getUsrToken(), lastChatId);
+                    // chatManager.fetchChatRecord(rId, authManager.getPhoneNo(), authManager.getUsrToken(), lastChatId);
+                    fetchChatRecord(rId, authManager.getPhoneNo(), authManager.getUsrToken(), lastChatId);
                 } catch (Exception e) {
 
                 }
             }
-        });
-
-
-        ((RelativeLayout) findViewById(R.id.rr_chat_layout)).setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View arg0) {
-
-                InputMethodManager imm = (InputMethodManager) getSystemService(
-                        INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(chatText.getWindowToken(), 0);
-
-            }
-
         });
 
         //clear the message list always to initiate a new chat
@@ -1091,7 +1084,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                         ChatMessageBody temp = new ChatMessageBody();
 
                         if (isClicks() == true) {
-                            temp.clicks = Utils.convertClicks(seekValue).trim();
+                            temp.clicks = Utils.convertClicks(String.valueOf(seekValue)).trim();
                             temp.textMsg = temp.clicks + "        " + chatString;
                         } else {
                             temp.clicks = "no";
@@ -1102,21 +1095,27 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                         temp.chatType = Constants.CHAT_TYPE_TEXT;
                         CHAT_TYPE = Constants.CHAT_TYPE_TEXT;
 
+                        long sentOntime = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis();
+
+                        temp.sentOn = "" + sentOntime;
+                        temp.chatId = authManager.getQBId() + qBId + sentOntime;
+
+                        ShowValueinChat(temp);
                         myQbChatService.sendMessage(temp);
-                        setValueForHistory(temp);
+                        createRecordForHistory(temp);
 
                         chatText.setText("");
                         seekValue = 0;
                         mybar.setProgress(10);
-                        mImageCaptureUri = null;
                     } else {//if any media is attached
                         if (mImageCaptureUri != null) {//if image is attached
                             CHAT_TYPE = Constants.CHAT_TYPE_IMAGE;
                             // new uploadMediaFileOnQb().execute(path.toString());
                             if (path != null)
-                                uploadImageFileOnQB(path.toString());
+                                sendMsgToQB(path);
+                             //   doComposeMediaMsg(path);
+                                //uploadImageFileOnQB(path.toString());
                         }
-
                     }
 
                 }
@@ -1321,12 +1320,10 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                     seekValue = 0;
 
 
-
+                    attachBtn.setImageDrawable(getResources().getDrawable(R.drawable.attach_icon));
                 }*/
 
                 // chatText.setText("");
-
-                attachBtn.setImageDrawable(getResources().getDrawable(R.drawable.r_footer_icon));
                 break;
             case R.id.iv_menu_button:
                 hideAttachView();
@@ -1370,19 +1367,18 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         }
     }
 
-    //mukesh/monika chat code
-    private void setValueForHistory(ChatMessageBody obj) {
+   
+
+    //monika- function to show chat in listview
+    private void ShowValueinChat(ChatMessageBody obj) {
 
         authManager = ModelManager.getInstance().getAuthorizationManager();
-        long sentOntime = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis();
 
-        obj.sentOn = "" + sentOntime;
-        obj.chatId = authManager.getQBId() + qBId + sentOntime;
 
         obj.sharedMessage = null;
         //   obj.deliveredChatID=null;
         // obj.cardDetails=null;
-        obj.isDelivered = null;
+        obj.isDelivered = Constants.MSG_SENDING;
         obj.relationshipId = rId;
         obj.userId = authManager.getUserId();
         obj.senderUserToken = authManager.getUsrToken();
@@ -1395,6 +1391,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             } else
                 obj.textMsg = null;
         }
+
         ArrayList<ChatMessageBody> tempChatList = ModelManager.getInstance().getChatManager().chatMessageList;
         tempChatList.add(obj);
 
@@ -1404,9 +1401,11 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         } else {
             adapter.notifyDataSetChanged();
         }
-        createRecordForHistory(obj);
+   //  return obj;
+    //  createRecordForHistory(obj);
 
     }
+
 
     /*  private void sendCardToPartner(String card_url, String cardTittle, String cardDiscription, String card_Id, String clicks, String is_CustomCard, String card_DB_ID, String accepted_Rejected, String played_Countered, String card_originator, String card_owner) {
 
@@ -1521,35 +1520,42 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             }
       }*/
 
-    private void uploadImageFileOnQB(String path) {
+    //monika-fucntion to upload file on Qb
+    private void uploadImageFileOnQB(String path, String msgId) {
         File mfile = new File(path);
-        QBContent.uploadFileTask(mfile, true, new QBCallbackImpl() {
+        final String chatId=msgId;
+        Boolean fileIsPublic = false;
+        QBContent.uploadFileTask(mfile, fileIsPublic, null, new QBEntityCallbackImpl<QBFile>() {
             @Override
-            public void onComplete(Result result) {
-                if (result.isSuccess()) {
-                    QBFileUploadTaskResult res = (QBFileUploadTaskResult) result;
-                    uploadedImgUrl = res.getFile().getPublicUrl().toString();
-                    System.out.println(TAG + "<---onPostExecute--->" + uploadedImgUrl);
-                    sendMsgToQB(uploadedImgUrl);
-                }
+            public void onSuccess(QBFile file, Bundle params) {
+               String fileUrl= file.getId().toString();
+               sendMediaMsgToQB(fileUrl, chatId);
+
+            }
+
+            @Override
+            public void onError(List<String> errors) {
+                // error
             }
         });
 
     }
 
-    private void sendMsgToQB(String result) {
+    //monika- common function to create msg in case of media attachment
+    private void sendMsgToQB(String path) {
         ChatMessageBody temp = new ChatMessageBody();
         String chatString = chatText.getText().toString();
         switch (CHAT_TYPE) {
             case Constants.CHAT_TYPE_IMAGE:
                 temp.imageRatio = "1";
-                temp.content_url = result;
+                temp.content_url = path;
+                temp.isDelivered=Constants.MSG_SENDING;
                 temp.chatType = Constants.CHAT_TYPE_IMAGE;
                 break;
             default:
         }
         if (isClicks() == true) {
-            temp.clicks = Utils.convertClicks(seekValue).trim();
+            temp.clicks = Utils.convertClicks(String.valueOf(seekValue)).trim();
             temp.textMsg = temp.clicks + "        " + chatString;
         } else {
             temp.clicks = "no";
@@ -1558,12 +1564,22 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         temp.partnerQbId = qBId;
         temp.senderQbId = authManager.getQBId();
 
-        myQbChatService.sendMessage(temp);
-        setValueForHistory(temp);
+        long sentOntime = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis();
+
+        temp.sentOn = "" + sentOntime;
+        temp.chatId = authManager.getQBId() + qBId + sentOntime;
+
+   //     setValueForHistory(temp);
+        ShowValueinChat(temp);
         chatText.setText("");
         seekValue = 0;
         mybar.setProgress(10);
-        mImageCaptureUri = null;
+        mImageCaptureUri=null;
+     //   path=null;
+        attachBtn.setImageDrawable(getResources().getDrawable(R.drawable.r_img_icon));
+        uploadImageFileOnQB(path,temp.chatId);
+
+
 
     }
 
@@ -1631,17 +1647,33 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
         // TODO Auto-generated method stub
-        try {
         if (s.length() > 0) {
             myQbChatService.sendTypeNotification("YES", qBId);
 
         } else {
             myQbChatService.sendTypeNotification("NO", qBId);
         }
-        }catch (Exception e){
-            e.printStackTrace();
+     /*   DefaultPacketExtension extension = new DefaultPacketExtension("extraParams", "jabber:client");
+        if (s.length() > 0) {
+            extension.setValue("isComposing", "YES");
+        } else {
+            extension.setValue("isComposing", "NO");
         }
+        Message message = new Message();
+        message.setType(Message.Type.chat); // 1-1 chat message
+        message.addExtension(extension);
+        try {
+            //chatObject.sendMessage(Integer.parseInt(qBId), message);
+        } catch (Exception e) {
 
+            try {
+                // againLoginToQuickBlox();
+                // chatObject.removeChatMessageListener(this);
+                //chatObject.addChatMessageListener(this);
+            } catch (Exception e1) {
+            }
+            e.printStackTrace();
+        }*/
     }
 
     @Override
@@ -1677,6 +1709,16 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             EventBus.getDefault().unregister(this);
         }
         EventBus.getDefault().register(this);
+
+        try {
+            authManager = ModelManager.getInstance().getAuthorizationManager();
+            //chatObject = authManager.getqBPrivateChat();
+            // chatObject.removeChatMessageListener(this);
+            //chatObject.addChatMessageListener(this);
+        } catch (Exception e) {
+        }
+
+
     }
 
     @Override
@@ -1725,6 +1767,10 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         } else if (message.equalsIgnoreCase("Composing NO")) {
             typingtext.setVisibility(View.VISIBLE);
             typingtext.setText("online");
+        }else if(message.startsWith("Delivered Msg")){
+            String chatId=message.substring(13);
+            updateChatDeliverStatusInList(chatId);
+
         }
 
     }
@@ -1943,6 +1989,15 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             message.addExtension(extension);
             // chatObject.sendMessage(Integer.parseInt(qBId), message);
         } catch (Exception e) {
+            try {
+                //chatObject.removeChatMessageListener(this);
+                // chatObject.addChatMessageListener(this);
+            } catch (Exception e1) {
+            }
+          /*  chatObject = null;
+            authManager = ModelManager.getInstance().getAuthorizationManager();
+            chatObject = authManager.getqBPrivateChat();
+            chatObject.addChatMessageListener(this);*/
             e.printStackTrace();
         }
     }
@@ -1991,11 +2046,30 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             // chatObject.sendMessage(Integer.parseInt(qBId), message);
 
         } catch (Exception e) {
+            // againLoginToQuickBlox();
+            /*chatObject = null;
+            authManager = ModelManager.getInstance().getAuthorizationManager();
+            chatObject = authManager.getqBPrivateChat();
+            chatObject.addChatMessageListener(this);*/
             e.printStackTrace();
         }
     }
 
+    private void loginToQuickBlox() {
 
+        try {
+            // chatObject = null;
+            authManager = ModelManager.getInstance().getAuthorizationManager();
+            // chatObject = authManager.getqBPrivateChat();
+            // chatObject.addChatMessageListener(this);
+            //chatObject.notifyAll();
+        } catch (Exception e) {
+            // authManager = ModelManager.getInstance().getAuthorizationManager();
+            //chatObject = authManager.getqBPrivateChat();
+            //againLoginToQuickBlox();
+            e.printStackTrace();
+        }
+    }
 
     private boolean isClicks() {
         if (seekValue != 0 && (-10 <= seekValue && seekValue <= 10)) {
@@ -2008,6 +2082,52 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         }
     }
 
+    private int grandClicksForReceiverEndInt(String clicksValue) {
+        int changeClicks = 0;
+        if (clicksValue.equalsIgnoreCase("+01")) {
+            changeClicks = 1;
+        } else if (clicksValue.equalsIgnoreCase("+02")) {
+            changeClicks = 2;
+        } else if (clicksValue.equalsIgnoreCase("+03")) {
+            changeClicks = 3;
+        } else if (clicksValue.equalsIgnoreCase("+04")) {
+            changeClicks = 4;
+        } else if (clicksValue.equalsIgnoreCase("+05")) {
+            changeClicks = 5;
+        } else if (clicksValue.equalsIgnoreCase("+06")) {
+            changeClicks = 6;
+        } else if (clicksValue.equalsIgnoreCase("+07")) {
+            changeClicks = 7;
+        } else if (clicksValue.equalsIgnoreCase("+08")) {
+            changeClicks = 8;
+        } else if (clicksValue.equalsIgnoreCase("+09")) {
+            changeClicks = 9;
+        } else if (clicksValue.equalsIgnoreCase("+10")) {
+            changeClicks = 10;
+        } else if (clicksValue.equalsIgnoreCase("-1")) {
+            changeClicks = 1;
+        } else if (clicksValue.equalsIgnoreCase("-2")) {
+            changeClicks = -2;
+        } else if (clicksValue.equalsIgnoreCase("-3")) {
+            changeClicks = -3;
+        } else if (clicksValue.equalsIgnoreCase("-4")) {
+            changeClicks = -4;
+        } else if (clicksValue.equalsIgnoreCase("-5")) {
+            changeClicks = -5;
+        } else if (clicksValue.equalsIgnoreCase("-6")) {
+            changeClicks = -6;
+        } else if (clicksValue.equalsIgnoreCase("-7")) {
+            changeClicks = -7;
+        } else if (clicksValue.equalsIgnoreCase("-8")) {
+            changeClicks = -8;
+        } else if (clicksValue.equalsIgnoreCase("-9")) {
+            changeClicks = -9;
+        } else if (clicksValue.equalsIgnoreCase("-10")) {
+            changeClicks = -10;
+        }
+        return changeClicks;
+
+    }
 
 
 
@@ -2077,8 +2197,9 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         return bitmap;
     }
 
-    private void createRecordForHistory(ChatMessageBody obj) {
+    private void createRecordForHistory(final ChatMessageBody obj) {
         HashMap<String, Object> fields = new HashMap<String, Object>();
+
 
         fields.put("message", obj.textMsg);
         fields.put("clicks", obj.clicks);
@@ -2112,19 +2233,22 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         QBCustomObject qbCustomObject = new QBCustomObject();
         qbCustomObject.setClassName("chats");  // your Class name
         qbCustomObject.setFields(fields);
+
         QBCustomObjects.createObject(qbCustomObject, new QBCallbackImpl() {
             @Override
             public void onComplete(Result result) {
                 if (result.isSuccess()) {
                     QBCustomObjectResult qbCustomObjectResult = (QBCustomObjectResult) result;
                     QBCustomObject qbCustomObject = qbCustomObjectResult.getCustomObject();
+               //    int chatIdtemp=qbCustomObject.getId();
+                 //  obj.chatId=String.valueOf(chatIdtemp);
                     Log.e("New record: ", qbCustomObject.toString());
                 } else {
                     Log.e("Errors", result.getErrors().toString());
                 }
             }
         });
-
+           // return String.valueOf(msgId);
     }
 
     private void updateValues(Intent intent) {
@@ -2267,6 +2391,20 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
             //clear the message list always to initiate a new chat
             ModelManager.getInstance().getChatManager().chatMessageList.clear();
+
+            //code to hide keyboard
+            ((RelativeLayout) findViewById(R.id.rr_chat_layout)).setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View arg0) {
+
+                    InputMethodManager imm = (InputMethodManager) getSystemService(
+                            INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(chatText.getWindowToken(), 0);
+
+                }
+
+            });
             setlist();
         }
     }
@@ -2278,7 +2416,123 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         return Uri.parse(path);
     }
 
+    public void fetchChatRecord(String relationshipId, String phone, String usertoken, String chatId) {
 
+
+        chatManager = ModelManager.getInstance().getChatManager();
+        //  ArrayList<ChatMessageBody>refreshivechatList=new ArrayList<ChatMessageBody>();
+        AsyncHttpClient client = null;
+        StringEntity se = null;
+        // TODO Auto-generated method stub
+        JSONObject userInputDetails = new JSONObject();
+        try {
+            userInputDetails.put("phone_no", phone);
+            userInputDetails.put("user_token", usertoken);
+            userInputDetails.put("relationship_id", relationshipId);
+            if (!Utils.isEmptyString(chatId)) {
+                userInputDetails.put("last_chat_id", chatId);
+            }
+
+            client = new AsyncHttpClient();
+            se = new StringEntity(userInputDetails.toString());
+            se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+            Log.e(TAG, "userInputDetails-->" + userInputDetails);
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        client.post(this, APIs.FETCHCHATRECORDS, se, "application/json",
+                new JsonHttpResponseHandler() {
+
+                    @Override
+                    public void onFailure(int statusCode, Throwable e,
+                                          JSONObject errorResponse) {
+                        super.onFailure(statusCode, e, errorResponse);
+                        if (errorResponse != null) {
+                            Log.e("errorResponse", "->" + errorResponse);
+                            EventBus.getDefault().post("FecthChat False");
+                        } else {
+                            EventBus.getDefault().post("FecthChat Network Error");
+                        }
+                    }
+
+                    @Override
+                    public void onSuccess(int statusCode,
+                                          org.apache.http.Header[] headers,
+                                          JSONObject response) {
+                        super.onSuccess(statusCode, headers, response);
+                        boolean state = false;
+                        try {
+                            Log.e(TAG, "response FecthChat ->" + response);
+                            state = response.getBoolean("success");
+                            if (state) {
+
+                                chatManager.refreshivechatList.clear();
+                                Utils.clickCustomLog(response.toString());
+                                JSONArray list = response.getJSONArray("chats");
+                                for (int i = 0; i < list.length(); i++) {
+                                    ChatMessageBody temp = new ChatMessageBody();
+                                    JSONObject data = list.getJSONObject(i);
+                                    JSONObject chatObj = data.getJSONObject("Chat");
+
+                                    // if (chatObj.has("receiverQB_id"))
+                                    //   temp.re(chatObj.getString("receiverQB_id"));
+                                    if (chatObj.has("sharedMessage"))
+                                        temp.sharedMessage = chatObj.getString("sharedMessage");
+                                    if (chatObj.has("video_thumb"))
+                                        temp.video_thumb = chatObj.getString("video_thumb");
+                                    if (chatObj.has("QB_id"))
+                                        temp.senderQbId = chatObj.getString("QB_id");
+                                    if (chatObj.has("senderUserToken"))
+                                        temp.senderUserToken = chatObj.getString("senderUserToken");
+                                    if (chatObj.has("type"))
+                                        temp.chatType = Integer.parseInt(chatObj.getString("type"));
+                                    if (chatObj.has("message"))
+                                        temp.textMsg = chatObj.getString("message");
+                                    if (chatObj.has("content"))
+                                        temp.content_url = chatObj.getString("content");
+                                    if (chatObj.has("relationshipId"))
+                                        temp.relationshipId = chatObj.getString("relationshipId");
+                                    if (chatObj.has("_id"))
+                                        temp._id = chatObj.getString("_id");
+                                    if (chatObj.has("userId"))
+                                        temp.userId = chatObj.getString("userId");
+                                    if (chatObj.has("location_coordinates"))
+                                        temp.location_coordinates = chatObj.getString("location_coordinates");
+                                    if (chatObj.has("clicks")) {
+                                        temp.clicks = chatObj.getString("clicks");
+                                        if (Utils.isEmptyString(temp.clicks))
+                                            temp.clicks = "no";
+                                    }
+                                    if (chatObj.has("isDelivered"))
+                                        temp.isDelivered = chatObj.getString("isDelivered");
+                                    if (chatObj.has("imageRatio"))
+                                        temp.imageRatio = chatObj.getString("imageRatio");
+                                    if (chatObj.has("chatId"))
+                                        temp.chatId = chatObj.getString("chatId");
+                                    if (chatObj.has("cards"))
+                                        // temp.cardchatObj.getString("cards"));
+                                        if (chatObj.has("sentOn"))
+                                            temp.sentOn = chatObj.getString("sentOn");
+                                    chatManager.refreshivechatList.add(temp);
+                                }
+
+                                chatManager.chatMessageList.addAll(0, chatManager.refreshivechatList);
+
+                                EventBus.getDefault().post("FecthChat True");
+                            } else {
+                                EventBus.getDefault().post("FecthChat False");
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                }
+        );
+
+    }
 
     class DBTask extends AsyncTask<Void, Void, Void> {
 
@@ -2295,6 +2549,40 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         }
     }
 
+    //function to update chatMessagelist for delivered chats
+    private void updateChatDeliverStatusInList(String chatId){
+        for(ChatMessageBody msg:chatManager.chatMessageList){
+            if(msg.chatId.equalsIgnoreCase(chatId)){
+                msg.isDelivered="true";
+                break;
+            }
+        }
+        if(adapter!=null)
+            adapter.notifyDataSetChanged();
+        else{
+            adapter=new ChatRecordAdapter(this,R.layout.view_chat_demo,chatManager.chatMessageList);
+            chatListView.setAdapter(adapter);
+        }
+    }
+
+
+//monika-update the content url for specific chatid and send msg to Qb and create history
+    private void sendMediaMsgToQB(String fileUrl,String tempChatId){
+       // ArrayList<ChatMessageBody> tempChatList=chatManager.chatMessageList;
+        path=null;
+        for(ChatMessageBody temp:chatManager.chatMessageList) {
+            if (!(Utils.isEmptyString(temp.chatId))) {
+                if (temp.chatId.equalsIgnoreCase(tempChatId)) {
+                    temp.content_url = fileUrl;
+                    temp.isDelivered = Constants.MSG_SENT;
+                    myQbChatService.sendMessage(temp);
+                    createRecordForHistory(temp);
+                    adapter.notifyDataSetChanged();
+
+                }
+            }
+        }
+    }
 
 }
 

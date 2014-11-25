@@ -67,5 +67,9 @@ public class Constants {
     //constant to check length of chat text in adapter
     public final static int CHAT_LENTH_LIMIT = 15;
 
+    //constants for media delivery status
+    public static final String MSG_SENDING="SENDING";
+    public static final String MSG_SENT="SENT";
+    public static final String MSG_DELIVERED="DELIVERED";
 
 }
