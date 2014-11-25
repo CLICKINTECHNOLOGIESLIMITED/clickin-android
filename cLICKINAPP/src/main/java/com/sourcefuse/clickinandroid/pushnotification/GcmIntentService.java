@@ -13,7 +13,7 @@ import android.util.Log;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.sourcefuse.clickinandroid.model.AuthManager;
-import com.sourcefuse.clickinandroid.view.UserProfileView;
+
 import com.sourcefuse.clickinapp.R;
 
 
@@ -81,7 +81,7 @@ public class GcmIntentService extends IntentService {
         mNotificationManager = (NotificationManager)
                 this.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0,new Intent(this, UserProfileView.class), 0);
+       /* PendingIntent contentIntent = PendingIntent.getActivity(this, 0,new Intent(this, UserProfileView.class), 0);
         Log.e("recive", msg);
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
@@ -93,7 +93,7 @@ public class GcmIntentService extends IntentService {
 
         mBuilder.setContentIntent(contentIntent);
         mBuilder.setAutoCancel(true);
-        mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+        mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());*/
     }
 
 }

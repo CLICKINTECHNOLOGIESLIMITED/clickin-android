@@ -256,12 +256,15 @@
                     android:background="@drawable/box"
                     android:focusableInTouchMode="true"
                     android:gravity="top"
-                    android:inputType="textNoSuggestions"
+                    android:maxLines="20"
+                    android:inputType="textNoSuggestions|textMultiLine"
                     android:hint="@string/spam_edit_hint"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:paddingTop="7dp"
-                    android:textColor="@color/dark_gray"
+                    android:imeOptions="actionDone"
+                    android:textColorHint="@color/search_txt"
+                    android:textColor="@color/black"
                     android:textSize="18sp" />
 
                 <TextView

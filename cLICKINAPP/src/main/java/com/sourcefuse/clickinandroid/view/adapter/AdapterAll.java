@@ -70,7 +70,7 @@ public class AdapterAll extends ArrayAdapter<CardBean> {
                     Intent intent = new Intent(getContext(), ViewTradeCart.class);
                     intent.putExtra("ForCounter", false);
                     context.startActivity(intent);
-                    ((Activity) context).overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+                    ((Activity) context).overridePendingTransition(R.anim.slide_in_up, R.anim.stay);
 
                 }
                 else{
@@ -85,7 +85,7 @@ public class AdapterAll extends ArrayAdapter<CardBean> {
                     Log.e("All Adapter " , "Original URL::>>>>>>>>" +url);
 
 
-					
+
                     String Title = bean.getCardTitle();
                     String Discription = bean.getCardDescription();
 
@@ -99,7 +99,7 @@ public class AdapterAll extends ArrayAdapter<CardBean> {
                     Log.e("CARD DETAILS","----->"+Title+","+Discription+","+bean.getCard_Id());
 
                     context.startActivity(intent);
-                    ((Activity) context).overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+                    ((Activity) context).overridePendingTransition(R.anim.slide_in_up, R.anim.stay);
 
                 }
 

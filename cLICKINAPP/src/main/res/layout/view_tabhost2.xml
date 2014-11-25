@@ -52,7 +52,6 @@
                 <com.sourcefuse.clickinandroid.utils.ClickInTextView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-
                     android:id="@+id/textView"
                     android:gravity="center_horizontal|right"
                     android:layout_marginBottom="-3dp"
@@ -60,7 +59,6 @@
                     android:textStyle="bold"
                     geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
                     android:layout_gravity="center"
-
                     android:text="43"
                     android:textSize="20sp"
                     android:textColor="@color/chat_notification"
@@ -136,7 +134,7 @@
                     <TabWidget
                         android:id="@android:id/tabs"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
 
                         >
                     </TabWidget>
@@ -149,12 +147,17 @@
 
                         >
 
-                        <TextView
+                        <com.sourcefuse.clickinandroid.utils.ClickInTextView
                             android:id="@+id/Layout_Tab_2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textStyle="bold"
                             android:gravity="bottom"
-                           />
+                            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
+
+
+                            />
+
 
                         <!--<com.sourcefuse.clickinandroid.utils.ClickInTextView-->
                         <!--android:id="@+id/Layout_Tab_2"-->
@@ -177,8 +180,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
-
-
-
       </FrameLayout>
+
+
+
+    <!--<ImageView-->
+        <!--android:id="@+id/imageview_underline"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/Layout_Tab_2"-->
+        <!--android:background="@drawable/tabbottomline"/>-->
 </LinearLayout>

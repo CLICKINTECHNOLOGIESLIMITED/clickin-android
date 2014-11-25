@@ -19,6 +19,7 @@ package com.sourcefuse.clickinandroid.view.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.database.DataSetObserver;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.util.SparseArray;
 import android.util.TypedValue;
@@ -217,12 +218,13 @@ public class SimpleSectionedListAdapter extends BaseAdapter implements PinnedSec
             btn_someone_layout = (LinearLayout) convertView.findViewById(R.id.btn_someone_layout);
             view1.setTypeface(typeface);
             view.setTypeface(typeface);
-            view.setTextSize(TypedValue.COMPLEX_UNIT_DIP,16);
 
             if(hidevalue)
             {
                 btn_someone_layout.setVisibility(View.GONE);
+
             }else {
+
                 btn_someone_layout.setVisibility(View.VISIBLE);
             }
             btn_someone_layout.setOnClickListener(new View.OnClickListener() {

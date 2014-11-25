@@ -85,11 +85,11 @@ public class AuthManager {
       private String tmpQBId;
       private String tmpUserId;
       private String tmpUserName;
-      private String tmpUserPic;
-      private String tmpFollower;
-      private String tmpFollowing;
+      private String tmpUserPic = "";
+      private String tmpFollower = "0";
+      private String tmpFollowing = "0";
       private int tmpIsFollowing;
-      private String tmpGender;
+      private String tmpGender = "";
       private String tmpDOB;
 
       public void setUserCity(String userCity) {
@@ -942,8 +942,7 @@ public class AuthManager {
                                            super.onSuccess(statusCode, headers, response);
                                            boolean state = false;
                                            try {
-                                                 System.out.println("response-INSERTEMAIL--> "
-                                                                            + response);
+                                                Log.e("respone ----->",""+response);
                                                  state = response.getBoolean("success");
                                                  if (state) {
                                                        EventBus.getDefault().post("RequestSend True");
@@ -1023,8 +1022,8 @@ public class AuthManager {
                                           JSONObject jobj = new JSONObject(response.getString("user"));
                                           if (jobj.has("gender"))
                                                 authManager.setTmpGender(jobj.getString("gender"));
-//                            else
-//                                authManager.setGender("");
+                                                 else
+                                                authManager.setGender("");
                                           if (jobj.has("follower"))
                                                 authManager.setTmpFollower(jobj.getString("follower"));
                                           if (jobj.has("following"))

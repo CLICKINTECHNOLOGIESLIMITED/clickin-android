@@ -580,8 +580,10 @@
                         android:gravity="top"
                         android:hint="Briefly explain what happened."
                         android:paddingLeft="10dp"
+                        android:inputType="textNoSuggestions"
                         android:paddingRight="5dp"
                         android:paddingTop="7dp"
+                        android:imeOptions="actionDone"
                         android:textColor="@color/dark_gray"
                         android:textSize="18sp" />
 
@@ -712,7 +714,7 @@
                     android:layout_below="@+id/tv_logout_msg"
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="30dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="30dp"
                     android:paddingBottom="1dp">
 
 
@@ -727,18 +729,20 @@
                         android:gravity="center"
                         android:text="YES"
                         android:textStyle="bold"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/white"
+                        android:textSize="18sp"/>
 
                     <TextView
                         android:id="@+id/btn_logout_no"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginLeft="9dp"
                         android:layout_weight="1"
                         android:background="@drawable/active_yes_btn"
                         android:gravity="center"
                         android:text="NO"
+                        android:textSize="18sp"
                         android:textStyle="bold"
                         android:textColor="@color/white" />
                 </LinearLayout>

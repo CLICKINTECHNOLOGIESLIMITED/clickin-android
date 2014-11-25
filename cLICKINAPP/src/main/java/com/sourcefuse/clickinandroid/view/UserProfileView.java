@@ -259,7 +259,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
                         }
 
                   } else {//if temp uri null
-                        if (authManager.getGender() != null) {//gender not null
+                        if (!Utils.isEmptyString(authManager.getGender())) {//gender not null
 
                               if (authManager.getGender().equalsIgnoreCase("guy")) {//gender guy
                                     try {
@@ -469,7 +469,6 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
             } else if (message.equalsIgnoreCase("deleteRelationship False")) {
                   Utils.dismissBarDialog();
                   Utils.fromSignalDialog(this, authManager.getMessage());
-
             } else if (message.equalsIgnoreCase("deleteRelationship Error")) {
                   Utils.dismissBarDialog();
                   Utils.fromSignalDialog(this, AlertMessage.connectionError);

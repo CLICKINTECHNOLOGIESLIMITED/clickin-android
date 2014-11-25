@@ -131,12 +131,12 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
                               mySelfy.setImageBitmap(imageBitmap);
                         else {
 
-                              if (authManager.getGender() != null) {
+                              if (!Utils.isEmptyString(authManager.getGender())) {
                                     Log.e("UserPic", authManager.getUserPic());
-                                    if (authManager.getGender().matches("guy")) {
+                                    if (authManager.getGender().equalsIgnoreCase("guy")) {
 
                                           try {
-                                                if (authManager.getUserPic()!=null) {
+                                                if (!Utils.isEmptyString(authManager.getUserPic())) {
                                                       Picasso.with(EditMyProfileView.this)
                                                               .load(authManager.getUserPic())
                                                               .skipMemoryCache()
@@ -150,7 +150,7 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
                                           }
                                     } else {
                                           try {
-                                                if (authManager.getUserPic()!=null) {
+                                                if (!Utils.isEmptyString(authManager.getUserPic())) {
                                                       Picasso.with(EditMyProfileView.this)
                                                               .load(authManager.getUserPic())
                                                               .skipMemoryCache()
@@ -173,7 +173,7 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
                   }
 
             } else {
-                  if (authManager.getGender()!=null) {
+                  if (!Utils.isEmptyString(authManager.getGender())) {
 
                         if (authManager.getGender().equalsIgnoreCase("guy")) {
                               try {
@@ -193,7 +193,7 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
                               }
                         } else if (authManager.getGender().equalsIgnoreCase("girl")) {
                               try {
-                                    if (authManager.getUserPic()!=null) {
+                                    if (!Utils.isEmptyString(authManager.getUserPic())) {
                                           Picasso.with(this)
                                                   .load(authManager.getUserPic())
                                                   .skipMemoryCache()

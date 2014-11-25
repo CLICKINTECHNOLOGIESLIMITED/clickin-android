@@ -35,6 +35,7 @@
     <color name="fill_edt">#00b0c7</color>
     <color name="empt_edt">#f0f0f0</color>
     <color name="profile_usr_name">#01DFD7</color>
+    <color name="click_default_btn">#39cad4</color>
     <color name="screen_header">#00B0C7</color>
     <color name="usr_name">#F5A9D0</color>
     <color name="clickin_with_list">#E0ECF8</color>
@@ -88,4 +89,9 @@
     <color name="owner_relation_header_with_m">#b3b3b3</color>
     <color name="owner_relation_partner_name">#39cad4</color>
 
+
+
+    <color name="profile_border">#364566</color>
+    <color name="some_back">#4d5b7b</color>
+    <color name="click_in">#5d6a88</color>
 </resources>

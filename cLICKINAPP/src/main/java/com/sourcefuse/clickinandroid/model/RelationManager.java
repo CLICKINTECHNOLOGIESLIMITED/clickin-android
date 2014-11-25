@@ -51,7 +51,9 @@ public class RelationManager  {
     public ArrayList<GetrelationshipsBean> requestedList = new ArrayList<GetrelationshipsBean>();
 
     private String followerListCount = "0";
-    private String followingListCount = "0";;
+    private String followingListCount = "0";
+    private String followerOListCount = "0";
+    private String followingOListCount = "0";
 
 	String strService = null;
 
@@ -104,6 +106,9 @@ public class RelationManager  {
 								requestedList.clear();
                                 relationManager.setFollowerListCount(response.getString("follower"));
                                 relationManager.setFollowingListCount(response.getString("following"));
+
+
+
 								JSONArray list = response.getJSONArray("relationships");
 								getRelationShipArray = new ArrayList<GetrelationshipsBean>();
 								for (int i = 0; i < list.length(); i++) {
@@ -233,6 +238,10 @@ public class RelationManager  {
                         if (response.has("relation_status"))
                             relationManager.setRelationStatus(response.getString("relation_status"));
 
+                        if(response.has("follower"))
+                        relationManager.setOFollowerListCount(response.getString("follower"));
+                        if(response.has("following"))
+                        relationManager.setOFollowingListCount(response.getString("following"));
 
 						ProfileRelationShipArray = new ArrayList<ProfileRelationShipBean>();
 						for (int i = 0; i < list.length(); i++) {
@@ -745,6 +754,26 @@ public class RelationManager  {
     public void setFollowingListCount(String followingListCount) {
         this.followingListCount = followingListCount;
     }
+
+
+
+    public String getOFollowerListCount() {
+        return followerOListCount;
+    }
+
+    public void setOFollowerListCount(String followerOListCount) {
+        this.followerOListCount = followerOListCount;
+    }
+
+    public String getOFollowingListCount() {
+        return followingOListCount;
+    }
+
+    public void setOFollowingListCount(String followingOListCount) {
+        this.followingOListCount = followingOListCount;
+    }
+
+
 
 
 }

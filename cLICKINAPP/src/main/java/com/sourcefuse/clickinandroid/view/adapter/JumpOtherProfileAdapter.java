@@ -52,14 +52,14 @@ public class JumpOtherProfileAdapter extends ArrayAdapter<ProfileRelationShipBea
 
 			typeface = Typeface.createFromAsset(context.getAssets(),Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
 			holder.usr_name.setTypeface(typeface,typeface.BOLD);
-			
+
 			row.setTag(holder);
 		} else {
 			holder = (RecordHolder) row.getTag();
 		}
-		
+
 		final RecordHolder rholder = (RecordHolder) row.getTag();
-		
+
 		try{
 		rholder.usr_name.setText(item.getPartnerName());
             if(!item.getPartnerPic().equalsIgnoreCase("")) {
@@ -79,7 +79,7 @@ public class JumpOtherProfileAdapter extends ArrayAdapter<ProfileRelationShipBea
                 holder.usrimg.setImageResource(R.drawable.male_user);
             }
 		}catch(Exception e){}
-		
+
 		return row;
 	}
 

@@ -13,7 +13,7 @@
             android:id="@+id/rr_header"
             android:layout_width="match_parent"
             android:layout_height="45dp"
-            android:background="@color/appclr">
+            android:background="@drawable/backbtnbgstrip">
 
 
             <ImageView
@@ -251,7 +251,7 @@
                 android:weightSum="6"
                 android:layout_weight="0.3"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="-3dp"
+                android:layout_marginTop="2dp"
                 >
                 <com.sourcefuse.clickinandroid.utils.ClickInTextView
                     android:id="@+id/btn_one"
@@ -259,7 +259,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="9dp"
                     android:layout_toLeftOf="@+id/btn_two"
-                    android:background="@drawable/c_number_background"
+                    android:background="@drawable/tab_number_background"
                     android:gravity="center"
                     android:layout_gravity="top"
                     android:text="5"
@@ -276,7 +276,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="9dp"
                     android:layout_toLeftOf="@+id/btn_three"
-                    android:background="@drawable/c_number_background"
+                    android:background="@drawable/tab_number_background"
                     android:gravity="center"
                     android:text="10"
                     android:textColor="@drawable/card_text_color_state"
@@ -292,7 +292,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="9dp"
                     android:layout_toLeftOf="@+id/btn_four"
-                    android:background="@drawable/c_number_background"
+                    android:background="@drawable/tab_number_background"
                     android:gravity="center"
                     android:text="15"
                     android:textColor="@drawable/card_text_color_state"
@@ -308,7 +308,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="9dp"
                     android:layout_toLeftOf="@+id/btn_five"
-                    android:background="@drawable/c_number_background"
+                    android:background="@drawable/tab_number_background"
                     android:layout_gravity="top"
                     android:gravity="center"
                     android:text="20"
@@ -324,7 +324,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="9dp"
                     android:layout_toLeftOf="@+id/btn_play"
-                    android:background="@drawable/c_number_background"
+                    android:background="@drawable/tab_number_background"
                     android:gravity="center"
                     android:text="25"
                     android:textSize="20sp"
@@ -339,9 +339,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="top"
-                    android:layout_marginRight="0dp"
+                    android:layout_marginRight="-5dp"
                     android:layout_alignParentRight="true"
-                    android:src="@drawable/play_btn" />
+                    android:src="@drawable/play_button" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

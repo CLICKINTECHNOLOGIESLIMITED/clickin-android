@@ -93,7 +93,7 @@ public class CardGridViewAdapter extends ArrayAdapter<CardBean> {
 
                     // Log.e(TAG, "Value in Bean Tit" + url);
                     context.startActivity(intent);
-                    ((Activity) context).overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+                    ((Activity) context).overridePendingTransition(R.anim.slide_in_up, R.anim.stay);
                 }
 
                 else {
@@ -121,7 +121,7 @@ public class CardGridViewAdapter extends ArrayAdapter<CardBean> {
                     Log.e("CARD DETAILS","----->"+Title+","+Discription+","+bean.getCard_Id());
 
                     context.startActivity(intent);
-                    ((Activity) context).overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+                    ((Activity) context).overridePendingTransition(R.anim.slide_in_up, R.anim.stay);
 //                    String url ;
 //                    String url1 = bean.getCardUrl() ;
 //                    String add = "/a/1080" ;

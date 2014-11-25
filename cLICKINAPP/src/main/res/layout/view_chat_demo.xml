@@ -132,6 +132,7 @@
              android:id="@+id/ll_for_share_icon"
              android:layout_height="wrap_content">
                 <ProgressBar
+                    android:id="@+id/pb_loding"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_gravity="center_horizontal"

@@ -17,6 +17,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -108,6 +109,7 @@ public class
         SimpleSectionedListAdapter simpleSectionedGridAdapter;
 
         boolean hidevalue = (relationManager.acceptedList.size() > 0) ? true : false;
+
 
         sections.add(new SimpleSectionedListAdapter.Section(mHeaderPositions[0], mHeaderNames[0], mHeaderNames2[0]));
         simpleSectionedGridAdapter = new SimpleSectionedListAdapter(ClickInBaseView.this, clickInadapter, R.layout.header_clickwith, R.id.tv_clickintx, R.id.tv_with, hidevalue);
@@ -249,17 +251,14 @@ public class
                         }
                     }
                     String search_date = edt_search.getText().toString();
-                    if (!Utils.isEmptyString(search_date) && search_date.length() < 3) {
-                        slidemenu.findViewById(R.id.btn_clear).setVisibility(View.VISIBLE);
-                        slidemenu.findViewById(R.id.btn_progressBar).setVisibility(View.GONE);
-                    } else if (!Utils.isEmptyString(search_date) && search_date.length() > 2) {
+                     if (!Utils.isEmptyString(search_date) && search_date.length() > 0) {
                         slidemenu.findViewById(R.id.btn_clear).setVisibility(View.GONE);
                         slidemenu.findViewById(R.id.btn_progressBar).setVisibility(View.VISIBLE);
                     } else {
                         slidemenu.findViewById(R.id.btn_clear).setVisibility(View.GONE);
                         slidemenu.findViewById(R.id.btn_progressBar).setVisibility(View.GONE);
                     }
-                    if (edt_search.getText().toString().length() > 2) {
+                    if (edt_search.getText().toString().length() > 0) {
                         hideSearchlist.setVisibility(View.VISIBLE);
                         searchList.setVisibility(View.VISIBLE);
                         stopSearch = true;
@@ -286,10 +285,7 @@ public class
         hideSearchlist = (ImageView) slidemenu.findViewById(R.id.iv_hide_searchlist);
 
         clickWithlistView = (ListView) slidemenu.findViewById(R.id.click_with_list_menu);
-           /* clickWithlistView.setDivider(getResources().getDrawable(R.drawable.list_divider__));
-            clickWithlistView.setDividerHeight(4);*/
-            /*clickWithlistView.setFooterDividersEnabled(false);
-            clickWithlistView.setHeaderDividersEnabled(false);*/
+
         // Adding  header And footer
         View headerView = ((LayoutInflater) ClickInBaseView.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.menu_header, null, false);
         View footerView = ((LayoutInflater) ClickInBaseView.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.menu_footer, null, false);
@@ -424,6 +420,7 @@ public class
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                com.sourcefuse.clickinandroid.utils.Log.e("in cickin baseview on searchInviteView ----->","in cickin baseview on searchInviteView ----->");
                 Intent intent = new Intent(ClickInBaseView.this, AddSomeoneView.class);
                 startActivity(intent);
             }
@@ -511,11 +508,11 @@ public class
                 }
                 Log.e("", "00000000-userPic" + slidemenu);
                 Intent intent = new Intent(ClickInBaseView.this, UserProfileView.class);
+                intent.putExtra("isChangeInList",true);
                 intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
                 List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
-                //  Log.d("topActivity", "CURRENT Activity ::"
-                //        + taskInfo.get(0).topActivity.getClassName());
+
                 ComponentName componentInfo = taskInfo.get(0).topActivity;
                 String className = componentInfo.getClassName();
                 if (className.equalsIgnoreCase("com.sourcefuse.clickinandroid.view.UserProfileView")) {
@@ -568,7 +565,7 @@ public class
                 Intent intent = new Intent(ClickInBaseView.this, AddSomeoneView.class);
                 intent.putExtra("FromOwnProfile", true);
                 startActivity(intent);
-
+                com.sourcefuse.clickinandroid.utils.Log.e("in cickin baseview on searchInviteView ----->","in cickin baseview on searchInviteView ----->");
                         /* code for animation prafull*/
 
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
@@ -596,16 +593,15 @@ public class
 
                         String partnerPhone = relationManager.fetchUsersByNameData.get(position).getPhoneNo();
                         Intent intent = new Intent(ClickInBaseView.this, JumpOtherProfileView.class);
-                        //     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         intent.putExtra("FromOwnProfile", true);
                         intent.putExtra("phNumber", partnerPhone);
                         startActivity(intent);
 
-                                    /* code for animation prafull*/
+                        /* code for animation prafull*/
 
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
-                        hideSearchlist.setVisibility(View.GONE);
-                        searchList.setVisibility(View.GONE);
+                        /*hideSearchlist.setVisibility(View.GONE);
+                        searchList.setVisibility(View.GONE);*/
                     } catch (Exception e) {
                     }
                 }
@@ -683,29 +679,21 @@ public class
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-       /* Log.e("00000", "00000000000");
-        if (!(edt_search.getText().toString().length() > 0)) {
-            hideSearchlist.setVisibility(View.GONE);
-            searchList.setVisibility(View.GONE);
-            try {
-                InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-            } catch (Exception e) {
-            }
-        }
+        Log.e("00000", "00000000000");
+
         String search_date = edt_search.getText().toString();
         if (!Utils.isEmptyString(search_date) && search_date.length() < 3) {
             slidemenu.findViewById(R.id.btn_clear).setVisibility(View.VISIBLE);
             slidemenu.findViewById(R.id.btn_progressBar).setVisibility(View.GONE);
         } else if (!Utils.isEmptyString(search_date) && search_date.length() > 2) {
-            slidemenu.findViewById(R.id.btn_clear).setVisibility(View.GONE);
-            slidemenu.findViewById(R.id.btn_progressBar).setVisibility(View.VISIBLE);
+            /*slidemenu.findViewById(R.id.btn_clear).setVisibility(View.GONE);
+            slidemenu.findViewById(R.id.btn_progressBar).setVisibility(View.VISIBLE);*/
         } else {
             slidemenu.findViewById(R.id.btn_clear).setVisibility(View.GONE);
             slidemenu.findViewById(R.id.btn_progressBar).setVisibility(View.GONE);
         }
         if (edt_search.getText().toString().length() > 2) {
-            hideSearchlist.setVisibility(View.VISIBLE);
+            /*hideSearchlist.setVisibility(View.VISIBLE);
             searchList.setVisibility(View.VISIBLE);
             stopSearch = true;
             if (stopSearch) {
@@ -713,8 +701,8 @@ public class
                 relationManager = ModelManager.getInstance().getRelationManager();
                 authManager = ModelManager.getInstance().getAuthorizationManager();
                 relationManager.fetchusersbyname(edt_search.getText().toString(), authManager.getPhoneNo(), authManager.getUsrToken());
-            }
-        }*/
+            }*/
+        }
 
 
     }
@@ -860,6 +848,7 @@ public class
     @Override
     public void onOpen() {
         Log.e("y", "if onOpen");
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
         authManager = ModelManager.getInstance().getAuthorizationManager();
         String dtails = "";
         try {
