@@ -55,10 +55,8 @@
                 android:layout_marginLeft="1dp"
                 android:paddingLeft="10dp"
                 android:ems="15"
-<<<<<<< HEAD
-=======
                 android:maxLength="15"
->>>>>>> 7814f950ca5598054e819b7d462adaac4d4292b1
+
                 android:text="@string/plus"
                 android:textColor="@color/signup_contry_code"
                 android:textColorHint="@color/sign_hint"
@@ -81,11 +79,7 @@
                 android:inputType="textPassword|textNoSuggestions"
                 android:paddingLeft="10dp"
                 android:ems="15"
-<<<<<<< HEAD
-                android:text="12345678"
-=======
-                android:text=""
->>>>>>> 7814f950ca5598054e819b7d462adaac4d4292b1
+                android:text="12345"
                 android:imeOptions="actionDone"
                 android:textColor="@color/signup_contry_code"
                 android:textColorHint="@color/sign_hint"
