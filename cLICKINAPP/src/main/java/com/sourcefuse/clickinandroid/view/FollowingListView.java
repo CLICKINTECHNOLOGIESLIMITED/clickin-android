@@ -81,7 +81,6 @@ public class FollowingListView extends ClickInBaseView implements View.OnClickLi
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
         Intent intent = new Intent(FollowingListView.this, UserProfileView.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         intent.putExtra("isChangeInList", mchangeinList);
@@ -115,11 +114,7 @@ public class FollowingListView extends ClickInBaseView implements View.OnClickLi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_back_ing:
-                Intent intent = new Intent(FollowingListView.this, UserProfileView.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                intent.putExtra("isChangeInList", mchangeinList);
-                startActivity(intent);
-                overridePendingTransition(0, R.anim.top_out);
+                onBackPressed();
                 break;
             case R.id.iv_notification_list_ing:
                 slidemenu.showSecondaryMenu(true);

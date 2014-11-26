@@ -86,10 +86,12 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     ((ProgressBar)row.findViewById(R.id.pb_loding)).setVisibility(View.VISIBLE);
                     ((ImageView)row.findViewById(R.id.iv_type_two_share_icon_r)).setVisibility(View.GONE);
 
+
+
+
                    sendStatusView.setImageResource(R.drawable.r_single_tick);
                     //Uri tempUri=Uri.parse(temp.content_url);
                     Picasso.with(context).load(temp.content_url)
-
                             .placeholder(R.drawable.default_profile)
                             .error(R.drawable.default_profile).into(image_attached);
 
