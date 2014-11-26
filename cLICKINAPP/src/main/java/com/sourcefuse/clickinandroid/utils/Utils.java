@@ -128,7 +128,7 @@ public class Utils {
 
 
     //akshit code starts
-    public static void fromSignalDialog1(Activity activity,String msgStrI, String msgStrII) {
+    public static void fromSignalDialog1(Activity activity, String msgStrI, String msgStrII) {
         dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
@@ -173,8 +173,9 @@ public class Utils {
         });
         dialog.show();
     }
-       // Akshit Code Starts
-    public static void fromSignalDialog(Activity activity ,String str){
+
+    // Akshit Code Starts
+    public static void fromSignalDialog(Activity activity, String str) {
 
         dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -198,10 +199,9 @@ public class Utils {
     // Ends
 
 
-
     public static String getCardURLForAndroid(String url) {
 
-        String url_to_load = url.replaceFirst("cards\\/(\\d+)\\.jpg","cards\\/a\\/1080\\/$1\\.jpg");
+        String url_to_load = url.replaceFirst("cards\\/(\\d+)\\.jpg", "cards\\/a\\/1080\\/$1\\.jpg");
         return url_to_load;
     }
 
@@ -215,7 +215,7 @@ public class Utils {
 
     public static boolean isCountryCodeValid(String code) {
         if (code.length() > 1) {
-            if(!(code.contains("+(null)")) && !(code.contains("null"))) {
+            if (!(code.contains("+(null)")) && !(code.contains("null"))) {
                 return true;
             }
         } else {
@@ -416,6 +416,48 @@ public class Utils {
     }
 
 
+    public static  String decodeSampledBitmapFromUri(Context context, Uri uri, int reqWidth, int reqHeight) {
+
+        Bitmap bm = null;
+        String path = null;
+        try {
+
+            final BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inJustDecodeBounds = true;
+            BitmapFactory.decodeStream(context.getContentResolver().openInputStream(uri), null, options);
+            options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+            options.inJustDecodeBounds = false;
+            bm = BitmapFactory.decodeStream(context.getContentResolver().openInputStream(uri), null, options);
+            path = MediaStore.Images.Media.insertImage(context.getContentResolver(), bm, "Title", null);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            Toast.makeText(context, e.toString(), Toast.LENGTH_LONG).show();
+        }
+
+
+
+
+
+        return path;
+    }
+
+    public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
+
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+            if (width > height) {
+                inSampleSize = Math.round((float) height / (float) reqHeight);
+            } else {
+                inSampleSize = Math.round((float) width / (float) reqWidth);
+            }
+        }
+        return inSampleSize;
+    }
+
+
     public static String getRegId(final Activity contex) {
         new AsyncTask<Void, Void, String>() {
             @Override
@@ -461,7 +503,7 @@ public class Utils {
 
     }
 
-    public static String lineBreacker(String text){
+    public static String lineBreacker(String text) {
 
 
       /* // int s = 25-text.length();
@@ -504,12 +546,11 @@ public class Utils {
         o.inJustDecodeBounds = true;
         BitmapFactory.decodeStream(c.getContentResolver().openInputStream(uri), null, o);
 
-        int width_tmp = o.outWidth
-                , height_tmp = o.outHeight;
+        int width_tmp = o.outWidth, height_tmp = o.outHeight;
         int scale = 1;
 
-        while(true) {
-            if(width_tmp / 2 < requiredSize || height_tmp / 2 < requiredSize)
+        while (true) {
+            if (width_tmp / 2 < requiredSize || height_tmp / 2 < requiredSize)
                 break;
             width_tmp /= 2;
             height_tmp /= 2;
@@ -519,20 +560,20 @@ public class Utils {
         BitmapFactory.Options o2 = new BitmapFactory.Options();
         o2.inSampleSize = scale;
 
-       Bitmap bmp =  BitmapFactory.decodeStream(c.getContentResolver().openInputStream(uri), null, o2);
+        Bitmap bmp = BitmapFactory.decodeStream(c.getContentResolver().openInputStream(uri), null, o2);
 
-            ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-           bmp.compress(Bitmap.CompressFormat.JPEG, 10, bytes);
-            String path = MediaStore.Images.Media.insertImage(c.getContentResolver(), bmp, "Title", null);
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.JPEG, 10, bytes);
+        String path = MediaStore.Images.Media.insertImage(c.getContentResolver(), bmp, "Title", null);
 
 
         return Uri.parse(path);
     }
-    public static String getLocalDate(String serverDate)
-    {
+
+    public static String getLocalDate(String serverDate) {
 //        Log.e("serverDate",serverDate);
 //         serverDate = "2014-10-09 09:46:50";
-        SimpleDateFormat sdf =  new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
         TimeZone tz = TimeZone.getDefault();
 //        Calendar cal = Calendar.getInstance();
 //        TimeZone tz = cal.getTimeZone();
@@ -551,76 +592,75 @@ public class Utils {
         String newDateStr = sdf.format(date);
 
 
-       return newDateStr;
+        return newDateStr;
     }
 
-        public static String getLocalDatefromTimestamp(long timestamp)
-        {
-            Date date = new Date(timestamp);
-            DateFormat formatter = new SimpleDateFormat("HH:mm a");
-            String dateFormatted = formatter.format(date);
-            return dateFormatted;
-        }
+    public static String getLocalDatefromTimestamp(long timestamp) {
+        Date date = new Date(timestamp);
+        DateFormat formatter = new SimpleDateFormat("HH:mm a");
+        String dateFormatted = formatter.format(date);
+        return dateFormatted;
+    }
 
 
     //monika- function to get country code from Sim
-    public static String getCountryCodeFromSim(Context context){
+    public static String getCountryCodeFromSim(Context context) {
 
-            String CountryZipCode = null;
-            TelephonyManager telephonyManager = (TelephonyManager)context. getSystemService(Context.TELEPHONY_SERVICE);
-            int simState = telephonyManager.getSimState();
-            //Log.e("simState",""+simState+"/"+TelephonyManager.SIM_STATE_NETWORK_LOCKED+"/"+TelephonyManager.SIM_STATE_UNKNOWN+"/"+TelephonyManager.SIM_STATE_READY);
-            switch (simState) {
+        String CountryZipCode = null;
+        TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        int simState = telephonyManager.getSimState();
+        //Log.e("simState",""+simState+"/"+TelephonyManager.SIM_STATE_NETWORK_LOCKED+"/"+TelephonyManager.SIM_STATE_UNKNOWN+"/"+TelephonyManager.SIM_STATE_READY);
+        switch (simState) {
 
-                case (TelephonyManager.SIM_STATE_ABSENT):
+            case (TelephonyManager.SIM_STATE_ABSENT):
 
-                case (TelephonyManager.SIM_STATE_NETWORK_LOCKED):
+            case (TelephonyManager.SIM_STATE_NETWORK_LOCKED):
 
-                case (TelephonyManager.SIM_STATE_PIN_REQUIRED):
+            case (TelephonyManager.SIM_STATE_PIN_REQUIRED):
 
-                case (TelephonyManager.SIM_STATE_PUK_REQUIRED):
+            case (TelephonyManager.SIM_STATE_PUK_REQUIRED):
 
-                case (TelephonyManager.SIM_STATE_UNKNOWN):
-                     CountryZipCode=null;
+            case (TelephonyManager.SIM_STATE_UNKNOWN):
+                CountryZipCode = null;
 
-                    break;
-                case (TelephonyManager.SIM_STATE_READY): {
-
-
-                    CountryZipCode = GetCountryZipCode(context);
-                    CountryZipCode = "+" + CountryZipCode;
-                    Log.e("COUNTRY ZIP CODE", CountryZipCode);
+                break;
+            case (TelephonyManager.SIM_STATE_READY): {
 
 
-                    break;
-                }
+                CountryZipCode = GetCountryZipCode(context);
+                CountryZipCode = "+" + CountryZipCode;
+                Log.e("COUNTRY ZIP CODE", CountryZipCode);
+
+
+                break;
             }
-            return CountryZipCode;
+        }
+        return CountryZipCode;
     }
 
 
-        public static String GetCountryZipCode(Context context){
-            String CountryID="";
-            String CountryZipCode="";
-            try {
-                TelephonyManager manager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-                //getNetworkCountryIso
-                CountryID = manager.getSimCountryIso().toUpperCase();
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-
-            String[] rl=context.getResources().getStringArray(R.array.CountryCodes);
-            for(int i=0;i<rl.length;i++){
-                String[] g=rl[i].split(",");
-                if(g[1].trim().equals(CountryID.trim())){
-                    CountryZipCode=g[0];
-                    Log.e("Code","Tis is Code>>>>>" +CountryZipCode);
-                    break;
-                }
-            }
-            return CountryZipCode;
+    public static String GetCountryZipCode(Context context) {
+        String CountryID = "";
+        String CountryZipCode = "";
+        try {
+            TelephonyManager manager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+            //getNetworkCountryIso
+            CountryID = manager.getSimCountryIso().toUpperCase();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
+        String[] rl = context.getResources().getStringArray(R.array.CountryCodes);
+        for (int i = 0; i < rl.length; i++) {
+            String[] g = rl[i].split(",");
+            if (g[1].trim().equals(CountryID.trim())) {
+                CountryZipCode = g[0];
+                Log.e("Code", "Tis is Code>>>>>" + CountryZipCode);
+                break;
+            }
+        }
+        return CountryZipCode;
+    }
 
 
 
@@ -628,156 +668,153 @@ public class Utils {
       /* code for camera*/
 
 
-      public static final String insertImage(ContentResolver cr,
-                                             Bitmap source,
-                                             String title,
-                                             String description) {
+    public static final String insertImage(ContentResolver cr,
+                                           Bitmap source,
+                                           String title,
+                                           String description) {
 
-            ContentValues values = new ContentValues();
-            values.put(MediaStore.Images.Media.TITLE, title);
-            values.put(MediaStore.Images.Media.DISPLAY_NAME, title);
-            values.put(MediaStore.Images.Media.DESCRIPTION, description);
-            values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
-            // Add the date meta data to ensure the image is added at the front of the gallery
-            values.put(MediaStore.Images.Media.DATE_ADDED, System.currentTimeMillis());
-            values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis());
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.Images.Media.TITLE, title);
+        values.put(MediaStore.Images.Media.DISPLAY_NAME, title);
+        values.put(MediaStore.Images.Media.DESCRIPTION, description);
+        values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
+        // Add the date meta data to ensure the image is added at the front of the gallery
+        values.put(MediaStore.Images.Media.DATE_ADDED, System.currentTimeMillis());
+        values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis());
 
-            Uri url = null;
-            String stringUrl = null;    /* value to be returned */
+        Uri url = null;
+        String stringUrl = null;    /* value to be returned */
 
-            try {
-                  url = cr.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+        try {
+            url = cr.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
 
-                  if (source != null) {
-                        OutputStream imageOut = cr.openOutputStream(url);
-                        try {
-                              source.compress(Bitmap.CompressFormat.JPEG, 50, imageOut);
-                        } finally {
-                              imageOut.close();
-                        }
+            if (source != null) {
+                OutputStream imageOut = cr.openOutputStream(url);
+                try {
+                    source.compress(Bitmap.CompressFormat.JPEG, 50, imageOut);
+                } finally {
+                    imageOut.close();
+                }
 
-                        long id = ContentUris.parseId(url);
-                        // Wait until MINI_KIND thumbnail is generated.
-                        Bitmap miniThumb = MediaStore.Images.Thumbnails.getThumbnail(cr, id, MediaStore.Images.Thumbnails.MINI_KIND, null);
-                        // This is for backward compatibility.
-                        storeThumbnail(cr, miniThumb, id, 50F, 50F, MediaStore.Images.Thumbnails.MICRO_KIND);
-                  } else {
-                        cr.delete(url, null, null);
-                        url = null;
-                  }
-            } catch (Exception e) {
-                  if (url != null) {
-                        cr.delete(url, null, null);
-                        url = null;
-                  }
+                long id = ContentUris.parseId(url);
+                // Wait until MINI_KIND thumbnail is generated.
+                Bitmap miniThumb = MediaStore.Images.Thumbnails.getThumbnail(cr, id, MediaStore.Images.Thumbnails.MINI_KIND, null);
+                // This is for backward compatibility.
+                storeThumbnail(cr, miniThumb, id, 50F, 50F, MediaStore.Images.Thumbnails.MICRO_KIND);
+            } else {
+                cr.delete(url, null, null);
+                url = null;
             }
-
+        } catch (Exception e) {
             if (url != null) {
-                  stringUrl = url.toString();
+                cr.delete(url, null, null);
+                url = null;
             }
+        }
 
-            return stringUrl;
-      }
+        if (url != null) {
+            stringUrl = url.toString();
+        }
 
-      /**
-       * A copy of the Android internals StoreThumbnail method, it used with the insertImage to
-       * populate the android.provider.MediaStore.Images.Media#insertImage with all the correct
-       * meta data. The StoreThumbnail method is private so it must be duplicated here.
-       * @see android.provider.MediaStore.Images.Media (StoreThumbnail private method)
-       */
-      private static final Bitmap storeThumbnail(
-                                                        ContentResolver cr,
-                                                        Bitmap source,
-                                                        long id,
-                                                        float width,
-                                                        float height,
-                                                        int kind) {
+        return stringUrl;
+    }
 
-            // create the matrix to scale it
-            Matrix matrix = new Matrix();
+    /**
+     * A copy of the Android internals StoreThumbnail method, it used with the insertImage to
+     * populate the android.provider.MediaStore.Images.Media#insertImage with all the correct
+     * meta data. The StoreThumbnail method is private so it must be duplicated here.
+     *
+     * @see android.provider.MediaStore.Images.Media (StoreThumbnail private method)
+     */
+    private static final Bitmap storeThumbnail(
+            ContentResolver cr,
+            Bitmap source,
+            long id,
+            float width,
+            float height,
+            int kind) {
 
-            float scaleX = width / source.getWidth();
-            float scaleY = height / source.getHeight();
+        // create the matrix to scale it
+        Matrix matrix = new Matrix();
 
-            matrix.setScale(scaleX, scaleY);
+        float scaleX = width / source.getWidth();
+        float scaleY = height / source.getHeight();
 
-            Bitmap thumb = Bitmap.createBitmap(source, 0, 0,
-                                                      source.getWidth(),
-                                                      source.getHeight(), matrix,
-                                                      true
-            );
+        matrix.setScale(scaleX, scaleY);
 
-            ContentValues values = new ContentValues(4);
-            values.put(MediaStore.Images.Thumbnails.KIND,kind);
-            values.put(MediaStore.Images.Thumbnails.IMAGE_ID,(int)id);
-            values.put(MediaStore.Images.Thumbnails.HEIGHT,thumb.getHeight());
-            values.put(MediaStore.Images.Thumbnails.WIDTH,thumb.getWidth());
+        Bitmap thumb = Bitmap.createBitmap(source, 0, 0,
+                source.getWidth(),
+                source.getHeight(), matrix,
+                true
+        );
 
-            Uri url = cr.insert(MediaStore.Images.Thumbnails.EXTERNAL_CONTENT_URI, values);
+        ContentValues values = new ContentValues(4);
+        values.put(MediaStore.Images.Thumbnails.KIND, kind);
+        values.put(MediaStore.Images.Thumbnails.IMAGE_ID, (int) id);
+        values.put(MediaStore.Images.Thumbnails.HEIGHT, thumb.getHeight());
+        values.put(MediaStore.Images.Thumbnails.WIDTH, thumb.getWidth());
 
-            try {
-                  OutputStream thumbOut = cr.openOutputStream(url);
-                  thumb.compress(Bitmap.CompressFormat.JPEG, 100, thumbOut);
-                  thumbOut.close();
-                  return thumb;
-            } catch (FileNotFoundException ex) {
-                  return null;
-            } catch (IOException ex) {
-                  return null;
-            }
-      }
+        Uri url = cr.insert(MediaStore.Images.Thumbnails.EXTERNAL_CONTENT_URI, values);
 
-
-      public static Uri savePhoto(Bitmap bmp)
-      {
-            //File imageFileFolder = new File(Environment.getExternalStorageDirectory(),"MyFolder"); //when you need to save the image inside your own folder in the SD Card
-            File path = Environment.getDataDirectory(); //this is the default location inside SD Card - Pictures folder
-            //imageFileFolder.mkdir(); //when you create your own folder, you use this line.
-            FileOutputStream out = null;
-            Calendar c = Calendar.getInstance();
-            String date = fromInt(c.get(Calendar.MONTH))
-                                  + fromInt(c.get(Calendar.DAY_OF_MONTH))
-                                  + fromInt(c.get(Calendar.YEAR))
-                                  + fromInt(c.get(Calendar.HOUR_OF_DAY))
-                                  + fromInt(c.get(Calendar.MINUTE))
-                                  + fromInt(c.get(Calendar.SECOND));
-            File imageFileName = new File(path, date.toString() + ".jpg"); //imageFileFolder
-            try
-            {
-                  out = new FileOutputStream(imageFileName);
-                  bmp.compress(Bitmap.CompressFormat.JPEG, 100, out);
-                  out.flush();
-                  out.close();
-                  scanPhoto(imageFileName.toString());
-                  out = null;
-            } catch (Exception e)
-            {
-                  e.printStackTrace();
-            }
-            return Uri.fromFile(imageFileName);
-      }
+        try {
+            OutputStream thumbOut = cr.openOutputStream(url);
+            thumb.compress(Bitmap.CompressFormat.JPEG, 100, thumbOut);
+            thumbOut.close();
+            return thumb;
+        } catch (FileNotFoundException ex) {
+            return null;
+        } catch (IOException ex) {
+            return null;
+        }
+    }
 
 
-      public static String fromInt(int val)
-      {
-            return String.valueOf(val);
-      }
-      public static void scanPhoto(String imageFileName)
-      {
-            Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-            File f = new File(imageFileName);
-            Uri contentUri = Uri.fromFile(f);
-            mediaScanIntent.setData(contentUri);
-            //this.cordova.getContext().sendBroadcast(mediaScanIntent); //this is deprecated
+    public static Uri savePhoto(Bitmap bmp) {
+        //File imageFileFolder = new File(Environment.getExternalStorageDirectory(),"MyFolder"); //when you need to save the image inside your own folder in the SD Card
+        File path = Environment.getDataDirectory(); //this is the default location inside SD Card - Pictures folder
+        //imageFileFolder.mkdir(); //when you create your own folder, you use this line.
+        FileOutputStream out = null;
+        Calendar c = Calendar.getInstance();
+        String date = fromInt(c.get(Calendar.MONTH))
+                + fromInt(c.get(Calendar.DAY_OF_MONTH))
+                + fromInt(c.get(Calendar.YEAR))
+                + fromInt(c.get(Calendar.HOUR_OF_DAY))
+                + fromInt(c.get(Calendar.MINUTE))
+                + fromInt(c.get(Calendar.SECOND));
+        File imageFileName = new File(path, date.toString() + ".jpg"); //imageFileFolder
+        try {
+            out = new FileOutputStream(imageFileName);
+            bmp.compress(Bitmap.CompressFormat.JPEG, 100, out);
+            out.flush();
+            out.close();
+            scanPhoto(imageFileName.toString());
+            out = null;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Uri.fromFile(imageFileName);
+    }
 
-      }
+
+    public static String fromInt(int val) {
+        return String.valueOf(val);
+    }
+
+    public static void scanPhoto(String imageFileName) {
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        File f = new File(imageFileName);
+        Uri contentUri = Uri.fromFile(f);
+        mediaScanIntent.setData(contentUri);
+        //this.cordova.getContext().sendBroadcast(mediaScanIntent); //this is deprecated
+
+    }
 
 
     public static String convertClicks(String clicks) {
 
         String changeClicks = "";
 
-        if (clicks.equalsIgnoreCase("1") || clicks.equalsIgnoreCase("+01") ) {
+        if (clicks.equalsIgnoreCase("1") || clicks.equalsIgnoreCase("+01")) {
             changeClicks = "+01       ";
         } else if (clicks.equalsIgnoreCase("2") || clicks.equalsIgnoreCase("+02")) {
             changeClicks = "+02       ";
@@ -785,17 +822,17 @@ public class Utils {
             changeClicks = "+03       ";
         } else if (clicks.equalsIgnoreCase("4") || clicks.equalsIgnoreCase("+04")) {
             changeClicks = "+04       ";
-        } else if (clicks.equalsIgnoreCase("5") || clicks.equalsIgnoreCase("+05")){
+        } else if (clicks.equalsIgnoreCase("5") || clicks.equalsIgnoreCase("+05")) {
             changeClicks = "+05       ";
         } else if (clicks.equalsIgnoreCase("6") || clicks.equalsIgnoreCase("+06")) {
             changeClicks = "+06       ";
-        } else if (clicks.equalsIgnoreCase("7")|| clicks.equalsIgnoreCase("+07"))  {
+        } else if (clicks.equalsIgnoreCase("7") || clicks.equalsIgnoreCase("+07")) {
             changeClicks = "+07       ";
         } else if (clicks.equalsIgnoreCase("8") || clicks.equalsIgnoreCase("+08")) {
             changeClicks = "+08       ";
-        } else if (clicks.equalsIgnoreCase("9") || clicks.equalsIgnoreCase("+09"))  {
+        } else if (clicks.equalsIgnoreCase("9") || clicks.equalsIgnoreCase("+09")) {
             changeClicks = "+09       ";
-        } else if (clicks.equalsIgnoreCase("10")|| clicks.equalsIgnoreCase("+10"))  {
+        } else if (clicks.equalsIgnoreCase("10") || clicks.equalsIgnoreCase("+10")) {
             changeClicks = "+10       ";
         } else if (clicks.equalsIgnoreCase("-1")) {
             changeClicks = "-01       ";
@@ -823,4 +860,4 @@ public class Utils {
         }
         return changeClicks;
     }
-    }
+}
