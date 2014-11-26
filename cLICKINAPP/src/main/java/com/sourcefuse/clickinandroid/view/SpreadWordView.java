@@ -70,23 +70,21 @@ public class SpreadWordView extends Activity implements OnClickListener {
         //Utils.launchBarDialog(this);
         //  new FetchContactFromPhone(SpreadWordView.this).getClickerList(authManager.getPhoneNo(),authManager.getUsrToken(),1);
         //   setlist();
-        profilemanager=ModelManager.getInstance().getProfileManager();
+        profilemanager = ModelManager.getInstance().getProfileManager();
 
-        if(profilemanager.spreadTheWorldList!=null && profilemanager.spreadTheWorldList.size()!=0){
-            for(ContactBean temp:profilemanager.spreadTheWorldList ){
+        if (profilemanager.spreadTheWorldList != null && profilemanager.spreadTheWorldList.size() != 0) {
+            for (ContactBean temp : profilemanager.spreadTheWorldList) {
                 temp.setChecked(false);
             }
-              setlist();
-        }else{
-              Utils.launchBarDialog(this);
-              new FetchContactFromPhone(this).getClickerList(authManager.getPhoneNo(), authManager.getUsrToken(), 1);
-          }
+            setlist();
+        } else {
+            Utils.launchBarDialog(this);
+            new FetchContactFromPhone(this).getClickerList(authManager.getPhoneNo(), authManager.getUsrToken(), 1);
+        }
 
-         if(!getIntent().getBooleanExtra("fromsignup",false))
-         {
-               findViewById(R.id.btn_next).setVisibility(View.GONE);
-         }
-
+        if (!getIntent().getBooleanExtra("fromsignup", false)) {
+            findViewById(R.id.btn_next).setVisibility(View.GONE);
+        }
 
 
     }
@@ -154,8 +152,8 @@ public class SpreadWordView extends Activity implements OnClickListener {
                     }
                 } else {
                     Utils.dismissBarDialog();
-                    Utils.fromSignalDialog(this,AlertMessage.connectionError);
-                  //  Toast.makeText(getApplicationContext(), "Please Check Your Internet Connection", Toast.LENGTH_SHORT).show();
+                    Utils.fromSignalDialog(this, AlertMessage.connectionError);
+                    //  Toast.makeText(getApplicationContext(), "Please Check Your Internet Connection", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.btn_back:
@@ -169,7 +167,7 @@ public class SpreadWordView extends Activity implements OnClickListener {
                 //   authManager.getProfileInfo("", authManager.getPhoneNo(), authManager.getUsrToken());
                 Intent clickersView = new Intent(SpreadWordView.this, UserProfileView.class);
                 clickersView.putExtra("FromSignup", true);
-                clickersView.putExtra("fromsignup", getIntent().getBooleanExtra("fromsignup", false));
+
                 startActivity(clickersView);
                 finish();
                 break;
@@ -187,38 +185,37 @@ public class SpreadWordView extends Activity implements OnClickListener {
                     }
 
 
-             /* send sms if not not register */
+                    /* send sms if not not register */
                  /*  send sms for nexus 5 check build version*/
                  /* prafull code */
                     try {
 
 
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) //At least KitKat
-                        {
-                            String defaultSmsPackageName = Telephony.Sms.getDefaultSmsPackage(SpreadWordView.this); //Need to change the build to API 19
+                        Intent smsIntent = new Intent(Intent.ACTION_VIEW);
+                        smsIntent.putExtra("sms_body", Constants.SEND_REQUEST_WITH_SMS_MESSAGE_SPREAD);
+                        smsIntent.setType("vnd.android-dir/mms-sms");
+                        smsIntent.setData(Uri.parse(uri.toString()));
+                        smsIntent.putExtra("exit_on_sent", true);
+                        startActivity(smsIntent);
 
+
+                    } catch (Exception e) {
+                        try {
+                            String defaultSmsPackageName = Telephony.Sms.getDefaultSmsPackage(SpreadWordView.this); //Need to change the build to API 19
                             Intent sendIntent = new Intent(Intent.ACTION_SEND);
                             sendIntent.setType("text/plain");
+                            sendIntent.putExtra("address", uri.toString());
                             sendIntent.putExtra(Intent.EXTRA_TEXT, Constants.SEND_REQUEST_WITH_SMS_MESSAGE);
+                            sendIntent.putExtra(Intent.ACTION_ATTACH_DATA,Uri.parse(uri.toString()));
                             if (defaultSmsPackageName != null)//Can be null in case that there is no default, then the user would be able to choose any app that support this intent.
                             {
                                 sendIntent.setPackage(defaultSmsPackageName);
                             }
-                            sendIntent.setData(Uri.parse(uri.toString()));
+                            sendIntent.putExtra("exit_on_sent", true);
                             startActivity(sendIntent);
-
-                        } else //For early versions, do what worked for you before.
-                        {
-                            Intent smsIntent = new Intent(Intent.ACTION_VIEW);
-                            smsIntent.putExtra("sms_body", Constants.SEND_REQUEST_WITH_SMS_MESSAGE);
-                            smsIntent.setData(Uri.parse(uri.toString()));
-                            smsIntent.setType("vnd.android-dir/mms-sms");
-                            startActivity(smsIntent);
+                        } catch (Exception e1) {
+                            e1.printStackTrace();
                         }
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        Log.e("Exception to send sms--->", "" + e.toString());
                     }
 
 
@@ -302,7 +299,6 @@ public class SpreadWordView extends Activity implements OnClickListener {
                                                }
 
                                            }
-
                     )
                     .
 

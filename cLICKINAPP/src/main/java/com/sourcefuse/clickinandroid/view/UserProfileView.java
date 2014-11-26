@@ -420,7 +420,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
             case R.id.btn_add_someone:
                 Intent intent = new Intent(UserProfileView.this, AddSomeoneView.class);
                 intent.putExtra("FromOwnProfile", true);
-                //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("fromsignup",false);
                 startActivity(intent);
                 break;
             case R.id.btn_edit_profile:
