@@ -98,7 +98,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 }else if(!(Utils.isEmptyString(temp.isDelivered))&& temp.isDelivered.equalsIgnoreCase(Constants.MSG_SENT)){
                     ((ProgressBar)row.findViewById(R.id.pb_loding)).setVisibility(View.GONE);
                     ((ImageView)row.findViewById(R.id.iv_type_two_share_icon_r)).setVisibility(View.VISIBLE);
-                    sendStatusView.setImageResource(R.drawable.double_check);
+                    sendStatusView.setImageResource(R.drawable.r_single_tick);
                     Picasso.with(context).load(temp.content_url)
                             .placeholder(R.drawable.default_profile)
                             .error(R.drawable.default_profile).into(image_attached);
