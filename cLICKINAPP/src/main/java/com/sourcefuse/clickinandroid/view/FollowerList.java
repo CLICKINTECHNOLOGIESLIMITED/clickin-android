@@ -125,12 +125,7 @@ public class FollowerList extends ClickInBaseView implements
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.iv_back:
-                Intent intent = new Intent(FollowerList.this, UserProfileView.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                intent.putExtra("isChangeInList", mListchangeVariable_flag);
-                startActivity(intent);
-                overridePendingTransition(0, R.anim.top_out);
-                finish();
+                onBackPressed();
                 break;
             case R.id.iv_notification_list:
                 slidemenu.showSecondaryMenu(true);

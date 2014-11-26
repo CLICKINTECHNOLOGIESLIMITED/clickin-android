@@ -53,6 +53,8 @@ import java.util.TimeZone;
 
 public class Utils {
 
+    public static boolean DEBUG = true;
+
     public static String deviceId, PROJECT_NUMBER = "1058681021160";
     private static CustomProgressDialog barProgressDialog;
 

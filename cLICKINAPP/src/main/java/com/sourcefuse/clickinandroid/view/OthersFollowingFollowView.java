@@ -74,7 +74,7 @@ public class OthersFollowingFollowView extends ClickInBaseView implements View.O
 
 
         Utils.launchBarDialog(OthersFollowingFollowView.this);
-        profManager.getFollwer(phNo, authManager.getPhoneNo(), authManager.getUsrToken());
+        profManager.getFollwerOther(phNo, authManager.getPhoneNo(), authManager.getUsrToken());
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -83,8 +83,8 @@ public class OthersFollowingFollowView extends ClickInBaseView implements View.O
 
                 if(isFollowing){
                     try {
-                    if(profManager.following.size()>=0){
-                        String phNo =  profManager.following.get(position).getPhoneNo();
+                    if(profManager.following_other.size()>=0){
+                        String phNo =  profManager.following_other.get(position).getPhoneNo();
                         switchView(phNo);
                     }
                 }catch (Exception e){
@@ -92,8 +92,8 @@ public class OthersFollowingFollowView extends ClickInBaseView implements View.O
                 }
                 }else{
                     try {
-                    if(profManager.pfollowerList.size()>=0){
-                        String phNo =  profManager.pfollowerList.get(position).getPhoneNo();
+                    if(profManager.pfollowerList_other.size()>=0){
+                        String phNo =  profManager.pfollowerList_other.get(position).getPhoneNo();
                         switchView(phNo);
                     }
                     }catch (Exception e){
@@ -121,19 +121,20 @@ public class OthersFollowingFollowView extends ClickInBaseView implements View.O
         intent.putExtra("FromOwnProfile", true);
         intent.putExtra("phNumber", phone);
         startActivity(intent);
-        this.finish();
+        finish();
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     public void setlist() {
 
           //  mFollowingListView.setVisibility(View.VISIBLE);
-            if(isFollowing && profManager.following.size()>0){
+            if(isFollowing && profManager.following_other.size()>0){
                 ((TextView) findViewById(R.id.tv_tag_screen_other)).setText(getResources().getString(R.string.txt_following));
-                adapter = new otherLollowerFollowingAdapter(this, R.layout.row_others_following_follow, profManager.following);
+                adapter = new otherLollowerFollowingAdapter(this, R.layout.row_others_following_follow, profManager.following_other);
                 listView.setAdapter(adapter);
-            }else if(profManager.pfollowerList.size()>0){
+            }else if(profManager.pfollowerList_other.size()>0){
                 ((TextView) findViewById(R.id.tv_tag_screen_other)).setText(getResources().getString(R.string.txt_follower));
-                adapter = new otherLollowerFollowingAdapter(this, R.layout.row_others_following_follow, profManager.pfollowerList);
+                adapter = new otherLollowerFollowingAdapter(this, R.layout.row_others_following_follow, profManager.pfollowerList_other);
                 listView.setAdapter(adapter);
             }
 
