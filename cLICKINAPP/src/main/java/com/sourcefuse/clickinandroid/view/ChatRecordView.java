@@ -1112,7 +1112,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                             CHAT_TYPE = Constants.CHAT_TYPE_IMAGE;
                             // new uploadMediaFileOnQb().execute(path.toString());
                             if (path != null)
-                                sendMsgToQB(path);
+                                sendMsgToQB(mImageCaptureUri.toString());
                              //   doComposeMediaMsg(path);
                                 //uploadImageFileOnQB(path.toString());
                         }
@@ -1322,7 +1322,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
                     attachBtn.setImageDrawable(getResources().getDrawable(R.drawable.attach_icon));
                 }*/
-
+                attachBtn.setImageDrawable(getResources().getDrawable(R.drawable.r_footer_icon));
                 // chatText.setText("");
                 break;
             case R.id.iv_menu_button:
@@ -1524,13 +1524,12 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     private void uploadImageFileOnQB(String path, String msgId) {
         File mfile = new File(path);
         final String chatId=msgId;
-        Boolean fileIsPublic = false;
+        Boolean fileIsPublic = true;
         QBContent.uploadFileTask(mfile, fileIsPublic, null, new QBEntityCallbackImpl<QBFile>() {
             @Override
             public void onSuccess(QBFile file, Bundle params) {
-               String fileUrl= file.getId().toString();
+               String fileUrl= file.getPublicUrl().toString();
                sendMediaMsgToQB(fileUrl, chatId);
-
             }
 
             @Override
@@ -1576,7 +1575,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         mybar.setProgress(10);
         mImageCaptureUri=null;
      //   path=null;
-        attachBtn.setImageDrawable(getResources().getDrawable(R.drawable.r_img_icon));
+        attachBtn.setImageDrawable(getResources().getDrawable(R.drawable.r_footer_icon));
         uploadImageFileOnQB(path,temp.chatId);
 
 
@@ -1591,7 +1590,6 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             //   Utils.launchBarDialog(this);
             Intent i = new Intent(this, MyQbChatService.class);
             bindService(i, mConnection, Context.BIND_AUTO_CREATE);
-
             updateValues(intent);
         } else if (actionReq.equalsIgnoreCase("CARD")) {
             Log.e(TAG + "onNewIntent", "onNewIntent");
@@ -1622,7 +1620,6 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
             if (myQbChatService != null)
                 myQbChatService.sendMessage(temp);
-
         }
 
     }
@@ -1647,11 +1644,15 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
         // TODO Auto-generated method stub
-        if (s.length() > 0) {
-            myQbChatService.sendTypeNotification("YES", qBId);
+        try {
+            if (s.length() > 0) {
+                myQbChatService.sendTypeNotification("YES", qBId);
 
-        } else {
-            myQbChatService.sendTypeNotification("NO", qBId);
+            } else {
+                myQbChatService.sendTypeNotification("NO", qBId);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
      /*   DefaultPacketExtension extension = new DefaultPacketExtension("extraParams", "jabber:client");
         if (s.length() > 0) {
@@ -1789,6 +1790,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 switch (requestCode) {
                     case Constants.CAMERA_REQUEST:
                         Bitmap imageBitmap;
+                       // mImageCaptureUri = data.getData();
+
                         try {
 
                                           /* code prafull for camera */
