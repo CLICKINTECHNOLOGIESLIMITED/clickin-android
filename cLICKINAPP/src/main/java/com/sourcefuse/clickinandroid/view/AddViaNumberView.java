@@ -198,6 +198,7 @@ public class AddViaNumberView extends Activity implements View.OnClickListener,T
                     Intent intent = new Intent(this,CurrentClickersView.class);
                     intent.putExtra("FromMenu",false);
                     intent.putExtra("FromSignup", true);
+                    intent.putExtra("fromsignup", getIntent().getBooleanExtra("fromsignup", false));
                     startActivity(intent);
 
                     finish();

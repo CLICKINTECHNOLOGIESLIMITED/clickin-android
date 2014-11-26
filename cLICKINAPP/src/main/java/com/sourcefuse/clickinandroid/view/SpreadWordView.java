@@ -4,7 +4,10 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Telephony;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -166,13 +169,13 @@ public class SpreadWordView extends Activity implements OnClickListener {
                 //   authManager.getProfileInfo("", authManager.getPhoneNo(), authManager.getUsrToken());
                 Intent clickersView = new Intent(SpreadWordView.this, UserProfileView.class);
                 clickersView.putExtra("FromSignup", true);
+                clickersView.putExtra("fromsignup", getIntent().getBooleanExtra("fromsignup", false));
                 startActivity(clickersView);
                 finish();
                 break;
             case R.id.btn_invite:
                 if (Utils.groupSms.size() > 0) {
-                    Intent smsIntent = new Intent(Intent.ACTION_VIEW);
-                    smsIntent.putExtra("sms_body", Constants.SEND_REQUEST_WITH_SMS_MESSAGE_SPREAD);
+
 
                     StringBuilder uri = new StringBuilder("sms:");
                     ListIterator<String> iterator = Utils.groupSms.listIterator();
@@ -183,22 +186,40 @@ public class SpreadWordView extends Activity implements OnClickListener {
                             uri.append(",");
                     }
 
-                    smsIntent.setType("vnd.android-dir/mms-sms");
-                    smsIntent.setData(Uri.parse(uri.toString()));
-                    startActivity(smsIntent);
 
-            /*Intent smsIntent = new Intent(Intent.ACTION_VIEW);
-            smsIntent.putExtra("sms_body", "Hello ClickIn");
-            smsIntent.putExtra("address", "4");
-            smsIntent.setType("vnd.android-dir/mms-sms");
-            startActivity(smsIntent);*/
+             /* send sms if not not register */
+                 /*  send sms for nexus 5 check build version*/
+                 /* prafull code */
+                    try {
 
-           /* Intent sendIntent = new Intent(Intent.ACTION_VIEW);
-            sendIntent.putExtra("sms_body", "default content");
-            sendIntent.setType("vnd.android-dir/mms-sms");
-            if (sendIntent.resolveActivity(getPackageManager()) != null) {
-                startActivity(sendIntent);
-            }*/
+
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) //At least KitKat
+                        {
+                            String defaultSmsPackageName = Telephony.Sms.getDefaultSmsPackage(SpreadWordView.this); //Need to change the build to API 19
+
+                            Intent sendIntent = new Intent(Intent.ACTION_SEND);
+                            sendIntent.setType("text/plain");
+                            sendIntent.putExtra(Intent.EXTRA_TEXT, Constants.SEND_REQUEST_WITH_SMS_MESSAGE);
+                            if (defaultSmsPackageName != null)//Can be null in case that there is no default, then the user would be able to choose any app that support this intent.
+                            {
+                                sendIntent.setPackage(defaultSmsPackageName);
+                            }
+                            sendIntent.setData(Uri.parse(uri.toString()));
+                            startActivity(sendIntent);
+
+                        } else //For early versions, do what worked for you before.
+                        {
+                            Intent smsIntent = new Intent(Intent.ACTION_VIEW);
+                            smsIntent.putExtra("sms_body", Constants.SEND_REQUEST_WITH_SMS_MESSAGE);
+                            smsIntent.setData(Uri.parse(uri.toString()));
+                            smsIntent.setType("vnd.android-dir/mms-sms");
+                            startActivity(smsIntent);
+                        }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Log.e("Exception to send sms--->", "" + e.toString());
+                    }
 
 
                 } else {

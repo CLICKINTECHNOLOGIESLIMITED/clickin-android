@@ -199,6 +199,7 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
 
                                 Intent sendIntent = new Intent(Intent.ACTION_SEND);
                                 sendIntent.setType("text/plain");
+                                sendIntent.putExtra("address", mPhNo);
                                 sendIntent.putExtra(Intent.EXTRA_TEXT, Constants.SEND_REQUEST_WITH_SMS_MESSAGE);
 
                                 if (defaultSmsPackageName != null)//Can be null in case that there is no default, then the user would be able to choose any app that support this intent.
@@ -265,6 +266,7 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
                 Utils.dismissBarDialog();
                 Intent intent = new Intent(this, UserProfileView.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                intent.putExtra("fromsignup", getIntent().getBooleanExtra("fromsignup", false));
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
                 finish();
