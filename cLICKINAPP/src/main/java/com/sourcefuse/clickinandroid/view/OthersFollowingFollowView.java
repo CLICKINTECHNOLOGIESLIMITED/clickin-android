@@ -5,7 +5,6 @@ package com.sourcefuse.clickinandroid.view;
  */
 
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,7 +12,6 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.sourcefuse.clickinandroid.model.AuthManager;
@@ -21,7 +19,6 @@ import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.ProfileManager;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.Utils;
-import com.sourcefuse.clickinandroid.view.adapter.FollowingAdapter;
 import com.sourcefuse.clickinandroid.view.adapter.otherLollowerFollowingAdapter;
 import com.sourcefuse.clickinapp.R;
 
@@ -80,6 +77,7 @@ public class OthersFollowingFollowView extends ClickInBaseView implements View.O
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+                  listView.setBackgroundColor(getResources().getColor(R.color.transparent));
 
                 if(isFollowing){
                     try {

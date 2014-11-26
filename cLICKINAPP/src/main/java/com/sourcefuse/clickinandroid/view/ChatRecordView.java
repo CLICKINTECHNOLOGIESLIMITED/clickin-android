@@ -20,6 +20,7 @@ import android.os.IBinder;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.method.ScrollingMovementMethod;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -673,6 +674,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         attachLocation = (ImageView) findViewById(R.id.iv_location);
         btnToCard = (Button) findViewById(R.id.btn_to_card);
 
+        chatText.setMovementMethod(new ScrollingMovementMethod());// akshit Code to scroll text smoothly inside edit text
 
         //profileName.setTypeface(typeface, typeface.BOLD);
         // typingtext.setTypeface(typeface);

@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -248,7 +247,7 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
             TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
 
             Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "fonts/AvenirNextLTPro-MediumCn_0.otf");
-
+            Typeface typefaceBold = Typeface.createFromAsset(getContext().getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_BOLD);//akshit to make text bold
 
 
             RelativeLayout relativeLayout = (RelativeLayout) view;
@@ -257,11 +256,10 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
             msgI.setTypeface(tf);
             msgI.setText(str);
 
-
             Button skip = (Button) dialog.findViewById(R.id.coolio);
-            skip.setTypeface(tf);
+            skip.setTypeface(typefaceBold);
             Button dismiss = (Button) dialog.findViewById(R.id.coolio1);
-            dismiss.setTypeface(tf);
+            dismiss.setTypeface(typefaceBold);
             skip.setTag(button);
 
             skip.setOnClickListener(new View.OnClickListener() {
@@ -299,14 +297,15 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
             dialog.setCancelable(false);
             TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
             Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "fonts/AvenirNextLTPro-MediumCn_0.otf");
+            Typeface typefaceBold = Typeface.createFromAsset(getContext().getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_BOLD);//akshit to make text bold
 
             msgI.setText(str);
             Button skip = (Button) dialog.findViewById(R.id.coolio);
             Button dismiss = (Button) dialog.findViewById(R.id.coolio1);
 
             msgI.setTypeface(tf);
-            skip.setTypeface(tf);
-            dismiss.setTypeface(tf);
+            skip.setTypeface(typefaceBold);
+            dismiss.setTypeface(typefaceBold);
 
 
 

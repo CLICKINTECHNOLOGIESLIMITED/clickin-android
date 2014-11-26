@@ -2,6 +2,7 @@ package com.sourcefuse.clickinandroid.view;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -21,6 +22,7 @@ import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.ProfileManager;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
+import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.FetchContactFromPhone;
 import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinandroid.utils.Utils;
@@ -37,6 +39,7 @@ public class AddSomeoneView extends Activity implements TextWatcher {
     private TextView bottom_text, back, title_top, title_bottom;//akshit code to hide textview
     private ContactAdapter adapter;
     private RelativeLayout showContactlist, layout_back;
+    private Typeface typeface, typefaceBold;
     AuthManager authManager;
 
 
@@ -46,7 +49,8 @@ public class AddSomeoneView extends Activity implements TextWatcher {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.view_addsomeone);
         this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
-
+        typeface = Typeface.createFromAsset(AddSomeoneView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
+        typefaceBold = Typeface.createFromAsset(AddSomeoneView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_BOLD);
         bottom_text = (TextView) findViewById(R.id.edt_text);//akshit code
         title_bottom = (TextView) findViewById(R.id.title_text_bottom);
         title_top = (TextView) findViewById(R.id.title_text_top);
@@ -59,6 +63,8 @@ public class AddSomeoneView extends Activity implements TextWatcher {
         showContactlist = (RelativeLayout) findViewById(R.id.rr_con_list);
         search_phbook.addTextChangedListener(this);
         authManager = ModelManager.getInstance().getAuthorizationManager();
+        bottom_text.setTypeface(typefaceBold);
+
 
         listView.setOnItemClickListener(new OnItemClickListener() {
             @Override

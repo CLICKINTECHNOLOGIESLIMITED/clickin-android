@@ -31,11 +31,7 @@ import com.sourcefuse.clickinandroid.view.JumpOtherProfileView;
 import com.sourcefuse.clickinapp.R;
 import com.squareup.picasso.Picasso;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
-
-import de.greenrobot.event.EventBus;
 
 public class FollowerAdapter extends ArrayAdapter<FollowerFollowingBean> {
     private static final String TAG = FollowerAdapter.class.getSimpleName();
@@ -320,8 +316,11 @@ public class FollowerAdapter extends ArrayAdapter<FollowerFollowingBean> {
         Button dismiss = (Button) dialog.findViewById(R.id.coolio1);
 
         Typeface face = Typeface.createFromAsset(getContext().getAssets(), "fonts/AvenirNextLTPro-MediumCn_0.otf");
+        Typeface typefaceBold = Typeface.createFromAsset(getContext().getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_BOLD);//akshit to set bold for buttom
         skip.setTypeface(face);
+        skip.setTypeface(typefaceBold);//akshit to set bold for buttom
         dismiss.setTypeface(face);
+        dismiss.setTypeface(typefaceBold);//akshit to set bold for buttom
 
         skip.setTag(position1);
         skip.setOnClickListener(new View.OnClickListener() {
