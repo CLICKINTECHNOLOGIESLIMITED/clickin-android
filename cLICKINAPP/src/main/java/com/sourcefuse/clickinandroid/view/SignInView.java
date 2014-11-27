@@ -129,9 +129,9 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
 
 
 
-          
+        ephone.setText("+9144444");
         ephone.setSelection(ephone.getText().toString().length());
-        //No need For this akshit
+        //No need. For this akshit
 
 
 //        ephone.setOnTouchListener(new View.OnTouchListener() {
@@ -188,6 +188,7 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
 //        }
 //       }
         }
+
 
     }
 

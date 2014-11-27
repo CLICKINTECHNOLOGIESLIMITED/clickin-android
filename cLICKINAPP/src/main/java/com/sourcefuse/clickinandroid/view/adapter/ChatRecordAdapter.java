@@ -3,6 +3,7 @@ package com.sourcefuse.clickinandroid.view.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -22,6 +23,7 @@ import com.sourcefuse.clickinandroid.model.bean.ChatRecordBeen;
 import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinandroid.utils.Utils;
+import com.sourcefuse.clickinandroid.view.ImageViewer;
 import com.sourcefuse.clickinapp.R;
 import com.squareup.picasso.Picasso;
 
@@ -46,7 +48,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ChatMessageBody temp = currentChatList.get(position);
+        final ChatMessageBody temp = currentChatList.get(position);
         LayoutInflater inflater = ((Activity) context).getLayoutInflater();
         View row = inflater.inflate(R.layout.view_chat_demo, parent, false);
         String oursQbId = ModelManager.getInstance().getAuthorizationManager().getQBId();
@@ -86,10 +88,12 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     ((ProgressBar)row.findViewById(R.id.pb_loding)).setVisibility(View.VISIBLE);
                     ((ImageView)row.findViewById(R.id.iv_type_two_share_icon_r)).setVisibility(View.GONE);
 
+
+
+
                    sendStatusView.setImageResource(R.drawable.r_single_tick);
                     //Uri tempUri=Uri.parse(temp.content_url);
                     Picasso.with(context).load(temp.content_url)
-
                             .placeholder(R.drawable.default_profile)
                             .error(R.drawable.default_profile).into(image_attached);
 
@@ -106,7 +110,40 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 image_attached.setVisibility(View.VISIBLE);
 
 
-            }//end of image loop-sender
+            }else{// //end of image loop-sender And Audio start
+                if(!Utils.isEmptyString(temp.content_url)) {
+
+                    parentChatLayout.setBackgroundResource(R.drawable.audio_send);
+                    ((ImageView)row.findViewById(R.id.iv_audio_play)).setVisibility(View.VISIBLE);
+
+                    if (!(Utils.isEmptyString(temp.textMsg)) || (!(temp.clicks.equalsIgnoreCase("no")))) {
+                        chatClickTextLayout.setVisibility(View.VISIBLE);
+                        RelativeLayout.LayoutParams paramsrr = new RelativeLayout.LayoutParams(
+                                RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+                        paramsrr.addRule(RelativeLayout.BELOW, R.id.iv_chat_image);
+                        chatClickTextLayout.setLayoutParams(paramsrr);
+                    }
+
+                    //code to set msg deilvery notification
+                    ImageView sendStatusView = (ImageView) row.findViewById(R.id.iv_send_status);
+                    if (!(Utils.isEmptyString(temp.isDelivered)) && temp.isDelivered.equalsIgnoreCase(Constants.MSG_SENDING)) {
+                        ((ProgressBar) row.findViewById(R.id.pb_loding)).setVisibility(View.VISIBLE);
+                        ((ImageView) row.findViewById(R.id.iv_type_two_share_icon_r)).setVisibility(View.GONE);
+
+                        sendStatusView.setImageResource(R.drawable.r_single_tick);
+
+
+                    } else if (!(Utils.isEmptyString(temp.isDelivered)) && temp.isDelivered.equalsIgnoreCase(Constants.MSG_SENT)) {
+                        ((ProgressBar) row.findViewById(R.id.pb_loding)).setVisibility(View.GONE);
+                        ((ImageView) row.findViewById(R.id.iv_type_two_share_icon_r)).setVisibility(View.VISIBLE);
+                        sendStatusView.setImageResource(R.drawable.double_check);
+
+                    }
+
+
+
+                }
+            }
 
         //only text-SENDER CASE
             if (!Utils.isEmptyString(temp.textMsg) && temp.clicks.equalsIgnoreCase("no")) {
@@ -137,7 +174,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
             //CLICKS AND TEXT- SENDER CASE
             if (!(temp.clicks.equalsIgnoreCase("no")) ) {
                 chatClickTextLayout.setVisibility(View.VISIBLE);
-                parentChatLayout.setBackgroundResource(R.drawable.c_clicks_s_bgpink);
+                chatClickTextLayout.setBackgroundResource(R.drawable.c_clicks_s_bgpink);
                 LinearLayout clicksArea = (LinearLayout) row.findViewById(R.id.clicks_area);
                 clicksArea.setVisibility(View.VISIBLE);
                 //  clicksArea.setBackgroundResource(R.drawable.c_clicks_s_bgpink);
@@ -222,6 +259,20 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                         .placeholder(R.drawable.default_profile)
                         .error(R.drawable.default_profile).into(image_attached);
 
+            }else{
+                if(!Utils.isEmptyString(temp.content_url)) {
+                    chatParentLayout.setBackgroundResource(R.drawable.audio_recieve);
+                    ((ImageView)row.findViewById(R.id.iv_audio_play)).setVisibility(View.VISIBLE);
+
+                    if (!(Utils.isEmptyString(temp.textMsg)) || (!(temp.clicks.equalsIgnoreCase("no")))) {
+                        chatClickTextLayout.setVisibility(View.VISIBLE);
+                        RelativeLayout.LayoutParams paramsr2 = new RelativeLayout.LayoutParams(
+                                RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+                        paramsr2.addRule(RelativeLayout.BELOW, R.id.iv_chat_image);
+                        chatClickTextLayout.setLayoutParams(paramsr2);
+                    }
+
+                }
             }
 
 
@@ -230,7 +281,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 chatClickTextLayout.setVisibility(View.VISIBLE);
                 TextView chatText = (TextView) row.findViewById(R.id.chat_text);
                 LinearLayout clicksArea = (LinearLayout) row.findViewById(R.id.clicks_area);
-                chatParentLayout.setBackgroundResource(R.drawable.whitechatbg);
+                chatClickTextLayout.setBackgroundResource(R.drawable.whitechatbg);
                 clicksArea.setVisibility(View.VISIBLE);
 
                 chatText.setVisibility(View.VISIBLE);
@@ -257,7 +308,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 chatClickTextLayout.setVisibility(View.VISIBLE);
                 LinearLayout clicksArea = (LinearLayout) row.findViewById(R.id.clicks_area);
                 clicksArea.setVisibility(View.VISIBLE);
-                chatParentLayout.setBackgroundResource(R.drawable.c_clicks_r_bgpink);
+                chatClickTextLayout.setBackgroundResource(R.drawable.c_clicks_r_bgpink);
 
                 TextView clicksText = (TextView) row.findViewById(R.id.clicks_text);
                 clicksText.setVisibility(View.VISIBLE);
@@ -292,7 +343,34 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
 
         }//end of reciver
-        //   authManager = ModelManager.getInstance().getAuthorizationManager();
+
+
+        ((ImageView)row.findViewById(R.id.iv_chat_image)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+
+                Intent intent = new Intent(context, ImageViewer.class);
+                intent.putExtra("Url", temp.content_url);
+                context.startActivity(intent);
+                ((Activity) context).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+
+
+            }
+        });
+
+        ((ImageView)row.findViewById(R.id.iv_audio_play)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+
+                Uri myUri = Uri.parse(temp.content_url);
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setDataAndType(myUri, "audio/*");
+                context.startActivity(intent);
+
+
+            }
+        });
+
         return row;
     }
 

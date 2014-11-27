@@ -140,8 +140,18 @@ public class MyQbChatService extends Service {
                 data.putString("imageRatio", msgObject.imageRatio);
                 data.putString("FileId", msgObject.content_url);
                 break;
-
-
+            case Constants.CHAT_TYPE_AUDIO:
+                data.putString("FileId", msgObject.content_url);
+                break;
+            case Constants.CHAT_TYPE_VIDEO:
+                data.putString("videoThumbnail", msgObject.video_thumb);
+                data.putString("FileId", msgObject.content_url);
+                break;
+            case Constants.CHAT_TYPE_LOCATION:
+                data.putString("location_coordinates", msgObject.location_coordinates);
+                data.putString("imageRatio", msgObject.imageRatio);
+                data.putString("FileId", msgObject.content_url);
+                break;
         }
 
         msg.setData(data);

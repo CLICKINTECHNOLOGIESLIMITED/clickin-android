@@ -37,18 +37,19 @@
         <Button
             android:id="@+id/coolio"
             android:layout_width="130dp"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
             android:layout_below="@+id/alert_msgI"
             android:textSize="20dp"
             android:text="OK"
             android:textColor="@color/white"
             android:layout_marginTop="40dp"
+            android:textStyle="bold"
             android:background="@drawable/blue_btn" />
 
         <Button
             android:id="@+id/coolio1"
             android:layout_width="130dp"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
             android:layout_below="@+id/alert_msgI"
             android:layout_centerHorizontal="true"
             android:textSize="20dp"
