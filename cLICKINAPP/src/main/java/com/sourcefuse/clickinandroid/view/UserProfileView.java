@@ -1,5 +1,7 @@
 package com.sourcefuse.clickinandroid.view;
 
+import android.app.ActivityManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -33,6 +35,7 @@ import com.sourcefuse.clickinapp.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class UserProfileView extends ClickInBaseView implements View.OnClickListener {
@@ -548,6 +551,15 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
                 relationManager.getRelationShips(authManager.getPhoneNo(), authManager.getUsrToken());
             }
         }
+
+
+        ActivityManager am = (ActivityManager) this.getSystemService(ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
+        Log.d("topActivity", "CURRENT Activity ::" + taskInfo.get(0).topActivity.getClassName());
+        ComponentName componentInfo = taskInfo.get(0).topActivity;
+
+
+        com.sourcefuse.clickinandroid.utils.Log.e("package name--->",""+componentInfo.getClass());
     }
 
     public void onDestroy() {

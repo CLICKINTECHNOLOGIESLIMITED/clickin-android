@@ -230,6 +230,8 @@ public class SpreadWordView extends Activity implements OnClickListener {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        com.sourcefuse.clickinandroid.utils.Log.e("on activity result","on activity result");
         try {
             super.onActivityResult(requestCode, resultCode, data);
             try {

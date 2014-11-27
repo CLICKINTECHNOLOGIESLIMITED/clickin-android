@@ -255,5 +255,10 @@ public class AddViaNumberView extends Activity implements View.OnClickListener,T
 // Ends
 
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
+        com.sourcefuse.clickinandroid.utils.Log.e("on activity result","on activity result");
+
+    }
 }
