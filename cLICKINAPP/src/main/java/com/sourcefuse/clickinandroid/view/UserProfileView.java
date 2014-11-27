@@ -198,9 +198,13 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
 
         //prafull code to set image bitmap
         try {
-            Bitmap imagebitmap = authManager.getUserbitmap();
-            if(imagebitmap != null)
-                userimage.setImageBitmap(imageBitmap);
+            Bitmap imagebitmap1 = authManager.getUserbitmap();
+            if(imagebitmap1 != null)
+                com.sourcefuse.clickinandroid.utils.Log.e("user bit map not null","user bit map not null");
+
+            if(imagebitmap1 != null)
+                userimage.setImageBitmap(imagebitmap1);
+
             else if(!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl"))
                 Picasso.with(UserProfileView.this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.female_user).into(userimage);
             else if(!Utils.isEmptyString(authManager.getGender()))
@@ -208,6 +212,8 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
 
         }catch (Exception e)
         {
+            com.sourcefuse.clickinandroid.utils.Log.e("on exception","on exception");
+
             if(!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl"))
                 userimage.setImageResource(R.drawable.male_user);
             else if(!Utils.isEmptyString(authManager.getGender()))

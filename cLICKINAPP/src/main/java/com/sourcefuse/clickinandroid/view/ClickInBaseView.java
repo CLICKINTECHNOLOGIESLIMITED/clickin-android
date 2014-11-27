@@ -98,8 +98,6 @@ public class
 
         authManager = ModelManager.getInstance().getAuthorizationManager();
 
-
-
     }
 
     @SuppressWarnings("static-access")
