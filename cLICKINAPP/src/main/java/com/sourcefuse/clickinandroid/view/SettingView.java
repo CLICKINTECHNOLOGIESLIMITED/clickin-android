@@ -44,7 +44,6 @@ public class SettingView extends Activity implements View.OnClickListener {
       private AuthManager authManager;
       private SettingManager settingManager;
       private UiLifecycleHelper uiHelper;
-      private ScrollView scroll_view;
 
       @Override
       protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +60,6 @@ public class SettingView extends Activity implements View.OnClickListener {
             not_working_layout = (LinearLayout) findViewById(R.id.not_working_layout);
             general_feed_layout = (LinearLayout) findViewById(R.id.general_feed_layout);
             logout_layout = (LinearLayout) findViewById(R.id.logout_layout);
-
 //            typefacemedium = Typeface.createFromAsset(SettingView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
 //            typefaceBold = Typeface.createFromAsset(SettingView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_BOLD);
             authManager = ModelManager.getInstance().getAuthorizationManager();
@@ -206,6 +204,8 @@ public class SettingView extends Activity implements View.OnClickListener {
                               checkboolean6 = true;
                               a.setHeight(height);
                               logout_layout.startAnimation(a);
+                            ((ScrollView)findViewById(R.id.scroll_view)).scrollTo(0,900);
+
                         }
                         break;
                   case R.id.deactivate_account:

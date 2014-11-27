@@ -105,6 +105,7 @@ public class DeactivateAccountView extends Activity implements View.OnClickListe
     public void onBackPressed() {
         super.onBackPressed();
         finish();
+        overridePendingTransition(0,R.anim.top_out);//akshit code for animation
     }
 
     @Override

@@ -28,12 +28,20 @@
       </config>
     </shared>
     <layouts>
+<<<<<<< HEAD
       <layout url="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/row_search_list.xml">
+=======
+      <layout url="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_addsomeone.xml">
+>>>>>>> 9ed61ecfa893ca2a8488c24eb5ce241dbf4840ca
         <config>
           <theme>@style/AppTheme</theme>
         </config>
       </layout>
+<<<<<<< HEAD
       <layout url="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_chat_layout.xml">
+=======
+      <layout url="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_setting.xml">
+>>>>>>> 9ed61ecfa893ca2a8488c24eb5ce241dbf4840ca
         <config>
           <theme>@style/AppTheme</theme>
         </config>
@@ -54,6 +62,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1b1e4e35-a6a6-446f-963c-15cc88993b9a" name="Default" comment="">
+<<<<<<< HEAD
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/model/AuthManager.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/model/AuthManager.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/ChatRecordView.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/ChatRecordView.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/ClickInBaseView.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/ClickInBaseView.java" />
@@ -61,6 +70,40 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/EditMyProfileView.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/EditMyProfileView.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/SignInView.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/SignInView.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/UserProfileView.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/UserProfileView.java" />
+=======
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_tradecart1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/viewcard_tabhost.xml" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/.name" afterPath="$PROJECT_DIR$/.idea/.name" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/AddSomeoneView.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/AddSomeoneView.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/Card.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/Card.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/CardView.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/CardView.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/CurrentClickersView.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/CurrentClickersView.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/adapter/DeactivateAccountView.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/adapter/DeactivateAccountView.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/SettingView.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/SettingView.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/SpreadWordView.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/SpreadWordView.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/ViewTradeCart.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/ViewTradeCart.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/card_click.xml" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/card_click.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout-xhdpi/card_click.xml" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout-xhdpi/card_click.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout-xxhdpi/card_click.xml" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout-xxhdpi/card_click.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local.properties" afterPath="$PROJECT_DIR$/local.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_addviacontactlist.xml" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_addviacontactlist.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_addvianumber.xml" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_addvianumber.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_currentclickers.xml" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_currentclickers.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_deactivate_account.xml" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_deactivate_account.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_editprofile.xml" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_editprofile.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_followerlist.xml" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_followerlist.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_followinglist.xml" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_followinglist.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_othes_follow_following.xml" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_othes_follow_following.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_privacy_layout.xml" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_privacy_layout.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_setting.xml" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_setting.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_spam.xml" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_spam.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_tabhost2.xml" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_tabhost2.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_term_use.xml" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_term_use.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_tradecart.xml" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_tradecart.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout-xhdpi/view_tradecart.xml" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout-xhdpi/view_tradecart.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout-xxhdpi/view_tradecart.xml" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout-xxhdpi/view_tradecart.xml" />
+>>>>>>> 9ed61ecfa893ca2a8488c24eb5ce241dbf4840ca
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="clickin-andoid.iws" />
@@ -89,6 +132,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
+<<<<<<< HEAD
       <file leaf-file-name="EditMyProfileView.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/EditMyProfileView.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -99,15 +143,57 @@
                 <element signature="e#3234#3928#0" expanded="true" />
                 <element signature="e#3916#3917#0" expanded="true" />
               </folding>
+=======
+      <file leaf-file-name="view_spread_word.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_spread_word.xml">
+          <provider editor-type-id="android-designer">
+            <state />
+          </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-5.9615383" vertical-offset="1255" max-vertical-offset="2670">
+              <caret line="94" column="12" selection-start-line="94" selection-start-column="12" selection-end-line="94" selection-end-column="12" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="CurrentClickersView.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/CurrentClickersView.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="574" max-vertical-offset="4485">
+              <caret line="61" column="15" selection-start-line="61" selection-start-column="15" selection-end-line="61" selection-end-column="15" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="view_currentclickers.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_currentclickers.xml">
+          <provider editor-type-id="android-designer">
+            <state />
+          </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-7.1153846" vertical-offset="1435" max-vertical-offset="2910">
+              <caret line="108" column="35" selection-start-line="108" selection-start-column="35" selection-end-line="108" selection-end-column="35" />
+              <folding />
+>>>>>>> 9ed61ecfa893ca2a8488c24eb5ce241dbf4840ca
+            </state>
+          </provider>
+        </entry>
+      </file>
+<<<<<<< HEAD
       <file leaf-file-name="UserProfileView.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/UserProfileView.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="2160" max-vertical-offset="6345">
               <caret line="214" column="9" selection-start-line="199" selection-start-column="8" selection-end-line="214" selection-end-column="9" />
+=======
+      <file leaf-file-name="SpreadWordView.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/SpreadWordView.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.6533333" vertical-offset="467" max-vertical-offset="4500">
+              <caret line="84" column="65" selection-start-line="84" selection-start-column="65" selection-end-line="84" selection-end-column="65" />
+>>>>>>> 9ed61ecfa893ca2a8488c24eb5ce241dbf4840ca
               <folding />
             </state>
           </provider>
@@ -3669,7 +3755,11 @@
     </option>
     <option name="modificationStamps">
       <map>
+<<<<<<< HEAD
         <entry key="$PROJECT_DIR$" value="12743740280000" />
+=======
+        <entry key="$PROJECT_DIR$" value="12733774460570" />
+>>>>>>> 9ed61ecfa893ca2a8488c24eb5ce241dbf4840ca
       </map>
     </option>
     <option name="projectBuildClasspath">
@@ -4406,6 +4496,7 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
+<<<<<<< HEAD
         <option value="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/model/NewsFeedManagerI.java" />
         <option value="$PROJECT_DIR$/settings.gradle" />
         <option value="$PROJECT_DIR$/library_pull/build.gradle" />
@@ -4425,6 +4516,8 @@
         <option value="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/feeds_image.xml" />
         <option value="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_signin.xml" />
         <option value="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/utils/Constants.java" />
+=======
+>>>>>>> 9ed61ecfa893ca2a8488c24eb5ce241dbf4840ca
         <option value="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_userprofile.xml" />
         <option value="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/FeedStarsView.java" />
         <option value="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/FeedCommentsView.java" />
@@ -4439,6 +4532,7 @@
         <option value="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/feed_list_item.xml" />
         <option value="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/adapter/FeedsAdapter.java" />
         <option value="$PROJECT_DIR$/cLICKINAPP/src/main/res/values/colors.xml" />
+<<<<<<< HEAD
         <option value="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_tradecart.xml" />
         <option value="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/utils/APIs.java" />
         <option value="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/adapter/AdapterAll.java" />
@@ -4457,14 +4551,52 @@
         <option value="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/ClickInBaseView.java" />
         <option value="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/UserProfileView.java" />
         <option value="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/EditMyProfileView.java" />
+=======
+        <option value="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/ChatRecordView.java" />
+        <option value="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/UserProfileView.java" />
+        <option value="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/utils/APIs.java" />
+        <option value="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/adapter/AdapterAll.java" />
+        <option value="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/adapter/CardGridViewAdapter.java" />
+        <option value="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/ViewSpamorAbuse.java" />
+        <option value="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/PrivacyView.java" />
+        <option value="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/TermUseView.java" />
+        <option value="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/CardView.java" />
+        <option value="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/SettingView.java" />
+        <option value="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_tabhost2.xml" />
+        <option value="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/Card.java" />
+        <option value="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/card_click.xml" />
+        <option value="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout-xhdpi/card_click.xml" />
+        <option value="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout-xxhdpi/card_click.xml" />
+        <option value="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_tradecart.xml" />
+        <option value="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/ViewTradeCart.java" />
+        <option value="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_editprofile.xml" />
+        <option value="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_setting.xml" />
+        <option value="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_deactivate_account.xml" />
+        <option value="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/adapter/DeactivateAccountView.java" />
+        <option value="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_spam.xml" />
+        <option value="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_privacy_layout.xml" />
+        <option value="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_term_use.xml" />
+        <option value="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout-xhdpi/view_tradecart.xml" />
+        <option value="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout-xxhdpi/view_tradecart.xml" />
+        <option value="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/AddSomeoneView.java" />
+        <option value="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_addvianumber.xml" />
+        <option value="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_addviacontactlist.xml" />
+        <option value="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_followerlist.xml" />
+        <option value="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_followinglist.xml" />
+        <option value="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_othes_follow_following.xml" />
+        <option value="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_spread_word.xml" />
+        <option value="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/CurrentClickersView.java" />
+        <option value="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_currentclickers.xml" />
+        <option value="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/SpreadWordView.java" />
+>>>>>>> 9ed61ecfa893ca2a8488c24eb5ce241dbf4840ca
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="65" />
-    <option name="y" value="24" />
+    <option name="y" value="-4" />
     <option name="width" value="1301" />
-    <option name="height" value="744" />
+    <option name="height" value="772" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -4511,7 +4643,10 @@
       <sortByType />
     </navigator>
     <panes>
+<<<<<<< HEAD
       <pane id="PackagesPane" />
+=======
+>>>>>>> 9ed61ecfa893ca2a8488c24eb5ce241dbf4840ca
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -4628,11 +4763,19 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="clickinandroid" />
+<<<<<<< HEAD
               <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+=======
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+>>>>>>> 9ed61ecfa893ca2a8488c24eb5ce241dbf4840ca
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+<<<<<<< HEAD
+=======
+      <pane id="PackagesPane" />
+>>>>>>> 9ed61ecfa893ca2a8488c24eb5ce241dbf4840ca
       <pane id="AndroidView" />
     </panes>
   </component>
@@ -4644,6 +4787,7 @@
     <property name="MemberChooser.showClasses" value="true" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="recentsLimit" value="5" />
+<<<<<<< HEAD
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="ZX1B33NCXL" />
     <property name="FullScreen" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -4654,6 +4798,10 @@
     <property name="LayoutCode.rearrangeEntriesJava" value="false" />
     <property name="OverrideImplement.combined" value="true" />
     <property name="OverrideImplement.overriding.sorted" value="false" />
+=======
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="TA89901UH3" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="svc" />
+>>>>>>> 9ed61ecfa893ca2a8488c24eb5ce241dbf4840ca
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -4908,25 +5056,36 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="65" y="24" width="1301" height="744" extended-state="6" />
+    <frame x="65" y="-4" width="1301" height="772" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32954547" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+<<<<<<< HEAD
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.37231505" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+=======
+      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27164418" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+>>>>>>> 9ed61ecfa893ca2a8488c24eb5ce241dbf4840ca
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32792208" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290938" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4674086" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.66883117" sideWeight="0.50039905" order="0" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.10174881" sideWeight="0.11993646" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.66883117" sideWeight="0.50039905" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3227345" sideWeight="0.49961567" order="2" side_tool="false" content_ui="tabs" />
+<<<<<<< HEAD
       <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.799682" sideWeight="0.49960095" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32962668" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+=======
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.10174881" sideWeight="0.88006353" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32962668" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+>>>>>>> 9ed61ecfa893ca2a8488c24eb5ce241dbf4840ca
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290938" sideWeight="0.49960285" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -4997,133 +5156,20 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/card_click.xml">
+=======
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/ClickInBaseView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="3630" max-vertical-offset="4650">
-          <caret line="242" column="70" selection-start-line="242" selection-start-column="49" selection-end-line="242" selection-end-column="70" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/CardView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="2708" max-vertical-offset="4110">
-          <caret line="229" column="0" selection-start-line="229" selection-start-column="0" selection-end-line="229" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="663" max-vertical-offset="10725">
+          <caret line="89" column="0" selection-start-line="89" selection-start-column="0" selection-end-line="89" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_getuserprofile.xml">
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/UserProfileView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.65822786" vertical-offset="1511" max-vertical-offset="2370">
-          <caret line="125" column="19" selection-start-line="125" selection-start-column="19" selection-end-line="125" selection-end-column="19" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/FeedView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.44341373" vertical-offset="1516" max-vertical-offset="2850">
-          <caret line="148" column="94" selection-start-line="148" selection-start-column="94" selection-end-line="148" selection-end-column="94" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_feeds_comments.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="4.419355" vertical-offset="827" max-vertical-offset="1380">
-          <caret line="46" column="39" selection-start-line="46" selection-start-column="39" selection-end-line="46" selection-end-column="39" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/adapter/FeedsCommentsAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.94863015" vertical-offset="121" max-vertical-offset="1080">
-          <caret line="70" column="96" selection-start-line="70" selection-start-column="8" selection-end-line="70" selection-end-column="96" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/adapter/SimpleSectionedListAdapter2.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-14.03125" vertical-offset="3001" max-vertical-offset="4635">
-          <caret line="267" column="25" selection-start-line="267" selection-start-column="25" selection-end-line="267" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/list_item.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="540">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/list_item_header.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.322581" vertical-offset="120" max-vertical-offset="660">
-          <caret line="19" column="5" selection-start-line="19" selection-start-column="5" selection-end-line="19" selection-end-column="5" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/list_item_header_feed.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1530">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_feedview_list.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.108499095" vertical-offset="0" max-vertical-offset="1425">
-          <caret line="4" column="36" selection-start-line="4" selection-start-column="36" selection-end-line="4" selection-end-column="36" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/model/bean/NewsFeedBean.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="6226" max-vertical-offset="7650">
-          <caret line="482" column="54" selection-start-line="482" selection-start-column="54" selection-end-line="482" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/feed_list_item.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="2040" max-vertical-offset="6660">
-          <caret line="169" column="12" selection-start-line="169" selection-start-column="12" selection-end-line="169" selection-end-column="12" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/values/colors.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="407" max-vertical-offset="1305">
-          <caret line="35" column="43" selection-start-line="35" selection-start-column="43" selection-end-line="35" selection-end-column="43" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/adapter/FeedsAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="974" max-vertical-offset="8250">
-          <caret line="127" column="89" selection-start-line="127" selection-start-column="89" selection-end-line="127" selection-end-column="89" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="5360" max-vertical-offset="8235">
+          <caret line="409" column="23" selection-start-line="409" selection-start-column="23" selection-end-line="409" selection-end-column="23" />
         </state>
       </provider>
     </entry>
@@ -5152,9 +5198,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/utils/APIs.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="180" max-vertical-offset="1215">
+        <state vertical-scroll-proportion="0.0" vertical-offset="180" max-vertical-offset="1155">
           <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -5165,17 +5210,29 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/ViewTradeCart.java">
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/adapter/CardGridViewAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="375" max-vertical-offset="4035">
-          <caret line="47" column="44" selection-start-line="47" selection-start-column="44" selection-end-line="47" selection-end-column="44" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="1236" max-vertical-offset="1695">
+          <caret line="126" column="1" selection-start-line="126" selection-start-column="1" selection-end-line="126" selection-end-column="1" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_tradecart.xml">
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/model/AuthManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1515" max-vertical-offset="5160">
-          <caret line="101" column="0" selection-start-line="101" selection-start-column="0" selection-end-line="101" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="6600" max-vertical-offset="16350">
+          <caret line="440" column="9" selection-start-line="440" selection-start-column="9" selection-end-line="440" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_chat_layout.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+>>>>>>> 9ed61ecfa893ca2a8488c24eb5ce241dbf4840ca
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3321492" vertical-offset="1748" max-vertical-offset="6090">
+          <caret line="129" column="8" selection-start-line="129" selection-start-column="8" selection-end-line="139" selection-end-column="52" />
           <folding />
         </state>
       </provider>
@@ -5183,15 +5240,370 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/adapter/CardGridViewAdapter.java">
+    <entry file="jar://$USER_HOME$/Downloads/android-studio/sdk/platforms/android-19/android.jar!/android/webkit/WebView.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.551495" vertical-offset="1303" max-vertical-offset="2160">
-          <caret line="126" column="1" selection-start-line="126" selection-start-column="1" selection-end-line="126" selection-end-column="1" />
+        <state vertical-scroll-proportion="0.3327674" vertical-offset="674" max-vertical-offset="5850">
+          <caret line="59" column="16" selection-start-line="59" selection-start-column="16" selection-end-line="59" selection-end-column="16" />
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_getuserprofile.xml">
+=======
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/FollowingListView.java">
+>>>>>>> 9ed61ecfa893ca2a8488c24eb5ce241dbf4840ca
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2415">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/SignInView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4045139" vertical-offset="697" max-vertical-offset="6420">
+          <caret line="94" column="0" selection-start-line="94" selection-start-column="0" selection-end-line="94" selection-end-column="0" />
+          <folding>
+            <element signature="e#3412#3806#0" expanded="true" />
+            <element signature="e#3794#3795#0" expanded="true" />
+            <element signature="e#14737#15121#0" expanded="true" />
+            <element signature="e#15110#15111#0" expanded="true" />
+            <element signature="e#15304#16223#0" expanded="true" />
+            <element signature="e#16212#16213#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+<<<<<<< HEAD
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_feeds_comments.xml">
+=======
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/AddViaContactView.java">
+>>>>>>> 9ed61ecfa893ca2a8488c24eb5ce241dbf4840ca
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.104166664" vertical-offset="0" max-vertical-offset="4665">
+          <caret line="33" column="13" selection-start-line="33" selection-start-column="13" selection-end-line="33" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/Downloads/android-studio/sdk/platforms/android-19/android.jar!/android/view/View.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.33333334" vertical-offset="9678" max-vertical-offset="17820">
+          <caret line="659" column="16" selection-start-line="659" selection-start-column="16" selection-end-line="659" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/CardView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.64126396" vertical-offset="315" max-vertical-offset="3585">
+          <caret line="72" column="41" selection-start-line="72" selection-start-column="41" selection-end-line="72" selection-end-column="41" />
+          <folding>
+            <element signature="e#2944#3108#0" expanded="true" />
+            <element signature="e#3097#3098#0" expanded="true" />
+            <element signature="e#3800#4893#0" expanded="true" />
+            <element signature="e#4880#4881#0" expanded="true" />
+            <element signature="e#4936#5154#0" expanded="true" />
+            <element signature="e#5143#5144#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+<<<<<<< HEAD
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/list_item.xml">
+=======
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/card_click.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+>>>>>>> 9ed61ecfa893ca2a8488c24eb5ce241dbf4840ca
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5731463" vertical-offset="104" max-vertical-offset="5310">
+          <caret line="26" column="40" selection-start-line="26" selection-start-column="40" selection-end-line="26" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+<<<<<<< HEAD
+=======
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout-xhdpi/card_click.xml">
+>>>>>>> 9ed61ecfa893ca2a8488c24eb5ce241dbf4840ca
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/list_item_header.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8116233" vertical-offset="0" max-vertical-offset="5385">
+          <caret line="27" column="49" selection-start-line="27" selection-start-column="49" selection-end-line="27" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+<<<<<<< HEAD
+=======
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout-xxhdpi/card_click.xml">
+>>>>>>> 9ed61ecfa893ca2a8488c24eb5ce241dbf4840ca
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/list_item_header_feed.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.09018036" vertical-offset="0" max-vertical-offset="5325">
+          <caret line="3" column="40" selection-start-line="3" selection-start-column="40" selection-end-line="3" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+<<<<<<< HEAD
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_feedview_list.xml">
+=======
+    </entry>
     <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/Card.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.697026" vertical-offset="0" max-vertical-offset="3480">
+          <caret line="41" column="40" selection-start-line="41" selection-start-column="40" selection-end-line="41" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/ViewTradeCart.java">
+>>>>>>> 9ed61ecfa893ca2a8488c24eb5ce241dbf4840ca
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.60966545" vertical-offset="3332" max-vertical-offset="3975">
+          <caret line="277" column="12" selection-start-line="277" selection-start-column="12" selection-end-line="277" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+<<<<<<< HEAD
+      <provider editor-type-id="android-designer">
+        <state />
+=======
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_editprofile.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.625" vertical-offset="25" max-vertical-offset="4035">
+          <caret line="23" column="36" selection-start-line="23" selection-start-column="36" selection-end-line="23" selection-end-column="36" />
+          <folding />
+        </state>
+>>>>>>> 9ed61ecfa893ca2a8488c24eb5ce241dbf4840ca
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/EditMyProfileView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.24698795" vertical-offset="8337" max-vertical-offset="8835">
+          <caret line="605" column="53" selection-start-line="605" selection-start-column="53" selection-end-line="605" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+<<<<<<< HEAD
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/feed_list_item.xml">
+=======
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_setting.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+>>>>>>> 9ed61ecfa893ca2a8488c24eb5ce241dbf4840ca
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.076923" vertical-offset="240" max-vertical-offset="12315">
+          <caret line="30" column="40" selection-start-line="30" selection-start-column="40" selection-end-line="30" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/adapter/DeactivateAccountView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.703704" vertical-offset="944" max-vertical-offset="3540">
+          <caret line="105" column="30" selection-start-line="105" selection-start-column="30" selection-end-line="105" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_deactivate_account.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6633267" vertical-offset="119" max-vertical-offset="6015">
+          <caret line="30" column="40" selection-start-line="30" selection-start-column="40" selection-end-line="30" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+<<<<<<< HEAD
+    <entry file="jar://$PROJECT_DIR$/cLICKINAPP/libs/android-async-http-1.4.4.jar!/com/loopj/android/http/AsyncHttpRequest.class">
+=======
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/ViewSpamorAbuse.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5555556" vertical-offset="270" max-vertical-offset="2325">
+          <caret line="35" column="38" selection-start-line="35" selection-start-column="38" selection-end-line="35" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_spam.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6542969" vertical-offset="145" max-vertical-offset="5040">
+          <caret line="32" column="43" selection-start-line="32" selection-start-column="43" selection-end-line="32" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/PrivacyView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1200">
+          <caret line="31" column="47" selection-start-line="31" selection-start-column="47" selection-end-line="31" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_privacy_layout.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+>>>>>>> 9ed61ecfa893ca2a8488c24eb5ce241dbf4840ca
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.52734375" vertical-offset="0" max-vertical-offset="1245">
+          <caret line="18" column="47" selection-start-line="18" selection-start-column="47" selection-end-line="18" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/TermUseView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1170">
+          <caret line="25" column="40" selection-start-line="25" selection-start-column="40" selection-end-line="25" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+<<<<<<< HEAD
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/model/ProfileManager.java">
+=======
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_term_use.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6152344" vertical-offset="0" max-vertical-offset="1260">
+          <caret line="21" column="46" selection-start-line="21" selection-start-column="46" selection-end-line="21" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_splash.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+>>>>>>> 9ed61ecfa893ca2a8488c24eb5ce241dbf4840ca
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="525">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_tabhost2.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
+        <state vertical-scroll-proportion="0.0" vertical-offset="180" max-vertical-offset="1215">
+          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+=======
+        <state vertical-scroll-proportion="0.0" vertical-offset="150" max-vertical-offset="3000">
+          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+>>>>>>> 9ed61ecfa893ca2a8488c24eb5ce241dbf4840ca
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout-xhdpi/view_tradecart.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
+        <state vertical-scroll-proportion="0.0" vertical-offset="677" max-vertical-offset="1305">
+          <caret line="69" column="68" selection-start-line="69" selection-start-column="68" selection-end-line="69" selection-end-column="68" />
+=======
+        <state vertical-scroll-proportion="0.5731463" vertical-offset="659" max-vertical-offset="5805">
+          <caret line="63" column="44" selection-start-line="63" selection-start-column="44" selection-end-line="63" selection-end-column="44" />
+          <folding />
+>>>>>>> 9ed61ecfa893ca2a8488c24eb5ce241dbf4840ca
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout-xxhdpi/view_tradecart.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
+        <state vertical-scroll-proportion="0.0" vertical-offset="375" max-vertical-offset="4035">
+          <caret line="47" column="44" selection-start-line="47" selection-start-column="44" selection-end-line="47" selection-end-column="44" />
+=======
+        <state vertical-scroll-proportion="0.5731463" vertical-offset="659" max-vertical-offset="5790">
+          <caret line="63" column="44" selection-start-line="63" selection-start-column="44" selection-end-line="63" selection-end-column="44" />
+          <folding />
+>>>>>>> 9ed61ecfa893ca2a8488c24eb5ce241dbf4840ca
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_tradecart.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6332665" vertical-offset="659" max-vertical-offset="5775">
+          <caret line="65" column="0" selection-start-line="65" selection-start-column="0" selection-end-line="65" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_addsomeone.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
+        <state vertical-scroll-proportion="0.551495" vertical-offset="1303" max-vertical-offset="2160">
+          <caret line="126" column="1" selection-start-line="126" selection-start-column="1" selection-end-line="126" selection-end-column="1" />
+=======
+        <state vertical-scroll-proportion="-4.9218435" vertical-offset="2651" max-vertical-offset="3150">
+          <caret line="13" column="46" selection-start-line="13" selection-start-column="46" selection-end-line="13" selection-end-column="46" />
+          <folding />
+>>>>>>> 9ed61ecfa893ca2a8488c24eb5ce241dbf4840ca
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/video_view.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state vertical-scroll-proportion="0.0" vertical-offset="1798" max-vertical-offset="2400">
           <caret line="168" column="0" selection-start-line="168" selection-start-column="0" selection-end-line="168" selection-end-column="0" />
         </state>
@@ -5218,26 +5630,59 @@
           <caret line="0" column="15" selection-start-line="0" selection-start-column="1" selection-end-line="0" selection-end-column="15" />
         </state>
       </provider>
+=======
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="512">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/AddSomeoneView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.8148148" vertical-offset="1169" max-vertical-offset="3390">
+          <caret line="120" column="27" selection-start-line="120" selection-start-column="27" selection-end-line="120" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_addvianumber.xml">
+>>>>>>> 9ed61ecfa893ca2a8488c24eb5ce241dbf4840ca
       <provider editor-type-id="android-designer">
         <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/AndroidManifest.xml">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state vertical-scroll-proportion="0.47342193" vertical-offset="825" max-vertical-offset="4320">
           <caret line="74" column="28" selection-start-line="74" selection-start-column="28" selection-end-line="74" selection-end-column="28" />
+=======
+        <state vertical-scroll-proportion="-15.076923" vertical-offset="2233" max-vertical-offset="2925">
+          <caret line="175" column="36" selection-start-line="175" selection-start-column="36" selection-end-line="175" selection-end-column="36" />
+>>>>>>> 9ed61ecfa893ca2a8488c24eb5ce241dbf4840ca
           <folding />
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/values/styles.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.6013289" vertical-offset="778" max-vertical-offset="1380">
           <caret line="76" column="72" selection-start-line="76" selection-start-column="56" selection-end-line="76" selection-end-column="72" />
+=======
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_addviacontactlist.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6660156" vertical-offset="2509" max-vertical-offset="3180">
+          <caret line="190" column="43" selection-start-line="190" selection-start-column="43" selection-end-line="190" selection-end-column="43" />
+>>>>>>> 9ed61ecfa893ca2a8488c24eb5ce241dbf4840ca
           <folding />
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_share_screen.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.3410302" vertical-offset="2043" max-vertical-offset="2835">
@@ -5245,29 +5690,47 @@
           <folding />
         </state>
       </provider>
+=======
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_othersprofile.xml">
+>>>>>>> 9ed61ecfa893ca2a8488c24eb5ce241dbf4840ca
       <provider editor-type-id="android-designer">
         <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_verify.xml">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3495">
+=======
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4230">
+>>>>>>> 9ed61ecfa893ca2a8488c24eb5ce241dbf4840ca
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
+<<<<<<< HEAD
+=======
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_followinglist.xml">
+>>>>>>> 9ed61ecfa893ca2a8488c24eb5ce241dbf4840ca
       <provider editor-type-id="android-designer">
         <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/VerifyView.java">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state vertical-scroll-proportion="0.3565365" vertical-offset="60" max-vertical-offset="3615">
           <caret line="39" column="37" selection-start-line="39" selection-start-column="37" selection-end-line="39" selection-end-column="37" />
+=======
+        <state vertical-scroll-proportion="0.63126254" vertical-offset="0" max-vertical-offset="2070">
+          <caret line="21" column="36" selection-start-line="21" selection-start-column="36" selection-end-line="21" selection-end-column="36" />
+>>>>>>> 9ed61ecfa893ca2a8488c24eb5ce241dbf4840ca
           <folding />
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/model/ClickInNotificationManager.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="400" max-vertical-offset="1380">
@@ -5283,42 +5746,78 @@
           <folding />
         </state>
       </provider>
+=======
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_othes_follow_following.xml">
+>>>>>>> 9ed61ecfa893ca2a8488c24eb5ce241dbf4840ca
       <provider editor-type-id="android-designer">
         <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/adapter/ClickInWithAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state vertical-scroll-proportion="0.0" vertical-offset="450" max-vertical-offset="1395">
           <caret line="66" column="67" selection-start-line="66" selection-start-column="67" selection-end-line="66" selection-end-column="67" />
+=======
+        <state vertical-scroll-proportion="0.46875" vertical-offset="0" max-vertical-offset="1455">
+          <caret line="16" column="48" selection-start-line="16" selection-start-column="48" selection-end-line="16" selection-end-column="48" />
+>>>>>>> 9ed61ecfa893ca2a8488c24eb5ce241dbf4840ca
           <folding />
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/model/bean/FetchUsersByNameBean.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="430" max-vertical-offset="825">
           <caret line="69" column="16" selection-start-line="69" selection-start-column="16" selection-end-line="69" selection-end-column="16" />
+=======
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_followerlist.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.27054107" vertical-offset="0" max-vertical-offset="1815">
+          <caret line="9" column="36" selection-start-line="9" selection-start-column="36" selection-end-line="9" selection-end-column="36" />
+>>>>>>> 9ed61ecfa893ca2a8488c24eb5ce241dbf4840ca
           <folding />
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/model/bean/FeedStarsBean.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33164558" vertical-offset="1039" max-vertical-offset="1500">
           <caret line="120" column="16" selection-start-line="120" selection-start-column="16" selection-end-line="120" selection-end-column="16" />
+=======
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/SettingView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="42.185184" vertical-offset="1349" max-vertical-offset="6300">
+          <caret line="43" column="38" selection-start-line="43" selection-start-column="38" selection-end-line="43" selection-end-column="38" />
+>>>>>>> 9ed61ecfa893ca2a8488c24eb5ce241dbf4840ca
           <folding />
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/model/RelationManager.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="8629" max-vertical-offset="11100">
           <caret line="631" column="57" selection-start-line="631" selection-start-column="57" selection-end-line="631" selection-end-column="57" />
+=======
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_currentclickers.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.1153846" vertical-offset="1435" max-vertical-offset="2910">
+          <caret line="108" column="35" selection-start-line="108" selection-start-column="35" selection-end-line="108" selection-end-column="35" />
+>>>>>>> 9ed61ecfa893ca2a8488c24eb5ce241dbf4840ca
           <folding />
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/model/NewsFeedManager.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="6578" max-vertical-offset="10200">
@@ -5420,6 +5919,31 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.359375" vertical-offset="1248" max-vertical-offset="3000">
           <caret line="97" column="52" selection-start-line="97" selection-start-column="41" selection-end-line="97" selection-end-column="52" />
+=======
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_spread_word.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.9615383" vertical-offset="1255" max-vertical-offset="2670">
+          <caret line="94" column="12" selection-start-line="94" selection-start-column="12" selection-end-line="94" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/CurrentClickersView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="574" max-vertical-offset="4485">
+          <caret line="61" column="15" selection-start-line="61" selection-start-column="15" selection-end-line="61" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/SpreadWordView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6533333" vertical-offset="467" max-vertical-offset="4500">
+          <caret line="84" column="65" selection-start-line="84" selection-start-column="65" selection-end-line="84" selection-end-column="65" />
+>>>>>>> 9ed61ecfa893ca2a8488c24eb5ce241dbf4840ca
           <folding />
         </state>
       </provider>

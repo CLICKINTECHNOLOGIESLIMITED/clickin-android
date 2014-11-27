@@ -24,7 +24,8 @@
                 android:layout_marginLeft="8dp"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="5dp"
-                android:src="@drawable/trade_back" />
+                android:src="@drawable/trade_back"
+                android:visibility="gone"/>
             <!--<LinearLayout-->
                 <!--android:id="@+id/linear_layout_back"-->
                 <!--android:orientation="horizontal"-->

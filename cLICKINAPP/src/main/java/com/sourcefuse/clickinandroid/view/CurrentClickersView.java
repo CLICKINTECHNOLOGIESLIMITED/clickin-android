@@ -10,6 +10,7 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.facebook.Session;
@@ -72,9 +73,12 @@ public class CurrentClickersView extends Activity implements OnClickListener {
 
             boolean showNextButton = getIntent().getExtras().getBoolean("FromMenu");
             if (showNextButton) {
-                  middleBack.setVisibility(View.VISIBLE);
+                ((RelativeLayout)findViewById(R.id.rl_back)).setVisibility(View.GONE);
+
+                  middleBack.setVisibility(View.GONE);
                   back.setVisibility(View.GONE);
                   next.setVisibility(View.GONE);
+
             } else {
                   middleBack.setVisibility(View.GONE);
                   back.setVisibility(View.VISIBLE);
