@@ -62,8 +62,8 @@ public class ChatThread extends Thread implements QBMessageListener {
         authManager = ModelManager.getInstance().getAuthorizationManager();
 
         QBSettings.getInstance().fastConfigInit(Constants.CLICKIN_APP_ID, Constants.CLICKIN_AUTH_KEY, Constants.CLICKIN_AUTH_SECRET);
-        //    QBSettings.getInstance().setServerApiDomain("apiclickin.quickblox.com");
-        //  QBSettings.getInstance().setContentBucketName("qb-clickin");
+       // QBSettings.getInstance().setServerApiDomain("apiclickin.quickblox.com");
+       // QBSettings.getInstance().setContentBucketName("qb-clickin");
         //QBSettings.getInstance().setChatServerDomain("chatclickin.quickblox.com");
         QBChatService.setDebugEnabled(true);
     }
@@ -115,6 +115,24 @@ public class ChatThread extends Thread implements QBMessageListener {
 
                                     message.setProperty("fileID", data.getString("FileId"));
                                     message.setProperty("imageRatio", data.getString("imageRatio"));
+
+                                    break;
+                                case Constants.CHAT_TYPE_AUDIO:
+
+                                    message.setProperty("audioID", data.getString("FileId"));
+
+                                    break;
+                                case Constants.CHAT_TYPE_VIDEO:
+
+                                    message.setProperty("videoThumbnail", data.getString("videoThumbnail"));
+                                    message.setProperty("videoID", data.getString("FileId"));
+
+                                    break;
+                                case Constants.CHAT_TYPE_LOCATION:
+
+                                    message.setProperty("location_coordinates", data.getString("location_coordinates"));
+                                    message.setProperty("imageRatio", data.getString("imageRatio"));
+                                    message.setProperty("locationID", data.getString("FileId"));
 
                                     break;
                             }
@@ -313,6 +331,8 @@ public class ChatThread extends Thread implements QBMessageListener {
                 }
                 if (extraParamsObj.has("fileID")) {
                     temp.content_url = extraParamsObj.getString("fileID");
+                }else if(extraParamsObj.has("audioID")){
+                    temp.content_url = extraParamsObj.getString("audioID");
                 }
                 if (temp.clicks.equalsIgnoreCase("no")) {
                     temp.textMsg = body;

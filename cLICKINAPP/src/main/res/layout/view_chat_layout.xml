@@ -292,7 +292,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/r_video_icon"
-                    android:visibility="gone" />
+                   />
 
                 <ImageView
                     android:id="@+id/iv_adiuo"
@@ -300,7 +300,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="5dp"
                     android:background="@drawable/r_mic_icon"
-                    android:visibility="gone" />
+                    android:visibility="visible" />
 
                 <ImageView
                     android:id="@+id/iv_location"

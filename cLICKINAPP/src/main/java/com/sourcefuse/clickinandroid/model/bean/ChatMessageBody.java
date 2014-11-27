@@ -30,6 +30,8 @@ public class ChatMessageBody {
     public String chatId = null;
     public String sentOn = null;
     public String location_coordinates = null;
+    public String locationId = null;
+
     public String sharedMessage = null;
     public String isDelivered = null;
     public String relationshipId = null;

@@ -104,9 +104,12 @@ public class RelationManager  {
 								acceptedList.clear();
 								initiatorList.clear();
 								requestedList.clear();
-                                relationManager.setFollowerListCount(response.getString("follower"));
-                                relationManager.setFollowingListCount(response.getString("following"));
-
+                                try {
+                                    relationManager.setFollowerListCount(response.getString("follower"));
+                                    relationManager.setFollowingListCount(response.getString("following"));
+                                }catch (Exception e){
+                                    e.printStackTrace();
+                                }
 
 
 								JSONArray list = response.getJSONArray("relationships");
