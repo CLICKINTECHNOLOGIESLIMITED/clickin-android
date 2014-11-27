@@ -39,6 +39,10 @@ public class AuthManager {
     private String userId;
     private String userName;
 
+
+
+
+
     public String getDeviceRegistereId() {
         return deviceRegistereId;
     }

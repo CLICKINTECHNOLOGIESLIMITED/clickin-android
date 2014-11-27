@@ -312,103 +312,26 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
         profileName.setText("" + splitted[0]);
         try {
-            Uri tempUri = authManager.getUserImageUri();
-            if (tempUri != null) {
-                Bitmap imageBitmap;
-                imageBitmap = authManager.getUserbitmap();
-                if (imageBitmap != null)
-                    mypix.setImageBitmap(imageBitmap);
-                else {
-                    if (!authManager.getGender().equalsIgnoreCase("")) {
-
-                        if (authManager.getGender().equalsIgnoreCase("guy")) {
-                            try {
-                                if (!authManager.getUserPic().equalsIgnoreCase("")) {
-                                    Picasso.with(this)
-                                            .load(authManager.getUserPic())
-                                            .skipMemoryCache()
-
-                                            .error(R.drawable.male_user)
-                                            .into(mypix);
-                                } else {
-                                    mypix.setImageResource(R.drawable.male_user);
-                                }
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                mypix.setImageResource(R.drawable.male_user);
-                            }
-                        } else if (authManager.getGender().equalsIgnoreCase("girl")) {
-                            try {
-                                if (!authManager.getUserPic().equalsIgnoreCase("")) {
-                                    Picasso.with(this)
-                                            .load(authManager.getUserPic())
-                                            .skipMemoryCache()
-
-                                            .error(R.drawable.female_user)
-                                            .into(mypix);
-                                } else {
-                                    mypix.setImageResource(R.drawable.female_user);
-                                }
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                mypix.setImageResource(R.drawable.female_user);
-                            }
-                        }
-
-                    } else {
-                        mypix.setImageResource(R.drawable.male_user);
-                    }
-                }
-
-            } else {
-                if (authManager.getGender() != null) {
-
-                    if (authManager.getGender().equalsIgnoreCase("guy")) {
-                        try {
-                            if (!authManager.getUserPic().equalsIgnoreCase("")) {
-                                Picasso.with(this)
-                                        .load(authManager.getUserPic())
-                                        .skipMemoryCache()
-
-                                        .error(R.drawable.male_user)
-                                        .into(mypix);
-                            } else {
-                                mypix.setImageResource(R.drawable.male_user);
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            mypix.setImageResource(R.drawable.male_user);
-                        }
-                    } else if (authManager.getGender().equalsIgnoreCase("girl")) {
-                        try {
-                            if (!authManager.getUserPic().equalsIgnoreCase("")) {
-                                Picasso.with(this)
-                                        .load(authManager.getUserPic())
-                                        .skipMemoryCache()
-
-                                        .error(R.drawable.female_user)
-                                        .into(mypix);
-                            } else {
-                                mypix.setImageResource(R.drawable.female_user);
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            mypix.setImageResource(R.drawable.female_user);
-                        }
-                    }
-
-                } else {
-                    mypix.setImageResource(R.drawable.male_user);
-                }
-
-            }
-
+            Bitmap imageBitmap;
+            imageBitmap = authManager.getUserbitmap();
+            if (imageBitmap != null)
+                mypix.setImageBitmap(imageBitmap);
+            else if (Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("guy"))
+                Picasso.with(this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.male_user).into(mypix);
+            else if (Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl"))
+                Picasso.with(this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.female_user).into(mypix);
+            else if (Utils.isEmptyString(authManager.getGender()))
+                Picasso.with(this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.male_user).into(mypix);
         } catch (Exception e) {
-            e.printStackTrace();
+            if (Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("guy"))
+                mypix.setImageResource(R.drawable.male_user);
+            else if (Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl"))
+                mypix.setImageResource(R.drawable.female_user);
+            else if (Utils.isEmptyString(authManager.getGender()))
+                mypix.setImageResource(R.drawable.male_user);
         }
-        Picasso.with(ChatRecordView.this).load(partnerPic)
 
-                .error(R.drawable.male_user).into(partnerPix);
+        Picasso.with(ChatRecordView.this).load(partnerPic).error(R.drawable.male_user).into(partnerPix);
 
 
         mybar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
@@ -665,39 +588,39 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
                         ShowValueinChat(temp);
                         myQbChatService.sendMessage(temp);
-                       // createRecordForHistory(temp);
+                        // createRecordForHistory(temp);
 
                         chatText.setText("");
                         seekValue = 0;
                         mybar.setProgress(10);
-                    } else if(mImageCaptureUri != null) {//if any media is attached
-                       // if (mImageCaptureUri != null) {//if image is attached
-                            CHAT_TYPE = Constants.CHAT_TYPE_IMAGE;
+                    } else if (mImageCaptureUri != null) {//if any media is attached
+                        // if (mImageCaptureUri != null) {//if image is attached
+                        CHAT_TYPE = Constants.CHAT_TYPE_IMAGE;
 
-                                sendMsgToQB(mImageCaptureUri.toString());
+                        sendMsgToQB(mImageCaptureUri.toString());
 
-                    } else if(!Utils.isEmptyString(audioFilePath)) { //Audio is attached
+                    } else if (!Utils.isEmptyString(audioFilePath)) { //Audio is attached
 
-                            CHAT_TYPE = Constants.CHAT_TYPE_AUDIO;
-                            sendMsgToQB(audioFilePath);
+                        CHAT_TYPE = Constants.CHAT_TYPE_AUDIO;
+                        sendMsgToQB(audioFilePath);
 
-                    }else if(!Utils.isEmptyString(videofilePath)) { //Video is attached
+                    } else if (!Utils.isEmptyString(videofilePath)) { //Video is attached
 
-                            CHAT_TYPE = Constants.CHAT_TYPE_VIDEO;
-                            sendMsgToQB(videofilePath);
+                        CHAT_TYPE = Constants.CHAT_TYPE_VIDEO;
+                        sendMsgToQB(videofilePath);
                     }
 
                 }
 
                 /* to detele uri once image is send prafull */
-                mImageCaptureUri  = null;
+                mImageCaptureUri = null;
                 path = null;
 
 
                 attachBtn.setImageDrawable(getResources().getDrawable(R.drawable.r_footer_icon));
                 // chatText.setText("");
 
-                mImageCaptureUri=null;
+                mImageCaptureUri = null;
                 audioFilePath = null;
                 videofilePath = null;
                 break;
@@ -776,8 +699,6 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     }
 
 
-
-
     //monika- function to show chat in listview
     private void ShowValueinChat(ChatMessageBody obj) {
 
@@ -819,13 +740,13 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     //monika-fucntion to upload file on Qb
     private void uploadImageFileOnQB(String path, String msgId) {
         File mfile = new File(path);
-        final String chatId=msgId;
+        final String chatId = msgId;
         Boolean fileIsPublic = true;
         QBContent.uploadFileTask(mfile, fileIsPublic, null, new QBEntityCallbackImpl<QBFile>() {
             @Override
             public void onSuccess(QBFile file, Bundle params) {
 
-                String fileUrl= file.getPublicUrl().toString();
+                String fileUrl = file.getPublicUrl().toString();
                 sendMediaMsgToQB(fileUrl, chatId);
 
             }
@@ -846,25 +767,25 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             case Constants.CHAT_TYPE_IMAGE:
                 temp.imageRatio = "1";
                 temp.content_url = path;
-                temp.isDelivered=Constants.MSG_SENDING;
+                temp.isDelivered = Constants.MSG_SENDING;
                 temp.chatType = Constants.CHAT_TYPE_IMAGE;
                 break;
             case Constants.CHAT_TYPE_AUDIO:
                 temp.content_url = path;
-                temp.isDelivered=Constants.MSG_SENDING;
+                temp.isDelivered = Constants.MSG_SENDING;
                 temp.chatType = Constants.CHAT_TYPE_AUDIO;
                 break;
             case Constants.CHAT_TYPE_VIDEO:
                 temp.content_url = path;
                 temp.video_thumb = path;
-                temp.isDelivered=Constants.MSG_SENDING;
+                temp.isDelivered = Constants.MSG_SENDING;
                 temp.chatType = Constants.CHAT_TYPE_VIDEO;
                 break;
             case Constants.CHAT_TYPE_LOCATION:
                 temp.content_url = path;
                 temp.imageRatio = "1";
                 temp.location_coordinates = "";
-                temp.isDelivered=Constants.MSG_SENDING;
+                temp.isDelivered = Constants.MSG_SENDING;
                 temp.chatType = Constants.CHAT_TYPE_LOCATION;
                 break;
 
@@ -890,11 +811,10 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         chatText.setText("");
         seekValue = 0;
         mybar.setProgress(10);
-        mImageCaptureUri=null;
+        mImageCaptureUri = null;
 
         attachBtn.setImageDrawable(getResources().getDrawable(R.drawable.r_footer_icon));
-        uploadImageFileOnQB(path,temp.chatId);
-
+        uploadImageFileOnQB(path, temp.chatId);
 
 
     }
@@ -969,7 +889,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             } else {
                 myQbChatService.sendTypeNotification("NO", qBId);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -1066,8 +986,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         } else if (message.equalsIgnoreCase("Composing NO")) {
             typingtext.setVisibility(View.VISIBLE);
             typingtext.setText("online");
-        }else if(message.startsWith("Delivered Msg")){
-            String chatId=message.substring(13);
+        } else if (message.startsWith("Delivered Msg")) {
+            String chatId = message.substring(13);
             updateChatDeliverStatusInList(chatId);
 
         }
@@ -1368,9 +1288,6 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     }
 
 
-
-
-
     private String clickForFlipper(int clicks) {
 
         String changeClicks = "";
@@ -1438,7 +1355,6 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     }
 
 
-
     private void updateValues(Intent intent) {
         //save previous chat here
         String temprId = intent.getExtras().getString("rId");
@@ -1477,132 +1393,51 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
 
             profileName.setText("" + splitted[0]);
-            try {
-                Uri tempUri = authManager.getUserImageUri();
-                if (tempUri != null) {
+
+
+
+                try {
                     Bitmap imageBitmap;
                     imageBitmap = authManager.getUserbitmap();
                     if (imageBitmap != null)
                         mypix.setImageBitmap(imageBitmap);
-                    else {
-                        if (!Utils.isEmptyString(authManager.getGender())) {
-
-                            if (authManager.getGender().equalsIgnoreCase("guy")) {
-                                try {
-                                    if (!authManager.getUserPic().equalsIgnoreCase("")) {
-                                        Picasso.with(this)
-                                                .load(authManager.getUserPic())
-                                                .skipMemoryCache()
-
-                                                .error(R.drawable.male_user)
-                                                .into(mypix);
-                                    } else {
-                                        mypix.setImageResource(R.drawable.male_user);
-                                    }
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                    mypix.setImageResource(R.drawable.male_user);
-                                }
-                            } else if (authManager.getGender().equalsIgnoreCase("girl")) {
-                                try {
-                                    if (!authManager.getUserPic().equalsIgnoreCase("")) {
-                                        Picasso.with(this)
-                                                .load(authManager.getUserPic())
-                                                .skipMemoryCache()
-
-                                                .error(R.drawable.female_user)
-                                                .into(mypix);
-                                    } else {
-                                        mypix.setImageResource(R.drawable.female_user);
-                                    }
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                    mypix.setImageResource(R.drawable.female_user);
-                                }
-                            }
-
-                        } else {
-                            mypix.setImageResource(R.drawable.male_user);
-                        }
-                    }
-
-                } else {
-                    if (authManager.getGender() != null) {
-
-                        if (authManager.getGender().equalsIgnoreCase("guy")) {
-                            try {
-                                if (!authManager.getUserPic().equalsIgnoreCase("")) {
-                                    Picasso.with(this)
-                                            .load(authManager.getUserPic())
-                                            .skipMemoryCache()
-
-                                            .error(R.drawable.male_user)
-                                            .into(mypix);
-                                } else {
-                                    mypix.setImageResource(R.drawable.male_user);
-                                }
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                mypix.setImageResource(R.drawable.male_user);
-                            }
-                        } else if (authManager.getGender().equalsIgnoreCase("girl")) {
-                            try {
-                                if (!Utils.isEmptyString(authManager.getGender())) {
-                                    Picasso.with(this)
-                                            .load(authManager.getUserPic())
-                                            .skipMemoryCache()
-
-                                            .error(R.drawable.female_user)
-                                            .into(mypix);
-                                } else {
-                                    mypix.setImageResource(R.drawable.female_user);
-                                }
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                mypix.setImageResource(R.drawable.female_user);
-                            }
-                        }
-
-                    } else {
+                    else if (Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("guy"))
+                        Picasso.with(this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.male_user).into(mypix);
+                    else if (Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl"))
+                        Picasso.with(this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.female_user).into(mypix);
+                    else if (Utils.isEmptyString(authManager.getGender()))
+                        Picasso.with(this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.male_user).into(mypix);
+                } catch (Exception e) {
+                    if (Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("guy"))
                         mypix.setImageResource(R.drawable.male_user);
+                    else if (Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl"))
+                        mypix.setImageResource(R.drawable.female_user);
+                    else if (Utils.isEmptyString(authManager.getGender()))
+                        mypix.setImageResource(R.drawable.male_user);
+                }
+                Picasso.with(ChatRecordView.this).load(partnerPic).error(R.drawable.male_user).into(partnerPix);
+
+
+                //clear the message list always to initiate a new chat
+                ModelManager.getInstance().getChatManager().chatMessageList.clear();
+
+                //code to hide keyboard
+                ((RelativeLayout) findViewById(R.id.rr_chat_layout)).setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View arg0) {
+
+                        InputMethodManager imm = (InputMethodManager) getSystemService(
+                                INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(chatText.getWindowToken(), 0);
+
                     }
 
-                }
-
-            } catch (Exception e) {
-                e.printStackTrace();
+                });
+                setlist();
             }
-            Picasso.with(ChatRecordView.this).load(partnerPic)
-
-                    .error(R.drawable.male_user).into(partnerPix);
-
-
-            //clear the message list always to initiate a new chat
-            ModelManager.getInstance().getChatManager().chatMessageList.clear();
-
-            //code to hide keyboard
-            ((RelativeLayout) findViewById(R.id.rr_chat_layout)).setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View arg0) {
-
-                    InputMethodManager imm = (InputMethodManager) getSystemService(
-                            INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(chatText.getWindowToken(), 0);
-
-                }
-
-            });
-            setlist();
         }
-    }
 
-    public Uri getImageUri(Context inContext, Bitmap inImage) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
-        return Uri.parse(path);
-    }
 
 
 
@@ -1622,27 +1457,27 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     }
 
     //function to update chatMessagelist for delivered chats
-    private void updateChatDeliverStatusInList(String chatId){
-        for(ChatMessageBody msg:chatManager.chatMessageList){
-            if(msg.chatId.equalsIgnoreCase(chatId)){
-                msg.isDelivered="true";
+    private void updateChatDeliverStatusInList(String chatId) {
+        for (ChatMessageBody msg : chatManager.chatMessageList) {
+            if (msg.chatId.equalsIgnoreCase(chatId)) {
+                msg.isDelivered = "true";
                 break;
             }
         }
-        if(adapter!=null)
+        if (adapter != null)
             adapter.notifyDataSetChanged();
-        else{
-            adapter=new ChatRecordAdapter(this,R.layout.view_chat_demo,chatManager.chatMessageList);
+        else {
+            adapter = new ChatRecordAdapter(this, R.layout.view_chat_demo, chatManager.chatMessageList);
             chatListView.setAdapter(adapter);
         }
     }
 
 
     //monika-update the content url for specific chatid and send msg to Qb and create history
-    private void sendMediaMsgToQB(String fileUrl,String tempChatId){
+    private void sendMediaMsgToQB(String fileUrl, String tempChatId) {
         // ArrayList<ChatMessageBody> tempChatList=chatManager.chatMessageList;
-        path=null;
-        for(ChatMessageBody temp:chatManager.chatMessageList) {
+        path = null;
+        for (ChatMessageBody temp : chatManager.chatMessageList) {
             if (!(Utils.isEmptyString(temp.chatId))) {
                 if (temp.chatId.equalsIgnoreCase(tempChatId)) {
                     temp.content_url = fileUrl;
