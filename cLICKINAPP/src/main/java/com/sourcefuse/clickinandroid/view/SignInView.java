@@ -45,9 +45,8 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
     private AuthManager authManager;
     private Dialog mDialog;
     public MyQbChatService myQbChatService;
-    private boolean mIsBound;
-    private Typeface typeface, typefaceBold;
-
+    private Typeface typeface;
+    private String DeviceRegId = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,14 +55,18 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
           getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         typeface = Typeface.createFromAsset(SignInView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
-        typefaceBold = Typeface.createFromAsset(SignInView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_BOLD);
+
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
         authManager = ModelManager.getInstance().getAuthorizationManager();
         Utils.deviceId = Utils.getRegId(SignInView.this);
-        authManager.setDeviceRegistereId(Utils.deviceId);
+        String deviceregid = Utils.deviceId;
+        DeviceRegId = Utils.deviceId;
+        Log.e("device reg id--->",""+deviceregid);
+        authManager.setDeviceRegistereId(deviceregid);
+
         do_latter = (Button) findViewById(R.id.btn_get_clickin);
         ephone = (EditText) findViewById(R.id.edt_email_phoneno);
         ePwd = (EditText) findViewById(R.id.edt_passwd);
@@ -102,16 +105,7 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
 
 //ends
 
-//        ePwd.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if (keyCode == KeyEvent.KEYCODE_ENTER ) {
-//                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-//                    imm.hideSoftInputFromWindow(ePwd.getWindowToken(), 0);
-//                }
-//                return false;
-//            }
-//        });
+
 
 
 //            //akshit code for country Code
@@ -134,33 +128,7 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
         //No need. For this akshit
 
 
-//        ephone.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(Vie9w v, MotionEvent event) {
-//
-//           InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-//            inputMethodManager.showSoftInput(ephone, 0);
-//
-//
-//                if(ephone.getText().toString().contains("null"))
-//                {
-//                    if (ephone.getSelectionStart() <= 6) {
-//                        return false;
-//                    } else {
-//                        return true;
-//                    }
-//
-//                else {
-//                    if (ephone.getSelectionStart() <= 2) {
-//                        return false;
-//                    } else {
-//                        return true;
-//                    }
-//                }
-//            }
-//        });
-//
-//    }
+
 
 
     }
@@ -208,7 +176,8 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
                     getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
                     authManager = ModelManager.getInstance().getAuthorizationManager();
                     Utils.launchBarDialog(SignInView.this);
-                    authManager.signIn(ephone.getText().toString().trim(), ePwd.getText().toString().trim(), authManager.getDeviceRegistereId(), Constants.DEVICETYPE);
+
+                    authManager.signIn(ephone.getText().toString().trim(), ePwd.getText().toString().trim(), DeviceRegId, Constants.DEVICETYPE);
 //                    Log.e(TAG,"Phone no without space" +ephone.getText().toString().trim());
                 }
                 else if(ephone.getText().toString().length() ==0){
