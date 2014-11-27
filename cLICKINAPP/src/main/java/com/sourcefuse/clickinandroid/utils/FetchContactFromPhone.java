@@ -3,7 +3,6 @@ package com.sourcefuse.clickinandroid.utils;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.provider.ContactsContract;
 import android.util.Log;
 
@@ -24,7 +23,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
-
 import java.util.Comparator;
 import java.util.Iterator;
 
@@ -243,7 +241,10 @@ public class FetchContactFromPhone {
                 Log.d("", "errorResponse--> " + errorResponse);
                 if (errorResponse != null) {
                     try {
-                        authManager.setMessage(errorResponse.getString("message"));
+                        if (authManager == null)
+                            authManager = ModelManager.getInstance().getAuthorizationManager();
+
+                             authManager.setMessage(errorResponse.getString("message"));
 
                     } catch (JSONException e1) {
                         // TODO Auto-generated catch block

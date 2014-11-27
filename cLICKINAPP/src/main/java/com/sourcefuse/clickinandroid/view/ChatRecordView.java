@@ -1141,7 +1141,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 Intent intent = new Intent(ChatRecordView.this, CardView.class);
                 intent.putExtra("qBId", qBId);
                 startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+                overridePendingTransition(R.anim.slide_in_up, R.anim.stay);
                 break;
 
             case R.id.iv_attach:

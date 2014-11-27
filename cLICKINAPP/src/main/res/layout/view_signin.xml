@@ -92,13 +92,13 @@
             android:id="@+id/ll_search"
             android:layout_width="305dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/linearLayout1"
             android:layout_marginLeft="30dp"
+            android:layout_below="@+id/btn_get_clickin_signin"
             android:layout_marginRight="30dp"
-            android:layout_marginTop="39dp"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="16dp">
 
-            <TextView
+            <com.sourcefuse.clickinandroid.utils.ClickInTextView
                 android:id="@+id/tv_forgot_pwd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -108,11 +108,12 @@
                 android:text="@string/txt_forget_pwd"
                 android:textColor="@color/signin_color"
                 android:textStyle="bold"
+                geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"
 
                 />
 
 
-            <TextView
+            <com.sourcefuse.clickinandroid.utils.ClickInTextView
                 android:id="@+id/tv_signup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -121,19 +122,19 @@
                 android:gravity="right"
                 android:padding="10dp"
                 android:text="@string/txt_signup"
-
                 android:textColor="@color/signin_color"
                 android:textStyle="bold"
+                geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"
                 />
         </RelativeLayout>
 
         <Button
-            android:id="@+id/btn_get_clickin"
+            android:id="@+id/btn_get_clickin_signin"
             android:layout_width="310dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ll_search"
+            android:layout_below="@+id/linearLayout1"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="39dp"
             android:background="@drawable/c_getclicin_active" />
     </RelativeLayout>
 
