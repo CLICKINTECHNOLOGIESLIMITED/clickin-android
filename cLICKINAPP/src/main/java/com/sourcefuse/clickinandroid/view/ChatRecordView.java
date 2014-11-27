@@ -149,15 +149,15 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     String firstname;
     String[] splitted;
     private SeekBar mybar;
-    private TextView pos, neg;
-    private Button send /*btnToCard*/;
+    private TextView pos, neg, profileName, typingtext, myTotalclicks, partnerTotalclicks;
+    private Button send, btnToCard;
     private int relationListIndex, myClicks, userClicks;
     private String qBId, rId, partnerPic, partnerName, partnerId, partnerPh, myTotalString, userTotalClicks;
     private ChatManager chatManager;
     private AuthManager authManager;
     private RelationManager relationManager;
     private EditText chatText;
-    private ImageView attachBtn;
+    private ImageView mypix, partnerPix, menu, attachBtn, notificationIcon;
     private PullToRefreshListView chatListView;
     private ChatRecordAdapter adapter = null;
     //private Typeface typeface;
@@ -177,12 +177,6 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     private int CHAT_TYPE;
     private boolean mIsBound;
 
-
-    /*ImageView menu,notificationIcon;*/
-    /*TextView profileName,typingtext;*/
-
-    /*ImageView mypix,partnerPix;
-    TextView myTotalclicks,partnerTotalclicks;*/
     //chatId-unquie to chat msg- use to track delivery status
     Integer msgId;
 
@@ -250,31 +244,31 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         mybar = (SeekBar) findViewById(R.id.seekBar1);
         pos = (TextView) findViewById(R.id.tv_positive);
         neg = (TextView) findViewById(R.id.tv_negetive);
-        /*mypix = (ImageView) findViewById(R.id.iv_my_pix);*/
+        mypix = (ImageView) findViewById(R.id.iv_my_pix);
         attachBtn = (ImageView) findViewById(R.id.iv_attach);
         attachBtn.setScaleType(ImageView.ScaleType.FIT_XY);
-        /*partnerPix = (ImageView) findViewById(R.id.iv_partner_pix);*/
-        /*menu = (ImageView) findViewById(R.id.iv_menu_button);*/
-        /*notificationIcon = (ImageView) findViewById(R.id.iv_notification_button);*/
-        /*profileName = (TextView) findViewById(R.id.tv_profiler);*/
+        partnerPix = (ImageView) findViewById(R.id.iv_partner_pix);
+        menu = (ImageView) findViewById(R.id.iv_menu_button);
+        notificationIcon = (ImageView) findViewById(R.id.iv_notification_button);
+        profileName = (TextView) findViewById(R.id.tv_profiler);
         llAttachment = (LinearLayout) findViewById(R.id.ll_attachment);
-        /*typingtext = (TextView) findViewById(R.id.tv_typing);*/
+        typingtext = (TextView) findViewById(R.id.tv_typing);
 
-        /*myTotalclicks = (TextView) findViewById(R.id.tv_myclick);
-        partnerTotalclicks = (TextView) findViewById(R.id.tv_partner_click);*/
+        myTotalclicks = (TextView) findViewById(R.id.tv_myclick);
+        partnerTotalclicks = (TextView) findViewById(R.id.tv_partner_click);
 
         atchPhoto = (ImageView) findViewById(R.id.iv_photo);
         attachAudio = (ImageView) findViewById(R.id.iv_adiuo);
         attachVideo = (ImageView) findViewById(R.id.iv_video);
         attachLocation = (ImageView) findViewById(R.id.iv_location);
-        /*btnToCard = (Button) findViewById(R.id.btn_to_card);*/
+        btnToCard = (Button) findViewById(R.id.btn_to_card);
 
         chatText.setMovementMethod(new ScrollingMovementMethod());// akshit Code to scroll text smoothly inside edit text
 
         //profileName.setTypeface(typeface, typeface.BOLD);
         // typingtext.setTypeface(typeface);
-        /*menu.setOnClickListener(this);
-        notificationIcon.setOnClickListener(this);*/
+        menu.setOnClickListener(this);
+        notificationIcon.setOnClickListener(this);
         pos.setText("+" + mybar.getMax());
         neg.setText("-" + mybar.getMax());
 
@@ -282,8 +276,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         mybar.setProgress(initialProgresss);
 
         send.setOnClickListener(this);
-        /*btnToCard.setOnClickListener(this);*/
-        /*partnerPix.setOnClickListener(this);*/
+        btnToCard.setOnClickListener(this);
+        partnerPix.setOnClickListener(this);
 
 
         attachBtn.setOnClickListener(this);
@@ -304,8 +298,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         myClicks = Integer.parseInt(myTotalString);
         userClicks = Integer.parseInt(userTotalClicks);
 
-        /*myTotalclicks.setText("" + myTotalString);
-        partnerTotalclicks.setText("" + userTotalClicks);*/
+        myTotalclicks.setText("" + myTotalString);
+        partnerTotalclicks.setText("" + userTotalClicks);
 
         partnerPh = getIntent().getExtras().getString("partnerPh");
         relationListIndex = getIntent().getExtras().getInt("relationListIndex");
@@ -316,8 +310,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         // chatManager.chatListFromServer.clear();
 
 
-        /*profileName.setText("" + splitted[0]);*/
-        /*try {
+        profileName.setText("" + splitted[0]);
+        try {
             Uri tempUri = authManager.getUserImageUri();
             if (tempUri != null) {
                 Bitmap imageBitmap;
@@ -414,7 +408,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         }
         Picasso.with(ChatRecordView.this).load(partnerPic)
 
-                .error(R.drawable.male_user).into(partnerPix);*/
+                .error(R.drawable.male_user).into(partnerPix);
 
 
         mybar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
@@ -707,7 +701,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 audioFilePath = null;
                 videofilePath = null;
                 break;
-            /*case R.id.iv_menu_button:
+            case R.id.iv_menu_button:
                 hideAttachView();
                 slidemenu.showMenu(true);
                 break;
@@ -719,8 +713,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 Intent intent = new Intent(ChatRecordView.this, CardView.class);
                 intent.putExtra("qBId", qBId);
                 startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
-                break;*/
+                overridePendingTransition(R.anim.slide_in_up, R.anim.stay);
+                break;
 
             case R.id.iv_attach:
                 if (showAttachmentView) {
@@ -736,14 +730,14 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 }
                 break;
 
-           /* case R.id.iv_partner_pix:
+            case R.id.iv_partner_pix:
                 Intent viewProfile = new Intent(ChatRecordView.this, JumpOtherProfileView.class);
                 //  viewProfile.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 viewProfile.putExtra("FromOwnProfile", true);
                 viewProfile.putExtra("phNumber", partnerPh);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
                 startActivity(viewProfile);
-                break;*/
+                break;
 
 
         }
@@ -1067,11 +1061,11 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         } else if (message.equalsIgnoreCase("Chat Message Recieve")) {
             adapter.notifyDataSetChanged();
         } else if (message.equalsIgnoreCase("Composing YES")) {
-            /*typingtext.setVisibility(View.VISIBLE);
-            typingtext.setText("Typing..");*/
+            typingtext.setVisibility(View.VISIBLE);
+            typingtext.setText("Typing..");
         } else if (message.equalsIgnoreCase("Composing NO")) {
-            /*typingtext.setVisibility(View.VISIBLE);
-            typingtext.setText("online");*/
+            typingtext.setVisibility(View.VISIBLE);
+            typingtext.setText("online");
         }else if(message.startsWith("Delivered Msg")){
             String chatId=message.substring(13);
             updateChatDeliverStatusInList(chatId);
@@ -1482,8 +1476,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             //chatManager.fetchChatRecord(rId, authManager.getPhoneNo(), authManager.getUsrToken(),"");
 
 
-            /*profileName.setText("" + splitted[0]);*/
-            /*try {
+            profileName.setText("" + splitted[0]);
+            try {
                 Uri tempUri = authManager.getUserImageUri();
                 if (tempUri != null) {
                     Bitmap imageBitmap;
@@ -1580,7 +1574,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             }
             Picasso.with(ChatRecordView.this).load(partnerPic)
 
-                    .error(R.drawable.male_user).into(partnerPix);*/
+                    .error(R.drawable.male_user).into(partnerPix);
 
 
             //clear the message list always to initiate a new chat

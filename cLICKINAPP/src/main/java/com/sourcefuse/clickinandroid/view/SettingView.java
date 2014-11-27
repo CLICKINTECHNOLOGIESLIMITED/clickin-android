@@ -3,7 +3,6 @@ package com.sourcefuse.clickinandroid.view;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
@@ -11,6 +10,7 @@ import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.facebook.Session;
@@ -39,11 +39,12 @@ public class SettingView extends Activity implements View.OnClickListener {
       LinearLayout sharing_layout, main_password_layout, password_layout, report_layout, not_working_layout,
               general_feed_layout, logout_layout;
       int height;
-      private Typeface typefacemedium;
-      private Typeface typefaceBold;
+//      private Typeface typefacemedium;
+//      private Typeface typefaceBold;
       private AuthManager authManager;
       private SettingManager settingManager;
       private UiLifecycleHelper uiHelper;
+      private ScrollView scroll_view;
 
       @Override
       protected void onCreate(Bundle savedInstanceState) {
@@ -61,12 +62,12 @@ public class SettingView extends Activity implements View.OnClickListener {
             general_feed_layout = (LinearLayout) findViewById(R.id.general_feed_layout);
             logout_layout = (LinearLayout) findViewById(R.id.logout_layout);
 
-            typefacemedium = Typeface.createFromAsset(SettingView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
-            typefaceBold = Typeface.createFromAsset(SettingView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_BOLD);
+//            typefacemedium = Typeface.createFromAsset(SettingView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
+//            typefaceBold = Typeface.createFromAsset(SettingView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_BOLD);
             authManager = ModelManager.getInstance().getAuthorizationManager();
             settingManager = ModelManager.getInstance().getSettingManager();
 
-            ((TextView) findViewById(R.id.sharing_text)).setOnClickListener(this);
+            findViewById(R.id.sharing_text).setOnClickListener(this);
             ((TextView) findViewById(R.id.account_text)).setOnClickListener(this);
             ((TextView) findViewById(R.id.change_password)).setOnClickListener(this);
             ((TextView) findViewById(R.id.report_text)).setOnClickListener(this);
@@ -89,38 +90,6 @@ public class SettingView extends Activity implements View.OnClickListener {
             ((LinearLayout) findViewById(R.id.twitter_layout)).setOnClickListener(this);
             ((LinearLayout) findViewById(R.id.google_plus_layout)).setOnClickListener(this);
 
-            ((TextView) findViewById(R.id.tv_child_title)).setTypeface(typefacemedium);
-            ((TextView) findViewById(R.id.twitter_title)).setTypeface(typefacemedium);
-            ((TextView) findViewById(R.id.google_plus_title)).setTypeface(typefacemedium);
-            ((TextView) findViewById(R.id.edit_profile)).setTypeface(typefacemedium);
-            ((TextView) findViewById(R.id.change_password)).setTypeface(typefacemedium);
-            ((TextView) findViewById(R.id.deactivate_account)).setTypeface(typefacemedium);
-
-            ((EditText) findViewById(R.id.old_password)).setTypeface(typefacemedium);
-            ((EditText) findViewById(R.id.new_password)).setTypeface(typefacemedium);
-            ((EditText) findViewById(R.id.confirm_password)).setTypeface(typefacemedium);
-            ((EditText) findViewById(R.id.problem_text)).setTypeface(typefacemedium);
-            ((EditText) findViewById(R.id.general_problem_text)).setTypeface(typefacemedium);
-
-            ((TextView) findViewById(R.id.save_password)).setTypeface(typefaceBold);
-            ((TextView) findViewById(R.id.btn_send_not_working)).setTypeface(typefaceBold);
-            ((TextView) findViewById(R.id.btn_send_general_problem)).setTypeface(typefaceBold);
-            ((TextView) findViewById(R.id.btn_logout_yes)).setTypeface(typefaceBold);
-            ((TextView) findViewById(R.id.btn_logout_no)).setTypeface(typefaceBold);
-            ((TextView) findViewById(R.id.push_notification_row)).setTypeface(typefaceBold);
-            ((TextView) findViewById(R.id.in_app_sound_row)).setTypeface(typefaceBold);
-            ((TextView) findViewById(R.id.sharing_text)).setTypeface(typefaceBold);
-            ((TextView) findViewById(R.id.account_text)).setTypeface(typefaceBold);
-            ((TextView) findViewById(R.id.privacy_policy_row)).setTypeface(typefaceBold);
-            ((TextView) findViewById(R.id.term_use_row)).setTypeface(typefaceBold);
-            ((TextView) findViewById(R.id.report_text)).setTypeface(typefaceBold);
-            ((TextView) findViewById(R.id.logout_text)).setTypeface(typefaceBold);
-            ((TextView) findViewById(R.id.tv_profile_txt)).setTypeface(typefaceBold);
-
-            ((TextView) findViewById(R.id.spam_text)).setTypeface(typefacemedium);
-            ((TextView) findViewById(R.id.tv_logout_msg)).setTypeface(typefacemedium);
-            ((TextView) findViewById(R.id.not_working_text)).setTypeface(typefacemedium);
-            ((TextView) findViewById(R.id.general_feed_back_text)).setTypeface(typefacemedium);
 
 //  for facebook share
 
@@ -225,6 +194,7 @@ public class SettingView extends Activity implements View.OnClickListener {
                         break;
                   case R.id.logout_text:
                         if (logout_layout.getVisibility() == View.VISIBLE) {
+
                               MyCustomAnimation a = new MyCustomAnimation(logout_layout, 300, MyCustomAnimation.COLLAPSE);
                               height = a.getHeight();
                               logout_layout.startAnimation(a);
@@ -241,22 +211,27 @@ public class SettingView extends Activity implements View.OnClickListener {
                   case R.id.deactivate_account:
                         Intent intent = new Intent(this, DeactivateAccountView.class);
                         startActivity(intent);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);//akshit code
                         break;
                   case R.id.privacy_policy_row:
                         Intent intent1 = new Intent(this, PrivacyView.class);
                         startActivity(intent1);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);//akshit code
                         break;
                   case R.id.term_use_row:
                         Intent intent2 = new Intent(this, TermUseView.class);
                         startActivity(intent2);
+                      overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);//akshit code
                         break;
                   case R.id.spam_text:
                         Intent intent3 = new Intent(this, ViewSpamorAbuse.class);
                         startActivity(intent3);
+                      overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);//akshit code
                         break;
                   case R.id.edit_profile:
                         Intent intent4 = new Intent(this, EditMyProfileView.class);
                         startActivity(intent4);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);//akshit code
                         break;
                   case R.id.btn_logout_yes:
                         //   new MyPreference(getApplicationContext()).clearAllPreference();

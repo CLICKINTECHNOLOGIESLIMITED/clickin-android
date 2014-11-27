@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
@@ -45,8 +44,9 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
     private AuthManager authManager;
     private Dialog mDialog;
     public MyQbChatService myQbChatService;
-    private Typeface typeface;
-    private String DeviceRegId = null;
+    private boolean mIsBound;
+   // private Typeface typeface, typefaceBold;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,20 +54,14 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
         setContentView(R.layout.view_signin);
           getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
-        typeface = Typeface.createFromAsset(SignInView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
-
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
         authManager = ModelManager.getInstance().getAuthorizationManager();
         Utils.deviceId = Utils.getRegId(SignInView.this);
-        String deviceregid = Utils.deviceId;
-        DeviceRegId = Utils.deviceId;
-        Log.e("device reg id--->",""+deviceregid);
-        authManager.setDeviceRegistereId(deviceregid);
-
-        do_latter = (Button) findViewById(R.id.btn_get_clickin);
+        authManager.setDeviceRegistereId(Utils.deviceId);
+        do_latter = (Button) findViewById(R.id.btn_get_clickin_signin);
         ephone = (EditText) findViewById(R.id.edt_email_phoneno);
         ePwd = (EditText) findViewById(R.id.edt_passwd);
         forgotPwd = (TextView) findViewById(R.id.tv_forgot_pwd);
@@ -84,9 +78,9 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
         ePwd.setOnClickListener(this);
 
 
-        forgotPwd.setTypeface(typeface);
-        signUp.setTypeface(typeface);
-        signUp.setTypeface(typeface);
+//        forgotPwd.setTypeface(typeface);
+//        signUp.setTypeface(typeface);
+//        signUp.setTypeface(typeface);
 
         // akshit code for closing keypad if touched anywhere outside
         ((RelativeLayout) findViewById(R.id.relative_layout_root_signin)).setOnClickListener(new View.OnClickListener() {
@@ -105,7 +99,16 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
 
 //ends
 
-
+//        ePwd.setOnKeyListener(new View.OnKeyListener() {
+//            @Override
+//            public boolean onKey(View v, int keyCode, KeyEvent event) {
+//                if (keyCode == KeyEvent.KEYCODE_ENTER ) {
+//                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+//                    imm.hideSoftInputFromWindow(ePwd.getWindowToken(), 0);
+//                }
+//                return false;
+//            }
+//        });
 
 
 //            //akshit code for country Code
@@ -123,12 +126,38 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
 
 
 
-        ephone.setText("+9144444");
+
         ephone.setSelection(ephone.getText().toString().length());
         //No need. For this akshit
 
 
-
+//        ephone.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(Vie9w v, MotionEvent event) {
+//
+//           InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+//            inputMethodManager.showSoftInput(ephone, 0);
+//
+//
+//                if(ephone.getText().toString().contains("null"))
+//                {
+//                    if (ephone.getSelectionStart() <= 6) {
+//                        return false;
+//                    } else {
+//                        return true;
+//                    }
+//
+//                else {
+//                    if (ephone.getSelectionStart() <= 2) {
+//                        return false;
+//                    } else {
+//                        return true;
+//                    }
+//                }
+//            }
+//        });
+//
+//    }
 
 
     }
@@ -163,7 +192,7 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_get_clickin:
+            case R.id.btn_get_clickin_signin:
 
 
              /*  ClickInAlertDialog.networkErrorAlert(SignInView.this);*/
@@ -176,8 +205,7 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
                     getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
                     authManager = ModelManager.getInstance().getAuthorizationManager();
                     Utils.launchBarDialog(SignInView.this);
-
-                    authManager.signIn(ephone.getText().toString().trim(), ePwd.getText().toString().trim(), DeviceRegId, Constants.DEVICETYPE);
+                    authManager.signIn(ephone.getText().toString().trim(), ePwd.getText().toString().trim(), authManager.getDeviceRegistereId(), Constants.DEVICETYPE);
 //                    Log.e(TAG,"Phone no without space" +ephone.getText().toString().trim());
                 }
                 else if(ephone.getText().toString().length() ==0){

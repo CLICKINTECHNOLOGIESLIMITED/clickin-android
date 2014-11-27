@@ -3,23 +3,23 @@ package com.sourcefuse.clickinandroid.view.adapter;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.SettingManager;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
-import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.MyPreference;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.SplashView;
@@ -32,8 +32,7 @@ import de.greenrobot.event.EventBus;
  */
 public class DeactivateAccountView extends Activity implements View.OnClickListener {
     private ImageView backarrow;
-    private Typeface typefaceBold;
-    private Typeface typefacemedium;
+
     private AuthManager authManager;
     private SettingManager settingManager;
 
@@ -45,42 +44,61 @@ public class DeactivateAccountView extends Activity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);//akshit code to prevent auto pop-up for keyboard
         setContentView(R.layout.view_deactivate_account);
         this.overridePendingTransition(R.anim.slide_in_right ,R.anim.slide_out_right);
-        typefacemedium = Typeface.createFromAsset(DeactivateAccountView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
-        typefaceBold = Typeface.createFromAsset(DeactivateAccountView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_BOLD);
+
 
         backarrow = (ImageView) findViewById(R.id.iv_back_noti);
         backarrow.setOnClickListener(this);
-        ((TextView) findViewById(R.id.deactivate_msg)).setTypeface(typefacemedium);
-        ((TextView) findViewById(R.id.option_text)).setTypeface(typefacemedium);
+//        ((TextView) findViewById(R.id.deactivate_msg)).setTypeface(typefacemedium);
+//        ((TextView) findViewById(R.id.option_text)).setTypeface(typefacemedium);
 
         mradioGroup = (RadioGroup) findViewById(R.id.rgOpinion);
         authManager = ModelManager.getInstance().getAuthorizationManager();
         settingManager = ModelManager.getInstance().getSettingManager();
 
         ((LinearLayout) findViewById(R.id.mail_radio_button_layout)).setOnClickListener(this);
-        ((RadioButton) findViewById(R.id.deactivate_radio_msg_one)).setTypeface(typefacemedium);
-        ((RadioButton) findViewById(R.id.deactivate_radio_msg_two)).setTypeface(typefacemedium);
-        ((RadioButton) findViewById(R.id.deactivate_radio_msg_three)).setTypeface(typefacemedium);
-        ((RadioButton) findViewById(R.id.deactivate_radio_msg_four)).setTypeface(typefacemedium);
-        ((RadioButton) findViewById(R.id.deactivate_radio_msg_five)).setTypeface(typefacemedium);
-        ((RadioButton) findViewById(R.id.deactivate_radio_msg_six)).setTypeface(typefacemedium);
-        ((RadioButton) findViewById(R.id.deactivate_radio_msg_seven)).setTypeface(typefacemedium);
+        ((RadioButton) findViewById(R.id.deactivate_radio_msg_one)).setOnClickListener(this);//setTypeface(typefacemedium);
+        ((RadioButton) findViewById(R.id.deactivate_radio_msg_two)).setOnClickListener(this);
+        ((RadioButton) findViewById(R.id.deactivate_radio_msg_three)).setOnClickListener(this);
+        ((RadioButton) findViewById(R.id.deactivate_radio_msg_four)).setOnClickListener(this);
+        ((RadioButton) findViewById(R.id.deactivate_radio_msg_five)).setOnClickListener(this);
+        ((RadioButton) findViewById(R.id.deactivate_radio_msg_six)).setOnClickListener(this);
+        ((RadioButton) findViewById(R.id.deactivate_radio_msg_seven)).setOnClickListener(this);
         // ((RadioButton) findViewById(R.id.mail_radio_button)).setTypeface(typefacemedium);
-        ((EditText) findViewById(R.id.general_problem_text)).setTypeface(typefacemedium);
-        ((EditText) findViewById(R.id.old_password)).setTypeface(typefacemedium);
-        ((TextView) findViewById(R.id.tv_profile_txt)).setTypeface(typefaceBold);
-        ((TextView) findViewById(R.id.btn_good_bye)).setTypeface(typefaceBold);
-        ((TextView) findViewById(R.id.btn_stay)).setTypeface(typefaceBold);
-        ((TextView) findViewById(R.id.deactivate_text)).setTypeface(typefaceBold);
-        ((TextView) findViewById(R.id.leaving_text)).setTypeface(typefaceBold);
-        ((TextView) findViewById(R.id.email_opt_out_text)).setTypeface(typefaceBold);
-        ((TextView) findViewById(R.id.password_text)).setTypeface(typefaceBold);
+        EditText general=((EditText) findViewById(R.id.general_problem_text));
+        EditText passw = ((EditText) findViewById(R.id.old_password));
+
+//        TextView text_profile=((TextView) findViewById(R.id.tv_profile_txt));
+//        TextView text_good=((TextView) findViewById(R.id.btn_good_bye));
+//        TextView text_profile=((TextView) findViewById(R.id.btn_stay));
+//        TextView text_profile=((TextView) findViewById(R.id.deactivate_text));
+//        TextView text_profile=((TextView) findViewById(R.id.leaving_text));
+//        TextView text_profile= ((TextView) findViewById(R.id.email_opt_out_text));
+//        TextView text_profile=((TextView) findViewById(R.id.password_text));
+
 
         ((TextView) findViewById(R.id.btn_good_bye)).setOnClickListener(this);
         ((TextView) findViewById(R.id.btn_stay)).setOnClickListener(this);
 
+
+        // akshit code for closing keypad if touched anywhere outside
+        ((RelativeLayout) findViewById(R.id.relative_layout_root_deactivate_account)).setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+
+                InputMethodManager imm = (InputMethodManager) getSystemService(
+                        INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(((EditText) findViewById(R.id.general_problem_text)).getWindowToken(), 0);
+                imm.hideSoftInputFromWindow(((EditText) findViewById(R.id.old_password)).getWindowToken(), 0);
+
+            }
+
+        });
+
+//ends
     }
 
     @Override
@@ -92,10 +110,24 @@ public class DeactivateAccountView extends Activity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+
+            //akshit code for hiding keyboard
+            case R.id.deactivate_radio_msg_one:
+            case R.id.deactivate_radio_msg_two:
+            case R.id.deactivate_radio_msg_three:
+            case R.id.deactivate_radio_msg_four:
+            case R.id.deactivate_radio_msg_five:
+            case R.id.deactivate_radio_msg_six:
+            case R.id.deactivate_radio_msg_seven:
+                InputMethodManager inputMethodManager1 = (InputMethodManager)  this.getSystemService(Activity.INPUT_METHOD_SERVICE);
+                inputMethodManager1.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
+
+                break;//ends
             case R.id.iv_back_noti:
                 finish();
                 break;
             case R.id.btn_good_bye:
+
 
                 String phone_no, user_token, password, reason_type, other_reason;
 
@@ -131,6 +163,8 @@ public class DeactivateAccountView extends Activity implements View.OnClickListe
                 finish();
                 break;
             case R.id.mail_radio_button_layout:
+                InputMethodManager inputMethodManager2 = (InputMethodManager)  this.getSystemService(Activity.INPUT_METHOD_SERVICE);
+                inputMethodManager2.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
                 /*RadioButton mail_radio_button = (RadioButton) findViewById(R.id.mail_radio_button);
                 if (mail_radio_button.isChecked()) {
                     mail_radio_button.setChecked(false);
@@ -166,16 +200,36 @@ public class DeactivateAccountView extends Activity implements View.OnClickListe
         if (message.equalsIgnoreCase("DeactivteAccount True")) {
             Utils.dismissBarDialog();
             fromSignalDialog(this, AlertMessage.DEACTIVATE_ON_SUCCESS);
+
         }
         if (message.equalsIgnoreCase("DeactivteAccount False")) {
             Utils.dismissBarDialog();
             Utils.fromSignalDialog(this, AlertMessage.DEACTIVATE_ON_FALIURE);
+
         }
         if (message.equalsIgnoreCase("DeactivteAccount Network Error")) {
             Utils.dismissBarDialog();
             Utils.fromSignalDialog(this, AlertMessage.connectionError);
         }
     }
+
+
+//    public void showAlert(Activity activity, String masg) {
+//        new AlertDialog.Builder(activity).setTitle("Alert").setMessage(masg)
+//                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int whichButton) {
+//                        Intent intent=new Intent(DeactivateAccountView.this, SplashView.class);
+//                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                        startActivity(intent);
+//                        overridePendingTransition(R.anim.slide_in_right ,R.anim.slide_out_right);
+//                        new MyPreference(getApplicationContext()).clearAllPreference();
+//                        DeactivateAccountView.this.finish();
+//
+//                    }
+//                }).show();
+//
+//    }
+
 
     // Akshit Code Starts
     public  void fromSignalDialog(Activity activity ,String str){
@@ -205,19 +259,5 @@ public class DeactivateAccountView extends Activity implements View.OnClickListe
         dialog.show();
     }
     // Ends
-//    public void showAlert(Activity activity, String masg) {
-//        new AlertDialog.Builder(activity).setTitle("Alert").setMessage(masg)
-//                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-//                    public void onClick(DialogInterface dialog, int whichButton) {
-//                        Intent intent=new Intent(DeactivateAccountView.this, SplashView.class);
-//                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                        startActivity(intent);
-//                        overridePendingTransition(R.anim.slide_in_right ,R.anim.slide_out_right);
-//                        new MyPreference(getApplicationContext()).clearAllPreference();
-//                        DeactivateAccountView.this.finish();
-//
-//                    }
-//                }).show();
-//
-//    }
+
 }
