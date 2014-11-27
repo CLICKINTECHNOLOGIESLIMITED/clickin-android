@@ -20,6 +20,7 @@ import com.facebook.widget.FacebookDialog;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.SettingManager;
+import com.sourcefuse.clickinandroid.services.MyQbChatService;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.Log;
@@ -263,6 +264,8 @@ public class SettingView extends Activity implements View.OnClickListener {
                         SharedPreferences.Editor editor = preferences.edit();
                         editor.clear();
                         editor.apply();
+                        Intent i=new Intent(this, MyQbChatService.class);
+                        stopService(i);
 
                         Log.e("", "holder.logoutYes");
                         Intent intent5 = new Intent(SettingView.this, SplashView.class);

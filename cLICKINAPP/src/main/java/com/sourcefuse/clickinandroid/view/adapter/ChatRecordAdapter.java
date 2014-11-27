@@ -64,7 +64,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
             //code to set time
             TextView timeView=(TextView)row.findViewById(R.id.tv_time_text);
-            timeView.setText(temp.sentOn);
+            timeView.setText(Utils.getLocalDatefromTimestamp(Long.parseLong(temp.sentOn)));
 
 
             //temp code -for image
@@ -200,7 +200,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
             //code to set time
             TextView timeView=(TextView)row.findViewById(R.id.tv_time_text);
-            timeView.setText(temp.sentOn);
+            timeView.setText(Utils.getLocalDatefromTimestamp(Long.parseLong(temp.sentOn)));
 
             //temp code -for image-receiver end
             if(!(Utils.isEmptyString(temp.imageRatio))){

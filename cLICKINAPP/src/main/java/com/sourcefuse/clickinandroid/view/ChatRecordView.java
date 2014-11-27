@@ -1102,7 +1102,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
                         ShowValueinChat(temp);
                         myQbChatService.sendMessage(temp);
-                        createRecordForHistory(temp);
+                       // createRecordForHistory(temp);
 
                         chatText.setText("");
                         seekValue = 0;
@@ -2579,7 +2579,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                     temp.content_url = fileUrl;
                     temp.isDelivered = Constants.MSG_SENT;
                     myQbChatService.sendMessage(temp);
-                    createRecordForHistory(temp);
+                 //   createRecordForHistory(temp);
                     adapter.notifyDataSetChanged();
 
                 }
