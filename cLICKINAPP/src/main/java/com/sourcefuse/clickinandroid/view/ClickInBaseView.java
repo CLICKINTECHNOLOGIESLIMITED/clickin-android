@@ -16,7 +16,6 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
@@ -55,8 +54,7 @@ import java.util.List;
 
 import de.greenrobot.event.EventBus;
 
-public class
-        ClickInBaseView extends Activity implements TextWatcher, SlidingMenu.OnOpenListener, SlidingMenu.OnCloseListener {
+public class ClickInBaseView extends Activity implements TextWatcher, SlidingMenu.OnOpenListener, SlidingMenu.OnCloseListener {
 
 
     /// Left Menu
@@ -91,13 +89,16 @@ public class
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        /*setContentView(R.layout.view_baseview);*/
+        setContentView(R.layout.view_baseview);
         Log.e("ClickInBaseView1", "onCreate");
 
         authManager = ModelManager.getInstance().getAuthorizationManager();
 
 
     }
+
+
+
 
     @SuppressWarnings("static-access")
     public void setLeftMenuList() {
@@ -252,7 +253,7 @@ public class
                         }
                     }
                     String search_date = edt_search.getText().toString();
-                     if (!Utils.isEmptyString(search_date) && search_date.length() > 0) {
+                    if (!Utils.isEmptyString(search_date) && search_date.length() > 0) {
                         slidemenu.findViewById(R.id.btn_clear).setVisibility(View.GONE);
                         slidemenu.findViewById(R.id.btn_progressBar).setVisibility(View.VISIBLE);
                     } else {
@@ -612,23 +613,6 @@ public class
 
 
     }
-
-
-    /* set content view */
-
-    @Override
-    public void setContentView(int layoutResID) {
-        super.setContentView(layoutResID);
-        View header = getLayoutInflater().inflate(R.layout.view_baseview, null);
-        ((ViewGroup) ((ViewGroup) findViewById(android.R.id.content)).getChildAt(0)).addView(header, 0);
-
-
-    }
-
-
-
-    /* set content view */
-
 
     public void rightMenuElements() {
 
