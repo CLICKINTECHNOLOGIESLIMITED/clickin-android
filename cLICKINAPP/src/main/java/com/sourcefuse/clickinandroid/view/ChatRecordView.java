@@ -447,6 +447,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
         chatText.addTextChangedListener(this);
 
+
         atchPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

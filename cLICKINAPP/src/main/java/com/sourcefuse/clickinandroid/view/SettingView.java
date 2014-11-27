@@ -264,6 +264,7 @@ public class SettingView extends Activity implements View.OnClickListener {
                         SharedPreferences.Editor editor = preferences.edit();
                         editor.clear();
                         editor.apply();
+                      //monika- stop service running in background
                         Intent i=new Intent(this, MyQbChatService.class);
                         stopService(i);
 
