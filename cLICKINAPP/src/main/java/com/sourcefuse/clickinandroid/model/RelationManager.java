@@ -55,92 +55,98 @@ public class RelationManager {
     private String followerOListCount = "0";
     private String followingOListCount = "0";
 
-    String strService = null;
+
+	String strService = null;
 
 
-    public void getRelationShips(String phone, String usertoken) {
-        // TODO Auto-generated method stub
-        relationManager = ModelManager.getInstance().getRelationManager();
-        JSONObject userInputDetails = new JSONObject();
-        try {
-            userInputDetails.put("phone_no", phone);
-            userInputDetails.put("user_token", usertoken);
+	public void getRelationShips(String phone, String usertoken) {
+		// TODO Auto-generated method stub
+		relationManager = ModelManager.getInstance().getRelationManager();
+		JSONObject userInputDetails = new JSONObject();
+		try {
+			userInputDetails.put("phone_no", phone);
+			userInputDetails.put("user_token", usertoken);
 
-            client = new AsyncHttpClient();
-            se = new StringEntity(userInputDetails.toString());
-            se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+			client = new AsyncHttpClient();
+			se = new StringEntity(userInputDetails.toString());
+			se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,"application/json"));
 
-            Log.e("UsrInput-For-GETRELATIONSHIPS-> ", "" + userInputDetails);
-            strService = APIs.GETRELATIONSHIPS;
+			Log.e("UsrInput-For-GETRELATIONSHIPS-> ", ""+ userInputDetails);
+			strService = APIs.GETRELATIONSHIPS;
 
-        } catch (Exception e1) {
-            e1.printStackTrace();
-        }
-        client.post(null, strService, se, "application/json", new JsonHttpResponseHandler() {
-            @Override
-            public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
-                super.onFailure(statusCode, e, errorResponse);
-                Log.e(TAG, "errorResponse--> " + errorResponse);
-                if (errorResponse != null) {
-                    getrelationshipsData.clear();
-                    acceptedList.clear();
-                    initiatorList.clear();
-                    requestedList.clear();
-                    EventBus.getDefault().post("GetRelationShips False");
-                } else {
-                    EventBus.getDefault().post("GetRelationShips Network Error");
-                }
-            }
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+		client.post(null, strService, se, "application/json",new JsonHttpResponseHandler() {
+					@Override
+					public void onFailure(int statusCode, Throwable e,JSONObject errorResponse) {
+						super.onFailure(statusCode, e, errorResponse);
+						Log.e(TAG,"errorResponse--> " + errorResponse);
+						if (errorResponse != null) {
+                            getrelationshipsData.clear();
+                            acceptedList.clear();
+                            initiatorList.clear();
+                            requestedList.clear();
+                            EventBus.getDefault().post("GetRelationShips False");
+						} else {
+                            EventBus.getDefault().post("GetRelationShips Network Error");
+						}
+					}
 
-            @Override
-            public void onSuccess(int statusCode, org.apache.http.Header[] headers, JSONObject response) {
-                super.onSuccess(statusCode, headers, response);
-                boolean state = false;
-                try {
-                    Log.e(TAG, "response--> " + response);
-                    state = response.getBoolean("success");
-                    if (state) {
-                        getrelationshipsData.clear();
-                        acceptedList.clear();
-                        initiatorList.clear();
-                        requestedList.clear();
-                        relationManager.setFollowerListCount(response.getString("follower"));
-                        relationManager.setFollowingListCount(response.getString("following"));
-
-
-                        JSONArray list = response.getJSONArray("relationships");
-                        getRelationShipArray = new ArrayList<GetrelationshipsBean>();
-                        for (int i = 0; i < list.length(); i++) {
-                            JSONObject data = list.getJSONObject(i);
-                            getRelationShipList = new GetrelationshipsBean();
-
-                            if (!Utils.isEmptyString(data.getString("partner_id"))) {
-                                if (data.getString("accepted").matches("true")) {
-                                    setArrayListForDifferentStatus(data, acceptedList);
-                                } else {
-                                    setArrayListForDifferentStatus(data, requestedList);
+					@Override
+					public void onSuccess(int statusCode,org.apache.http.Header[] headers,JSONObject response) {
+						super.onSuccess(statusCode, headers, response);
+						boolean state = false;
+						try {
+                            Log.e(TAG, "response--> " + response);
+							state = response.getBoolean("success");
+							if (state) {
+								getrelationshipsData.clear();
+								acceptedList.clear();
+								initiatorList.clear();
+								requestedList.clear();
+                                try {
+                                    relationManager.setFollowerListCount(response.getString("follower"));
+                                    relationManager.setFollowingListCount(response.getString("following"));
+                                }catch (Exception e){
+                                    e.printStackTrace();
                                 }
-                            }
-                        }
-                        getrelationshipsData.addAll(requestedList);
-                        getrelationshipsData.addAll(acceptedList);
-                        //getrelationshipsData.addAll(initiatorList);
-                        EventBus.getDefault().post("GetRelationShips True");
-                    } else {
-                        getrelationshipsData.clear();
-                        acceptedList.clear();
-                        initiatorList.clear();
-                        requestedList.clear();
-                        EventBus.getDefault().post("GetRelationShips False");
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
 
-            }
+
+								JSONArray list = response.getJSONArray("relationships");
+								getRelationShipArray = new ArrayList<GetrelationshipsBean>();
+								for (int i = 0; i < list.length(); i++) {
+									JSONObject data = list.getJSONObject(i);
+									getRelationShipList = new GetrelationshipsBean();
+
+									if (!Utils.isEmptyString(data.getString("partner_id"))) {
+										if(data.getString("accepted").matches("true")){
+                                            setArrayListForDifferentStatus(data,acceptedList);
+										}else{
+                                            setArrayListForDifferentStatus(data,requestedList);
+										}
+									}
+								}
+                                getrelationshipsData.addAll(requestedList);
+                                getrelationshipsData.addAll(acceptedList);
+								//getrelationshipsData.addAll(initiatorList);
+                                EventBus.getDefault().post("GetRelationShips True");
+							}else{
+                                getrelationshipsData.clear();
+                                acceptedList.clear();
+                                initiatorList.clear();
+                                requestedList.clear();
+                                EventBus.getDefault().post("GetRelationShips False");
+                            }
+						} catch (JSONException e) {
+							e.printStackTrace();
+                        }
+
+                    }
 
         });
     }
+
 
 
     private void setArrayListForDifferentStatus(JSONObject jsondata, ArrayList<GetrelationshipsBean> listdata) {

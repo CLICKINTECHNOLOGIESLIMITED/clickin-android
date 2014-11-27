@@ -35,6 +35,8 @@ import org.json.JSONObject;
 import org.json.XML;
 
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.TimeZone;
 import java.util.regex.Pattern;
 
 import de.greenrobot.event.EventBus;
@@ -52,7 +54,7 @@ public class ChatThread extends Thread implements QBMessageListener {
     private QBChatService chat;
     private Handler mMyHandler;
     private JSONObject mRooms = new JSONObject();
-    private QBPrivateChat chatObject;
+    private QBChat chatObject;
     private AuthManager authManager;
     private QBUser mUser;
 
@@ -62,8 +64,8 @@ public class ChatThread extends Thread implements QBMessageListener {
         authManager = ModelManager.getInstance().getAuthorizationManager();
 
         QBSettings.getInstance().fastConfigInit(Constants.CLICKIN_APP_ID, Constants.CLICKIN_AUTH_KEY, Constants.CLICKIN_AUTH_SECRET);
-        //    QBSettings.getInstance().setServerApiDomain("apiclickin.quickblox.com");
-        //  QBSettings.getInstance().setContentBucketName("qb-clickin");
+       // QBSettings.getInstance().setServerApiDomain("apiclickin.quickblox.com");
+       // QBSettings.getInstance().setContentBucketName("qb-clickin");
         //QBSettings.getInstance().setChatServerDomain("chatclickin.quickblox.com");
         QBChatService.setDebugEnabled(true);
     }
@@ -85,7 +87,8 @@ public class ChatThread extends Thread implements QBMessageListener {
                         Bundle data = msg.getData();
                         if (QBChatService.getInstance().isLoggedIn()) {
                             int partnerQBId = Integer.parseInt(data.getString("partnerQBId"));
-                            chatObject = QBChatService.getInstance().getPrivateChatManager().getChat(partnerQBId);
+                         //   chatObject = QBChatService.getInstance().getPrivateChatManager().getChat(partnerQBId);
+                          //  chatObject=QBChatService.getInstance().
                             if (chatObject == null)
                                 chatObject = QBChatService.getInstance().getPrivateChatManager().createChat(partnerQBId, ChatThread.this);
                             QBChatMessage message = new QBChatMessage();
@@ -115,6 +118,24 @@ public class ChatThread extends Thread implements QBMessageListener {
 
                                     message.setProperty("fileID", data.getString("FileId"));
                                     message.setProperty("imageRatio", data.getString("imageRatio"));
+
+                                    break;
+                                case Constants.CHAT_TYPE_AUDIO:
+
+                                    message.setProperty("audioID", data.getString("FileId"));
+
+                                    break;
+                                case Constants.CHAT_TYPE_VIDEO:
+
+                                    message.setProperty("videoThumbnail", data.getString("videoThumbnail"));
+                                    message.setProperty("videoID", data.getString("FileId"));
+
+                                    break;
+                                case Constants.CHAT_TYPE_LOCATION:
+
+                                    message.setProperty("location_coordinates", data.getString("location_coordinates"));
+                                    message.setProperty("imageRatio", data.getString("imageRatio"));
+                                    message.setProperty("locationID", data.getString("FileId"));
 
                                     break;
                             }
@@ -313,6 +334,8 @@ public class ChatThread extends Thread implements QBMessageListener {
                 }
                 if (extraParamsObj.has("fileID")) {
                     temp.content_url = extraParamsObj.getString("fileID");
+                }else if(extraParamsObj.has("audioID")){
+                    temp.content_url = extraParamsObj.getString("audioID");
                 }
                 if (temp.clicks.equalsIgnoreCase("no")) {
                     temp.textMsg = body;
@@ -325,6 +348,9 @@ public class ChatThread extends Thread implements QBMessageListener {
                         temp.clicks = Utils.convertClicks(temp.clicks).trim();
                     }
                 }
+                //calcuate time to receiver
+                long receiveTime = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis();
+                temp.sentOn=""+receiveTime;
                 ModelManager.getInstance().getChatManager().chatMessageList.add(temp);
 
                 EventBus.getDefault().post("Chat Message Recieve");

@@ -33,8 +33,8 @@ public class VideoUtil {
         final Dialog mdialog   = new Dialog(contex);
         mdialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         mdialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        mdialog.getWindow().setSoftInputMode(
-                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        /*mdialog.getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);*/
         mdialog.setContentView(R.layout.alert_take_vedio);
         mdialog.setCancelable(false);
 
@@ -76,44 +76,6 @@ public class VideoUtil {
         });
         mdialog.show();
     }
-//        String[] addPhoto;
-//        addPhoto = new String[]{"CAPTURE A VIDEO", "FROM YOUR GALLERY"};
-//        AlertDialog.Builder dialog = new AlertDialog.Builder(contex);
-//        dialog.setTitle("Add your video");
-//
-//        dialog.setItems(addPhoto, new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int id) {
-//                if (id == 0) {
-//                    try {
-//                        Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-//                        fileUri = getOutputMediaFileUri();
-//                        intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
-//                        intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, REQUEST_VIDEO_CAPTURED);
-//                        contex.startActivityForResult(intent, REQUEST_VIDEO_CAPTURED);
-//                    } catch (ActivityNotFoundException e) {
-//                    }
-//                    dialog.dismiss();
-//                } else if (id == 1) {
-//                    Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-//                    photoPickerIntent.setType("video/*");
-//                    contex.startActivityForResult(photoPickerIntent, REQUEST_VIDEO_CAPTURED_FROM_GALLERY);
-//                    dialog.dismiss();
-//                }
-//            }
-//        });
-//        dialog.setNeutralButton("Cancel",
-//                new android.content.DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//
-//                        dialog.dismiss();
-//                    }
-//                }
-//        );
-//        dialog.show();
-//    }
-
     /**
      * Create a file Uri for saving  video
      */

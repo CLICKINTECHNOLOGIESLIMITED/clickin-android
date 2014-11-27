@@ -51,7 +51,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.TimeZone;
 
-public class Utils {
+public class
+        Utils {
 
     public static boolean DEBUG = true;
 
