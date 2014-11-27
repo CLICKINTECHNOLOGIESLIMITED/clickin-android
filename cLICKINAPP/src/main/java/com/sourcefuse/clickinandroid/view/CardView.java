@@ -250,6 +250,12 @@ public class CardView extends FragmentActivity{
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        overridePendingTransition(0,R.anim.slide_out_finish_up);
+    }
 }
 
 

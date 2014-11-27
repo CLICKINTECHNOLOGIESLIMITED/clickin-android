@@ -234,5 +234,12 @@ Log.e(TAG,"Original Url" +url);
     public void afterTextChanged(Editable editable) {
 
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        overridePendingTransition(0, R.anim.slide_out_finish_up);
+    }
 }
 

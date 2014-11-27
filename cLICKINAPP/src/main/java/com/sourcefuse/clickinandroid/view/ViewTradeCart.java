@@ -276,7 +276,14 @@ public class ViewTradeCart extends Activity implements View.OnClickListener
 
 
            }
-        }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        overridePendingTransition(0, R.anim.slide_out_finish_up);
+    }
+}
 
 
 
