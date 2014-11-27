@@ -1,9 +1,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
     xmlns:geekui="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rl_addvia_contact_action"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/rl_addvia_contact_action"
     android:background="@drawable/enterdigitmainbg">
 
     <LinearLayout
@@ -18,33 +18,32 @@
         <com.sourcefuse.clickinandroid.utils.ClickInTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
             android:layout_gravity="center"
+            android:layout_marginBottom="5dp"
             android:layout_weight="1"
             android:gravity="center"
             android:text="ADD SOMEONE"
-            android:layout_centerHorizontal="true"
             android:textColor="@color/screen_header"
             android:textSize="43sp"
             android:textStyle="bold"
-            android:layout_marginBottom="5dp"
-            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
-            />
+            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
+
         <com.sourcefuse.clickinandroid.utils.ClickInTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
             android:layout_gravity="top"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="-50dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:layout_centerHorizontal="true"
             android:text="TO CLICK WITH"
             android:textColor="@color/screen_header"
             android:textSize="43sp"
             android:textStyle="bold"
-            android:layout_marginLeft="24dp"
-            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
-            android:layout_marginTop="-50dp"
-            android:layout_marginBottom="10dp"
-            />
+            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
 
     </LinearLayout>
 
@@ -85,53 +84,53 @@
                 android:layout_width="fill_parent"
                 android:layout_height="50dp"
                 android:layout_centerHorizontal="true"
-                android:paddingTop="15dp"
                 android:layout_marginBottom="2dp"
                 android:layout_toRightOf="@+id/iv_contact_icon"
+                android:background="@drawable/search_bg"
                 android:paddingLeft="10dp"
+                android:paddingTop="15dp"
                 android:text="mahendra"
                 android:textColor="@color/black"
                 android:textSize="15sp"
-                android:textStyle="bold"
-                android:background="@drawable/search_bg"
-                ></TextView>
+                android:textStyle="bold"></TextView>
 
         </RelativeLayout>
-<LinearLayout
-    android:id="@+id/ll2"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_below="@+id/rr_contact_iv"
-    android:orientation="vertical"
-    android:weightSum="1">
 
-    <TextView
-        android:id="@+id/edt_text_cntry_cd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rr_contact_iv"
-        android:layout_marginBottom="2dp"
-        android:text="@string/txt_cntrycode"
-        android:textColor="@color/dark_gray"
-        android:textSize="10sp"
-        android:layout_weight="23.50"></TextView>
+        <LinearLayout
+            android:id="@+id/ll2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rr_contact_iv"
+            android:orientation="vertical"
+            android:weightSum="1">
 
-
-    <EditText
-        android:id="@+id/edt_cntry_cd"
-        android:layout_width="fill_parent"
-        android:layout_height="45dp"
-        android:background="@color/background_grey"
-        android:ems="10"
-        android:singleLine="true"
-          android:inputType="textNoSuggestions"
-        android:padding="10dp"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:textStyle="bold"></EditText>
+            <TextView
+                android:id="@+id/edt_text_cntry_cd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rr_contact_iv"
+                android:layout_marginBottom="2dp"
+                android:layout_weight="23.50"
+                android:text="@string/txt_cntrycode"
+                android:textColor="@color/dark_gray"
+                android:textSize="10sp"></TextView>
 
 
-</LinearLayout>
+            <EditText
+                android:id="@+id/edt_cntry_cd"
+                android:layout_width="fill_parent"
+                android:layout_height="45dp"
+                android:background="@color/background_grey"
+                android:ems="10"
+                android:inputType="textNoSuggestions"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"></EditText>
+
+
+        </LinearLayout>
 
 
         <LinearLayout
@@ -150,10 +149,10 @@
                 android:layout_marginLeft="4dp"
                 android:background="@color/background_grey"
                 android:ems="12"
+                android:hint="Phone Number"
                 android:inputType="phone|textNoSuggestions"
                 android:padding="10dp"
                 android:textColor="@color/black"
-                android:hint="Phone Number"
                 android:textColorHint="@color/dark_gray"
                 android:textSize="16sp"
                 android:textStyle="bold">
@@ -162,22 +161,16 @@
             </EditText>
         </LinearLayout>
 
-        <RelativeLayout
-            android:id="@+id/rr_con_list"
-            android:layout_width="wrap_content"
+
+        <Button
+            android:id="@+id/btn_get_clickIn"
+            android:layout_width="310dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/ll_search"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="5dp">
+            android:layout_marginTop="20dp"
+            android:background="@drawable/c_getclicin_deactive" />
 
-            <Button
-                android:id="@+id/btn_get_clickIn"
-                android:layout_width="310dp"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/c_getclicin_deactive" />
-        </RelativeLayout>
     </RelativeLayout>
 
     <RelativeLayout

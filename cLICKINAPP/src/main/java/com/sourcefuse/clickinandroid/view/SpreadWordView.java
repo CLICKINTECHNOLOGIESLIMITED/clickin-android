@@ -4,7 +4,10 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Telephony;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -67,23 +70,21 @@ public class SpreadWordView extends Activity implements OnClickListener {
         //Utils.launchBarDialog(this);
         //  new FetchContactFromPhone(SpreadWordView.this).getClickerList(authManager.getPhoneNo(),authManager.getUsrToken(),1);
         //   setlist();
-        profilemanager=ModelManager.getInstance().getProfileManager();
+        profilemanager = ModelManager.getInstance().getProfileManager();
 
-        if(profilemanager.spreadTheWorldList!=null && profilemanager.spreadTheWorldList.size()!=0){
-            for(ContactBean temp:profilemanager.spreadTheWorldList ){
+        if (profilemanager.spreadTheWorldList != null && profilemanager.spreadTheWorldList.size() != 0) {
+            for (ContactBean temp : profilemanager.spreadTheWorldList) {
                 temp.setChecked(false);
             }
-              setlist();
-        }else{
-              Utils.launchBarDialog(this);
-              new FetchContactFromPhone(this).getClickerList(authManager.getPhoneNo(), authManager.getUsrToken(), 1);
-          }
+            setlist();
+        } else {
+            Utils.launchBarDialog(this);
+            new FetchContactFromPhone(this).getClickerList(authManager.getPhoneNo(), authManager.getUsrToken(), 1);
+        }
 
-         if(!getIntent().getBooleanExtra("fromsignup",false))
-         {
-               findViewById(R.id.btn_next).setVisibility(View.GONE);
-         }
-
+        if (!getIntent().getBooleanExtra("fromsignup", false)) {
+            findViewById(R.id.btn_next).setVisibility(View.GONE);
+        }
 
 
     }
@@ -151,8 +152,8 @@ public class SpreadWordView extends Activity implements OnClickListener {
                     }
                 } else {
                     Utils.dismissBarDialog();
-                    Utils.fromSignalDialog(this,AlertMessage.connectionError);
-                  //  Toast.makeText(getApplicationContext(), "Please Check Your Internet Connection", Toast.LENGTH_SHORT).show();
+                    Utils.fromSignalDialog(this, AlertMessage.connectionError);
+                    //  Toast.makeText(getApplicationContext(), "Please Check Your Internet Connection", Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.btn_back:
@@ -166,13 +167,13 @@ public class SpreadWordView extends Activity implements OnClickListener {
                 //   authManager.getProfileInfo("", authManager.getPhoneNo(), authManager.getUsrToken());
                 Intent clickersView = new Intent(SpreadWordView.this, UserProfileView.class);
                 clickersView.putExtra("FromSignup", true);
+
                 startActivity(clickersView);
                 finish();
                 break;
             case R.id.btn_invite:
                 if (Utils.groupSms.size() > 0) {
-                    Intent smsIntent = new Intent(Intent.ACTION_VIEW);
-                    smsIntent.putExtra("sms_body", Constants.SEND_REQUEST_WITH_SMS_MESSAGE_SPREAD);
+
 
                     StringBuilder uri = new StringBuilder("sms:");
                     ListIterator<String> iterator = Utils.groupSms.listIterator();
@@ -183,22 +184,39 @@ public class SpreadWordView extends Activity implements OnClickListener {
                             uri.append(",");
                     }
 
-                    smsIntent.setType("vnd.android-dir/mms-sms");
-                    smsIntent.setData(Uri.parse(uri.toString()));
-                    startActivity(smsIntent);
 
-            /*Intent smsIntent = new Intent(Intent.ACTION_VIEW);
-            smsIntent.putExtra("sms_body", "Hello ClickIn");
-            smsIntent.putExtra("address", "4");
-            smsIntent.setType("vnd.android-dir/mms-sms");
-            startActivity(smsIntent);*/
+                    /* send sms if not not register */
+                 /*  send sms for nexus 5 check build version*/
+                 /* prafull code */
+                    try {
 
-           /* Intent sendIntent = new Intent(Intent.ACTION_VIEW);
-            sendIntent.putExtra("sms_body", "default content");
-            sendIntent.setType("vnd.android-dir/mms-sms");
-            if (sendIntent.resolveActivity(getPackageManager()) != null) {
-                startActivity(sendIntent);
-            }*/
+
+                        Intent smsIntent = new Intent(Intent.ACTION_VIEW);
+                        smsIntent.putExtra("sms_body", Constants.SEND_REQUEST_WITH_SMS_MESSAGE_SPREAD);
+                        smsIntent.setType("vnd.android-dir/mms-sms");
+                        smsIntent.setData(Uri.parse(uri.toString()));
+                        smsIntent.putExtra("exit_on_sent", true);
+                        startActivity(smsIntent);
+
+
+                    } catch (Exception e) {
+                        try {
+                            String defaultSmsPackageName = Telephony.Sms.getDefaultSmsPackage(SpreadWordView.this); //Need to change the build to API 19
+                            Intent sendIntent = new Intent(Intent.ACTION_SEND);
+                            sendIntent.setType("text/plain");
+                            sendIntent.putExtra("address", uri.toString());
+                            sendIntent.putExtra(Intent.EXTRA_TEXT, Constants.SEND_REQUEST_WITH_SMS_MESSAGE);
+                            sendIntent.putExtra(Intent.ACTION_ATTACH_DATA,Uri.parse(uri.toString()));
+                            if (defaultSmsPackageName != null)//Can be null in case that there is no default, then the user would be able to choose any app that support this intent.
+                            {
+                                sendIntent.setPackage(defaultSmsPackageName);
+                            }
+                            sendIntent.putExtra("exit_on_sent", true);
+                            startActivity(sendIntent);
+                        } catch (Exception e1) {
+                            e1.printStackTrace();
+                        }
+                    }
 
 
                 } else {
@@ -281,7 +299,6 @@ public class SpreadWordView extends Activity implements OnClickListener {
                                                }
 
                                            }
-
                     )
                     .
 

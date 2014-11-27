@@ -20,6 +20,7 @@ import android.os.IBinder;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.method.ScrollingMovementMethod;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -262,6 +263,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         attachLocation = (ImageView) findViewById(R.id.iv_location);
         btnToCard = (Button) findViewById(R.id.btn_to_card);
 
+        chatText.setMovementMethod(new ScrollingMovementMethod());// akshit Code to scroll text smoothly inside edit text
 
         //profileName.setTypeface(typeface, typeface.BOLD);
         // typingtext.setTypeface(typeface);
@@ -486,8 +488,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 try {
                     // int lastIndex = chatManager.chatMessageList.size() - 1;
                     String lastChatId = chatManager.chatMessageList.get(0).chatId;
-                    // chatManager.fetchChatRecord(rId, authManager.getPhoneNo(), authManager.getUsrToken(), lastChatId);
-                    fetchChatRecord(rId, authManager.getPhoneNo(), authManager.getUsrToken(), lastChatId);
+                    chatManager.fetchChatRecord(rId, authManager.getPhoneNo(), authManager.getUsrToken(), lastChatId);
                 } catch (Exception e) {
 
                 }
@@ -600,35 +601,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         dialog.show();
     }
 
-    /*private void sendWithExtension(String messageText, String clicks) {
-          //chat = QBChatService.getInstance().createChat();
-          try {
-         *//* Log.e(TAG,"SEND CHAT DATA--->"+ "messageText ->"+messageText+ "\nclicks ->"+  clicks+ "\ncontent ->"+ content + "\nrelationshipId ->"+ relationshipId + "\nuserId ->"+ userId + "\nsenderUserToken ->"+ senderUserToken
-                    + "\nsentOn ->"+ sentOn+ "\nchatId ->"+ chatId + "\ntype ->"+ type + "\nvideo_thumb ->"+ video_thumb + "\nfileID ->"+ fileID + "\nfileIDContent ->"+ fileIDContent + "\nimageRatio ->"+ imageRatio + "\ncards ->"+ cards
-                    + "\nlocationCoordinates ->"+ locationCoordinates + "\nsharedMessage ->"+ sharedMessage + "\ndeliveredChatID ->"+ deliveredChatID);
-*//*
-                  DefaultPacketExtension extension = new DefaultPacketExtension("extraParams", "jabber:client");
-                  extension.setValue("clicks", clicks);
 
-                  Log.e(TAG, "SENT Chat-->" + extension.toXML().toString());
-
-                  Message messageWithEx = new Message();
-                  messageWithEx.setType(Message.Type.chat);
-                  messageWithEx.setBody(messageText);// 1-1 chat message
-                  messageWithEx.addExtension(extension);
-                 // chatObject.sendMessage(Integer.parseInt(qBId), messageWithEx);
-            } catch (Exception e) {
-                  e.printStackTrace();
-                  try {
-                      //  chatObject.removeChatMessageListener(this);
-                      //  chatObject.addChatMessageListener(this);
-                  } catch (Exception e1) {
-                  }
-                  Log.e(TAG, "Exception----> " + e.toString());
-            }
-
-      }
-*/
     public void setlist() {
 
         try {
@@ -704,19 +677,20 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
                     } else if(!Utils.isEmptyString(audioFilePath)) { //Audio is attached
 
-                        CHAT_TYPE = Constants.CHAT_TYPE_AUDIO;
-
+                            CHAT_TYPE = Constants.CHAT_TYPE_AUDIO;
                             sendMsgToQB(audioFilePath);
 
                     }else if(!Utils.isEmptyString(videofilePath)) { //Video is attached
 
-                        CHAT_TYPE = Constants.CHAT_TYPE_VIDEO;
-
+                            CHAT_TYPE = Constants.CHAT_TYPE_VIDEO;
                             sendMsgToQB(videofilePath);
-
                     }
 
                 }
+
+                /* to detele uri once image is send prafull */
+                mImageCaptureUri  = null;
+                path = null;
 
 
                 attachBtn.setImageDrawable(getResources().getDrawable(R.drawable.r_footer_icon));
@@ -849,8 +823,10 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         QBContent.uploadFileTask(mfile, fileIsPublic, null, new QBEntityCallbackImpl<QBFile>() {
             @Override
             public void onSuccess(QBFile file, Bundle params) {
+
                 String fileUrl= file.getPublicUrl().toString();
                 sendMediaMsgToQB(fileUrl, chatId);
+
             }
 
             @Override
@@ -914,7 +890,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         seekValue = 0;
         mybar.setProgress(10);
         mImageCaptureUri=null;
-        //path=null;
+
         attachBtn.setImageDrawable(getResources().getDrawable(R.drawable.r_footer_icon));
         uploadImageFileOnQB(path,temp.chatId);
 
@@ -984,6 +960,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
         // TODO Auto-generated method stub
+
         try {
             if (s.length() > 0) {
                 myQbChatService.sendTypeNotification("YES", qBId);
@@ -1110,7 +1087,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 switch (requestCode) {
                     case Constants.CAMERA_REQUEST:
                         Bitmap imageBitmap;
-                        // mImageCaptureUri = data.getData();
+
 
                         try {
 
@@ -1162,7 +1139,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                             }
 
                             mImageCaptureUri = Utils.decodeUri(ChatRecordView.this, mImageCaptureUri, 550);
-                            path = Utils.getRealPathFromURI(mImageCaptureUri, ChatRecordView.this);
+                            path = mImageCaptureUri.toString();
                             currentImagepath = mImageCaptureUri.toString();
 
                             bitmap.recycle();
@@ -1232,8 +1209,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                                 );
                             }
                             bitmap.recycle();
-                            mImageCaptureUri = Utils.decodeUri(ChatRecordView.this, mImageCaptureUri, 550);
-                            path = Utils.getRealPathFromURI(mImageCaptureUri, ChatRecordView.this);
+                            mImageCaptureUri = Utils.decodeUri(ChatRecordView.this, data.getData(), 550);
+                            path = mImageCaptureUri.toString();
                             currentImagepath = mImageCaptureUri.toString();
                             attachBtn.setImageBitmap(resized);
 
@@ -1389,52 +1366,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         }
     }
 
-    private int grandClicksForReceiverEndInt(String clicksValue) {
-        int changeClicks = 0;
-        if (clicksValue.equalsIgnoreCase("+01")) {
-            changeClicks = 1;
-        } else if (clicksValue.equalsIgnoreCase("+02")) {
-            changeClicks = 2;
-        } else if (clicksValue.equalsIgnoreCase("+03")) {
-            changeClicks = 3;
-        } else if (clicksValue.equalsIgnoreCase("+04")) {
-            changeClicks = 4;
-        } else if (clicksValue.equalsIgnoreCase("+05")) {
-            changeClicks = 5;
-        } else if (clicksValue.equalsIgnoreCase("+06")) {
-            changeClicks = 6;
-        } else if (clicksValue.equalsIgnoreCase("+07")) {
-            changeClicks = 7;
-        } else if (clicksValue.equalsIgnoreCase("+08")) {
-            changeClicks = 8;
-        } else if (clicksValue.equalsIgnoreCase("+09")) {
-            changeClicks = 9;
-        } else if (clicksValue.equalsIgnoreCase("+10")) {
-            changeClicks = 10;
-        } else if (clicksValue.equalsIgnoreCase("-1")) {
-            changeClicks = 1;
-        } else if (clicksValue.equalsIgnoreCase("-2")) {
-            changeClicks = -2;
-        } else if (clicksValue.equalsIgnoreCase("-3")) {
-            changeClicks = -3;
-        } else if (clicksValue.equalsIgnoreCase("-4")) {
-            changeClicks = -4;
-        } else if (clicksValue.equalsIgnoreCase("-5")) {
-            changeClicks = -5;
-        } else if (clicksValue.equalsIgnoreCase("-6")) {
-            changeClicks = -6;
-        } else if (clicksValue.equalsIgnoreCase("-7")) {
-            changeClicks = -7;
-        } else if (clicksValue.equalsIgnoreCase("-8")) {
-            changeClicks = -8;
-        } else if (clicksValue.equalsIgnoreCase("-9")) {
-            changeClicks = -9;
-        } else if (clicksValue.equalsIgnoreCase("-10")) {
-            changeClicks = -10;
-        }
-        return changeClicks;
 
-    }
 
 
 
@@ -1504,59 +1436,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         return bitmap;
     }
 
-    private void createRecordForHistory(final ChatMessageBody obj) {
-        HashMap<String, Object> fields = new HashMap<String, Object>();
 
-
-        fields.put("message", obj.textMsg);
-        fields.put("clicks", obj.clicks);
-        fields.put("content", obj.content_url);
-        fields.put("imageRatio", obj.imageRatio);
-        fields.put("relationshipId", obj.relationshipId);
-        fields.put("userId", obj.userId);
-        fields.put("senderUserToken", obj.senderUserToken);
-        fields.put("sentOn", obj.sentOn);// "142455987");//UTC
-        fields.put("chatId", obj.chatId);
-        fields.put("type", obj.chatType);
-        fields.put("video_thumb", obj.video_thumb);
-
-        ArrayList<String> cards = null;
-        if (obj.card_id != null) {
-            cards = new ArrayList<String>();
-            cards.add(obj.card_owner);
-            cards.add(obj.card_content);
-            cards.add(String.valueOf(obj.is_CustomCard));
-            cards.add(obj.card_DB_ID);
-            cards.add(obj.card_heading);
-            cards.add(obj.card_url);
-            cards.add(obj.card_id);
-            cards.add(obj.card_Played_Countered);
-            cards.add(obj.card_originator);
-        }
-        fields.put("cards", cards);
-        fields.put("location_coordinates", obj.location_coordinates);
-        fields.put("sharedMessage", obj.sharedMessage);
-
-        QBCustomObject qbCustomObject = new QBCustomObject();
-        qbCustomObject.setClassName("chats");  // your Class name
-        qbCustomObject.setFields(fields);
-
-        QBCustomObjects.createObject(qbCustomObject, new QBCallbackImpl() {
-            @Override
-            public void onComplete(Result result) {
-                if (result.isSuccess()) {
-                    QBCustomObjectResult qbCustomObjectResult = (QBCustomObjectResult) result;
-                    QBCustomObject qbCustomObject = qbCustomObjectResult.getCustomObject();
-                    //    int chatIdtemp=qbCustomObject.getId();
-                    //  obj.chatId=String.valueOf(chatIdtemp);
-                    Log.e("New record: ", qbCustomObject.toString());
-                } else {
-                    Log.e("Errors", result.getErrors().toString());
-                }
-            }
-        });
-        // return String.valueOf(msgId);
-    }
 
     private void updateValues(Intent intent) {
         //save previous chat here
@@ -1723,123 +1603,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         return Uri.parse(path);
     }
 
-    public void fetchChatRecord(String relationshipId, String phone, String usertoken, String chatId) {
 
-
-        chatManager = ModelManager.getInstance().getChatManager();
-        //  ArrayList<ChatMessageBody>refreshivechatList=new ArrayList<ChatMessageBody>();
-        AsyncHttpClient client = null;
-        StringEntity se = null;
-        // TODO Auto-generated method stub
-        JSONObject userInputDetails = new JSONObject();
-        try {
-            userInputDetails.put("phone_no", phone);
-            userInputDetails.put("user_token", usertoken);
-            userInputDetails.put("relationship_id", relationshipId);
-            if (!Utils.isEmptyString(chatId)) {
-                userInputDetails.put("last_chat_id", chatId);
-            }
-
-            client = new AsyncHttpClient();
-            se = new StringEntity(userInputDetails.toString());
-            se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            Log.e(TAG, "userInputDetails-->" + userInputDetails);
-        } catch (Exception e1) {
-            e1.printStackTrace();
-        }
-        client.post(this, APIs.FETCHCHATRECORDS, se, "application/json",
-                new JsonHttpResponseHandler() {
-
-                    @Override
-                    public void onFailure(int statusCode, Throwable e,
-                                          JSONObject errorResponse) {
-                        super.onFailure(statusCode, e, errorResponse);
-                        if (errorResponse != null) {
-                            Log.e("errorResponse", "->" + errorResponse);
-                            EventBus.getDefault().post("FecthChat False");
-                        } else {
-                            EventBus.getDefault().post("FecthChat Network Error");
-                        }
-                    }
-
-                    @Override
-                    public void onSuccess(int statusCode,
-                                          org.apache.http.Header[] headers,
-                                          JSONObject response) {
-                        super.onSuccess(statusCode, headers, response);
-                        boolean state = false;
-                        try {
-                            Log.e(TAG, "response FecthChat ->" + response);
-                            state = response.getBoolean("success");
-                            if (state) {
-
-                                chatManager.refreshivechatList.clear();
-                                Utils.clickCustomLog(response.toString());
-                                JSONArray list = response.getJSONArray("chats");
-                                for (int i = 0; i < list.length(); i++) {
-                                    ChatMessageBody temp = new ChatMessageBody();
-                                    JSONObject data = list.getJSONObject(i);
-                                    JSONObject chatObj = data.getJSONObject("Chat");
-
-                                    // if (chatObj.has("receiverQB_id"))
-                                    //   temp.re(chatObj.getString("receiverQB_id"));
-                                    if (chatObj.has("sharedMessage"))
-                                        temp.sharedMessage = chatObj.getString("sharedMessage");
-                                    if (chatObj.has("video_thumb"))
-                                        temp.video_thumb = chatObj.getString("video_thumb");
-                                    if (chatObj.has("QB_id"))
-                                        temp.senderQbId = chatObj.getString("QB_id");
-                                    if (chatObj.has("senderUserToken"))
-                                        temp.senderUserToken = chatObj.getString("senderUserToken");
-                                    if (chatObj.has("type"))
-                                        temp.chatType = Integer.parseInt(chatObj.getString("type"));
-                                    if (chatObj.has("message"))
-                                        temp.textMsg = chatObj.getString("message");
-                                    if (chatObj.has("content"))
-                                        temp.content_url = chatObj.getString("content");
-                                    if (chatObj.has("relationshipId"))
-                                        temp.relationshipId = chatObj.getString("relationshipId");
-                                    if (chatObj.has("_id"))
-                                        temp._id = chatObj.getString("_id");
-                                    if (chatObj.has("userId"))
-                                        temp.userId = chatObj.getString("userId");
-                                    if (chatObj.has("location_coordinates"))
-                                        temp.location_coordinates = chatObj.getString("location_coordinates");
-                                    if (chatObj.has("clicks")) {
-                                        temp.clicks = chatObj.getString("clicks");
-                                        if (Utils.isEmptyString(temp.clicks))
-                                            temp.clicks = "no";
-                                    }
-                                    if (chatObj.has("isDelivered"))
-                                        temp.isDelivered = chatObj.getString("isDelivered");
-                                    if (chatObj.has("imageRatio"))
-                                        temp.imageRatio = chatObj.getString("imageRatio");
-                                    if (chatObj.has("chatId"))
-                                        temp.chatId = chatObj.getString("chatId");
-                                    if (chatObj.has("cards"))
-                                        // temp.cardchatObj.getString("cards"));
-                                        if (chatObj.has("sentOn"))
-                                            temp.sentOn = chatObj.getString("sentOn");
-                                    chatManager.refreshivechatList.add(temp);
-                                }
-
-                                chatManager.chatMessageList.addAll(0, chatManager.refreshivechatList);
-
-                                EventBus.getDefault().post("FecthChat True");
-                            } else {
-                                EventBus.getDefault().post("FecthChat False");
-                            }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-
-                }
-        );
-
-    }
 
     class DBTask extends AsyncTask<Void, Void, Void> {
 

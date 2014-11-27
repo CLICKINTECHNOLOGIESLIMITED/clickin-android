@@ -2,6 +2,7 @@ package com.sourcefuse.clickinandroid.view;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Telephony;
@@ -56,33 +57,38 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
         try {
             Bundle bundle = getIntent().getExtras();
             ((TextView) findViewById(R.id.tv_contact_name)).setText("" + bundle.getString("ConName"));
-             mlPhNo = bundle.getString("ConNumber");
+            mlPhNo = bundle.getString("ConNumber");
             String onlyPhNo = null;
 
 
-
+            com.sourcefuse.clickinandroid.utils.Log.e("contact no--->", "" + mlPhNo);
             //first check country code from SIM and compare it with num
             countryCode = Utils.getCountryCodeFromSim(this);
+            com.sourcefuse.clickinandroid.utils.Log.e("county code from sim--->", "" + countryCode);
             if (countryCode != null) {
                 if (mlPhNo.startsWith(countryCode)) {
                     onlyPhNo = mlPhNo.replace(countryCode, "");
-                    com.sourcefuse.clickinandroid.utils.Log.e("point 1-->","point 1-->");
-                }else {
+
+                    com.sourcefuse.clickinandroid.utils.Log.e("contact no point 1--->", "" + onlyPhNo);
+                } else {
                     onlyPhNo = mlPhNo;
-                    com.sourcefuse.clickinandroid.utils.Log.e("point 1-->","point 1-->");
+
+                    com.sourcefuse.clickinandroid.utils.Log.e("contact no point 3--->", "" + onlyPhNo);
                 }
-            } else {
+            }
+
+            /* to check country codetill present in no */
+
+            if (onlyPhNo.startsWith("+")) {
                 String[] rl = this.getResources().getStringArray(R.array.CountryCodes);
                 for (int i = 0; i < rl.length; i++) {
-                    String[] g = rl[i].split(",",2);
+                    String[] g = rl[i].split(",", 2);
                     String tempcountryCode = g[0];
                     tempcountryCode = "+" + tempcountryCode;
-                    if (mlPhNo.startsWith(tempcountryCode)) {
-                        onlyPhNo = mlPhNo.replace(tempcountryCode, "");
+                    if (onlyPhNo.startsWith(tempcountryCode)) {
+                        onlyPhNo = onlyPhNo.replace(tempcountryCode, "");
                         countryCode = tempcountryCode;
-                        com.sourcefuse.clickinandroid.utils.Log.e("point 2-->","point 2-->");
-                        com.sourcefuse.clickinandroid.utils.Log.e("point 2-->","point 2-->"+onlyPhNo);
-                        com.sourcefuse.clickinandroid.utils.Log.e("point 2-->","point 2-->"+countryCode);
+
                         break;
                     }
                 }
@@ -97,7 +103,7 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
                     onlyPhNo = mlPhNo;
             }
 
-            com.sourcefuse.clickinandroid.utils.Log.e("phone no---->",""+onlyPhNo);
+
             cntry_cd.setText("" + countryCode);
             phoneNo.setText("" + onlyPhNo);
             String image_uri = bundle.getString("ConUri");
@@ -145,7 +151,6 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
         ProfileManager prfManager = ModelManager.getInstance().getProfileManager();
 
 
-        com.sourcefuse.clickinandroid.utils.Log.e("oncreate---->", "" + prfManager.currClickersPhoneNums);
         if (prfManager.currClickersPhoneNums.size() > 0) {
 
         } else {
@@ -156,7 +161,14 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
 
     }
 
+
+
+
+
+
+
     @Override
+
     public void onBackPressed() {
         super.onBackPressed();
         finish();
@@ -169,18 +181,18 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
 
             case R.id.btn_get_clickIn:
                 String mPhNo;
-                String countryCode=cntry_cd.getText().toString().trim();
+                String countryCode = cntry_cd.getText().toString().trim();
 
 
                 if (phoneNo.getText().toString().length() >= 5) {
-                    if(!(countryCode.contains("null"))){
+                    if (!(countryCode.contains("null"))) {
                         mPhNo = cntry_cd.getText().toString().trim() + phoneNo.getText().toString().trim();
-                    }else{
+                    } else {
                         mPhNo = phoneNo.getText().toString().trim();
                     }
 
                     ProfileManager prfManager = ModelManager.getInstance().getProfileManager();
-                    com.sourcefuse.clickinandroid.utils.Log.e("current clickers list", "" + prfManager.currClickersPhoneNums);
+
                     if (prfManager.currClickersPhoneNums.contains(mPhNo)) {
                         authManager = ModelManager.getInstance().getAuthorizationManager();
                         Utils.launchBarDialog(this);
@@ -193,32 +205,32 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
                         try {
 
 
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) //At least KitKat
-                            {
+                            Intent smsIntent = new Intent(Intent.ACTION_VIEW);
+                            smsIntent.putExtra("sms_body", Constants.SEND_REQUEST_WITH_SMS_MESSAGE_SPREAD);
+                            smsIntent.setType("vnd.android-dir/mms-sms");
+                            smsIntent.setData(Uri.parse(mPhNo));
+                            smsIntent.putExtra("exit_on_sent", true);
+                            startActivityForResult(smsIntent, Constants.SMS_SEND);
+
+
+                        } catch (Exception e) {
+                            try {
                                 String defaultSmsPackageName = Telephony.Sms.getDefaultSmsPackage(AddViaContactView.this); //Need to change the build to API 19
 
                                 Intent sendIntent = new Intent(Intent.ACTION_SEND);
                                 sendIntent.setType("text/plain");
+                                sendIntent.putExtra("address", mPhNo);
+                                sendIntent.putExtra(Intent.ACTION_ATTACH_DATA, Uri.parse(mPhNo));
                                 sendIntent.putExtra(Intent.EXTRA_TEXT, Constants.SEND_REQUEST_WITH_SMS_MESSAGE);
-
                                 if (defaultSmsPackageName != null)//Can be null in case that there is no default, then the user would be able to choose any app that support this intent.
                                 {
                                     sendIntent.setPackage(defaultSmsPackageName);
                                 }
+                                sendIntent.putExtra("exit_on_sent", true);
                                 startActivity(sendIntent);
-
-                            } else //For early versions, do what worked for you before.
-                            {
-                                Intent smsIntent = new Intent(Intent.ACTION_VIEW);
-                                smsIntent.putExtra("sms_body", Constants.SEND_REQUEST_WITH_SMS_MESSAGE);
-                                smsIntent.putExtra("address", mPhNo);
-                                smsIntent.setType("vnd.android-dir/mms-sms");
-                                startActivity(smsIntent);
+                            } catch (Exception e1) {
+                                e1.printStackTrace();
                             }
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            Log.e("Exception to send sms--->", "" + e.toString());
                         }
 
                     }
@@ -233,6 +245,14 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+         if(requestCode == Constants.SMS_SEND)
+         {
+             com.sourcefuse.clickinandroid.utils.Log.e("on activity result","on activity result");
+         }
+    }
 
     @Override
     public void onStart() {
@@ -251,10 +271,10 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
 
     public void onEventMainThread(String message) {
         authManager = ModelManager.getInstance().getAuthorizationManager();
-        Log.d(TAG, "onEventMainThread->" + message);
+
         if (message.equalsIgnoreCase("RequestSend True")) {
             Utils.dismissBarDialog();
-            if (getIntent().getBooleanExtra("fromSignUp", false)) {
+            if (getIntent().getBooleanExtra("fromsignup", false)) {
                 Intent intent = new Intent(this, CurrentClickersView.class);
                 intent.putExtra("FromMenu", false);
                 intent.putExtra("FromSignup", true);
@@ -265,6 +285,7 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
                 Utils.dismissBarDialog();
                 Intent intent = new Intent(this, UserProfileView.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                intent.putExtra("isChangeInList",true);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
                 finish();
@@ -272,9 +293,9 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
 
         } else if (message.equalsIgnoreCase("RequestSend False")) {
             Utils.dismissBarDialog();
-            Log.d("2", "message->" + message);
+
             Utils.fromSignalDialog(this, authManager.getMessage());
-            //  Utils.showAlert(AddViaContactView.this, authManager.getMessage());
+            Log.d("2", "message->" + message);
         } else if (message.equalsIgnoreCase("RequestSend Network Error")) {
             Utils.dismissBarDialog();
             Utils.fromSignalDialog(this, AlertMessage.connectionError);

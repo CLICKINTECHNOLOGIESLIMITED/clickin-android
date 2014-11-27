@@ -3,7 +3,7 @@
     android:id="@+id/relative_layout_root_signin"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/white_pattern_bg"
+    android:background="@drawable/enterdigitmainbg"
     >
 
     <RelativeLayout
@@ -77,7 +77,7 @@
                 android:inputType="textPassword|textNoSuggestions"
                 android:paddingLeft="10dp"
                 android:ems="15"
-                android:text=""
+                android:text="12345678"
                 android:imeOptions="actionDone"
                 android:textColor="@color/signup_contry_code"
                 android:textColorHint="@color/sign_hint"

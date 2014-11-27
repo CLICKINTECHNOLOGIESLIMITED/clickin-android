@@ -2,6 +2,7 @@ package com.sourcefuse.clickinandroid.view;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Telephony;
@@ -48,6 +49,7 @@ public class AddViaNumberView extends Activity implements View.OnClickListener,T
         edtCountryCode= (EditText)findViewById(R.id.edt_cntry_cd);
 		edtPhoneNo.addTextChangedListener(AddViaNumberView.this);
 
+        com.sourcefuse.clickinandroid.utils.Log.e("add some one view--->",""+getIntent().getBooleanExtra("fromsignup",false));
 		getClickInVn.setOnClickListener(this);
         ((RelativeLayout) findViewById(R.id.rl_addvia_no_action)).setOnClickListener(new View.OnClickListener() {
 
@@ -74,56 +76,7 @@ public class AddViaNumberView extends Activity implements View.OnClickListener,T
         });
 
 		authManager = ModelManager.getInstance().getAuthorizationManager();
-//     try {
-//            String CountryZipCode = null;
-//            TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-//            int simState = telephonyManager.getSimState();
-//            //Log.e("simState",""+simState+"/"+TelephonyManager.SIM_STATE_NETWORK_LOCKED+"/"+TelephonyManager.SIM_STATE_UNKNOWN+"/"+TelephonyManager.SIM_STATE_READY);
-//            switch (simState) {
-//
-//                case (TelephonyManager.SIM_STATE_ABSENT): {
-//                    edtCountryCode.setText("+(null)");
-//                }
-//                break;
-//
-//                case (TelephonyManager.SIM_STATE_NETWORK_LOCKED): {
-//                    edtCountryCode.setText("+(null)");
-//                }
-//                break;
-//                case (TelephonyManager.SIM_STATE_PIN_REQUIRED):
-//                    break;
-//                case (TelephonyManager.SIM_STATE_PUK_REQUIRED):
-//                    break;
-//                case (TelephonyManager.SIM_STATE_UNKNOWN): {
-//                    edtCountryCode.setText("+(null)");
-//                }
-//                break;
-//                case (TelephonyManager.SIM_STATE_READY): {
-//
-//                    String simCountry = telephonyManager.getSimCountryIso();
-//                    Log.e("simCountry",simCountry);
-//
-//                    String simOperatorCode = telephonyManager.getSimOperator();
-//                    Log.e("simOperatorCode",simOperatorCode);
-//
-//                    String simOperatorName = telephonyManager.getSimOperatorName();
-//                    Log.e("simOperatorName",simOperatorName);
-//
-//                    String simSerial = telephonyManager.getSimSerialNumber();
-//                    Log.e("simSerial",simSerial);
-//
-//                    CountryZipCode = GetCountryZipCode();
-//                    CountryZipCode = "+" + CountryZipCode;
-//                    Log.e("COUNTRY ZIP CODE", CountryZipCode);
-//                    edtCountryCode.setText(CountryZipCode);
-//                }
-//                break;
-//            }
-//
-//        }catch(Exception e){
-//            Log.e(TAG, "Exception-->" + e.toString());
-//        }
-//
+
 
 
         //akshit code start For country Code ,
@@ -195,12 +148,20 @@ public class AddViaNumberView extends Activity implements View.OnClickListener,T
 			authManager = ModelManager.getInstance().getAuthorizationManager();
 				if (message.equalsIgnoreCase("RequestSend True")) {
 					Utils.dismissBarDialog();
-                    Intent intent = new Intent(this,CurrentClickersView.class);
-                    intent.putExtra("FromMenu",false);
-                    intent.putExtra("FromSignup", true);
-                    startActivity(intent);
-
-                    finish();
+                    if(getIntent().getBooleanExtra("fromsignup",false)) {
+                        Intent intent = new Intent(this, CurrentClickersView.class);
+                        intent.putExtra("FromMenu", false);
+                        intent.putExtra("Fromsignup", true);
+                        startActivity(intent);
+                        finish();
+                    }else {
+                        Intent intent = new Intent(this, UserProfileView.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        intent.putExtra("isChangeInList",true);
+                        startActivity(intent);
+                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+                        finish();
+                    }
 					//switchView();
 				} else if (message.equalsIgnoreCase("RequestSend False")) {
 					Utils.dismissBarDialog();
@@ -215,38 +176,43 @@ public class AddViaNumberView extends Activity implements View.OnClickListener,T
 				}else if(message.equalsIgnoreCase("Num Not Registered")){
 
 
+
+                    /* try to send with sms if sms is not present than it will send it towards hangout */
+
                     /* send sms if not not register */
                  /*  send sms for nexus 5 check build version*/
                  /* prafull code */
+
                     try {
 
 
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) //At least KitKat
-                        {
+
+                        Intent smsIntent = new Intent(Intent.ACTION_VIEW);
+                        smsIntent.putExtra("sms_body", Constants.SEND_REQUEST_WITH_SMS_MESSAGE_SPREAD);
+                        smsIntent.setType("vnd.android-dir/mms-sms");
+                        smsIntent.setData(Uri.parse(mPhNo));
+                        smsIntent.putExtra("exit_on_sent", true);
+                        startActivity(smsIntent);
+
+
+                    } catch (Exception e) {
+                        try {
                             String defaultSmsPackageName = Telephony.Sms.getDefaultSmsPackage(AddViaNumberView.this); //Need to change the build to API 19
 
                             Intent sendIntent = new Intent(Intent.ACTION_SEND);
                             sendIntent.setType("text/plain");
+                            sendIntent.putExtra("address", mPhNo);
+                            sendIntent.putExtra(Intent.ACTION_ATTACH_DATA,Uri.parse(mPhNo));
                             sendIntent.putExtra(Intent.EXTRA_TEXT, Constants.SEND_REQUEST_WITH_SMS_MESSAGE);
-
                             if (defaultSmsPackageName != null)//Can be null in case that there is no default, then the user would be able to choose any app that support this intent.
                             {
                                 sendIntent.setPackage(defaultSmsPackageName);
                             }
+                            sendIntent.putExtra("exit_on_sent", true);
                             startActivity(sendIntent);
-
-                        } else //For early versions, do what worked for you before.
-                        {
-                            Intent smsIntent = new Intent(Intent.ACTION_VIEW);
-                            smsIntent.putExtra("sms_body", Constants.SEND_REQUEST_WITH_SMS_MESSAGE);
-                            smsIntent.putExtra("address", mPhNo);
-                            smsIntent.setType("vnd.android-dir/mms-sms");
-                            startActivity(smsIntent);
+                        } catch (Exception e1) {
+                            e1.printStackTrace();
                         }
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        Log.e("Exception to send sms--->", "" + e.toString());
                     }
 
 

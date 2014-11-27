@@ -213,7 +213,7 @@
             <RelativeLayout
                 android:id="@+id/point_attach_chat"
                 android:layout_width="match_parent"
-                android:layout_height="55dp"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/point_seekbar"
                 android:background="@drawable/r_footer_bg"
                 android:paddingTop="5dp"
@@ -246,18 +246,22 @@
                 <!--android:src="@drawable/r_footer_icon"-->
                 <!--/>-->
 
-                <EditText
-                    android:id="@+id/edit_chatBox"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:ems="12"
 
-                    android:singleLine="false"
-                    android:background="@drawable/r_footer_middle_bg"
-                    android:maxLength="140"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp"></EditText>
+                    <EditText
+                        android:id="@+id/edit_chatBox"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:ems="12"
+                        android:maxLines="4"
+                        android:singleLine="false"
+                        android:background="@drawable/r_footer_middle_bg"
+                        android:maxLength="140"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:scrollbars="vertical"
+                        ></EditText>
+
 
                 <Button
                     android:id="@+id/btn_send"

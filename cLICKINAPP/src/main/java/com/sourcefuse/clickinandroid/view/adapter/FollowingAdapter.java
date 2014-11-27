@@ -183,6 +183,8 @@ public class FollowingAdapter extends ArrayAdapter<FollowerFollowingBean> {
 
         msgI.setText(AlertMessage.unFollowselecteduser);
 
+        //akshit to set bold for buttom
+        Typeface typefaceBold = Typeface.createFromAsset(getContext().getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_BOLD);
 
         RelativeLayout relativeLayout = (RelativeLayout) view;
         TextView button = (TextView) relativeLayout.getChildAt(2);
@@ -190,6 +192,7 @@ public class FollowingAdapter extends ArrayAdapter<FollowerFollowingBean> {
 
         Button skip = (Button) dialog.findViewById(R.id.coolio);
         skip.setTag(button);
+        skip.setTypeface(typefaceBold);//akshit to set bold for buttom
 
 
         skip.setOnClickListener(new View.OnClickListener() {
@@ -218,6 +221,7 @@ public class FollowingAdapter extends ArrayAdapter<FollowerFollowingBean> {
             }
         });
         dialog.show();
+        dismiss.setTypeface(typefaceBold);//akshit to set bold for buttom
     }
 // Ends
 

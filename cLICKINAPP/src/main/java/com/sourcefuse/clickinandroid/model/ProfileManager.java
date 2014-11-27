@@ -43,6 +43,17 @@ public class ProfileManager {
     public ArrayList<CurrentClickerBean> currentClickerListFB = new ArrayList<CurrentClickerBean>();
 
 
+    /* for other profile */
+    public static ArrayList<FollowerFollowingBean> following_other = new ArrayList<FollowerFollowingBean>();
+    public static ArrayList<FollowerFollowingBean> followers_other = new ArrayList<FollowerFollowingBean>();
+    public ArrayList<FollowerFollowingBean> followRequesed_other = new ArrayList<FollowerFollowingBean>();
+    public ArrayList<FollowerFollowingBean> pfollowerList_other = new ArrayList<FollowerFollowingBean>();
+    public ArrayList<FollowerFollowingBean> Replacement_other = new ArrayList<FollowerFollowingBean>();
+    private FollowerFollowingBean followerList_other = null;
+    private FollowerFollowingBean followingList_other = null;
+    private ArrayList<FollowerFollowingBean> followingArray_other = null;
+
+
     public void setProfile(String fname, String lname, String phone,
                            String usertoken, String gender, String dob, String city,
                            String country, String email, String fbaccesstoken, String userpic) {
@@ -185,10 +196,10 @@ public class ProfileManager {
                         for (int i = 0; i < list.length(); i++) {
                             JSONObject data = list.getJSONObject(i);
                             followingList = new FollowerFollowingBean();
-                            Log.e("get accepted ---->",""+data.getString("accepted"));
+                            Log.e("get accepted ---->", "" + data.getString("accepted"));
                             if (!Utils.isEmptyString(data.getString("accepted"))) {
                                 followingList.setAccepted(data.getString("accepted"));
-                                Log.e("get accepted ---->",""+data.getString("accepted"));
+                                Log.e("get accepted ---->", "" + data.getString("accepted"));
                                 JSONObject rId = data.getJSONObject("_id");
                                 followingList.setrFollowerId(rId.getString("$id"));
                                 data.has("followee_id");
@@ -316,7 +327,201 @@ public class ProfileManager {
             }
         });
     }
+/* jump to other profile view*/
 
+
+    public void getFollwerOther(String othersPhone, String phone, String usertoken) {
+        // TODO Auto-generated method stub
+        authManager = ModelManager.getInstance().getAuthorizationManager();
+        try {
+            client = new AsyncHttpClient();
+            //client.addHeader("user-token", usertoken);
+            //client.addHeader("phone-no", phone);
+
+            client.addHeader("User-Token", usertoken);
+            client.addHeader("Phone-No", phone);
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+
+        String str = null;
+        if (!Utils.isEmptyString(othersPhone)) {
+            str = othersPhone.substring(1);
+        } else {
+            str = phone.substring(1);
+        }
+        Log.e("APIs.GETUSERFOLLOWER+", "----> " + APIs.GETUSERFOLLOWER + ":%2B" + str);
+        client.get(APIs.GETUSERFOLLOWER + ":%2B" + str, new JsonHttpResponseHandler() {
+            boolean success = false;
+
+            @Override
+            public void onFailure(int statusCode, Throwable e,
+                                  JSONObject errorResponse) {
+                super.onFailure(statusCode, e, errorResponse);
+                System.out.println("errorResponse--> " + errorResponse);
+                if (errorResponse != null) {
+                    try {
+                        authManager.setMessage(errorResponse.getString("message"));
+                    } catch (JSONException e1) {
+                    }
+                    EventBus.getDefault().post("GetFollower False");
+                } else {
+                    EventBus.getDefault().post("GetFollower Network Error");
+                }
+
+            }
+
+            @Override
+            public void onSuccess(int statusCode,
+                                  org.apache.http.Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                try {
+                    System.out.println("response--> " + response);
+                    success = response.getBoolean("success");
+                    if (success) {
+                        following_other.clear();
+                        followers_other.clear();
+                        followRequesed_other.clear();
+                        pfollowerList_other.clear();
+                        JSONArray list = response.getJSONArray("following");
+                        followingArray_other = new ArrayList<FollowerFollowingBean>();
+                        for (int i = 0; i < list.length(); i++) {
+                            JSONObject data = list.getJSONObject(i);
+                            followingList_other = new FollowerFollowingBean();
+                            Log.e("get accepted ---->", "" + data.getString("accepted"));
+                            if (!Utils.isEmptyString(data.getString("accepted"))) {
+                                followingList_other.setAccepted(data.getString("accepted"));
+                                Log.e("get accepted ---->", "" + data.getString("accepted"));
+                                JSONObject rId = data.getJSONObject("_id");
+                                followingList_other.setrFollowerId(rId.getString("$id"));
+                                data.has("followee_id");
+                                followingList_other.setFolloweeId(data.getString("followee_id"));
+                                data.has("followee_name");
+                                followingList_other.setFolloweeName(data.getString("followee_name"));
+                                data.has("followee_pic");
+                                followingList_other.setFolloweePic(data.getString("followee_pic"));
+                                data.has("phone_no");
+                                followingList_other.setPhoneNo(data.getString("phone_no"));
+                                followingList_other.setIsFollowing("false");
+                                /*data.has("following_id");
+                                followingList.setFollowingId(data.getString("following_id"));*/
+                                followingArray_other.add(followingList_other);
+                            } else {
+                                followingList_other.setAccepted("");
+                                JSONObject rId = data.getJSONObject("_id");
+                                followingList_other.setrFollowerId(rId.getString("$id"));
+                                data.has("followee_id");
+                                followingList_other.setFolloweeId(data.getString("followee_id"));
+                                data.has("followee_name");
+                                followingList_other.setFolloweeName(data.getString("followee_name"));
+                                data.has("followee_pic");
+                                followingList_other.setFolloweePic(data.getString("followee_pic"));
+                                data.has("phone_no");
+                                followingList_other.setPhoneNo(data.getString("phone_no"));
+                                followingList_other.setIsFollowing("false");
+                                /*data.has("following_id");
+                                followingList.setFollowingId(data.getString("following_id"));*/
+                                followingArray_other.add(followingList_other);
+                            }
+                        }
+                        JSONArray followerData = response.getJSONArray("follower");
+                        //followerArray = new ArrayList<FollowerFollowingBean>();
+                        for (int i = 0; i < followerData.length(); i++) {
+
+                            JSONObject data = followerData.getJSONObject(i);
+                            if (!data.getString("accepted").matches("false")) {
+                                followerList_other = new FollowerFollowingBean();
+                                if (!Utils.isEmptyString(data.getString("accepted"))) {
+                                    followerList_other.setAccepted(data.getString("accepted"));
+                                    JSONObject rId = data.getJSONObject("_id");
+                                    followerList_other.setrFollowerId(rId.getString("$id"));
+                                    if (data.has("follower_id"))
+                                        followerList_other.setFolloweeId(data.getString("follower_id"));
+                                    data.has("follower_name");
+                                    followerList_other.setFolloweeName(data.getString("follower_name"));
+                                    data.has("follower_pic");
+                                    followerList_other.setFolloweePic(data.getString("follower_pic"));
+                                    data.has("phone_no");
+                                    followerList_other.setPhoneNo(data.getString("phone_no"));
+
+                                    if (data.has("following_id")) {
+                                        followerList_other.setFollowingId(data.getString("following_id"));
+                                    }
+
+                                    if (data.has("is_following")) {
+                                        if (!Utils.isEmptyString(data.getString("is_following"))) {
+                                            followerList_other.setIsFollowing(data.getString("is_following"));
+                                        } else {
+                                            followerList_other.setIsFollowing("false");
+                                        }
+                                    } else {
+                                        followerList_other.setIsFollowing("false");
+                                    }
+                                    if (data.has("following_accepted")) {
+                                        if (!Utils.isEmptyString(data.getString("following_accepted"))) {
+                                            followerList_other.setFollowingAccepted(data.getString("following_accepted"));
+                                        } else {
+                                            followerList_other.setFollowingAccepted("false");
+                                        }
+                                    } else {
+                                        followerList_other.setFollowingAccepted("false");
+                                    }
+                                    pfollowerList_other.add(followerList_other);
+                                } else {
+                                    followerList_other.setAccepted("");
+                                    JSONObject rId = data.getJSONObject("_id");
+                                    followerList_other.setrFollowerId(rId.getString("$id"));
+                                    if (data.has("follower_id"))
+                                        followerList_other.setFolloweeId(data.getString("follower_id"));
+                                    data.has("follower_name");
+                                    followerList_other.setFolloweeName(data.getString("follower_name"));
+                                    data.has("follower_pic");
+                                    followerList_other.setFolloweePic(data.getString("follower_pic"));
+                                    data.has("phone_no");
+                                    followerList_other.setPhoneNo(data.getString("phone_no"));
+
+                                    if (data.has("following_id")) {
+                                        followerList_other.setFollowingId(data.getString("following_id"));
+                                    }
+                                    if (data.has("is_following")) {
+                                        if (!Utils.isEmptyString(data.getString("is_following"))) {
+                                            followerList_other.setIsFollowing(data.getString("is_following"));
+                                        } else {
+                                            followerList_other.setIsFollowing("false");
+                                        }
+                                    } else {
+                                        followerList_other.setIsFollowing("false");
+                                    }
+                                    if (data.has("following_accepted")) {
+                                        if (!Utils.isEmptyString(data.getString("following_accepted"))) {
+                                            followerList_other.setFollowingAccepted(data.getString("following_accepted"));
+                                        } else {
+                                            followerList_other.setFollowingAccepted("false");
+                                        }
+                                    } else {
+                                        followerList_other.setFollowingAccepted("false");
+                                    }
+                                    // followerArray.add(followerList);
+                                    followRequesed_other.add(followerList_other);
+                                    Log.e("followRequesed size in Mgr", "" + followRequesed_other.size());
+                                }
+                            }
+                        }
+                        //followerArray.add(followerList);
+                        followers_other.addAll(followRequesed_other);
+                        followers_other.addAll(pfollowerList_other);
+                        following_other.addAll(followingArray_other);
+                        EventBus.getDefault().post("GetFollower True");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+
+    /* jump to other profile view*/
     public void getOthersProfile(String phone, String usertoken, String partner_phone) {
 
         // TODO Auto-generated method stub

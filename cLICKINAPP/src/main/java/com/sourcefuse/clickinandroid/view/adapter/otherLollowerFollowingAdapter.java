@@ -37,11 +37,9 @@ public class otherLollowerFollowingAdapter extends ArrayAdapter<FollowerFollowin
     private static final String TAG = FollowingAdapter.class.getSimpleName();
     Context context;
     int layoutResourceId;
-    private AuthManager authManager;
-    private RelationManager relationManager;
     RecordHolder rholder;
     List<FollowerFollowingBean> item;
-    private Typeface typeface;
+
 
     public otherLollowerFollowingAdapter(Context context, int layoutResourceId,
                             List<FollowerFollowingBean> item1) {
@@ -61,7 +59,7 @@ public class otherLollowerFollowingAdapter extends ArrayAdapter<FollowerFollowin
             row = inflater.inflate(layoutResourceId, parent, false);
             holder = new RecordHolder();
 
-            typeface = Typeface.createFromAsset(context.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_BOLD);
+
 
             holder.usr_name = (TextView) row.findViewById(R.id.tv_clickers_name_other);
             holder.usrimg = (ImageView) row.findViewById(R.id.iv_usr_other);

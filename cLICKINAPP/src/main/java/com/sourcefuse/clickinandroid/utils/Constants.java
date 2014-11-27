@@ -30,6 +30,7 @@ public class Constants {
 
 	public static final int sliderWidth = 60;
 
+    public static final int SMS_SEND = 100;
 
 
 
@@ -46,8 +47,8 @@ public class Constants {
 	public static final String FONT_FILE_PATH_AVENIRNEXTLTPRO_BOLD= "fonts/AvenirNextLTPro-BoldCn_0.otf";
     public static final String FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN= "fonts/AvenirNextLTPro-MediumCn_0.otf";
 
-    public static final String SEND_REQUEST_WITH_SMS_MESSAGE= "Hey ! Lets you and I get Clickin' ! Download now - http://www.clickinapp.com/";
-    public static final String SEND_REQUEST_WITH_SMS_MESSAGE_SPREAD= "Hey! Come join us on Clickin' - Dowload Now - http://www.clickinapp.com/";
+    public static final String SEND_REQUEST_WITH_SMS_MESSAGE= "Hey ! Lets you and I get Clickin' ! Download now - http://www.clickinapp.com";
+    public static final String SEND_REQUEST_WITH_SMS_MESSAGE_SPREAD= "Hey! Come join us on Clickin' - Dowload Now - http://www.clickinapp.com";
 
 	public static final String PRIVACY_LINK_URL="https://api.clickinapp.com/pages/privacy-policy";
 	public static final String TERMS_LINK_URL="https://api.clickinapp.com/pages/term-of-use";
