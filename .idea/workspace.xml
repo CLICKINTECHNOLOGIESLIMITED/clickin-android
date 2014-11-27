@@ -50,23 +50,35 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1b1e4e35-a6a6-446f-963c-15cc88993b9a" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/utils/ClickInRadioButton.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/res/drawable-xhdpi/audio_play.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/res/drawable-xhdpi/audio_recieve.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/res/drawable-xhdpi/audio_send.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/.name" afterPath="$PROJECT_DIR$/.idea/.name" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/utils/APIs.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/utils/APIs.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/AndroidManifest.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/AddSomeoneView.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/AddSomeoneView.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/AddViaContactView.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/AddViaContactView.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/AddViaNumberView.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/AddViaNumberView.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/model/bean/ChatMessageBody.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/model/bean/ChatMessageBody.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/adapter/ChatRecordAdapter.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/adapter/ChatRecordAdapter.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/ChatRecordView.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/ChatRecordView.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/adapter/DeactivateAccountView.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/adapter/DeactivateAccountView.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/EditMyProfileView.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/EditMyProfileView.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/services/ChatThread.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/services/ChatThread.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/ClickInBaseView.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/ClickInBaseView.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/utils/Constants.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/utils/Constants.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/utils/FetchContactFromPhone.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/utils/FetchContactFromPhone.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/PrivacyView.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/PrivacyView.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/services/MyQbChatService.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/services/MyQbChatService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/model/RelationManager.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/model/RelationManager.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/SettingView.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/SettingView.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/SignInView.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/SignInView.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/TermUseView.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/TermUseView.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/ViewSpamorAbuse.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/ViewSpamorAbuse.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_deactivate_account.xml" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_deactivate_account.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_setting.xml" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_setting.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_signin.xml" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_signin.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_spam.xml" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_spam.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/SpreadWordView.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/SpreadWordView.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/UserProfileView.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/view/UserProfileView.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/utils/Utils.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/utils/Utils.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/utils/VideoUtil.java" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/java/com/sourcefuse/clickinandroid/utils/VideoUtil.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/alert_take_vedio.xml" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/alert_take_vedio.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/assets/crashlytics-build.properties" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/assets/crashlytics-build.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local.properties" afterPath="$PROJECT_DIR$/local.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_addviacontactlist.xml" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_addviacontactlist.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_chat_demo.xml" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_chat_demo.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_chat_layout.xml" afterPath="$PROJECT_DIR$/cLICKINAPP/src/main/res/layout/view_chat_layout.xml" />
     </list>
     <ignored path="clickin-andoid.iws" />
     <ignored path=".idea/workspace.xml" />

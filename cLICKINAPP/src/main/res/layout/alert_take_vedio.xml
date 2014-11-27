@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:geekui="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/white_border_alert"
@@ -17,6 +18,7 @@
             android:text="Add your photo"
             android:gravity="center"
             android:textSize="15sp"
+            geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"
             android:textStyle="normal"/>
         <View
             android:id="@+id/v_backdevider3"
@@ -35,6 +37,8 @@
             android:textStyle="normal"
             android:gravity="center"
             android:textSize="20sp"
+            geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"
+
             android:textColor="@color/dialog_text"/>
 
         <View
@@ -53,6 +57,8 @@
             android:textStyle="normal"
             android:gravity="center"
             android:textSize="20sp"
+            geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"
+
             android:textColor="@color/dialog_text"/>
 
         <View

@@ -66,6 +66,8 @@ public class AddSomeoneView extends Activity implements TextWatcher {
         bottom_text.setTypeface(typefaceBold);
 
 
+        Log.e("from signup value---->",""+getIntent().getBooleanExtra("fromsignup", false));
+
         listView.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {

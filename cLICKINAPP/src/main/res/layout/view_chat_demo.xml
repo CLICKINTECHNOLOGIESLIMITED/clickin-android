@@ -24,6 +24,24 @@
         android:background="@drawable/newbg"
         android:visibility="visible">
 
+        <ImageView
+            android:id="@+id/iv_audio_play"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:layout_marginLeft="20dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/audio_play"
+            android:visibility="gone"
+            />
+
+    <LinearLayout
+        android:id="@+id/ll_image_audio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
 
 
         <ImageView
@@ -32,15 +50,18 @@
             android:layout_height="180dp"
             android:adjustViewBounds="true"
             android:visibility="gone"
+
             />
+        </LinearLayout>
 
         <!-- layout for clicks and text -Type 1-->
         <LinearLayout
             android:id="@+id/parent_clicks_area"
-            android:layout_below="@+id/iv_chat_image"
+            android:layout_below="@+id/ll_image_audio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
+            android:background="@drawable/newbg"
             android:gravity="center_vertical"
             android:orientation="vertical"
             android:visibility="gone"

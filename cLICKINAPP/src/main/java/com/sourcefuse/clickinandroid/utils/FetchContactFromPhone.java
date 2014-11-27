@@ -3,6 +3,7 @@ package com.sourcefuse.clickinandroid.utils;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.provider.ContactsContract;
 import android.util.Log;
 
@@ -23,6 +24,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
+
 import java.util.Comparator;
 import java.util.Iterator;
 
@@ -156,7 +158,7 @@ public class FetchContactFromPhone {
     }
 
 	/*private class AsyncTaskRunner extends AsyncTask<String, String, String> {
-		private String resp;
+        private String resp;
 
 		@Override
 		protected String doInBackground(String... params) {
@@ -244,7 +246,7 @@ public class FetchContactFromPhone {
                         if (authManager == null)
                             authManager = ModelManager.getInstance().getAuthorizationManager();
 
-                             authManager.setMessage(errorResponse.getString("message"));
+                            authManager.setMessage("" + errorResponse.getString("message"));
 
                     } catch (JSONException e1) {
                         // TODO Auto-generated catch block
@@ -270,19 +272,19 @@ public class FetchContactFromPhone {
                         profilemanager.spreadTheWorldList.clear();
                         JSONArray list = response.getJSONArray("phone_nos");
                         clickerArray = new ArrayList<CurrentClickerBean>();
-                        com.sourcefuse.clickinandroid.utils.Log.e("clickerArray --->",""+clickerArray);
+                        com.sourcefuse.clickinandroid.utils.Log.e("clickerArray --->", "" + clickerArray);
                         for (int i = 0; i < list.length(); i++) {
-                            com.sourcefuse.clickinandroid.utils.Log.e("no of times---->",""+i);
+                            com.sourcefuse.clickinandroid.utils.Log.e("no of times---->", "" + i);
                             JSONObject data = list.getJSONObject(i);
                             int existcode = data.getInt("exists");
-                            com.sourcefuse.clickinandroid.utils.Log.e("Exit code ----->",""+existcode);
+                            com.sourcefuse.clickinandroid.utils.Log.e("Exit code ----->", "" + existcode);
                             if (clickers == existcode) {
 
-                                com.sourcefuse.clickinandroid.utils.Log.e("String phone no--->",""+data.getString("phone_no"));
+                                com.sourcefuse.clickinandroid.utils.Log.e("String phone no--->", "" + data.getString("phone_no"));
                                 ContactBean cb = Utils.contactMap.get(data.getString("phone_no"));
                                 Log.e("ContactBean", "ContactBean" + cb);
 
-                                com.sourcefuse.clickinandroid.utils.Log.e("Contact map--->",""+Utils.contactMap);
+                                com.sourcefuse.clickinandroid.utils.Log.e("Contact map--->", "" + Utils.contactMap);
                                 if (cb != null) {
                                     clickerList = new CurrentClickerBean();
                                     if (data.has("phone_no")) {

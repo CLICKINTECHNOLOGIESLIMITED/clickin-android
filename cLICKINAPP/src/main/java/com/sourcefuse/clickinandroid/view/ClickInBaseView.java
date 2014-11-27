@@ -422,6 +422,7 @@ public class
                 }
                 com.sourcefuse.clickinandroid.utils.Log.e("in cickin baseview on searchInviteView ----->","in cickin baseview on searchInviteView ----->");
                 Intent intent = new Intent(ClickInBaseView.this, AddSomeoneView.class);
+                intent.putExtra("fromsignup",false);
                 startActivity(intent);
             }
         });
