@@ -26,7 +26,7 @@ public class Card extends Activity implements View.OnClickListener,TextWatcher {
     private TextView tv_about_message;
     private static final String TAG = "CardViewAdapter";
     ImageView mBackButton;
-    String url,clicks,cardTitle,cardDiscription,card_Db_id,card_id;
+    String url,clicks,cardTitle,cardDiscription,card_Db_id,card_id,card_Accepted_Rejected;
 
 
     Context context;
@@ -85,6 +85,7 @@ public class Card extends Activity implements View.OnClickListener,TextWatcher {
                 trd_clicks_bottom.setText(intent.getStringExtra("cardClicks"));
                 trd_clicks_top.setText(intent.getStringExtra("cardClicks"));
                 tv_about_message.setText("HOW MANY CLICKS DO YOU WANT FOR IT?");
+
             }
             url = intent.getStringExtra("Url");
             cardTitle = intent.getStringExtra("Title");
@@ -200,10 +201,12 @@ Log.e(TAG,"Original Url" +url);
                 if(forCounter){
                  i.putExtra("isCounter",true);
                  i.putExtra("card_id",card_id);
+                    i.putExtra("card_Accepted_Rejected","nil");
                 }else{
                   i.putExtra("isCounter",false);
+                    i.putExtra("card_Accepted_Rejected","nil");
                 }
-                i.putExtra("card_Accepted_Rejected","nil");
+
                 i.putExtra("played_Countered","PLAYED A CARD");
                 i.putExtra("is_CustomCard",false);
                 i.putExtra("card_url",url);

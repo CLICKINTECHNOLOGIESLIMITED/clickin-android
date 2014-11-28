@@ -34,6 +34,7 @@
             android:src="@drawable/audio_play"
             android:visibility="gone" />
 
+
         <LinearLayout
             android:id="@+id/media_layout"
             android:layout_width="wrap_content"
@@ -51,10 +52,11 @@
         <!-- layout for clicks and text -Type 1-->
         <LinearLayout
             android:id="@+id/parent_clicks_area"
+            android:layout_below="@+id/media_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/media_layout"
+
             android:background="@drawable/newbg"
             android:gravity="center_vertical"
             android:orientation="vertical"
