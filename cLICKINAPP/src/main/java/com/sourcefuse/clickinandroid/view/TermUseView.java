@@ -1,16 +1,16 @@
 package com.sourcefuse.clickinandroid.view;
 
 import android.app.Activity;
-import android.graphics.Typeface;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.TextView;
 
 import com.sourcefuse.clickinandroid.utils.Constants;
+import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
 
 /**
@@ -47,6 +47,7 @@ public class TermUseView extends Activity implements View.OnClickListener
         {
             case R.id.iv_back_noti:
                 finish();
+                overridePendingTransition(0,R.anim.top_out);//akshit code for animation
                 break;
         }
     }
@@ -57,11 +58,25 @@ public class TermUseView extends Activity implements View.OnClickListener
             view.loadUrl(url);
             return true;
         }
+
+        @Override
+        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            super.onPageStarted(view, url, favicon);
+            Utils.launchBarDialog(TermUseView.this);
+        }
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            super.onPageFinished(view, url);
+            Utils.dismissBarDialog();
+
+        }
     }
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         finish();
+        overridePendingTransition(0,R.anim.top_out);//akshit code for animation
     }
 
 

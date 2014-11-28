@@ -1,5 +1,7 @@
 package com.sourcefuse.clickinandroid.view;
 
+import android.app.ActivityManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -33,6 +35,7 @@ import com.sourcefuse.clickinapp.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class UserProfileView extends ClickInBaseView implements View.OnClickListener {
@@ -193,135 +196,30 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         }
         setFollowAndFollowingCount();
 
-        //akshit code start for image and default image at userprofile
+        //prafull code to set image bitmap
         try {
-            Uri tempUri = authManager.getUserImageUri();
             Bitmap imagebitmap1 = authManager.getUserbitmap();
-            if (imagebitmap1 != null) {
-                imageBitmap = authManager.getUserbitmap();
+            if (imagebitmap1 != null)
+                com.sourcefuse.clickinandroid.utils.Log.e("user bit map not null", "user bit map not null");
 
-                if (imageBitmap != null) {   //set image bitmap if not null
-                    userimage.setImageBitmap(imageBitmap);
-                    //  Log.e("bit map greater than zero->","bit map greater than zero->");
-                } else { ///if image bitmap null
-                    if (authManager.getGender() != null) {//gender not null
-                        if (authManager.getGender().equalsIgnoreCase("guy")) {///if guy
-                            try {
-                                if (authManager.getUserPic() != null) {
-                                    Picasso.with(UserProfileView.this)
-                                            .load(authManager.getUserPic())
-                                            .skipMemoryCache()
-                                            .error(R.drawable.male_user)
-                                            .into(userimage);
-                                    //   Log.e("guy->","guy->");
-                                } else {
-                                    userimage.setImageResource(R.drawable.male_user);
-                                    //    Log.e("guy exception->","guy exceptionElse->");
-                                }
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                userimage.setImageResource(R.drawable.male_user);
-                                //     Log.e("guy exception->","guy exception->");
-                            }
-                        } //if guy ends
-                        else if (authManager.getGender().equalsIgnoreCase("girl")) {//if girl
-                            try {
-                                if (authManager.getUserPic() != null) {//with pic
-                                    Picasso.with(UserProfileView.this)
-                                            .load(authManager.getUserPic())
-                                            .skipMemoryCache()
-                                            .error(R.drawable.female_user)
-                                            .into(userimage);
-                                    //    Log.e("Female->","female->");
-                                } else {
-                                    userimage.setImageResource(R.drawable.female_user);
-                                    // Log.e("Female->","female Else->");
-                                }
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                // Log.e("Female->","female Exception->");
-                                userimage.setImageResource(R.drawable.female_user);
-                            }
-                        }
+            if (imagebitmap1 != null)
+                userimage.setImageBitmap(imagebitmap1);
 
-                    } else// if gender is null set default
-                    {
-                        //  Log.e("Default Esle->","DEfault Else->");
-                        userimage.setImageResource(R.drawable.male_user);
-                    }
-                }
-
-            } else {//if temp uri null
-                if (!Utils.isEmptyString(authManager.getGender())) {//gender not null
-
-                    if (authManager.getGender().equalsIgnoreCase("guy")) {//gender guy
-                        try {
-                            if (authManager.getUserPic() != null) {
-                                Picasso.with(UserProfileView.this)
-                                        .load(authManager.getUserPic())
-                                        .skipMemoryCache()
-                                        .error(R.drawable.male_user)
-                                        .into(userimage);
-                                //   userimage.setImageResource(R.drawable.male_user);
-                                //      Log.e("URL" ,"Url for giving image for guy" +authManager.getUserPic());
-                                //     Log.e("guy->","guy->");
-                            } else {
-                                //    Log.e("guy->","guyElse->");
-                                userimage.setImageResource(R.drawable.male_user);
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            //  Log.e("guy->","guyExceptin->");
-                            userimage.setImageResource(R.drawable.male_user);
-                        }
-                    } //gender guy ends
-                    else if (authManager.getGender().equalsIgnoreCase("girl")) {//gender girl
-                        try {
-                            if (authManager.getUserPic() != null) {
-                                Picasso.with(UserProfileView.this)
-                                        .load(authManager.getUserPic())
-                                        .skipMemoryCache()
-
-                                        .error(R.drawable.female_user)
-                                        .into(userimage);
-                                Log.e("girl->", "GEnder guy two ->");
-                                Log.e("url", "" + authManager.getUserPic());
-                                //userimage.setImageResource(R.drawable.female_user);
-                            } else {
-                                userimage.setImageResource(R.drawable.female_user);
-                                //  Log.e("girel->","Gender Girl Two->");
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            userimage.setImageResource(R.drawable.female_user);
-                            //Log.e("girel->","Exception Gender Girl Two->");
-                        }
-                    }//gender girl end
-
-                }//if gender null
-                else {
-                    if (authManager.getUserPic() != null) {
-                        Picasso.with(UserProfileView.this)
-                                .load(authManager.getUserPic())
-                                .skipMemoryCache()
-
-                                .error(R.drawable.male_user)
-                                .into(userimage);
-                    } else {
-                        userimage.setImageResource(R.drawable.male_user);
-                    }
-
-                }
-
-            }
-
+            else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl"))
+                Picasso.with(UserProfileView.this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.female_user).into(userimage);
+            else if (!Utils.isEmptyString(authManager.getGender()))
+                Picasso.with(UserProfileView.this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.male_user).into(userimage);
 
         } catch (Exception e) {
-            e.printStackTrace();
-            userimage.setImageResource(R.drawable.male_user);
-            Log.e("User Profile View->", "total exception->");
+            com.sourcefuse.clickinandroid.utils.Log.e("on exception", "on exception");
+
+            if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl"))
+                userimage.setImageResource(R.drawable.male_user);
+            else if (!Utils.isEmptyString(authManager.getGender()))
+                userimage.setImageResource(R.drawable.female_user);
         }
-//
+
+
     }
 //akshit code ends
 
@@ -333,7 +231,6 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         follower.setText(Html.fromHtml(text));
         String textfollowing = "<font color=#f29691>" + getResources().getString(R.string.txt_following) + "</font> <font color=#cccccc>" + relationManager.getFollowingListCount() + "</font>";
         following.setText(Html.fromHtml(textfollowing));
-
     }
 
 
@@ -349,43 +246,48 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
             authManager.setEditProfileFlag(false);
         }
     }
-
+    SimpleSectionedListAdapter1 simpleSectionedGridAdapter;
     public void setlist() {
 
         setFollowAndFollowingCount();
 
-        ArrayList<Section> sections = new ArrayList<Section>();
-        SimpleSectionedListAdapter1 simpleSectionedGridAdapter;
-        relationManager = ModelManager.getInstance().getRelationManager();
-        adapter = new UserRelationAdapter(UserProfileView.this, R.layout.row_userprofile, relationManager.getrelationshipsData);
-        String[] mHeaderNames = {"CLICKIN'", "CLICKIN'"};
-        String[] mHeaderNames2 = {" REQUESTS", " WITH"};
-        Integer[] mHeaderPositions = {0, relationManager.requestedList.size()};
-        int positionOfHeader = 0;
-        int noOfHeader = 0;
+        if (simpleSectionedGridAdapter != null) {
+            simpleSectionedGridAdapter.notifyDataSetChanged();
+            com.sourcefuse.clickinandroid.utils.Log.e("in adapter not null","in adapter not null");
+        } else {
+            ArrayList<Section> sections = new ArrayList<Section>();
+            com.sourcefuse.clickinandroid.utils.Log.e("in adapter null","in adapter null");
+            relationManager = ModelManager.getInstance().getRelationManager();
+            adapter = new UserRelationAdapter(UserProfileView.this, R.layout.row_userprofile, relationManager.getrelationshipsData);
+            String[] mHeaderNames = {"CLICKIN'", "CLICKIN'"};
+            String[] mHeaderNames2 = {" REQUESTS", " WITH"};
+            Integer[] mHeaderPositions = {0, relationManager.requestedList.size()};
+            int positionOfHeader = 0;
+            int noOfHeader = 0;
 
-        if (relationManager.acceptedList.size() == 0 && relationManager.requestedList.size() == 0) {
-            positionOfHeader = 2;
-            noOfHeader = 2;
-        } else if (relationManager.requestedList.size() > 0 && relationManager.acceptedList.size() == 0) {
-            positionOfHeader = 0;
-            noOfHeader = 1;
-        } else if ((relationManager.requestedList.size() == 0) && (relationManager.acceptedList.size() > 0)) {
-            positionOfHeader = 1;
-            noOfHeader = 2;
-        } else if ((relationManager.requestedList.size() > 0) && (relationManager.requestedList.size() > 0)) {
-            positionOfHeader = 0;
-            noOfHeader = 2;
-        }
-        for (int i = positionOfHeader; i < noOfHeader; i++) {
-            sections.add(new Section(mHeaderPositions[i], mHeaderNames[i], mHeaderNames2[i]));
-        }
-        simpleSectionedGridAdapter = new SimpleSectionedListAdapter1(UserProfileView.this, adapter, R.layout.list_item_header, R.id.tv_clickintx, R.id.tv_with);
-        simpleSectionedGridAdapter.setSections(sections.toArray(new Section[0]));
-        mUserRelationlistView.setAdapter(simpleSectionedGridAdapter);
+            if (relationManager.acceptedList.size() == 0 && relationManager.requestedList.size() == 0) {
+                positionOfHeader = 2;
+                noOfHeader = 2;
+            } else if (relationManager.requestedList.size() > 0 && relationManager.acceptedList.size() == 0) {
+                positionOfHeader = 0;
+                noOfHeader = 1;
+            } else if ((relationManager.requestedList.size() == 0) && (relationManager.acceptedList.size() > 0)) {
+                positionOfHeader = 1;
+                noOfHeader = 2;
+            } else if ((relationManager.requestedList.size() > 0) && (relationManager.requestedList.size() > 0)) {
+                positionOfHeader = 0;
+                noOfHeader = 2;
+            }
+            for (int i = positionOfHeader; i < noOfHeader; i++) {
+                sections.add(new Section(mHeaderPositions[i], mHeaderNames[i], mHeaderNames2[i]));
+            }
+            simpleSectionedGridAdapter = new SimpleSectionedListAdapter1(UserProfileView.this, adapter, R.layout.list_item_header, R.id.tv_clickintx, R.id.tv_with);
+            simpleSectionedGridAdapter.setSections(sections.toArray(new Section[0]));
+            mUserRelationlistView.setAdapter(simpleSectionedGridAdapter);
 
-        btnAddSomeone = (Button) footerView.findViewById(R.id.btn_add_someone);
-        btnAddSomeone.setOnClickListener(this);
+            btnAddSomeone = (Button) footerView.findViewById(R.id.btn_add_someone);
+            btnAddSomeone.setOnClickListener(this);
+        }
     }
 
     /*
@@ -420,7 +322,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
             case R.id.btn_add_someone:
                 Intent intent = new Intent(UserProfileView.this, AddSomeoneView.class);
                 intent.putExtra("FromOwnProfile", true);
-                intent.putExtra("fromsignup",false);
+                intent.putExtra("fromsignup", false);
                 startActivity(intent);
                 break;
             case R.id.btn_edit_profile:
@@ -548,6 +450,15 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
                 relationManager.getRelationShips(authManager.getPhoneNo(), authManager.getUsrToken());
             }
         }
+
+
+        ActivityManager am = (ActivityManager) this.getSystemService(ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
+        Log.d("topActivity", "CURRENT Activity ::" + taskInfo.get(0).topActivity.getClassName());
+        ComponentName componentInfo = taskInfo.get(0).topActivity;
+
+
+        com.sourcefuse.clickinandroid.utils.Log.e("package name--->", "" + componentInfo.getClass());
     }
 
     public void onDestroy() {

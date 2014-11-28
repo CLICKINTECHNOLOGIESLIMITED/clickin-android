@@ -52,33 +52,7 @@ public class SplashView extends Activity implements View.OnClickListener {
 
         // new MyPreference(getApplicationContext()).clearAllPreference();
 
-      /*  if (isLogin()) {
-            //if user is already logged in, then set all user values in authmanager from prefrence
-            AuthManager authManager = ModelManager.getInstance().getAuthorizationManager();
-            SharedPreferences preferences= PreferenceManager.getDefaultSharedPreferences(this);
-            authManager.setUsrToken(preferences.getString("token",null));
-            authManager.setPhoneNo(preferences.getString("myPhoneNo", null));
-            authManager.setGender(preferences.getString("gender", null));
-            authManager.setFollower(preferences.getString("follower", null));
-            authManager.setFollowing(preferences.getString("following", null));
-            authManager.setIsFollowing(preferences.getString("is_following", null));
-            authManager.setUserName(preferences.getString("name", null));
-            authManager.setUserPic(preferences.getString("user_pic", null));
-            authManager.setdOB(preferences.getString("dob", null));
-            authManager.setUserCity(preferences.getString("city", null));
-            authManager.setUserCountry(preferences.getString("country", null));
-            authManager.setEmailId(preferences.getString("email", null));
-            String imgUri=preferences.getString("userimageuri",null);
-            if(imgUri!=null)
-            authManager.setUserImageUri(Uri.parse(imgUri));
-            else
-            authManager.setUserImageUri(null);
-            loginToQuickBlox();
-            Intent intent = new Intent(SplashView.this, UserProfileView.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-            this.finish();
-        } else {*/
+
             if (signIn.getVisibility() == View.INVISIBLE && signUp.getVisibility() == View.INVISIBLE) {
 
                 signIn.startAnimation(fadeIn);

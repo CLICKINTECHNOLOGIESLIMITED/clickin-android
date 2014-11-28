@@ -227,7 +227,7 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
                                     sendIntent.setPackage(defaultSmsPackageName);
                                 }
                                 sendIntent.putExtra("exit_on_sent", true);
-                                startActivity(sendIntent);
+                                startActivityForResult(sendIntent, Constants.SMS_SEND);
                             } catch (Exception e1) {
                                 e1.printStackTrace();
                             }
@@ -247,11 +247,8 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-         if(requestCode == Constants.SMS_SEND)
-         {
+
              com.sourcefuse.clickinandroid.utils.Log.e("on activity result","on activity result");
-         }
     }
 
     @Override

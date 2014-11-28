@@ -125,8 +125,8 @@ public class AddSomeoneView extends Activity implements TextWatcher {
                     do_latter.setVisibility(View.GONE);
                     do_invited.setVisibility(View.GONE);
                     bottom_text.setVisibility(View.GONE);
-                    layout_back.setVisibility(View.VISIBLE);
-                    back.setVisibility(View.VISIBLE);
+                    layout_back.setVisibility(View.GONE);
+                    back.setVisibility(View.GONE);
                     title_top.setText("ADD SOMEONE");
                     title_bottom.setText("TO CLICK WITH");
 

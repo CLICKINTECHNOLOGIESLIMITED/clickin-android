@@ -63,6 +63,7 @@ public class Constants {
     public final static int CHAT_TYPE_VIDEO = 4;
     public final static int CHAT_TYPE_LOCATION= 5;
 
+
 	public final static int CHAT_TYPE_CARD = 6;
     public final static int CHAT_TYPE_NOFITICATION = 7;
     public final static int CHAT_TYPE_VIDEO_INITATING=8;

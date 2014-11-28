@@ -2,6 +2,7 @@ package com.sourcefuse.clickinandroid.view;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.webkit.WebViewClient;
 import android.widget.TextView;
 
 import com.sourcefuse.clickinandroid.utils.Constants;
+import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
 
 /**
@@ -33,10 +35,9 @@ public class PrivacyView extends Activity implements View.OnClickListener
         typefaceBold = Typeface.createFromAsset(PrivacyView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_BOLD);
         ((TextView) findViewById(R.id.tv_profile_txt)).setTypeface(typefaceBold);
         findViewById(R.id.iv_back_noti).setOnClickListener(this);
-
         mprivacywebview.setWebViewClient(new MyBrowser());
         mprivacywebview.getSettings().setLoadsImagesAutomatically(true);
-        mprivacywebview.getSettings().setAppCacheEnabled(false);
+         mprivacywebview.getSettings().setAppCacheEnabled(false);
         mprivacywebview.getSettings().setAllowContentAccess(true);
         mprivacywebview.getSettings().setLoadWithOverviewMode(true);
         mprivacywebview.getSettings().setUseWideViewPort(true);
@@ -54,6 +55,7 @@ public class PrivacyView extends Activity implements View.OnClickListener
         {
             case R.id.iv_back_noti:
                 finish();
+                overridePendingTransition(0,R.anim.top_out);//akshit code for animation
                 break;
         }
     }
@@ -64,10 +66,24 @@ public class PrivacyView extends Activity implements View.OnClickListener
             view.loadUrl(url);
             return true;
         }
+
+        @Override
+        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            super.onPageStarted(view, url, favicon);
+            Utils.launchBarDialog(PrivacyView.this);
+        }
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            super.onPageFinished(view, url);
+            Utils.dismissBarDialog();
+
+        }
     }
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         finish();
+        overridePendingTransition(0,R.anim.top_out);//akshit code for animation
     }
 }
