@@ -4,10 +4,8 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.Telephony;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -84,6 +82,9 @@ public class SpreadWordView extends Activity implements OnClickListener {
 
         if (!getIntent().getBooleanExtra("fromsignup", false)) {
             findViewById(R.id.btn_next).setVisibility(View.GONE);
+            findViewById(R.id.btn_back).setVisibility(View.GONE);
+
+
         }
 
 
@@ -230,6 +231,8 @@ public class SpreadWordView extends Activity implements OnClickListener {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        com.sourcefuse.clickinandroid.utils.Log.e("on activity result","on activity result");
         try {
             super.onActivityResult(requestCode, resultCode, data);
             try {

@@ -1,7 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="@color/empty_edt"
+    android:background="@color/some_back"
     android:paddingBottom="2dp"
     android:layout_marginRight="10dp"
     android:layout_marginLeft="10dp"
@@ -48,6 +48,6 @@
     <ImageView
         android:id="@+id/divider"
         android:layout_width="fill_parent"
-        android:background="@color/black"
+        android:background="@color/profile_border"
         android:layout_height="2dp" />
 </LinearLayout>

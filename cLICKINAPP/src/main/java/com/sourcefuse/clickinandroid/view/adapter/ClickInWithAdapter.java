@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.sourcefuse.clickinandroid.model.bean.GetrelationshipsBean;
 import com.sourcefuse.clickinandroid.utils.Constants;
+import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
 import com.squareup.picasso.Picasso;
@@ -63,6 +64,7 @@ public class ClickInWithAdapter extends ArrayAdapter<GetrelationshipsBean> {
 
                rholder.clickInUsrName.setText(item.getPartnerName());
                rholder.unReadNo.setText("");
+           Log.e("item partner pic ---->",""+item.getPartnerPic());
                if(!item.getPartnerPic().equalsIgnoreCase("")) {
                    try{
                        Picasso.with(context).load(item.getPartnerPic())

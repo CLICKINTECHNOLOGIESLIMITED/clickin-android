@@ -7,8 +7,10 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -49,6 +51,7 @@ import com.sourcefuse.clickinandroid.view.adapter.SimpleSectionedListAdapter;
 import com.sourcefuse.clickinapp.R;
 import com.squareup.picasso.Picasso;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -94,7 +97,6 @@ public class
         Log.e("ClickInBaseView1", "onCreate");
 
         authManager = ModelManager.getInstance().getAuthorizationManager();
-
 
     }
 
@@ -230,8 +232,6 @@ public class
         searchList = (ListView) slidemenu.findViewById(R.id.search_list);
 
 
-
-
         edt_search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
@@ -251,7 +251,7 @@ public class
                         }
                     }
                     String search_date = edt_search.getText().toString();
-                     if (!Utils.isEmptyString(search_date) && search_date.length() > 0) {
+                    if (!Utils.isEmptyString(search_date) && search_date.length() > 0) {
                         slidemenu.findViewById(R.id.btn_clear).setVisibility(View.GONE);
                         slidemenu.findViewById(R.id.btn_progressBar).setVisibility(View.VISIBLE);
                     } else {
@@ -327,61 +327,41 @@ public class
         }
 
         try {
-            Bitmap imageBitmap1 = authManager.getUserbitmap();
-            if (imageBitmap1 != null) {
-                imageBitmap = authManager.getUserbitmap();
-                if (imageBitmap != null)
-                    userPic.setImageBitmap(imageBitmap);
-                else {
-                    try {
-                        if (dtails.equalsIgnoreCase("Male")) {
-                            Picasso.with(this)
-                                    .load(authManager.getUserPic())
-                                    .skipMemoryCache()
 
-                                    .error(R.drawable.male_user)
-                                    .into(userPic);
-                        } else if (dtails.equalsIgnoreCase("Female")) {
-                            Picasso.with(this)
-                                    .load(authManager.getUserPic())
-                                    .skipMemoryCache()
-
-                                    .error(R.drawable.female_user)
-                                    .into(userPic);
-                        } else {
-                            userPic.setImageResource(R.drawable.male_user);
-                        }
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-
-            } else {
+            imageBitmap = authManager.getUserbitmap();
+            if (imageBitmap != null)
+                userPic.setImageBitmap(imageBitmap);
+            else {
                 try {
                     if (dtails.equalsIgnoreCase("Male")) {
                         Picasso.with(this)
                                 .load(authManager.getUserPic())
                                 .skipMemoryCache()
-
                                 .error(R.drawable.male_user)
                                 .into(userPic);
                     } else if (dtails.equalsIgnoreCase("Female")) {
                         Picasso.with(this)
                                 .load(authManager.getUserPic())
                                 .skipMemoryCache()
-
                                 .error(R.drawable.female_user)
                                 .into(userPic);
-                    } else {
-                        userPic.setImageResource(R.drawable.male_user);
+                    } else if (dtails.equalsIgnoreCase(" ")) {
+                        Picasso.with(this)
+                                .load(authManager.getUserPic())
+                                .skipMemoryCache()
+                                .into(userPic);
                     }
 
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    if (dtails.equalsIgnoreCase("Male"))
+                        userPic.setImageResource(R.drawable.male_user);
+                    else if (dtails.equalsIgnoreCase("Female"))
+                        userPic.setImageResource(R.drawable.female_user);
+                    else
+                        userPic.setImageResource(R.drawable.male_user);
                 }
-
             }
+
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -420,9 +400,9 @@ public class
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                com.sourcefuse.clickinandroid.utils.Log.e("in cickin baseview on searchInviteView ----->","in cickin baseview on searchInviteView ----->");
+                com.sourcefuse.clickinandroid.utils.Log.e("in cickin baseview on searchInviteView ----->", "in cickin baseview on searchInviteView ----->");
                 Intent intent = new Intent(ClickInBaseView.this, AddSomeoneView.class);
-                intent.putExtra("fromsignup",false);
+                intent.putExtra("fromsignup", false);
                 startActivity(intent);
             }
         });
@@ -509,7 +489,7 @@ public class
                 }
                 Log.e("", "00000000-userPic" + slidemenu);
                 Intent intent = new Intent(ClickInBaseView.this, UserProfileView.class);
-                intent.putExtra("isChangeInList",true);
+                intent.putExtra("isChangeInList", true);
                 intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
                 List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
@@ -566,7 +546,7 @@ public class
                 Intent intent = new Intent(ClickInBaseView.this, AddSomeoneView.class);
                 intent.putExtra("FromOwnProfile", true);
                 startActivity(intent);
-                com.sourcefuse.clickinandroid.utils.Log.e("in cickin baseview on searchInviteView ----->","in cickin baseview on searchInviteView ----->");
+                com.sourcefuse.clickinandroid.utils.Log.e("in cickin baseview on searchInviteView ----->", "in cickin baseview on searchInviteView ----->");
                         /* code for animation prafull*/
 
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
@@ -722,40 +702,26 @@ public class
         relationManager = ModelManager.getInstance().getRelationManager();
         userName.setText(authManager.getUserName());
         userPic.setScaleType(ScaleType.FIT_XY);
-        if (authManager.getGender() != null) {
-            if (authManager.getGender().matches("guy")) {
 
-                try {
-                    if (authManager.getUserPic() != null) {
-                        Picasso.with(ClickInBaseView.this)
-                                .load(authManager.getUserPic())
-                                .skipMemoryCache()
+        /* to set downloaded image from server*/
+        try {
 
-                                .error(R.drawable.male_user).into(userPic);
-                    } else {
-                        userPic.setImageResource(R.drawable.male_user);
-                    }
-                } catch (Exception e) {
-                    userPic.setImageResource(R.drawable.male_user);
-                }
-            } else {
-                try {
-                    if (authManager.getUserPic() != null) {
-                        Picasso.with(ClickInBaseView.this)
-                                .load(authManager.getUserPic())
-                                .skipMemoryCache()
+            if (authManager.getUserbitmap() != null)
+                userPic.setImageBitmap(authManager.getUserbitmap());
+            else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("guy")) {
+                        Picasso.with(ClickInBaseView.this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.male_user).into(userPic);
+            } else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl")) {
+                        Picasso.with(ClickInBaseView.this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.female_user).into(userPic);
 
-                                .error(R.drawable.female_user).into(userPic);
-                    } else {
-                        userPic.setImageResource(R.drawable.female_user);
-                    }
-                } catch (Exception e) {
-                    userPic.setImageResource(R.drawable.female_user);
-                }
+
             }
-        } else {
-            userPic.setImageResource(R.drawable.male_user);
+        } catch (Exception e) {
+            if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl"))
+                userPic.setImageResource(R.drawable.female_user);
+            else
+                userPic.setImageResource(R.drawable.male_user);
         }
+
         setLeftMenuList();
     }
 
@@ -872,119 +838,39 @@ public class
             userPic.setScaleType(ScaleType.FIT_XY);
 
             try {
-                Uri tempUri = authManager.getUserImageUri();
-                if (tempUri != null) {
-                    imageBitmap = authManager.getUserbitmap();
-                    if (imageBitmap != null)
-                        userPic.setImageBitmap(imageBitmap);
-                    else {
-                        try {
-                            if (dtails.equalsIgnoreCase("Male")) {
-                                Picasso.with(this)
-                                        .load(authManager.getUserPic())
-                                        .skipMemoryCache()
 
-                                        .error(R.drawable.male_user)
-                                        .into(userPic);
-                            } else if (dtails.equalsIgnoreCase("Female")) {
-                                Picasso.with(this)
-                                        .load(authManager.getUserPic())
-                                        .skipMemoryCache()
 
-                                        .error(R.drawable.female_user)
-                                        .into(userPic);
-                            }
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                } else {
-                    try {
-                        if (dtails.equalsIgnoreCase("Male")) {
-                            Picasso.with(this)
-                                    .load(authManager.getUserPic())
-                                    .skipMemoryCache()
-
-                                    .error(R.drawable.male_user)
-                                    .into(userPic);
-                        } else if (dtails.equalsIgnoreCase("Female")) {
-                            Picasso.with(this)
-                                    .load(authManager.getUserPic())
-                                    .skipMemoryCache()
-
-                                    .error(R.drawable.female_user)
-                                    .into(userPic);
-                        }
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                }
-
+                imageBitmap = authManager.getUserbitmap();
+                if (imageBitmap != null)
+                    userPic.setImageBitmap(imageBitmap);
+                else if (dtails.equalsIgnoreCase("Male"))
+                    Picasso.with(this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.male_user).into(userPic);
+                else if (dtails.equalsIgnoreCase("Female"))
+                    Picasso.with(this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.female_user).into(userPic);
             } catch (Exception e) {
-                e.printStackTrace();
+                if (dtails.equalsIgnoreCase("Male"))
+                    Picasso.with(this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.male_user).into(userPic);
+                else if (dtails.equalsIgnoreCase("Female"))
+                    Picasso.with(this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.female_user).into(userPic);
+
             }
             authManager.setMenuUserInfoFlag(false);
         } else {
             Log.e("Inside Else ", "THis time control is in Else <><><><><><><><><><>");
             try {
-                Uri tempUri = authManager.getUserImageUri();
-                if (tempUri != null) {
-                    imageBitmap = authManager.getUserbitmap();
-                    if (imageBitmap != null)
-                        userPic.setImageBitmap(imageBitmap);
-                    else {
-                        try {
-                            if (dtails.equalsIgnoreCase("Male")) {
-                                Picasso.with(this)
-                                        .load(authManager.getUserPic())
-                                        .skipMemoryCache()
-
-                                        .error(R.drawable.male_user)
-                                        .into(userPic);
-                            } else if (dtails.equalsIgnoreCase("Female")) {
-                                Picasso.with(this)
-                                        .load(authManager.getUserPic())
-                                        .skipMemoryCache()
-
-                                        .error(R.drawable.female_user)
-                                        .into(userPic);
-                            }
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                } else {
-                    try {
-                        if (dtails.equalsIgnoreCase("Male")) {
-                            Picasso.with(this)
-                                    .load(authManager.getUserPic())
-                                    .skipMemoryCache()
-
-                                    .error(R.drawable.male_user)
-                                    .into(userPic);
-                        } else if (dtails.equalsIgnoreCase("Female")) {
-                            Picasso.with(this)
-                                    .load(authManager.getUserPic())
-                                    .skipMemoryCache()
-
-                                    .error(R.drawable.female_user)
-                                    .into(userPic);
-                        }
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                }
+                imageBitmap = authManager.getUserbitmap();
+                if (imageBitmap != null)
+                    userPic.setImageBitmap(imageBitmap);
+                else if (dtails.equalsIgnoreCase("Male"))
+                    Picasso.with(this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.male_user).into(userPic);
+                else if (dtails.equalsIgnoreCase("Female"))
+                    Picasso.with(this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.female_user).into(userPic);
 
             } catch (Exception e) {
-                e.printStackTrace();
+                if (dtails.equalsIgnoreCase("Male"))
+                    Picasso.with(this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.male_user).into(userPic);
+                else if (dtails.equalsIgnoreCase("Female"))
+                    Picasso.with(this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.female_user).into(userPic);
             }
         }
         try {
@@ -1011,6 +897,8 @@ public class
         Log.e("y", "if onClose");
 
     }
+
+
 
 
 }

@@ -65,7 +65,7 @@
                 android:layout_height="20dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="5dp"
-                android:indeterminateDrawable="@drawable/loading_spinner"
+                android:indeterminateDrawable="@drawable/my_progress_indeterminate"
                 android:visibility="gone" />
         </LinearLayout>
     </LinearLayout>

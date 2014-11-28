@@ -18,8 +18,6 @@ import java.util.ArrayList;
 import de.greenrobot.event.EventBus;
 
 
-
-
 /**
  * Created by mukesh on 3/7/14.
  */
@@ -29,9 +27,11 @@ public class ClickInNotificationManager implements NotificationManagerI {
 
     private ArrayList<NotificationBean> notificationArray = null;
     private NotificationBean ntificationBeanList = null;
-    @Override
-    public void getNotification(String lastNotificationId, String phone,String usertoken) {
 
+    @Override
+    public void getNotification(String lastNotificationId, String phone, String usertoken) {
+
+        Log.e("in getnotification list","in getnotification list");
         JSONObject userInputDetails = new JSONObject();
         try {
             userInputDetails.put("phone_no", phone);
@@ -40,7 +40,7 @@ public class ClickInNotificationManager implements NotificationManagerI {
 
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
-            se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,"application/json"));
+            se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
             Log.e("Input Data", "FETCHNOTIFICATIONS-->" + userInputDetails);
         } catch (Exception e1) {
             e1.printStackTrace();
@@ -61,9 +61,7 @@ public class ClickInNotificationManager implements NotificationManagerI {
                     }
 
                     @Override
-                    public void onSuccess(int statusCode,
-                                          org.apache.http.Header[] headers,
-                                          JSONObject response) {
+                    public void onSuccess(int statusCode, org.apache.http.Header[] headers,JSONObject response) {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
@@ -85,8 +83,6 @@ public class ClickInNotificationManager implements NotificationManagerI {
                                 notificationData.addAll(notificationArray);
 
 
-
-
                                 EventBus.getDefault().post("Notification true");
 
                             }
@@ -97,7 +93,8 @@ public class ClickInNotificationManager implements NotificationManagerI {
 
                     }
 
-                });
+                }
+        );
 
     }
 

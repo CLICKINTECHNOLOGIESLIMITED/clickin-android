@@ -1,6 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:mySwitch="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:geekui="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
     android:background="@color/white"
@@ -26,7 +27,8 @@
                 android:paddingBottom="5dp"
                 android:paddingRight="30dp"
                 android:paddingTop="5dp"
-                android:src="@drawable/back_arrow" />
+                android:src="@drawable/back_arrow"
+                android:visibility="gone"/>
 
 
             <ImageView
@@ -64,6 +66,7 @@
     </RelativeLayout>
 
     <ScrollView
+        android:id="@+id/scroll_view"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
@@ -72,7 +75,10 @@
         android:background="@drawable/r_owner_profile_bg"
         android:fadingEdgeLength="0dp"
         android:overScrollMode="never"
-        android:scrollbarAlwaysDrawVerticalTrack="false">
+        android:scrollbarAlwaysDrawVerticalTrack="false"
+        android:fillViewport="true"
+
+        >
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -86,7 +92,7 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <TextView
+                <com.sourcefuse.clickinandroid.utils.ClickInTextView
                     android:id="@+id/push_notification_row"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -96,7 +102,9 @@
                     android:layout_weight="1"
                     android:text="Push Notifications"
                     android:textColor="@color/appclr"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"/>
 
 
                 <com.sourcefuse.clickinandroid.utils.MySwitch
@@ -130,7 +138,7 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <TextView
+                <com.sourcefuse.clickinandroid.utils.ClickInTextView
                     android:id="@+id/in_app_sound_row"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -140,7 +148,11 @@
                     android:layout_weight="1"
                     android:text="In-App Sounds"
                     android:textColor="@color/appclr"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
+                    android:textStyle="bold"
+
+                    />
 
 
                 <com.sourcefuse.clickinandroid.utils.MySwitch
@@ -168,7 +180,7 @@
             </LinearLayout>
 
 
-            <TextView
+            <com.sourcefuse.clickinandroid.utils.ClickInTextView
                 android:id="@+id/sharing_text"
                 android:layout_width="fill_parent"
                 android:layout_height="60dp"
@@ -178,7 +190,9 @@
                 android:paddingLeft="20dp"
                 android:text="Sharing"
                 android:textColor="@color/appclr"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:textStyle="bold"
+                geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"/>
 
 
             <LinearLayout
@@ -210,7 +224,7 @@
                         android:layout_marginRight="10dp"
                         android:background="@drawable/inactive_fb" />
 
-                    <TextView
+                    <com.sourcefuse.clickinandroid.utils.ClickInTextView
                         android:id="@+id/tv_child_title"
                         android:layout_width="wrap_content"
                         android:layout_height="fill_parent"
@@ -219,9 +233,10 @@
                         android:gravity="center_vertical"
                         android:text="facebook"
                         android:textColor="@color/dark_gray"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"
+                        geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"/>
 
-                    <TextView
+                    <com.sourcefuse.clickinandroid.utils.ClickInTextView
                         android:id="@+id/clickin_user_name"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
@@ -230,7 +245,8 @@
                         android:layout_marginRight="20dp"
                         android:gravity="center_vertical|right"
                         android:textColor="@color/dark_gray"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"
+                        geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"/>
                 </LinearLayout>
 
 
@@ -256,7 +272,7 @@
                         android:layout_marginRight="10dp"
                         android:background="@drawable/inactive_twitter" />
 
-                    <TextView
+                    <com.sourcefuse.clickinandroid.utils.ClickInTextView
                         android:id="@+id/twitter_title"
                         android:layout_width="wrap_content"
                         android:layout_height="fill_parent"
@@ -265,9 +281,10 @@
                         android:gravity="center_vertical"
                         android:text="Twitter"
                         android:textColor="@color/dark_gray"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"
+                        geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"/>
 
-                    <TextView
+                    <com.sourcefuse.clickinandroid.utils.ClickInTextView
                         android:id="@+id/twitter_user_name"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
@@ -276,7 +293,8 @@
                         android:layout_marginRight="20dp"
                         android:gravity="center_vertical|right"
                         android:textColor="@color/dark_gray"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"
+                        geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"/>
                 </LinearLayout>
 
 
@@ -302,7 +320,7 @@
                         android:layout_marginRight="10dp"
                         android:background="@drawable/inactive_gmail" />
 
-                    <TextView
+                    <com.sourcefuse.clickinandroid.utils.ClickInTextView
                         android:id="@+id/google_plus_title"
                         android:layout_width="wrap_content"
                         android:layout_height="fill_parent"
@@ -311,9 +329,10 @@
                         android:gravity="center_vertical"
                         android:text="Google +"
                         android:textColor="@color/dark_gray"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"
+                        geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"/>
 
-                    <TextView
+                    <com.sourcefuse.clickinandroid.utils.ClickInTextView
                         android:id="@+id/google_plus_user_name"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
@@ -322,7 +341,8 @@
                         android:layout_marginRight="20dp"
                         android:gravity="center_vertical|right"
                         android:textColor="@color/dark_gray"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"
+                        geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"/>
                 </LinearLayout>
 
 
@@ -335,7 +355,7 @@
             </LinearLayout>
 
 
-            <TextView
+            <com.sourcefuse.clickinandroid.utils.ClickInTextView
                 android:id="@+id/account_text"
                 android:layout_width="fill_parent"
                 android:layout_height="60dp"
@@ -345,7 +365,9 @@
                 android:paddingLeft="20dp"
                 android:text="Account"
                 android:textColor="@color/appclr"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
+                android:textStyle="bold"/>
 
             <LinearLayout
                 android:id="@+id/main_password_layout"
@@ -359,7 +381,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/fb_divider" />
 
-                <TextView
+                <com.sourcefuse.clickinandroid.utils.ClickInTextView
                     android:id="@+id/edit_profile"
                     android:layout_width="fill_parent"
                     android:layout_height="60dp"
@@ -368,14 +390,15 @@
                     android:paddingLeft="20dp"
                     android:text="Edit Profile"
                     android:textColor="@color/dark_gray"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"/>
 
                 <ImageView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/fb_divider" />
 
-                <TextView
+                <com.sourcefuse.clickinandroid.utils.ClickInTextView
                     android:id="@+id/change_password"
                     android:layout_width="fill_parent"
                     android:layout_height="60dp"
@@ -384,7 +407,8 @@
                     android:paddingLeft="20dp"
                     android:text="Change Password"
                     android:textColor="@color/dark_gray"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"/>
 
                 <LinearLayout
                     android:id="@+id/password_layout"
@@ -399,7 +423,7 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/fb_divider" />
 
-                    <EditText
+                    <com.sourcefuse.clickinandroid.utils.ClickInEditBox
                         android:id="@+id/old_password"
                         style="@style/settingmargin"
                         android:layout_width="fill_parent"
@@ -412,10 +436,12 @@
                         android:paddingBottom="5dp"
                         android:paddingLeft="10dp"
                         android:paddingTop="5dp"
+                        android:imeOptions="actionNext"
                         android:textColor="@color/dark_gray"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"
+                        geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"/>
 
-                    <EditText
+                    <com.sourcefuse.clickinandroid.utils.ClickInEditBox
                         android:id="@+id/new_password"
                         style="@style/settingmargin"
                         android:layout_width="fill_parent"
@@ -424,12 +450,14 @@
                         android:layout_marginTop="8dp"
                         android:background="@drawable/old_pass_field"
                         android:hint="New Password"
+                        android:imeOptions="actionNext"
                         android:inputType="textPassword|textNoSuggestions"
                         android:paddingLeft="10dp"
                         android:textColor="@color/dark_gray"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"
+                        geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"/>
 
-                    <EditText
+                    <com.sourcefuse.clickinandroid.utils.ClickInEditBox
                         android:id="@+id/confirm_password"
                         style="@style/settingmargin"
                         android:layout_width="fill_parent"
@@ -440,10 +468,12 @@
                         android:hint="Confirm Password"
                         android:inputType="textPassword|textNoSuggestions"
                         android:paddingLeft="10dp"
+                        android:imeOptions="actionDone"
                         android:textColor="@color/dark_gray"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"
+                        geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"/>
 
-                    <TextView
+                    <com.sourcefuse.clickinandroid.utils.ClickInTextView
                         android:id="@+id/save_password"
                         style="@style/settingmargin"
                         android:layout_width="fill_parent"
@@ -456,7 +486,8 @@
                         android:gravity="center_vertical|center_horizontal"
                         android:text="SAVE"
                         android:textColor="@color/white"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"
+                        geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"/>
                 </LinearLayout>
 
                 <ImageView
@@ -464,7 +495,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/fb_divider" />
 
-                <TextView
+                <com.sourcefuse.clickinandroid.utils.ClickInTextView
                     android:id="@+id/deactivate_account"
                     android:layout_width="fill_parent"
                     android:layout_height="60dp"
@@ -473,11 +504,12 @@
                     android:paddingLeft="20dp"
                     android:text="Deactivate Account"
                     android:textColor="@color/dark_gray"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"/>
             </LinearLayout>
 
 
-            <TextView
+            <com.sourcefuse.clickinandroid.utils.ClickInTextView
                 android:id="@+id/privacy_policy_row"
                 android:layout_width="fill_parent"
                 android:layout_height="60dp"
@@ -487,10 +519,12 @@
                 android:paddingLeft="20dp"
                 android:text="Privacy Policy"
                 android:textColor="@color/appclr"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
+                android:textStyle="bold"/>
 
 
-            <TextView
+            <com.sourcefuse.clickinandroid.utils.ClickInTextView
                 android:id="@+id/term_use_row"
                 android:layout_width="fill_parent"
                 android:layout_height="60dp"
@@ -500,10 +534,12 @@
                 android:paddingLeft="20dp"
                 android:text="Terms of Use"
                 android:textColor="@color/appclr"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
+                android:textStyle="bold"/>
 
 
-            <TextView
+            <com.sourcefuse.clickinandroid.utils.ClickInTextView
                 android:id="@+id/report_text"
                 android:layout_width="fill_parent"
                 android:layout_height="60dp"
@@ -513,7 +549,9 @@
                 android:paddingLeft="20dp"
                 android:text="Report a Problem"
                 android:textColor="@color/appclr"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
+                android:textStyle="bold"/>
 
 
             <LinearLayout
@@ -528,7 +566,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/fb_divider" />
 
-                <TextView
+                <com.sourcefuse.clickinandroid.utils.ClickInTextView
                     android:id="@+id/spam_text"
                     android:layout_width="fill_parent"
                     android:layout_height="50dp"
@@ -537,14 +575,15 @@
                     android:paddingLeft="20dp"
                     android:text="Spam or Abuse"
                     android:textColor="@color/dark_gray"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"/>
 
                 <ImageView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/fb_divider" />
 
-                <TextView
+                <com.sourcefuse.clickinandroid.utils.ClickInTextView
                     android:id="@+id/not_working_text"
                     android:layout_width="fill_parent"
                     android:layout_height="50dp"
@@ -553,7 +592,8 @@
                     android:paddingLeft="20dp"
                     android:text="It's not working"
                     android:textColor="@color/dark_gray"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"/>
 
                 <ImageView
                     android:layout_width="fill_parent"
@@ -568,7 +608,7 @@
                     android:orientation="vertical"
                     android:visibility="gone">
 
-                    <EditText
+                    <com.sourcefuse.clickinandroid.utils.ClickInEditBox
                         android:id="@+id/problem_text"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
@@ -583,11 +623,13 @@
                         android:inputType="textNoSuggestions"
                         android:paddingRight="5dp"
                         android:paddingTop="7dp"
+                        android:paddingBottom="35dp"
                         android:imeOptions="actionDone"
                         android:textColor="@color/dark_gray"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"
+                        geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"/>
 
-                    <TextView
+                    <com.sourcefuse.clickinandroid.utils.ClickInTextView
                         android:id="@+id/btn_send_not_working"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
@@ -601,7 +643,8 @@
                         android:gravity="center_vertical|center_horizontal"
                         android:text="SEND"
                         android:textColor="@color/white"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"
+                        geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"/>
 
                     <ImageView
                         android:layout_width="fill_parent"
@@ -610,7 +653,7 @@
                 </LinearLayout>
 
 
-                <TextView
+                <com.sourcefuse.clickinandroid.utils.ClickInTextView
                     android:id="@+id/general_feed_back_text"
                     android:layout_width="fill_parent"
                     android:layout_height="50dp"
@@ -619,7 +662,8 @@
                     android:paddingLeft="20dp"
                     android:text="General feedback"
                     android:textColor="@color/dark_gray"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"/>
 
                 <LinearLayout
                     android:id="@+id/general_feed_layout"
@@ -634,7 +678,7 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/fb_divider" />
 
-                    <EditText
+                    <com.sourcefuse.clickinandroid.utils.ClickInEditBox
                         android:id="@+id/general_problem_text"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
@@ -648,11 +692,13 @@
                         android:hint="Briefly Explain what you love,hate or want us to improve on"
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"
+                        android:paddingBottom="35dp"
                         android:paddingTop="7dp"
                         android:textColor="@color/dark_gray"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"
+                        geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"/>
 
-                    <TextView
+                    <com.sourcefuse.clickinandroid.utils.ClickInTextView
                         android:id="@+id/btn_send_general_problem"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
@@ -666,14 +712,15 @@
                         android:gravity="center_vertical|center_horizontal"
                         android:text="SEND"
                         android:textColor="@color/white"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"
+                        geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"/>
 
                 </LinearLayout>
 
 
             </LinearLayout>
 
-            <TextView
+            <com.sourcefuse.clickinandroid.utils.ClickInTextView
                 android:id="@+id/logout_text"
                 android:layout_width="fill_parent"
                 android:layout_height="60dp"
@@ -683,7 +730,9 @@
                 android:paddingLeft="20dp"
                 android:text="Logout"
                 android:textColor="@color/appclr"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
+                android:textStyle="bold"/>
 
 
             <LinearLayout
@@ -694,10 +743,11 @@
                 android:background="@color/white"
                 android:orientation="vertical"
                 android:paddingBottom="10dp"
-                android:visibility="gone">
+                android:visibility="gone"
+                >
 
 
-                <TextView
+                <com.sourcefuse.clickinandroid.utils.ClickInTextView
                     android:id="@+id/tv_logout_msg"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -705,7 +755,8 @@
                     android:layout_marginTop="10dp"
                     android:text="@string/txt_logout"
                     android:textColor="@color/dark_gray"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"/>
 
 
                 <LinearLayout
@@ -718,7 +769,7 @@
                     android:paddingBottom="1dp">
 
 
-                    <TextView
+                    <com.sourcefuse.clickinandroid.utils.ClickInTextView
                         android:id="@+id/btn_logout_yes"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -730,9 +781,10 @@
                         android:text="YES"
                         android:textStyle="bold"
                         android:textColor="@color/white"
-                        android:textSize="18sp"/>
+                        android:textSize="18sp"
+                        geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"/>
 
-                    <TextView
+                    <com.sourcefuse.clickinandroid.utils.ClickInTextView
                         android:id="@+id/btn_logout_no"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -744,7 +796,8 @@
                         android:text="NO"
                         android:textSize="18sp"
                         android:textStyle="bold"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/white"
+                        geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"/>
                 </LinearLayout>
 
             </LinearLayout>
@@ -754,7 +807,7 @@
                 android:layout_height="fill_parent"
                 android:layout_marginTop="2dp"
                 android:background="@color/white"
-                android:paddingBottom="70dp"
+                android:paddingBottom="100dp"
                 android:paddingTop="10dp" />
         </LinearLayout>
     </ScrollView>
