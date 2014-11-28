@@ -199,29 +199,25 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         //prafull code to set image bitmap
         try {
             Bitmap imagebitmap1 = authManager.getUserbitmap();
-            if(imagebitmap1 != null)
-                com.sourcefuse.clickinandroid.utils.Log.e("user bit map not null","user bit map not null");
+            if (imagebitmap1 != null)
+                com.sourcefuse.clickinandroid.utils.Log.e("user bit map not null", "user bit map not null");
 
-            if(imagebitmap1 != null)
+            if (imagebitmap1 != null)
                 userimage.setImageBitmap(imagebitmap1);
 
-            else if(!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl"))
+            else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl"))
                 Picasso.with(UserProfileView.this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.female_user).into(userimage);
-            else if(!Utils.isEmptyString(authManager.getGender()))
+            else if (!Utils.isEmptyString(authManager.getGender()))
                 Picasso.with(UserProfileView.this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.male_user).into(userimage);
 
-        }catch (Exception e)
-        {
-            com.sourcefuse.clickinandroid.utils.Log.e("on exception","on exception");
+        } catch (Exception e) {
+            com.sourcefuse.clickinandroid.utils.Log.e("on exception", "on exception");
 
-            if(!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl"))
+            if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl"))
                 userimage.setImageResource(R.drawable.male_user);
-            else if(!Utils.isEmptyString(authManager.getGender()))
+            else if (!Utils.isEmptyString(authManager.getGender()))
                 userimage.setImageResource(R.drawable.female_user);
         }
-
-
-
 
 
     }
@@ -235,7 +231,6 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         follower.setText(Html.fromHtml(text));
         String textfollowing = "<font color=#f29691>" + getResources().getString(R.string.txt_following) + "</font> <font color=#cccccc>" + relationManager.getFollowingListCount() + "</font>";
         following.setText(Html.fromHtml(textfollowing));
-
     }
 
 
@@ -251,43 +246,48 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
             authManager.setEditProfileFlag(false);
         }
     }
-
+    SimpleSectionedListAdapter1 simpleSectionedGridAdapter;
     public void setlist() {
 
         setFollowAndFollowingCount();
 
-        ArrayList<Section> sections = new ArrayList<Section>();
-        SimpleSectionedListAdapter1 simpleSectionedGridAdapter;
-        relationManager = ModelManager.getInstance().getRelationManager();
-        adapter = new UserRelationAdapter(UserProfileView.this, R.layout.row_userprofile, relationManager.getrelationshipsData);
-        String[] mHeaderNames = {"CLICKIN'", "CLICKIN'"};
-        String[] mHeaderNames2 = {" REQUESTS", " WITH"};
-        Integer[] mHeaderPositions = {0, relationManager.requestedList.size()};
-        int positionOfHeader = 0;
-        int noOfHeader = 0;
+        if (simpleSectionedGridAdapter != null) {
+            simpleSectionedGridAdapter.notifyDataSetChanged();
+            com.sourcefuse.clickinandroid.utils.Log.e("in adapter not null","in adapter not null");
+        } else {
+            ArrayList<Section> sections = new ArrayList<Section>();
+            com.sourcefuse.clickinandroid.utils.Log.e("in adapter null","in adapter null");
+            relationManager = ModelManager.getInstance().getRelationManager();
+            adapter = new UserRelationAdapter(UserProfileView.this, R.layout.row_userprofile, relationManager.getrelationshipsData);
+            String[] mHeaderNames = {"CLICKIN'", "CLICKIN'"};
+            String[] mHeaderNames2 = {" REQUESTS", " WITH"};
+            Integer[] mHeaderPositions = {0, relationManager.requestedList.size()};
+            int positionOfHeader = 0;
+            int noOfHeader = 0;
 
-        if (relationManager.acceptedList.size() == 0 && relationManager.requestedList.size() == 0) {
-            positionOfHeader = 2;
-            noOfHeader = 2;
-        } else if (relationManager.requestedList.size() > 0 && relationManager.acceptedList.size() == 0) {
-            positionOfHeader = 0;
-            noOfHeader = 1;
-        } else if ((relationManager.requestedList.size() == 0) && (relationManager.acceptedList.size() > 0)) {
-            positionOfHeader = 1;
-            noOfHeader = 2;
-        } else if ((relationManager.requestedList.size() > 0) && (relationManager.requestedList.size() > 0)) {
-            positionOfHeader = 0;
-            noOfHeader = 2;
-        }
-        for (int i = positionOfHeader; i < noOfHeader; i++) {
-            sections.add(new Section(mHeaderPositions[i], mHeaderNames[i], mHeaderNames2[i]));
-        }
-        simpleSectionedGridAdapter = new SimpleSectionedListAdapter1(UserProfileView.this, adapter, R.layout.list_item_header, R.id.tv_clickintx, R.id.tv_with);
-        simpleSectionedGridAdapter.setSections(sections.toArray(new Section[0]));
-        mUserRelationlistView.setAdapter(simpleSectionedGridAdapter);
+            if (relationManager.acceptedList.size() == 0 && relationManager.requestedList.size() == 0) {
+                positionOfHeader = 2;
+                noOfHeader = 2;
+            } else if (relationManager.requestedList.size() > 0 && relationManager.acceptedList.size() == 0) {
+                positionOfHeader = 0;
+                noOfHeader = 1;
+            } else if ((relationManager.requestedList.size() == 0) && (relationManager.acceptedList.size() > 0)) {
+                positionOfHeader = 1;
+                noOfHeader = 2;
+            } else if ((relationManager.requestedList.size() > 0) && (relationManager.requestedList.size() > 0)) {
+                positionOfHeader = 0;
+                noOfHeader = 2;
+            }
+            for (int i = positionOfHeader; i < noOfHeader; i++) {
+                sections.add(new Section(mHeaderPositions[i], mHeaderNames[i], mHeaderNames2[i]));
+            }
+            simpleSectionedGridAdapter = new SimpleSectionedListAdapter1(UserProfileView.this, adapter, R.layout.list_item_header, R.id.tv_clickintx, R.id.tv_with);
+            simpleSectionedGridAdapter.setSections(sections.toArray(new Section[0]));
+            mUserRelationlistView.setAdapter(simpleSectionedGridAdapter);
 
-        btnAddSomeone = (Button) footerView.findViewById(R.id.btn_add_someone);
-        btnAddSomeone.setOnClickListener(this);
+            btnAddSomeone = (Button) footerView.findViewById(R.id.btn_add_someone);
+            btnAddSomeone.setOnClickListener(this);
+        }
     }
 
     /*
@@ -322,7 +322,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
             case R.id.btn_add_someone:
                 Intent intent = new Intent(UserProfileView.this, AddSomeoneView.class);
                 intent.putExtra("FromOwnProfile", true);
-                intent.putExtra("fromsignup",false);
+                intent.putExtra("fromsignup", false);
                 startActivity(intent);
                 break;
             case R.id.btn_edit_profile:
@@ -458,7 +458,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         ComponentName componentInfo = taskInfo.get(0).topActivity;
 
 
-        com.sourcefuse.clickinandroid.utils.Log.e("package name--->",""+componentInfo.getClass());
+        com.sourcefuse.clickinandroid.utils.Log.e("package name--->", "" + componentInfo.getClass());
     }
 
     public void onDestroy() {

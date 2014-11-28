@@ -50,6 +50,8 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
     private Dialog mDialog;
     public MyQbChatService myQbChatService;
     private boolean mIsBound;
+
+
     // private Typeface typeface, typefaceBold;
 
     @Override
@@ -65,6 +67,9 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
 
         authManager = ModelManager.getInstance().getAuthorizationManager();
         Utils.deviceId = Utils.getRegId(SignInView.this);
+
+        com.sourcefuse.clickinandroid.utils.Log.e("reg id---->",Utils.deviceId);
+
         authManager.setDeviceRegistereId(Utils.deviceId);
         do_latter = (Button) findViewById(R.id.btn_get_clickin_signin);
         ephone = (EditText) findViewById(R.id.edt_email_phoneno);
@@ -209,7 +214,7 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
                     getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
                     authManager = ModelManager.getInstance().getAuthorizationManager();
                     Utils.launchBarDialog(SignInView.this);
-                    authManager.signIn(ephone.getText().toString().trim(), ePwd.getText().toString().trim(), authManager.getDeviceRegistereId(), Constants.DEVICETYPE);
+                    authManager.signIn(ephone.getText().toString().trim(), ePwd.getText().toString().trim(), Utils.deviceId, Constants.DEVICETYPE);
 //                    Log.e(TAG,"Phone no without space" +ephone.getText().toString().trim());
                 } else if (ephone.getText().toString().length() == 0) {
                     Utils.fromSignalDialog(this, AlertMessage.enterPhoneEmail);
