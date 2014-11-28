@@ -182,7 +182,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     Integer msgId;
 
     private ClickinDbHelper dbHelper;
-    //monika- variable to store video thumbnail
+    //mukesh- variable to store video thumbnail
     private String thumurl=null;
 
     public static Bitmap getBitmapFromCameraData(Intent data, Context context) {
@@ -313,105 +313,27 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
 
         profileName.setText("" + splitted[0]);
-        try {
-            Uri tempUri = authManager.getUserImageUri();
-            if (tempUri != null) {
-                Bitmap imageBitmap;
-                imageBitmap = authManager.getUserbitmap();
-                if (imageBitmap != null)
-                    mypix.setImageBitmap(imageBitmap);
-                else {
-                    if (!authManager.getGender().equalsIgnoreCase("")) {
-
-                        if (authManager.getGender().equalsIgnoreCase("guy")) {
-                            try {
-                                if (!authManager.getUserPic().equalsIgnoreCase("")) {
-                                    Picasso.with(this)
-                                            .load(authManager.getUserPic())
-                                            .skipMemoryCache()
-
-                                            .error(R.drawable.male_user)
-                                            .into(mypix);
-                                } else {
-                                    mypix.setImageResource(R.drawable.male_user);
-                                }
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                mypix.setImageResource(R.drawable.male_user);
-                            }
-                        } else if (authManager.getGender().equalsIgnoreCase("girl")) {
-                            try {
-                                if (!authManager.getUserPic().equalsIgnoreCase("")) {
-                                    Picasso.with(this)
-                                            .load(authManager.getUserPic())
-                                            .skipMemoryCache()
-
-                                            .error(R.drawable.female_user)
-                                            .into(mypix);
-                                } else {
-                                    mypix.setImageResource(R.drawable.female_user);
-                                }
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                mypix.setImageResource(R.drawable.female_user);
-                            }
-                        }
-
-                    } else {
-                        mypix.setImageResource(R.drawable.male_user);
-                    }
-                }
-
-            } else {
-                if (authManager.getGender() != null) {
-
-                    if (authManager.getGender().equalsIgnoreCase("guy")) {
-                        try {
-                            if (!authManager.getUserPic().equalsIgnoreCase("")) {
-                                Picasso.with(this)
-                                        .load(authManager.getUserPic())
-                                        .skipMemoryCache()
-
-                                        .error(R.drawable.male_user)
-                                        .into(mypix);
-                            } else {
-                                mypix.setImageResource(R.drawable.male_user);
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            mypix.setImageResource(R.drawable.male_user);
-                        }
-                    } else if (authManager.getGender().equalsIgnoreCase("girl")) {
-                        try {
-                            if (!authManager.getUserPic().equalsIgnoreCase("")) {
-                                Picasso.with(this)
-                                        .load(authManager.getUserPic())
-                                        .skipMemoryCache()
-
-                                        .error(R.drawable.female_user)
-                                        .into(mypix);
-                            } else {
-                                mypix.setImageResource(R.drawable.female_user);
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            mypix.setImageResource(R.drawable.female_user);
-                        }
-                    }
-
-                } else {
-                    mypix.setImageResource(R.drawable.male_user);
-                }
-
-            }
-
+  try {
+            Bitmap imageBitmap;
+            imageBitmap = authManager.getUserbitmap();
+            if (imageBitmap != null)
+                mypix.setImageBitmap(imageBitmap);
+            else if (Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("guy"))
+                Picasso.with(this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.male_user).into(mypix);
+            else if (Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl"))
+                Picasso.with(this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.female_user).into(mypix);
+            else if (Utils.isEmptyString(authManager.getGender()))
+                Picasso.with(this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.male_user).into(mypix);
         } catch (Exception e) {
-            e.printStackTrace();
+            if (Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("guy"))
+                mypix.setImageResource(R.drawable.male_user);
+            else if (Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl"))
+                mypix.setImageResource(R.drawable.female_user);
+            else if (Utils.isEmptyString(authManager.getGender()))
+                mypix.setImageResource(R.drawable.male_user);
         }
-        Picasso.with(ChatRecordView.this).load(partnerPic)
 
-                .error(R.drawable.male_user).into(partnerPix);
-
+        Picasso.with(ChatRecordView.this).load(partnerPic).error(R.drawable.male_user).into(partnerPix);
 
         mybar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
             @Override
@@ -1710,104 +1632,27 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
 
             profileName.setText("" + splitted[0]);
-            try {
-                Uri tempUri = authManager.getUserImageUri();
-                if (tempUri != null) {
+          try {
                     Bitmap imageBitmap;
                     imageBitmap = authManager.getUserbitmap();
                     if (imageBitmap != null)
                         mypix.setImageBitmap(imageBitmap);
-                    else {
-                        if (!Utils.isEmptyString(authManager.getGender())) {
-
-                            if (authManager.getGender().equalsIgnoreCase("guy")) {
-                                try {
-                                    if (!authManager.getUserPic().equalsIgnoreCase("")) {
-                                        Picasso.with(this)
-                                                .load(authManager.getUserPic())
-                                                .skipMemoryCache()
-
-                                                .error(R.drawable.male_user)
-                                                .into(mypix);
-                                    } else {
-                                        mypix.setImageResource(R.drawable.male_user);
-                                    }
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                    mypix.setImageResource(R.drawable.male_user);
-                                }
-                            } else if (authManager.getGender().equalsIgnoreCase("girl")) {
-                                try {
-                                    if (!authManager.getUserPic().equalsIgnoreCase("")) {
-                                        Picasso.with(this)
-                                                .load(authManager.getUserPic())
-                                                .skipMemoryCache()
-
-                                                .error(R.drawable.female_user)
-                                                .into(mypix);
-                                    } else {
-                                        mypix.setImageResource(R.drawable.female_user);
-                                    }
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                    mypix.setImageResource(R.drawable.female_user);
-                                }
-                            }
-
-                        } else {
-                            mypix.setImageResource(R.drawable.male_user);
-                        }
-                    }
-
-                } else {
-                    if (authManager.getGender() != null) {
-
-                        if (authManager.getGender().equalsIgnoreCase("guy")) {
-                            try {
-                                if (!authManager.getUserPic().equalsIgnoreCase("")) {
-                                    Picasso.with(this)
-                                            .load(authManager.getUserPic())
-                                            .skipMemoryCache()
-
-                                            .error(R.drawable.male_user)
-                                            .into(mypix);
-                                } else {
-                                    mypix.setImageResource(R.drawable.male_user);
-                                }
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                mypix.setImageResource(R.drawable.male_user);
-                            }
-                        } else if (authManager.getGender().equalsIgnoreCase("girl")) {
-                            try {
-                                if (!Utils.isEmptyString(authManager.getGender())) {
-                                    Picasso.with(this)
-                                            .load(authManager.getUserPic())
-                                            .skipMemoryCache()
-
-                                            .error(R.drawable.female_user)
-                                            .into(mypix);
-                                } else {
-                                    mypix.setImageResource(R.drawable.female_user);
-                                }
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                mypix.setImageResource(R.drawable.female_user);
-                            }
-                        }
-
-                    } else {
+                    else if (Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("guy"))
+                        Picasso.with(this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.male_user).into(mypix);
+                    else if (Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl"))
+                        Picasso.with(this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.female_user).into(mypix);
+                    else if (Utils.isEmptyString(authManager.getGender()))
+                        Picasso.with(this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.male_user).into(mypix);
+                } catch (Exception e) {
+                    if (Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("guy"))
                         mypix.setImageResource(R.drawable.male_user);
-                    }
-
+                    else if (Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl"))
+                        mypix.setImageResource(R.drawable.female_user);
+                    else if (Utils.isEmptyString(authManager.getGender()))
+                        mypix.setImageResource(R.drawable.male_user);
                 }
+                Picasso.with(ChatRecordView.this).load(partnerPic).error(R.drawable.male_user).into(partnerPix);
 
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            Picasso.with(ChatRecordView.this).load(partnerPic)
-
-                    .error(R.drawable.male_user).into(partnerPix);
 
 
             //clear the message list always to initiate a new chat
