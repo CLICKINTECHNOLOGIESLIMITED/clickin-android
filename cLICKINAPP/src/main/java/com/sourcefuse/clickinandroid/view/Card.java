@@ -40,7 +40,7 @@ public class Card extends Activity implements View.OnClickListener,TextWatcher {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.card_click);
-        Utils.launchBarDialog(Card.this);
+      //  Utils.launchBarDialog(Card.this);
         trd_clicks_bottom = (TextView)findViewById(R.id.trd_clicks_bottom);
         trd_clicks_top = (TextView)findViewById(R.id.trd_clicks_top);
         tv_about_message = (TextView)findViewById(R.id.tv_about_message);
@@ -116,7 +116,7 @@ public class Card extends Activity implements View.OnClickListener,TextWatcher {
 
                     @Override
                     public void onError() {
-
+                        Utils.dismissBarDialog();
                         }
                     });
             Log.e(TAG,"Modified Url In The Picasso >>>>" +url_to_load);
@@ -203,7 +203,9 @@ Log.e(TAG,"Original Url" +url);
                 }else{
                   i.putExtra("isCounter",false);
                 }
-                i.putExtra("is_CustomCard","false");
+                i.putExtra("card_Accepted_Rejected","nil");
+                i.putExtra("played_Countered","PLAYED A CARD");
+                i.putExtra("is_CustomCard",false);
                 i.putExtra("card_url",url);
                 i.putExtra("card_clicks",clicks);
                 i.putExtra("Title",cardTitle);

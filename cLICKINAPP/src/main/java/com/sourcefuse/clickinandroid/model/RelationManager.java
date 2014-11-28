@@ -54,6 +54,7 @@ public class RelationManager {
     private String followingListCount = "0";
     private String followerOListCount = "0";
     private String followingOListCount = "0";
+    public String getPartnerName = "";
 
 
 	String strService = null;

@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
+import com.sourcefuse.clickinandroid.model.RelationManager;
 import com.sourcefuse.clickinandroid.model.bean.ChatMessageBody;
 import com.sourcefuse.clickinandroid.model.bean.ChatRecordBeen;
 import com.sourcefuse.clickinandroid.utils.Constants;
@@ -36,6 +37,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
     ArrayList<ChatMessageBody> currentChatList;
     private AuthManager authManager;
+    private RelationManager relationManager;
 
 
     public ChatRecordAdapter(Context context, int layoutResourceId,
@@ -52,6 +54,10 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
         LayoutInflater inflater = ((Activity) context).getLayoutInflater();
         View row = inflater.inflate(R.layout.view_chat_demo, parent, false);
         String oursQbId = ModelManager.getInstance().getAuthorizationManager().getQBId();
+        RelativeLayout parentChatLayout=(RelativeLayout)row.findViewById(R.id.chat_parent_layout);
+        relationManager = ModelManager.getInstance().getRelationManager();
+
+
         if (temp.senderQbId.equalsIgnoreCase(oursQbId)) { //start of sender
 
 
@@ -59,7 +65,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
 
             RelativeLayout rlTimeStatusSender = (RelativeLayout) row.findViewById(R.id.rl_time_sender);
-            RelativeLayout parentChatLayout=(RelativeLayout)row.findViewById(R.id.chat_parent_layout);
+
             LinearLayout chatClickTextLayout = (LinearLayout) row.findViewById(R.id.parent_clicks_area);
 
 
@@ -72,13 +78,16 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
             //temp code -for image
             if(!(Utils.isEmptyString(temp.imageRatio))){
                 //set layout properties for image view
+                LinearLayout media_layout=(LinearLayout)row.findViewById(R.id.media_layout);
                 ImageView image_attached=(ImageView)row.findViewById(R.id.iv_chat_image);
+                media_layout.setVisibility(View.VISIBLE);
+                image_attached.setVisibility(View.VISIBLE);
 
                 if(!(Utils.isEmptyString(temp.textMsg)) || (!(temp.clicks.equalsIgnoreCase("no")))){
                     chatClickTextLayout.setVisibility(View.VISIBLE);
                     RelativeLayout.LayoutParams paramsrr = new RelativeLayout.LayoutParams(
                             RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-                    paramsrr.addRule(RelativeLayout.BELOW, R.id.iv_chat_image);
+                    paramsrr.addRule(RelativeLayout.BELOW, R.id.media_layout);
                     chatClickTextLayout.setLayoutParams(paramsrr);
                 }
 
@@ -87,10 +96,6 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 if(!(Utils.isEmptyString(temp.isDelivered)) && temp.isDelivered.equalsIgnoreCase(Constants.MSG_SENDING)) {
                     ((ProgressBar)row.findViewById(R.id.pb_loding)).setVisibility(View.VISIBLE);
                     ((ImageView)row.findViewById(R.id.iv_type_two_share_icon_r)).setVisibility(View.GONE);
-
-
-
-
                    sendStatusView.setImageResource(R.drawable.r_single_tick);
                     //Uri tempUri=Uri.parse(temp.content_url);
                     Picasso.with(context).load(temp.content_url)
@@ -110,8 +115,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 image_attached.setVisibility(View.VISIBLE);
 
 
-            }else{// //end of image loop-sender And Audio start
-                if(!Utils.isEmptyString(temp.content_url)) {
+            }else if(!Utils.isEmptyString(temp.content_url)){// //end of image loop-sender And Audio start
 
                     parentChatLayout.setBackgroundResource(R.drawable.audio_send);
                     ((ImageView)row.findViewById(R.id.iv_audio_play)).setVisibility(View.VISIBLE);
@@ -139,16 +143,29 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                         sendStatusView.setImageResource(R.drawable.double_check);
 
                     }
+            }else if(!Utils.isEmptyString(temp.card_url)) {// //end of Audio loop-sender And Card start
+                parentChatLayout.setBackgroundResource(R.drawable.newbg);
+                ((RelativeLayout)row.findViewById(R.id.send_card_first_time)).setVisibility(View.VISIBLE);
+               // ((LinearLayout)row.findViewById(R.id.card_recieve_first_time)).setVisibility(View.VISIBLE);
 
+                ((TextView)row.findViewById(R.id.trd_clicks_top)).setText(temp.clicks);
+                ((TextView)row.findViewById(R.id.trd_clicks_bottom)).setText(temp.clicks);
 
+               // ((TextView)row.findViewById(R.id.card_partner_name)).setText(temp.clicks);
 
-                }
+                ImageView trade_image =  (ImageView) row.findViewById(R.id.trade_image);
+                trade_image.setVisibility(View.VISIBLE);
+                String url_to_load = (temp.card_url).replaceFirst("cards\\/(\\d+)\\.jpg","cards\\/a\\/1080\\/$1\\.jpg");
+                Picasso.with(context).load(url_to_load)
+                        .placeholder(R.drawable.default_profile)
+                        .error(R.drawable.default_profile).into(trade_image);
             }
 
         //only text-SENDER CASE
             if (!Utils.isEmptyString(temp.textMsg) && temp.clicks.equalsIgnoreCase("no")) {
                 //  RelativeLayout textViewLayout = (RelativeLayout) row.findViewById(R.id.chat_parent_layout);
                 chatClickTextLayout.setVisibility(View.VISIBLE);
+                chatClickTextLayout.setBackgroundResource(R.drawable.newbg);
                 LinearLayout clicksArea = (LinearLayout) row.findViewById(R.id.clicks_area);
                 clicksArea.setVisibility(View.VISIBLE);
 
@@ -242,13 +259,16 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
             //temp code -for image-receiver end
             if(!(Utils.isEmptyString(temp.imageRatio))){
                 //set layout properties for image view
+                LinearLayout media_layout=(LinearLayout)row.findViewById(R.id.media_layout);
                 ImageView image_attached=(ImageView)row.findViewById(R.id.iv_chat_image);
+                media_layout.setVisibility(View.VISIBLE);
+                image_attached.setVisibility(View.VISIBLE);
 
                 if(!(Utils.isEmptyString(temp.textMsg)) || (!(temp.clicks.equalsIgnoreCase("no")))){
                     chatClickTextLayout.setVisibility(View.VISIBLE);
                     RelativeLayout.LayoutParams paramsr2 = new RelativeLayout.LayoutParams(
                             RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-                    paramsr2.addRule(RelativeLayout.BELOW, R.id.iv_chat_image);
+                    paramsr2.addRule(RelativeLayout.BELOW, R.id.media_layout);
                     chatClickTextLayout.setLayoutParams(paramsr2);
                 }
 
@@ -259,8 +279,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                         .placeholder(R.drawable.default_profile)
                         .error(R.drawable.default_profile).into(image_attached);
 
-            }else{
-                if(!Utils.isEmptyString(temp.content_url)) {
+            }else if(!Utils.isEmptyString(temp.content_url)) {
                     chatParentLayout.setBackgroundResource(R.drawable.audio_recieve);
                     ((ImageView)row.findViewById(R.id.iv_audio_play)).setVisibility(View.VISIBLE);
 
@@ -272,7 +291,23 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                         chatClickTextLayout.setLayoutParams(paramsr2);
                     }
 
-                }
+            } else if(!Utils.isEmptyString(temp.card_url)) {
+                parentChatLayout.setBackgroundResource(R.drawable.whitechatbg);
+                ((RelativeLayout)row.findViewById(R.id.send_card_first_time)).setVisibility(View.VISIBLE);
+                ((LinearLayout)row.findViewById(R.id.card_recieve_first_time)).setVisibility(View.VISIBLE);
+
+                ((TextView)row.findViewById(R.id.trd_clicks_top)).setText(temp.clicks);
+                ((TextView)row.findViewById(R.id.trd_clicks_bottom)).setText(temp.clicks);
+
+                ((TextView)row.findViewById(R.id.card_partner_name)).setText(relationManager.getPartnerName);
+
+
+                ImageView trade_image =  (ImageView) row.findViewById(R.id.trade_image);
+                trade_image.setVisibility(View.VISIBLE);
+                String url_to_load = (temp.card_url).replaceFirst("cards\\/(\\d+)\\.jpg","cards\\/a\\/1080\\/$1\\.jpg");
+                Picasso.with(context).load(url_to_load)
+                        .placeholder(R.drawable.default_profile)
+                        .error(R.drawable.default_profile).into(trade_image);
             }
 
 

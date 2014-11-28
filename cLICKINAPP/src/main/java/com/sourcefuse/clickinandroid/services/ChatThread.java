@@ -142,6 +142,7 @@ public class ChatThread extends Thread implements QBMessageListener {
                             if (!(data.getInt("ChatType") == Constants.CHAT_TYPE_CARD)) {
                                 if (data.containsKey("clicks"))
                                     message.setProperty("clicks", data.getString("clicks"));
+                                    message.setBody("");
 
                             }
 
@@ -336,6 +337,19 @@ public class ChatThread extends Thread implements QBMessageListener {
                     temp.content_url = extraParamsObj.getString("fileID");
                 }else if(extraParamsObj.has("audioID")){
                     temp.content_url = extraParamsObj.getString("audioID");
+                }else if(extraParamsObj.has("card_owner")){
+
+                    temp.clicks = extraParamsObj.getString("card_clicks");
+                    temp.card_owner = Integer.toString(extraParamsObj.getInt("card_owner"));
+                    temp.card_content = extraParamsObj.getString("card_content");
+                    temp.is_CustomCard = extraParamsObj.getBoolean("is_CustomCard");
+                    temp.card_DB_ID =extraParamsObj.getString("card_DB_ID");
+                    temp.card_Accepted_Rejected = extraParamsObj.getString("card_Accepted_Rejected");
+                    temp.card_heading = extraParamsObj.getString("card_heading");
+                    temp.card_url =extraParamsObj.getString("card_url");
+                    temp.card_id = extraParamsObj.getString("card_id");
+                    temp.card_Played_Countered = extraParamsObj.getString("card_Played_Countered");
+                    temp.card_originator = extraParamsObj.getString("card_originator");
                 }
                 if (temp.clicks.equalsIgnoreCase("no")) {
                     temp.textMsg = body;
