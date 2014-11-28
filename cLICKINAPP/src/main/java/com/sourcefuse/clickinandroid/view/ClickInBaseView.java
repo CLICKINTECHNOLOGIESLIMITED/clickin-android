@@ -134,27 +134,34 @@ public class
 
         chatManager = ModelManager.getInstance().getChatManager();
         chatManager.setrelationshipId(rid);
+        startActivity(intent);
+        this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+        slidemenu.showContent();
 
 
-        ActivityManager am = (ActivityManager) this.getSystemService(ACTIVITY_SERVICE);
+     /*   ActivityManager am = (ActivityManager) this.getSystemService(ACTIVITY_SERVICE);
         List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
         ComponentName componentInfo = taskInfo.get(0).topActivity;
         String className = componentInfo.getClassName();
-        if (className.equalsIgnoreCase("com.sourcefuse.clickinandroid.view.ChatRecordView")) {
+//monika- if we open the same partner to chat to which already chatting, then no need to start activtiy again
+        if (ChatRecordView.rId.equalsIgnoreCase(rid)) {
+            if (className.equalsIgnoreCase("com.sourcefuse.clickinandroid.view.ChatRecordView")) {
+           /* for animation prafull */
+           /*     this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+                slidemenu.showContent();
+            }
+        }else {
             startActivity(intent);
+            this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+            slidemenu.showContent();*/
+
 
                   /* for animation prafull */
 
-            this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
-            slidemenu.showContent();
-            //  slidemenu.showContent(true);
-        } else {
-            startActivity(intent);
-                  /* for animation prafull */
 
-            this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
-            // slidemenu.showContent(true);
-        }
+      //  }
+
+
 
 
     }

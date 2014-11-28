@@ -35,8 +35,6 @@ import org.json.JSONObject;
 import org.json.XML;
 
 import java.io.IOException;
-import java.util.Calendar;
-import java.util.TimeZone;
 import java.util.regex.Pattern;
 
 import de.greenrobot.event.EventBus;
@@ -54,7 +52,7 @@ public class ChatThread extends Thread implements QBMessageListener {
     private QBChatService chat;
     private Handler mMyHandler;
     private JSONObject mRooms = new JSONObject();
-    private QBChat chatObject;
+    private QBPrivateChat chatObject;
     private AuthManager authManager;
     private QBUser mUser;
 
@@ -87,8 +85,7 @@ public class ChatThread extends Thread implements QBMessageListener {
                         Bundle data = msg.getData();
                         if (QBChatService.getInstance().isLoggedIn()) {
                             int partnerQBId = Integer.parseInt(data.getString("partnerQBId"));
-                         //   chatObject = QBChatService.getInstance().getPrivateChatManager().getChat(partnerQBId);
-                          //  chatObject=QBChatService.getInstance().
+                            chatObject = QBChatService.getInstance().getPrivateChatManager().getChat(partnerQBId);
                             if (chatObject == null)
                                 chatObject = QBChatService.getInstance().getPrivateChatManager().createChat(partnerQBId, ChatThread.this);
                             QBChatMessage message = new QBChatMessage();
@@ -348,9 +345,6 @@ public class ChatThread extends Thread implements QBMessageListener {
                         temp.clicks = Utils.convertClicks(temp.clicks).trim();
                     }
                 }
-                //calcuate time to receiver
-                long receiveTime = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis();
-                temp.sentOn=""+receiveTime;
                 ModelManager.getInstance().getChatManager().chatMessageList.add(temp);
 
                 EventBus.getDefault().post("Chat Message Recieve");

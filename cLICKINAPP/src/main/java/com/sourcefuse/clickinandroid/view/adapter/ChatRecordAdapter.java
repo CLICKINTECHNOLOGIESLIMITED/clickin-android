@@ -72,13 +72,16 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
             //temp code -for image
             if(!(Utils.isEmptyString(temp.imageRatio))){
                 //set layout properties for image view
+                LinearLayout media_layout=(LinearLayout)row.findViewById(R.id.media_layout);
                 ImageView image_attached=(ImageView)row.findViewById(R.id.iv_chat_image);
+                media_layout.setVisibility(View.VISIBLE);
+                image_attached.setVisibility(View.VISIBLE);
 
                 if(!(Utils.isEmptyString(temp.textMsg)) || (!(temp.clicks.equalsIgnoreCase("no")))){
                     chatClickTextLayout.setVisibility(View.VISIBLE);
                     RelativeLayout.LayoutParams paramsrr = new RelativeLayout.LayoutParams(
                             RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-                    paramsrr.addRule(RelativeLayout.BELOW, R.id.iv_chat_image);
+                    paramsrr.addRule(RelativeLayout.BELOW, R.id.media_layout);
                     chatClickTextLayout.setLayoutParams(paramsrr);
                 }
 
@@ -87,10 +90,6 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 if(!(Utils.isEmptyString(temp.isDelivered)) && temp.isDelivered.equalsIgnoreCase(Constants.MSG_SENDING)) {
                     ((ProgressBar)row.findViewById(R.id.pb_loding)).setVisibility(View.VISIBLE);
                     ((ImageView)row.findViewById(R.id.iv_type_two_share_icon_r)).setVisibility(View.GONE);
-
-
-
-
                    sendStatusView.setImageResource(R.drawable.r_single_tick);
                     //Uri tempUri=Uri.parse(temp.content_url);
                     Picasso.with(context).load(temp.content_url)
@@ -149,6 +148,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
             if (!Utils.isEmptyString(temp.textMsg) && temp.clicks.equalsIgnoreCase("no")) {
                 //  RelativeLayout textViewLayout = (RelativeLayout) row.findViewById(R.id.chat_parent_layout);
                 chatClickTextLayout.setVisibility(View.VISIBLE);
+                chatClickTextLayout.setBackgroundResource(R.drawable.newbg);
                 LinearLayout clicksArea = (LinearLayout) row.findViewById(R.id.clicks_area);
                 clicksArea.setVisibility(View.VISIBLE);
 
@@ -242,13 +242,16 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
             //temp code -for image-receiver end
             if(!(Utils.isEmptyString(temp.imageRatio))){
                 //set layout properties for image view
+                LinearLayout media_layout=(LinearLayout)row.findViewById(R.id.media_layout);
                 ImageView image_attached=(ImageView)row.findViewById(R.id.iv_chat_image);
+                media_layout.setVisibility(View.VISIBLE);
+                image_attached.setVisibility(View.VISIBLE);
 
                 if(!(Utils.isEmptyString(temp.textMsg)) || (!(temp.clicks.equalsIgnoreCase("no")))){
                     chatClickTextLayout.setVisibility(View.VISIBLE);
                     RelativeLayout.LayoutParams paramsr2 = new RelativeLayout.LayoutParams(
                             RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-                    paramsr2.addRule(RelativeLayout.BELOW, R.id.iv_chat_image);
+                    paramsr2.addRule(RelativeLayout.BELOW, R.id.media_layout);
                     chatClickTextLayout.setLayoutParams(paramsr2);
                 }
 

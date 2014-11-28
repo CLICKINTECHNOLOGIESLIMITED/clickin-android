@@ -65,6 +65,7 @@ public class Constants {
 
 	public final static int CHAT_TYPE_CARD = 6;
     public final static int CHAT_TYPE_NOFITICATION = 7;
+    public final static int CHAT_TYPE_VIDEO_INITATING=8;
     //constant to check length of chat text in adapter
     public final static int CHAT_LENTH_LIMIT = 15;
 
