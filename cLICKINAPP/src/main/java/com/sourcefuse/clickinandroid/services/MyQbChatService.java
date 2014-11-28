@@ -19,6 +19,7 @@ import android.support.v4.app.NotificationCompat;
 
 import com.sourcefuse.clickinandroid.model.bean.ChatMessageBody;
 import com.sourcefuse.clickinandroid.utils.Constants;
+import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
 
 import org.jivesoftware.smack.packet.Message;
@@ -116,6 +117,7 @@ public class MyQbChatService extends Service {
         android.os.Message msg = new android.os.Message();
         Bundle data = new Bundle();
         data.putString("partnerQBId", msgObject.partnerQbId);
+       // if(Utils.isEmptyString(msgObject.textMsg))
         data.putString("textMsg", msgObject.textMsg);
         data.putString("clicks", msgObject.clicks);
         data.putInt("ChatType", msgObject.chatType);

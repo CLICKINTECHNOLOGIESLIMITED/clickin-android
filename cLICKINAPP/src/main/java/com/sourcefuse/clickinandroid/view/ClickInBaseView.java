@@ -313,9 +313,9 @@ public class
         try {
             try {
 
-                if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().matches("girl")) {
+                if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl")) {
                     dtails = "Female";
-                } else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().matches("guy")) {
+                } else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("guy")) {
                     dtails = "Male";
                 } else {
                     dtails = " ";
