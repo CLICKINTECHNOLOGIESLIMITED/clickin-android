@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.sourcefuse.clickinandroid.model.AuthManager;
@@ -31,14 +32,12 @@ import de.greenrobot.event.EventBus;
  * Created by prafull on 17/9/14.
  */
 public class DeactivateAccountView extends Activity implements View.OnClickListener {
+    RadioGroup mradioGroup;
     private ImageView backarrow;
-
     private AuthManager authManager;
     private SettingManager settingManager;
-
     private String email_opt_out = "yes";
     private boolean email_opt_out_b = true;
-    RadioGroup mradioGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +45,7 @@ public class DeactivateAccountView extends Activity implements View.OnClickListe
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 //        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);//akshit code to prevent auto pop-up for keyboard
         setContentView(R.layout.view_deactivate_account);
-        this.overridePendingTransition(R.anim.slide_in_right ,R.anim.slide_out_right);
+        this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
 
         backarrow = (ImageView) findViewById(R.id.iv_back_noti);
@@ -67,7 +66,8 @@ public class DeactivateAccountView extends Activity implements View.OnClickListe
         ((RadioButton) findViewById(R.id.deactivate_radio_msg_six)).setOnClickListener(this);
         ((RadioButton) findViewById(R.id.deactivate_radio_msg_seven)).setOnClickListener(this);
         // ((RadioButton) findViewById(R.id.mail_radio_button)).setTypeface(typefacemedium);
-        EditText general=((EditText) findViewById(R.id.general_problem_text));
+        ((EditText) findViewById(R.id.general_problem_text)).setOnClickListener(this);
+
         EditText passw = ((EditText) findViewById(R.id.old_password));
 
 //        TextView text_profile=((TextView) findViewById(R.id.tv_profile_txt));
@@ -99,13 +99,25 @@ public class DeactivateAccountView extends Activity implements View.OnClickListe
         });
 
 //ends
+
+
+        //akshit code
+        final ScrollView scrollView = (ScrollView) findViewById(R.id.scroll_view_deactivate);
+        scrollView.post(new Runnable() {
+            @Override
+            public void run() {
+                scrollView.fullScroll(ScrollView.FOCUS_UP);
+
+            }
+        });
+//end
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         finish();
-        overridePendingTransition(0,R.anim.top_out);//akshit code for animation
+        overridePendingTransition(0, R.anim.top_out);//akshit code for animation
     }
 
     @Override
@@ -120,7 +132,7 @@ public class DeactivateAccountView extends Activity implements View.OnClickListe
             case R.id.deactivate_radio_msg_five:
             case R.id.deactivate_radio_msg_six:
             case R.id.deactivate_radio_msg_seven:
-                InputMethodManager inputMethodManager1 = (InputMethodManager)  this.getSystemService(Activity.INPUT_METHOD_SERVICE);
+                InputMethodManager inputMethodManager1 = (InputMethodManager) this.getSystemService(Activity.INPUT_METHOD_SERVICE);
                 inputMethodManager1.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
 
                 break;//ends
@@ -163,8 +175,11 @@ public class DeactivateAccountView extends Activity implements View.OnClickListe
             case R.id.btn_stay:
                 finish();
                 break;
+            case R.id.general_problem_text:
+                ((EditText) findViewById(R.id.general_problem_text)).setCursorVisible(true);
+                break;
             case R.id.mail_radio_button_layout:
-                InputMethodManager inputMethodManager2 = (InputMethodManager)  this.getSystemService(Activity.INPUT_METHOD_SERVICE);
+                InputMethodManager inputMethodManager2 = (InputMethodManager) this.getSystemService(Activity.INPUT_METHOD_SERVICE);
                 inputMethodManager2.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
                 /*RadioButton mail_radio_button = (RadioButton) findViewById(R.id.mail_radio_button);
                 if (mail_radio_button.isChecked()) {
@@ -195,6 +210,7 @@ public class DeactivateAccountView extends Activity implements View.OnClickListe
             EventBus.getDefault().unregister(this);
         }
         EventBus.getDefault().register(this);
+
     }
 
     public void onEventMainThread(String message) {
@@ -233,7 +249,7 @@ public class DeactivateAccountView extends Activity implements View.OnClickListe
 
 
     // Akshit Code Starts
-    public  void fromSignalDialog(Activity activity ,String str){
+    public void fromSignalDialog(Activity activity, String str) {
 
         final Dialog dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -248,10 +264,10 @@ public class DeactivateAccountView extends Activity implements View.OnClickListe
         dismiss.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                Intent intent=new Intent(DeactivateAccountView.this, SplashView.class);
+                Intent intent = new Intent(DeactivateAccountView.this, SplashView.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_right ,R.anim.slide_out_right);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
                 new MyPreference(getApplicationContext()).clearAllPreference();
                 DeactivateAccountView.this.finish();
 

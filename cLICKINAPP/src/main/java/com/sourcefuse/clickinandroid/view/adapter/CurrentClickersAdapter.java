@@ -21,17 +21,16 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 
-
 public class CurrentClickersAdapter extends ArrayAdapter<CurrentClickerBean> {
     Context context;
     int layoutResourceId;
-    private AuthManager authManager ;
+    private AuthManager authManager;
     private RelationManager relationManager;
     private ProfileManager profilemanager;
 
 
     public CurrentClickersAdapter(Context context, int layoutResourceId,
-                             List<CurrentClickerBean> item) {
+                                  List<CurrentClickerBean> item) {
         super(context, layoutResourceId, item);
         this.layoutResourceId = layoutResourceId;
         this.context = context;
@@ -60,16 +59,15 @@ public class CurrentClickersAdapter extends ArrayAdapter<CurrentClickerBean> {
         final RecordHolder rholder = (RecordHolder) row.getTag();
 
 
-
-        if(item.getFollow()==0){
+        if (item.getFollow() == 0) {
             rholder.follow.setBackgroundResource(R.drawable.follow_pink);
-        }else{
+        } else {
             rholder.follow.setBackgroundResource(R.drawable.requested_grey);
         }
 
-        if(profilemanager.currentClickerList.size()==(position+1)){
+        if (profilemanager.currentClickerList.size() == (position + 1)) {
             rholder.whiteDivider.setVisibility(View.GONE);
-        }else{
+        } else {
             rholder.whiteDivider.setVisibility(View.VISIBLE);
         }
 
@@ -89,20 +87,20 @@ public class CurrentClickersAdapter extends ArrayAdapter<CurrentClickerBean> {
         }
 
 
-            holder.follow.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    authManager = ModelManager.getInstance().getAuthorizationManager();
-                    relationManager = ModelManager.getInstance().getRelationManager();
+        holder.follow.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                authManager = ModelManager.getInstance().getAuthorizationManager();
+                relationManager = ModelManager.getInstance().getRelationManager();
 
-                    if(item.getFollow()==0){
-                        item.setFollow(1);
-                        relationManager.followUser(item.getGetClickerPhone(), authManager.getPhoneNo(), authManager.getUsrToken());
-                        rholder.follow.setBackgroundResource(R.drawable.requested_grey);
-                        CurrentClickersView.followReqStatus=true;
-                    }
-
+                if (item.getFollow() == 0) {
+                    item.setFollow(1);
+                    relationManager.followUser(item.getGetClickerPhone(), authManager.getPhoneNo(), authManager.getUsrToken());
+                    rholder.follow.setBackgroundResource(R.drawable.requested_grey);
+                    CurrentClickersView.followReqStatus = true;
                 }
-            });
+
+            }
+        });
 
         return row;
     }

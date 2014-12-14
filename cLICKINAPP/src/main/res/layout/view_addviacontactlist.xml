@@ -6,54 +6,54 @@
     android:layout_height="match_parent"
     android:background="@drawable/enterdigitmainbg">
 
-    <LinearLayout
-        android:id="@+id/iv_topicon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/c_header_bg"
-        android:orientation="vertical"
-        android:weightSum="2">
+    <!--<LinearLayout-->
+        <!--android:id="@+id/iv_topicon"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:background="@drawable/c_header_bg"-->
+        <!--android:orientation="vertical"-->
+        <!--android:weightSum="2">-->
 
-        <com.sourcefuse.clickinandroid.utils.ClickInTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center"
-            android:layout_marginBottom="5dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="ADD SOMEONE"
-            android:textColor="@color/screen_header"
-            android:textSize="43sp"
-            android:textStyle="bold"
-            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
+        <!--<com.sourcefuse.clickinandroid.utils.ClickInTextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:layout_marginBottom="5dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:gravity="center"-->
+            <!--android:text="ADD SOMEONE"-->
+            <!--android:textColor="@color/screen_header"-->
+            <!--android:textSize="43sp"-->
+            <!--android:textStyle="bold"-->
+            <!--geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />-->
 
-        <com.sourcefuse.clickinandroid.utils.ClickInTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="top"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="24dp"
-            android:layout_marginTop="-50dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="TO CLICK WITH"
-            android:textColor="@color/screen_header"
-            android:textSize="43sp"
-            android:textStyle="bold"
-            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
+        <!--<com.sourcefuse.clickinandroid.utils.ClickInTextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--android:layout_gravity="top"-->
+            <!--android:layout_marginBottom="10dp"-->
+            <!--android:layout_marginLeft="24dp"-->
+            <!--android:layout_marginTop="-50dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:gravity="center"-->
+            <!--android:text="TO CLICK WITH"-->
+            <!--android:textColor="@color/screen_header"-->
+            <!--android:textSize="43sp"-->
+            <!--android:textStyle="bold"-->
+            <!--geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />-->
 
-    </LinearLayout>
+    <!--</LinearLayout>-->
 
 
-    <!--<ImageView-->
-    <!--android:id="@+id/iv_topicon"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_centerHorizontal="true"-->
-    <!--android:background="@drawable/add_someone" />-->
+    <ImageView
+    android:id="@+id/iv_topicon"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:background="@drawable/addtosomeone" />
     <RelativeLayout
         android:id="@+id/linearLayout1"
         android:layout_width="wrap_content"
@@ -180,8 +180,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="400dp"
-        android:background="@drawable/c_back_footer"
-        >
+        android:background="@drawable/c_back_footer">
 
         <TextView
             android:id="@+id/btn_go_back"
@@ -190,8 +189,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="30dp"
             android:background="@drawable/c_back"
-            android:gravity="bottom"
-           />
+            android:gravity="bottom" />
         <!--<Button-->
         <!--android:id="@+id/btn_go_back_num"-->
         <!--android:layout_width="wrap_content"-->

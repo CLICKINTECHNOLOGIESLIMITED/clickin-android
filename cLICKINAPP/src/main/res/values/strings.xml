@@ -90,7 +90,9 @@
     <string name="header_profile_one">GOT YOUR NUMBER!</string>
     <string name="header_profile_two">GIMME SOME\n MORE</string>
 
-    <string name="deactivate_radio_msg_one">This is temporary.I\'II be back.</string>
+    <string name="general_prob_hint">Briefly explain what you love, hate or want \nus to improve on.</string>
+    <string name="deactivate_text">Deactivating your account will disable your profile and remove your name and picture from your friend’s list. Some information may still be visible to others, such as posts shared on The Feed.</string>
+    <string name="deactivate_radio_msg_one">This is temporary. I’ll be back.</string>
     <string name="deactivate_radio_msg_two">I have a privacy concern.</string>
     <string name="deactivate_radio_msg_three">I don\'t understand how to use Clickin\'.</string>
     <string name="deactivate_radio_msg_four">I have another account.</string>
@@ -117,6 +119,10 @@
     <string name="txt_relationrequest">relationrequest</string>
     <string name="txt_relationstatus">relationstatus</string>
     <string name="txt_relationdelete">relationdelete</string>
+    <string name="txt_follow">followrequest</string>
+    <string name="txt_relation_visibility">relationvisibility</string>
+    <string name="follow_status">followstatus</string>
+    <string name="type_share">share</string>
 
     <string name="trade_hint">HOW MANY CLICKS ARE YOU WILLING TO OFFER?</string>
     <string name="title_activity_card">Card</string>
@@ -124,7 +130,7 @@
 
     <string name="plus">+</string>
     <!--Country codes-->
-    <string-array name="CountryCodes" >
+    <string-array name="CountryCodes">
         <item>93,AF</item>
         <item>355,AL</item>
         <item>213,DZ</item>
@@ -337,5 +343,8 @@
     <string name="usephoto">Use Photo</string>
     <string name="cancel">Cancel</string>
     <string name="choose">Choose</string>
+
+    <string name="chat_msg">has sent you a message</string>
+    <string name="chat_image">has sent you a photo</string>
 
 </resources>

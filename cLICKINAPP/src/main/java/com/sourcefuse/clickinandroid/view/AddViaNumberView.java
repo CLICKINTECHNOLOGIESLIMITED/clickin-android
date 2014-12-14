@@ -3,12 +3,10 @@ package com.sourcefuse.clickinandroid.view;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.Telephony;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
@@ -27,30 +25,29 @@ import com.sourcefuse.clickinapp.R;
 
 import de.greenrobot.event.EventBus;
 
-public class AddViaNumberView extends Activity implements View.OnClickListener,TextWatcher {
+public class AddViaNumberView extends Activity implements View.OnClickListener, TextWatcher {
     private static final String TAG = PlayItSafeView.class.getSimpleName();
-	private Button getClickInVn;
-	private AuthManager authManager ;
-	private EditText edtPhoneNo,edtCountryCode;
-
-
     String mPhNo;
+    boolean fromProfile = false;
+    private Button getClickInVn;
+    private AuthManager authManager;
+    private EditText edtPhoneNo, edtCountryCode;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.view_addvianumber);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.view_addvianumber);
 
 
-		this.overridePendingTransition(R.anim.slide_in_right ,R.anim.slide_out_right);
-		getClickInVn = (Button) findViewById(R.id.btn_get_click_via_no);
-		edtPhoneNo = (EditText) findViewById(R.id.edt_get_ph_no);
-        edtCountryCode= (EditText)findViewById(R.id.edt_cntry_cd);
-		edtPhoneNo.addTextChangedListener(AddViaNumberView.this);
+        this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+        getClickInVn = (Button) findViewById(R.id.btn_get_click_via_no);
+        edtPhoneNo = (EditText) findViewById(R.id.edt_get_ph_no);
+        edtCountryCode = (EditText) findViewById(R.id.edt_cntry_cd);
+        edtPhoneNo.addTextChangedListener(AddViaNumberView.this);
 
-        com.sourcefuse.clickinandroid.utils.Log.e("add some one view--->",""+getIntent().getBooleanExtra("fromsignup",false));
-		getClickInVn.setOnClickListener(this);
+        com.sourcefuse.clickinandroid.utils.Log.e("add some one view--->", "" + getIntent().getBooleanExtra("fromsignup", false));
+        getClickInVn.setOnClickListener(this);
         ((RelativeLayout) findViewById(R.id.rl_addvia_no_action)).setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -65,6 +62,10 @@ public class AddViaNumberView extends Activity implements View.OnClickListener,T
 
         });
 
+        //akshit code to hide back button.
+        if (!getIntent().getBooleanExtra("fromsignup", false)) {
+            findViewById(R.id.rl_back).setVisibility(View.GONE);
+        }
 
 
         ((TextView) findViewById(R.id.btn_go_back_num)).setOnClickListener(new View.OnClickListener() {
@@ -75,59 +76,53 @@ public class AddViaNumberView extends Activity implements View.OnClickListener,T
             }
         });
 
-		authManager = ModelManager.getInstance().getAuthorizationManager();
-
+        authManager = ModelManager.getInstance().getAuthorizationManager();
 
 
         //akshit code start For country Code ,
 
-        try{
-            String countryCode=Utils.getCountryCodeFromSim(this);
-            if(countryCode==null){
+        try {
+            String countryCode = Utils.getCountryCodeFromSim(this);
+            if (countryCode == null) {
                 edtCountryCode.setText("+(null)");
-            }else{
+            } else {
                 edtCountryCode.setText(countryCode);
             }
 
 
         } catch (Exception e) {
         }
-	}
-      @Override
-      public void onBackPressed() {
-            super.onBackPressed();
-            finish();
-            overridePendingTransition(0, R.anim.top_out);
-      }
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.btn_get_click_via_no:
-            if(Utils.isCountryCodeValid(edtCountryCode.getText().toString())){
-                if (Utils.isPhoneValid(edtPhoneNo.getText().toString()) && (edtPhoneNo.getText().toString().length() >= 5)) {
-                     mPhNo=edtCountryCode.getText().toString().trim()+edtPhoneNo.getText().toString().trim();
-                    //Monika-need to hit webservice to check num registered or not
-            /*        ProfileManager prfManager= ModelManager.getInstance().getProfileManager();
-                    if(prfManager.currClickersPhoneNums.contains(mPhNo)){
-                        authManager = ModelManager.getInstance().getAuthorizationManager();
-                        authManager.sendNewRequest(authManager.getPhoneNo(), mPhNo, authManager.getUsrToken());
-                    }else {
+    }
 
-                    }*/
-                    FetchContactFromPhone.checkNumWithClickInDb(mPhNo);
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        overridePendingTransition(0, R.anim.top_out);
+    }
 
-                }else{
-                    Utils.fromSignalDialog(this,AlertMessage.phone);
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_get_click_via_no:
+                if (Utils.isCountryCodeValid(edtCountryCode.getText().toString())) {
+                    if (Utils.isPhoneValid(edtPhoneNo.getText().toString()) && (edtPhoneNo.getText().toString().length() >= 5) && !((EditText) findViewById(R.id.edt_cntry_cd)).getText().toString().equalsIgnoreCase("+(null)")) {
+                        mPhNo = edtCountryCode.getText().toString().trim() + edtPhoneNo.getText().toString().trim();
+                        Utils.launchBarDialog(AddViaNumberView.this);
+                        FetchContactFromPhone.checkNumWithClickInDb(mPhNo);
+
+                    } else {
+                        Utils.fromSignalDialog(this, AlertMessage.phone);
+                    }
+
+                } else {
+                    Utils.fromSignalDialog(this, AlertMessage.country);
                 }
 
-            }else{
-                Utils.fromSignalDialog(this,AlertMessage.country);
-            }
+                break;
 
-			break;
-
-		}
-	}
+        }
+    }
 
     @Override
     public void onStart() {
@@ -139,42 +134,44 @@ public class AddViaNumberView extends Activity implements View.OnClickListener,T
     @Override
     public void onStop() {
         super.onStop();
-        if(EventBus.getDefault().isRegistered(this)){
+        if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this);
         }
     }
 
-    public void onEventMainThread(String message){
-			authManager = ModelManager.getInstance().getAuthorizationManager();
-				if (message.equalsIgnoreCase("RequestSend True")) {
-					Utils.dismissBarDialog();
-                    if(getIntent().getBooleanExtra("fromsignup",false)) {
-                        Intent intent = new Intent(this, CurrentClickersView.class);
-                        intent.putExtra("FromMenu", false);
-                        intent.putExtra("Fromsignup", true);
-                        startActivity(intent);
-                        finish();
-                    }else {
-                        Intent intent = new Intent(this, UserProfileView.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                        intent.putExtra("isChangeInList",true);
-                        startActivity(intent);
-                        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
-                        finish();
-                    }
-					//switchView();
-				} else if (message.equalsIgnoreCase("RequestSend False")) {
-					Utils.dismissBarDialog();
-                    Utils.fromSignalDialog(this,authManager.getMessage());
-                    //Utils.showAlert(AddViaNumberView.this, authManager.getMessage());
-                   // finish();
-				} else if(message.equalsIgnoreCase("RequestSend Network Error")){
-					Utils.dismissBarDialog();
-				      Utils.fromSignalDialog(this,AlertMessage.connectionError);
-				//	Utils.showAlert(AddViaNumberView.this, AlertMessage.connectionError);
-                    //finish();
-				}else if(message.equalsIgnoreCase("Num Not Registered")){
+    public void onEventMainThread(String message) {
+        authManager = ModelManager.getInstance().getAuthorizationManager();
+        if (message.equalsIgnoreCase("RequestSend True")) {
+            Utils.dismissBarDialog();
+            if (getIntent().getBooleanExtra("fromsignup", false)) {
+                Intent intent = new Intent(this, CurrentClickersView.class);
+                intent.putExtra("FromMenu", false);
+                intent.putExtra("Fromsignup", true);
+                startActivity(intent);
+                finish();
+            } else {
+                ((RelativeLayout) findViewById(R.id.rl_back)).setVisibility(View.GONE);
+                Intent intent = new Intent(this, UserProfileView.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                intent.putExtra("isChangeInList", true);
+                startActivity(intent);
 
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+                finish();
+            }
+            //switchView();
+        } else if (message.equalsIgnoreCase("RequestSend False")) {
+            Utils.dismissBarDialog();
+            Utils.fromSignalDialog(this, authManager.getMessage());
+            //Utils.showAlert(AddViaNumberView.this, authManager.getMessage());
+            // finish();
+        } else if (message.equalsIgnoreCase("RequestSend Network Error")) {
+            Utils.dismissBarDialog();
+            Utils.fromSignalDialog(this, AlertMessage.connectionError);
+            //	Utils.showAlert(AddViaNumberView.this, AlertMessage.connectionError);
+            //finish();
+        } else if (message.equalsIgnoreCase("Num Not Registered")) {
+            Utils.dismissBarDialog();
 
 
                     /* try to send with sms if sms is not present than it will send it towards hangout */
@@ -183,49 +180,47 @@ public class AddViaNumberView extends Activity implements View.OnClickListener,T
                  /*  send sms for nexus 5 check build version*/
                  /* prafull code */
 
-                    try {
+            try {
 
 
+                Intent smsIntent = new Intent(Intent.ACTION_VIEW);
+                smsIntent.putExtra("sms_body", Constants.SEND_REQUEST_WITH_SMS_MESSAGE_SPREAD);
+                smsIntent.setType("vnd.android-dir/mms-sms");
+                smsIntent.setData(Uri.parse(mPhNo));
+                smsIntent.putExtra("exit_on_sent", true);
+                startActivity(smsIntent);
 
-                        Intent smsIntent = new Intent(Intent.ACTION_VIEW);
-                        smsIntent.putExtra("sms_body", Constants.SEND_REQUEST_WITH_SMS_MESSAGE_SPREAD);
-                        smsIntent.setType("vnd.android-dir/mms-sms");
-                        smsIntent.setData(Uri.parse(mPhNo));
-                        smsIntent.putExtra("exit_on_sent", true);
-                        startActivity(smsIntent);
 
+            } catch (Exception e) {
+                try {
+                    String defaultSmsPackageName = Telephony.Sms.getDefaultSmsPackage(AddViaNumberView.this); //Need to change the build to API 19
 
-                    } catch (Exception e) {
-                        try {
-                            String defaultSmsPackageName = Telephony.Sms.getDefaultSmsPackage(AddViaNumberView.this); //Need to change the build to API 19
-
-                            Intent sendIntent = new Intent(Intent.ACTION_SEND);
-                            sendIntent.setType("text/plain");
-                            sendIntent.putExtra("address", mPhNo);
-                            sendIntent.putExtra(Intent.ACTION_ATTACH_DATA,Uri.parse(mPhNo));
-                            sendIntent.putExtra(Intent.EXTRA_TEXT, Constants.SEND_REQUEST_WITH_SMS_MESSAGE);
-                            if (defaultSmsPackageName != null)//Can be null in case that there is no default, then the user would be able to choose any app that support this intent.
-                            {
-                                sendIntent.setPackage(defaultSmsPackageName);
-                            }
-                            sendIntent.putExtra("exit_on_sent", true);
-                            startActivity(sendIntent);
-                        } catch (Exception e1) {
-                            e1.printStackTrace();
-                        }
+                    Intent sendIntent = new Intent(Intent.ACTION_SEND);
+                    sendIntent.setType("text/plain");
+                    sendIntent.putExtra("address", mPhNo);
+                    sendIntent.putExtra(Intent.ACTION_ATTACH_DATA, Uri.parse(mPhNo));
+                    sendIntent.putExtra(Intent.EXTRA_TEXT, Constants.SEND_REQUEST_WITH_SMS_MESSAGE);
+                    if (defaultSmsPackageName != null)//Can be null in case that there is no default, then the user would be able to choose any app that support this intent.
+                    {
+                        sendIntent.setPackage(defaultSmsPackageName);
                     }
-
-
-
-                }else if(message.equalsIgnoreCase("Num Registered")){
-                    Utils.launchBarDialog(this);
-                    authManager = ModelManager.getInstance().getAuthorizationManager();
-                    authManager.sendNewRequest(authManager.getPhoneNo(), mPhNo, authManager.getUsrToken());
-                }else if(message.equalsIgnoreCase("Num Check False")){
-                    Utils.dismissBarDialog();
-                    Utils.fromSignalDialog(this,authManager.getMessage());
+                    sendIntent.putExtra("exit_on_sent", true);
+                    startActivity(sendIntent);
+                } catch (Exception e1) {
+                    e1.printStackTrace();
                 }
-		}
+            }
+
+
+        } else if (message.equalsIgnoreCase("Num Registered")) {
+            /*Utils.launchBarDialog(this);*/
+            authManager = ModelManager.getInstance().getAuthorizationManager();
+            authManager.sendNewRequest(authManager.getPhoneNo(), mPhNo, authManager.getUsrToken());
+        } else if (message.equalsIgnoreCase("Num Check False")) {
+            Utils.dismissBarDialog();
+            Utils.fromSignalDialog(this, authManager.getMessage());
+        }
+    }
 
 
     @Override
@@ -236,7 +231,7 @@ public class AddViaNumberView extends Activity implements View.OnClickListener,T
     @Override
     public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
 
-        if (edtPhoneNo.getText().toString().length()>0){
+        if (edtPhoneNo.getText().toString().length() > 0) {
 
             getClickInVn.setBackgroundResource(R.drawable.c_getclicin_active);
             getClickInVn.setEnabled(true);
@@ -258,7 +253,9 @@ public class AddViaNumberView extends Activity implements View.OnClickListener,T
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        com.sourcefuse.clickinandroid.utils.Log.e("on activity result","on activity result");
+        com.sourcefuse.clickinandroid.utils.Log.e("on activity result", "on activity result");
 
     }
+
+
 }

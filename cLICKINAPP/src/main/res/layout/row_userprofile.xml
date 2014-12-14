@@ -1,14 +1,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:geekui="http://schemas.android.com/apk/res-auto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-    >
+    xmlns:geekui="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <RelativeLayout
         android:id="@+id/rl_jk"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
+        android:layout_height="wrap_content">
 
         <com.sourcefuse.clickinandroid.utils.ClickInTextView
             android:id="@+id/tv_usr_name"
@@ -25,9 +23,9 @@
             android:singleLine="true"
             android:text="Bregenja"
             android:textColor="@color/owner_relation_partner_name"
-            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
+            android:textSize="16sp"
             android:textStyle="normal"
-            android:textSize="16sp"/>
+            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
 
         <RelativeLayout
             android:id="@+id/rl_kl"
@@ -37,8 +35,7 @@
             android:background="@color/white"
             android:paddingBottom="2dp"
             android:paddingLeft="2dp"
-            android:paddingRight="2dp"
-            >
+            android:paddingRight="2dp">
 
             <RelativeLayout
                 android:id="@+id/rl_m"
@@ -55,7 +52,7 @@
                     android:layout_marginRight="-8dp"
                     android:adjustViewBounds="true"
                     android:scaleType="fitXY"
-                    android:src="@drawable/female_crt"/>
+                    android:src="@drawable/female_crt" />
 
                 <TextView
                     android:id="@+id/btn_privacy"
@@ -63,7 +60,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/iv_usr_pic"
-                    android:background="@drawable/owner_profile_eye_icon"/>
+                    android:background="@drawable/owner_profile_eye_icon" />
             </RelativeLayout>
 
             <TextView
@@ -72,7 +69,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="5dp"
-                android:background="@drawable/owner_side_icon_cross"/>
+                android:background="@drawable/owner_side_icon_cross" />
         </RelativeLayout>
 
         <View
@@ -81,7 +78,7 @@
             android:layout_height="5dp"
             android:layout_below="@+id/rl_kl"
             android:background="@color/white"
-            android:visibility="gone"/>
+            android:visibility="gone" />
     </RelativeLayout>
 
     <com.sourcefuse.clickinandroid.utils.ClickInTextView
@@ -91,18 +88,17 @@
         android:layout_below="@+id/rl_jk"
         android:background="@drawable/owner_list_roundedview"
         android:gravity="center_horizontal"
-        android:text="PENDING"
         android:paddingBottom="5dp"
+        android:text="PENDING"
         android:textColor="@color/sign_hint"
-        geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"
-        />
+        geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
 
     <View
         android:id="@+id/v_devider"
         android:layout_width="wrap_content"
         android:layout_height="18dp"
         android:layout_below="@+id/tv_pending"
-        android:background="@color/transparent"/>
+        android:background="@color/transparent" />
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -117,7 +113,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginTop="2dp"
-            android:background="@color/edit_profile_clr"/>
+            android:background="@color/edit_profile_clr" />
     </LinearLayout>
 
 </RelativeLayout>

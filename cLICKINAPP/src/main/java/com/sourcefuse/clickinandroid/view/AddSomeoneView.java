@@ -2,7 +2,7 @@ package com.sourcefuse.clickinandroid.view;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -22,7 +22,6 @@ import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.ProfileManager;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
-import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.FetchContactFromPhone;
 import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinandroid.utils.Utils;
@@ -33,15 +32,14 @@ import de.greenrobot.event.EventBus;
 
 public class AddSomeoneView extends Activity implements TextWatcher {
 
+    AuthManager authManager;
+    boolean FromOwnProfile;
     private Button do_latter, do_invited;
     private EditText search_phbook;
     private ListView listView;
     private TextView bottom_text, back, title_top, title_bottom;//akshit code to hide textview
     private ContactAdapter adapter;
     private RelativeLayout showContactlist, layout_back;
-    private Typeface typeface, typefaceBold;
-    AuthManager authManager;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +47,6 @@ public class AddSomeoneView extends Activity implements TextWatcher {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.view_addsomeone);
         this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
-        typeface = Typeface.createFromAsset(AddSomeoneView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
-        typefaceBold = Typeface.createFromAsset(AddSomeoneView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_BOLD);
         bottom_text = (TextView) findViewById(R.id.edt_text);//akshit code
         title_bottom = (TextView) findViewById(R.id.title_text_bottom);
         title_top = (TextView) findViewById(R.id.title_text_top);
@@ -63,10 +59,9 @@ public class AddSomeoneView extends Activity implements TextWatcher {
         showContactlist = (RelativeLayout) findViewById(R.id.rr_con_list);
         search_phbook.addTextChangedListener(this);
         authManager = ModelManager.getInstance().getAuthorizationManager();
-        bottom_text.setTypeface(typefaceBold);
 
 
-        Log.e("from signup value---->",""+getIntent().getBooleanExtra("fromsignup", false));
+        Log.e("from signup value---->", "" + getIntent().getBooleanExtra("fromsignup", false));
 
         listView.setOnItemClickListener(new OnItemClickListener() {
             @Override
@@ -77,7 +72,7 @@ public class AddSomeoneView extends Activity implements TextWatcher {
 
 
                 ProfileManager prfManager = ModelManager.getInstance().getProfileManager();
-                com.sourcefuse.clickinandroid.utils.Log.e("oncreate---->", "" + prfManager.currClickersPhoneNums);
+                Log.e("oncreate---->", "" + prfManager.currClickersPhoneNums);
 
                 Intent intent = new Intent(AddSomeoneView.this, AddViaContactView.class);
                 intent.putExtra("fromsignup", getIntent().getBooleanExtra("fromsignup", false));
@@ -86,10 +81,13 @@ public class AddSomeoneView extends Activity implements TextWatcher {
                 //Monika- we need to append counntry code if it doesn't with contact num
                 String phNum = Utils.itData.get(position).getConNumber();
                 Log.e("phone no---->", "" + phNum);
-                if (!(phNum.contains("+"))) {
-                    if (!Utils.isEmptyString(authManager.getCountrycode()))
+               /* if (!(phNum.contains("+"))) {
+                    android.util.Log.e("in contains","in contains");
+                    if (!Utils.isEmptyString(authManager.getCountrycode())) {
                         phNum = authManager.getCountrycode() + phNum;
-                }
+                        android.util.Log.e("in contains add country code","in contains add country code");
+                    }
+                }*/
 
                 intent.putExtra("ConNumber", phNum);
                 if (!Utils.isEmptyString(Utils.itData.get(position).getConUri())) {
@@ -127,8 +125,10 @@ public class AddSomeoneView extends Activity implements TextWatcher {
                     bottom_text.setVisibility(View.GONE);
                     layout_back.setVisibility(View.GONE);
                     back.setVisibility(View.GONE);
-                    title_top.setText("ADD SOMEONE");
-                    title_bottom.setText("TO CLICK WITH");
+                    title_bottom.setVisibility(View.GONE);
+                    title_top.setVisibility(View.GONE);
+                    findViewById(R.id.iv_topicon).setVisibility(View.GONE);
+                    findViewById(R.id.iv_image_top).setVisibility(View.VISIBLE);
 
                 } else {
                     do_latter.setVisibility(View.VISIBLE);
@@ -163,11 +163,16 @@ public class AddSomeoneView extends Activity implements TextWatcher {
         do_latter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent clickersView = new Intent(AddSomeoneView.this, CurrentClickersView.class);
+//                Intent clickersView = new Intent(AddSomeoneView.this, CurrentClickersView.class);
+//                clickersView.putExtra("FromSignup", true);
+//                clickersView.putExtra("fromsignup", getIntent().getBooleanExtra("fromsignup", false));
+//                clickersView.putExtra("FromMenu", false);
+//                startActivity(clickersView);
+
+                Intent clickersView = new Intent(AddSomeoneView.this, UserProfileView.class);
                 clickersView.putExtra("FromSignup", true);
-                clickersView.putExtra("fromsignup", getIntent().getBooleanExtra("fromsignup", false));
-                clickersView.putExtra("FromMenu", false);
                 startActivity(clickersView);
+                finish();
             }
         });
 
@@ -175,27 +180,28 @@ public class AddSomeoneView extends Activity implements TextWatcher {
         do_invited.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+//
+//                Intent clickersView = new Intent(AddSomeoneView.this, CurrentClickersView.class);
+//                clickersView.putExtra("FromSignup", true);
+//                clickersView.putExtra("fromsignup", getIntent().getBooleanExtra("fromsignup", false));
+//                clickersView.putExtra("FromMenu", false);
+//                startActivity(clickersView);
 
-                Intent clickersView = new Intent(AddSomeoneView.this, CurrentClickersView.class);
+                Intent clickersView = new Intent(AddSomeoneView.this, UserProfileView.class);
                 clickersView.putExtra("FromSignup", true);
-                clickersView.putExtra("fromsignup", getIntent().getBooleanExtra("fromsignup", false));
-                clickersView.putExtra("FromMenu", false);
                 startActivity(clickersView);
+                finish();
 
             }
         });
         //akshit code end
 
 
-        if (Utils.itData.size() == 0) {
-
-            Utils.launchBarDialog(this);
-            new FetchContactFromPhone(this).getClickerList(authManager.getPhoneNo(), authManager.getUsrToken(), 1);
-        } else {
-            Log.e("current clickers list--->", "" + Utils.itData);
-            adapter = new ContactAdapter(this, R.layout.row_contacts, Utils.itData);
-            listView.setAdapter(adapter);
-        }
+        //   if (Utils.itData.size() != 0) {
+        Log.e("current clickers list--->", "" + Utils.itData);
+        adapter = new ContactAdapter(this, R.layout.row_contacts, Utils.itData);
+        listView.setAdapter(adapter);
+        // }
     }
 
 
@@ -234,7 +240,9 @@ public class AddSomeoneView extends Activity implements TextWatcher {
         EventBus.getDefault().register(this);
         if (Utils.itData.size() == 0) {
             Utils.launchBarDialog(this);
-            new FetchContactFromPhone(this).getClickerList(authManager.getPhoneNo(), authManager.getUsrToken(), 1);
+            //monika- readcontacts in background and then call fetchcontact
+            new LoadContacts().execute();
+            // new FetchContactFromPhone(this).getClickerList(authManager.getPhoneNo(), authManager.getUsrToken(), 1);
         }
     }
 
@@ -259,7 +267,9 @@ public class AddSomeoneView extends Activity implements TextWatcher {
         } else if (message.equalsIgnoreCase("CheckFriend False")) {
             Utils.dismissBarDialog();
             //  Utils.showAlert(this,authManager.getMessage());
-            Utils.fromSignalDialog(this, authManager.getMessage());
+            Log.e("Add phone", "Message" + authManager.getMessage());
+            //   Utils.fromSignalDialog(this, authManager.getMessage());
+
         } else if (message.equalsIgnoreCase("CheckFriend Network Error")) {
             Utils.dismissBarDialog();
             //    Utils.showAlert(this, AlertMessage.connectionError);
@@ -267,5 +277,17 @@ public class AddSomeoneView extends Activity implements TextWatcher {
         }
     }
 
+    private class LoadContacts extends AsyncTask<Void, Void, Void> {
 
+        @Override
+        protected Void doInBackground(Void... voids) {
+            new FetchContactFromPhone(AddSomeoneView.this).readContacts();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void voids) {
+            new FetchContactFromPhone(AddSomeoneView.this).getClickerList(authManager.getPhoneNo(), authManager.getUsrToken(), 1);
+        }
+    }
 }

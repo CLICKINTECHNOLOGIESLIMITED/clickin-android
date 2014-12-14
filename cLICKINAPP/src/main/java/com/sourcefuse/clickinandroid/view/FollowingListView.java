@@ -1,12 +1,9 @@
 package com.sourcefuse.clickinandroid.view;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -17,7 +14,6 @@ import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.ProfileManager;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
-import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.adapter.FollowingAdapter;
 import com.sourcefuse.clickinapp.R;
@@ -26,18 +22,15 @@ import de.greenrobot.event.EventBus;
 
 public class FollowingListView extends ClickInBaseView implements View.OnClickListener {
     private static final String TAG = FollowingListView.class.getSimpleName();
+    public static boolean fromOwnProfile = false;
+    public static boolean mchangeinList = false;
+    public FollowingAdapter adapter;
     private ImageView back, notification;
     private ListView listView;
-    public FollowingAdapter adapter;
     private ProfileManager profManager;
     private AuthManager authManager;
     private TextView profileName;
-
-    public static boolean fromOwnProfile = false;
     private RelativeLayout mFollowingListView, mFollowingListEmpty;
-
-
-    public static boolean mchangeinList = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +54,6 @@ public class FollowingListView extends ClickInBaseView implements View.OnClickLi
         authManager = ModelManager.getInstance().getAuthorizationManager();
 
 
-
         try {
             fromOwnProfile = getIntent().getExtras().getBoolean("FromOwnProfile");
             if (fromOwnProfile) {
@@ -69,9 +61,9 @@ public class FollowingListView extends ClickInBaseView implements View.OnClickLi
                 Utils.launchBarDialog(FollowingListView.this);
                 profManager.getFollwer("", authManager.getPhoneNo(), authManager.getUsrToken());
             } else {
-                profileName.setText(""+getIntent().getStringExtra("name"));
+                profileName.setText("" + getIntent().getStringExtra("name"));
                 Utils.launchBarDialog(FollowingListView.this);
-                profManager.getFollwer(""+getIntent().getStringExtra("phoneNo"), authManager.getPhoneNo(), authManager.getUsrToken());
+                profManager.getFollwer("" + getIntent().getStringExtra("phoneNo"), authManager.getPhoneNo(), authManager.getUsrToken());
             }
         } catch (Exception e) {
         }
@@ -169,7 +161,7 @@ public class FollowingListView extends ClickInBaseView implements View.OnClickLi
             //Utils.showAlert(FollowingListView.this, AlertMessage.connectionError);
             Log.d("3", "message->" + getMsg);
         } else if (getMsg.equalsIgnoreCase("update")) {
-            Log.e("list on notify--->",""+profManager.following);
+            Log.e("list on notify--->", "" + profManager.following);
             adapter.notifyDataSetChanged();
 
         }

@@ -29,17 +29,16 @@ class TestFragmentAdapter extends FragmentStatePagerAdapter implements IconPager
         return mCount;
     }
 
-
-    @Override
-    public int getIconResId(int index) {
-        return ICONS[index % ICONS.length];
-    }
-
     public void setCount(int count) {
         if (count > 0 && count <= 10) {
             mCount = count;
             notifyDataSetChanged();
         }
+    }
+
+    @Override
+    public int getIconResId(int index) {
+        return ICONS[index % ICONS.length];
     }
 
 }

@@ -9,10 +9,12 @@ public class AlertMessage {
     public static final String enterPhoneEmail = "Please enter Phone No./Email ID";
     public static final String enterPassword = "Please enter password";
     public static final String eMailAlreadyExist = "This email already exists. Please check and try again";
-    public static final String unFollowselecteduser = "Do you want unfollow the selected user." ;
-    public static final String InternetConnection = "Please Check Your Internet Connection" ;
+    public static final String unFollowselecteduser = "Do you want unfollow the selected user.";
+    public static final String InternetConnection = "Please Check Your Internet Connection";
     public static final String password_recovey = "Password recover link has been sent to your email.";
 
+    public static final String itsNotworking = "Enter Atleast 10 characters.";
+    public static final String generalFeedback = "Enter Atleast 10 characters.";
 
 
     public static final String Phonenolength = "The phone number you have entered is invalid. Please try again";
@@ -28,7 +30,7 @@ public class AlertMessage {
     public static final String emailid = "Please enter your email address";
     public static final String ageValid = "Please enter your Date of Birth";
     public static final String profilepic = "Select a user image";
-    public static final String usrAllreadyExists =  "A User with the same phone no. already exists. Please check and try again, or contact our help team";
+    public static final String usrAllreadyExists = "A User with the same phone no. already exists. Please check and try again, or contact our help team";
 
     public static final String SENDVERIFYMSGI = "WE SENT YOU THE CODE!";
     public static final String SENDVERIFYMSGII = "Just to make sure you didn't \nwrong number us";
@@ -51,15 +53,15 @@ public class AlertMessage {
 
     public static final String SREADTHEWORDMSGON = " has invited you to get Clickin' ";
 
-    public static final String DEACTIVATE_ENTER_PASSWORD="Please Enter Password first";
-    public static final String DEACTIVATE_PASSWORD="Your password should be at least 8 characters long.";
-    public static final String DEACTIVATE_ON_FALIURE="Please enter correct password";
-    public static final String DEACTIVATE_ON_SUCCESS="Account has been deactivated successfully";
+    public static final String DEACTIVATE_ENTER_PASSWORD = "Please Enter Password first";
+    public static final String DEACTIVATE_PASSWORD = "Your password should be at least 8 characters long.";
+    public static final String DEACTIVATE_ON_FALIURE = "Please enter correct password";
+    public static final String DEACTIVATE_ON_SUCCESS = "Account has been deactivated successfully";
 
-    public static final String CHANGE_PASSWORD_CHARACTER = "Your password should be at least 8 characters long." ;
-    public static final String CHANGE_PASSWORD="Please enter values in all the fields";
-    public static final String CHANGE_PASSWORD_NOT_MATCH="New password doesn't match. Try again";
-    public static final String CHANGE_PASSWORD_SUCESS="Password has been changed successfully";
-    public static final String CHANGE_PASSWORD_FAILURE="Old password did not match";
+    public static final String CHANGE_PASSWORD_CHARACTER = "Your password should be at least 8 characters long.";
+    public static final String CHANGE_PASSWORD = "Please enter values in all the fields";
+    public static final String CHANGE_PASSWORD_NOT_MATCH = "New password doesn't match. Try again";
+    public static final String CHANGE_PASSWORD_SUCESS = "Password has been changed successfully";
+    public static final String CHANGE_PASSWORD_FAILURE = "Old password did not match";
 
 }

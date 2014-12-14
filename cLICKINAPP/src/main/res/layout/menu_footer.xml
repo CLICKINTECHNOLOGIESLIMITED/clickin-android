@@ -14,6 +14,7 @@
             android:id="@+id/ll_feed"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/menu_footer_layout_color"
             android:clickable="true"
             android:focusable="true"
             android:orientation="horizontal">
@@ -33,9 +34,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@+id/feed_icon"
                 android:paddingLeft="15dp"
-                android:layout_marginLeft="5dp"
                 android:text="@string/txt_feed"
                 android:textColor="@color/menu_footer"
                 android:textSize="20sp"
@@ -56,6 +57,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/v_divider_feed"
+            android:background="@drawable/menu_footer_layout_color"
             android:clickable="true"
             android:focusable="true"
             android:orientation="horizontal">
@@ -76,11 +78,11 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/v_divider_feed"
                 android:layout_gravity="center_vertical"
+                android:layout_marginLeft="5dp"
                 android:paddingLeft="15dp"
                 android:text="@string/txt_find_friend"
                 android:textColor="@color/menu_footer"
                 android:textSize="20sp"
-                android:layout_marginLeft="5dp"
                 geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
         </LinearLayout>
 
@@ -99,9 +101,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/v_divider_friend"
+            android:background="@drawable/menu_footer_layout_color"
             android:clickable="true"
             android:focusable="true"
             android:orientation="horizontal">
+
 
             <ImageView
                 android:id="@+id/invite_icon"
@@ -139,6 +143,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/v_divider_invite"
+            android:background="@drawable/menu_footer_layout_color"
             android:clickable="true"
             android:focusable="true"
             android:orientation="horizontal">
@@ -158,11 +163,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:layout_marginLeft="5dp"
                 android:paddingLeft="15dp"
                 android:text="@string/txt_setting"
                 android:textColor="@color/menu_footer"
                 android:textSize="20sp"
-                android:layout_marginLeft="5dp"
                 geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
         </LinearLayout>
     </RelativeLayout>

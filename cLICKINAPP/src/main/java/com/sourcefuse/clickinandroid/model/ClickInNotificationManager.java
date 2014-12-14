@@ -1,5 +1,7 @@
 package com.sourcefuse.clickinandroid.model;
 
+import android.content.Context;
+
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.sourcefuse.clickinandroid.model.bean.NotificationBean;
@@ -29,9 +31,9 @@ public class ClickInNotificationManager implements NotificationManagerI {
     private NotificationBean ntificationBeanList = null;
 
     @Override
-    public void getNotification(String lastNotificationId, String phone, String usertoken) {
+    public void getNotification(Context context, String lastNotificationId, String phone, String usertoken) {
 
-        Log.e("in getnotification list","in getnotification list");
+        Log.e("in getnotification list", "in getnotification list");
         JSONObject userInputDetails = new JSONObject();
         try {
             userInputDetails.put("phone_no", phone);
@@ -45,7 +47,7 @@ public class ClickInNotificationManager implements NotificationManagerI {
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        client.post(null, APIs.FETCHNOTIFICATIONS, se, "application/json",
+        client.post(context, APIs.FETCHNOTIFICATIONS, se, "application/json",
                 new JsonHttpResponseHandler() {
 
                     @Override
@@ -61,7 +63,7 @@ public class ClickInNotificationManager implements NotificationManagerI {
                     }
 
                     @Override
-                    public void onSuccess(int statusCode, org.apache.http.Header[] headers,JSONObject response) {
+                    public void onSuccess(int statusCode, org.apache.http.Header[] headers, JSONObject response) {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
@@ -95,6 +97,7 @@ public class ClickInNotificationManager implements NotificationManagerI {
 
                 }
         );
+
 
     }
 

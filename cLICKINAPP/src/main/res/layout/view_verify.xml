@@ -12,7 +12,7 @@
         android:layout_marginBottom="10dp"
         android:background="@drawable/c_header_bg"
         android:orientation="vertical"
-        android:weightSum="2" >
+        android:weightSum="2">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -23,12 +23,12 @@
             <com.sourcefuse.clickinandroid.utils.ClickInTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
                 android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:layout_weight="1"
                 android:gravity="bottom"
                 android:text="ENTER"
-                android:layout_marginTop="15dp"
                 android:textColor="@color/screen_header"
                 android:textSize="38sp"
                 android:textStyle="bold"
@@ -43,20 +43,21 @@
             <com.sourcefuse.clickinandroid.utils.ClickInTextView
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:layout_centerHorizontal="true"
                 android:layout_gravity="top"
+                android:layout_marginTop="-19dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="THE CODE"
-                android:layout_centerHorizontal="true"
                 android:textColor="@color/screen_header"
                 android:textSize="38sp"
                 android:textStyle="bold"
-                geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
 
-                android:layout_marginTop="-19dp"/>
+                geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
             <!--android:paddingLeft="80sp"/>-->5
 
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/ll_boxs"
             android:layout_width="match_parent"
@@ -66,6 +67,7 @@
             android:layout_marginBottom="45dp"
             android:orientation="horizontal"
             android:weightSum="4">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="70dp">
@@ -74,8 +76,8 @@
                     android:id="@+id/edt_one"
                     android:layout_width="20dp"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="5dp"
                     android:layout_marginLeft="30dp"
+                    android:layout_marginRight="5dp"
 
                     android:layout_weight="1"
                     android:background="@drawable/e_v_number_field_empty"
@@ -124,8 +126,8 @@
                     android:id="@+id/edt_four"
                     android:layout_width="20dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:layout_marginRight="30dp"
+                    android:layout_weight="1"
                     android:background="@drawable/e_v_number_field_empty"
                     android:cursorVisible="false"
                     android:ems="1"

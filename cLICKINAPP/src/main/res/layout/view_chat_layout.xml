@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:geekui="http://schemas.android.com/apk/res-auto"
-    android:layout_width="fill_parent"
     android:id="@+id/rr_chat_layout"
-    android:background="@drawable/white_pattern_bg"
+    android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="@drawable/enterdigitmainbg"
     android:orientation="vertical">
 
 
@@ -133,7 +133,9 @@
             android:layout_height="wrap_content"
             android:layout_above="@+id/rl_chat"
             android:layout_below="@+id/rr_chatprofile_info"
-            android:layout_margin="5dp"
+            android:layout_marginBottom="-24dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
             android:divider="#00000000"
             android:listSelector="@android:color/transparent"
             android:stackFromBottom="true"
@@ -160,17 +162,22 @@
                 android:id="@+id/point_seekbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="-10dp"
+                android:layout_marginTop="28dp"
                 android:background="@color/white">
 
-                <TextView
+                <com.sourcefuse.clickinandroid.utils.ClickInTextView
                     android:id="@+id/tv_negetive"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="-10"
                     android:textColor="@color/profile_name_b"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"
+                    geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
 
                 <!--<SeekBar-->
                 <!--android:id="@+id/seekBar1"-->
@@ -187,27 +194,29 @@
 
                 <SeekBar
                     android:id="@+id/seekBar1"
-                    android:layout_width="match_parent"
+                    android:layout_width="330dp"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="35dp"
-                    android:layout_marginRight="34dp"
                     android:indeterminate="false"
                     android:max="10"
-                    android:progressDrawable="@drawable/styled_progress"
-                    android:thumb="@drawable/seek" />
+                    android:paddingLeft="31dp"
+                    android:paddingRight="33dp"
+                    android:progressDrawable="@drawable/seek_bar"
+                    android:thumb="@drawable/thumb_seek" />
 
-                <TextView
+                <com.sourcefuse.clickinandroid.utils.ClickInTextView
                     android:id="@+id/tv_positive"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
+                    android:layout_marginRight="10dp"
+                    android:paddingLeft="10dp"
+                    android:text="+10"
                     android:textColor="@color/profile_name_b"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"
+                    geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
+
             </RelativeLayout>
 
             <RelativeLayout
@@ -215,36 +224,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/point_seekbar"
+                android:layout_marginTop="7dp"
                 android:background="@drawable/r_footer_bg"
-                android:paddingTop="5dp"
-
-                >
+                android:paddingTop="5dp">
 
                 <LinearLayout
                     android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="8dp">
+                    android:layout_height="35dp"
+                    android:layout_alignBottom="@+id/edit_chatBox"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_toLeftOf="@+id/edit_chatBox"
+                    android:gravity="center_horizontal">
+
 
                     <ImageView
                         android:id="@+id/iv_attach"
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:layout_alignParentLeft="true"
-                        android:layout_weight="1"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/r_footer_icon" />
-
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:src="@drawable/attachedfileiconx" />
 
                 </LinearLayout>
-                <!--<ImageView-->
-                <!--android:id="@+id/iv_attach"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginLeft="10dp"-->
-                <!--android:layout_alignParentLeft="true"-->
-                <!--android:src="@drawable/r_footer_icon"-->
-                <!--/>-->
 
 
                 <EditText
@@ -252,26 +254,46 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:ems="12"
-                    android:maxLines="4"
-                    android:singleLine="false"
+                    android:layout_marginBottom="4.5dp"
+                    android:layout_marginTop="7dp"
                     android:background="@drawable/r_footer_middle_bg"
+                    android:ems="12"
                     android:maxLength="140"
+                    android:maxLines="4"
+                    android:paddingBottom="10dp"
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
                     android:scrollbars="vertical"
+                    android:singleLine="false"
+
                     ></EditText>
 
 
                 <Button
                     android:id="@+id/btn_send"
-                    android:layout_width="45dp"
-                    android:layout_height="40dp"
+                    android:layout_width="37dp"
+                    android:layout_height="35dp"
+                    android:layout_alignBottom="@+id/edit_chatBox"
                     android:layout_alignParentRight="true"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:background="@drawable/r_send_btn"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginTop="11dp"
+                    android:background="@drawable/send_btn"
                     android:gravity="bottom" />
+
+                <com.sourcefuse.clickinandroid.utils.ClickInTextView
+                    android:id="@+id/textview_send"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:layout_alignBottom="@+id/edit_chatBox"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="6dp"
+                    android:gravity="center_vertical"
+                    android:padding="10dp"
+                    android:text="SEND"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:visibility="gone"
+                    geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
             </RelativeLayout>
 
             <LinearLayout
@@ -286,33 +308,31 @@
 
                 <ImageView
                     android:id="@+id/iv_photo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_marginRight="5dp"
                     android:background="@drawable/r_img_icon" />
 
                 <ImageView
                     android:id="@+id/iv_video"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/r_video_icon"
-                    />
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/r_video_icon" />
 
                 <ImageView
                     android:id="@+id/iv_adiuo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_marginRight="5dp"
                     android:background="@drawable/r_mic_icon"
                     android:visibility="visible" />
 
                 <ImageView
                     android:id="@+id/iv_location"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_marginRight="5dp"
-                    android:background="@drawable/r_pin_icon"
-                    />
+                    android:background="@drawable/r_pin_icon" />
 
 
             </LinearLayout>
@@ -365,36 +385,32 @@
         android:id="@+id/rl_flipper"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="100dp"
-        android:layout_marginTop="99dp"
+        android:layout_marginBottom="111dp"
+        android:layout_marginTop="100dp"
         android:background="@color/black_opacity"
+        android:gravity="center"
         android:orientation="horizontal"
         android:visibility="gone">
 
-        <LinearLayout
+        <com.sourcefuse.clickinandroid.utils.ClickInTextView
+            android:id="@+id/tv_flipper_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true">
+            android:text="-10"
+            android:textColor="@color/feed_clickin"
+            android:textSize="87sp"
+            android:textStyle="bold"
+            geekui:customFont="AAvenirNextLTPro-BoldCn_0.otf" />
 
-            <TextView
-                android:id="@+id/tv_flipper_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="-10"
-                android:textColor="@color/feed_clickin"
-                android:textSize="100sp"
-                android:textStyle="bold" />
+        <ImageView
+            android:id="@+id/iv_fliper_heart"
+            android:layout_width="67dp"
+            android:layout_height="67dp"
+            android:layout_marginLeft="7dp"
+            android:layout_marginTop="27dp"
+            android:layout_toRightOf="@+id/tv_flipper_value"
+            android:background="@drawable/heart_flipper" />
 
-            <ImageView
-                android:id="@+id/iv_fliper_heart"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="10dp"
-                android:background="@drawable/r_click_icon" />
-        </LinearLayout>
     </RelativeLayout>
 
 </RelativeLayout>

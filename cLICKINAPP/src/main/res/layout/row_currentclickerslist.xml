@@ -7,8 +7,7 @@
         android:id="@+id/iv_usr"
         android:layout_width="45dp"
         android:layout_height="45dp"
-        android:layout_alignParentLeft="true"
-      />
+        android:layout_alignParentLeft="true" />
 
     <TextView
         android:id="@+id/tv_white"
@@ -26,8 +25,7 @@
         android:layout_marginTop="4dp"
         android:layout_toRightOf="@+id/iv_usr"
         android:text="Bregenja"
-        android:textSize="16sp"
-        />
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/btn_follow"

@@ -44,19 +44,66 @@ import de.greenrobot.event.EventBus;
 
 
 public class EditMyProfileView extends Activity implements View.OnClickListener {
+    /* test code prafull */
+    public static final int MEDIA_TYPE_IMAGE = 1;
     private static final String TAG = EditMyProfileView.class.getSimpleName();
+    private static final String IMAGE_DIRECTORY_NAME = "FootGloryFlow Application";
     private Button clickToSave;
     private ImageView mySelfy, OpenGallery, OpenCamera, backAction;
     private EditText myName, myLast, myEmail, myCity, myCountry;
     private AuthManager authManager;
     private ProfileManager profileManager;
     private Uri mImageCaptureUri;
-
-
     //variables use to maintain current values of user so we can set values later on in auth manager
     private String userName, userLastName, userEmail, userCity, userCountry;
+
+    //
     private Uri userImageUri;
 
+    public static Uri getOutputMediaFileUri(int type) {
+        return Uri.fromFile(getOutputMediaFile(type));
+    }
+
+    private static File getOutputMediaFile(int type) {
+
+        // External sdcard location
+        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), IMAGE_DIRECTORY_NAME);
+
+        // Create the storage directory if it does not exist
+        if (!mediaStorageDir.exists()) {
+            if (!mediaStorageDir.mkdirs()) {
+
+                return null;
+            }
+        }
+
+        // Create a media file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss",
+                Locale.getDefault()).format(new Date());
+        File mediaFile;
+        if (type == MEDIA_TYPE_IMAGE) {
+            mediaFile = new File(mediaStorageDir.getPath() + File.separator
+                    + "IMG_" + timeStamp + ".jpg");
+        } else {
+            return null;
+        }
+
+        return mediaFile;
+    }
+
+    public static Bitmap getBitmapFromCameraData(Intent data, Context context) {
+        Uri selectedImage = data.getData();
+        String[] filePathColumn =
+                {
+                        MediaStore.Images.Media.DATA
+                };
+        Cursor cursor = context.getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+        cursor.moveToFirst();
+        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+        String picturePath = cursor.getString(columnIndex);
+        cursor.close();
+        return BitmapFactory.decodeFile(picturePath);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,30 +170,33 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
         }
 
 
-        /* prafull code to for image*/
+        //prafull code to set image bitmap
         try {
-            Bitmap imagebitmap = authManager.getUserbitmap();
-            if(imagebitmap != null)
-                mySelfy.setImageBitmap(imagebitmap);
-            else if(!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl"))
+            Log.e("in try---->", "in try--->");
+            Bitmap imagebitmap1 = authManager.getUserbitmap();
+            if (imagebitmap1 != null)
+                com.sourcefuse.clickinandroid.utils.Log.e("user bit map not null", "user bit map not null");
+            boolean userpic = Utils.isEmptyString(authManager.getUserPic());
+            Log.e("user pic url ---->", "" + authManager.getUserPic());
+            Log.e("user pc --->", "" + authManager.getUserPic());
+            if (imagebitmap1 != null)
+                mySelfy.setImageBitmap(imagebitmap1);
+            else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl") && !userpic)
                 Picasso.with(EditMyProfileView.this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.female_user).into(mySelfy);
-            else if(!Utils.isEmptyString(authManager.getGender()))
+            else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("guy") && !userpic)
                 Picasso.with(EditMyProfileView.this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.male_user).into(mySelfy);
-
-        }catch (Exception e)
-        {
-            if(!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl"))
-                mySelfy.setImageResource(R.drawable.male_user);
-            else if(!Utils.isEmptyString(authManager.getGender()))
+            else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl"))
                 mySelfy.setImageResource(R.drawable.female_user);
+            else
+                mySelfy.setImageResource(R.drawable.male_user);
+
+        } catch (Exception e) {
+            com.sourcefuse.clickinandroid.utils.Log.e("on exception", "on exception");
+            mySelfy.setImageResource(R.drawable.male_user);
         }
 
 
-
     }
-
-//
-
 
     @Override
     public void onClick(View v) {
@@ -223,57 +273,6 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
         }
     }
 
-
-    /* test code prafull */
-    public static final int MEDIA_TYPE_IMAGE = 1;
-    private static final String IMAGE_DIRECTORY_NAME = "FootGloryFlow Application";
-
-
-    public static Uri getOutputMediaFileUri(int type) {
-        return Uri.fromFile(getOutputMediaFile(type));
-    }
-
-    private static File getOutputMediaFile(int type) {
-
-        // External sdcard location
-        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), IMAGE_DIRECTORY_NAME);
-
-        // Create the storage directory if it does not exist
-        if (!mediaStorageDir.exists()) {
-            if (!mediaStorageDir.mkdirs()) {
-
-                return null;
-            }
-        }
-
-        // Create a media file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss",
-                Locale.getDefault()).format(new Date());
-        File mediaFile;
-        if (type == MEDIA_TYPE_IMAGE) {
-            mediaFile = new File(mediaStorageDir.getPath() + File.separator
-                    + "IMG_" + timeStamp + ".jpg");
-        } else {
-            return null;
-        }
-
-        return mediaFile;
-    }
-
-    public static Bitmap getBitmapFromCameraData(Intent data, Context context) {
-        Uri selectedImage = data.getData();
-        String[] filePathColumn =
-                {
-                        MediaStore.Images.Media.DATA
-                };
-        Cursor cursor = context.getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-        cursor.moveToFirst();
-        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-        String picturePath = cursor.getString(columnIndex);
-        cursor.close();
-        return BitmapFactory.decodeFile(picturePath);
-    }
-
     public String getRealPathFromURI(Uri uri) {
         Cursor cursor = getContentResolver().query(uri, null, null, null, null);
         cursor.moveToFirst();
@@ -306,58 +305,58 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
 
         if (Constants.CAMERA_REQUEST == requestCode && resultCode == RESULT_OK) {
 
+            if (mImageCaptureUri != null) {
+                Bitmap bitmap = BitmapFactory.decodeFile(mImageCaptureUri.getPath(), new BitmapFactory.Options());
+                BitmapFactory.Options bmpFactoryOptions = new BitmapFactory.Options();
+                Bitmap bitmap1;
+                bmpFactoryOptions.inSampleSize = 2;
+                bmpFactoryOptions.outWidth = bitmap.getWidth();
+                bmpFactoryOptions.outHeight = bitmap.getHeight();
+                bmpFactoryOptions.inJustDecodeBounds = false;
+                bitmap1 = BitmapFactory.decodeFile(mImageCaptureUri.getPath(), bmpFactoryOptions);
 
-            Bitmap bitmap = BitmapFactory.decodeFile(mImageCaptureUri.getPath(), new BitmapFactory.Options());
-            BitmapFactory.Options bmpFactoryOptions = new BitmapFactory.Options();
-            Bitmap bitmap1;
-            bmpFactoryOptions.inSampleSize = 2;
-            bmpFactoryOptions.outWidth = bitmap.getWidth();
-            bmpFactoryOptions.outHeight = bitmap.getHeight();
-            bmpFactoryOptions.inJustDecodeBounds = false;
-            bitmap1 = BitmapFactory.decodeFile(mImageCaptureUri.getPath(), bmpFactoryOptions);
+                try {
+                    ExifInterface ei = new ExifInterface(mImageCaptureUri.getPath());
+                    int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
 
-            try {
-                ExifInterface ei = new ExifInterface(mImageCaptureUri.getPath());
-                int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+                    int angle = 0;
 
-                int angle = 0;
-
-                if (orientation == ExifInterface.ORIENTATION_ROTATE_90) {
-                    angle = 90;
-                } else if (orientation == ExifInterface.ORIENTATION_ROTATE_180) {
-                    angle = 180;
-                } else if (orientation == ExifInterface.ORIENTATION_ROTATE_270) {
-                    angle = 270;
-                }
-                Matrix mat = new Matrix();
-                mat.postRotate(angle);
-                Log.e("angle from camera 1 --->", "" + angle);
-
-                Bitmap resize;
-                resize = Bitmap.createBitmap(bitmap1, 0, 0, bitmap1.getWidth(), bitmap1.getHeight(), mat, true);
-                if (resize != null) {
-
-                    try {
-                        authManager.setOrginalBitmap(resize);
-                        Intent intent = new Intent(EditMyProfileView.this, CropView.class);
-                        intent.putExtra("from", "fromcamera");
-                        intent.putExtra("uri", mImageCaptureUri.toString());
-                        startActivityForResult(intent, Constants.CROP_PICTURE);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        Log.e("exception--->", "exception--->");
+                    if (orientation == ExifInterface.ORIENTATION_ROTATE_90) {
+                        angle = 90;
+                    } else if (orientation == ExifInterface.ORIENTATION_ROTATE_180) {
+                        angle = 180;
+                    } else if (orientation == ExifInterface.ORIENTATION_ROTATE_270) {
+                        angle = 270;
                     }
-                }
-                userImageUri = mImageCaptureUri;
+                    Matrix mat = new Matrix();
+                    mat.postRotate(angle);
+                    Log.e("angle from camera 1 --->", "" + angle);
+
+                    Bitmap resize;
+                    resize = Bitmap.createBitmap(bitmap1, 0, 0, bitmap1.getWidth(), bitmap1.getHeight(), mat, true);
+                    if (resize != null) {
+
+                        try {
+                            authManager.setOrginalBitmap(resize);
+                            Intent intent = new Intent(EditMyProfileView.this, CropView.class);
+                            intent.putExtra("from", "fromcamera");
+                            intent.putExtra("uri", mImageCaptureUri.toString());
+                            startActivityForResult(intent, Constants.CROP_PICTURE);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Log.e("exception--->", "exception--->");
+                        }
+                    }
+                    userImageUri = mImageCaptureUri;
                         /*authManager.setUserImageUri(userImageUri);*/
-                // authManager.setUserPic(imageBitmap.toString());
-                mImageCaptureUri = null;
-                authManager.setMenuUserInfoFlag(true);
+                    // authManager.setUserPic(imageBitmap.toString());
+                    mImageCaptureUri = null;
+                    authManager.setMenuUserInfoFlag(true);
 
-            } catch (Exception e) {
-                e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
-
 
         }
         if (Constants.SELECT_PICTURE == requestCode && resultCode == RESULT_OK) {
@@ -519,6 +518,9 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
             authManager.setOrginalBitmap(null);
             authManager.setmResizeBitmap(null);
             finish();
+            overridePendingTransition(0, R.anim.top_out);//akshit code for animation
+
+
         } else if (getMsg.equalsIgnoreCase("UpdateProfile False")) {
             Utils.dismissBarDialog();
             Utils.fromSignalDialog(this, AlertMessage.eMailAlreadyExist);

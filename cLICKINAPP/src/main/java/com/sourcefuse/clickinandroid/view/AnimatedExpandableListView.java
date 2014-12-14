@@ -117,7 +117,7 @@ public class AnimatedExpandableListView extends ExpandableListView {
         super.setAdapter(adapter);
 
         // Make sure that the adapter extends AnimatedExpandableListAdapter
-        if(adapter instanceof AnimatedExpandableListAdapter) {
+        if (adapter instanceof AnimatedExpandableListAdapter) {
             this.adapter = (AnimatedExpandableListAdapter) adapter;
             this.adapter.setParent(this);
         } else {
@@ -127,9 +127,10 @@ public class AnimatedExpandableListView extends ExpandableListView {
 
     /**
      * Expands the given group with an animation.
+     *
      * @param groupPos The position of the group to expand
-     * @return  Returns true if the group was expanded. False if the group was
-     *          already expanded.
+     * @return Returns true if the group was expanded. False if the group was
+     * already expanded.
      */
     public boolean expandGroupWithAnimation(int groupPos) {
         int groupFlatPos = getFlatListPosition(getPackedPositionForGroup(groupPos));
@@ -161,9 +162,10 @@ public class AnimatedExpandableListView extends ExpandableListView {
 
     /**
      * Collapses the given group with an animation.
+     *
      * @param groupPos The position of the group to collapse
-     * @return  Returns true if the group was collapsed. False if the group was
-     *          already collapsed.
+     * @return Returns true if the group was collapsed. False if the group was
+     * already collapsed.
      */
     public boolean collapseGroupWithAnimation(int groupPos) {
         int groupFlatPos = getFlatListPosition(getPackedPositionForGroup(groupPos));
@@ -233,12 +235,11 @@ public class AnimatedExpandableListView extends ExpandableListView {
      * adapters used with AnimatedExpandableListView MUST extend this class.
      */
     public static abstract class AnimatedExpandableListAdapter extends BaseExpandableListAdapter {
-        private SparseArray<GroupInfo> groupInfo = new SparseArray<GroupInfo>();
-        private AnimatedExpandableListView parent;
-
         private static final int STATE_IDLE = 0;
         private static final int STATE_EXPANDING = 1;
         private static final int STATE_COLLAPSING = 2;
+        private SparseArray<GroupInfo> groupInfo = new SparseArray<GroupInfo>();
+        private AnimatedExpandableListView parent;
 
         private void setParent(AnimatedExpandableListView parent) {
             this.parent = parent;
@@ -253,6 +254,7 @@ public class AnimatedExpandableListView extends ExpandableListView {
         }
 
         public abstract View getRealChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent);
+
         public abstract int getRealChildrenCount(int groupPosition);
 
         private GroupInfo getGroupInfo(int groupPosition) {
@@ -407,10 +409,12 @@ public class AnimatedExpandableListView extends ExpandableListView {
                         }
 
                         @Override
-                        public void onAnimationRepeat(Animation animation) {}
+                        public void onAnimationRepeat(Animation animation) {
+                        }
 
                         @Override
-                        public void onAnimationStart(Animation animation) {}
+                        public void onAnimationStart(Animation animation) {
+                        }
 
                     });
                     dummyView.startAnimation(ani);
@@ -434,10 +438,12 @@ public class AnimatedExpandableListView extends ExpandableListView {
                         }
 
                         @Override
-                        public void onAnimationRepeat(Animation animation) {}
+                        public void onAnimationRepeat(Animation animation) {
+                        }
 
                         @Override
-                        public void onAnimationStart(Animation animation) {}
+                        public void onAnimationStart(Animation animation) {
+                        }
 
                     });
                     dummyView.startAnimation(ani);
@@ -482,6 +488,7 @@ public class AnimatedExpandableListView extends ExpandableListView {
 
         /**
          * Add a view for the DummyView to draw.
+         *
          * @param childView View to draw
          */
         public void addFakeView(View childView) {
@@ -493,7 +500,7 @@ public class AnimatedExpandableListView extends ExpandableListView {
         protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
             super.onLayout(changed, left, top, right, bottom);
             final int len = views.size();
-            for(int i = 0; i < len; i++) {
+            for (int i = 0; i < len; i++) {
                 View v = views.get(i);
                 v.layout(left, top, right, bottom);
             }
@@ -510,7 +517,7 @@ public class AnimatedExpandableListView extends ExpandableListView {
             divider.setBounds(0, 0, dividerWidth, dividerHeight);
 
             final int len = views.size();
-            for(int i = 0; i < len; i++) {
+            for (int i = 0; i < len; i++) {
                 View v = views.get(i);
                 v.draw(canvas);
                 canvas.translate(0, v.getMeasuredHeight());

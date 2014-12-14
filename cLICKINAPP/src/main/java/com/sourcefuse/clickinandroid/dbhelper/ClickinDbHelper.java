@@ -27,6 +27,7 @@ public class ClickinDbHelper extends SQLiteOpenHelper implements ChatRecordI {
     public static final String chatType = "chatType";
     public static final String content_url = "content_url";
     public static final String imageRatio = "imageRatio";
+    //Card parameter start
     public static final String card_owner = "card_owner";
     public static final String card_content = "card_content";
     public static final String is_CustomCard = "is_CustomCard";
@@ -37,6 +38,7 @@ public class ClickinDbHelper extends SQLiteOpenHelper implements ChatRecordI {
     public static final String card_id = "card_id";
     public static final String card_Played_Countered = "card_Played_Countered";
     public static final String card_originator = "card_originator";
+    // Card parameter end
     public static final String video_thumb = "video_thumb";
     public static final String chatId = "chatId";
     public static final String sentOn = "sentOn";
@@ -62,6 +64,7 @@ public class ClickinDbHelper extends SQLiteOpenHelper implements ChatRecordI {
             + card_Accepted_Rejected + " text, "
             + card_heading + " text, "
             + card_url + " text, "
+            + card_id + " text, "
             + card_Played_Countered + " text, "
             + card_originator + " text, "
             + video_thumb + " text, "
@@ -131,22 +134,24 @@ public class ClickinDbHelper extends SQLiteOpenHelper implements ChatRecordI {
             contentValues.put(chatType, chat.chatType);
             contentValues.put(content_url, chat.content_url);
             contentValues.put(imageRatio, chat.imageRatio);
+            // card parameter start
             contentValues.put(card_owner, chat.card_owner);
             contentValues.put(card_content, chat.card_content);
-            contentValues.put(is_CustomCard, chat.is_CustomCard);
-
+            contentValues.put(is_CustomCard, Boolean.toString(chat.is_CustomCard));
             contentValues.put(card_DB_ID, chat.card_DB_ID);
             contentValues.put(card_Accepted_Rejected, chat.card_Accepted_Rejected);
             contentValues.put(card_heading, chat.card_heading);
             contentValues.put(card_url, chat.card_url);
+            contentValues.put(card_id, chat.card_id);
             contentValues.put(card_Played_Countered, chat.card_Played_Countered);
             contentValues.put(card_originator, chat.card_originator);
+            // card parameter end
             contentValues.put(video_thumb, chat.video_thumb);
             contentValues.put(chatId, chat.chatId);
             contentValues.put(sentOn, chat.sentOn);
             contentValues.put(location_coordinates, chat.location_coordinates);
             contentValues.put(sharedMessage, chat.sharedMessage);
-            contentValues.put(isDelivered, chat.is_CustomCard);
+            contentValues.put(isDelivered, chat.isDelivered);
 
             contentValues.put(relationshipId, chat.relationshipId);
             contentValues.put(userId, chat.userId);
@@ -180,7 +185,7 @@ public class ClickinDbHelper extends SQLiteOpenHelper implements ChatRecordI {
                         new String[]{String.valueOf(rId)}, // d. selections args
                         null, // e. group by
                         null, // f. having
-                        null, // g. order by
+                        sentOn, // g. order by
                         null); // h. limit
         int si = chatCursor.getCount();
 
@@ -194,17 +199,18 @@ public class ClickinDbHelper extends SQLiteOpenHelper implements ChatRecordI {
                     chat.chatType = Integer.parseInt(chatCursor.getString(chatCursor.getColumnIndex(chatType)));
                     chat.content_url = chatCursor.getString(chatCursor.getColumnIndex(content_url));
                     chat.imageRatio = chatCursor.getString(chatCursor.getColumnIndex(imageRatio));
+                    // Card Start
                     chat.card_owner = (chatCursor.getString(chatCursor.getColumnIndex(card_owner)));
                     chat.card_content = (chatCursor.getString(chatCursor.getColumnIndex(card_content)));
                     chat.is_CustomCard = Boolean.parseBoolean((chatCursor.getString(chatCursor.getColumnIndex(is_CustomCard))));
-
-
                     chat.card_DB_ID = (chatCursor.getString(chatCursor.getColumnIndex(card_DB_ID)));
                     chat.card_Accepted_Rejected = (chatCursor.getString(chatCursor.getColumnIndex(card_Accepted_Rejected)));
                     chat.card_heading = (chatCursor.getString(chatCursor.getColumnIndex(card_heading)));
                     chat.card_url = (chatCursor.getString(chatCursor.getColumnIndex(card_url)));
+                    chat.card_id = (chatCursor.getString(chatCursor.getColumnIndex(card_id)));
                     chat.card_Played_Countered = (chatCursor.getString(chatCursor.getColumnIndex(card_Played_Countered)));
                     chat.card_originator = (chatCursor.getString(chatCursor.getColumnIndex(card_originator)));
+                    // Card End
                     chat.video_thumb = (chatCursor.getString(chatCursor.getColumnIndex(video_thumb)));
                     chat.chatId = (chatCursor.getString(chatCursor.getColumnIndex(chatId)));
                     chat.sentOn = (chatCursor.getString(chatCursor.getColumnIndex(sentOn)));

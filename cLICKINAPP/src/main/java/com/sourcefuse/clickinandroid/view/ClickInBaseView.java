@@ -7,10 +7,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -23,15 +20,14 @@ import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.sourcefuse.clickinandroid.model.AuthManager;
@@ -46,12 +42,10 @@ import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.adapter.ClickInWithAdapter;
 import com.sourcefuse.clickinandroid.view.adapter.NotificationAdapter;
 import com.sourcefuse.clickinandroid.view.adapter.SearchAdapter;
-
 import com.sourcefuse.clickinandroid.view.adapter.SimpleSectionedListAdapter;
 import com.sourcefuse.clickinapp.R;
 import com.squareup.picasso.Picasso;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,6 +55,16 @@ public class
         ClickInBaseView extends Activity implements TextWatcher, SlidingMenu.OnOpenListener, SlidingMenu.OnCloseListener {
 
 
+    public ListView clickWithlistView, searchList;
+    public ClickInWithAdapter clickInadapter;
+    public Boolean stopSearch = true;
+    public EditText edt_search;
+    //Right Menu.....
+    public ListView notificationList;
+    public NotificationAdapter notificationAdapter;
+    public NewsFeedManager newsFeedManager;
+    public static SlidingMenu slidemenu;
+    SimpleSectionedListAdapter simpleSectionedGridAdapter;
     /// Left Menu
     private TextView userName;
     private ImageView userPic, hideSearchlist;
@@ -70,24 +74,13 @@ public class
     private Typeface typeface;
     private TextView searchInviteView;
     private LinearLayout theFeed, inviteF, findFriend, setting;
-    public ListView clickWithlistView, searchList;
-    public ClickInWithAdapter clickInadapter;
     private String quickBlockId, partnerPic, partnerName, partnerId, myClicks, userClicks, partnerPh;
-    public Boolean stopSearch = true;
-    public EditText edt_search;
     private SearchAdapter searchListadapter;
     private RelativeLayout imageMenuRefresh;
     private int relationListIndex;
-
-    //Right Menu.....
-    public ListView notificationList;
     private ImageView backArrowRightSide;
-    public NotificationAdapter notificationAdapter;
-    public NewsFeedManager newsFeedManager;
     private Bitmap imageBitmap = null;
-    SlidingMenu slidemenu;
     private ChatManager chatManager;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,7 +101,7 @@ public class
         Integer[] mHeaderPositions = {0};
 
         ArrayList<SimpleSectionedListAdapter.Section> sections = new ArrayList<SimpleSectionedListAdapter.Section>();
-        SimpleSectionedListAdapter simpleSectionedGridAdapter;
+
 
         boolean hidevalue = (relationManager.acceptedList.size() > 0) ? true : false;
 
@@ -136,34 +129,27 @@ public class
 
         chatManager = ModelManager.getInstance().getChatManager();
         chatManager.setrelationshipId(rid);
-        startActivity(intent);
-        this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
-        slidemenu.showContent();
 
 
-     /*   ActivityManager am = (ActivityManager) this.getSystemService(ACTIVITY_SERVICE);
+        ActivityManager am = (ActivityManager) this.getSystemService(ACTIVITY_SERVICE);
         List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
         ComponentName componentInfo = taskInfo.get(0).topActivity;
         String className = componentInfo.getClassName();
-//monika- if we open the same partner to chat to which already chatting, then no need to start activtiy again
-        if (ChatRecordView.rId.equalsIgnoreCase(rid)) {
-            if (className.equalsIgnoreCase("com.sourcefuse.clickinandroid.view.ChatRecordView")) {
-           /* for animation prafull */
-           /*     this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
-                slidemenu.showContent();
-            }
-        }else {
+        if (className.equalsIgnoreCase("com.sourcefuse.clickinandroid.view.ChatRecordView")) {
             startActivity(intent);
-            this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
-            slidemenu.showContent();*/
-
 
                   /* for animation prafull */
 
+            this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+            slidemenu.showContent();
+            //  slidemenu.showContent(true);
+        } else {
+            startActivity(intent);
+                  /* for animation prafull */
 
-      //  }
-
-
+            this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+            // slidemenu.showContent(true);
+        }
 
 
     }
@@ -195,7 +181,23 @@ public class
 
         slidemenu.setOnCloseListener(ClickInBaseView.this);
         slidemenu.setOnOpenListener(ClickInBaseView.this);
-        
+        slidemenu.setOnOpenedListener(new SlidingMenu.OnOpenedListener() {
+            @Override
+            public void onOpened() {
+
+                if (slidemenu.isMenuShowing()) {
+
+
+                }
+                if (slidemenu.isSecondaryMenuShowing()) {
+                    if (authManager != null) {
+                        authManager.setNotificationCounter(0);
+                        EventBus.getDefault().post("update Counter");
+                    }
+                }
+
+            }
+        });
         /*
          * Right Menu
          */
@@ -316,63 +318,33 @@ public class
 
         userName.setText(authManager.getUserName());
         userPic.setScaleType(ScaleType.FIT_XY);
-        String dtails = "";
-        try {
-            try {
 
-                if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl")) {
-                    dtails = "Female";
-                } else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("guy")) {
-                    dtails = "Male";
-                } else {
-                    dtails = " ";
-                }
-            } catch (Exception e) {
-            }
+
+        //prafull code to set image bitmap
+        try {
+            Log.e("in try---->", "in try--->");
+            Bitmap imagebitmap1 = authManager.getUserbitmap();
+            if (imagebitmap1 != null)
+                com.sourcefuse.clickinandroid.utils.Log.e("user bit map not null", "user bit map not null");
+            boolean userpic = Utils.isEmptyString(authManager.getUserPic());
+            Log.e("user pic url ---->", "" + authManager.getUserPic());
+            Log.e("user pc --->", "" + authManager.getUserPic());
+            if (imagebitmap1 != null)
+                userPic.setImageBitmap(imagebitmap1);
+            else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl") && !userpic)
+                Picasso.with(ClickInBaseView.this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.female_user).into(userPic);
+            else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("guy") && !userpic)
+                Picasso.with(ClickInBaseView.this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.male_user).into(userPic);
+            else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl"))
+                userPic.setImageResource(R.drawable.female_user);
+            else
+                userPic.setImageResource(R.drawable.male_user);
 
         } catch (Exception e) {
+            com.sourcefuse.clickinandroid.utils.Log.e("on exception", "on exception");
+            userPic.setImageResource(R.drawable.male_user);
         }
 
-        try {
-
-            imageBitmap = authManager.getUserbitmap();
-            if (imageBitmap != null)
-                userPic.setImageBitmap(imageBitmap);
-            else {
-                try {
-                    if (dtails.equalsIgnoreCase("Male")) {
-                        Picasso.with(this)
-                                .load(authManager.getUserPic())
-                                .skipMemoryCache()
-                                .error(R.drawable.male_user)
-                                .into(userPic);
-                    } else if (dtails.equalsIgnoreCase("Female")) {
-                        Picasso.with(this)
-                                .load(authManager.getUserPic())
-                                .skipMemoryCache()
-                                .error(R.drawable.female_user)
-                                .into(userPic);
-                    } else if (dtails.equalsIgnoreCase(" ")) {
-                        Picasso.with(this)
-                                .load(authManager.getUserPic())
-                                .skipMemoryCache()
-                                .into(userPic);
-                    }
-
-                } catch (Exception e) {
-                    if (dtails.equalsIgnoreCase("Male"))
-                        userPic.setImageResource(R.drawable.male_user);
-                    else if (dtails.equalsIgnoreCase("Female"))
-                        userPic.setImageResource(R.drawable.female_user);
-                    else
-                        userPic.setImageResource(R.drawable.male_user);
-                }
-            }
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         edt_search.addTextChangedListener(this);
 
         clickWithlistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -385,14 +357,15 @@ public class
                         partnerPic = relationManager.acceptedList.get(position - 2).getPartnerPic();
                         quickBlockId = relationManager.acceptedList.get(position - 2).getPartnerQBId();
                         partnerId = relationManager.acceptedList.get(position - 2).getPartner_id();
-                        myClicks = relationManager.acceptedList.get(position - 2).getClicks();
-                        userClicks = relationManager.acceptedList.get(position - 2).getUserClicks();
+                        userClicks = relationManager.acceptedList.get(position - 2).getClicks();
+                        myClicks = relationManager.acceptedList.get(position - 2).getUserClicks();
                         partnerPh = relationManager.acceptedList.get(position - 2).getPhoneNo();
                         Log.e("", "position--In..> " + rId);
                         relationListIndex = (position - 2);
                         switchView(rId, relationListIndex);
 
                     } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 }
             }
@@ -458,6 +431,7 @@ public class
                     e.printStackTrace();
                 }
                 Intent intent = new Intent(ClickInBaseView.this, SpreadWordView.class);
+                intent.putExtra("fromProfile", true);
                 startActivity(intent);
 
                         /* code for animation prafull*/
@@ -588,8 +562,11 @@ public class
                         /* code for animation prafull*/
 
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
-                        /*hideSearchlist.setVisibility(View.GONE);
-                        searchList.setVisibility(View.GONE);*/
+                        hideSearchlist.setVisibility(View.GONE);
+                        searchList.setVisibility(View.GONE);
+                        findViewById(R.id.btn_clear).setVisibility(View.GONE);
+                        findViewById(R.id.btn_progressBar).setVisibility(View.GONE);
+                        ((EditText) findViewById(R.id.edt_search)).setText("");
                     } catch (Exception e) {
                     }
                 }
@@ -701,7 +678,8 @@ public class
         relationManager = ModelManager.getInstance().getRelationManager();
         setLeftMenuList();
         notificationMngr = ModelManager.getInstance().getNotificationManagerManager();
-        notificationMngr.getNotification("", authManager.getPhoneNo(), authManager.getUsrToken());
+        Log.e("notifacation---->", "notification--->");
+        notificationMngr.getNotification(getApplicationContext(), "", authManager.getPhoneNo(), authManager.getUsrToken());
     }
 
     public void setMenuListData() {
@@ -712,21 +690,27 @@ public class
 
         /* to set downloaded image from server*/
         try {
-
-            if (authManager.getUserbitmap() != null)
-                userPic.setImageBitmap(authManager.getUserbitmap());
-            else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("guy")) {
-                        Picasso.with(ClickInBaseView.this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.male_user).into(userPic);
-            } else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl")) {
-                        Picasso.with(ClickInBaseView.this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.female_user).into(userPic);
-
-
-            }
-        } catch (Exception e) {
-            if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl"))
+            Log.e("in try---->", "in try--->");
+            Bitmap imagebitmap1 = authManager.getUserbitmap();
+            if (imagebitmap1 != null)
+                com.sourcefuse.clickinandroid.utils.Log.e("user bit map not null", "user bit map not null");
+            boolean userpic = Utils.isEmptyString(authManager.getUserPic());
+            Log.e("user pic url ---->", "" + authManager.getUserPic());
+            Log.e("user pc --->", "" + authManager.getUserPic());
+            if (imagebitmap1 != null)
+                userPic.setImageBitmap(imagebitmap1);
+            else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl") && !userpic)
+                Picasso.with(ClickInBaseView.this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.female_user).into(userPic);
+            else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("guy") && !userpic)
+                Picasso.with(ClickInBaseView.this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.male_user).into(userPic);
+            else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl"))
                 userPic.setImageResource(R.drawable.female_user);
             else
                 userPic.setImageResource(R.drawable.male_user);
+
+        } catch (Exception e) {
+            com.sourcefuse.clickinandroid.utils.Log.e("on exception", "on exception");
+            userPic.setImageResource(R.drawable.male_user);
         }
 
         setLeftMenuList();
@@ -734,9 +718,10 @@ public class
 
 
     public void onEventMainThread(String message) {
-        Log.d("onEventMainThread", "onEventMainThread->");
+        Log.e("onEventMainThread", "onEventMainThread->");
         authManager = ModelManager.getInstance().getAuthorizationManager();
         if (message.equalsIgnoreCase("SearchResult True")) {
+            Log.e("on true---->", "on true");
             stopSearch = true;
             Utils.dismissBarDialog();
             slidemenu.findViewById(R.id.btn_clear).setVisibility(View.VISIBLE);
@@ -785,11 +770,14 @@ public class
                   /* code for animation prafull*/
 
             this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
-        } else if (message.equalsIgnoreCase("NewsFeed False")) {
+        }  //akshit code
+        else if (message.equalsIgnoreCase("NewsFeed False")) {
             Log.d("2", "message->" + message);
             stopSearch = true;
             Utils.dismissBarDialog();
-            newsFeedManager.userFeed.clear();
+            newsFeedManager = ModelManager.getInstance().getNewsFeedManager();
+            if (newsFeedManager.userFeed != null)
+                newsFeedManager.userFeed.clear();
 
             try {
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -798,16 +786,18 @@ public class
                 e.printStackTrace();
             }
 
-//            Utils.showAlert(ClickInBaseView.this, authManager.getMessage());
-            Intent intent = new Intent(ClickInBaseView.this, FeedView.class);
+            //ends
 
-            startActivity(intent);
-            Log.d("2", "message->" + message);
         } else if (message.equalsIgnoreCase("NewsFeed Error")) {
             stopSearch = true;
             Utils.dismissBarDialog();
             Utils.fromSignalDialog(ClickInBaseView.this, AlertMessage.connectionError);
             Log.d("3", "message->" + message);
+        } else if (message.equalsIgnoreCase("Notification true")) {
+            setNotificationList();
+        } else if (message.equalsIgnoreCase("Update DB Message")) {
+            //temp code
+            Toast.makeText(this, "Message received for other partner", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -824,61 +814,30 @@ public class
         Log.e("y", "if onOpen");
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
         authManager = ModelManager.getInstance().getAuthorizationManager();
-        String dtails = "";
         try {
-            try {
+            userName.setText(authManager.getUserName());//akshit code
 
-                if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().matches("girl")) {
-                    dtails = "Female";
-                } else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().matches("guy")) {
-                    dtails = "Male";
-                }
-            } catch (Exception e) {
-            }
+            Log.e("in try---->", "in try--->");
+            Bitmap imagebitmap1 = authManager.getUserbitmap();
+            if (imagebitmap1 != null)
+                com.sourcefuse.clickinandroid.utils.Log.e("user bit map not null", "user bit map not null");
+            boolean userpic = Utils.isEmptyString(authManager.getUserPic());
+            Log.e("user pic url ---->", "" + authManager.getUserPic());
+            Log.e("user pc --->", "" + authManager.getUserPic());
+            if (imagebitmap1 != null)
+                userPic.setImageBitmap(imagebitmap1);
+            else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl") && !userpic)
+                Picasso.with(ClickInBaseView.this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.female_user).into(userPic);
+            else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("guy") && !userpic)
+                Picasso.with(ClickInBaseView.this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.male_user).into(userPic);
+            else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl"))
+                userPic.setImageResource(R.drawable.female_user);
+            else
+                userPic.setImageResource(R.drawable.male_user);
 
         } catch (Exception e) {
-        }
-
-        if (authManager.isMenuUserInfoFlag()) {
-            Log.e("Inside if", "THis time Control is in If <><><><><><><><><");
-            userName.setText(authManager.getUserName());
-            userPic.setScaleType(ScaleType.FIT_XY);
-
-            try {
-
-
-                imageBitmap = authManager.getUserbitmap();
-                if (imageBitmap != null)
-                    userPic.setImageBitmap(imageBitmap);
-                else if (dtails.equalsIgnoreCase("Male"))
-                    Picasso.with(this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.male_user).into(userPic);
-                else if (dtails.equalsIgnoreCase("Female"))
-                    Picasso.with(this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.female_user).into(userPic);
-            } catch (Exception e) {
-                if (dtails.equalsIgnoreCase("Male"))
-                    Picasso.with(this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.male_user).into(userPic);
-                else if (dtails.equalsIgnoreCase("Female"))
-                    Picasso.with(this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.female_user).into(userPic);
-
-            }
-            authManager.setMenuUserInfoFlag(false);
-        } else {
-            Log.e("Inside Else ", "THis time control is in Else <><><><><><><><><><>");
-            try {
-                imageBitmap = authManager.getUserbitmap();
-                if (imageBitmap != null)
-                    userPic.setImageBitmap(imageBitmap);
-                else if (dtails.equalsIgnoreCase("Male"))
-                    Picasso.with(this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.male_user).into(userPic);
-                else if (dtails.equalsIgnoreCase("Female"))
-                    Picasso.with(this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.female_user).into(userPic);
-
-            } catch (Exception e) {
-                if (dtails.equalsIgnoreCase("Male"))
-                    Picasso.with(this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.male_user).into(userPic);
-                else if (dtails.equalsIgnoreCase("Female"))
-                    Picasso.with(this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.female_user).into(userPic);
-            }
+            com.sourcefuse.clickinandroid.utils.Log.e("on exception", "on exception");
+            userPic.setImageResource(R.drawable.male_user);
         }
         try {
             edt_search.setText("");
@@ -904,8 +863,6 @@ public class
         Log.e("y", "if onClose");
 
     }
-
-
 
 
 }

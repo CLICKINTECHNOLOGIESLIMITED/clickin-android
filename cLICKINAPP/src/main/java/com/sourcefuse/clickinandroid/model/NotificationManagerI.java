@@ -1,5 +1,7 @@
 package com.sourcefuse.clickinandroid.model;
 
+import android.content.Context;
+
 import com.sourcefuse.clickinandroid.model.bean.NotificationBean;
 
 import java.util.ArrayList;
@@ -9,6 +11,7 @@ import java.util.ArrayList;
  */
 public interface NotificationManagerI {
 
-    public abstract void getNotification(String lastNotificationId,String phone,String usertoken);
     public ArrayList<NotificationBean> notificationData = new ArrayList<NotificationBean>();
+
+    public abstract void getNotification(Context context, String lastNotificationId, String phone, String usertoken);
 }

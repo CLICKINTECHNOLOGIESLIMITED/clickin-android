@@ -19,48 +19,46 @@
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold"
-            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
-            />
+            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
 
         <com.sourcefuse.clickinandroid.utils.ClickInTextView
-        android:id="@+id/alert_msgII"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/alert_msgI"
-        android:layout_centerHorizontal="true"
-        android:layout_centerInParent="true"
-        android:gravity="center_horizontal"
-        android:text="clickwith"
-        android:textColor="@color/white"
+            android:id="@+id/alert_msgII"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/alert_msgI"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            android:gravity="center_horizontal"
+            android:text="clickwith"
+            android:textColor="@color/white"
 
-        android:textSize="14sp" />
+            android:textSize="14sp" />
 
         <Button
             android:id="@+id/coolio"
             android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/alert_msgI"
-            android:textSize="20dp"
-            android:text="Yes Please"
-            android:textStyle="bold"
-            android:textColor="@color/white"
             android:layout_marginTop="45dp"
-            android:background="@drawable/blue_btn" />
+            android:background="@drawable/blue_btn"
+            android:text="Yes Please"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/coolio1"
             android:layout_width="130dp"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
             android:layout_below="@+id/alert_msgI"
             android:layout_centerHorizontal="true"
-            android:textSize="20dp"
-            android:text="No Thanks"
-            android:textStyle="bold"
-            android:textColor="@color/white"
             android:layout_marginTop="45dp"
-            android:layout_alignParentRight="true"
             android:background="@drawable/pink_btn"
-            />
+            android:text="No Thanks"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:textStyle="bold" />
     </RelativeLayout>
 
 </RelativeLayout>

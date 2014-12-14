@@ -28,7 +28,7 @@ public class ClickInRadioButton extends RadioButton {
     }
 
     private void setCustomFont(Context ctx, AttributeSet attrs) {
-        TypedArray a = ctx.obtainStyledAttributes(attrs,  R.styleable.ClickInTextView);
+        TypedArray a = ctx.obtainStyledAttributes(attrs, R.styleable.ClickInTextView);
         String customFont = a.getString(R.styleable.ClickInTextView_customFont);
         setCustomFont(ctx, customFont);
     }

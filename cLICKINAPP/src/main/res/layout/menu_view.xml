@@ -2,15 +2,14 @@
     android:id="@+id/relative_layout_root_menuview"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/search_text_color"
-    >
+    android:orientation="vertical">
 
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:background="@color/search_text_color"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/search_text_color">
 
         <ImageView
             android:id="@+id/iv_hide_searchlist"
@@ -44,8 +43,8 @@
                 android:ellipsize="end"
                 android:hint="SEARCH CLICKIN'"
                 android:imeOptions="actionSearch"
-                android:paddingLeft="5dp"
                 android:inputType="textCapSentences"
+                android:paddingLeft="5dp"
                 android:singleLine="true"
                 android:textColor="@color/signup_contry_code"
                 android:textColorHint="@color/signup_contry_code"
@@ -56,8 +55,8 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_gravity="center_vertical"
-                android:visibility="gone"
-                android:background="@drawable/search_cross" />
+                android:background="@drawable/search_cross"
+                android:visibility="gone" />
 
             <ProgressBar
                 android:id="@+id/btn_progressBar"
@@ -91,7 +90,7 @@
         android:id="@+id/click_with_list_menu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/search_text_color"
+        android:background="@drawable/gradient_"
         android:choiceMode="singleChoice"
         android:divider="@null"
         android:fadingEdge="none"

@@ -1,5 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:geekui="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/linear_layout_root_share_screen"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
     android:background="@color/devider"
@@ -15,19 +16,17 @@
             android:layout_height="45dp"
             android:background="@color/appclr">
 
-            <ImageView
-                android:id="@+id/iv_back_noti"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="6dp"
-                android:paddingBottom="5dp"
-                android:paddingRight="30dp"
-                android:paddingTop="5dp"
-                android:src="@drawable/back_arrow" />
-
-
+            <!--<ImageView-->
+                <!--android:id="@+id/iv_back_noti"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignParentLeft="true"-->
+                <!--android:layout_marginLeft="10dp"-->
+                <!--android:layout_marginTop="6dp"-->
+                <!--android:paddingBottom="5dp"-->
+                <!--android:paddingRight="30dp"-->
+                <!--android:paddingTop="5dp"-->
+                <!--android:src="@drawable/back_arrow" />-->
 
 
         </RelativeLayout>
@@ -55,21 +54,24 @@
     </RelativeLayout>
 
     <ScrollView
+        android:id="@+id/scroll_view_share"
         android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
         android:background="@drawable/r_owner_profile_bg"
-        android:layout_height="wrap_content">
+        android:layout_marginTop="10dp">
 
         <LinearLayout
+            android:id="@+id/linear_layout_share"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="fill_parent"
-                android:orientation="vertical"
-                android:paddingBottom="10dp"
+                android:layout_height="wrap_content"
                 android:background="@color/devider"
-                android:layout_height="wrap_content">
+                android:orientation="vertical"
+                android:paddingBottom="10dp">
 
                 <LinearLayout
                     android:layout_width="fill_parent"
@@ -82,19 +84,81 @@
                         android:id="@+id/shr_user_image"
                         android:layout_width="150dp"
                         android:layout_height="150dp"
-                        android:background="@drawable/female_crt" />
+                        android:visibility="gone"
+                        android:scaleType="fitXY"
+                         />
 
                     <EditText
                         android:id="@+id/shr_caption"
                         android:layout_width="fill_parent"
                         android:layout_height="150dp"
                         android:background="@color/white"
+                        android:singleLine="false"
+                        android:maxLength="140"
+                        android:lines="5"
+                        android:paddingRight="4dp"
                         android:gravity="top"
+                        android:inputType="textCapWords|textMultiLine"
                         android:hint="@string/share_hint"
                         android:paddingLeft="10dp"
-                        android:paddingTop="15dp" />
+                        android:paddingTop="15dp"
+                        android:cursorVisible="false"
+                        android:clickable="true"/>
 
                 </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/share_clicks_area"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="1dp"
+                    android:padding="15dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/share_clicks_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        android:visibility="gone"
+                        android:textStyle="bold"
+                       />
+
+                    <ImageView
+                        android:id="@+id/share_clicks_heart"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:visibility="gone"
+                        android:src="@drawable/c_clicks_heart"
+                        android:layout_marginLeft="5dp"
+                        />
+
+                    <TextView
+                        android:id="@+id/share_chat_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:visibility="gone"
+                        android:singleLine="false"
+                        android:layout_marginLeft="5dp"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        />
+
+                </LinearLayout>
+
+
+
 
                 <LinearLayout
                     android:layout_width="fill_parent"
@@ -104,8 +168,8 @@
                     android:background="@color/profile_name_b"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:visibility="gone"
-                    android:paddingLeft="20dp">
+                    android:paddingLeft="20dp"
+                    android:visibility="gone">
 
                     <com.sourcefuse.clickinandroid.utils.ClickInTextView
                         android:id="@+id/shr_point"
@@ -153,7 +217,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
                     android:layout_marginTop="10dp"
-                    android:background="@drawable/s_checkout_active" />
+                    android:background="@drawable/facebook_share_background" />
 
                 <!--<ImageView
                     android:id="@+id/shr_twitter"
@@ -177,7 +241,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginTop="15dp"
-                android:background="@drawable/s_checkout_active" />
+                android:background="@drawable/share_blue_btn" />
 
         </LinearLayout>
     </ScrollView>

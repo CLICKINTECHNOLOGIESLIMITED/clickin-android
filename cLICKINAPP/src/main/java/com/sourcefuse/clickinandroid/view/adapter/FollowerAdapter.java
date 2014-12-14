@@ -1,4 +1,3 @@
-
 package com.sourcefuse.clickinandroid.view.adapter;
 
 import android.app.Activity;
@@ -37,14 +36,11 @@ public class FollowerAdapter extends ArrayAdapter<FollowerFollowingBean> {
     private static final String TAG = FollowerAdapter.class.getSimpleName();
     Context context;
     int layoutResourceId;
-
+    RecordHolder vholder;
+    List<FollowerFollowingBean> item;
     private AuthManager authManager;
     private RelationManager relationManager;
     private ProfileManager profileManager;
-
-    RecordHolder vholder;
-
-    List<FollowerFollowingBean> item;
 
     public FollowerAdapter(Context context, int layoutResourceId,
                            List<FollowerFollowingBean> item1) {
@@ -64,7 +60,6 @@ public class FollowerAdapter extends ArrayAdapter<FollowerFollowingBean> {
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
             row = inflater.inflate(layoutResourceId, parent, false);
             holder = new RecordHolder();
-
 
 
             holder.usr_name = (TextView) row.findViewById(R.id.tv_clickers_name);
@@ -118,7 +113,6 @@ public class FollowerAdapter extends ArrayAdapter<FollowerFollowingBean> {
         } else {
             holder.hfollowers.setVisibility(View.GONE);
         }
-
 
 
         if (!Utils.isEmptyString(item.get(position).getAccepted()) && item.get(position).getAccepted().equalsIgnoreCase("true") && item.get(position).getFollowingAccepted().equalsIgnoreCase("true") && item.get(position).getIsFollowing().equalsIgnoreCase("true")) {
@@ -181,20 +175,20 @@ public class FollowerAdapter extends ArrayAdapter<FollowerFollowingBean> {
 /* condition for following and open unfollow dialog */
                 if (!Utils.isEmptyString(item.get(position).getAccepted()) && item.get(position).getAccepted().equalsIgnoreCase("true") && item.get(position).getFollowingAccepted().equalsIgnoreCase("true") && item.get(position).getIsFollowing().equalsIgnoreCase("true")) {
 
-                    Log.e("un follow----->","un follow----->");
+                    Log.e("un follow----->", "un follow----->");
 
                     unfallowDialog(position);
 
                 } else if (!Utils.isEmptyString(item.get(position).getAccepted()) && item.get(position).getAccepted().equalsIgnoreCase("true")
                         && item.get(position).getFollowingAccepted().equalsIgnoreCase("true") && item.get(position).getIsFollowing().equalsIgnoreCase("false")) {
 /* condition for requested  */
-                    Log.e("no change----->","no change----->");
+                    Log.e("no change----->", "no change----->");
                 } else if (!Utils.isEmptyString(item.get(position).getAccepted()) && item.get(position).getAccepted().equalsIgnoreCase("true") && item.get(position).getFollowingAccepted().equalsIgnoreCase("false") && item.get(position).getIsFollowing().equalsIgnoreCase("true")) {
-                    Log.e("no change----->","no change----->");
+                    Log.e("no change----->", "no change----->");
 /* condition for requested  */
                 } else if (!Utils.isEmptyString(item.get(position).getAccepted()) && item.get(position).getAccepted().equalsIgnoreCase("false") && item.get(position).getFollowingAccepted().equalsIgnoreCase("true") && item.get(position).getIsFollowing().equalsIgnoreCase("false")) {
 
-                    Log.e("requested----->","requested----->");
+                    Log.e("requested----->", "requested----->");
 /* condition for folloe change it to requested  */
                     textView.setBackgroundResource(R.drawable.requested_btn);
                     v.setBackgroundResource(R.drawable.requested_btn);
@@ -206,7 +200,7 @@ public class FollowerAdapter extends ArrayAdapter<FollowerFollowingBean> {
 
                 } else if (!Utils.isEmptyString(item.get(position).getAccepted()) && item.get(position).getAccepted().equalsIgnoreCase("true") && item.get(position).getFollowingAccepted().equalsIgnoreCase("false") && item.get(position).getIsFollowing().equalsIgnoreCase("false")) {
 /* condition for folloe change it to requested  */
-                    Log.e("requested----->","requested----->");
+                    Log.e("requested----->", "requested----->");
                     textView.setBackgroundResource(R.drawable.requested_btn);
                     v.setBackgroundResource(R.drawable.requested_btn);
                     relationManager.followUser(item.get(position).getPhoneNo(), authManager.getPhoneNo(), authManager.getUsrToken());
@@ -290,17 +284,6 @@ public class FollowerAdapter extends ArrayAdapter<FollowerFollowingBean> {
         return row;
     }
 
-    static class RecordHolder {
-        LinearLayout rlResectAccept;
-        TextView usr_name, hfollowersRequest, hfollowers;
-        ImageView usrimg, divider_;
-        TextView reqbtn;
-        Button resBtn;
-        Button accBtn;
-
-
-    }
-
     // Akshit Code Starts to show pop-up for unfollowing friend
     public void unfallowDialog(int position1) {
 
@@ -351,6 +334,17 @@ public class FollowerAdapter extends ArrayAdapter<FollowerFollowingBean> {
             }
         });
         dialog.show();
+    }
+
+    static class RecordHolder {
+        LinearLayout rlResectAccept;
+        TextView usr_name, hfollowersRequest, hfollowers;
+        ImageView usrimg, divider_;
+        TextView reqbtn;
+        Button resBtn;
+        Button accBtn;
+
+
     }
 // Ends
 

@@ -1,9 +1,9 @@
 package com.sourcefuse.clickinandroid.view;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Telephony;
 import android.view.View;
@@ -11,7 +11,6 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.facebook.FacebookException;
 import com.facebook.Session;
@@ -24,6 +23,7 @@ import com.sourcefuse.clickinandroid.model.bean.ContactBean;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.FetchContactFromPhone;
+import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.adapter.SpreadWordAdapter;
 import com.sourcefuse.clickinapp.R;
@@ -37,12 +37,18 @@ import de.greenrobot.event.EventBus;
  */
 public class SpreadWordView extends Activity implements OnClickListener {
 
+    public boolean fromProfile = false;
     private Button phonebook, facebook;
-
-    Dialog dialog;
     private AuthManager authManager;
     private ProfileManager profilemanager;
-
+    //Methods for Facebook
+    private Session.StatusCallback callback = new Session.StatusCallback() {
+        @Override
+        public void call(Session session, SessionState state,
+                         Exception exception) {
+            onSessionStateChange(session, state, exception);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,10 +59,9 @@ public class SpreadWordView extends Activity implements OnClickListener {
         phonebook = (Button) findViewById(R.id.btn_phb);
         facebook = (Button) findViewById(R.id.btn_fb);
 
-        ((TextView) findViewById(R.id.btn_invite)).setOnClickListener(this);
-
-        ((TextView) findViewById(R.id.btn_back)).setOnClickListener(this);
-        ((TextView) findViewById(R.id.btn_next)).setOnClickListener(this);
+        findViewById(R.id.btn_invite).setOnClickListener(this);
+        findViewById(R.id.btn_back).setOnClickListener(this);
+        findViewById(R.id.btn_next).setOnClickListener(this);
 
         phonebook.setOnClickListener(this);
         facebook.setOnClickListener(this);
@@ -77,19 +82,24 @@ public class SpreadWordView extends Activity implements OnClickListener {
             setlist();
         } else {
             Utils.launchBarDialog(this);
-            new FetchContactFromPhone(this).getClickerList(authManager.getPhoneNo(), authManager.getUsrToken(), 1);
+            new LoadContacts().execute();
+            //  new FetchContactFromPhone(this).getClickerList(authManager.getPhoneNo(), authManager.getUsrToken(), 1);
         }
 
-        if (!getIntent().getBooleanExtra("fromsignup", false)) {
+
+        //akshit code starts
+        fromProfile = getIntent().getExtras().getBoolean("fromProfile");
+        if (fromProfile) {
             findViewById(R.id.btn_next).setVisibility(View.GONE);
             findViewById(R.id.btn_back).setVisibility(View.GONE);
-
+        } else {
+            findViewById(R.id.btn_next).setVisibility(View.VISIBLE);
+            findViewById(R.id.btn_back).setVisibility(View.VISIBLE);
 
         }
 
-
+//ends
     }
-
 
     public void setlist() {
         ProfileManager profilemanager = ModelManager.getInstance().getProfileManager();
@@ -168,7 +178,6 @@ public class SpreadWordView extends Activity implements OnClickListener {
                 //   authManager.getProfileInfo("", authManager.getPhoneNo(), authManager.getUsrToken());
                 Intent clickersView = new Intent(SpreadWordView.this, UserProfileView.class);
                 clickersView.putExtra("FromSignup", true);
-
                 startActivity(clickersView);
                 finish();
                 break;
@@ -193,7 +202,9 @@ public class SpreadWordView extends Activity implements OnClickListener {
 
 
                         Intent smsIntent = new Intent(Intent.ACTION_VIEW);
-                        smsIntent.putExtra("sms_body", Constants.SEND_REQUEST_WITH_SMS_MESSAGE_SPREAD);
+                        smsIntent.putExtra("sms_body", Constants.SEND_REQUEST_WITH_SMS_MESSAGE);
+                        smsIntent.putExtra(Intent.EXTRA_TEXT, Constants.SEND_REQUEST_WITH_SMS_MESSAGE);
+                        smsIntent.putExtra("text", Constants.SEND_REQUEST_WITH_SMS_MESSAGE);
                         smsIntent.setType("vnd.android-dir/mms-sms");
                         smsIntent.setData(Uri.parse(uri.toString()));
                         smsIntent.putExtra("exit_on_sent", true);
@@ -205,9 +216,10 @@ public class SpreadWordView extends Activity implements OnClickListener {
                             String defaultSmsPackageName = Telephony.Sms.getDefaultSmsPackage(SpreadWordView.this); //Need to change the build to API 19
                             Intent sendIntent = new Intent(Intent.ACTION_SEND);
                             sendIntent.setType("text/plain");
+
                             sendIntent.putExtra("address", uri.toString());
                             sendIntent.putExtra(Intent.EXTRA_TEXT, Constants.SEND_REQUEST_WITH_SMS_MESSAGE);
-                            sendIntent.putExtra(Intent.ACTION_ATTACH_DATA,Uri.parse(uri.toString()));
+                            sendIntent.putExtra(Intent.ACTION_ATTACH_DATA, Uri.parse(uri.toString()));
                             if (defaultSmsPackageName != null)//Can be null in case that there is no default, then the user would be able to choose any app that support this intent.
                             {
                                 sendIntent.setPackage(defaultSmsPackageName);
@@ -228,11 +240,10 @@ public class SpreadWordView extends Activity implements OnClickListener {
         }
     }
 
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        com.sourcefuse.clickinandroid.utils.Log.e("on activity result","on activity result");
+        com.sourcefuse.clickinandroid.utils.Log.e("on activity result", "on activity result");
         try {
             super.onActivityResult(requestCode, resultCode, data);
             try {
@@ -246,15 +257,6 @@ public class SpreadWordView extends Activity implements OnClickListener {
         }
         Utils.dismissBarDialog();
     }
-
-    //Methods for Facebook
-    private Session.StatusCallback callback = new Session.StatusCallback() {
-        @Override
-        public void call(Session session, SessionState state,
-                         Exception exception) {
-            onSessionStateChange(session, state, exception);
-        }
-    };
 
     private void onSessionStateChange(Session session, SessionState state,
                                       Exception exception) {
@@ -320,15 +322,32 @@ public class SpreadWordView extends Activity implements OnClickListener {
             setlist();
         } else if (message.equalsIgnoreCase("CheckFriend False")) {
             Utils.dismissBarDialog();
+            //  Utils.showAlert(this,authManager.getMessage());
+            Log.e("Add phone", "Message" + authManager.getMessage());
+            //   Utils.fromSignalDialog(this, authManager.getMessage());
 
         } else if (message.equalsIgnoreCase("CheckFriend Network Error")) {
             Utils.dismissBarDialog();
-
+            //    Utils.showAlert(this, AlertMessage.connectionError);
             Utils.fromSignalDialog(this, AlertMessage.connectionError);
-            //  Utils.showAlert(SpreadWordView.this, AlertMessage.connectionError);
-
         }
     }
 
+
+    private class LoadContacts extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            new FetchContactFromPhone(SpreadWordView.this).readContacts();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void voids) {
+            if (authManager == null)
+                authManager = ModelManager.getInstance().getAuthorizationManager();
+            new FetchContactFromPhone(SpreadWordView.this).getClickerList(authManager.getPhoneNo(), authManager.getUsrToken(), 1);
+        }
+    }
 
 }

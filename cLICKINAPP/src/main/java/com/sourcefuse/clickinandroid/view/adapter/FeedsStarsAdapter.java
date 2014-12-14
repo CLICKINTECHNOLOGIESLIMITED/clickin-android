@@ -2,38 +2,23 @@ package com.sourcefuse.clickinandroid.view.adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.ProfileManager;
 import com.sourcefuse.clickinandroid.model.bean.FeedStarsBean;
-import com.sourcefuse.clickinandroid.model.bean.NewsFeedBean;
 import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinapp.R;
 import com.squareup.picasso.Picasso;
 
-import org.w3c.dom.Text;
-
-import java.io.IOException;
 import java.util.ArrayList;
-
-import static com.sourcefuse.clickinapp.R.drawable.report_icon;
 
 public class FeedsStarsAdapter extends ArrayAdapter<FeedStarsBean> {
     Context context;
@@ -41,6 +26,7 @@ public class FeedsStarsAdapter extends ArrayAdapter<FeedStarsBean> {
     ArrayList<FeedStarsBean> eachNewsFeed;
     MediaPlayer player;
     AuthManager authMgr;
+
     public FeedsStarsAdapter(Context context, int layoutResourceId,
                              ArrayList<FeedStarsBean> item) {
         super(context, layoutResourceId, item);
@@ -49,7 +35,6 @@ public class FeedsStarsAdapter extends ArrayAdapter<FeedStarsBean> {
         this.eachNewsFeed = item;
 
     }
-
 
 
     @Override
@@ -64,7 +49,7 @@ public class FeedsStarsAdapter extends ArrayAdapter<FeedStarsBean> {
                     .findViewById(R.id.tv_clickers_name);
             holder.usrimg = (ImageView) row.findViewById(R.id.iv_usr);
             holder.usrimg.setScaleType(ImageView.ScaleType.FIT_XY);
-            holder.reqbtn = (ImageView) row.findViewById(R.id.btn_actions);
+            holder.reqbtn = (TextView) row.findViewById(R.id.btn_actions);
 
 
             row.setTag(holder);
@@ -75,20 +60,17 @@ public class FeedsStarsAdapter extends ArrayAdapter<FeedStarsBean> {
         authMgr = ModelManager.getInstance().getAuthorizationManager();
 
         holder.usr_name.setText(eachNewsFeed.get(position).getUserName());
-        if(!eachNewsFeed.get(position).getUserPic().equalsIgnoreCase("")) {
+        if (!eachNewsFeed.get(position).getUserPic().equalsIgnoreCase("")) {
             try {
                 Picasso.with(context).load(eachNewsFeed.get(position).getUserPic()).skipMemoryCache().error(R.drawable.male_user).into(holder.usrimg);
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 holder.usrimg.setImageResource(R.drawable.male_user);
             }
-        }
-        else {
+        } else {
             holder.usrimg.setImageResource(R.drawable.male_user);
         }
         ProfileManager prMgr = ModelManager.getInstance().getProfileManager();
-        if(prMgr.following!=null) {
+        if (prMgr.following != null) {
             Log.e("followRequesed", "" + prMgr.following.size());
 //            for (int i = 0; i < prMgr.following.size();i++)
 //            {
@@ -105,27 +87,26 @@ public class FeedsStarsAdapter extends ArrayAdapter<FeedStarsBean> {
 //                    }
 //                    break;
 //                }
-               if(eachNewsFeed.get(position).getUserId().equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getUserId()))
-                {
-                    holder.reqbtn.setVisibility(View.GONE);
-                }
-                else if(eachNewsFeed.get(position).getIs_user_in_relation()==1)
-                {
-                    holder.reqbtn.setVisibility(View.VISIBLE);
-                    if(eachNewsFeed.get(position).getIs_user_following()==1)
-                    {
-                        if(eachNewsFeed.get(position).getIs_user_following_acceptance()!=null)
-                        {
-                            holder.reqbtn.setImageResource(R.drawable.following);
-                        }
-                        else
-                        {
-                            holder.reqbtn.setImageResource(R.drawable.requested_grey);
-                        }
+            if (eachNewsFeed.get(position).getUserId().equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getUserId())) {
+                holder.reqbtn.setVisibility(View.GONE);
+            } else if (eachNewsFeed.get(position).getIs_user_in_relation() == 1) {
+                holder.reqbtn.setVisibility(View.VISIBLE);
+
+                if (eachNewsFeed.get(position).getIs_user_following() == 1) {
+                    if (eachNewsFeed.get(position).getIs_user_following_acceptance() != null) {
+                        holder.reqbtn.setBackgroundResource(R.drawable.following_btn);
+                    } else {
+                        holder.reqbtn.setBackgroundResource(R.drawable.requested_btn);
                     }
+                } else {
+                    holder.reqbtn.setBackgroundResource(R.drawable.c_owner_grey_corss);
                 }
-//            }
+
+
+            }
+
         }
+
 //        if(prMgr.pfollowerList!=null) {
 //            for (int i = 0; i < prMgr.pfollowerList.size();i++)
 //            {
@@ -144,7 +125,7 @@ public class FeedsStarsAdapter extends ArrayAdapter<FeedStarsBean> {
 
     static class RecordHolder {
         ImageView usrimg;
-        ImageView reqbtn;
+        TextView reqbtn;//akshit code
         TextView usr_name;
 //        Button reqbtn;
     }

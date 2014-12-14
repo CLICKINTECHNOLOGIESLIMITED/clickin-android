@@ -14,8 +14,8 @@ public class GcmBroadcastReceiver extends WakefulBroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
 
 
-    	Log.e("mbroad cast reciver", "in broad cast reciver");
-        ComponentName comp = new ComponentName(context.getPackageName(),GcmIntentService.class.getName());
+        Log.e("mbroad cast reciver", "in broad cast reciver");
+        ComponentName comp = new ComponentName(context.getPackageName(), GcmIntentService.class.getName());
 
 
         startWakefulService(context, (intent.setComponent(comp)));

@@ -61,13 +61,13 @@
     <color name="chat_notification">#f29691</color>
     <color name="menu_footer">#64718f</color>
 
-<color name="lightest_gray">#F6F6F6</color>
+    <color name="lightest_gray">#F6F6F6</color>
 
     <color name="strip_color_tab">#ffffff</color>
 
 
     <color name="edit_profile_clr">#E6E6E6</color>
-
+    <color name="menu_footer_color">#00b0c7</color>
     <color name="feed_senderuser">#01DFD7</color>
     <color name="feed_clickin">#F29691</color>
 
@@ -90,8 +90,8 @@
     <color name="owner_relation_partner_name">#39cad4</color>
 
 
-
     <color name="profile_border">#364566</color>
     <color name="some_back">#4d5b7b</color>
     <color name="click_in">#5d6a88</color>
+    <color name="color_">#cbcbcb</color>
 </resources>

@@ -3,71 +3,96 @@ package com.sourcefuse.clickinandroid.model;
 
 public class ModelManager {
 
-	private final AuthManager authMgr;
-	private final ProfileManager profileMgr;
-	private final RelationManager relationManager;
-	private final NewsFeedManager newsFeedManager;
-	private final ChatManager chatManager;
-    private final ClickInNotificationManager notificationManager;
-    private final SettingManager msettingManager;
+    private static ModelManager modelMgr = null;
+    private AuthManager authMgr;
+    private ProfileManager profileMgr;
+    private RelationManager relationManager;
+    private NewsFeedManager newsFeedManager;
+    private ChatManager chatManager;
+    private ClickInNotificationManager notificationManager;
+    private SettingManager msettingManager;
 
-	private static ModelManager modelMgr = null;
+    private ModelManager() {
 
-	private ModelManager() {
-
-		authMgr = new AuthManager();
-		profileMgr = new ProfileManager();
-		relationManager = new RelationManager();
-		newsFeedManager = new NewsFeedManager();
-		chatManager = new ChatManager();
+        authMgr = new AuthManager();
+        profileMgr = new ProfileManager();
+        relationManager = new RelationManager();
+        newsFeedManager = new NewsFeedManager();
+        chatManager = new ChatManager();
         notificationManager = new ClickInNotificationManager();
-        msettingManager=new SettingManager();
+        msettingManager = new SettingManager();
 
-	}
+    }
 
-	public static ModelManager getInstance() {
-		if (modelMgr == null) {
-			modelMgr = new ModelManager();
-		}
+    public static ModelManager getInstance() {
+        if (modelMgr == null) {
+            modelMgr = new ModelManager();
+        }
 
-		return modelMgr;
-	}
+        return modelMgr;
+    }
+
+    public static void setInstance() {
+
+        modelMgr = new ModelManager();
+
+    }
+
 
     public static boolean getInstanceModelManager() {
         if (modelMgr != null) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
 
-	public AuthManager getAuthorizationManager() {
+    public AuthManager getAuthorizationManager() {
 
-		return this.authMgr;
-	}
+        return this.authMgr;
+    }
 
-	public ProfileManager getProfileManager() {
+    public void AuthorizationManager() {
 
-		return this.profileMgr;
-	}
-	public RelationManager getRelationManager() {
+        this.authMgr = null;
+        this.profileMgr = null;
+        this.relationManager = null;
+        this.newsFeedManager = null;
+        this.chatManager = null;
+        this.notificationManager = null;
+        this.msettingManager = null;
+    }
 
-		return this.relationManager;
-	}
-	public NewsFeedManager getNewsFeedManager() {
+    public ProfileManager getProfileManager() {
 
-		return this.newsFeedManager;
-	}
-	public ChatManager getChatManager() {
+        return this.profileMgr;
+    }
 
-		return this.chatManager;
-	}
+    public RelationManager getRelationManager() {
+
+        return this.relationManager;
+    }
+
+    public NewsFeedManager getNewsFeedManager() {
+
+        return this.newsFeedManager;
+    }
+
+    public ChatManager getChatManager() {
+
+        return this.chatManager;
+    }
+
     public ClickInNotificationManager getNotificationManagerManager() {
 
         return this.notificationManager;
     }
-    public SettingManager getSettingManager()
-    {
+
+    public SettingManager getSettingManager() {
         return this.msettingManager;
     }
+
+
+    /* code to set manager null*/
+
 }

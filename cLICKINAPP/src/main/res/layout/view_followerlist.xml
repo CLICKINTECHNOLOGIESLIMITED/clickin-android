@@ -18,8 +18,8 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="5dp"
             android:background="@drawable/back_arrow"
-            android:visibility="gone"
-            android:padding="5dp" />
+            android:padding="5dp"
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/iv_notification_list"

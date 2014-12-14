@@ -1,14 +1,17 @@
 package com.sourcefuse.clickinandroid.view;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.sourcefuse.clickinandroid.model.AuthManager;
@@ -25,19 +28,19 @@ import de.greenrobot.event.EventBus;
  */
 public class ViewSpamorAbuse extends Activity implements View.OnClickListener {
 
+    RadioGroup mradioGroup;
     private AuthManager authManager;
     private SettingManager settingManager;
-    RadioGroup mradioGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.view_spam);
-        this.overridePendingTransition(R.anim.slide_in_right ,R.anim.slide_out_right);
+        this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
         findViewById(R.id.iv_back_noti).setOnClickListener(this);
 
-        //akshit code starts
+        //akshit code starts::Removed Typeface
         ((RadioButton) findViewById(R.id.spam_radio_one)).setOnClickListener(this);//.setTypeface(typefacemedium)
         ((RadioButton) findViewById(R.id.spam_radio_two)).setOnClickListener(this);
         ((RadioButton) findViewById(R.id.spam_radio_three)).setOnClickListener(this);
@@ -48,6 +51,7 @@ public class ViewSpamorAbuse extends Activity implements View.OnClickListener {
         ((RadioButton) findViewById(R.id.spam_radio_eight)).setOnClickListener(this);
         ((RadioButton) findViewById(R.id.spam_radio_nine)).setOnClickListener(this);
         ((TextView) findViewById(R.id.btn_report)).setOnClickListener(this);
+        ((EditText) findViewById(R.id.spam_edit_txt)).setOnClickListener(this);
         //Ends
 
 //        EditText edittext_spam = ((EditText) findViewById(R.id.spam_edit_txt));
@@ -60,7 +64,6 @@ public class ViewSpamorAbuse extends Activity implements View.OnClickListener {
         authManager = ModelManager.getInstance().getAuthorizationManager();
         settingManager = ModelManager.getInstance().getSettingManager();
         mradioGroup = (RadioGroup) findViewById(R.id.rbg_spam);
-
 
 
         // akshit code for closing keypad if touched anywhere outside
@@ -78,6 +81,16 @@ public class ViewSpamorAbuse extends Activity implements View.OnClickListener {
         });
 
 //ends
+        //akshit code
+        final ScrollView scrollView = (ScrollView) findViewById(R.id.scroll_view_spam);
+        scrollView.post(new Runnable() {
+            @Override
+            public void run() {
+                scrollView.fullScroll(ScrollView.FOCUS_UP);
+
+            }
+        });
+//end
 
     }
 
@@ -86,7 +99,7 @@ public class ViewSpamorAbuse extends Activity implements View.OnClickListener {
     public void onBackPressed() {
         super.onBackPressed();
         finish();
-        overridePendingTransition(0,R.anim.top_out);//akshit code for animation
+        overridePendingTransition(0, R.anim.top_out);//akshit code for animation
     }
 
     @Override
@@ -104,7 +117,7 @@ public class ViewSpamorAbuse extends Activity implements View.OnClickListener {
             case R.id.spam_radio_eight:
             case R.id.spam_radio_nine:
 
-                InputMethodManager inputMethodManager1 = (InputMethodManager)  this.getSystemService(Activity.INPUT_METHOD_SERVICE);
+                InputMethodManager inputMethodManager1 = (InputMethodManager) this.getSystemService(Activity.INPUT_METHOD_SERVICE);
                 inputMethodManager1.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
 
                 break;// akshit code ends
@@ -128,9 +141,12 @@ public class ViewSpamorAbuse extends Activity implements View.OnClickListener {
 
                 break;
 
+            case R.id.spam_edit_txt:
+                ((EditText) findViewById(R.id.spam_edit_txt)).setCursorVisible(true);
+                break;
             case R.id.iv_back_noti:
                 finish();
-                overridePendingTransition(0,R.anim.top_out);//akshit code for animation
+                overridePendingTransition(0, R.anim.top_out);//akshit code for animation
                 break;
         }
     }
@@ -147,9 +163,9 @@ public class ViewSpamorAbuse extends Activity implements View.OnClickListener {
     public void onEventMainThread(String message) {
         if (message.equalsIgnoreCase("ReportaProblem True")) {
             Utils.dismissBarDialog();
-            finish();
+            fromSignalDialog(this, "Problem Reported");
 
-// message on success
+            // message on success
             //Utils.showAlert(this,);
         }
         if (message.equalsIgnoreCase("ReportaProblem False")) {
@@ -161,7 +177,7 @@ public class ViewSpamorAbuse extends Activity implements View.OnClickListener {
         }
         if (message.equalsIgnoreCase("ReportaProblem Network Error")) {
             Utils.dismissBarDialog();
-            Utils.fromSignalDialog(this,AlertMessage.connectionError);
+            Utils.fromSignalDialog(this, AlertMessage.connectionError);
 
 // message on onnetwork error
             //Utils.showAlert(this,);
@@ -169,4 +185,29 @@ public class ViewSpamorAbuse extends Activity implements View.OnClickListener {
 
     }
 
+    // Akshit Code Starts
+    public void fromSignalDialog(final Activity activity, String str) {
+
+        final Dialog dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.setContentView(R.layout.alert_check_dialogs);
+        dialog.setCancelable(false);
+        TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
+        msgI.setText(str);
+
+
+        final Button Cancel = (Button) dialog.findViewById(R.id.coolio);
+        Cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                dialog.dismiss();
+                finish();
+                overridePendingTransition(0, R.anim.top_out);//akshit code for animation
+
+            }
+        });
+        dialog.show();
+    }
+    // Ends
 }

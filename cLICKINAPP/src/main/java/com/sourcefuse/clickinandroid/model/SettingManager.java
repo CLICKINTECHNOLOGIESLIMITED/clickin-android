@@ -18,10 +18,21 @@ import de.greenrobot.event.EventBus;
  */
 public class SettingManager {
     private static final String TAG = SettingManager.class.getSimpleName();
-
-    private AuthManager authManager;
     StringEntity se = null;
+    private AuthManager authManager;
     private AsyncHttpClient client;
+
+    //akshit Code For App Sound
+    public static boolean appSounds = true ;
+    public static boolean isAppSounds() {
+        return appSounds;
+    }
+
+    public static void setAppSounds(boolean appSounds) {
+        SettingManager.appSounds = appSounds;
+    }
+//Ends
+
 
     public void changePassword(String phone_no, String user_token, String old_password, String new_password, String confirm_password) {
         authManager = ModelManager.getInstance().getAuthorizationManager();
@@ -126,7 +137,7 @@ public class SettingManager {
         );
     }
 
-    public void deactivteAccount(String phone_no, String user_token, String reason_type, String other_reason, String email_opt_out ,String password) {
+    public void deactivteAccount(String phone_no, String user_token, String reason_type, String other_reason, String email_opt_out, String password) {
         authManager = ModelManager.getInstance().getAuthorizationManager();
         JSONObject userInputDetails = new JSONObject();
         try {
@@ -258,6 +269,7 @@ public class SettingManager {
                             EventBus.getDefault().post("ForgotPassword Network Error");
                         }
                     }
+
                     @Override
                     public void onSuccess(int statusCode,
                                           org.apache.http.Header[] headers,

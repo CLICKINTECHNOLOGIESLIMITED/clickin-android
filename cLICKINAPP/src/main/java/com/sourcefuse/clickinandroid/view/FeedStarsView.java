@@ -25,14 +25,13 @@ import de.greenrobot.event.EventBus;
  * Created by charunigam on 10/10/14.
  */
 public class FeedStarsView extends Activity {
-    private ListView list;
-    private ArrayList<Section> sections = new ArrayList<Section>();
     public static FeedsAdapter adapter;
-    private NewsFeedManager newsFeedManager;
-    private AuthManager authMgr;
-
     ImageView menu;
     String news_feedId;
+    private ListView list;
+    private ArrayList<Section> sections = new ArrayList<Section>();
+    private NewsFeedManager newsFeedManager;
+    private AuthManager authMgr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,11 +39,10 @@ public class FeedStarsView extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         setContentView(R.layout.view_feeds_stars);
-        this.overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_right);
+        this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
         Bundle bundle = getIntent().getExtras();
-        if(bundle!=null)
-        {
-           news_feedId = bundle.getString("news_feed_id");
+        if (bundle != null) {
+            news_feedId = bundle.getString("news_feed_id");
         }
         menu = (ImageView) findViewById(R.id.iv_menu);
         list = (ListView) findViewById(R.id.stars_list);
@@ -61,8 +59,9 @@ public class FeedStarsView extends Activity {
 
         Utils.launchBarDialog(FeedStarsView.this);
 
-            newsFeedManager.fetchCommentStars(authMgr.getPhoneNo(), authMgr.getUsrToken(), "", news_feedId, "star");
+        newsFeedManager.fetchCommentStars(authMgr.getPhoneNo(), authMgr.getUsrToken(), "", news_feedId, "star");
     }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -79,6 +78,7 @@ public class FeedStarsView extends Activity {
             EventBus.getDefault().unregister(this);
         }
     }
+
     public void onEventMainThread(String message) {
 
         if (message.equalsIgnoreCase("FetchCommentStatus True")) {
@@ -89,12 +89,19 @@ public class FeedStarsView extends Activity {
             Utils.dismissBarDialog();
         } else if (message.equalsIgnoreCase("FetchCommentStatus Network Error")) {
             Utils.fromSignalDialog(FeedStarsView.this, AlertMessage.connectionError);
-        } else if (message.equalsIgnoreCase("GetFollower True")){
+        } else if (message.equalsIgnoreCase("GetFollower True")) {
             newsFeedManager.fetchCommentStars(authMgr.getPhoneNo(), authMgr.getUsrToken(), "", news_feedId, "star");
         } else if (message.equalsIgnoreCase("GetFollower False")) {
             Utils.dismissBarDialog();
         } else if (message.equalsIgnoreCase("GetFollower Network Error")) {
             Utils.fromSignalDialog(FeedStarsView.this, AlertMessage.connectionError);
         }
+    }
+
+    //akshit code.
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(0, R.anim.top_out);//akshit code for animation
     }
 }

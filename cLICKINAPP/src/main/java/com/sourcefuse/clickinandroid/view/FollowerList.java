@@ -1,24 +1,19 @@
 package com.sourcefuse.clickinandroid.view;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.crashlytics.android.internal.m;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.ProfileManager;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
-import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.adapter.FollowerAdapter;
 import com.sourcefuse.clickinapp.R;
@@ -28,20 +23,17 @@ import de.greenrobot.event.EventBus;
 public class FollowerList extends ClickInBaseView implements
         View.OnClickListener {
     private static final String TAG = FollowerList.class.getSimpleName();
+    public static FollowerAdapter adapter;
+    public static boolean fromOwnProfile = false;
+    public static boolean mListchangeVariable_flag = false;
     private ImageView back, notification;
     private ListView listView;
-    public static FollowerAdapter adapter;
     private ProfileManager profManager;
     private AuthManager authManager;
     private TextView profileName;
 
-    public static boolean fromOwnProfile = false;
-    private RelativeLayout mFollowerListView, mFollowerListEmpty;
-
     /*  to check change in list variable in adapter */
-
-    public static  boolean mListchangeVariable_flag = false;
-
+    private RelativeLayout mFollowerListView, mFollowerListEmpty;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +62,7 @@ public class FollowerList extends ClickInBaseView implements
             Utils.launchBarDialog(FollowerList.this);
             profManager.getFollwer("", authManager.getPhoneNo(), authManager.getUsrToken());
         } else {
-            profileName.setText(""+getIntent().getStringExtra("name"));
+            profileName.setText("" + getIntent().getStringExtra("name"));
             Utils.launchBarDialog(FollowerList.this);
             profManager.getFollwer(getIntent().getExtras().getString("phoneNo"), authManager.getPhoneNo(), authManager.getUsrToken());
         }
@@ -80,16 +72,15 @@ public class FollowerList extends ClickInBaseView implements
     @Override
     public void onBackPressed() {
 
-        if(mListchangeVariable_flag)
-        {
+        if (mListchangeVariable_flag) {
             super.onBackPressed();
-            Intent intent = new Intent(this,UserProfileView.class);
+            Intent intent = new Intent(this, UserProfileView.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            intent.putExtra("isChangeInList",true);
+            intent.putExtra("isChangeInList", true);
             startActivity(intent);
             finish();
             overridePendingTransition(0, R.anim.top_out);
-        }else {
+        } else {
             super.onBackPressed();
             finish();
             overridePendingTransition(0, R.anim.top_out);

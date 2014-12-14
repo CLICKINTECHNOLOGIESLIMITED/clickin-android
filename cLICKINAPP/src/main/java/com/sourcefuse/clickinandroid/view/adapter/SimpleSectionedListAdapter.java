@@ -19,10 +19,8 @@ package com.sourcefuse.clickinandroid.view.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.database.DataSetObserver;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.util.SparseArray;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,8 +38,8 @@ import java.util.Arrays;
 import java.util.Comparator;
 
 
-
-public class SimpleSectionedListAdapter extends BaseAdapter implements PinnedSectionListViewNew.PinnedSectionListAdapter{
+public class SimpleSectionedListAdapter extends BaseAdapter implements PinnedSectionListViewNew.PinnedSectionListAdapter {
+    Context mContext;
     private boolean mValid = true;
     private int mSectionResourceId;
     private LayoutInflater mLayoutInflater;
@@ -50,32 +48,11 @@ public class SimpleSectionedListAdapter extends BaseAdapter implements PinnedSec
     private int mHeaderTextViewResId;
     private int mHeaderTextViewResId1;
     private Typeface typeface;
-
-    Context mContext;
-
     private boolean hidevalue;
 
-    public static class Section {
-        int firstPosition;
-        int sectionedPosition;
-        CharSequence title;
-        CharSequence title2;
-
-        public Section(int firstPosition, CharSequence title,CharSequence title2) {
-            this.firstPosition = firstPosition;
-            this.title = title;
-            this.title2 =title2;
-
-        }
-
-        public CharSequence getTitle() {
-            return title;
-        }
-    }
-
-    public SimpleSectionedListAdapter(Context context, BaseAdapter baseAdapter, int sectionResourceId, int headerTextViewResId, int header1,Boolean value) {
+    public SimpleSectionedListAdapter(Context context, BaseAdapter baseAdapter, int sectionResourceId, int headerTextViewResId, int header1, Boolean value) {
         mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        mContext =context;
+        mContext = context;
         mSectionResourceId = sectionResourceId;
         mHeaderTextViewResId = headerTextViewResId;
 
@@ -96,7 +73,6 @@ public class SimpleSectionedListAdapter extends BaseAdapter implements PinnedSec
             }
         });
     }
-
 
     public void setSections(Section[] sections) {
         mSections.clear();
@@ -208,22 +184,22 @@ public class SimpleSectionedListAdapter extends BaseAdapter implements PinnedSec
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (isSectionHeaderPosition(position)) {
-            TextView view,view1;;
+            TextView view, view1;
+            ;
             LinearLayout btn_someone_layout;
-                    convertView = mLayoutInflater.inflate(mSectionResourceId, parent, false);
+            convertView = mLayoutInflater.inflate(mSectionResourceId, parent, false);
 
             typeface = Typeface.createFromAsset(mContext.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_BOLD);
             view = (TextView) convertView.findViewById(mHeaderTextViewResId);
-            view1 = (TextView)convertView.findViewById(mHeaderTextViewResId1);
+            view1 = (TextView) convertView.findViewById(mHeaderTextViewResId1);
             btn_someone_layout = (LinearLayout) convertView.findViewById(R.id.btn_someone_layout);
             view1.setTypeface(typeface);
             view.setTypeface(typeface);
 
-            if(hidevalue)
-            {
+            if (hidevalue) {
                 btn_someone_layout.setVisibility(View.GONE);
 
-            }else {
+            } else {
 
                 btn_someone_layout.setVisibility(View.VISIBLE);
             }
@@ -247,5 +223,23 @@ public class SimpleSectionedListAdapter extends BaseAdapter implements PinnedSec
     @Override
     public boolean isItemViewTypePinned(int position) {
         return isSectionHeaderPosition(position);
+    }
+
+    public static class Section {
+        int firstPosition;
+        int sectionedPosition;
+        CharSequence title;
+        CharSequence title2;
+
+        public Section(int firstPosition, CharSequence title, CharSequence title2) {
+            this.firstPosition = firstPosition;
+            this.title = title;
+            this.title2 = title2;
+
+        }
+
+        public CharSequence getTitle() {
+            return title;
+        }
     }
 }

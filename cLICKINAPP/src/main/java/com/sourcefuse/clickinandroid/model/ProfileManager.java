@@ -23,6 +23,21 @@ import de.greenrobot.event.EventBus;
 
 public class ProfileManager {
 
+    public static ArrayList<FollowerFollowingBean> following = new ArrayList<FollowerFollowingBean>();
+    public static ArrayList<FollowerFollowingBean> followers = new ArrayList<FollowerFollowingBean>();
+    /* for other profile */
+    public static ArrayList<FollowerFollowingBean> following_other = new ArrayList<FollowerFollowingBean>();
+    public static ArrayList<FollowerFollowingBean> followers_other = new ArrayList<FollowerFollowingBean>();
+    public ArrayList<FollowerFollowingBean> followRequesed = new ArrayList<FollowerFollowingBean>();
+    public ArrayList<FollowerFollowingBean> pfollowerList = new ArrayList<FollowerFollowingBean>();
+    public ArrayList<FollowerFollowingBean> Replacement = new ArrayList<FollowerFollowingBean>();
+    public ArrayList<CurrentClickerBean> currentClickerList = new ArrayList<CurrentClickerBean>();
+    public ArrayList<ContactBean> spreadTheWorldList = new ArrayList<ContactBean>();
+    public ArrayList<String> currClickersPhoneNums = new ArrayList<String>();
+    public ArrayList<CurrentClickerBean> currentClickerListFB = new ArrayList<CurrentClickerBean>();
+    public ArrayList<FollowerFollowingBean> followRequesed_other = new ArrayList<FollowerFollowingBean>();
+    public ArrayList<FollowerFollowingBean> pfollowerList_other = new ArrayList<FollowerFollowingBean>();
+    public ArrayList<FollowerFollowingBean> Replacement_other = new ArrayList<FollowerFollowingBean>();
     private StringEntity se = null;
     private AsyncHttpClient client;
     private AuthManager authManager;
@@ -30,25 +45,6 @@ public class ProfileManager {
     private ArrayList<FollowerFollowingBean> followingArray = null;
     private FollowerFollowingBean followerList = null;
     private ArrayList<FollowerFollowingBean> followerArray = null;
-
-    public ArrayList<FollowerFollowingBean> followRequesed = new ArrayList<FollowerFollowingBean>();
-    public ArrayList<FollowerFollowingBean> pfollowerList = new ArrayList<FollowerFollowingBean>();
-    public ArrayList<FollowerFollowingBean> Replacement = new ArrayList<FollowerFollowingBean>();
-
-    public static ArrayList<FollowerFollowingBean> following = new ArrayList<FollowerFollowingBean>();
-    public static ArrayList<FollowerFollowingBean> followers = new ArrayList<FollowerFollowingBean>();
-    public ArrayList<CurrentClickerBean> currentClickerList = new ArrayList<CurrentClickerBean>();
-    public ArrayList<ContactBean> spreadTheWorldList = new ArrayList<ContactBean>();
-    public ArrayList<String> currClickersPhoneNums = new ArrayList<String>();
-    public ArrayList<CurrentClickerBean> currentClickerListFB = new ArrayList<CurrentClickerBean>();
-
-
-    /* for other profile */
-    public static ArrayList<FollowerFollowingBean> following_other = new ArrayList<FollowerFollowingBean>();
-    public static ArrayList<FollowerFollowingBean> followers_other = new ArrayList<FollowerFollowingBean>();
-    public ArrayList<FollowerFollowingBean> followRequesed_other = new ArrayList<FollowerFollowingBean>();
-    public ArrayList<FollowerFollowingBean> pfollowerList_other = new ArrayList<FollowerFollowingBean>();
-    public ArrayList<FollowerFollowingBean> Replacement_other = new ArrayList<FollowerFollowingBean>();
     private FollowerFollowingBean followerList_other = null;
     private FollowerFollowingBean followingList_other = null;
     private ArrayList<FollowerFollowingBean> followingArray_other = null;
@@ -63,15 +59,20 @@ public class ProfileManager {
 
             userInputDetails.put("phone_no", phone);
             userInputDetails.put("user_token", usertoken);
-            userInputDetails.put("gender", gender);
-            userInputDetails.put("gender", "");
+
+            //akshit becoz was previously returning null
+            if (!Utils.isEmptyString(gender)) {
+                userInputDetails.put("gender", gender);
+            } else {
+                userInputDetails.put("gender", "");
+
+            }//ends
             userInputDetails.put("dob", dob);
             if (!Utils.isEmptyString(userpic)) {
                 userInputDetails.put("user_pic", userpic);
             } else {
                 userInputDetails.put("user_pic", "");
             }
-
             userInputDetails.put("city", city);
             userInputDetails.put("country", country);
             userInputDetails.put("email", email);

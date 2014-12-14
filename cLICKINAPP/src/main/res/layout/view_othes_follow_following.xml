@@ -19,8 +19,8 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="5dp"
             android:background="@drawable/back_arrow"
-            android:visibility="gone"
-            android:padding="5dp" />
+            android:padding="5dp"
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/iv_notification_list_ing"
@@ -36,8 +36,7 @@
         android:id="@+id/rl_followingdata_other"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rr_header"
-        >
+        android:layout_below="@+id/rr_header">
 
         <com.sourcefuse.clickinandroid.utils.ClickInTextView
             android:id="@+id/tv_tag_screen_other"
@@ -46,10 +45,10 @@
             android:paddingBottom="5dp"
             android:paddingLeft="10dp"
             android:paddingTop="10dp"
-            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
             android:textColor="@color/dark_gray"
             android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
 
         <ListView
             android:id="@+id/list_following_other"
@@ -63,8 +62,6 @@
             android:scrollbars="none" />
 
     </RelativeLayout>
-
-
 
 
     <RelativeLayout
@@ -82,11 +79,11 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="12dp"
             android:text="@string/txt_following"
+            android:textAllCaps="true"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:textAllCaps="true"
-            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"/>
+            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
     </RelativeLayout>
 
 </RelativeLayout>

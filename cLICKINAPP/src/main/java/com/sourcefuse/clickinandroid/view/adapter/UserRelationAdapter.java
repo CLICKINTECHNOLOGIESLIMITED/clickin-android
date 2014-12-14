@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,14 +33,14 @@ import java.util.List;
 public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
     Context context;
     int layoutResourceId;
+    List<GetrelationshipsBean> itemList;
+    TextView privacy;
     private AuthManager authManager;
     private ProfileManager profileManager;
+    /*RecordHolder rholder;*/
     private RelationManager relationManager;
     private boolean showpending = false;
-      /*RecordHolder rholder;*/
 
-
-    List<GetrelationshipsBean> itemList;
 
     public UserRelationAdapter(Context context, int layoutResourceId,
                                List<GetrelationshipsBean> item) {
@@ -52,8 +50,17 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
         this.context = context;
 
     }
-
-    TextView privacy;
+//    ((ImageView)row.findViewById(R.id.iv_accept_card)).setTag(position);
+//    ((ImageView) row.findViewById(R.id.iv_accept_card)).setOnClickListener(new View.OnClickListener() {
+//        @Override
+//        public void onClick(View v) {
+//            //Card ACCEPT Action
+//            int position = (Integer) v.getTag();
+//            sendUpdateCardValues(position, "accepted", "ACCEPTED!");
+//
+//
+//        }
+//    });
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
@@ -65,9 +72,10 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
         LayoutInflater inflater = ((Activity) context).getLayoutInflater();
         row = inflater.inflate(layoutResourceId, parent, false);
                   /*holder = new RecordHolder();*/
-        TextView usr_name = (TextView) row.findViewById(R.id.tv_usr_name);
+        final TextView usr_name = (TextView) row.findViewById(R.id.tv_usr_name);
         TextView pending = (TextView) row.findViewById(R.id.tv_pending);
-        ImageView usrimg = (ImageView) row.findViewById(R.id.iv_usr_pic);
+        final ImageView usrimg = (ImageView) row.findViewById(R.id.iv_usr_pic);
+
         View whiteview = (View) row.findViewById(R.id.v_whiteview);
         View devider = (View) row.findViewById(R.id.v_devider);
         ImageView btm_divider = (ImageView) row.findViewById(R.id.btm_divider);
@@ -106,7 +114,6 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
             privacy.setBackgroundResource(R.drawable.requested_statuts);
             privacy.setTag(position);
         }
-
 
         boolean last = false;
         if (position == relationManager.requestedList.size() - 1) {
@@ -192,22 +199,31 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
             }
         });
 
+        //akshit Code For clickin
+        usrimg.setTag(position);
         usrimg.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                int position = (Integer) v.getTag();
+                int pos = (Integer) v.getTag();
+                Log.e("Image View Clicked", "TAG" + pos);
+                if (itemList.get(pos).getStatusAccepted() == "true") {
 
-                if (itemList.get(position).getStatusAccepted() == "true") {
+                    relationManager = ModelManager.getInstance().getRelationManager();
+                    String partnerId = relationManager.getrelationshipsData.get(pos).getPartner_id();
+
                     Intent intent = new Intent(context, JumpOtherProfileView.class);
                     //    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("PartnerId", partnerId);
                     intent.putExtra("FromOwnProfile", true);
                     intent.putExtra("phNumber", itemList.get(position).getPhoneNo());
                     ((Activity) context).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
                     context.startActivity(intent);
                     Log.e("", "holder.usrimg");
+                } else {
+                    Log.e("User RelationAdapter ", "Same User");
                 }
             }
-        });
+        });//ends
         delete.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
@@ -227,7 +243,6 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
     }
 
 
-
     // Akshit Code Starts to show pop-up to make relation ship private
     public void relationDialog(String str, final int position1, View view) {
 
@@ -238,20 +253,20 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
         dialog.setCancelable(false);
         TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
 
-        Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "fonts/AvenirNextLTPro-MediumCn_0.otf");
+//        Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "fonts/AvenirNextLTPro-MediumCn_0.otf");
 
 
         RelativeLayout relativeLayout = (RelativeLayout) view;
         TextView button = (TextView) relativeLayout.getChildAt(1);
 
-        msgI.setTypeface(tf);
+//        msgI.setTypeface(tf);
         msgI.setText(str);
 
 
         Button skip = (Button) dialog.findViewById(R.id.coolio);
-        skip.setTypeface(tf);
+        // skip.setTypeface(tf);
         Button dismiss = (Button) dialog.findViewById(R.id.coolio1);
-        dismiss.setTypeface(tf);
+        //     dismiss.setTypeface(tf);
         skip.setTag(button);
 
         skip.setOnClickListener(new View.OnClickListener() {
@@ -290,15 +305,15 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
         dialog.setContentView(R.layout.alert_relationship);
         dialog.setCancelable(false);
         TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
-        Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "fonts/AvenirNextLTPro-MediumCn_0.otf");
+//        Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "fonts/AvenirNextLTPro-MediumCn_0.otf");
 
         msgI.setText(str);
         Button skip = (Button) dialog.findViewById(R.id.coolio);
         Button dismiss = (Button) dialog.findViewById(R.id.coolio1);
 
-        msgI.setTypeface(tf);
-        skip.setTypeface(tf);
-        dismiss.setTypeface(tf);
+//        msgI.setTypeface(tf);
+//        skip.setTypeface(tf);
+//        dismiss.setTypeface(tf);
 
 
         RelativeLayout relativeLayout = (RelativeLayout) view;

@@ -17,19 +17,19 @@ import java.util.List;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class MainActivity extends Activity implements ActionBar.TabListener {
-    private ViewPager viewPager;
     ActionBar bar;
     List<Fragment> fragList = new ArrayList<Fragment>();
+    private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_card);
         viewPager = (ViewPager) findViewById(R.id.pager);
-         bar = getActionBar();
+        bar = getActionBar();
         bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-        for (int i=1; i <= 30; i++) {
+        for (int i = 1; i <= 30; i++) {
             Tab tab = bar.newTab();
             tab.setText("Tab " + i);
             tab.setTabListener(this);
@@ -70,11 +70,10 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
         if (f == null) {
             tf = new TabFragment();
             Bundle data = new Bundle();
-            data.putInt("idx",  tab.getPosition());
+            data.putInt("idx", tab.getPosition());
             tf.setArguments(data);
             fragList.add(tf);
-        }
-        else
+        } else
             tf = (TabFragment) f;
 
         fragmentTransaction.replace(android.R.id.content, tf);

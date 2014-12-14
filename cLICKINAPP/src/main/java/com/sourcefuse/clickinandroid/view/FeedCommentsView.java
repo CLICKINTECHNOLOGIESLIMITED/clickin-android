@@ -33,11 +33,7 @@ import de.greenrobot.event.EventBus;
  * Created by charunigam on 10/10/14.
  */
 public class FeedCommentsView extends Activity {
-    private ListView list;
-    private NewsFeedManager newsFeedManager;
-    private AuthManager authMgr;
-
-    ImageView menu,send_btn;
+    ImageView menu, send_btn;
     String news_feedId;
     boolean send = false;
     FeedsCommentsAdapter adapter;
@@ -45,29 +41,32 @@ public class FeedCommentsView extends Activity {
     EditText comment;
     InputMethodManager imm;
     int comment_count;
+    private ListView list;
+    private NewsFeedManager newsFeedManager;
+    private AuthManager authMgr;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         setContentView(R.layout.view_feeds_comments);
-        this.overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_right);
+        this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
         Bundle bundle = getIntent().getExtras();
-        if(bundle!=null)
-        {
-           news_feedId = bundle.getString("news_feed_id");
-           comment_count = bundle.getInt("comment_count");
+        if (bundle != null) {
+            news_feedId = bundle.getString("news_feed_id");
+            comment_count = bundle.getInt("comment_count");
         }
-        imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
         newsFeedManager = ModelManager.getInstance().getNewsFeedManager();
         authMgr = ModelManager.getInstance().getAuthorizationManager();
-        feedList =  newsFeedManager.feedStarsList;
+        feedList = newsFeedManager.feedStarsList;
 
         menu = (ImageView) findViewById(R.id.iv_menu);
         list = (ListView) findViewById(R.id.stars_list);
-        send_btn = (ImageView)findViewById(R.id.send_comment);
-        comment = (EditText)findViewById(R.id.comment_edit);
+        send_btn = (ImageView) findViewById(R.id.send_comment);
+        comment = (EditText) findViewById(R.id.comment_edit);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         send_btn.setEnabled(false);
@@ -77,7 +76,7 @@ public class FeedCommentsView extends Activity {
             public void onClick(View v) {
                 finish();
                 imm.hideSoftInputFromWindow(comment.getWindowToken(), 0);
-                if(send) {
+                if (send) {
                     Constants.comments = true;
                     newsFeedManager.fetchNewsFeed("", ModelManager.getInstance().getAuthorizationManager().getPhoneNo(), ModelManager.getInstance().getAuthorizationManager().getUsrToken());
                 }
@@ -86,7 +85,7 @@ public class FeedCommentsView extends Activity {
         send_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!comment.getText().toString().trim().equalsIgnoreCase("")) {
+                if (!comment.getText().toString().trim().equalsIgnoreCase("")) {
 
                     send = true;
 
@@ -103,7 +102,7 @@ public class FeedCommentsView extends Activity {
                         list.setSelection(list.getCount());
                     } else {
                         adapter.notifyDataSetChanged();
-                                list.setSelection(list.getCount());
+                        list.setSelection(list.getCount());
                     }
 
 
@@ -129,7 +128,7 @@ public class FeedCommentsView extends Activity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(!s.toString().trim().equalsIgnoreCase(""))
+                if (!s.toString().trim().equalsIgnoreCase(""))
                     send_btn.setEnabled(true);
                 else
                     send_btn.setEnabled(false);
@@ -138,9 +137,10 @@ public class FeedCommentsView extends Activity {
 
         Utils.launchBarDialog(FeedCommentsView.this);
 
-            newsFeedManager.fetchCommentStars(authMgr.getPhoneNo(), authMgr.getUsrToken(), "", news_feedId, "comment");
+        newsFeedManager.fetchCommentStars(authMgr.getPhoneNo(), authMgr.getUsrToken(), "", news_feedId, "comment");
 
     }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -157,11 +157,12 @@ public class FeedCommentsView extends Activity {
             EventBus.getDefault().unregister(this);
         }
     }
+
     public void onEventMainThread(String message) {
 
         if (message.equalsIgnoreCase("FetchCommentStatus True")) {
-            if(feedList.size()>comment_count)
-                Constants.comments=true;
+            if (feedList.size() > comment_count)
+                Constants.comments = true;
             adapter = new FeedsCommentsAdapter(this, R.layout.view_feeds_comments_row, feedList);
             list.setAdapter(adapter);
             Utils.dismissBarDialog();
@@ -171,5 +172,12 @@ public class FeedCommentsView extends Activity {
             Utils.fromSignalDialog(FeedCommentsView.this, AlertMessage.connectionError);
 
         }
+    }
+
+    //akshit code.
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(0, R.anim.top_out);//akshit code for animation
     }
 }

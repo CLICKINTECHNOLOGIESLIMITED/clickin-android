@@ -5,7 +5,6 @@ import android.net.Uri;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
-
 import com.quickblox.module.chat.QBPrivateChat;
 import com.sourcefuse.clickinandroid.utils.APIs;
 import com.sourcefuse.clickinandroid.utils.Log;
@@ -24,12 +23,13 @@ import de.greenrobot.event.EventBus;
   /* resize bit map*/
 
 public class AuthManager {
+    private static final String TAG = AuthManager.class.getSimpleName();
+    public String ourClicks = null;
+    //to track with which user we are in chat currently
+    public String partnerQbId = null;
     StringEntity se = null;
     AsyncHttpClient client;
-    private static final String TAG = AuthManager.class.getSimpleName();
     private AuthManager authManager;
-
-
     //values stored in Authmanager
     private Boolean isDeviceRegistered;
     private String message;
@@ -38,9 +38,57 @@ public class AuthManager {
     private String usrToken;
     private String userId;
     private String userName;
+    private String userPic;
+    private String emailId;
+    private String follower;
+    private String following;
+    private String isFollowing;
+    private String gender;
+    private String dOB;
+    private String deviceRegistereId;
+    private String userCity;
+    private String userCountry;
+    private Uri userImageUri = null;
+    private Bitmap userbitmap = null;
+    private Bitmap mResizeBitmap;
+    private Bitmap mOrginalBitmap;
+    private String tmpCity;
+    private String tmpCountry;
+    private String tmpFollowId;
+    private int tmpIsFollowingRequested;
+    private boolean editProfileFlag = false;
+    private String tmpQBId;
+    private String tmpUserId;
+    private String tmpUserName;
+    private String tmpUserPic = "";
+    private String tmpFollower = "0";
+    private String tmpFollowing = "0";
+    private int tmpIsFollowing;
+    private String tmpGender = "";
+    private String tmpDOB;
+    private String countrycode;
+    private boolean menuUserInfoFlag = false;
+    // private QBPrivateChat qBPrivateChatReal;
+    private QBPrivateChat qBPrivateChat;
+    private String mLatLan;
+    /* for notification counter */
+    private int mNotificationCounter;
 
+    public String getLatLan() {
+        return mLatLan;
+    }
 
+    public void setLatLan(String mLatLan) {
+        this.mLatLan = mLatLan;
+    }
 
+    public int getNotificationCounter() {
+        return mNotificationCounter;
+    }
+
+    public void setNotificationCounter(int mNotificationCounter) {
+        this.mNotificationCounter = mNotificationCounter;
+    }
 
 
     public String getDeviceRegistereId() {
@@ -51,47 +99,9 @@ public class AuthManager {
         this.deviceRegistereId = deviceRegistereId1;
     }
 
-    private String userPic;
-    private String emailId;
-    private String follower;
-
     public String getUserCity() {
         return userCity;
     }
-
-
-    private String following;
-    private String isFollowing;
-    private String gender;
-    private String dOB;
-    private String deviceRegistereId;
-    private String userCity;
-    private String userCountry;
-    private Uri userImageUri = null;
-    private Bitmap userbitmap;
-
-
-    private Bitmap mResizeBitmap;
-
-
-    private Bitmap mOrginalBitmap;
-
-    private String tmpCity;
-    private String tmpCountry;
-    private String tmpFollowId;
-    private int tmpIsFollowingRequested;
-
-    private boolean editProfileFlag = false;
-
-    private String tmpQBId;
-    private String tmpUserId;
-    private String tmpUserName;
-    private String tmpUserPic = "";
-    private String tmpFollower = "0";
-    private String tmpFollowing = "0";
-    private int tmpIsFollowing;
-    private String tmpGender = "";
-    private String tmpDOB;
 
     public void setUserCity(String userCity) {
         this.userCity = userCity;
@@ -301,7 +311,6 @@ public class AuthManager {
         this.dOB = dOB;
     }
 
-
     public String getCountrycode() {
         return countrycode;
     }
@@ -309,8 +318,6 @@ public class AuthManager {
     public void setCountrycode(String countrycode) {
         this.countrycode = countrycode;
     }
-
-    private String countrycode;
 
     public boolean isEditProfileFlag() {
         return editProfileFlag;
@@ -320,7 +327,6 @@ public class AuthManager {
         this.editProfileFlag = editProfileFlag;
     }
 
-
     public boolean isMenuUserInfoFlag() {
         return menuUserInfoFlag;
     }
@@ -328,9 +334,6 @@ public class AuthManager {
     public void setMenuUserInfoFlag(boolean menuUserInfoFlag) {
         this.menuUserInfoFlag = menuUserInfoFlag;
     }
-
-    private boolean menuUserInfoFlag = false;
-
 
     /**
      * @return the tmpQBId
@@ -417,7 +420,7 @@ public class AuthManager {
     }
 
     /**
-     * @return the tmpIsFollowing
+     * @return the tmpIsFollowin
      */
     public int getTmpIsFollowing() {
         return tmpIsFollowing;
@@ -514,10 +517,6 @@ public class AuthManager {
         this.tmpIsFollowingRequested = tmpIsFollowingRequested;
     }
 
-
-    // private QBPrivateChat qBPrivateChatReal;
-    private QBPrivateChat qBPrivateChat;
-
     public QBPrivateChat getqBPrivateChat() {
 
         return qBPrivateChat;
@@ -527,20 +526,20 @@ public class AuthManager {
         this.qBPrivateChat = qBPrivateChat;
     }
 
-    public void setUserImageUri(Uri uri) {
-        this.userImageUri = uri;
-    }
-
     public Uri getUserImageUri() {
         return this.userImageUri;
     }
 
-    public void setUserbitmap(Bitmap userbitmap) {
-        this.userbitmap = userbitmap;
+    public void setUserImageUri(Uri uri) {
+        this.userImageUri = uri;
     }
 
     public Bitmap getUserbitmap() {
         return this.userbitmap;
+    }
+
+    public void setUserbitmap(Bitmap userbitmap) {
+        this.userbitmap = userbitmap;
     }
 
 
@@ -563,7 +562,7 @@ public class AuthManager {
     }
 
 
-    public void signIn(String username, String password, String deviceToken,String deviceType) {
+    public void signIn(String username, String password, String deviceToken, String deviceType) {
         authManager = ModelManager.getInstance().getAuthorizationManager();
         JSONObject userInputDetails = new JSONObject();
         try {
@@ -1017,34 +1016,62 @@ public class AuthManager {
                     success = response.getBoolean("success");
                     if (success) {
 
+
                         if (!Utils.isEmptyString(othersphone)) {
                             JSONObject jobj = new JSONObject(response.getString("user"));
                             if (jobj.has("gender"))
                                 authManager.setTmpGender(jobj.getString("gender"));
                             else
-                                authManager.setGender("");
+                                authManager.setTmpGender("");
+
+                            //   android.util.Log.e("value of gender from server ---",""+jobj.getString("gender"));
+
                             if (jobj.has("follower"))
                                 authManager.setTmpFollower(jobj.getString("follower"));
+                            else
+                                authManager.setTmpFollower("");
                             if (jobj.has("following"))
                                 authManager.setTmpFollowing(jobj.getString("following"));
+                            else
+                                authManager.setTmpFollowing("");
+
                             if (jobj.has("is_following"))
                                 authManager.setTmpIsFollowing(jobj.getInt("is_following"));
+                            else
+                                authManager.setTmpIsFollowing(0);
                             if (jobj.has("name"))
                                 authManager.setTmpUserName(jobj.getString("name"));
+                            else
+                                authManager.setTmpUserName("");
                             if (jobj.has("user_pic"))
                                 authManager.setTmpUserPic(jobj.getString("user_pic"));
+                            else
+                                authManager.setTmpUserPic("");
                             if (jobj.has("dob"))
                                 authManager.setTmpDOB(jobj.getString("dob"));
+                            else
+                                authManager.setTmpDOB("");
                             if (jobj.has("is_following_requested"))
                                 authManager.setTmpIsFollowingRequested(jobj.getInt("is_following_requested"));
+                            else
+                                authManager.setTmpIsFollowingRequested(0);
+
+                            //akshit code for setting otheruser City and country
+                            if (jobj.has("city"))
+                                authManager.setTmpCity(jobj.getString("city"));
+                            else
+                                authManager.setTmpCity(jobj.getString(""));
+
+                            if (jobj.has("country"))
+                                authManager.setTmpCountry(jobj.getString("country"));
+                            else
+                                authManager.setTmpCountry(jobj.getString(""));
+                            //ends
 
                         } else {
                             JSONObject jobj = new JSONObject(response.getString("user"));
                             if (jobj.has("gender"))
                                 authManager.setGender(jobj.getString("gender"));
-//                            }else
-//                            authManager.setGender("");
-
                             if (jobj.has("follower"))
                                 authManager.setFollower(jobj.getString("follower"));
                             if (jobj.has("following"))
