@@ -23,8 +23,6 @@ import com.facebook.Session;
 import com.facebook.SessionState;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ChatManager;
-import com.sourcefuse.clickinandroid.utils.AlertMessage;
-import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
 import com.squareup.picasso.Picasso;
@@ -37,8 +35,6 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
 import java.util.TimeZone;
-
-import static com.facebook.Session.OpenRequest;
 
 /**
  * Created by prafull on 25/9/14.
@@ -130,8 +126,9 @@ public class ViewShare extends Activity implements View.OnClickListener {
             else if (!Utils.isEmptyString(audioID))
               {
                   ImageView shr_image = (ImageView) findViewById(R.id.shr_user_image);
+                  shr_image.setBackgroundResource(R.color.white);//akshit code
                   shr_image.setVisibility(View.VISIBLE);
-                  shr_image.setBackgroundResource(R.drawable.soundicon_);
+                  shr_image.setImageResource(R.drawable.soundicon_);//akshit code
                   shr_caption.setHint("Write your caption \nhere...");
               }
 
@@ -260,7 +257,7 @@ public class ViewShare extends Activity implements View.OnClickListener {
     private void onSessionStateChange(Session session, SessionState state, Exception exception) {
         if (state.isOpened()) {
             access_Token = session.getAccessToken();
-            Log.e("access_Token", "access_Token->" + access_Token);
+            android.util.Log.e("access_Token", "access_Token->" + access_Token);
 
 /*
             OpenRequest op = new OpenRequest(ViewShare.this);
@@ -299,7 +296,7 @@ public class ViewShare extends Activity implements View.OnClickListener {
 
     private void publishStory() {
 
-        Log.e("publishStory", "publishStory");
+        android.util.Log.e("publishStory", "publishStory");
         Session session = Session.getActiveSession();
 
         if (session != null) {
@@ -329,7 +326,7 @@ public class ViewShare extends Activity implements View.OnClickListener {
                     try {
                         postId = graphResponse.getString("id");
                     } catch (JSONException e) {
-                        Log.e(TAG, "JSON error " + e.getMessage());
+                        android.util.Log.e(TAG, "JSON error " + e.getMessage());
                     }
                     FacebookRequestError error = response.getError();
                     if (error != null) {

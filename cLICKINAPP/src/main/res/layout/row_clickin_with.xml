@@ -38,7 +38,7 @@
             android:textStyle="bold"
             geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
 
-        <TextView
+        <com.sourcefuse.clickinandroid.utils.ClickInTextView
             android:id="@+id/tv_unread"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -47,10 +47,12 @@
             android:layout_gravity="center_vertical"
             android:layout_marginRight="10dp"
             android:background="@drawable/blue_circle"
-            android:padding="2dp"
+            android:padding="3dp"
             android:text="55"
+            android:gravity="center"
             android:textSize="13sp"
-            android:visibility="gone" />
+            android:visibility="visible"
+            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
     </LinearLayout>
 
     <ImageView

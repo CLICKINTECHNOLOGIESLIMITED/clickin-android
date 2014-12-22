@@ -135,7 +135,7 @@ public final class NativeAppCallAttachmentStore implements NativeAppCallContentP
                 processor.processAttachment(attachment, file);
             }
         } catch (IOException exception) {
-            Log.e(TAG, "Got unexpected exception:" + exception);
+            android.util.Log.e(TAG, "Got unexpected exception:" + exception);
             for (File file : filesToCleanup) {
                 try {
                     file.delete();

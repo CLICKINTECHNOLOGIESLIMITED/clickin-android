@@ -69,7 +69,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
         if (temp.senderQbId.equalsIgnoreCase(oursQbId)) { //start of sender
 
 
-            Log.e(TAG, "getView" + "getView");//SENDER
+            android.util.Log.e(TAG, "getView" + "getView");//SENDER
 
 
             LinearLayout parent_shared_layout = (LinearLayout) row.findViewById(R.id.parent_shared_layout);
@@ -126,7 +126,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     ((ImageView) row.findViewById(R.id.iv_type_two_share_icon_r)).setVisibility(View.GONE);
                     sendStatusView.setImageResource(R.drawable.r_single_tick);
                     Bitmap bitmap = null;
-                    if (temp.content_url.contains("http")) {
+                    if (!temp.content_url.contains("http")) {
                         bitmap = Utils.path(Uri.parse(temp.content_url));
                     }
                     if (bitmap != null) {
@@ -141,6 +141,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     sendStatusView.setImageResource(R.drawable.double_check);
                     Picasso.with(context).load(temp.content_url).resize(300, 300).centerCrop().into(image_attached);
                 }
+
+
+
                 image_attached.setScaleType(ImageView.ScaleType.FIT_XY);
                 image_attached.setVisibility(View.VISIBLE);
   /* for map to set text location shared */
@@ -239,23 +242,37 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
 
                 if (!(Utils.isEmptyString(temp.isDelivered)) && temp.isDelivered.equalsIgnoreCase(Constants.MSG_SENDING)) {
-                    android.util.Log.e("in one video", "in one video");
+                    //android.util.android.util.Log.e("in one video", "in one video");
                     row.findViewById(R.id.pb_loding).setVisibility(View.VISIBLE);
                     row.findViewById(R.id.iv_type_two_share_icon_r).setVisibility(View.GONE);
                     sendStatusView.setImageResource(R.drawable.r_single_tick);
 
+
+/* case when thumb is not uploaded form server prafull*/
+                    Bitmap bitmap = null;
+                    if (!temp.video_thumb.contains("http")) {
+                        bitmap = Utils.path(Uri.parse(temp.video_thumb));
+                    }
+                    if (bitmap != null) {
+                        image_attached.setImageBitmap(bitmap);
+                    } else {
+                        Picasso.with(context).load(temp.video_thumb)
+                                .into(image_attached);
+                    }
+
                 } else if (!(Utils.isEmptyString(temp.isDelivered)) && temp.isDelivered.equalsIgnoreCase(Constants.MSG_SENT)) {
 
-                    android.util.Log.e("in two video", "in two video");
+                   // android.util.android.util.Log.e("in two video", "in two video");
 
                     row.findViewById(R.id.pb_loding).setVisibility(View.GONE);
                     row.findViewById(R.id.iv_type_two_share_icon_r).setVisibility(View.VISIBLE);
                     sendStatusView.setImageResource(R.drawable.double_check);
+                    /* case when text is uploaded */
+                    Picasso.with(context).load(temp.video_thumb)
+                            .into(image_attached);
                 }
 
-                Picasso.with(context).load(temp.video_thumb)
 
-                        .into(image_attached);
 
                 image_attached.setScaleType(ImageView.ScaleType.FIT_XY);
                 image_attached.setVisibility(View.VISIBLE);
@@ -288,7 +305,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                             String url_to_load = (temp.card_url).replaceFirst("cards\\/(\\d+)\\.jpg", "cards\\/a\\/1080\\/$1\\.jpg");
                             Picasso.with(context).load(url_to_load)
                                     .into(trade_image);
-                            Log.e("URL FOR CARD", "URL>>>>>>>>>>>>>" + url_to_load);
+                            android.util.Log.e("URL FOR CARD", "URL>>>>>>>>>>>>>" + url_to_load);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -393,13 +410,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 //code to hide share icon for text messages-monika
                 if (Utils.isEmptyString(temp.content_url))
                     ((LinearLayout) row.findViewById(R.id.ll_for_share_icon)).setVisibility(View.GONE);
-
                 chatClickTextLayout.setVisibility(View.VISIBLE);
-                LinearLayout clicksArea = (LinearLayout) row.findViewById(R.id.clicks_area);
-                clicksArea.setVisibility(View.VISIBLE);
-                TextView chatText = (TextView) row.findViewById(R.id.long_chat_text); // prafull code
-                chatText.setVisibility(View.VISIBLE);
-                chatText.setTextColor(context.getResources().getColor(R.color.black));
+
+
                 if (!Utils.isEmptyString(temp.sharingMedia)) { // for share case-praful
                     LinearLayout mShareLayout = (LinearLayout) row.findViewById(R.id.parent_clicks_area_share);
                     mShareLayout.setBackgroundResource(R.color.white);
@@ -408,8 +421,17 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     mShareText.setVisibility(View.VISIBLE);
                     mShareText.setText("" + temp.textMsg);
                     mShareText.setTextColor(context.getResources().getColor(R.color.black));
+//                    RelativeLayout.LayoutParams mTextParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//                    mTextParams.setMargins(0, 0, 0, 100);
+//                    mShareLayout.setLayoutParams(mTextParams);
+                    // mShareLayout.setPadding(0,0,0,50);
                 } else {
+                    LinearLayout clicksArea = (LinearLayout) row.findViewById(R.id.clicks_area);
+                    clicksArea.setVisibility(View.VISIBLE);
+                    TextView chatText = (TextView) row.findViewById(R.id.long_chat_text); // prafull code
                     parent_shared_layout.setBackgroundResource(R.drawable.newbg_grey);
+                    chatText.setVisibility(View.VISIBLE);
+                    chatText.setTextColor(context.getResources().getColor(R.color.black));
                     chatText.setBackgroundResource(R.drawable.grey_square);
                     chatText.setText("" + temp.textMsg);
                     LinearLayout.LayoutParams mTextParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -494,6 +516,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     if (temp.textMsg.length() > Constants.CHAT_LENTH_LIMIT) {
                         mShareSort.setText(temp.textMsg.substring(0, 12));
                         mShareSort.setVisibility(View.VISIBLE);
+                        mShareLong.setText(temp.textMsg.substring(13));//akshit changes
                         mShareLong.setTextColor(context.getResources().getColor(R.color.white));
                         mShareLong.setVisibility(View.VISIBLE);
 
@@ -509,7 +532,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
             if (!Utils.isEmptyString(temp.sharingMedia)) {
 
-                Log.e("in share media-->", "in share media-->");
+                android.util.Log.e("in share media-->", "in share media-->");
                 if (temp.shareStatus.equalsIgnoreCase("shareAccepted")) { // set tip iamge for share accepted
                     parent_shared_layout.setBackgroundResource(R.drawable.sharedleft);
                     row.findViewById(R.id.parent_clicks_area).setVisibility(View.GONE);
@@ -579,17 +602,17 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
                 if (!Utils.isEmptyString(temp.textMsg) && !temp.clicks.equalsIgnoreCase("no")) // case for image with click
                 {
-                    Log.e("case 1 --->", "case 1 --->");
+                    android.util.Log.e("case 1 --->", "case 1 --->");
                     mImageParams.setMargins(15, 2, 5, 7);
                     mImageLayout.setLayoutParams(mImageParams);
                     image_attached.setPadding(5, 0, 0, 0);
                 } else if (!temp.clicks.equalsIgnoreCase("no")) //text without click
                 {
-                    Log.e("case 2 --->", "case 2 --->");
+                    android.util.Log.e("case 2 --->", "case 2 --->");
                     mImageParams.setMargins(5, 4, 5, 11);
                     mImageLayout.setLayoutParams(mImageParams);
                 } else {
-                    Log.e("case 3 --->", "case 3 --->");
+                    android.util.Log.e("case 3 --->", "case 3 --->");
                     // case without text and without click
                     mImageParams.setMargins(7, 4, 25, 11);
                     mImageLayout.setLayoutParams(mImageParams);
@@ -639,10 +662,10 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
                 if (Utils.isEmptyString(temp.textMsg) && temp.clicks.equalsIgnoreCase("no")) {
                     parent_shared_layout.setPadding(10, 5, 30, 5); // set padding
-                    Log.e("in audio case 1", "in audio case 1");
+                    android.util.Log.e("in audio case 1", "in audio case 1");
                 } else {
                     parent_shared_layout.setPadding(50, 5, 30, 5); // set padding
-                    Log.e("in audio case 2", "in audio case 2");
+                    android.util.Log.e("in audio case 2", "in audio case 2");
                 }
 
                 row.findViewById(R.id.temp_layout).setVisibility(View.VISIBLE);
@@ -700,7 +723,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 /* log for video */
 
 
-                android.util.Log.e("temp thumb for video", "" + temp.video_thumb);
+                //android.util.android.util.Log.e("temp thumb for video", "" + temp.video_thumb);
 
 
                 /* log for video */
@@ -708,7 +731,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
                 if (!(Utils.isEmptyString(temp.isDelivered)) && temp.isDelivered.equalsIgnoreCase(Constants.MSG_SENDING)) {
 
-                    android.util.Log.e("in one video", "in one video");
+                    //android.util.android.util.Log.e("in one video", "in one video");
 
                     ((ProgressBar) row.findViewById(R.id.pb_loding)).setVisibility(View.VISIBLE);
                     ((ImageView) row.findViewById(R.id.iv_type_two_share_icon_r)).setVisibility(View.GONE);
@@ -718,7 +741,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     row.findViewById(R.id.pb_loding).setVisibility(View.GONE);
                     row.findViewById(R.id.iv_type_two_share_icon_r).setVisibility(View.VISIBLE);
                     sendStatusView.setImageResource(R.drawable.double_check);
-                    android.util.Log.e("in two video", "in two video");
+                    //android.util.android.util.Log.e("in two video", "in two video");
                 }
 
                 Picasso.with(context).load(temp.video_thumb)
@@ -953,7 +976,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     chatText.setText(temp.textMsg);
                 }
 
-                Log.e("reciver only text case------>", "reciver only text case------>");
+                android.util.Log.e("reciver only text case------>", "reciver only text case------>");
 
             }//end of text- receiver end
 
@@ -961,7 +984,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
             if (!(temp.clicks.equalsIgnoreCase("no")) && Utils.isEmptyString(temp.card_id) && Utils.isEmptyString(temp.sharingMedia)) {
 
-                Log.e("reciver click case------>", "reciver click case------>");
+                android.util.Log.e("reciver click case------>", "reciver click case------>");
 
                 chatClickTextLayout.setVisibility(View.VISIBLE);
                 LinearLayout clicksArea = (LinearLayout) row.findViewById(R.id.clicks_area);
@@ -1015,7 +1038,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 parent_shared_layout.setBackgroundResource(R.drawable.newbg);
                 parent_shared_layout.setVisibility(View.VISIBLE);
 
-                Log.e("at reciver end in share--->", "at reciver end in share--->");
+                android.util.Log.e("at reciver end in share--->", "at reciver end in share--->");
                 LinearLayout mClickArea = (LinearLayout) row.findViewById(R.id.clicks_area_share);
                 mClickArea.setVisibility(View.VISIBLE);
                 TextView mShareText = (TextView) row.findViewById(R.id.clicks_text_share);
@@ -1196,9 +1219,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
         ChatMessageBody item = ModelManager.getInstance().getChatManager().chatMessageList.get(position);
         if (!(Utils.isEmptyString(item.location_coordinates))) {
 
-            android.util.Log.e("open map--->", "open map--->");
+            //android.util.android.util.Log.e("open map--->", "open map--->");
             String coordinates = item.location_coordinates;
-            android.util.Log.e("location coordinates-->", "" + coordinates);
+           // android.util.android.util.Log.e("location coordinates-->", "" + coordinates);
             Intent intent = new Intent(context, MapView.class);
             intent.putExtra("from", "chatrecord");
             intent.putExtra("coordinates", coordinates);
@@ -1211,9 +1234,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
 
         } else if (!(Utils.isEmptyString(item.imageRatio))) {
-            android.util.Log.e("image play", "image play");
-            android.util.Log.e("location coordinates-->", "" + item.location_coordinates);
-            android.util.Log.e("image url --->", "" + item.content_url);
+           /* android.util.android.util.Log.e("image play", "image play");
+            android.util.android.util.Log.e("location coordinates-->", "" + item.location_coordinates);
+            android.util.android.util.Log.e("image url --->", "" + item.content_url);*/
 
             Uri uri = Uri.parse(item.content_url);
             Intent it = new Intent(Intent.ACTION_VIEW);
@@ -1224,8 +1247,8 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 e.printStackTrace();
             }
         } else if (!Utils.isEmptyString(item.video_thumb)) {
-            android.util.Log.e("video play", "video play");
-            android.util.Log.e("video url --->", "" + item.content_url);
+            /*android.util.android.util.Log.e("video play", "video play");
+            android.util.android.util.Log.e("video url --->", "" + item.content_url);*/
 
             Uri intentUri = Uri.parse(item.content_url);
 
@@ -1239,10 +1262,10 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
             }
 
         } else if (!Utils.isEmptyString(item.content_url) && Utils.isEmptyString(item.video_thumb)) {
-            android.util.Log.e("audio play", "audio play");
-            android.util.Log.e("audio url --->", "" + item.content_url);
+            /*android.util.android.util.Log.e("audio play", "audio play");
+            android.util.android.util.Log.e("audio url --->", "" + item.content_url);*/
 
-            Log.e("play audio", "play audio");
+            android.util.Log.e("play audio", "play audio");
 
             Uri intentUri = Uri.parse(item.content_url);
             Intent intent = new Intent();

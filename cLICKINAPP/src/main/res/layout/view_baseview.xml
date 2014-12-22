@@ -1,8 +1,37 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:geekui="http://schemas.android.com/apk/res-auto"
     android:id="@+id/relative_layout_root_baseview"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="10dp">
 
+    <com.sourcefuse.clickinandroid.utils.ClickInTextView
+        android:id="@+id/iv_open_right_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="1dp"
+        android:background="@drawable/owner_profile_hedder_icon"
+        android:gravity="center"
+        android:textColor="@color/row_select_notification_bg"
+        android:textSize="13dp"
+        android:textStyle="bold"
+        geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
+
+    <ImageView
+        android:id="@+id/iv_open_left_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="3dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="50dp"
+        android:paddingTop="10dp"
+        android:src="@drawable/owner_profile_top_icon"
+        />
 
 </RelativeLayout>

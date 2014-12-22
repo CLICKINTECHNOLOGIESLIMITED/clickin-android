@@ -22,13 +22,13 @@ public class AudioUtil {
     private static MediaRecorder.OnErrorListener errorListener = new MediaRecorder.OnErrorListener() {
         @Override
         public void onError(MediaRecorder mr, int what, int extra) {
-            Log.e("Error: ", "what-> " + what + ", " + extra);
+            android.util.Log.e("Error: ", "what-> " + what + ", " + extra);
         }
     };
     private static MediaRecorder.OnInfoListener infoListener = new MediaRecorder.OnInfoListener() {
         @Override
         public void onInfo(MediaRecorder mr, int what, int extra) {
-            Log.e("Warning: ", "what-> " + what + ", " + extra);
+            android.util.Log.e("Warning: ", "what-> " + what + ", " + extra);
         }
     };
 
@@ -39,7 +39,7 @@ public class AudioUtil {
         recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
         fileName = getFilename();
         recorder.setOutputFile(fileName);
-        Log.e("Filename:", "" + fileName);
+        android.util.Log.e("Filename:", "" + fileName);
         recorder.setOnErrorListener(errorListener);
         recorder.setOnInfoListener(infoListener);
 

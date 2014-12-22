@@ -123,7 +123,7 @@ public class PlayItSafeView extends Activity implements View.OnClickListener, Te
     }
 
     public void onEventMainThread(String message) {
-        Log.d(TAG, "onEventMainThread->" + message);
+        android.util.Log.d(TAG, "onEventMainThread->" + message);
 
         authManager = ModelManager.getInstance().getAuthorizationManager();
         if (message.equalsIgnoreCase("PlayItSafe True")) {

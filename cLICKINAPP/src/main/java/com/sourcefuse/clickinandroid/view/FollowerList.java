@@ -26,7 +26,6 @@ public class FollowerList extends ClickInBaseView implements
     public static FollowerAdapter adapter;
     public static boolean fromOwnProfile = false;
     public static boolean mListchangeVariable_flag = false;
-    private ImageView back, notification;
     private ListView listView;
     private ProfileManager profManager;
     private AuthManager authManager;
@@ -48,10 +47,7 @@ public class FollowerList extends ClickInBaseView implements
         mFollowerListView = (RelativeLayout) findViewById(R.id.rl_followerdata);
         mFollowerListEmpty = (RelativeLayout) findViewById(R.id.rl_empty_follower);
         profileName = (TextView) findViewById(R.id.tv_profile_txt_wer);
-        back = (ImageView) findViewById(R.id.iv_back);
-        notification = (ImageView) findViewById(R.id.iv_notification_list);
-        back.setOnClickListener(this);
-        notification.setOnClickListener(this);
+
         profManager = ModelManager.getInstance().getProfileManager();
         authManager = ModelManager.getInstance().getAuthorizationManager();
 
@@ -94,7 +90,7 @@ public class FollowerList extends ClickInBaseView implements
         if (profManager.followers.size() > 0) {
             mFollowerListView.setVisibility(View.VISIBLE);
             mFollowerListEmpty.setVisibility(View.GONE);
-            com.sourcefuse.clickinandroid.utils.Log.e("size---->", "" + profManager.followers.size());
+            //com.sourcefuse.clickinandroid.utils.android.util.Log.e("size---->", "" + profManager.followers.size());
             adapter = new FollowerAdapter(this, R.layout.row_follower, profManager.followers);
             int index = listView.getFirstVisiblePosition();
             View v = listView.getChildAt(0);
@@ -115,12 +111,7 @@ public class FollowerList extends ClickInBaseView implements
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.iv_back:
-                onBackPressed();
-                break;
-            case R.id.iv_notification_list:
-                slidemenu.showSecondaryMenu(true);
-                break;
+
         }
 
     }
@@ -144,7 +135,8 @@ public class FollowerList extends ClickInBaseView implements
 
     public void onEventMainThread(String getMsg) {
         super.onEventMainThread(getMsg);
-        Log.d(TAG, "onEventMainThread->" + getMsg);
+        Utils.dismissBarDialog();
+        android.util.Log.d(TAG, "onEventMainThread->" + getMsg);
         authManager = ModelManager.getInstance().getAuthorizationManager();
         if (getMsg.equalsIgnoreCase("UnFollowUser true")) {
 
@@ -165,14 +157,14 @@ public class FollowerList extends ClickInBaseView implements
         } else if (getMsg.equalsIgnoreCase("GetFollower True")) {
             Utils.dismissBarDialog();
             setlist();
-            Log.d("1", "message->" + getMsg);
+            android.util.Log.d("1", "message->" + getMsg);
         } else if (getMsg.equalsIgnoreCase("GetFollower False")) {
             Utils.dismissBarDialog();
-            Log.d("2", "message->" + getMsg);
+            android.util.Log.d("2", "message->" + getMsg);
         } else if (getMsg.equalsIgnoreCase("GetFollower Network Error")) {
             Utils.dismissBarDialog();
             Utils.fromSignalDialog(FollowerList.this, AlertMessage.connectionError);
-            Log.d("3", "message->" + getMsg);
+            android.util.Log.d("3", "message->" + getMsg);
         } else if (getMsg.equalsIgnoreCase("followUpdateStatus True")) {
 
 

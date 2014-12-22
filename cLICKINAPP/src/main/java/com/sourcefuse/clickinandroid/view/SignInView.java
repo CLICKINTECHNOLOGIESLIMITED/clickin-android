@@ -90,13 +90,13 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
         authManager = ModelManager.getInstance().getAuthorizationManager();
         try {
             GPSTracker gpsTracker = new GPSTracker(this);
-            Log.e("in try--->", "in try");
+            android.util.Log.e("in try--->", "in try");
             String latlan = gpsTracker.getLatitude() + ";" + gpsTracker.getLongitude();
-            Log.e("latlan--->", "" + latlan);
+            android.util.Log.e("latlan--->", "" + latlan);
             authManager.setLatLan(latlan);
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e("in exceptin anroid--->", "in exception---");
+            android.util.Log.e("in exceptin anroid--->", "in exception---");
         }
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
@@ -104,9 +104,9 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
 
 
         Utils.deviceId = Utils.getRegId(SignInView.this);
-        Log.e("device reg id---->", "device reg id--->");
-        Log.e("device reg id aa---->", "" + Utils.getRegId(SignInView.this));
-        Log.e("device reg id aa---->", "" + Utils.deviceId);
+        android.util.Log.e("device reg id---->", "device reg id--->");
+        android.util.Log.e("device reg id aa---->", "" + Utils.getRegId(SignInView.this));
+        android.util.Log.e("device reg id aa---->", "" + Utils.deviceId);
         authManager.setDeviceRegistereId(Utils.deviceId);
         do_latter = (Button) findViewById(R.id.btn_get_clickin_signin);
         ephone = (EditText) findViewById(R.id.edt_email_phoneno);
@@ -211,15 +211,15 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
 
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(layout.getWindowToken(), 0);
-//                Log.e(TAG,"ephone ewithout" +ephone.getText().toString());
+//                android.util.Log.e(TAG,"ephone ewithout" +ephone.getText().toString());
                 if (activeDone && ephone.getText().toString().trim().length() > 0 && ephone.getText().toString() != "+(null)" && ePwd.getText().toString().length() > 0) {
                     getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
                     authManager = ModelManager.getInstance().getAuthorizationManager();
                     Utils.launchBarDialog(SignInView.this);
-                    Log.e("device id from utils-->", "" + Utils.deviceId);
-                    Log.e("device id from auth-->", "" + authManager.getDeviceRegistereId());
+                    android.util.Log.e("device id from utils-->", "" + Utils.deviceId);
+                    android.util.Log.e("device id from auth-->", "" + authManager.getDeviceRegistereId());
                     authManager.signIn(ephone.getText().toString().trim(), ePwd.getText().toString().trim(), Utils.deviceId, Constants.DEVICETYPE);
-//                    Log.e(TAG,"Phone no without space" +ephone.getText().toString().trim());
+//                    android.util.Log.e(TAG,"Phone no without space" +ephone.getText().toString().trim());
                 } else if (ephone.getText().toString().length() == 0) {
                     Utils.fromSignalDialog(this, AlertMessage.enterPhoneEmail);
                 } else if (ePwd.getText().toString().length() == 0) {
@@ -263,15 +263,17 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
     }
 
     public void onEventMainThread(String getMsg) {
-        Log.d(TAG, "onEventMainThread->" + getMsg);
+        android.util.Log.d(TAG, "onEventMainThread->" + getMsg);
         authManager = ModelManager.getInstance().getAuthorizationManager();
         if (getMsg.equalsIgnoreCase("SignIn True")) {
-            //save only those values in sharedprefrence that required to sing in
+            //save only those values in sharedprefrence that required to sign in
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
             SharedPreferences.Editor editor = preferences.edit();
             editor.putString("myPhoneNo", authManager.getPhoneNo());
             editor.putString("pwd", ePwd.getText().toString().trim());
             editor.putString("DeviceId", Utils.deviceId);
+            editor.putString("authToken",ModelManager.getInstance().getAuthorizationManager().getUsrToken());
+            editor.putString("userid",ModelManager.getInstance().getAuthorizationManager().getUserId());
             //  editor.putString("DeviceType",Constants.DEVICETYPE);
             editor.commit();
 

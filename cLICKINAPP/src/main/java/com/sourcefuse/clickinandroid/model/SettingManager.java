@@ -18,21 +18,21 @@ import de.greenrobot.event.EventBus;
  */
 public class SettingManager {
     private static final String TAG = SettingManager.class.getSimpleName();
+    //akshit Code For App Sound
+    public static boolean appSounds = true;
+    public static boolean mNotification_Enable = true;
     StringEntity se = null;
     private AuthManager authManager;
     private AsyncHttpClient client;
 
-    //akshit Code For App Sound
-    public static boolean appSounds = true ;
     public static boolean isAppSounds() {
         return appSounds;
     }
+//Ends
 
     public static void setAppSounds(boolean appSounds) {
         SettingManager.appSounds = appSounds;
     }
-//Ends
-
 
     public void changePassword(String phone_no, String user_token, String old_password, String new_password, String confirm_password) {
         authManager = ModelManager.getInstance().getAuthorizationManager();
@@ -47,7 +47,7 @@ public class SettingManager {
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            Log.e(TAG, "changePassword-->" + userInputDetails);
+            android.util.Log.e(TAG, "changePassword-->" + userInputDetails);
         } catch (Exception e1) {
             e1.printStackTrace();
         }
@@ -69,7 +69,7 @@ public class SettingManager {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            Log.e(TAG, "response ChangePassword ->" + response);
+                            android.util.Log.e(TAG, "response ChangePassword ->" + response);
                             state = response.getBoolean("success");
                             if (state) {
 
@@ -86,7 +86,7 @@ public class SettingManager {
         );
     }
 
-    public void enableDisablePushNotifications(String phone_no, String user_token, String isEnable) {
+    public void enableDisablePushNotifications(String phone_no, String user_token, final String isEnable) {
         authManager = ModelManager.getInstance().getAuthorizationManager();
         JSONObject userInputDetails = new JSONObject();
         try {
@@ -98,7 +98,7 @@ public class SettingManager {
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            Log.e(TAG, "PushNotifications-->" + se);
+            android.util.Log.e(TAG, "PushNotifications-->" + se);
         } catch (Exception e1) {
             e1.printStackTrace();
         }
@@ -120,12 +120,13 @@ public class SettingManager {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            Log.e(TAG, "response ChangePassword ->" + response);
+                            android.util.Log.e(TAG, "response ChangePassword ->" + response);
                             state = response.getBoolean("success");
                             if (state) {
 
                                 EventBus.getDefault().post("PushNotifications True");
                             }
+                            SettingManager.mNotification_Enable = Boolean.parseBoolean(isEnable);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -151,11 +152,11 @@ public class SettingManager {
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            Log.e(TAG, "changePassword-->" + se);
+            android.util.Log.e(TAG, "changePassword-->" + se);
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        Log.e(TAG, "send json ->" + userInputDetails);
+        android.util.Log.e(TAG, "send json ->" + userInputDetails);
         client.post(null, APIs.SETTINGCHANGEDEACTIVATE, se, "application/json",
                 new JsonHttpResponseHandler() {
 
@@ -174,7 +175,7 @@ public class SettingManager {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            Log.e(TAG, "response DeactivteAccount ->" + response);
+                            android.util.Log.e(TAG, "response DeactivteAccount ->" + response);
                             state = response.getBoolean("success");
                             if (state) {
 
@@ -204,7 +205,7 @@ public class SettingManager {
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            Log.e(TAG, "reportaproblem-->" + userInputDetails);
+            android.util.Log.e(TAG, "reportaproblem-->" + userInputDetails);
         } catch (Exception e1) {
             e1.printStackTrace();
         }
@@ -226,7 +227,7 @@ public class SettingManager {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            Log.e(TAG, "response ReportaProblem ->" + response);
+                            android.util.Log.e(TAG, "response ReportaProblem ->" + response);
                             state = response.getBoolean("success");
                             if (state) {
 
@@ -252,7 +253,7 @@ public class SettingManager {
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            Log.e(TAG, "ForgotPassword-->" + se);
+            android.util.Log.e(TAG, "ForgotPassword-->" + se);
         } catch (Exception e1) {
             e1.printStackTrace();
         }
@@ -306,7 +307,7 @@ public class SettingManager {
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            Log.e(TAG, "reportaproblem-->" + se);
+            android.util.Log.e(TAG, "reportaproblem-->" + se);
         } catch (Exception e1) {
             e1.printStackTrace();
         }
@@ -328,7 +329,7 @@ public class SettingManager {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            Log.e(TAG, "response ChangeLastSeenTime ->" + response);
+                            android.util.Log.e(TAG, "response ChangeLastSeenTime ->" + response);
                             state = response.getBoolean("success");
                             if (state) {
 

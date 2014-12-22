@@ -119,10 +119,10 @@ public class Card extends Activity implements View.OnClickListener, TextWatcher 
             cardDiscription = intent.getStringExtra("Discription");
             card_Db_id = intent.getStringExtra("card_DB_ID");
 
-            Log.e(TAG, "Url for the fetched Card is" + url + "," + cardTitle + "," + cardDiscription + "," + card_Db_id);
+            android.util.Log.e(TAG, "Url for the fetched Card is" + url + "," + cardTitle + "," + cardDiscription + "," + card_Db_id);
 
         } else {
-            Log.e(TAG, "Value in intent in null");
+            android.util.Log.e(TAG, "Value in intent in null");
         }
         try {
             String url_to_load = url.replaceFirst("cards\\/(\\d+)\\.jpg", "cards\\/a\\/1080\\/$1\\.jpg");
@@ -142,11 +142,11 @@ public class Card extends Activity implements View.OnClickListener, TextWatcher 
                             Utils.dismissBarDialog();
                         }
                     });
-            Log.e(TAG, "Modified Url In The Picasso >>>>" + url_to_load);
+            android.util.Log.e(TAG, "Modified Url In The Picasso >>>>" + url_to_load);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Log.e(TAG, "Original Url" + url);
+        android.util.Log.e(TAG, "Original Url" + url);
     }
 
 

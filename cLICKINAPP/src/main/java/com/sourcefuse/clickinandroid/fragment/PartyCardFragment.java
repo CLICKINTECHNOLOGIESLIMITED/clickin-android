@@ -40,7 +40,6 @@ public class PartyCardFragment extends Fragment {
         card = bean.getTab_content();
 
         // chatManager.categories.get("All");
-        Log.e(TAG, "Msg CCard To check" + card);
 
         if (card.equals("All")) {
 

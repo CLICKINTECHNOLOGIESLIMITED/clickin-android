@@ -12,8 +12,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.sourcefuse.clickinandroid.model.bean.NotificationBean;
-import com.sourcefuse.clickinandroid.utils.Log;
-import com.sourcefuse.clickinandroid.view.ClickInBaseView;
 import com.sourcefuse.clickinandroid.view.FeedView;
 import com.sourcefuse.clickinandroid.view.FollowerList;
 import com.sourcefuse.clickinandroid.view.FollowingListView;
@@ -75,13 +73,13 @@ public class NotificationAdapter extends ArrayAdapter<NotificationBean> {
 
         }
 
-        Log.e("type from notification---->", "" + item.getNotificationType());
+
 /* no image for has ended relation ship */
         rholder.notificationMsg.setText(item.getNotificationMsg());
         holder.mNotificationLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ClickInBaseView.slidemenu.showContent();
+             //   ClickInBaseView.slidemenu.showContent();
                 if (item.getNotificationType().matches(context.getResources().getString(R.string.txt_relationstatus)) ||
                         item.getNotificationType().matches(context.getResources().getString(R.string.txt_relation_visibility))
                         || item.getNotificationType().equalsIgnoreCase(context.getResources().getString(R.string.txt_relationrequest))) {

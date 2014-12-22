@@ -25,7 +25,6 @@ public class FollowingListView extends ClickInBaseView implements View.OnClickLi
     public static boolean fromOwnProfile = false;
     public static boolean mchangeinList = false;
     public FollowingAdapter adapter;
-    private ImageView back, notification;
     private ListView listView;
     private ProfileManager profManager;
     private AuthManager authManager;
@@ -43,13 +42,10 @@ public class FollowingListView extends ClickInBaseView implements View.OnClickLi
         listView = (ListView) findViewById(R.id.list_following);
         mFollowingListView = (RelativeLayout) findViewById(R.id.rl_followingdata);
         mFollowingListEmpty = (RelativeLayout) findViewById(R.id.rl_empty_following);
-        back = (ImageView) findViewById(R.id.iv_back_ing);
         profileName = (TextView) findViewById(R.id.tv_profile_txt_ing);
 
 
-        notification = (ImageView) findViewById(R.id.iv_notification_list_ing);
-        back.setOnClickListener(this);
-        notification.setOnClickListener(this);
+
         profManager = ModelManager.getInstance().getProfileManager();
         authManager = ModelManager.getInstance().getAuthorizationManager();
 
@@ -105,12 +101,7 @@ public class FollowingListView extends ClickInBaseView implements View.OnClickLi
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.iv_back_ing:
-                onBackPressed();
-                break;
-            case R.id.iv_notification_list_ing:
-                slidemenu.showSecondaryMenu(true);
-                break;
+
         }
 
     }
@@ -135,33 +126,33 @@ public class FollowingListView extends ClickInBaseView implements View.OnClickLi
 
     public void onEventMainThread(String getMsg) {
         super.onEventMainThread(getMsg);
-        Log.d(TAG, "onEventMainThread->" + getMsg);
+        android.util.Log.d(TAG, "onEventMainThread->" + getMsg);
         authManager = ModelManager.getInstance().getAuthorizationManager();
         if (getMsg.equalsIgnoreCase("GetFollower True")) {
             Utils.dismissBarDialog();
             setlist();
-            Log.d("1", "message->" + getMsg);
+            android.util.Log.d("1", "message->" + getMsg);
         } else if (getMsg.equalsIgnoreCase("GetFollower False")) {
             Utils.dismissBarDialog();
-            Log.d("2", "message->" + getMsg);
+            android.util.Log.d("2", "message->" + getMsg);
         } else if (getMsg.equalsIgnoreCase("GetFollower Network Error")) {
             Utils.dismissBarDialog();
             Utils.fromSignalDialog(this, AlertMessage.connectionError);
             //Utils.showAlert(FollowingListView.this, AlertMessage.connectionError);
-            Log.d("3", "message->" + getMsg);
+            android.util.Log.d("3", "message->" + getMsg);
         } else if (getMsg.equalsIgnoreCase("UnFollowUser true")) {
             // adapter.notifyDataSetChanged();
-            Log.d("1", "message->" + getMsg);
+            android.util.Log.d("1", "message->" + getMsg);
         } else if (getMsg.equalsIgnoreCase("UnFollowUser false")) {
             Utils.dismissBarDialog();
-            Log.d("2", "message->" + getMsg);
+            android.util.Log.d("2", "message->" + getMsg);
         } else if (getMsg.equalsIgnoreCase("UnFollowUser Network Error")) {
             Utils.dismissBarDialog();
             Utils.fromSignalDialog(this, AlertMessage.connectionError);
             //Utils.showAlert(FollowingListView.this, AlertMessage.connectionError);
-            Log.d("3", "message->" + getMsg);
+            android.util.Log.d("3", "message->" + getMsg);
         } else if (getMsg.equalsIgnoreCase("update")) {
-            Log.e("list on notify--->", "" + profManager.following);
+            android.util.Log.e("list on notify--->", "" + profManager.following);
             adapter.notifyDataSetChanged();
 
         }

@@ -111,20 +111,6 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         mUserRelationlistView = (ListView) findViewById(R.id.list_click_with_profile);
 
 
-        ((ImageView) findViewById(R.id.iv_open_left_menu)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                slidemenu.showMenu(true);
-            }
-        });
-        findViewById(R.id.iv_open_right_menu).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                slidemenu.showSecondaryMenu(true);
-            }
-        });
-
-
         ((TextView) findViewById(R.id.tv_profile_txt)).setText("PROFILE");
 
 
@@ -179,7 +165,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
             //   relationManager = ModelManager.getInstance().getRelationManager();
             // relationManager.getRelationShips(authManager.getPhoneNo(), authManager.getUsrToken());
         }
-        Log.e(TAG, "vv" + authManager.getPhoneNo() + "" + authManager.getUsrToken());
+        android.util.Log.e(TAG, "vv" + authManager.getPhoneNo() + "" + authManager.getUsrToken());
 
 
         findViewById(R.id.iv_usr_icon).setOnClickListener(new View.OnClickListener() {
@@ -202,7 +188,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         String dob = "";
         try {
             try {
-                Log.e(TAG, "Gender -->" + authManager.getGender());
+                android.util.Log.e(TAG, "Gender -->" + authManager.getGender());
                 if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl")) {
                     dtails = "Female, ";
                     gender = "girl";
@@ -219,29 +205,29 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         if (!Utils.isEmptyString(authManager.getUserCity()) && Utils.isEmptyString(authManager.getUserCountry())) {
             dtails = dtails + "\n" + authManager.getUserCity();
             userdetails.setText(dtails);
-            Log.e("in else 1", "in else 1");
+            android.util.Log.e("in else 1", "in else 1");
         } else if (Utils.isEmptyString(authManager.getUserCity()) && !Utils.isEmptyString(authManager.getUserCountry())) {
             dtails = dtails + "\n" + authManager.getUserCountry();
             userdetails.setText(dtails);
-            Log.e("in else 2", "in else 2");
+            android.util.Log.e("in else 2", "in else 2");
         } else if (!Utils.isEmptyString(authManager.getUserCity()) && !Utils.isEmptyString(authManager.getUserCountry())) {
             userdetails.setText(dtails + "\n" + authManager.getUserCity() + "," + authManager.getUserCountry());
-            Log.e("in else 3", "in else 3");
+            android.util.Log.e("in else 3", "in else 3");
         } else {
             userdetails.setText(dtails + "\n");
-            Log.e("in else 4", "in else 4");
+            android.util.Log.e("in else 4", "in else 4");
         }
         setFollowAndFollowingCount();
 
         //prafull code to set image bitmap
         try {
-            Log.e("in try---->", "in try--->");
+            android.util.Log.e("in try---->", "in try--->");
             Bitmap imagebitmap1 = authManager.getUserbitmap();
-            if (imagebitmap1 != null)
-                com.sourcefuse.clickinandroid.utils.Log.e("user bit map not null", "user bit map not null");
+           /* if (imagebitmap1 != null)
+                com.sourcefuse.clickinandroid.utils.android.util.Log.e("user bit map not null", "user bit map not null");*/
             boolean userpic = Utils.isEmptyString(authManager.getUserPic());
-            Log.e("user pic url ---->", "" + authManager.getUserPic());
-            Log.e("user pc --->", "" + authManager.getUserPic());
+            android.util.Log.e("user pic url ---->", "" + authManager.getUserPic());
+            android.util.Log.e("user pc --->", "" + authManager.getUserPic());
             if (imagebitmap1 != null)
                 userimage.setImageBitmap(imagebitmap1);
             else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl") && !userpic)
@@ -254,7 +240,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
                 userimage.setImageResource(R.drawable.male_user);
 
         } catch (Exception e) {
-            com.sourcefuse.clickinandroid.utils.Log.e("on exception", "on exception");
+            //com.sourcefuse.clickinandroid.utils.android.util.Log.e("on exception", "on exception");
             userimage.setImageResource(R.drawable.male_user);
         }
 
@@ -275,7 +261,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
 
     @Override
     protected void onResume() {
-        Log.e("onResume", "onResume UserProfile");
+        android.util.Log.e("onResume", "onResume UserProfile");
         super.onResume();
         authManager = ModelManager.getInstance().getAuthorizationManager();
         if (authManager.isEditProfileFlag()) {
@@ -343,15 +329,6 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
                 startActivity(intentFollowing);
                 this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
-            case R.id.iv_menu:
-                Log.e("iv_menu", "iv_menu");
-                slidemenu.showMenu(true);
-
-                break;
-            case R.id.iv_notification:
-                Log.e("iv_notification", "iv_notification");
-                slidemenu.showSecondaryMenu(true);
-                break;
             case R.id.btn_add_someone:
                 Intent intent = new Intent(UserProfileView.this, AddSomeoneView.class);
                 intent.putExtra("FromOwnProfile", true);
@@ -395,7 +372,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
 
     public void onEventMainThread(String message) {
         super.onEventMainThread(message);
-        Log.e(TAG, "onEventMainThread-->" + message);
+        android.util.Log.e(TAG, "onEventMainThread-->" + message);
         authManager = ModelManager.getInstance().getAuthorizationManager();
         relationManager = ModelManager.getInstance().getRelationManager();
         if (message.equalsIgnoreCase("deleteRelationship True")) {
@@ -424,10 +401,10 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
             mChangeinList = true;
         } else if (message.equalsIgnoreCase("UserVisible true")) {
 
-            if (Utils.DEBUG)
-                com.sourcefuse.clickinandroid.utils.Log.e("on error when change type", "on error when change type");
+            /*if (Utils.DEBUG)
+                com.sourcefuse.clickinandroid.utils.android.util.Log.e("on error when change type", "on error when change type");*/
 
-            Log.d("3", "message->" + message);
+            android.util.Log.d("3", "message->" + message);
         } else if (message.equalsIgnoreCase("GetrelationShips True")) {
             Utils.dismissBarDialog();
             myQbChatService.setChatListeners();
@@ -437,7 +414,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
             }
             setlist();
         } else if (message.equalsIgnoreCase("ProfileInfo True")) {
-            Log.e(TAG, "ProfileInfo True");
+            android.util.Log.e(TAG, "ProfileInfo True");
             //monika-start service in case of sign up only, else it will be done from sign in
             Intent i = new Intent(this, MyQbChatService.class);
             startService(i);
@@ -452,16 +429,11 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
             Utils.dismissBarDialog();
             Utils.fromSignalDialog(this, AlertMessage.connectionError);
         } else if (message.equalsIgnoreCase("UserVisible Network Error")) {
-            if (Utils.DEBUG)
-                com.sourcefuse.clickinandroid.utils.Log.e("on error when change type", "on error when change type");
+            /*if (Utils.DEBUG)*/
+                //com.sourcefuse.clickinandroid.utils.android.util.Log.e("on error when change type", "on error when change type");
         } else if (message.equalsIgnoreCase("UserVisible true on error")) {
-            if (Utils.DEBUG)
-                com.sourcefuse.clickinandroid.utils.Log.e("on error when change type on error", "on error when change type on error");
-        } else if (message.equalsIgnoreCase("update Counter")) {
-            if (Utils.DEBUG)
-                com.sourcefuse.clickinandroid.utils.Log.e("value of counter", "" + authManager.getNotificationCounter());
-
-            ((TextView) findViewById(R.id.iv_open_right_menu)).setText("" + authManager.getNotificationCounter());
+           /* if (Utils.DEBUG)*/
+               // com.sourcefuse.clickinandroid.utils.android.util.Log.e("on error when change type on error", "on error when change type on error");
         }
 
 
@@ -498,29 +470,23 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        addMenu(false);
+
+        //com.sourcefuse.clickinandroid.utils.android.util.Log.e("on new Inent---", "on new Inent---");
         if (intent.getExtras() != null && intent.getExtras().containsKey("isChangeInList")) {
             if (intent.getExtras().getBoolean("isChangeInList")) {
+                if (slidemenu.isMenuShowing())
+                    slidemenu.showContent();
                 mChangeinList = true;
                 relationManager = ModelManager.getInstance().getRelationManager();
                 relationManager.getRelationShips(authManager.getPhoneNo(), authManager.getUsrToken());
-
             }
         }
-
-
-        ActivityManager am = (ActivityManager) this.getSystemService(ACTIVITY_SERVICE);
-        List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
-        Log.d("topActivity", "CURRENT Activity ::" + taskInfo.get(0).topActivity.getClassName());
-        ComponentName componentInfo = taskInfo.get(0).topActivity;
-
-
-        com.sourcefuse.clickinandroid.utils.Log.e("package name--->", "" + componentInfo.getClass());
+        // addMenu(false);
     }
 
     public void onDestroy() {
         super.onDestroy();
 
-        Log.e("UserprofileView", "Destroy");
+        android.util.Log.e("UserprofileView", "Destroy");
     }
 }

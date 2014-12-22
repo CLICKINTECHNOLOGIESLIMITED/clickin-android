@@ -38,7 +38,7 @@ public class ClickInTextView extends TextView {
         try {
             setTypeface(FontLoader.getInstance(ctx).getFont(asset));
         } catch (Exception e) {
-            android.util.Log.e("font not found:::::::::::::::::::::::::::::", "font not found:::::::::::::::::::::::::::::");
+            //android.util.android.util.Log.e("font not found:::::::::::::::::::::::::::::", "font not found:::::::::::::::::::::::::::::");
             e.printStackTrace();
 
         }

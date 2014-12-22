@@ -17,16 +17,16 @@
             android:background="@color/appclr">
 
             <!--<ImageView-->
-                <!--android:id="@+id/iv_back_noti"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_alignParentLeft="true"-->
-                <!--android:layout_marginLeft="10dp"-->
-                <!--android:layout_marginTop="6dp"-->
-                <!--android:paddingBottom="5dp"-->
-                <!--android:paddingRight="30dp"-->
-                <!--android:paddingTop="5dp"-->
-                <!--android:src="@drawable/back_arrow" />-->
+            <!--android:id="@+id/iv_back_noti"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:layout_marginTop="6dp"-->
+            <!--android:paddingBottom="5dp"-->
+            <!--android:paddingRight="30dp"-->
+            <!--android:paddingTop="5dp"-->
+            <!--android:src="@drawable/back_arrow" />-->
 
 
         </RelativeLayout>
@@ -48,6 +48,7 @@
                 android:layout_centerVertical="true"
                 android:text="@string/txt_share"
                 android:textColor="@color/white"
+                android:paddingBottom="8dp"
                 android:textSize="20sp"
                 android:textStyle="bold" />
         </RelativeLayout>
@@ -57,8 +58,8 @@
         android:id="@+id/scroll_view_share"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/r_owner_profile_bg"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:background="@drawable/r_owner_profile_bg">
 
         <LinearLayout
             android:id="@+id/linear_layout_share"
@@ -84,26 +85,25 @@
                         android:id="@+id/shr_user_image"
                         android:layout_width="150dp"
                         android:layout_height="150dp"
-                        android:visibility="gone"
                         android:scaleType="fitXY"
-                         />
+                        android:visibility="gone" />
 
                     <EditText
                         android:id="@+id/shr_caption"
                         android:layout_width="fill_parent"
                         android:layout_height="150dp"
                         android:background="@color/white"
-                        android:singleLine="false"
-                        android:maxLength="140"
-                        android:lines="5"
-                        android:paddingRight="4dp"
-                        android:gravity="top"
-                        android:inputType="textCapWords|textMultiLine"
-                        android:hint="@string/share_hint"
-                        android:paddingLeft="10dp"
-                        android:paddingTop="15dp"
+                        android:clickable="true"
                         android:cursorVisible="false"
-                        android:clickable="true"/>
+                        android:gravity="top"
+                        android:hint="@string/share_hint"
+                        android:inputType="textCapWords|textMultiLine"
+                        android:lines="5"
+                        android:maxLength="140"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="4dp"
+                        android:paddingTop="15dp"
+                        android:singleLine="false" />
 
                 </LinearLayout>
 
@@ -116,9 +116,9 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="1dp"
-                    android:padding="15dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
+                    android:padding="15dp"
                     android:visibility="gone">
 
                     <TextView
@@ -128,36 +128,31 @@
                         android:gravity="center_vertical"
                         android:textColor="@color/white"
                         android:textSize="18sp"
-                        android:visibility="gone"
                         android:textStyle="bold"
-                       />
+                        android:visibility="gone" />
 
                     <ImageView
                         android:id="@+id/share_clicks_heart"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:visibility="gone"
-                        android:src="@drawable/c_clicks_heart"
                         android:layout_marginLeft="5dp"
-                        />
+                        android:gravity="center_vertical"
+                        android:src="@drawable/c_clicks_heart"
+                        android:visibility="gone" />
 
                     <TextView
                         android:id="@+id/share_chat_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:visibility="gone"
-                        android:singleLine="false"
                         android:layout_marginLeft="5dp"
+                        android:gravity="center_vertical"
+                        android:singleLine="false"
                         android:textColor="@color/white"
-                        android:textStyle="bold"
                         android:textSize="16sp"
-                        />
+                        android:textStyle="bold"
+                        android:visibility="gone" />
 
                 </LinearLayout>
-
-
 
 
                 <LinearLayout

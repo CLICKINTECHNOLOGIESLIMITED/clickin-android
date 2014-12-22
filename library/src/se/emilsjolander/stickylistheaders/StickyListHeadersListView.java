@@ -642,7 +642,7 @@ public class StickyListHeadersListView extends FrameLayout {
 
     private boolean requireSdkVersion(int versionCode) {
         if (Build.VERSION.SDK_INT < versionCode) {
-            Log.e("StickyListHeaders", "Api lvl must be at least "+versionCode+" to call this method");
+            android.util.Log.e("StickyListHeaders", "Api lvl must be at least "+versionCode+" to call this method");
             return false;
         }
         return true;

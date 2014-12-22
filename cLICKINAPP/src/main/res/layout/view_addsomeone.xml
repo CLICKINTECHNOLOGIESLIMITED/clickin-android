@@ -49,17 +49,17 @@
             geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
 
 
-
     </LinearLayout>
+
     <ImageView
         android:id="@+id/iv_image_top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:background="@drawable/addtosomeone"></ImageView>
+        android:background="@drawable/addtosomeone"
+        android:visibility="gone"></ImageView>
 
     <RelativeLayout
         android:id="@+id/linearLayout1"

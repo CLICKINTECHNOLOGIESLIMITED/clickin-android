@@ -17,6 +17,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 
+import com.sourcefuse.clickinandroid.dbhelper.ClickinDbHelper;
 import com.sourcefuse.clickinandroid.model.bean.ChatMessageBody;
 import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.Utils;
@@ -26,6 +27,7 @@ import org.jivesoftware.smack.packet.Message;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -215,6 +217,13 @@ public class MyQbChatService extends Service {
         //QBChatService.getInstance().destroy();
         EventBus.getDefault().unregister(this);
         logoutFromQb();
+        ClickinDbHelper dbHelper = new ClickinDbHelper(this);
+        android.util.Log.e("Service","Delete Db");
+        try {
+            dbHelper.clearDB();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 //        db.close();
     }
 
@@ -411,7 +420,7 @@ public class QbChatService extends Service {
     @Override
     public void onCreate() {
 
-        Log.e(TAG, "CS started");
+        android.util.Log.e(TAG, "CS started");
         systemService = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         mNM =systemService;
         Handler handler = new Handler() {

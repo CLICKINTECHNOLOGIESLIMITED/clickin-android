@@ -747,7 +747,7 @@ public class AppEventsLogger {
         try {
             flushResults = buildAndExecuteRequests(reason, keysToFlush);
         } catch (Exception e) {
-            Log.d(TAG, "Caught unexpected exception while flushing: " + e.toString());
+            android.util.Log.d(TAG, "Caught unexpected exception while flushing: " + e.toString());
         }
 
         synchronized (staticLock) {
@@ -1264,7 +1264,7 @@ public class AppEventsLogger {
                         new BufferedOutputStream(context.openFileOutput(PERSISTED_EVENTS_FILENAME, 0)));
                 oos.writeObject(persistedEvents);
             } catch (Exception e) {
-                Log.d(TAG, "Got unexpected exception: " + e.toString());
+                android.util.Log.d(TAG, "Got unexpected exception: " + e.toString());
             } finally {
                 Utility.closeQuietly(oos);
             }
@@ -1287,7 +1287,7 @@ public class AppEventsLogger {
             } catch (FileNotFoundException e) {
                 // Expected if we never persisted any events.
             } catch (Exception e) {
-                Log.d(TAG, "Got unexpected exception: " + e.toString());
+                android.util.Log.d(TAG, "Got unexpected exception: " + e.toString());
             } finally {
                 Utility.closeQuietly(ois);
             }

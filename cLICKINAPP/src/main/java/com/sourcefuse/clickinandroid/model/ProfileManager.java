@@ -79,7 +79,7 @@ public class ProfileManager {
             userInputDetails.put("first_name", fname);
             userInputDetails.put("last_name", lname);
             // userInputDetails.put("fb_access_token", "jh");
-//			Log.d("", "userInputDetails---> " + userInputDetails);
+//			android.util.Log.d("", "userInputDetails---> " + userInputDetails);
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,
@@ -159,7 +159,7 @@ public class ProfileManager {
         } else {
             str = phone.substring(1);
         }
-        Log.e("APIs.GETUSERFOLLOWER+", "----> " + APIs.GETUSERFOLLOWER + ":%2B" + str);
+        android.util.Log.e("APIs.GETUSERFOLLOWER+", "----> " + APIs.GETUSERFOLLOWER + ":%2B" + str);
         client.get(APIs.GETUSERFOLLOWER + ":%2B" + str, new JsonHttpResponseHandler() {
             boolean success = false;
 
@@ -197,10 +197,10 @@ public class ProfileManager {
                         for (int i = 0; i < list.length(); i++) {
                             JSONObject data = list.getJSONObject(i);
                             followingList = new FollowerFollowingBean();
-                            Log.e("get accepted ---->", "" + data.getString("accepted"));
+                            android.util.Log.e("get accepted ---->", "" + data.getString("accepted"));
                             if (!Utils.isEmptyString(data.getString("accepted"))) {
                                 followingList.setAccepted(data.getString("accepted"));
-                                Log.e("get accepted ---->", "" + data.getString("accepted"));
+                                android.util.Log.e("get accepted ---->", "" + data.getString("accepted"));
                                 JSONObject rId = data.getJSONObject("_id");
                                 followingList.setrFollowerId(rId.getString("$id"));
                                 data.has("followee_id");
@@ -312,7 +312,7 @@ public class ProfileManager {
                                     }
                                     // followerArray.add(followerList);
                                     followRequesed.add(followerList);
-                                    Log.e("followRequesed size in Mgr", "" + followRequesed.size());
+                                    android.util.Log.e("followRequesed size in Mgr", "" + followRequesed.size());
                                 }
                             }
                         }
@@ -351,7 +351,7 @@ public class ProfileManager {
         } else {
             str = phone.substring(1);
         }
-        Log.e("APIs.GETUSERFOLLOWER+", "----> " + APIs.GETUSERFOLLOWER + ":%2B" + str);
+        android.util.Log.e("APIs.GETUSERFOLLOWER+", "----> " + APIs.GETUSERFOLLOWER + ":%2B" + str);
         client.get(APIs.GETUSERFOLLOWER + ":%2B" + str, new JsonHttpResponseHandler() {
             boolean success = false;
 
@@ -389,10 +389,10 @@ public class ProfileManager {
                         for (int i = 0; i < list.length(); i++) {
                             JSONObject data = list.getJSONObject(i);
                             followingList_other = new FollowerFollowingBean();
-                            Log.e("get accepted ---->", "" + data.getString("accepted"));
+                            android.util.Log.e("get accepted ---->", "" + data.getString("accepted"));
                             if (!Utils.isEmptyString(data.getString("accepted"))) {
                                 followingList_other.setAccepted(data.getString("accepted"));
-                                Log.e("get accepted ---->", "" + data.getString("accepted"));
+                                android.util.Log.e("get accepted ---->", "" + data.getString("accepted"));
                                 JSONObject rId = data.getJSONObject("_id");
                                 followingList_other.setrFollowerId(rId.getString("$id"));
                                 data.has("followee_id");
@@ -504,7 +504,7 @@ public class ProfileManager {
                                     }
                                     // followerArray.add(followerList);
                                     followRequesed_other.add(followerList_other);
-                                    Log.e("followRequesed size in Mgr", "" + followRequesed_other.size());
+                                    android.util.Log.e("followRequesed size in Mgr", "" + followRequesed_other.size());
                                 }
                             }
                         }
@@ -533,7 +533,7 @@ public class ProfileManager {
             //client.addHeader("phone_no", phone);
             client.addHeader("User-Token", usertoken);
             client.addHeader("Phone-No", phone);
-            Log.e("", "usertoken--" + usertoken + ",," + phone + "--partner_phone--" + partner_phone);
+            android.util.Log.e("", "usertoken--" + usertoken + ",," + phone + "--partner_phone--" + partner_phone);
         } catch (Exception e1) {
             e1.printStackTrace();
         }
@@ -602,7 +602,7 @@ public class ProfileManager {
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            Log.e("suserInputDetailse--> ", "" + userInputDetails);
+            android.util.Log.e("suserInputDetailse--> ", "" + userInputDetails);
         } catch (Exception e1) {
             e1.printStackTrace();
         }

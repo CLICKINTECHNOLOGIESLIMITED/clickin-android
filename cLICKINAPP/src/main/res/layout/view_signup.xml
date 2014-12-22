@@ -11,39 +11,38 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:background="@drawable/enterdigits"
-        android:orientation="horizontal"
-        >
+        android:orientation="horizontal">
 
         <!--<com.sourcefuse.clickinandroid.utils.ClickInTextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_centerHorizontal="true"-->
-            <!--android:layout_gravity="center"-->
-            <!--android:layout_marginRight="1dp"-->
-            <!--android:layout_marginTop="-30dp"-->
-            <!--android:layout_weight="1"-->
-            <!--android:gravity="bottom"-->
-            <!--android:paddingTop="10dp"-->
-            <!--android:text="ENTER YOUR"-->
-            <!--android:textColor="@color/screen_header"-->
-            <!--android:textSize="30sp"-->
-            <!--android:textStyle="bold"-->
-            <!--geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:layout_marginRight="1dp"-->
+        <!--android:layout_marginTop="-30dp"-->
+        <!--android:layout_weight="1"-->
+        <!--android:gravity="bottom"-->
+        <!--android:paddingTop="10dp"-->
+        <!--android:text="ENTER YOUR"-->
+        <!--android:textColor="@color/screen_header"-->
+        <!--android:textSize="30sp"-->
+        <!--android:textStyle="bold"-->
+        <!--geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />-->
 
         <!--<com.sourcefuse.clickinandroid.utils.ClickInTextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_centerHorizontal="true"-->
-            <!--android:layout_gravity="top"-->
-            <!--android:layout_marginLeft="76dp"-->
-            <!--android:layout_marginTop="-16dp"-->
-            <!--android:layout_weight="1"-->
-            <!--android:gravity="top"-->
-            <!--android:text="DIGITS!"-->
-            <!--android:textColor="@color/screen_header"-->
-            <!--android:textSize="51sp"-->
-            <!--android:textStyle="bold"-->
-            <!--geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_gravity="top"-->
+        <!--android:layout_marginLeft="76dp"-->
+        <!--android:layout_marginTop="-16dp"-->
+        <!--android:layout_weight="1"-->
+        <!--android:gravity="top"-->
+        <!--android:text="DIGITS!"-->
+        <!--android:textColor="@color/screen_header"-->
+        <!--android:textSize="51sp"-->
+        <!--android:textStyle="bold"-->
+        <!--geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />-->
 
     </ImageView>
 

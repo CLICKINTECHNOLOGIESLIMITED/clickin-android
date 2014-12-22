@@ -1,6 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:geekui="http://schemas.android.com/apk/res-auto"
-    xmlns:mySwitch="http://schemas.android.com/apk/res-auto"
     android:id="@+id/linear_layout_root_setting"
     android:layout_width="match_parent"
     android:layout_height="fill_parent"
@@ -113,26 +112,47 @@
                         geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
 
 
-                    <com.sourcefuse.clickinandroid.utils.MySwitch
+                    <Switch
                         android:id="@+id/toggle_notification_one"
-                        style="@style/mySwitchStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:layout_marginRight="20dp"
                         android:layout_marginTop="4dp"
-                        android:visibility="visible"
-                        mySwitch:backgroundMask="@drawable/smask_background_copy"
-                        mySwitch:leftBackground="@drawable/sleft_background_copy"
-                        mySwitch:pushStyle="true"
-                        mySwitch:rightBackground="@drawable/sright_background_copy"
-                        mySwitch:textOff="    "
-                        mySwitch:textOn="    "
-                        mySwitch:textOnThumb="false"
-                        mySwitch:thumb="@drawable/stoggle_copy"
-                        mySwitch:thumbExtraMovement="23dp"
-                        mySwitch:track="@drawable/sgroove_copy"
-                        mySwitch:trackTextPadding="2dp" />
+                        android:visibility="gone" />
+
+                    <CheckBox
+                        android:id="@+id/checkbox_pushnotificstion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginTop="4dp"
+                        android:visibility="gone"
+
+                        />
+
+
+                    <!--<com.sourcefuse.clickinandroid.utils.MySwitch-->
+                    <!--android:id="@+id/toggle_notification_one"-->
+                    <!--style="@style/mySwitchStyle"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginBottom="2dp"-->
+                    <!--android:layout_marginRight="20dp"-->
+                    <!--android:layout_marginTop="4dp"-->
+                    <!--android:visibility="visible"-->
+                    <!--mySwitch:backgroundMask="@drawable/smask_background_copy"-->
+                    <!--mySwitch:leftBackground="@drawable/sleft_background_copy"-->
+                    <!--mySwitch:pushStyle="true"-->
+                    <!--mySwitch:rightBackground="@drawable/sright_background_copy"-->
+                    <!--mySwitch:textOff="    "-->
+                    <!--mySwitch:textOn="    "-->
+                    <!--mySwitch:textOnThumb="false"-->
+                    <!--mySwitch:thumb="@drawable/stoggle_copy"-->
+                    <!--mySwitch:thumbExtraMovement="23dp"-->
+                    <!--mySwitch:track="@drawable/sgroove_copy"-->
+                    <!--mySwitch:trackTextPadding="2dp" />-->
                 </LinearLayout>
 
 
@@ -161,29 +181,51 @@
 
                         />
 
-
-                    <com.sourcefuse.clickinandroid.utils.MySwitch
+                    <Switch
                         android:id="@+id/toggle_app_sounds"
-                        style="@style/mySwitchStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
                         android:layout_marginBottom="2dp"
                         android:layout_marginRight="20dp"
                         android:layout_marginTop="4dp"
-                        android:visibility="visible"
-                        mySwitch:backgroundMask="@drawable/sgroove_copy"
-                        mySwitch:leftBackground="@drawable/sgroove_copy"
-                        mySwitch:pushStyle="true"
-                        mySwitch:rightBackground="@drawable/sgroove_copy"
-                        mySwitch:textOff="    "
-                        mySwitch:textOn="    "
-                        mySwitch:textOnThumb="false"
-                        mySwitch:thumb="@drawable/stoggle_copy"
-                        mySwitch:thumbExtraMovement="23dp"
-                        mySwitch:track="@drawable/sgroove_copy"
-                        mySwitch:trackTextPadding="2dp" />
+                        android:visibility="gone"
+
+                        />
+
+
+                    <CheckBox
+                        android:id="@+id/checkbox_appsound"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginTop="4dp"
+                        android:visibility="gone"
+
+                        />
+
+                    <!--<com.sourcefuse.clickinandroid.utils.MySwitch-->
+                    <!--android:id="@+id/toggle_app_sounds"-->
+                    <!--style="@style/mySwitchStyle"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentRight="true"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:layout_marginBottom="2dp"-->
+                    <!--android:layout_marginRight="20dp"-->
+                    <!--android:layout_marginTop="4dp"-->
+                    <!--android:visibility="visible"-->
+                    <!--mySwitch:backgroundMask="@drawable/sgroove_copy"-->
+                    <!--mySwitch:leftBackground="@drawable/sgroove_copy"-->
+                    <!--mySwitch:pushStyle="true"-->
+                    <!--mySwitch:rightBackground="@drawable/sgroove_copy"-->
+                    <!--mySwitch:textOff="    "-->
+                    <!--mySwitch:textOn="    "-->
+                    <!--mySwitch:textOnThumb="false"-->
+                    <!--mySwitch:thumb="@drawable/stoggle_copy"-->
+                    <!--mySwitch:thumbExtraMovement="23dp"-->
+                    <!--mySwitch:track="@drawable/sgroove_copy"-->
+                    <!--mySwitch:trackTextPadding="2dp" />-->
                 </LinearLayout>
 
 

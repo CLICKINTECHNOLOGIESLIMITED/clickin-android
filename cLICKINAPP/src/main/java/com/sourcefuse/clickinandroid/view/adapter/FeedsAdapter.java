@@ -156,7 +156,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
             } else {
                 if (!(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().equalsIgnoreCase("null"))) {
                     if (!eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().trim().equalsIgnoreCase("")) {
-                        Log.e("msg", eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message());
+                        android.util.Log.e("msg", eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message());
                         typeface = Typeface.createFromAsset(getContext().getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
                         holder.clickedIn.setVisibility(View.VISIBLE);
                         holder.layout_clickin.setVisibility(View.VISIBLE);
@@ -192,7 +192,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
 //                holder.clickedInMessage.setVisibility(View.GONE);
 //            }
 //        }
-//        Log.e("FeedsAdapter++ChatDetailType",eachNewsFeed.get(position).getNewsFeedArray_chatDetail_type());
+//        android.util.Log.e("FeedsAdapter++ChatDetailType",eachNewsFeed.get(position).getNewsFeedArray_chatDetail_type());
         if (eachNewsFeed.get(position).getNewsFeedArray_chatDetail_type() != null) {
 
        /* Condition for Image - Type 2 & 6
@@ -286,10 +286,10 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
 
        }else if(!Utils.isEmptyString(item.content_url) && Utils.isEmptyString(item.video_thumb))
        {
-           android.util.Log.e("audio play", "audio play");
-           android.util.Log.e("audio url --->", "" + item.content_url);
+           android.util.android.util.Log.e("audio play", "audio play");
+           android.util.android.util.Log.e("audio url --->", "" + item.content_url);
 
-           Log.e("play audio","play audio");
+           android.util.Log.e("play audio","play audio");
 
            Uri intentUri = Uri.parse(item.content_url);
            Intent intent = new Intent();
@@ -306,7 +306,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
 *
 * */
 
-//                Log.e("FeedsAdapter++ChatDetailContent", eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content());
+//                android.util.Log.e("FeedsAdapter++ChatDetailContent", eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content());
             }
         });
         holder.feed_video_button.setOnClickListener(new View.OnClickListener() {
@@ -337,7 +337,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
 //                intent.putExtra("url",eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content());
 //                context.startActivity(intent);
 
-                Log.e("video url", eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content());
+                android.util.Log.e("video url", eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content());
             }
         });
         holder.feed_menu.setOnClickListener(new View.OnClickListener() {
@@ -390,7 +390,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
             }
         });
         if (eachNewsFeed.get(position).getCommentArrayList() != null) {
-//            Log.e("eachNewsFeed.get(position).getCommentArrayList().size()",""+eachNewsFeed.get(position).getCommentArrayList().size());
+//            android.util.Log.e("eachNewsFeed.get(position).getCommentArrayList().size()",""+eachNewsFeed.get(position).getCommentArrayList().size());
             holder.feed_comments_layout.setVisibility(View.VISIBLE);
             if (eachNewsFeed.get(position).getNewsfeedArray_comments_count() > 3) {
                 holder.feed_comments_layout1.setVisibility(View.VISIBLE);
@@ -421,11 +421,11 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
                         holder.comment4.setText(Html.fromHtml(text));
                         break;
                     }
-//                Log.e("cmnt4",eachNewsFeed.get(position).getCommentArrayList().get(2).getNewsFeedArray_commentArray_comment());
+//                android.util.Log.e("cmnt4",eachNewsFeed.get(position).getCommentArrayList().get(2).getNewsFeedArray_commentArray_comment());
                 }
 
             } else {
-//                Log.e("name1",""+eachNewsFeed.get(position).getCommentArrayList().size());
+//                android.util.Log.e("name1",""+eachNewsFeed.get(position).getCommentArrayList().size());
                 holder.feed_comments_layout1.setVisibility(View.GONE);
                 if (eachNewsFeed.get(position).getCommentArrayList().size() == 1) {
 //                    holder.name2.setVisibility(View.VISIBLE);
@@ -607,13 +607,13 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
                 context.startActivity(intent);
             }
         });
-//        Log.e("stars count",""+eachNewsFeed.get(position).getNewsfeedArray_stars_count());
+//        android.util.Log.e("stars count",""+eachNewsFeed.get(position).getNewsfeedArray_stars_count());
         if (eachNewsFeed.get(position).getNewsfeedArray_stars_count() == 0) {
             holder.feed_star_user.setText("No Stars");
             holder.feed_star_user.setTextColor(context.getResources().getColor(R.color.dark_gray));//akshit code Black is not needed
             holder.feed_star_user.setClickable(false);
         } else {
-//            Log.e("stars count ar size",""+eachNewsFeed.get(position).getStarredArrayList().size());
+//            android.util.Log.e("stars count ar size",""+eachNewsFeed.get(position).getStarredArrayList().size());
             if (eachNewsFeed.get(position).getNewsfeedArray_stars_count() > 5) {
                 holder.feed_star_user.setText(eachNewsFeed.get(position).getNewsfeedArray_stars_count() + " Stars");
                 holder.feed_star_user.setTextColor(context.getResources().getColor(R.color.dark_gray));//akshit code Black is not needed
@@ -627,7 +627,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
                         stars_text += eachNewsFeed.get(position).getStarredArrayList().get(i).getNewsFeedArray_starredArray_user_name() + ", ";
                     }
                 }
-//            Log.e("stars ",stars_text);
+//            android.util.Log.e("stars ",stars_text);
                 holder.feed_star_user.setTextColor(context.getResources().getColor(R.color.feed_senderuser));
                 holder.feed_star_user.setText(stars_text);
                 holder.feed_star_user.setClickable(true);

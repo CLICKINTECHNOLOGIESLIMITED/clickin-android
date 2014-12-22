@@ -70,7 +70,7 @@ public final class TestFragment extends Fragment {
             clickHereToSignup.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Log.e("ClickHereToSignUp Clicked", "true");
+                    android.util.Log.e("ClickHereToSignUp Clicked", "true");
 
                     Intent signup = new Intent(getActivity(), SignUpView.class);
                     getActivity().startActivity(signup);
@@ -97,7 +97,7 @@ public final class TestFragment extends Fragment {
             loginButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Log.e("Login Clicked", "true");
+                    android.util.Log.e("Login Clicked", "true");
                     Intent signIn = new Intent(getActivity(), SignInView.class);
                     getActivity().startActivity(signIn);
                     coverFlowChecked();

@@ -660,7 +660,7 @@ public class Session implements Serializable {
                     break;
                 default:
                     // Silently ignore attempts to refresh token if we are not open
-                    Log.d(TAG, "refreshToken ignored in state " + this.state);
+                    android.util.Log.d(TAG, "refreshToken ignored in state " + this.state);
                     return;
             }
             this.tokenInfo = AccessToken.createFromRefresh(this.tokenInfo, bundle);
@@ -1236,7 +1236,7 @@ public class Session implements Serializable {
                 case CREATED_TOKEN_LOADED:
                 case CLOSED:
                 case CLOSED_LOGIN_FAILED:
-                    Log.d(TAG, "Unexpected call to finishAuthOrReauth in state " + this.state);
+                    android.util.Log.d(TAG, "Unexpected call to finishAuthOrReauth in state " + this.state);
                     break;
             }
         }

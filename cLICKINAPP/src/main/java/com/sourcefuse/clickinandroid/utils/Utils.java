@@ -16,6 +16,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.drawable.ColorDrawable;
+import android.media.AudioManager;
 import android.media.ExifInterface;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
@@ -38,7 +39,9 @@ import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
 import com.sourcefuse.clickinandroid.model.SettingManager;
+import com.sourcefuse.clickinandroid.model.bean.ChatMessageBody;
 import com.sourcefuse.clickinandroid.model.bean.ContactBean;
+import com.sourcefuse.clickinandroid.model.bean.GetrelationshipsBean;
 import com.sourcefuse.clickinapp.R;
 
 import java.io.ByteArrayOutputStream;
@@ -46,6 +49,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -62,20 +66,19 @@ public class
     public static boolean DEBUG = true;
 
     public static String deviceId, PROJECT_NUMBER = "1058681021160";
-    private static CustomProgressDialog barProgressDialog;
-    public static boolean appSound ;
+    public static boolean appSound;
     public static SharedPreferences prefrences;
     public static Activity acty;
+    public static ArrayList<ContactBean> itData = new ArrayList<ContactBean>();
+    public static ArrayList<String> groupSms = new ArrayList<String>();
+    public static HashMap<String, ContactBean> contactMap = new HashMap<String, ContactBean>();
+    static GoogleCloudMessaging gcm;
+    static String regid;
+    private static CustomProgressDialog barProgressDialog;
     private static Dialog dialog;
     private static Uri mImageCaptureUri;
     public AuthManager authManager;
-    static GoogleCloudMessaging gcm;
-    static String regid;
-    public static ArrayList<ContactBean> itData = new ArrayList<ContactBean>();
-
-    public static ArrayList<String> groupSms = new ArrayList<String>();
-
-    public static HashMap<String, ContactBean> contactMap = new HashMap<String, ContactBean>();
+    private static MediaPlayer mplayer;
 
     public static void launchBarDialog(Activity activity) {
 
@@ -254,7 +257,7 @@ public class
         immagex.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] b = baos.toByteArray();
         String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
-        // Log.e("LOOK", imageEncoded);
+        // android.util.Log.e("LOOK", imageEncoded);
         return imageEncoded;
     }
 
@@ -416,7 +419,13 @@ public class
             int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
             cursor.moveToFirst();
             return cursor.getString(column_index);
-        } finally {
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+            Log.e("on error in real path------>",e.toString());
+            return  "";
+        }
+        finally {
             if (cursor != null) {
                 cursor.close();
             }
@@ -424,7 +433,7 @@ public class
     }
 
 
-    public static  String decodeSampledBitmapFromUri(Context context, Uri uri, int reqWidth, int reqHeight) {
+    public static String decodeSampledBitmapFromUri(Context context, Uri uri, int reqWidth, int reqHeight) {
 
         Bitmap bm = null;
         String path = null;
@@ -441,9 +450,6 @@ public class
             e.printStackTrace();
             Toast.makeText(context, e.toString(), Toast.LENGTH_LONG).show();
         }
-
-
-
 
 
         return path;
@@ -580,14 +586,14 @@ public class
     }
 
     public static String getLocalDate(String serverDate) {
-//        Log.e("serverDate",serverDate);
+//        android.util.Log.e("serverDate",serverDate);
 //         serverDate = "2014-10-09 09:46:50";
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
         TimeZone tz = TimeZone.getDefault();
 //        Calendar cal = Calendar.getInstance();
 //        TimeZone tz = cal.getTimeZone();
 //        TimeZone tz = TimeZone.getTimeZone("Asia/Calcutta");
-//        Log.e("tz",tz.toString());
+//        android.util.Log.e("tz",tz.toString());
         sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
         Date date = null;
         try {
@@ -618,7 +624,7 @@ public class
         String CountryZipCode = null;
         TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         int simState = telephonyManager.getSimState();
-        //Log.e("simState",""+simState+"/"+TelephonyManager.SIM_STATE_NETWORK_LOCKED+"/"+TelephonyManager.SIM_STATE_UNKNOWN+"/"+TelephonyManager.SIM_STATE_READY);
+        //android.util.Log.e("simState",""+simState+"/"+TelephonyManager.SIM_STATE_NETWORK_LOCKED+"/"+TelephonyManager.SIM_STATE_UNKNOWN+"/"+TelephonyManager.SIM_STATE_READY);
         switch (simState) {
 
             case (TelephonyManager.SIM_STATE_ABSENT):
@@ -638,7 +644,7 @@ public class
 
                 CountryZipCode = GetCountryZipCode(context);
                 CountryZipCode = "+" + CountryZipCode;
-                Log.e("COUNTRY ZIP CODE", CountryZipCode);
+                android.util.Log.e("COUNTRY ZIP CODE", CountryZipCode);
 
 
                 break;
@@ -664,7 +670,7 @@ public class
             String[] g = rl[i].split(",");
             if (g[1].trim().equals(CountryID.trim())) {
                 CountryZipCode = g[0];
-                Log.e("Code", "Tis is Code>>>>>" + CountryZipCode);
+                android.util.Log.e("Code", "Tis is Code>>>>>" + CountryZipCode);
                 break;
             }
         }
@@ -871,26 +877,26 @@ public class
     }
 
     //function to update clicks value for ours and partner- in case of Cards only monika
-    public static void updateClicksValue(String oursClicks,String partnerClicks, String clicks, boolean ours){
-        int tempOurClicks=Integer.parseInt(oursClicks);
-        int tempPartnerClicks=Integer.parseInt(partnerClicks);
+    public static void updateClicksValue(String oursClicks, String partnerClicks, String clicks, boolean ours) {
+        int tempOurClicks = Integer.parseInt(oursClicks);
+        int tempPartnerClicks = Integer.parseInt(partnerClicks);
         int tempClicks;
-        RelationManager manager=ModelManager.getInstance().getRelationManager();
-        if(clicks.equalsIgnoreCase("05")){
-            tempClicks=5;
-        }else{
-            tempClicks=Integer.parseInt(clicks);
+        RelationManager manager = ModelManager.getInstance().getRelationManager();
+        if (clicks.equalsIgnoreCase("05")) {
+            tempClicks = 5;
+        } else {
+            tempClicks = Integer.parseInt(clicks);
         }
-        if(ours){
-            tempOurClicks=tempOurClicks+tempClicks;
-            ModelManager.getInstance().getAuthorizationManager().ourClicks=String.valueOf(tempOurClicks);
-            tempPartnerClicks=tempPartnerClicks-tempClicks;
-            manager.partnerClicks=String.valueOf(tempPartnerClicks);
-        }else{
-            tempOurClicks=tempOurClicks-tempClicks;
-            ModelManager.getInstance().getAuthorizationManager().ourClicks=String.valueOf(tempOurClicks);
-            tempPartnerClicks=tempPartnerClicks+tempClicks;
-            manager.partnerClicks=String.valueOf(tempPartnerClicks);
+        if (ours) {
+            tempOurClicks = tempOurClicks + tempClicks;
+            ModelManager.getInstance().getAuthorizationManager().ourClicks = String.valueOf(tempOurClicks);
+            tempPartnerClicks = tempPartnerClicks - tempClicks;
+            manager.partnerClicks = String.valueOf(tempPartnerClicks);
+        } else {
+            tempOurClicks = tempOurClicks - tempClicks;
+            ModelManager.getInstance().getAuthorizationManager().ourClicks = String.valueOf(tempOurClicks);
+            tempPartnerClicks = tempPartnerClicks + tempClicks;
+            manager.partnerClicks = String.valueOf(tempPartnerClicks);
         }
 
     }
@@ -898,8 +904,7 @@ public class
 
     /* find bitmap */
 
-    public static Bitmap path(Uri mpath)
-    {
+    public static Bitmap path(Uri mpath) {
         Bitmap resized = null;
         try {
 
@@ -951,7 +956,7 @@ public class
             }
 
         } catch (Exception ex) {
-            com.sourcefuse.clickinandroid.utils.Log.e("Exception", "Exception-->" + ex.toString());
+            Log.e("Exception", "Exception-->" + ex.toString());
             ex.printStackTrace();
         }
         return resized;
@@ -959,11 +964,11 @@ public class
     }
 
     //monika-convert String clicks value to int
-    public static int convertToIntClicks(String clicks){
+    public static int convertToIntClicks(String clicks) {
 
-        int changeClicks =0;
+        int changeClicks = 0;
 
-        if (clicks.equalsIgnoreCase("1") || clicks.equalsIgnoreCase("01")){
+        if (clicks.equalsIgnoreCase("1") || clicks.equalsIgnoreCase("01")) {
             changeClicks = 1;
         } else if (clicks.equalsIgnoreCase("2") || clicks.equalsIgnoreCase("02")) {
             changeClicks = 2;
@@ -989,22 +994,22 @@ public class
 
 
     // //function to update clicks value for ours -without cards-monika
-    public static void updateClicksWithoutCard(String oursClicks, String clicks, boolean add){
-        String tempOurClicksString=new String(oursClicks);
-        if(tempOurClicksString.startsWith("+") || tempOurClicksString.startsWith("-"))
-            tempOurClicksString=tempOurClicksString.substring(1);
+    public static void updateClicksWithoutCard(String oursClicks, String clicks, boolean add) {
+        String tempOurClicksString = new String(oursClicks);
+        if (tempOurClicksString.startsWith("+") || tempOurClicksString.startsWith("-"))
+            tempOurClicksString = tempOurClicksString.substring(1);
 
-        int tempOurClicks=Integer.parseInt(tempOurClicksString);
+        int tempOurClicks = Integer.parseInt(tempOurClicksString);
 
-        int tempClicks=convertToIntClicks(clicks.substring(1));
+        int tempClicks = convertToIntClicks(clicks.substring(1));
 
-        if(add){
-            tempOurClicks=tempOurClicks+tempClicks;
-            ModelManager.getInstance().getAuthorizationManager().ourClicks=String.valueOf(tempOurClicks);
+        if (add) {
+            tempOurClicks = tempOurClicks + tempClicks;
+            ModelManager.getInstance().getAuthorizationManager().ourClicks = String.valueOf(tempOurClicks);
 
-        }else{//minus cicks
-            tempOurClicks=tempOurClicks-tempClicks;
-            ModelManager.getInstance().getAuthorizationManager().ourClicks=String.valueOf(tempOurClicks);
+        } else {//minus cicks
+            tempOurClicks = tempOurClicks - tempClicks;
+            ModelManager.getInstance().getAuthorizationManager().ourClicks = String.valueOf(tempOurClicks);
 
         }
 
@@ -1012,55 +1017,159 @@ public class
 
     //function to update clicks of partner without card
     // //function to update clicks value for ours -without cards-monika
-    public static void updateClicksPartnerWithoutCard(String partnerClicks, String clicks, boolean add){
-        String tempPartnerClicksString=new String(partnerClicks);
-        if(tempPartnerClicksString.startsWith("+") || tempPartnerClicksString.startsWith("-"))
-            tempPartnerClicksString=tempPartnerClicksString.substring(1);
+    public static void updateClicksPartnerWithoutCard(String partnerClicks, String clicks, boolean add) {
+        String tempPartnerClicksString = new String(partnerClicks);
+        if (tempPartnerClicksString.startsWith("+") || tempPartnerClicksString.startsWith("-"))
+            tempPartnerClicksString = tempPartnerClicksString.substring(1);
 
-        int tempPartnerClicks=Integer.parseInt(tempPartnerClicksString);
+        int tempPartnerClicks = Integer.parseInt(tempPartnerClicksString);
 
-        int tempClicks=convertToIntClicks(clicks.substring(1));
+        int tempClicks = convertToIntClicks(clicks.substring(1));
 
-        if(add){
-            tempPartnerClicks=tempPartnerClicks+tempClicks;
-            ModelManager.getInstance().getRelationManager().partnerClicks=String.valueOf(tempPartnerClicks);
+        if (add) {
+            tempPartnerClicks = tempPartnerClicks + tempClicks;
+            ModelManager.getInstance().getRelationManager().partnerClicks = String.valueOf(tempPartnerClicks);
 
-        }else{//minus cicks
-            tempPartnerClicks=tempPartnerClicks-tempClicks;
-            ModelManager.getInstance().getRelationManager().partnerClicks=String.valueOf(tempPartnerClicks);
+        } else {//minus cicks
+            tempPartnerClicks = tempPartnerClicks - tempClicks;
+            ModelManager.getInstance().getRelationManager().partnerClicks = String.valueOf(tempPartnerClicks);
 
         }
 
     }
 
     //akshit code to play sound
-    public static void playSound(Activity activity,int resID){
+    public static void playSound(Activity activity, int resID) {
 
 
-        boolean check ;
-
-        final MediaPlayer mplayer;
-        mplayer = MediaPlayer.create(activity,resID);
         SettingManager mSettingManager = ModelManager.getInstance().getSettingManager();
 
-        if(mSettingManager.isAppSounds()) {
+        if (mSettingManager.isAppSounds()) {
             try {
-                Log.e("Utils App Sound","Sounds Enabled");
-                //      if(check)
-                mplayer.start();
-//                else
-//                    mplayer.stop();
+                Log.e("Utils App Sound", "Sounds Enabled");
+
+                if (mplayer == null) {
+                    mplayer = MediaPlayer.create(activity, resID);
+                    mplayer.setLooping(false);
+                    mplayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                    if (!mplayer.isPlaying())
+                        mplayer.start();
+
+                    mplayer.setVolume(100, 100);
+                    mplayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                        @Override
+                        public void onCompletion(MediaPlayer mediaPlayer) {
+                            mplayer.release();
+                            mplayer = null;
+                        }
+                    });
+                }
+
+            } catch (IllegalArgumentException e) {
+                Log.e("You might not set the URI correctly!", "" + e.toString());
+            } catch (SecurityException e) {
+                Log.e("You might not set the URI correctly!", "" + e.toString());
+            } catch (IllegalStateException e) {
+                Log.e("You might not set the URI correctly!", "" + e.toString());
             } catch (Exception e) {
                 e.printStackTrace();
+                Log.e("Utils App error", "" + e.toString());
             }
-        }else{
-             Log.e("Utils App Sound","Sounds Disabled");
+        } else {
+            Log.e("Utils App Sound", "Sounds Disabled");
         }
 
+    }
+
+    //monika- code to
+
+
+    public static void Unregister(final Activity contex) {
+        new AsyncTask<Void, Void, String>() {
+            @Override
+            protected String doInBackground(Void... params) {
+                String msg = "";
+                try {
+                    if (gcm == null) {
+                        gcm = GoogleCloudMessaging.getInstance(contex);
+                    }
+                   gcm.unregister();
+
+                } catch (IOException ex) {
+                    msg = "Error :" + ex.getMessage();
+
+                }
+                return msg;
+            }
+
+            @Override
+            protected void onPostExecute(String msg) {
+                android.util.Log.e("GCM", "Rregid--->id" + msg);
+            }
+
+        }.execute(null, null, null);
 
     }
 
 
-    //monika- code to
+
+    //monika-function to update clicks for background messages
+    public static void updateClicksBackgroundMsgs(int relationIndex,ChatMessageBody obj){
+        ArrayList<GetrelationshipsBean>tempAcceptlist=ModelManager.getInstance().getRelationManager().acceptedList;
+        if(relationIndex<=tempAcceptlist.size()) {
+            GetrelationshipsBean temp = tempAcceptlist.get(relationIndex);
+            String oursClicks=temp.getUserClicks();
+            String partnerClicks=temp.getClicks();
+            int tempOurClicks = Integer.parseInt(oursClicks);
+            int tempPartnerClicks = Integer.parseInt(partnerClicks);
+            int tempClicks;
+            RelationManager manager = ModelManager.getInstance().getRelationManager();
+
+            //check card is there or not
+            if(!Utils.isEmptyString(obj.card_owner)){
+                if(obj.card_Accepted_Rejected.equalsIgnoreCase("accepted")) {
+                    if (obj.clicks.equalsIgnoreCase("05")) {
+                        tempClicks = 5;
+                    } else {
+                        tempClicks = Integer.parseInt(obj.clicks);
+                    }
+                    //if we send the card, then clicks will get subtracted from our clicks
+                    if (obj.card_originator.equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getUserId())) {
+                        tempOurClicks = tempOurClicks - tempClicks;
+                        tempPartnerClicks = tempPartnerClicks + tempClicks;
+                    } else {
+                        tempOurClicks = tempOurClicks + tempClicks;
+                        tempPartnerClicks = tempPartnerClicks - tempClicks;
+                    }
+                }
+            }else{
+                if (obj.clicks.equalsIgnoreCase("05")) {
+                    tempClicks = 5;
+                } else {
+                    tempClicks = convertToIntClicks(obj.clicks.substring(1));
+                }
+
+                //if card is not there, then clicks will be calculated from ours only
+                if(obj.clicks.startsWith("+")){
+                    tempOurClicks=tempOurClicks+tempClicks;
+                }else if(obj.clicks.startsWith("-")){
+                    tempOurClicks=tempOurClicks-tempClicks;
+                }
+
+            }
+
+
+            temp.setUserClicks(String.valueOf(tempOurClicks));
+            temp.setClicks(String.valueOf(tempPartnerClicks));
+        }
+    }
+
+    public static void updateClicksInRelationshipList(int relationListIndex) {
+
+        //monika-swap values as per naming convention on server
+        ModelManager.getInstance().getRelationManager().acceptedList.get(relationListIndex).setClicks( ModelManager.getInstance().getRelationManager().partnerClicks);
+        ModelManager.getInstance().getRelationManager().acceptedList.get(relationListIndex).setUserClicks(ModelManager.getInstance().getAuthorizationManager().ourClicks);
+
+    }
 }
 

@@ -7,6 +7,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
@@ -15,6 +16,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
@@ -36,6 +38,7 @@ import com.sourcefuse.clickinandroid.model.ClickInNotificationManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.NewsFeedManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
+import com.sourcefuse.clickinandroid.model.bean.GetrelationshipsBean;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.Utils;
@@ -51,8 +54,7 @@ import java.util.List;
 
 import de.greenrobot.event.EventBus;
 
-public class
-        ClickInBaseView extends Activity implements TextWatcher, SlidingMenu.OnOpenListener, SlidingMenu.OnCloseListener {
+public class ClickInBaseView extends Activity implements TextWatcher, SlidingMenu.OnOpenListener, SlidingMenu.OnCloseListener {
 
 
     public ListView clickWithlistView, searchList;
@@ -63,8 +65,9 @@ public class
     public ListView notificationList;
     public NotificationAdapter notificationAdapter;
     public NewsFeedManager newsFeedManager;
-    public static SlidingMenu slidemenu;
+    public SlidingMenu slidemenu;
     SimpleSectionedListAdapter simpleSectionedGridAdapter;
+    View header;
     /// Left Menu
     private TextView userName;
     private ImageView userPic, hideSearchlist;
@@ -86,12 +89,36 @@ public class
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.view_baseview);
+        /*setContentView(R.layout.view_baseview);*/
         Log.e("ClickInBaseView1", "onCreate");
 
         authManager = ModelManager.getInstance().getAuthorizationManager();
 
     }
+
+    @Override
+    public void setContentView(int layoutResID) {  // prafull code for comman header
+        super.setContentView(layoutResID);
+        header = getLayoutInflater().inflate(R.layout.view_baseview, null);
+        ((ViewGroup) ((ViewGroup) findViewById(android.R.id.content)).getChildAt(0)).addView(header, 1);
+        header.findViewById(R.id.iv_open_left_menu).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                com.sourcefuse.clickinandroid.utils.Log.e("in left menu", "in left menu");
+                slidemenu.showMenu();
+            }
+        });
+
+        header.findViewById(R.id.iv_open_right_menu).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                com.sourcefuse.clickinandroid.utils.Log.e("in right menu", "in right menu");
+                slidemenu.showSecondaryMenu();
+            }
+        });
+
+    }
+
 
     @SuppressWarnings("static-access")
     public void setLeftMenuList() {
@@ -172,6 +199,34 @@ public class
         slidemenu.setMenu(R.layout.menu_view);
         leftMenuElements();
 
+
+        /* set notification data prafull code */
+
+        if (authManager == null)
+            authManager = ModelManager.getInstance().getAuthorizationManager();
+        TextView mNotificationText = (TextView) header.findViewById(R.id.iv_open_right_menu);
+        if (authManager.getNotificationCounter() > 0) {
+
+            String mValue = "";
+            int mNotificationValue = authManager.getNotificationCounter();
+
+            if (mNotificationValue > 99) {
+                mValue = "99+";
+                com.sourcefuse.clickinandroid.utils.Log.e("in notification value", "" + mValue);
+            } else {
+                mValue = String.valueOf(mNotificationValue);
+                com.sourcefuse.clickinandroid.utils.Log.e("in notification value", "" + mValue);
+
+            }
+            mNotificationText.setText("" + mValue);
+            mNotificationText.setTextColor(Color.parseColor("#39cad4"));
+        } else {
+            com.sourcefuse.clickinandroid.utils.Log.e("in else part", "in else part");
+            mNotificationText.setText("0");
+            mNotificationText.setTextColor(Color.parseColor("#000000"));
+        }
+
+
         if (setData) {
             getMenuListData();
         } else {
@@ -192,7 +247,7 @@ public class
                 if (slidemenu.isSecondaryMenuShowing()) {
                     if (authManager != null) {
                         authManager.setNotificationCounter(0);
-                        EventBus.getDefault().post("update Counter");
+                        EventBus.getDefault().postSticky("update Counter");
                     }
                 }
 
@@ -324,8 +379,8 @@ public class
         try {
             Log.e("in try---->", "in try--->");
             Bitmap imagebitmap1 = authManager.getUserbitmap();
-            if (imagebitmap1 != null)
-                com.sourcefuse.clickinandroid.utils.Log.e("user bit map not null", "user bit map not null");
+            //  if (imagebitmap1 != null)
+            //com.sourcefuse.clickinandroid.utils.android.util.Log.e("user bit map not null", "user bit map not null");
             boolean userpic = Utils.isEmptyString(authManager.getUserPic());
             Log.e("user pic url ---->", "" + authManager.getUserPic());
             Log.e("user pc --->", "" + authManager.getUserPic());
@@ -341,7 +396,7 @@ public class
                 userPic.setImageResource(R.drawable.male_user);
 
         } catch (Exception e) {
-            com.sourcefuse.clickinandroid.utils.Log.e("on exception", "on exception");
+            //   com.sourcefuse.clickinandroid.utils.android.util.Log.e("on exception", "on exception");
             userPic.setImageResource(R.drawable.male_user);
         }
 
@@ -362,6 +417,14 @@ public class
                         partnerPh = relationManager.acceptedList.get(position - 2).getPhoneNo();
                         Log.e("", "position--In..> " + rId);
                         relationListIndex = (position - 2);
+
+/* prafulll code to set counter to zero */
+                        if (relationManager.acceptedList.get(position - 2).getUnreadMsg() != 0) {
+                            relationManager.acceptedList.get(position - 2).setUnreadMsg(0);
+                            clickInadapter.notifyDataSetChanged();
+                        }
+/* prafulll code to set counter to zero */
+
                         switchView(rId, relationListIndex);
 
                     } catch (Exception e) {
@@ -380,7 +443,7 @@ public class
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                com.sourcefuse.clickinandroid.utils.Log.e("in cickin baseview on searchInviteView ----->", "in cickin baseview on searchInviteView ----->");
+//                com.sourcefuse.clickinandroid.utils.android.util.Log.e("in cickin baseview on searchInviteView ----->", "in cickin baseview on searchInviteView ----->");
                 Intent intent = new Intent(ClickInBaseView.this, AddSomeoneView.class);
                 intent.putExtra("fromsignup", false);
                 startActivity(intent);
@@ -527,7 +590,7 @@ public class
                 Intent intent = new Intent(ClickInBaseView.this, AddSomeoneView.class);
                 intent.putExtra("FromOwnProfile", true);
                 startActivity(intent);
-                com.sourcefuse.clickinandroid.utils.Log.e("in cickin baseview on searchInviteView ----->", "in cickin baseview on searchInviteView ----->");
+//                com.sourcefuse.clickinandroid.utils.android.util.Log.e("in cickin baseview on searchInviteView ----->", "in cickin baseview on searchInviteView ----->");
                         /* code for animation prafull*/
 
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
@@ -614,7 +677,7 @@ public class
             EventBus.getDefault().unregister(this);
         }
 
-        EventBus.getDefault().register(this);
+        EventBus.getDefault().registerSticky(this);
     }
 
 
@@ -658,15 +721,7 @@ public class
             slidemenu.findViewById(R.id.btn_progressBar).setVisibility(View.GONE);
         }
         if (edt_search.getText().toString().length() > 2) {
-            /*hideSearchlist.setVisibility(View.VISIBLE);
-            searchList.setVisibility(View.VISIBLE);
-            stopSearch = true;
-            if (stopSearch) {
-                stopSearch = false;
-                relationManager = ModelManager.getInstance().getRelationManager();
-                authManager = ModelManager.getInstance().getAuthorizationManager();
-                relationManager.fetchusersbyname(edt_search.getText().toString(), authManager.getPhoneNo(), authManager.getUsrToken());
-            }*/
+
         }
 
 
@@ -692,8 +747,8 @@ public class
         try {
             Log.e("in try---->", "in try--->");
             Bitmap imagebitmap1 = authManager.getUserbitmap();
-            if (imagebitmap1 != null)
-                com.sourcefuse.clickinandroid.utils.Log.e("user bit map not null", "user bit map not null");
+            //   if (imagebitmap1 != null)
+            //     com.sourcefuse.clickinandroid.utils.android.util.Log.e("user bit map not null", "user bit map not null");
             boolean userpic = Utils.isEmptyString(authManager.getUserPic());
             Log.e("user pic url ---->", "" + authManager.getUserPic());
             Log.e("user pc --->", "" + authManager.getUserPic());
@@ -709,18 +764,39 @@ public class
                 userPic.setImageResource(R.drawable.male_user);
 
         } catch (Exception e) {
-            com.sourcefuse.clickinandroid.utils.Log.e("on exception", "on exception");
+//            com.sourcefuse.clickinandroid.utils.android.util.Log.e("on exception", "on exception");
             userPic.setImageResource(R.drawable.male_user);
         }
 
         setLeftMenuList();
     }
 
+    protected void onResume(){
+        super.onResume();
+        if(clickInadapter !=null)
+            clickInadapter.notifyDataSetChanged();
+    }
 
     public void onEventMainThread(String message) {
         Log.e("onEventMainThread", "onEventMainThread->");
         authManager = ModelManager.getInstance().getAuthorizationManager();
-        if (message.equalsIgnoreCase("SearchResult True")) {
+        String mTestString = new String(message);
+
+        if (mTestString.contains("UpdateMessageCounter###")) { /* prafulll code to set counter to zero */
+        /*    String mMessage = new String(message);
+            String[] mSplit = mMessage.split("###", 2);
+            String mRelationId = mSplit[1];
+            Log.e("relation ship id on update counter ---->", "" + mRelationId);
+            for (GetrelationshipsBean mRelationShipBean : relationManager.acceptedList) {
+                if (mRelationShipBean.getRelationshipId().equalsIgnoreCase(mRelationId)) {
+                    mRelationShipBean.setUnreadMsg(mRelationShipBean.getUnreadMsg() + 1);
+                    clickInadapter.notifyDataSetChanged();
+
+                    Log.e("found---->", "found---->");
+                }
+            }*/
+            clickInadapter.notifyDataSetChanged();
+        } else if (message.equalsIgnoreCase("SearchResult True")) {
             Log.e("on true---->", "on true");
             stopSearch = true;
             Utils.dismissBarDialog();
@@ -798,6 +874,34 @@ public class
         } else if (message.equalsIgnoreCase("Update DB Message")) {
             //temp code
             Toast.makeText(this, "Message received for other partner", Toast.LENGTH_SHORT).show();
+        } else if (message.equalsIgnoreCase("update Counter")) { // prafull code for notification update andrid
+            TextView mNotificationText = (TextView) header.findViewById(R.id.iv_open_right_menu);
+
+            if (authManager == null)
+                authManager = ModelManager.getInstance().getAuthorizationManager();
+
+            if (authManager.getNotificationCounter() > 0) {
+
+                String mValue = "";
+                int mNotificationValue = authManager.getNotificationCounter();
+
+                if (mNotificationValue > 99) {
+                    mValue = "99+";
+                } else {
+                    mValue = String.valueOf(mNotificationValue);
+                }
+                mNotificationText.setText("" + mValue);
+                mNotificationText.setTextColor(Color.parseColor("#39cad4"));
+            } else {
+                mNotificationText.setText("0");
+                mNotificationText.setTextColor(Color.parseColor("#000000"));
+            }
+
+            if (notificationMngr == null)
+                notificationMngr = ModelManager.getInstance().getNotificationManagerManager();
+
+            notificationMngr.getNotification(getApplicationContext(), "", authManager.getPhoneNo(), authManager.getUsrToken());
+
         }
 
     }
@@ -819,8 +923,8 @@ public class
 
             Log.e("in try---->", "in try--->");
             Bitmap imagebitmap1 = authManager.getUserbitmap();
-            if (imagebitmap1 != null)
-                com.sourcefuse.clickinandroid.utils.Log.e("user bit map not null", "user bit map not null");
+            //   if (imagebitmap1 != null)
+            //     com.sourcefuse.clickinandroid.utils.android.util.Log.e("user bit map not null", "user bit map not null");
             boolean userpic = Utils.isEmptyString(authManager.getUserPic());
             Log.e("user pic url ---->", "" + authManager.getUserPic());
             Log.e("user pc --->", "" + authManager.getUserPic());
@@ -836,7 +940,7 @@ public class
                 userPic.setImageResource(R.drawable.male_user);
 
         } catch (Exception e) {
-            com.sourcefuse.clickinandroid.utils.Log.e("on exception", "on exception");
+//            com.sourcefuse.clickinandroid.utils.android.util.Log.e("on exception", "on exception");
             userPic.setImageResource(R.drawable.male_user);
         }
         try {

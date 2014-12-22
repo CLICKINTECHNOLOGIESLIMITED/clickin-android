@@ -3,12 +3,14 @@ package com.sourcefuse.clickinandroid.view;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -20,6 +22,7 @@ import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
 import com.facebook.widget.FacebookDialog;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.SettingManager;
@@ -32,23 +35,25 @@ import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.adapter.DeactivateAccountView;
 import com.sourcefuse.clickinapp.R;
 
+import java.io.IOException;
+
 import de.greenrobot.event.EventBus;
 
-public class SettingView extends Activity implements View.OnClickListener {
+public class SettingView extends Activity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
     private static final String TAG = ChatRecordView.class.getSimpleName();
     private FacebookDialog.Callback dialogCallback = new FacebookDialog.Callback() {
         @Override
         public void onError(FacebookDialog.PendingCall pendingCall, Exception error, Bundle data) {
-            Log.e(TAG, String.format("Error: %s", error.toString()));
+           // android.util.android.util.Log.e(TAG, String.format("Error: %s", error.toString()));
         }
 
         @Override
         public void onComplete(FacebookDialog.PendingCall pendingCall, Bundle data) {
-            Log.e(TAG, "Success!");
+           // android.util.android.util.Log.e(TAG, "Success!");
         }
     };
+    public CompoundButton appSound;
     boolean checkboolean = false, checkboolean1 = false, checkboolean2 = false, checkboolean3 = false, checkboolean4 = false, checkboolean5 = false, checkboolean6 = false;
-
     LinearLayout sharing_layout, main_password_layout, password_layout, report_layout, not_working_layout,
             general_feed_layout, logout_layout;
     int height;
@@ -59,7 +64,6 @@ public class SettingView extends Activity implements View.OnClickListener {
     private AuthManager authManager;
     private SettingManager settingManager;
     private UiLifecycleHelper uiHelper;
-    public CompoundButton appSound ;
     private Session.StatusCallback callback = new Session.StatusCallback() {
         @Override
         public void call(Session session, SessionState state, Exception exception) {
@@ -128,29 +132,110 @@ public class SettingView extends Activity implements View.OnClickListener {
 
 //ends
 //akshit code For App Sound
-        appSound = (CompoundButton)findViewById(R.id.toggle_app_sounds);
-        if(settingManager.isAppSounds()){//to check to sate on activity launch,By Default app sound is set Enabled,and To set the position of switch
-            appSound.setChecked(false);
-            Log.e("Setting View","True");
-        }else{
-            appSound.setChecked(true);
-            Log.e("Setting View","False");
-        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+            appSound = (CompoundButton) findViewById(R.id.toggle_app_sounds);
+            appSound.setVisibility(View.VISIBLE);
 
-
-       appSound.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(b){
-                    settingManager.setAppSounds(false);
-                    Log.e("Setting View " ,"b True");
-                }else{
-                    settingManager.setAppSounds(true);
-                    Log.e("Setting View " ,"b false");
-                }
+            if (settingManager.isAppSounds()) {//to check to sate on activity launch,By Default app sound is set Enabled,and To set the position of switch
+                appSound.setChecked(true);
+               // android.util.android.util.Log.e("Setting View", "True");
+            } else {
+                appSound.setChecked(false);
+                //android.util.android.util.Log.e("Setting View", "False");
             }
-        });
+            appSound.setOnCheckedChangeListener(this);
+
+
+            /* for push notification */
+            ((CompoundButton) findViewById(R.id.toggle_notification_one)).setVisibility(View.VISIBLE);
+            if (SettingManager.mNotification_Enable) {
+                ((CompoundButton) findViewById(R.id.toggle_notification_one)).setChecked(true);
+            } else {
+                ((CompoundButton) findViewById(R.id.toggle_notification_one)).setChecked(false);
+            }
+            ((CompoundButton) findViewById(R.id.toggle_notification_one)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    if (b) {
+                        try {
+                            Utils.getRegId(SettingView.this);
+                           // SettingManager.mNotification_Enable = true;
+                            settingManager.enableDisablePushNotifications(authManager.getPhoneNo(),authManager.getUsrToken(),"true");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                           // android.util.android.util.Log.e("in exception ----", "in exception ----");
+                        }
+                    } else {
+                        try {
+                          //  SettingManager.mNotification_Enable = false;
+                            settingManager.enableDisablePushNotifications(authManager.getPhoneNo(),authManager.getUsrToken(),"false");
+                            Utils.Unregister(SettingView.this);
+                        } catch (Exception e) {
+                            /*android.util.android.util.Log.e("exception---->", "" + e.toString());
+                            android.util.android.util.Log.e("in exception unregister----", "in exception unregister----");*/
+                        }
+                    }
+                }
+            });
+
+        } else {
+            CheckBox checkBox = (CheckBox) findViewById(R.id.checkbox);
+            checkBox.setVisibility(View.VISIBLE);
+            checkBox.setChecked(true);
+            if (settingManager.isAppSounds()) {//to check to sate on activity launch,By Default app sound is set Enabled,and To set the position of switch
+                checkBox.setChecked(true);
+                //android.util.android.util.Log.e("Setting View", "True");
+            } else {
+                checkBox.setChecked(false);
+                //android.util.android.util.Log.e("Setting View", "False");
+            }
+
+            checkBox.setOnCheckedChangeListener(this);
+
+            /* for push notification */
+
+
+            CheckBox mPushNotification = (CheckBox) findViewById(R.id.checkbox_pushnotificstion);
+            mPushNotification.setVisibility(View.VISIBLE);
+            mPushNotification.setChecked(true);
+
+            if (SettingManager.mNotification_Enable) {
+                mPushNotification.setChecked(true);
+            } else {
+                mPushNotification.setChecked(false);
+            }
+
+            mPushNotification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    if (b) {
+                        try {
+                            Utils.getRegId(SettingView.this);
+                            settingManager.enableDisablePushNotifications(authManager.getPhoneNo(),authManager.getUsrToken(),"true");
+                            //SettingManager.mNotification_Enable = true;
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            //android.util.android.util.Log.e("in exception ----", "in exception ----");
+                        }
+                    } else {
+                        try {
+                            Utils.Unregister(SettingView.this);
+                            settingManager.enableDisablePushNotifications(authManager.getPhoneNo(),authManager.getUsrToken(),"false");
+                            //SettingManager.mNotification_Enable = false;
+                        } catch (Exception e) {
+                            /*android.util.android.util.Log.e("exception---->", "" + e.toString());
+                            android.util.android.util.Log.e("in exception unregister----", "in exception unregister----");*/
+                        }
+                    }
+                }
+            });
+
+
+        }
         //ends
+
+        /* for push notification */
+
 
 //  for facebook share
 
@@ -350,7 +435,7 @@ public class SettingView extends Activity implements View.OnClickListener {
 
                 ModelManager.setInstance();
 
-                Log.e("", "holder.logoutYes");
+               // android.util.android.util.Log.e("", "holder.logoutYes");
                 Intent intent5 = new Intent(SettingView.this, SplashView.class);
                 intent5.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent5.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -375,7 +460,7 @@ public class SettingView extends Activity implements View.OnClickListener {
                     uiHelper.trackPendingDialogCall(shareDialog.present());
 
                 } else {
-                    Log.e(TAG, "Success!");
+                   // android.util.android.util.Log.e(TAG, "Success!");
                 }
 
 
@@ -416,7 +501,7 @@ public class SettingView extends Activity implements View.OnClickListener {
 // Not working problem
 
             case R.id.btn_send_not_working:
-                Log.e("Setting View", "Send Pressed");
+                //android.util.android.util.Log.e("Setting View", "Send Pressed");
                 String mphone_no, muser_token, spam_or_abuse_type, comment;
                 mphone_no = authManager.getPhoneNo();
                 muser_token = authManager.getUsrToken();
@@ -441,7 +526,7 @@ public class SettingView extends Activity implements View.OnClickListener {
 
 // general feedback
             case R.id.btn_send_general_problem:
-                Log.e("Setting View", "Send Pressed");
+                //android.util.android.util.Log.e("Setting View", "Send Pressed");
 
 
                 String mphone_no_general, muser_token_general, spam_or_abuse_type_general, comment_general;
@@ -563,8 +648,19 @@ public class SettingView extends Activity implements View.OnClickListener {
 
     public void onDestroy() {
         super.onDestroy();
-        Log.e("SettingsView", "Destroy");
+        //android.util.android.util.Log.e("SettingsView", "Destroy");
     }
 
 
+    @Override
+    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+        if (b) {
+            settingManager.setAppSounds(true);
+            //android.util.android.util.Log.e("Setting View ", "b True");
+        } else {
+            settingManager.setAppSounds(false);
+            //android.util.android.util.Log.e("Setting View ", "b false");
+        }
+    }
 }

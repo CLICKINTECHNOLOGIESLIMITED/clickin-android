@@ -88,7 +88,7 @@ public class ChatManager {
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            Log.e(TAG, "userInputDetails-->" + userInputDetails);
+            android.util.Log.e(TAG, "userInputDetails-->" + userInputDetails);
         } catch (Exception e1) {
             e1.printStackTrace();
         }
@@ -100,7 +100,7 @@ public class ChatManager {
                                           JSONObject errorResponse) {
                         super.onFailure(statusCode, e, errorResponse);
                         if (errorResponse != null) {
-                            Log.e("errorResponse", "->" + errorResponse);
+                            android.util.Log.e("errorResponse", "->" + errorResponse);
                             EventBus.getDefault().post("FecthChat False");
                         } else {
                             EventBus.getDefault().post("FecthChat Network Error");
@@ -115,7 +115,7 @@ public class ChatManager {
                         boolean state = false;
                         ChatMessageBody temp = null;
                         try {
-                            Log.e(TAG, "response FecthChat ->" + response);
+                            android.util.Log.e(TAG, "response FecthChat ->" + response);
                             state = response.getBoolean("success");
                             if (state) {
 
@@ -214,7 +214,7 @@ public class ChatManager {
 
             client.addHeader("User-Token", usertoken);
             client.addHeader("Phone-No", phone);
-            Log.e("usertoken-phone_no-othersphone-->", "" + usertoken + "-" + phone);
+            android.util.Log.e("usertoken-phone_no-othersphone-->", "" + usertoken + "-" + phone);
         } catch (Exception e1) {
             e1.printStackTrace();
         }
@@ -241,7 +241,7 @@ public class ChatManager {
                                   org.apache.http.Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 try {
-                    Log.e("", "response--> " + response);
+                    android.util.Log.e("", "response--> " + response);
                     Utils.clickCustomLog(response.toString());
                     success = response.getBoolean("success");
 
@@ -260,7 +260,7 @@ public class ChatManager {
 
                             //  lists.add(new ArrayList<CardBean>());
                             categories.put(categoryObj.getString("name"), new ArrayList<CardBean>());
-                            Log.e(TAG, "Catagories Values" + categories);
+                            android.util.Log.e(TAG, "Catagories Values" + categories);
 
                         }
 
@@ -323,7 +323,7 @@ public class ChatManager {
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            Log.e(TAG, "ChatShare-->" + userInputDetails);
+            android.util.Log.e(TAG, "ChatShare-->" + userInputDetails);
         } catch (Exception e1) {
             e1.printStackTrace();
         }
@@ -334,7 +334,7 @@ public class ChatManager {
                     public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
                         super.onFailure(statusCode, e, errorResponse);
 
-                        Log.e(TAG, "response ChatShare ->" + errorResponse);
+                        android.util.Log.e(TAG, "response ChatShare ->" + errorResponse);
                         if (errorResponse != null) {
                             EventBus.getDefault().post("ChatShare False");
                         } else {
@@ -347,7 +347,7 @@ public class ChatManager {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            Log.e(TAG, "response ChatShare ->" + response);
+                            android.util.Log.e(TAG, "response ChatShare ->" + response);
                             state = response.getBoolean("success");
                             if (state) {
 
@@ -376,7 +376,7 @@ public class ChatManager {
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            Log.e(TAG, "ShareAction-->" + userInputDetails);
+            android.util.Log.e(TAG, "ShareAction-->" + userInputDetails);
         } catch (Exception e1) {
             e1.printStackTrace();
         }
@@ -398,7 +398,7 @@ public class ChatManager {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            Log.e(TAG, "response ShareAction ->" + response);
+                            android.util.Log.e(TAG, "response ShareAction ->" + response);
                             state = response.getBoolean("success");
                             if (state) {
 
@@ -426,7 +426,7 @@ public class ChatManager {
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            Log.e(TAG, "ShareCards-->" + userInputDetails);
+            android.util.Log.e(TAG, "ShareCards-->" + userInputDetails);
         } catch (Exception e1) {
             e1.printStackTrace();
         }
@@ -448,7 +448,7 @@ public class ChatManager {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            Log.e(TAG, "response ShareCards ->" + response);
+                            android.util.Log.e(TAG, "response ShareCards ->" + response);
                             state = response.getBoolean("success");
                             if (state) {
 
@@ -476,7 +476,7 @@ public class ChatManager {
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            Log.e(TAG, "GetUnReadMessageCount-->" + userInputDetails);
+            android.util.Log.e(TAG, "GetUnReadMessageCount-->" + userInputDetails);
         } catch (Exception e1) {
             e1.printStackTrace();
         }
@@ -498,7 +498,7 @@ public class ChatManager {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            Log.e(TAG, "response GetUnReadMessageCount ->" + response);
+                            android.util.Log.e(TAG, "response GetUnReadMessageCount ->" + response);
                             state = response.getBoolean("success");
                             if (state) {
 
@@ -527,7 +527,7 @@ public class ChatManager {
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            Log.e(TAG, "ResetUnReadMessageCount-->" + userInputDetails);
+            android.util.Log.e(TAG, "ResetUnReadMessageCount-->" + userInputDetails);
         } catch (Exception e1) {
             e1.printStackTrace();
         }
@@ -549,7 +549,7 @@ public class ChatManager {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            Log.e(TAG, "response ResetUnReadMessageCount ->" + response);
+                            android.util.Log.e(TAG, "response ResetUnReadMessageCount ->" + response);
                             state = response.getBoolean("success");
                             if (state) {
 
@@ -576,7 +576,7 @@ public class ChatManager {
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            Log.e(TAG, "ResetBadgeCount-->" + userInputDetails);
+            android.util.Log.e(TAG, "ResetBadgeCount-->" + userInputDetails);
         } catch (Exception e1) {
             e1.printStackTrace();
         }
@@ -598,7 +598,7 @@ public class ChatManager {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            Log.e(TAG, "response ResetBadgeCount ->" + response);
+                            android.util.Log.e(TAG, "response ResetBadgeCount ->" + response);
                             state = response.getBoolean("success");
                             if (state) {
 

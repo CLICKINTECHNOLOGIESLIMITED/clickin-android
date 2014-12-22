@@ -168,7 +168,7 @@ public class SpreadWordView extends Activity implements OnClickListener {
                 }
                 break;
             case R.id.btn_back:
-                //Log.e("", "COUNT------>" + listView.getCount());
+                //android.util.Log.e("", "COUNT------>" + listView.getCount());
                 finish();
                 overridePendingTransition(0, R.anim.top_out);
                 break;
@@ -243,7 +243,7 @@ public class SpreadWordView extends Activity implements OnClickListener {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        com.sourcefuse.clickinandroid.utils.Log.e("on activity result", "on activity result");
+      //  com.sourcefuse.clickinandroid.utils.android.util.Log.e("on activity result", "on activity result");
         try {
             super.onActivityResult(requestCode, resultCode, data);
             try {
@@ -251,9 +251,9 @@ public class SpreadWordView extends Activity implements OnClickListener {
             } catch (Exception e) {
             }
         } catch (Exception e) {
-            //   android.util.Log.d(TAG, "" + e);
+            //   android.util.android.util.Log.d(TAG, "" + e);
         } catch (Error e) {
-            // android.util.Log.d(TAG, "" + e);
+            // android.util.android.util.Log.d(TAG, "" + e);
         }
         Utils.dismissBarDialog();
     }
@@ -262,7 +262,7 @@ public class SpreadWordView extends Activity implements OnClickListener {
                                       Exception exception) {
         if (state.isOpened()) {
             final String access_Token = session.getAccessToken();
-            //     android.util.Log.d(TAG, access_Token);
+            //     android.util.android.util.Log.d(TAG, access_Token);
             sendRequestDialogForFriendList();
         } else if (state.isClosed()) {
             Utils.dismissBarDialog();
@@ -288,10 +288,10 @@ public class SpreadWordView extends Activity implements OnClickListener {
                                                    try {
                                                        final String requestId = values.getString("request");
                                                        if (requestId != null) {
-                                                           //  Log.e(TAG, "Request sent");
+                                                           //  android.util.Log.e(TAG, "Request sent");
                                                            Utils.dismissBarDialog();
                                                        } else {
-                                                           //    Log.e(TAG, "Request cancelled");
+                                                           //    android.util.Log.e(TAG, "Request cancelled");
                                                            Utils.dismissBarDialog();
                                                        }
                                                    } catch (Exception e) {
@@ -316,14 +316,14 @@ public class SpreadWordView extends Activity implements OnClickListener {
 
 
     public void onEventMainThread(String message) {
-        // android.util.Log.d(TAG, "onEventMainThread->" + message);
+        // android.util.android.util.Log.d(TAG, "onEventMainThread->" + message);
         if (message.equalsIgnoreCase("CheckFriend True")) {
             Utils.dismissBarDialog();
             setlist();
         } else if (message.equalsIgnoreCase("CheckFriend False")) {
             Utils.dismissBarDialog();
             //  Utils.showAlert(this,authManager.getMessage());
-            Log.e("Add phone", "Message" + authManager.getMessage());
+            android.util.Log.e("Add phone", "Message" + authManager.getMessage());
             //   Utils.fromSignalDialog(this, authManager.getMessage());
 
         } else if (message.equalsIgnoreCase("CheckFriend Network Error")) {

@@ -103,7 +103,7 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
             privacy.setBackgroundResource(R.drawable.owner_profile_eye_icon);
             privacy.setTag(position);
         } else if (Utils.isEmptyString(itemList.get(position).getStatusAccepted()) && itemList.get(position).getRequestInitiator().equalsIgnoreCase("true")) {
-                  /*android.util.Log.e("getRequestInitiator", "getRequestInitiator");*/
+                  /*android.util.android.Utils.Log.e("getRequestInitiator", "getRequestInitiator");*/
             //sent request ClickIcon
             showpending = true;
             privacy.setBackgroundResource(R.drawable.pending_status);
@@ -169,7 +169,6 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
             public void onClick(View v) {
                 authManager = ModelManager.getInstance().getAuthorizationManager();
                 relationManager = ModelManager.getInstance().getRelationManager();
-                Log.e("1", "1" + itemList.get(position).getmStatuspublic());
 
 
                 RelativeLayout layout = (RelativeLayout) v.getParent();
@@ -180,18 +179,13 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
 
                 if (itemList.get(position).getStatusAccepted().equalsIgnoreCase("true") && itemList.get(position).getmStatuspublic().equalsIgnoreCase("true")) {
 
-                    Log.e("1", "2");
                     relationDialog(AlertMessage.PUBLICMSG + itemList.get(position).getPartnerName() + " private?", position, layout);//request normal dialog to custom dialog
 
                 } else if (itemList.get(position).getStatusAccepted().equalsIgnoreCase("true") && (itemList.get(position).getmStatuspublic().equalsIgnoreCase("false") || Utils.isEmptyString(itemList.get(position).getmStatuspublic()))) {
-                    Log.e("1", "3");
 
                     relationDialogprivate(AlertMessage.PRIVATE + itemList.get(position).getPartnerName() + " public?", position, layout);//replace Normal Dialog to custom dialog
                 } else if (Utils.isEmptyString(itemList.get(position).getStatusAccepted()) && itemList.get(position).getRequestInitiator().equalsIgnoreCase("true")) {
-                    Log.e("1", "4");
                 } else if (Utils.isEmptyString(itemList.get(position).getStatusAccepted())) {
-                    Log.e("1", "5");
-                    Log.e("in empty ---->", "in empty ---->");
                     Utils.launchBarDialog((Activity) context);
                     relationManager.updateStatus(itemList.get(position).getRelationshipId(), authManager.getPhoneNo(), authManager.getUsrToken(), "true");
                     itemList.get(position).setStatusAccepted("true");
@@ -205,7 +199,6 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
             public void onClick(View v) {
 
                 int pos = (Integer) v.getTag();
-                Log.e("Image View Clicked", "TAG" + pos);
                 if (itemList.get(pos).getStatusAccepted() == "true") {
 
                     relationManager = ModelManager.getInstance().getRelationManager();
@@ -218,9 +211,9 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
                     intent.putExtra("phNumber", itemList.get(position).getPhoneNo());
                     ((Activity) context).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
                     context.startActivity(intent);
-                    Log.e("", "holder.usrimg");
+
                 } else {
-                    Log.e("User RelationAdapter ", "Same User");
+
                 }
             }
         });//ends
@@ -273,7 +266,7 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
             @Override
             public void onClick(View view) {
 
-                Log.e("getRelationshipId---->", "" + itemList.get(position1).getRelationshipId());
+
 
                 TextView button1 = (TextView) view.getTag();
                 button1.setBackgroundResource(R.drawable.owner_profile_eye_cross_icon);
@@ -323,7 +316,6 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
         skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.e("getRelationshipId---->", "" + itemList.get(position1).getRelationshipId());
                 TextView button1 = (TextView) view.getTag();
                 button1.setBackgroundResource(R.drawable.owner_profile_eye_icon);
                 itemList.get(position1).setmStatuspublic("true");

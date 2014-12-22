@@ -60,11 +60,22 @@ public class ClickInWithAdapter extends ArrayAdapter<GetrelationshipsBean> {
         }
 
         final RecordHolder rholder = (RecordHolder) row.getTag();
+        android.util.Log.e("in clickinwiht adapter---->","in clickinwiht adapter---->");
         if (!Utils.isEmptyString(item.getStatusAccepted()) && item.getStatusAccepted().matches("true")) {
 
             rholder.clickInUsrName.setText(item.getPartnerName());
-            rholder.unReadNo.setText("");
-            Log.e("item partner pic ---->", "" + item.getPartnerPic());
+
+            if (item.getUnreadMsg() != 0) {
+                rholder.unReadNo.setText("" + item.getUnreadMsg());
+                rholder.unReadNo.setVisibility(View.VISIBLE);
+                android.util.Log.e("counter on update---->",""+item.getUnreadMsg());
+            }
+            else {
+                rholder.unReadNo.setVisibility(View.GONE);
+                android.util.Log.e("counter on update---->","counter on update---->");
+            }
+
+            android.util.Log.e("item partner pic ---->", "" + item.getPartnerPic());
             if (!item.getPartnerPic().equalsIgnoreCase("")) {
                 try {
                     Picasso.with(context).load(item.getPartnerPic())
@@ -86,6 +97,7 @@ public class ClickInWithAdapter extends ArrayAdapter<GetrelationshipsBean> {
             row.findViewById(R.id.clcth_divider).setVisibility(View.GONE);
         else
             row.findViewById(R.id.clcth_divider).setVisibility(View.VISIBLE);
+
 
         return row;
     }

@@ -61,7 +61,7 @@ public class AddSomeoneView extends Activity implements TextWatcher {
         authManager = ModelManager.getInstance().getAuthorizationManager();
 
 
-        Log.e("from signup value---->", "" + getIntent().getBooleanExtra("fromsignup", false));
+        android.util.Log.e("from signup value---->", "" + getIntent().getBooleanExtra("fromsignup", false));
 
         listView.setOnItemClickListener(new OnItemClickListener() {
             @Override
@@ -72,7 +72,7 @@ public class AddSomeoneView extends Activity implements TextWatcher {
 
 
                 ProfileManager prfManager = ModelManager.getInstance().getProfileManager();
-                Log.e("oncreate---->", "" + prfManager.currClickersPhoneNums);
+                android.util.Log.e("oncreate---->", "" + prfManager.currClickersPhoneNums);
 
                 Intent intent = new Intent(AddSomeoneView.this, AddViaContactView.class);
                 intent.putExtra("fromsignup", getIntent().getBooleanExtra("fromsignup", false));
@@ -80,12 +80,12 @@ public class AddSomeoneView extends Activity implements TextWatcher {
 
                 //Monika- we need to append counntry code if it doesn't with contact num
                 String phNum = Utils.itData.get(position).getConNumber();
-                Log.e("phone no---->", "" + phNum);
+                android.util.Log.e("phone no---->", "" + phNum);
                /* if (!(phNum.contains("+"))) {
-                    android.util.Log.e("in contains","in contains");
+                    android.util.android.util.Log.e("in contains","in contains");
                     if (!Utils.isEmptyString(authManager.getCountrycode())) {
                         phNum = authManager.getCountrycode() + phNum;
-                        android.util.Log.e("in contains add country code","in contains add country code");
+                        android.util.android.util.Log.e("in contains add country code","in contains add country code");
                     }
                 }*/
 
@@ -198,7 +198,7 @@ public class AddSomeoneView extends Activity implements TextWatcher {
 
 
         //   if (Utils.itData.size() != 0) {
-        Log.e("current clickers list--->", "" + Utils.itData);
+        android.util.Log.e("current clickers list--->", "" + Utils.itData);
         adapter = new ContactAdapter(this, R.layout.row_contacts, Utils.itData);
         listView.setAdapter(adapter);
         // }
@@ -260,14 +260,14 @@ public class AddSomeoneView extends Activity implements TextWatcher {
         authManager = ModelManager.getInstance().getAuthorizationManager();
         if (message.equalsIgnoreCase("CheckFriend True")) {
             Utils.dismissBarDialog();
-            Log.e("current clickers list--->", "" + Utils.itData);
+            android.util.Log.e("current clickers list--->", "" + Utils.itData);
             adapter = new ContactAdapter(this, R.layout.row_contacts, Utils.itData);
             listView.setAdapter(adapter);
 
         } else if (message.equalsIgnoreCase("CheckFriend False")) {
             Utils.dismissBarDialog();
             //  Utils.showAlert(this,authManager.getMessage());
-            Log.e("Add phone", "Message" + authManager.getMessage());
+            android.util.Log.e("Add phone", "Message" + authManager.getMessage());
             //   Utils.fromSignalDialog(this, authManager.getMessage());
 
         } else if (message.equalsIgnoreCase("CheckFriend Network Error")) {

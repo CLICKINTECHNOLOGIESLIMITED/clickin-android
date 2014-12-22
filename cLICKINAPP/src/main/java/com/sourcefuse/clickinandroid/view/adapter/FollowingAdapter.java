@@ -136,7 +136,7 @@ public class FollowingAdapter extends ArrayAdapter<FollowerFollowingBean> {
                     relationManager.followUser(item.get(position).getPhoneNo(), authManager.getPhoneNo(), authManager.getUsrToken());
                     item.get(position).setIsFollowing("false");
                     //FollowerList.adapter.notifyDataSetChanged();
-                    Log.e(TAG, "Click - holder.follow=");
+                    android.util.Log.e(TAG, "Click - holder.follow=");
                     FollowingListView.mchangeinList = true;
                 }
 
@@ -153,7 +153,7 @@ public class FollowingAdapter extends ArrayAdapter<FollowerFollowingBean> {
                 intent.putExtra("phNumber", item.get(position).getPhoneNo());
                 ((Activity) context).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
                 context.startActivity(intent);
-                Log.e("", "holder.usrimg");
+                android.util.Log.e("", "holder.usrimg");
 
             }
         });

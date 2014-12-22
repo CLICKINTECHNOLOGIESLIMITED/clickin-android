@@ -39,7 +39,6 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
     private TextView profileHeader, tvclickintx, tvwith, othesProfileName, clickwithHead, clickwithNameHead;
     private ListView listView;
     private ImageView userimage;
-    private ImageView menu, noti_other;
     private RelativeLayout rlClickWith;
     private JumpOtherProfileAdapter adapter;
     private AuthManager authManager;
@@ -83,8 +82,6 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
         following = (TextView) findViewById(R.id.btn_following_other);
         follower = (TextView) findViewById(R.id.btn_follower_other);
         follow = (TextView) findViewById(R.id.btn_follow);
-        menu = (ImageView) findViewById(R.id.iv_menu_other);
-        noti_other = (ImageView) findViewById(R.id.iv_notification_other);
         userimage = (ImageView) findViewById(R.id.iv_usr_icon);
         name = (TextView) findViewById(R.id.tv_name_other);
         userdetails = (TextView) findViewById(R.id.tv_user_details_other);
@@ -101,9 +98,7 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
         rlClickWith.setOnClickListener(this);
         follow.setOnClickListener(this);
         following.setOnClickListener(this);
-        noti_other.setOnClickListener(this);
         follower.setOnClickListener(this);
-        menu.setOnClickListener(this);
         name.setTypeface(typeface, typeface.BOLD);
         othesProfileName.setTypeface(typeface, typeface.BOLD);
         profileHeader.setTypeface(typeface, typeface.BOLD);
@@ -139,14 +134,14 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-//                Log.e("JumpOtherprofile Partner Id","PartnerID"+relationManager.profileRelationShipData.get(position).getPartner_id());
-//                Log.e("JumpOtherprofile User Id","UserID"+authManager.getUserId());
+//                android.util.Log.e("JumpOtherprofile Partner Id","PartnerID"+relationManager.profileRelationShipData.get(position).getPartner_id());
+//                android.util.Log.e("JumpOtherprofile User Id","UserID"+authManager.getUserId());
                 if (relationManager.profileRelationShipData.size() > 0 && !relationManager.profileRelationShipData.get(position).getPartner_id().equalsIgnoreCase(authManager.getUserId())) {
-                    Log.e("", "position--> " + position + "" + relationManager.profileRelationShipData.get(position).getPhoneNo());
+                    android.util.Log.e("", "position--> " + position + "" + relationManager.profileRelationShipData.get(position).getPhoneNo());
                     String phNo = relationManager.profileRelationShipData.get(position).getPhoneNo();
                     switchView(phNo);
                 } else {
-                    Log.e("Other Profile", "Same User");
+                    android.util.Log.e("Other Profile", "Same User");
                 }
             }
         });
@@ -202,40 +197,13 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
                 relationManager = ModelManager.getInstance().getRelationManager();
                 relationManager.followUser(phForOtherUser, authManager.getPhoneNo(), authManager.getUsrToken());
                 break;
-            case R.id.iv_menu_other:
-                slidemenu.showMenu(true);
-                break;
+
             case R.id.rl_add_someone:
                 if (Utils.isEmptyString(relationManager.getRelationStatus())) {
                     dialogClickwith();
-
-//                new AlertDialog.Builder(JumpOtherProfileView.this)
-//                        .setMessage(AlertMessage.MAKECLICKWITH + authManager.getTmpUserName())
-//                        .setPositiveButton("Yes Please",
-//                                new DialogInterface.OnClickListener() {
-//                                    @Override
-//                                    public void onClick(DialogInterface dialog,
-//                                                        int which) {
-//                                        authManager = ModelManager.getInstance().getAuthorizationManager();
-//
-//                                        authManager.sendNewRequest(authManager.getPhoneNo(), phForOtherUser, authManager.getUsrToken());
-//
-//                                    }
-//
-//                                }
-//                        ).setNegativeButton("No Thanks", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//
-//                        dialog.dismiss();
-//                    }
-//
-//                }).show();
                 }
                 break;
-            case R.id.iv_notification_other:
-                slidemenu.showSecondaryMenu(true);
-                break;
+
 
         }
 
@@ -277,7 +245,7 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
     public void onEventMainThread(String message) {
         super.onEventMainThread(message);
         relationManager = ModelManager.getInstance().getRelationManager();
-        Log.e("onEventMainThread", "-------" + message);
+        android.util.Log.e("onEventMainThread", "-------" + message);
         if (message.equalsIgnoreCase("ProfileInfo True")) {
             setView();
             setProfileData();
@@ -390,7 +358,7 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
             } else {
                 follow.setBackgroundResource(R.drawable.follow_other_profile);
             }
-            Log.e("Gender Other User", "" + authManager.getTmpGender());
+            android.util.Log.e("Gender Other User", "" + authManager.getTmpGender());
 
             //akshit code ,solved gender
             if (!Utils.isEmptyString(authManager.getTmpGender()) && authManager.getTmpGender().equalsIgnoreCase("girl")) {

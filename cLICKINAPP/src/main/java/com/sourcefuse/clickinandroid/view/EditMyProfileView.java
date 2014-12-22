@@ -43,13 +43,13 @@ import de.greenrobot.event.EventBus;
  */
 
 
-public class EditMyProfileView extends Activity implements View.OnClickListener {
+public class EditMyProfileView extends ClickInBaseView implements View.OnClickListener {
     /* test code prafull */
     public static final int MEDIA_TYPE_IMAGE = 1;
     private static final String TAG = EditMyProfileView.class.getSimpleName();
-    private static final String IMAGE_DIRECTORY_NAME = "FootGloryFlow Application";
+    private static final String IMAGE_DIRECTORY_NAME = "Clickin";
     private Button clickToSave;
-    private ImageView mySelfy, OpenGallery, OpenCamera, backAction;
+    private ImageView mySelfy, OpenGallery, OpenCamera;
     private EditText myName, myLast, myEmail, myCity, myCountry;
     private AuthManager authManager;
     private ProfileManager profileManager;
@@ -108,9 +108,8 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.view_editprofile);
-
+        addMenu(false);
         clickToSave = (Button) findViewById(R.id.btn_click_to_save);
         myName = (EditText) findViewById(R.id.edt_my_name);
         myLast = (EditText) findViewById(R.id.edt_my_last);
@@ -118,7 +117,7 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
         myCity = (EditText) findViewById(R.id.edt_my_city);
         myCountry = (EditText) findViewById(R.id.edt_my_country);
         mySelfy = (ImageView) findViewById(R.id.iv_selfi);
-        backAction = (ImageView) findViewById(R.id.iv_menu);
+
         OpenCamera = (ImageView) findViewById(R.id.iv_edit_camera);
         OpenGallery = (ImageView) findViewById(R.id.iv_edit_gallery);
 
@@ -126,7 +125,7 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
         clickToSave.setOnClickListener(this);
         OpenCamera.setOnClickListener(this);
         OpenGallery.setOnClickListener(this);
-        backAction.setOnClickListener(this);
+
 
 
         // akshit code for closing keypad if touched anywhere outside
@@ -172,13 +171,13 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
 
         //prafull code to set image bitmap
         try {
-            Log.e("in try---->", "in try--->");
+            android.util.Log.e("in try---->", "in try--->");
             Bitmap imagebitmap1 = authManager.getUserbitmap();
-            if (imagebitmap1 != null)
-                com.sourcefuse.clickinandroid.utils.Log.e("user bit map not null", "user bit map not null");
+            /*if (imagebitmap1 != null)
+                com.sourcefuse.clickinandroid.utils.android.util.Log.e("user bit map not null", "user bit map not null");*/
             boolean userpic = Utils.isEmptyString(authManager.getUserPic());
-            Log.e("user pic url ---->", "" + authManager.getUserPic());
-            Log.e("user pc --->", "" + authManager.getUserPic());
+            android.util.Log.e("user pic url ---->", "" + authManager.getUserPic());
+            android.util.Log.e("user pc --->", "" + authManager.getUserPic());
             if (imagebitmap1 != null)
                 mySelfy.setImageBitmap(imagebitmap1);
             else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl") && !userpic)
@@ -191,7 +190,7 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
                 mySelfy.setImageResource(R.drawable.male_user);
 
         } catch (Exception e) {
-            com.sourcefuse.clickinandroid.utils.Log.e("on exception", "on exception");
+           // com.sourcefuse.clickinandroid.utils.android.util.Log.e("on exception", "on exception");
             mySelfy.setImageResource(R.drawable.male_user);
         }
 
@@ -204,10 +203,6 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
             case R.id.iv_edit_gallery:
                 Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(pickPhoto, Constants.SELECT_PICTURE);
-                break;
-            case R.id.iv_menu:
-                finish();
-                overridePendingTransition(0, R.anim.top_out);//akshit code for animation
                 break;
             case R.id.iv_edit_camera:
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -224,7 +219,7 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
             case R.id.btn_click_to_save:
                 if (updateProfileValidation()) {
                     if (Utils.isEmailValid(myEmail.getText().toString())) {
-                        Log.e(TAG, "btn_click_to_save");
+                        android.util.Log.e(TAG, "btn_click_to_save");
                         Utils.launchBarDialog(EditMyProfileView.this);
                         try {
 
@@ -248,20 +243,20 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
                                 profileManager.setProfile(userName, userLastName, authManager.getPhoneNo(),
                                         authManager.getUsrToken(), "", "", userCity, userCountry, userEmail, "", Utils.encodeTobase64(bitmap));
                             } else {
-                                Log.e(TAG, "btn_click_to_save2");
+                                android.util.Log.e(TAG, "btn_click_to_save2");
                                 try {
                                     // imageBitmap = Picasso.with(EditMyProfileView.this).load(authManager.getUserPic()).get();
                                     //Utils.encodeTobase64(imageBitmap)
                                     profileManager.setProfile(userName, userLastName, authManager.getPhoneNo(),
                                             authManager.getUsrToken(), "", "", userCity, userCountry, userEmail, "", "");
                                 } catch (Exception e) {
-                                    Log.e(TAG, "1" + e.toString());
+                                    android.util.Log.e(TAG, "1" + e.toString());
                                 }
                             }
 
 
                         } catch (Exception e) {
-                            Log.e(TAG, "2" + e.toString());
+                            android.util.Log.e(TAG, "2" + e.toString());
                         }
                     } else {
 
@@ -330,7 +325,7 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
                     }
                     Matrix mat = new Matrix();
                     mat.postRotate(angle);
-                    Log.e("angle from camera 1 --->", "" + angle);
+                    android.util.Log.e("angle from camera 1 --->", "" + angle);
 
                     Bitmap resize;
                     resize = Bitmap.createBitmap(bitmap1, 0, 0, bitmap1.getWidth(), bitmap1.getHeight(), mat, true);
@@ -344,7 +339,7 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
                             startActivityForResult(intent, Constants.CROP_PICTURE);
                         } catch (Exception e) {
                             e.printStackTrace();
-                            Log.e("exception--->", "exception--->");
+                            android.util.Log.e("exception--->", "exception--->");
                         }
                     }
                     userImageUri = mImageCaptureUri;
@@ -391,7 +386,7 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
                 mat.postRotate(angle);
 
 
-                Log.e("angle from gallery --->", "" + angle);
+                android.util.Log.e("angle from gallery --->", "" + angle);
 
                 bitmap = Bitmap.createBitmap(bitmap1, 0, 0, bitmap1.getWidth(), bitmap1.getHeight(), mat, true);
 
@@ -399,39 +394,6 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
-
-
-                  /*      pick image from gallery    */
-
-
-                  /*Bitmap resized = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth(), bitmap.getHeight(), true);;*/
-                  /*if (bitmap.getWidth() >= bitmap.getHeight()) {
-
-                        resized = Bitmap.createBitmap(
-                                                             bitmap,
-                                                             bitmap.getWidth() / 2 - bitmap.getHeight() / 2,
-                                                             0,
-                                                             bitmap.getHeight(),
-                                                             bitmap.getHeight()
-                        );
-
-                  } else {
-
-                        resized = Bitmap.createBitmap(
-                                                             bitmap,
-                                                             0,
-                                                             bitmap.getHeight() / 2 - bitmap.getWidth() / 2,
-                                                             bitmap.getWidth(),
-                                                             bitmap.getWidth()
-                        );
-                  }*/
-
-
-
-
-
-                  /*bitmap.recycle();*/
 
 
             userImageUri = data.getData();
@@ -445,7 +407,7 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
                     startActivityForResult(intent, Constants.CROP_PICTURE);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Log.e("exception--->", "exception--->");
+                    android.util.Log.e("exception--->", "exception--->");
                 }
             }
 
@@ -459,7 +421,6 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
 
         }
         if (Constants.CROP_PICTURE == requestCode && resultCode == RESULT_OK) {
-
             if (data.getStringExtra("retake").equalsIgnoreCase("camare")) {
                 Intent intent1 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 mImageCaptureUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
@@ -471,10 +432,7 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
                 startActivityForResult(pickPhoto, Constants.SELECT_PICTURE);
             } else if (authManager.getmResizeBitmap() != null) {
                 mySelfy.setImageBitmap(authManager.getmResizeBitmap());
-                        /*Bitmap imageBitmap = authManager.getmResizeBitmap();
-                        authManager.setUserbitmap(authManager.getmResizeBitmap());
-                        authManager.setOrginalBitmap(null);
-                        authManager.setmResizeBitmap(null);*/
+                setMenuListData();
             }
         }
     }
@@ -484,20 +442,21 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
     public void onStart() {
         super.onStart();
 
-        EventBus.getDefault().register(this);
+//        EventBus.getDefault().register(this);
     }
 
     @Override
     public void onStop() {
         super.onStop();
 
-        EventBus.getDefault().unregister(this);
+        //  EventBus.getDefault().unregister(this);
 
 
     }
 
     public void onEventMainThread(String getMsg) {
-        Log.d(TAG, "onEventMainThread->" + getMsg);
+        super.onEventMainThread(getMsg);
+        android.util.Log.d(TAG, "onEventMainThread->" + getMsg);
         authManager = ModelManager.getInstance().getAuthorizationManager();
         if (getMsg.equalsIgnoreCase("UpdateProfile True")) {
             Utils.dismissBarDialog();
@@ -509,8 +468,10 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
             authManager.setMenuUserInfoFlag(true);
 
             if (authManager.getmResizeBitmap() == null) {
+                //com.sourcefuse.clickinandroid.utils.android.util.Log.e("save 2--->","save 2--->");
                 authManager.setUserbitmap(authManager.getUserbitmap());
-            } else {
+            } else  if(authManager.getmResizeBitmap() != null){
+                //com.sourcefuse.clickinandroid.utils.android.util.Log.e("save 1--->","save 1--->");
                 authManager.setUserbitmap(authManager.getmResizeBitmap());
             }
 
@@ -524,16 +485,8 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
         } else if (getMsg.equalsIgnoreCase("UpdateProfile False")) {
             Utils.dismissBarDialog();
             Utils.fromSignalDialog(this, AlertMessage.eMailAlreadyExist);
-            authManager.setUserbitmap(null);
-            authManager.setUserImageUri(null);
-            authManager.setOrginalBitmap(null);
-            authManager.setmResizeBitmap(null);
         } else if (getMsg.equalsIgnoreCase("UpdateProfile Network Error")) {
             Utils.dismissBarDialog();
-            authManager.setUserbitmap(null);
-            authManager.setUserImageUri(null);
-            authManager.setOrginalBitmap(null);
-            authManager.setmResizeBitmap(null);
             Utils.fromSignalDialog(this, AlertMessage.connectionError);
             //Utils.showAlert(EditMyProfileView.this, AlertMessage.connectionError);
         }
@@ -544,6 +497,11 @@ public class EditMyProfileView extends Activity implements View.OnClickListener 
     @Override
     public void onBackPressed() {
 
+        if(authManager == null)
+            authManager = ModelManager.getInstance().getAuthorizationManager();
+
+        authManager.setmResizeBitmap(null);
+        authManager.setOrginalBitmap(null);
         finish();
         overridePendingTransition(0, R.anim.top_out);//akshit code for animation
         super.onBackPressed();

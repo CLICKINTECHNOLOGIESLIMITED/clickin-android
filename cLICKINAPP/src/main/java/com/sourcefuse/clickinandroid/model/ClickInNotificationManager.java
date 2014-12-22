@@ -33,7 +33,7 @@ public class ClickInNotificationManager implements NotificationManagerI {
     @Override
     public void getNotification(Context context, String lastNotificationId, String phone, String usertoken) {
 
-        Log.e("in getnotification list", "in getnotification list");
+        android.util.Log.e("in getnotification list", "in getnotification list");
         JSONObject userInputDetails = new JSONObject();
         try {
             userInputDetails.put("phone_no", phone);
@@ -43,7 +43,7 @@ public class ClickInNotificationManager implements NotificationManagerI {
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            Log.e("Input Data", "FETCHNOTIFICATIONS-->" + userInputDetails);
+            android.util.Log.e("Input Data", "FETCHNOTIFICATIONS-->" + userInputDetails);
         } catch (Exception e1) {
             e1.printStackTrace();
         }
@@ -55,10 +55,10 @@ public class ClickInNotificationManager implements NotificationManagerI {
                                           JSONObject errorResponse) {
                         super.onFailure(statusCode, e, errorResponse);
                         if (errorResponse != null) {
-                            Log.e("errorResponse", "->" + errorResponse);
-                            EventBus.getDefault().post("Notification false");
+                            android.util.Log.e("errorResponse", "->" + errorResponse);
+                            EventBus.getDefault().postSticky("Notification false");
                         } else {
-                            EventBus.getDefault().post("Notification error");
+                            EventBus.getDefault().postSticky("Notification error");
                         }
                     }
 
@@ -69,6 +69,7 @@ public class ClickInNotificationManager implements NotificationManagerI {
                         try {
                             System.out.println("response Notification ->" + response);
                             state = response.getBoolean("success");
+                            notificationData.clear(); // to clear notification list as we featch all data
                             if (state) {
 
                                 JSONArray list = response.getJSONArray("notificationArray");
@@ -85,7 +86,7 @@ public class ClickInNotificationManager implements NotificationManagerI {
                                 notificationData.addAll(notificationArray);
 
 
-                                EventBus.getDefault().post("Notification true");
+                                EventBus.getDefault().postSticky("Notification true");
 
                             }
 

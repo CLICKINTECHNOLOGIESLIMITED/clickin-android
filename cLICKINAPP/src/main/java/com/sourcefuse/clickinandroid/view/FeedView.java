@@ -40,9 +40,6 @@ public class FeedView extends ClickInBaseView implements View.OnClickListener {
     ArrayList<String> recieverPhNo = new ArrayList<String>();
     ArrayList<String> timeOfFeed = new ArrayList<String>();
     int headerPosition = 0;
-    ImageView menu;
-    RelativeLayout notificationIcon;
-    // RelativeLayout no_feed_image;
     SimpleSectionedListAdapter2 simpleSectionedGridAdapter2;
     private ListView list;
     private ArrayList<Section> sections = new ArrayList<Section>();
@@ -57,14 +54,11 @@ public class FeedView extends ClickInBaseView implements View.OnClickListener {
         setContentView(R.layout.view_feedview_list);
         addMenu(true);
 
-        menu = (ImageView) findViewById(R.id.left_menu);
-        notificationIcon = (RelativeLayout) findViewById(R.id.right_notification);
 
         newsFeedManager = ModelManager.getInstance().getNewsFeedManager();
         authManager = ModelManager.getInstance().getAuthorizationManager();
 
-        menu.setOnClickListener(this);
-        notificationIcon.setOnClickListener(this);
+
 
         Utils.launchBarDialog(FeedView.this);
         newsFeedManager.fetchNewsFeed("", authManager.getPhoneNo(), authManager.getUsrToken());
@@ -95,7 +89,7 @@ public class FeedView extends ClickInBaseView implements View.OnClickListener {
     }
 
     private void initData() {
-        Log.e("FeedSize", String.valueOf(newsFeedBeanArrayList.size()));
+        android.util.Log.e("FeedSize", String.valueOf(newsFeedBeanArrayList.size()));
         senderName.clear();
         senderId.clear();
         receiverId.clear();
@@ -137,10 +131,10 @@ public class FeedView extends ClickInBaseView implements View.OnClickListener {
 
         adapter = new FeedsAdapter(FeedView.this, R.layout.feed_list_item, newsFeedManager.userFeed);
         for (int i = 0; i < senderName.size(); i++) {
-            Log.e("timeOfFeed=", timeOfFeed.get(i));
+            android.util.Log.e("timeOfFeed=", timeOfFeed.get(i));
             sections.add(new Section(mHeaderPositions.get(i), senderName.get(i), receiverName.get(i), senderImages.get(i), recieverImages.get(i), timeOfFeed.get(i), senderId.get(i), receiverId.get(i), senderPhNo.get(i), recieverPhNo.get(i)));
         }
-        Log.e("sections=", "" + sections.size());
+        android.util.Log.e("sections=", "" + sections.size());
         simpleSectionedGridAdapter2 = new SimpleSectionedListAdapter2(this, adapter,
                 R.layout.list_item_header_feed, R.id.senderUser, R.id.imageView1, R.id.recieverUser, R.id.feed_time);
         simpleSectionedGridAdapter2.setSections(sections.toArray(new Section[0]));
@@ -157,12 +151,7 @@ public class FeedView extends ClickInBaseView implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.left_menu:
-                slidemenu.showMenu(true);
-                break;
-            case R.id.right_notification:
-                slidemenu.showSecondaryMenu(true);
-                break;
+
         }
     }
 
@@ -170,17 +159,17 @@ public class FeedView extends ClickInBaseView implements View.OnClickListener {
 
         super.onEventMainThread(message);
 
-        android.util.Log.d("onEventMainThread", "onEventMainThread->");
+       // android.util.android.util.Log.d("onEventMainThread", "onEventMainThread->");
         authManager = ModelManager.getInstance().getAuthorizationManager();
 
         if (message.equalsIgnoreCase("NewsFeed True")) {
-            Log.e("TAG", "Message if True" + message);
+            android.util.Log.e("TAG", "Message if True" + message);
             newsFeedBeanArrayList = newsFeedManager.userFeed;
             initData();
             initControls();
             Utils.dismissBarDialog();
         } else if (message.equalsIgnoreCase("NewsFeed False")) {
-            Log.e("TAG", "Message if False" + message);
+            android.util.Log.e("TAG", "Message if False" + message);
             stopSearch = true;
             Utils.dismissBarDialog();
             newsFeedManager.userFeed.clear();
@@ -191,7 +180,7 @@ public class FeedView extends ClickInBaseView implements View.OnClickListener {
             stopSearch = true;
             Utils.dismissBarDialog();
             Utils.fromSignalDialog(FeedView.this, AlertMessage.connectionError);
-            android.util.Log.d("3", "message->" + message);
+           // android.util.android.util.Log.d("3", "message->" + message);
         } else if (message.equalsIgnoreCase("NewsFeedDelete False")) {
         } else if (message.equalsIgnoreCase("NewsFeedDelete True")) {
             newsFeedManager.fetchNewsFeed("", ModelManager.getInstance().getAuthorizationManager().getPhoneNo(), ModelManager.getInstance().getAuthorizationManager().getUsrToken());

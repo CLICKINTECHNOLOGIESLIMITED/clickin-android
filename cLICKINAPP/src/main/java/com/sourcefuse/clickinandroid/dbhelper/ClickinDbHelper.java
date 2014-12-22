@@ -89,17 +89,13 @@ public class ClickinDbHelper extends SQLiteOpenHelper implements ChatRecordI {
 
     @Override
     public void onCreate(SQLiteDatabase database) {
-        Log.e("DBHELPER", "Oncreate DB");
         //   super.onCreate(database);
         database.execSQL(DATABASE_CREATE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Log.e(TAG,
-                "Upgrading database from version " + oldVersion + " to "
-                        + newVersion + ", which will destroy all old data"
-        );
+
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CHATRECORD);
         onCreate(db);
     }
@@ -123,11 +119,9 @@ public class ClickinDbHelper extends SQLiteOpenHelper implements ChatRecordI {
         int size = chatList.size();
         if (size > 20)
             limit = size - 20;
-        Log.e(TAG, "----i..>" + limit);
         for (int k = (size - 1); k >= limit; k--) {
             ChatMessageBody chat = chatList.get(k);
             ContentValues contentValues = new ContentValues();
-            Log.e(TAG, "----i..>" + k);
             contentValues.put(partnerQbId, chat.partnerQbId);
             contentValues.put(textMsg, chat.textMsg);
             contentValues.put(clicks, chat.clicks);
@@ -175,7 +169,6 @@ public class ClickinDbHelper extends SQLiteOpenHelper implements ChatRecordI {
         //String selectUserChats = "SELECT  * FROM " + TABLE_CHATRECORD + " ORDER BY "+COLUMN_TIMESTAMP +" DESC  WHERE ("+ COLUMN_SID + " = "+sQbId+" AND " +COLUMN_RID +" = "+rQbId+" ) OR ( "+ COLUMN_SID + " = "+rQbId+" AND " +COLUMN_RID +" = "+sQbId +" )";
         //String selectUserChats = "SELECT * FROM " + TABLE_CHATRECORD +" WHERE("+ COLUMN_SID + "="+sQbId+" AND " +COLUMN_RID +"="+rQbId+") OR ("+ COLUMN_SID + "="+rQbId+" AND " +COLUMN_RID +" = "+sQbId +")";
         //  String selectUserChats = "SELECT * FROM " + TABLE_CHATRECORD +  " WHERE "+ relationshipId + " = "+rId;
-        //Log.e(TAG,"selectUserChats--> "+selectUserChats);
 
         //Cursor chatCursor = dbObj. rawQuery( selectUserChats, null );
         Cursor chatCursor =
@@ -224,10 +217,7 @@ public class ClickinDbHelper extends SQLiteOpenHelper implements ChatRecordI {
                     chat.senderQbId = (chatCursor.getString(chatCursor.getColumnIndex(senderQbId)));
 
 
-                    Log.e(TAG, "" + chat.senderQbId + "--" + chat.senderUserToken + "--" + chat.userId + "--" + chat.relationshipId + "--" + chat.isDelivered + "--" + chat.sharedMessage
-                            + chat.location_coordinates + "--" + chat.sentOn + "--" + chat.chatId + "--" + chat.video_thumb + "--" + chat.card_originator + "--" + chat.card_Played_Countered
-                            + "--" + chat.card_url + "--" + chat.card_heading + "--" + chat.card_Accepted_Rejected + "--" + chat.card_DB_ID + "--" + chat.is_CustomCard + "" + chat.card_content + "--" + chat.card_owner + "--" + chat.imageRatio + "--" + chat.content_url + "--" + chat.chatType + "--" + chat.clicks
-                            + "--" + chat.textMsg + "--" + chat.partnerQbId);
+
 
                     chatList.add(chat);
                 }
@@ -246,7 +236,6 @@ public class ClickinDbHelper extends SQLiteOpenHelper implements ChatRecordI {
         //String deleteUserChats = "DELETE FROM " + TABLE_CHATRECORD +" WHERE ("+ COLUMN_SID + "="+sQbId+" AND " +COLUMN_RID +"="+rQbId+") OR ("+ COLUMN_SID + "="+rQbId+" AND " +COLUMN_RID +"="+sQbId +")";
 
       /*  String deleteUserChats  = "( "+ relationshipId + " = "+rId +")";
-        Log.e(TAG,"deleteUserChats--> "+deleteUserChats);
         dbObj.delete(TABLE_CHATRECORD, deleteUserChats, null);*/
 
         //monika- correct query to delete chat
@@ -259,5 +248,11 @@ public class ClickinDbHelper extends SQLiteOpenHelper implements ChatRecordI {
         return 1;
     }
 
+   public void clearDB() throws SQLException{
+       if (dbObj == null || !dbObj.isOpen())
+           openDataBase();
+       dbObj.delete(TABLE_CHATRECORD,null,null //table name
+            ); //selections args
+   }
 
 }

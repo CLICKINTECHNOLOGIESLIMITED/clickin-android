@@ -15,6 +15,15 @@ public class GetrelationshipsBean {
     private String lastChatId;
     private String mStatuspublic;
     private String partnerName;
+    private int mUnreadMsg;
+
+    public int getUnreadMsg() {
+        return mUnreadMsg;
+    }
+
+    public void setUnreadMsg(int mUnreadMsg) {
+        this.mUnreadMsg = mUnreadMsg;
+    }
 
     /**
      * @return the partner_id

@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="2dp"
                 android:layout_marginTop="2dp"
-                android:text="mahi"
+
 
                 android:textColor="@color/signin_color" />
 
@@ -138,7 +138,7 @@
             <!-- layout for clicks and text-for audio ends-->
 
 
-           <!-- layout for clicks and text -Type 1-->
+            <!-- layout for clicks and text -Type 1-->
             <LinearLayout
                 android:id="@+id/parent_clicks_area"
                 android:layout_width="wrap_content"
@@ -200,13 +200,12 @@
                     android:maxEms="12"
                     android:padding="2dp"
                     android:singleLine="false"
-                    android:text="hi "
+
                     android:textColor="@color/black"
                     android:textSize="14sp"
                     android:visibility="gone" />
                 <!--This textView for extra chat text to display in second line -->
             </LinearLayout>
-
 
 
             <!--SEND CARD First TIME start-->

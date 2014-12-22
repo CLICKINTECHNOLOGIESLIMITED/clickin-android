@@ -118,7 +118,7 @@ public class ViewTradeCart extends Activity implements View.OnClickListener {
             if (forCounter) {
 
                 ((ImageView) findViewById(R.id.trade_image)).setImageResource(R.drawable.c_pink_counter);//akshit code
-                Log.e("Values Of Clicks","Clicks " +intent.getStringExtra("card_clicks"));
+                android.util.Log.e("Values Of Clicks","Clicks " +intent.getStringExtra("card_clicks"));
 
                 clicks = intent.getStringExtra("card_clicks");
 
@@ -156,7 +156,7 @@ public class ViewTradeCart extends Activity implements View.OnClickListener {
             }
 
         } else {
-            Log.e(TAG, "Value in intent in null");
+            android.util.Log.e(TAG, "Value in intent in null");
         }
 
 

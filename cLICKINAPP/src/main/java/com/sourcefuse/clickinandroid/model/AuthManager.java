@@ -576,16 +576,16 @@ public class AuthManager {
             userInputDetails.put("device_token", deviceToken);
             userInputDetails.put("password", password);
             userInputDetails.put("device_type", deviceType);
-            Log.e(TAG, "userInputDetails-> " + userInputDetails);
+            android.util.Log.e(TAG, "userInputDetails-> " + userInputDetails);
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
         } catch (Exception e1) {
             e1.printStackTrace();
-            Log.e("in catch block-->", "in catch block-->");
+            android.util.Log.e("in catch block-->", "in catch block-->");
         }
 
-        Log.e("SIGNIN url", APIs.SIGNIN);
+        android.util.Log.e("SIGNIN url", APIs.SIGNIN);
         client.post(null, APIs.SIGNIN, se, "application/json",
                 new JsonHttpResponseHandler() {
 
@@ -594,14 +594,14 @@ public class AuthManager {
                                           JSONObject errorResponse) {
                         super.onFailure(statusCode, e, errorResponse);
                         if (errorResponse != null) {
-                            Log.e("errorResponse", "->" + errorResponse);
+                            android.util.Log.e("errorResponse", "->" + errorResponse);
                             try {
                                 authManager.setMessage(errorResponse.getString("message"));
                             } catch (JSONException e1) {
                             }
-                            EventBus.getDefault().post("SignIn False");
+                            EventBus.getDefault().postSticky("SignIn False");
                         } else {
-                            EventBus.getDefault().post("SignIn Network Error");
+                            EventBus.getDefault().postSticky("SignIn Network Error");
                         }
 
                     }
@@ -611,7 +611,7 @@ public class AuthManager {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            Log.e(TAG, "response  SIGNIN->" + response);
+                            android.util.Log.e(TAG, "response  SIGNIN->" + response);
                             state = response.getBoolean("success");
                             if (state) {
 
@@ -641,7 +641,7 @@ public class AuthManager {
                                 }
 
                             }
-                            EventBus.getDefault().post("SignIn True");
+                            EventBus.getDefault().postSticky("SignIn True");
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -727,7 +727,7 @@ public class AuthManager {
                     @Override
                     public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
                         super.onFailure(statusCode, e, errorResponse);
-                        Log.e("Auth", "errorResponse--> " + errorResponse);
+                        android.util.Log.e("Auth", "errorResponse--> " + errorResponse);
                         if (errorResponse != null) {
                             try {
                                 authManager.setMessage(errorResponse.getString("message"));
@@ -757,7 +757,7 @@ public class AuthManager {
                                     authManager.setUserId(response.getString("user_id"));
                                 if (response.has("user_token"))
                                     authManager.setUsrToken(response.getString("user_token"));
-                                Log.e("getUsrToken--", "" + authManager.getUsrToken());
+                                android.util.Log.e("getUsrToken--", "" + authManager.getUsrToken());
                                 EventBus.getDefault().post("Verify True");
                             }
                         } catch (JSONException e) {
@@ -849,7 +849,7 @@ public class AuthManager {
             client = new AsyncHttpClient();
             se = new StringEntity(inputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            Log.e("", "inputDetails-->" + inputDetails);
+            android.util.Log.e("", "inputDetails-->" + inputDetails);
         } catch (Exception e1) {
             e1.printStackTrace();
         }
@@ -857,7 +857,7 @@ public class AuthManager {
             @Override
             public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
                 super.onFailure(statusCode, e, errorResponse);
-                Log.e("Auth", "errorResponse--> " + errorResponse);
+                android.util.Log.e("Auth", "errorResponse--> " + errorResponse);
                 if (errorResponse != null) {
                     try {
                         authManager.setMessage(errorResponse.getString("message"));
@@ -909,7 +909,7 @@ public class AuthManager {
             se = new StringEntity(inputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,
                     "application/json"));
-            Log.e("", "inputDetails-->" + inputDetails);
+            android.util.Log.e("", "inputDetails-->" + inputDetails);
         } catch (Exception e1) {
             e1.printStackTrace();
         }
@@ -940,7 +940,7 @@ public class AuthManager {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            Log.e("respone ----->", "" + response);
+                            android.util.Log.e("respone ----->", "" + response);
                             state = response.getBoolean("success");
                             if (state) {
                                 EventBus.getDefault().post("RequestSend True");
@@ -973,7 +973,7 @@ public class AuthManager {
             client.addHeader("User-Token", usertoken);
             client.addHeader("Phone-No", phone);
 
-            Log.e("usertoken-phone_no-othersphone-->", "" + usertoken + "-" + phone + "-" + othersphone);
+            android.util.Log.e("usertoken-phone_no-othersphone-->", "" + usertoken + "-" + phone + "-" + othersphone);
 
 
             if (!Utils.isEmptyString(othersphone)) {
@@ -984,7 +984,7 @@ public class AuthManager {
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        Log.e("othersphone url-->", "" + APIs.FETCHPROFILEINFO + "%2B" + str);
+        android.util.Log.e("othersphone url-->", "" + APIs.FETCHPROFILEINFO + "%2B" + str);
         client.get(APIs.FETCHPROFILEINFO + "%2B" + str, new JsonHttpResponseHandler() {
             boolean success = false;
 
@@ -998,9 +998,9 @@ public class AuthManager {
                     } catch (JSONException e1) {
                     }
 
-                    EventBus.getDefault().post("ProfileInfo False");
+                    EventBus.getDefault().postSticky("ProfileInfo False");
                 } else {
-                    EventBus.getDefault().post("ProfileInfo Network Error");
+                    EventBus.getDefault().postSticky("ProfileInfo Network Error");
                 }
 
             }
@@ -1012,7 +1012,7 @@ public class AuthManager {
                 super.onSuccess(statusCode, headers, response);
                 try {
 
-                    Log.e(TAG, "response--> " + response);
+                    android.util.Log.e(TAG, "response--> " + response);
                     success = response.getBoolean("success");
                     if (success) {
 
@@ -1024,7 +1024,7 @@ public class AuthManager {
                             else
                                 authManager.setTmpGender("");
 
-                            //   android.util.Log.e("value of gender from server ---",""+jobj.getString("gender"));
+                            //   android.util.android.util.Log.e("value of gender from server ---",""+jobj.getString("gender"));
 
                             if (jobj.has("follower"))
                                 authManager.setTmpFollower(jobj.getString("follower"));
@@ -1090,9 +1090,11 @@ public class AuthManager {
                                 authManager.setUserCountry(jobj.getString("country"));
                             if (jobj.has("email"))
                                 authManager.setEmailId(jobj.getString("email"));
+                            if (jobj.has("is_enable_push_notification"))
+                                SettingManager.mNotification_Enable = Boolean.parseBoolean(jobj.getString("is_enable_push_notification"));
                         }
 
-                        EventBus.getDefault().post("ProfileInfo True");
+                        EventBus.getDefault().postSticky("ProfileInfo True");
                     }
 
 

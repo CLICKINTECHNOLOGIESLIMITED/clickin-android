@@ -132,16 +132,16 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
       /* code for age prafull */
 
             age = getAge(selectedYear, selectedMonth, selectedDay);
-            Log.e(TAG, "Age Difference " + age);
+            android.util.Log.e(TAG, "Age Difference " + age);
 //            DateTime start  = new DateTime(start_date);
 //            DateTime end = new DateTime(new Date());
 //
 //            diffrence_in_mills = end.getMillis() - start.getMillis();
             long MILLISECONDS_IN_YEAR = (long) 1000 * 60 * 60 * 24 * 365;
             mills_in_17yrs = 17 * MILLISECONDS_IN_YEAR;
-//            Log.e(TAG,"Mill in 17 years" +mills_in_17yrs);
+//            android.util.Log.e(TAG,"Mill in 17 years" +mills_in_17yrs);
 //            periods_years = Years.yearsBetween(start,end);
-//           // Log.e(TAG ,"Actual Difference in years " + PeriodFormat.wordBased().print(periods_years));
+//           // android.util.Log.e(TAG ,"Actual Difference in years " + PeriodFormat.wordBased().print(periods_years));
 
 
         }
@@ -314,7 +314,7 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
         if (message.equalsIgnoreCase("UpdateProfile True")) {
             Utils.dismissBarDialog();
             bitmapImage = null;
-            //Log.e("Utils.DeleteImage","Utils.DeleteImage--->"+	Utils.DeleteImage(mImageCaptureUri,ProfileView.this));
+            //android.util.Log.e("Utils.DeleteImage","Utils.DeleteImage--->"+	Utils.DeleteImage(mImageCaptureUri,ProfileView.this));
             switchView();
         } else if (message.equalsIgnoreCase("UpdateProfile False")) {
             Utils.dismissBarDialog();
@@ -483,15 +483,15 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
         //User email, name, gender, DOB, Profile Pic, Access token
 
         final String access_Token = session.getAccessToken();
-        Log.d(TAG, access_Token);
+        android.util.Log.d(TAG, access_Token);
         Request request = Request.newMeRequest(session, new Request.GraphUserCallback() {
             @Override
             public void onCompleted(GraphUser user, Response response) {
                 if (user != null) {
 
-                    Log.e(TAG, String.valueOf(user));
+                    android.util.Log.e(TAG, String.valueOf(user));
                     try {
-                        Log.d("user email", user.getInnerJSONObject().getString("email"));
+                        android.util.Log.d("user email", user.getInnerJSONObject().getString("email"));
                         email.setText(user.getInnerJSONObject().getString("email"));
                     } catch (Exception e1) {
                         // TODO Auto-generated catch block
@@ -516,7 +516,7 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
 
                     try {
 
-                        //  Log.d(TAG, user.getLocation().getProperty("name").toString());
+                        //  android.util.Log.d(TAG, user.getLocation().getProperty("name").toString());
                         String userLocationName = user.getLocation().getProperty("name").toString();
 
                         String[] citynCountry = userLocationName.split(",");
@@ -539,7 +539,7 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
 
 
                     try {
-                        Log.e("dob", user.getBirthday());
+                        android.util.Log.e("dob", user.getBirthday());
 
                         String[] dob = user.getBirthday().split("/");
                         year = Integer.valueOf(dob[2]);
@@ -672,7 +672,7 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
                             }
                             Matrix mat = new Matrix();
                             mat.postRotate(angle);
-                            Log.e("angle from camera 1 --->", "" + angle);
+                            android.util.Log.e("angle from camera 1 --->", "" + angle);
                               /*bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), mat, true);*/
 
 
@@ -711,7 +711,7 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
                                     startActivityForResult(intent, Constants.CROP_PICTURE);
                                 } catch (Exception e) {
                                     e.printStackTrace();
-                                    Log.e("exception--->", "exception--->");
+                                    android.util.Log.e("exception--->", "exception--->");
                                 }
                             }
                                           /*bitmapImage.recycle();
@@ -761,7 +761,7 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
                             mat.postRotate(angle);
 
 
-                            Log.e("angle from gallery --->", "" + angle);
+                            android.util.Log.e("angle from gallery --->", "" + angle);
 
                               /*bitmap1 = Bitmap.createBitmap(bitmap1, 0, 0, bitmap1.getWidth(), bitmap1.getHeight(), mat, true);*/
 
@@ -778,7 +778,7 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
                                     startActivityForResult(intent, Constants.CROP_PICTURE);
                                 } catch (Exception e) {
                                     e.printStackTrace();
-                                    Log.e("exception--->", "exception--->");
+                                    android.util.Log.e("exception--->", "exception--->");
                                 }
                             }
 
@@ -852,9 +852,9 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
                 }
             }
         } catch (Exception e) {
-            Log.d(TAG, "" + e);
+            android.util.Log.d(TAG, "" + e);
         } catch (Error e) {
-            Log.d(TAG, "" + e);
+            android.util.Log.d(TAG, "" + e);
         }
     }
 
@@ -906,7 +906,7 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
 /* code for age prafull */
 
     public boolean updateProfileValidation() {
-        Log.e(TAG, "mCurrentyear" + mCurrentyear + "  year " + year);
+        android.util.Log.e(TAG, "mCurrentyear" + mCurrentyear + "  year " + year);
         if (fname.getText().toString().length() < 1) {
             Utils.fromSignalDialog(this, AlertMessage.fname);
             // Utils.showAlert(ProfileView.this, AlertMessage.fname);
@@ -920,13 +920,13 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
             //   Utils.showAlert(ProfileView.this, AlertMessage.emailid);
             return false;
         } else if ((mCurrentyear - year) == 0) {
-            Log.e(TAG, "mCurrentyear" + mCurrentyear + "  year " + year);
+            android.util.Log.e(TAG, "mCurrentyear" + mCurrentyear + "  year " + year);
             Utils.fromSignalDialog(this, AlertMessage.ageValid);
             // Utils.showAlert(ProfileView.this, AlertMessage.ageValid);
             return false;
         }  // else if (periods_years.isLessThan(Years.years(17))) {
         else if (age < 17) {
-            Log.e(TAG, "mCurrentyear" + diffrence_in_mills + "  year " + mills_in_17yrs);
+            android.util.Log.e(TAG, "mCurrentyear" + diffrence_in_mills + "  year " + mills_in_17yrs);
             Utils.fromSignalDialog(this, AlertMessage.UDERAGEMSGII);
             //   Utils.showAlert(ProfileView.this, AlertMessage.UDERAGEMSGII);
             return false;

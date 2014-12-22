@@ -46,17 +46,17 @@ public class GPSTracker extends Service implements LocationListener {
     }
 
     public Location getLocation() {
-        Log.e("in get location ", "in get location ");
+        android.util.Log.e("in get location ", "in get location ");
         try {
-            Log.e("in location try", "in location try");
+            android.util.Log.e("in location try", "in location try");
             locationManager = (LocationManager) mContext.getSystemService(LOCATION_SERVICE);
             isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
             isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
             this.canGetLocation = true;
             if (isNetworkEnabled) {
-                Log.e("in one--->", "in one--->");
+                android.util.Log.e("in one--->", "in one--->");
                 locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-                Log.d("Network", "Network");
+                android.util.Log.d("Network", "Network");
                 if (locationManager != null) {
                     location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
                     if (location != null) {
@@ -64,16 +64,16 @@ public class GPSTracker extends Service implements LocationListener {
                         longitude = location.getLongitude();
 
                         String lat = latitude + ";" + longitude;
-                        Log.e("lat---> and lang----> on network enable", "" + lat);
+                        android.util.Log.e("lat---> and lang----> on network enable", "" + lat);
 
                         authManager.setLatLan(lat);
                     }
                 }
             } else if (isGPSEnabled) {
-                Log.e("in two--->", "in two--->");
+                android.util.Log.e("in two--->", "in two--->");
                 if (location == null) {
                     locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-                    Log.d("GPS Enabled", "GPS Enabled");
+                    android.util.Log.d("GPS Enabled", "GPS Enabled");
                     if (locationManager != null) {
                         location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                         if (location != null) {
@@ -81,14 +81,14 @@ public class GPSTracker extends Service implements LocationListener {
                             longitude = location.getLongitude();
                             String lat = latitude + ";" + longitude;
                             authManager.setLatLan(lat);
-                            Log.e("lat---> and lang----> on isGPSEnabled", "" + lat);
+                            android.util.Log.e("lat---> and lang----> on isGPSEnabled", "" + lat);
                         }
                     }
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e(" location exception--->", " location exception--->");
+            android.util.Log.e(" location exception--->", " location exception--->");
         }
 
         return location;

@@ -132,8 +132,8 @@ public class MapActivity extends Activity implements ConnectionCallbacks, OnConn
 
                 final LatLng curLoc = mMap.getCameraPosition().target;
 
-                Log.e("lat on map click--->", "" + curLoc.latitude);
-                Log.e("lng on map click--->", "" + curLoc.longitude);
+                android.util.Log.e("lat on map click--->", "" + curLoc.latitude);
+                android.util.Log.e("lng on map click--->", "" + curLoc.longitude);
 
                 showMarker(curLoc.latitude, curLoc.longitude);
                 String latlng1 = curLoc.latitude + ";" + curLoc.longitude;
@@ -177,9 +177,9 @@ public class MapActivity extends Activity implements ConnectionCallbacks, OnConn
         final Double lat = Double.parseDouble(arg[0]);
         final Double lng = Double.parseDouble(arg[1]);
 
-        Log.e("lat --->", "" + lat);
-        Log.e("lng --->", "" + lng);
-        Log.e("auth manager --->", "" + authManager.getLatLan());
+        android.util.Log.e("lat --->", "" + lat);
+        android.util.Log.e("lng --->", "" + lng);
+        android.util.Log.e("auth manager --->", "" + authManager.getLatLan());
 
 
         if (!Utils.isEmptyString(authManager.getLatLan()) && lat != 0.0) {
@@ -188,16 +188,16 @@ public class MapActivity extends Activity implements ConnectionCallbacks, OnConn
             defaultposition(lat, lng);
         } else {
             try {
-                Log.e("in last part--->", "in last part--->");
+                android.util.Log.e("in last part--->", "in last part--->");
                 Location mLocation = locationClient.getLastLocation();
-                Log.e("location--->", "" + mLocation);
+                android.util.Log.e("location--->", "" + mLocation);
                 Double mLat = mLocation.getLatitude();
                 Double mLng = mLocation.getLongitude();
-                Log.e("lat----->", "" + mLat);
-                Log.e("lang----->", "" + mLng);
+                android.util.Log.e("lat----->", "" + mLat);
+                android.util.Log.e("lang----->", "" + mLng);
             } catch (Exception e) {
                 e.printStackTrace();
-                Log.e("in exception--->", "in exception--->");
+                android.util.Log.e("in exception--->", "in exception--->");
             }
         }
 
@@ -267,8 +267,8 @@ public class MapActivity extends Activity implements ConnectionCallbacks, OnConn
     @Override
     public void onCameraChange(CameraPosition position) {
 
-        Log.e("lat on camerachange--->", "" + position.target.latitude);
-        Log.e("lat on camerachange--->", "" + position.target.longitude);
+        android.util.Log.e("lat on camerachange--->", "" + position.target.latitude);
+        android.util.Log.e("lat on camerachange--->", "" + position.target.longitude);
 
 
     }
@@ -314,11 +314,11 @@ public class MapActivity extends Activity implements ConnectionCallbacks, OnConn
     protected void onResume() {
         super.onResume();
         if (checkGPSEnabled()) {
-            com.sourcefuse.clickinandroid.utils.Log.e("in if part-->", "in if part-->");
+           // com.sourcefuse.clickinandroid.utils.android.util.Log.e("in if part-->", "in if part-->");
             if (alertDialog != null && !alertDialog.isShowing())
                 buildAlertMessageNoGps();
         } else {
-            com.sourcefuse.clickinandroid.utils.Log.e("in else part-->", "in else part-->");
+            //com.sourcefuse.clickinandroid.utils.android.util.Log.e("in else part-->", "in else part-->");
             Utils.launchBarDialog(MapActivity.this);
             GPSTracker gpsTracker = new GPSTracker(MapActivity.this);
             Double mLat = gpsTracker.getLatitude();
@@ -326,8 +326,8 @@ public class MapActivity extends Activity implements ConnectionCallbacks, OnConn
             LatLng latLng = new LatLng(mLat, mLng);
             mlatLng = latLng;
 
-            Log.e("lat --->", "" + mLat);
-            Log.e("mLng --->", "" + mLng);
+            android.util.Log.e("lat --->", "" + mLat);
+            android.util.Log.e("mLng --->", "" + mLng);
 
 
             showMarker(mLat, mLng);
