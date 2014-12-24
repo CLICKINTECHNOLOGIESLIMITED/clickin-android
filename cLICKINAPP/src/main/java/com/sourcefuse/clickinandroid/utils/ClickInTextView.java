@@ -29,7 +29,7 @@ public class ClickInTextView extends TextView {
     }
 
     private void setCustomFont(Context ctx, AttributeSet attrs) {
-        TypedArray a = ctx.obtainStyledAttributes(attrs,  R.styleable.ClickInTextView);
+        TypedArray a = ctx.obtainStyledAttributes(attrs, R.styleable.ClickInTextView);
         String customFont = a.getString(R.styleable.ClickInTextView_customFont);
         setCustomFont(ctx, customFont);
     }
@@ -38,7 +38,7 @@ public class ClickInTextView extends TextView {
         try {
             setTypeface(FontLoader.getInstance(ctx).getFont(asset));
         } catch (Exception e) {
-            android.util.Log.e("font not found:::::::::::::::::::::::::::::", "font not found:::::::::::::::::::::::::::::");
+            //android.util.android.util.Log.e("font not found:::::::::::::::::::::::::::::", "font not found:::::::::::::::::::::::::::::");
             e.printStackTrace();
 
         }

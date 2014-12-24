@@ -18,8 +18,7 @@
             android:text="@string/txt_wesentyoucode"
             android:textColor="@color/white"
             android:textSize="18sp"
-            geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"
-            />
+            geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
 
         <!--<com.sourcefuse.clickinandroid.utils.ClickInTextView-->
         <!--android:id="@+id/alert_msgII"-->
@@ -39,25 +38,24 @@
             android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/alert_msgI"
-            android:textSize="20dp"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/blue_btn"
             android:text="OK"
             android:textColor="@color/white"
-            android:layout_marginTop="40dp"
-            android:background="@drawable/blue_btn" />
+            android:textSize="20dp" />
 
         <Button
             android:id="@+id/coolio1"
             android:layout_width="130dp"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
             android:layout_below="@+id/alert_msgI"
             android:layout_centerHorizontal="true"
-            android:textSize="20dp"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/pink_btn"
             android:text="Cancel"
             android:textColor="@color/white"
-            android:layout_marginTop="40dp"
-            android:layout_alignParentRight="true"
-            android:background="@drawable/pink_btn"
-            />
+            android:textSize="20dp" />
     </RelativeLayout>
 
 </RelativeLayout>

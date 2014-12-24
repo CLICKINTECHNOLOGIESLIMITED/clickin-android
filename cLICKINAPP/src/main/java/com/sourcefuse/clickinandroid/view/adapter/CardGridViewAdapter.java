@@ -18,17 +18,16 @@ import com.sourcefuse.clickinapp.R;
 import java.util.List;
 
 public class CardGridViewAdapter extends ArrayAdapter<CardBean> {
+    private static final String TAG = "CardViewAdapter";
     Context context;
     int layoutResourceId;
     int card1;
     ChatManager chatManager;
-    private List item;
     int pos;
     View row;
-    boolean debug = false ;
+    boolean debug = false;
     // String url = "https://s3.amazonaws.com/clickin-dev/cards/a/1080/39.jpg" ;
-
-    private static final String TAG = "CardViewAdapter";
+    private List item;
 
     public CardGridViewAdapter(Context context, int layoutResourceId, List<CardBean> item) {
         super(context, layoutResourceId, item);
@@ -69,77 +68,30 @@ public class CardGridViewAdapter extends ArrayAdapter<CardBean> {
         holder.cardDescription.setText(item.getCardDescription());
 
 
-
         row.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Log.e(TAG, "View is Clicked" + pos);
+                android.util.Log.e(TAG, "View is Clicked" + pos);
+
+                CardBean bean = getItem(position);
+                String url = bean.getCardUrl();
 
 
+                String Title = bean.getCardTitle();
+                String Discription = bean.getCardDescription();
 
-                if(debug) {
-                    CardBean bean = getItem(position);
-                    String url = bean.getCardUrl();
-                    String Title = bean.getCardTitle();
-                    String Discription = bean.getCardDescription();
-                    Intent intent = new Intent(getContext(), Card.class);
+                Intent intent = new Intent(getContext(), Card.class);
+                intent.putExtra("ForCounter", false);
+                intent.putExtra("Title", Title);
+                intent.putExtra("Discription", Discription);
+                intent.putExtra("card_url", url);
+                intent.putExtra("card_DB_ID", bean.getCard_Id());
+                // intent.putExtra("card_id", bean.getCard_Id());
+                android.util.Log.e("CARD DETAILS", "----->" + Title + "," + Discription + "," + bean.getCard_Id());
 
-                    intent.putExtra("Url", url);
-                	intent.putExtra("Title", Title);
-                	intent.putExtra("Discription", Discription);
-                	intent.putExtra("Url", url);
-                	intent.putExtra("card_id", bean.getCard_Id());
-
-                    // Log.e(TAG, "Value in Bean Tit" + url);
-                    context.startActivity(intent);
-                    ((Activity) context).overridePendingTransition(R.anim.slide_in_up, R.anim.stay);
-                }
-
-                else {
-
-                    CardBean bean = getItem(position);
-//                    String url;
-//                    String url1 = bean.getCardUrl() ;
-                    String url = bean.getCardUrl();
-                    String add = "/a/1080" ;
-
-                   // url=url1.replaceFirst("cards\\/(\\d+)\\.jpg","cards\\/a\\/1080\\/$1\\.jpg");
-                    Log.e("All Adapter " , "This Modified URL::>>>>>>>>" +url);
-
-
-
-                    String Title = bean.getCardTitle();
-                    String Discription = bean.getCardDescription();
-
-                    Intent intent = new Intent(getContext(), Card.class);
-                    intent.putExtra("ForCounter", false);
-                    intent.putExtra("Title", Title);
-                    intent.putExtra("Discription", Discription);
-                    intent.putExtra("Url", url);
-                    intent.putExtra("card_id", bean.getCard_Id());
-                    Log.e("CARD DETAILS","----->"+Title+","+Discription+","+bean.getCard_Id());
-
-                    context.startActivity(intent);
-                    ((Activity) context).overridePendingTransition(R.anim.slide_in_up, R.anim.stay);
-//                    String url ;
-//                    String url1 = bean.getCardUrl() ;
-//                    String add = "/a/1080" ;
-//
-//                    url=url1.replaceFirst("cards\\/(\\d+)\\.jpg","cards\\/a\\/1080\\/$1\\.jpg");
-//
-//                    Log.e(TAG , "This is new url " +url);
-//                    String Title = bean.getCardTitle();
-//                    String Discription = bean.getCardDescription();
-//                    Intent intent = new Intent(getContext(), Card.class);
-//
-//                    // Utils.launchBarDialog(((Activity)context));
-//                    intent.putExtra("Url", url);
-//                    Log.e(TAG, "Value in Bean Tit" + url);
-//                    context.startActivity(intent);
-//                    ((Activity) context).overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
-
-                }
+                context.startActivity(intent);
+                ((Activity) context).overridePendingTransition(R.anim.slide_in_up, R.anim.stay);
 
             }
 

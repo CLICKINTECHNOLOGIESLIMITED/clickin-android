@@ -1,9 +1,6 @@
 package com.sourcefuse.clickinandroid.utils;
 
-import com.quickblox.core.QBCallbackImpl;
-import com.quickblox.core.result.Result;
 import com.quickblox.module.content.QBContent;
-import com.quickblox.module.content.result.QBFileUploadTaskResult;
 import com.sourcefuse.clickinandroid.model.bean.ChatMessageBody;
 
 /**
@@ -11,11 +8,10 @@ import com.sourcefuse.clickinandroid.model.bean.ChatMessageBody;
  */
 public class UploadContentOnQb extends QBContent {
     String result;
-    public UploadContentOnQb(ChatMessageBody obj, String path){
+
+    public UploadContentOnQb(ChatMessageBody obj, String path) {
         super();
     }
-
-
 
 
 }

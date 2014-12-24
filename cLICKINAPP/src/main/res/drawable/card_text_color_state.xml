@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_selected="true" android:color="@color/card_click_color"/> <!-- pressed -->
-    <item android:state_focused="true" android:color="@color/card_click_color"/>
-    <item android:state_checked="true" android:color="@color/card_click_color"/>
-    <item android:state_pressed="true" android:color="@color/card_click_color_pressed"/>
-    <item android:state_long_pressable="true" android:color="@color/card_click_color_pressed"/>
+    <item android:color="@color/card_click_color" android:state_selected="true" />
+    <!-- pressed -->
+    <item android:color="@color/card_click_color" android:state_focused="true" />
+    <item android:color="@color/card_click_color" android:state_checked="true" />
+    <item android:color="@color/card_click_color_pressed" android:state_pressed="true" />
+    <item android:color="@color/card_click_color_pressed" android:state_long_pressable="true" />
 
-        <item android:color="@color/click_default_btn"/> <!-- default -->
+    <item android:color="@color/click_default_btn" />
+    <!-- default -->
 </selector>

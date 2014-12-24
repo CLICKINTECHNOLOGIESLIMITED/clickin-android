@@ -1,24 +1,19 @@
 package com.sourcefuse.clickinandroid.view;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.crashlytics.android.internal.m;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.ProfileManager;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
-import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.adapter.FollowerAdapter;
 import com.sourcefuse.clickinapp.R;
@@ -28,20 +23,16 @@ import de.greenrobot.event.EventBus;
 public class FollowerList extends ClickInBaseView implements
         View.OnClickListener {
     private static final String TAG = FollowerList.class.getSimpleName();
-    private ImageView back, notification;
-    private ListView listView;
     public static FollowerAdapter adapter;
+    public static boolean fromOwnProfile = false;
+    public static boolean mListchangeVariable_flag = false;
+    private ListView listView;
     private ProfileManager profManager;
     private AuthManager authManager;
     private TextView profileName;
 
-    public static boolean fromOwnProfile = false;
-    private RelativeLayout mFollowerListView, mFollowerListEmpty;
-
     /*  to check change in list variable in adapter */
-
-    public static  boolean mListchangeVariable_flag = false;
-
+    private RelativeLayout mFollowerListView, mFollowerListEmpty;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,10 +47,7 @@ public class FollowerList extends ClickInBaseView implements
         mFollowerListView = (RelativeLayout) findViewById(R.id.rl_followerdata);
         mFollowerListEmpty = (RelativeLayout) findViewById(R.id.rl_empty_follower);
         profileName = (TextView) findViewById(R.id.tv_profile_txt_wer);
-        back = (ImageView) findViewById(R.id.iv_back);
-        notification = (ImageView) findViewById(R.id.iv_notification_list);
-        back.setOnClickListener(this);
-        notification.setOnClickListener(this);
+
         profManager = ModelManager.getInstance().getProfileManager();
         authManager = ModelManager.getInstance().getAuthorizationManager();
 
@@ -70,7 +58,7 @@ public class FollowerList extends ClickInBaseView implements
             Utils.launchBarDialog(FollowerList.this);
             profManager.getFollwer("", authManager.getPhoneNo(), authManager.getUsrToken());
         } else {
-            profileName.setText(""+getIntent().getStringExtra("name"));
+            profileName.setText("" + getIntent().getStringExtra("name"));
             Utils.launchBarDialog(FollowerList.this);
             profManager.getFollwer(getIntent().getExtras().getString("phoneNo"), authManager.getPhoneNo(), authManager.getUsrToken());
         }
@@ -80,16 +68,15 @@ public class FollowerList extends ClickInBaseView implements
     @Override
     public void onBackPressed() {
 
-        if(mListchangeVariable_flag)
-        {
+        if (mListchangeVariable_flag) {
             super.onBackPressed();
-            Intent intent = new Intent(this,UserProfileView.class);
+            Intent intent = new Intent(this, UserProfileView.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            intent.putExtra("isChangeInList",true);
+            intent.putExtra("isChangeInList", true);
             startActivity(intent);
             finish();
             overridePendingTransition(0, R.anim.top_out);
-        }else {
+        } else {
             super.onBackPressed();
             finish();
             overridePendingTransition(0, R.anim.top_out);
@@ -103,7 +90,7 @@ public class FollowerList extends ClickInBaseView implements
         if (profManager.followers.size() > 0) {
             mFollowerListView.setVisibility(View.VISIBLE);
             mFollowerListEmpty.setVisibility(View.GONE);
-            com.sourcefuse.clickinandroid.utils.Log.e("size---->", "" + profManager.followers.size());
+            //com.sourcefuse.clickinandroid.utils.android.util.Log.e("size---->", "" + profManager.followers.size());
             adapter = new FollowerAdapter(this, R.layout.row_follower, profManager.followers);
             int index = listView.getFirstVisiblePosition();
             View v = listView.getChildAt(0);
@@ -124,12 +111,7 @@ public class FollowerList extends ClickInBaseView implements
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.iv_back:
-                onBackPressed();
-                break;
-            case R.id.iv_notification_list:
-                slidemenu.showSecondaryMenu(true);
-                break;
+
         }
 
     }
@@ -153,7 +135,8 @@ public class FollowerList extends ClickInBaseView implements
 
     public void onEventMainThread(String getMsg) {
         super.onEventMainThread(getMsg);
-        Log.d(TAG, "onEventMainThread->" + getMsg);
+        Utils.dismissBarDialog();
+        android.util.Log.d(TAG, "onEventMainThread->" + getMsg);
         authManager = ModelManager.getInstance().getAuthorizationManager();
         if (getMsg.equalsIgnoreCase("UnFollowUser true")) {
 
@@ -174,14 +157,14 @@ public class FollowerList extends ClickInBaseView implements
         } else if (getMsg.equalsIgnoreCase("GetFollower True")) {
             Utils.dismissBarDialog();
             setlist();
-            Log.d("1", "message->" + getMsg);
+            android.util.Log.d("1", "message->" + getMsg);
         } else if (getMsg.equalsIgnoreCase("GetFollower False")) {
             Utils.dismissBarDialog();
-            Log.d("2", "message->" + getMsg);
+            android.util.Log.d("2", "message->" + getMsg);
         } else if (getMsg.equalsIgnoreCase("GetFollower Network Error")) {
             Utils.dismissBarDialog();
             Utils.fromSignalDialog(FollowerList.this, AlertMessage.connectionError);
-            Log.d("3", "message->" + getMsg);
+            android.util.Log.d("3", "message->" + getMsg);
         } else if (getMsg.equalsIgnoreCase("followUpdateStatus True")) {
 
 

@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:state_selected="true" android:drawable="@drawable/c_number_background"/> <!-- pressed -->
-    <item android:state_focused="true" android:drawable="@drawable/c_number_background"/>
-    <item android:state_checked="true" android:drawable="@drawable/c_number_background"/>
-    <item android:state_pressed="true" android:drawable="@drawable/tradenumcircle_grey"/>
-    <item android:state_long_pressable="true" android:drawable="@drawable/tradenumcircle_grey"/>
+    <item android:drawable="@drawable/c_number_background" android:state_selected="true" />
+    <!-- pressed -->
+    <item android:drawable="@drawable/c_number_background" android:state_focused="true" />
+    <item android:drawable="@drawable/c_number_background" android:state_checked="true" />
+    <item android:drawable="@drawable/tradenumcircle_grey" android:state_pressed="true" />
+    <item android:drawable="@drawable/tradenumcircle_grey" android:state_long_pressable="true" />
 
-    <item android:drawable="@drawable/c_number_background"/> <!-- default -->
+    <item android:drawable="@drawable/c_number_background" />
+    <!-- default -->
 
 </selector>

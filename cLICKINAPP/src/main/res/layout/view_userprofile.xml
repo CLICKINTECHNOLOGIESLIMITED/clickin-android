@@ -1,6 +1,5 @@
-<RelativeLayout
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rl_usr_profile_"
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/enterdigitmainbg">
@@ -13,45 +12,6 @@
 
         />
 
-    <!--  <RelativeLayout
-          android:id="@+id/rr_header"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:background="@drawable/owner_profile_hedder">
-
-          <ImageView
-              android:id="@+id/iv_menu"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_alignParentLeft="true"
-              android:layout_marginLeft="10dp"
-              android:layout_marginTop="7dp"
-              android:paddingBottom="5dp"
-              android:paddingRight="50dp"
-              android:paddingTop="5dp"
-              android:src="@drawable/owner_profile_top_icon" />
-
-          <TextView
-              android:id="@+id/tv_profile_txt"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_centerHorizontal="true"
-              android:layout_marginTop="10dp"
-              android:text="@string/txt_profile"
-              android:textColor="@color/owner_profile_header_b"
-              android:textSize="20sp"
-              android:textStyle="bold" />
-
-          <ImageView
-              android:id="@+id/iv_notification"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_alignParentRight="true"
-              android:layout_marginRight="10dp"
-              android:layout_marginTop="1dp"
-              android:paddingLeft="50dp"
-              android:src="@drawable/owner_profile_hedder_icon" />
-      </RelativeLayout>-->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -90,8 +50,7 @@
                         android:paddingTop="5dp"
                         android:textColor="@color/owner_profile_name_b"
                         android:textSize="20sp"
-                        android:textStyle="bold"
-                        />
+                        android:textStyle="bold" />
 
 
                     <ImageView
@@ -101,8 +60,7 @@
                         android:layout_below="@+id/tv_name"
                         android:layout_marginLeft="10dp"
                         android:adjustViewBounds="true"
-                        android:scaleType="fitXY"
-                        />
+                        android:scaleType="fitXY" />
 
                     <TextView
                         android:id="@+id/tv_user_details"
@@ -114,7 +72,7 @@
                         android:paddingBottom="15dp"
                         android:singleLine="false"
                         android:textColor="@color/owner_profile_address_m"
-                        android:textSize="16sp"/>
+                        android:textSize="16sp" />
 
 
                 </RelativeLayout>
@@ -126,7 +84,7 @@
                     android:layout_alignBottom="@+id/rl_uig"
                     android:layout_alignParentRight="true"
                     android:layout_marginBottom="45dp"
-                    android:background="@drawable/owner_profile_icon"/>
+                    android:background="@drawable/owner_profile_icon" />
             </RelativeLayout>
 
             <TextView
@@ -142,7 +100,7 @@
                 android:gravity="center"
                 android:text="@string/txt_follower"
                 android:textColor="@color/profile_parter_nmae_b"
-                android:textSize="16sp"/>
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/btn_following"
@@ -156,7 +114,7 @@
                 android:gravity="center"
                 android:text="@string/txt_following"
                 android:textColor="@color/profile_name_b"
-                android:textSize="16sp"/>
+                android:textSize="16sp" />
         </RelativeLayout>
 
         <LinearLayout
@@ -173,19 +131,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
+                android:choiceMode="singleChoice"
                 android:clipToPadding="false"
                 android:divider="@null"
-                android:footerDividersEnabled="false"
-                android:overScrollFooter="@color/transparent"
-                android:scrollbarStyle="outsideInset"
-                android:transcriptMode="alwaysScroll"
-                android:scrollbars="none"
-                android:choiceMode="singleChoice"
                 android:fadingEdge="none"
+                android:footerDividersEnabled="false"
                 android:listSelector="#00000000"
+                android:overScrollFooter="@color/transparent"
                 android:overScrollMode="never"
-                />
-
+                android:scrollbarStyle="outsideInset"
+                android:scrollbars="none"
+                android:transcriptMode="alwaysScroll" />
 
 
         </LinearLayout>

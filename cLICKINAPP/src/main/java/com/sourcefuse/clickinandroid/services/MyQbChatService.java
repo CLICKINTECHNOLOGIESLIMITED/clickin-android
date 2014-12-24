@@ -17,6 +17,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 
+import com.sourcefuse.clickinandroid.dbhelper.ClickinDbHelper;
 import com.sourcefuse.clickinandroid.model.bean.ChatMessageBody;
 import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.Utils;
@@ -26,6 +27,7 @@ import org.jivesoftware.smack.packet.Message;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -117,11 +119,11 @@ public class MyQbChatService extends Service {
         android.os.Message msg = new android.os.Message();
         Bundle data = new Bundle();
         data.putString("partnerQBId", msgObject.partnerQbId);
-       // if(Utils.isEmptyString(msgObject.textMsg))
+        // if(Utils.isEmptyString(msgObject.textMsg))
         data.putString("textMsg", msgObject.textMsg);
         data.putString("clicks", msgObject.clicks);
         data.putInt("ChatType", msgObject.chatType);
-      //  data.putString("ChaidId",msgObject.chatId);
+        data.putString("ChatId", msgObject.chatId);
         switch (msgObject.chatType) {
             case Constants.CHAT_TYPE_CARD:
                 if (!msgObject.is_CustomCard) {
@@ -154,6 +156,34 @@ public class MyQbChatService extends Service {
                 data.putString("imageRatio", msgObject.imageRatio);
                 data.putString("FileId", msgObject.content_url);
                 break;
+
+            case Constants.CHAT_TYPE_SHARING:
+
+                if (!Utils.isEmptyString(msgObject.imageRatio)) {
+                    data.putString("imageRatio", msgObject.imageRatio);
+                    data.putString("FileId", msgObject.content_url);
+                } else if (!Utils.isEmptyString(msgObject.video_thumb)) {
+                    data.putString("videoThumbnail", msgObject.video_thumb);
+                    data.putString("FileId", msgObject.content_url);
+                } else if (Utils.isEmptyString(msgObject.imageRatio) && Utils.isEmptyString(msgObject.video_thumb)) {
+                    data.putString("FileId", msgObject.content_url);
+                }
+                data.putString("sharingMedia", msgObject.sharingMedia);
+                data.putString("originalChatId", msgObject.originalMessageID);
+                data.putString("clicks", msgObject.clicks);
+                data.putString("textMsg", msgObject.textMsg);
+                data.putString("caption", msgObject.shareComment);
+                data.putString("isMessageSender", msgObject.isMessageSender);
+                data.putString("shareStatus", msgObject.shareStatus);
+                data.putString("facebookToken", msgObject.facebookToken);
+                if (Utils.isEmptyString(msgObject.isAccepted)) {
+                    data.putString("isAccepted", "null");
+                } else {
+                    data.putString("isAccepted", msgObject.isAccepted);
+                }
+
+
+                break;
         }
 
         msg.setData(data);
@@ -179,13 +209,21 @@ public class MyQbChatService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         // We want this service to continue running until it is explicitly
         // stopped, so return sticky.
-        return START_STICKY;
+        return START_NOT_STICKY;
     }
 
     @Override
     public void onDestroy() {
         //QBChatService.getInstance().destroy();
         EventBus.getDefault().unregister(this);
+        logoutFromQb();
+        ClickinDbHelper dbHelper = new ClickinDbHelper(this);
+        android.util.Log.e("Service","Delete Db");
+        try {
+            dbHelper.clearDB();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 //        db.close();
     }
 
@@ -224,13 +262,23 @@ public class MyQbChatService extends Service {
         mNM.notify(mId++, mBuilder.build());
     }
 
-    public void createRoom(String roomName) {
+    public void setChatListeners() {
         Handler handler = mChatThread.getHandler();
         android.os.Message msg = new android.os.Message();
         Bundle data = new Bundle();
-        data.putString("room", roomName);
+
         msg.setData(data);
-        msg.what = ChatThread.CREATE_ROOM;
+        msg.what = ChatThread.ADD_CHAT_LISTENERS;
+        handler.sendMessage(msg);
+    }
+
+    public void logoutFromQb() {
+        Handler handler = mChatThread.getHandler();
+        android.os.Message msg = new android.os.Message();
+        Bundle data = new Bundle();
+
+        msg.setData(data);
+        msg.what = ChatThread.CHAT_LOGOUT;
         handler.sendMessage(msg);
     }
 
@@ -372,7 +420,7 @@ public class QbChatService extends Service {
     @Override
     public void onCreate() {
 
-        Log.e(TAG, "CS started");
+        android.util.Log.e(TAG, "CS started");
         systemService = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         mNM =systemService;
         Handler handler = new Handler() {

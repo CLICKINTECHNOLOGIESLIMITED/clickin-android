@@ -27,6 +27,7 @@ public class ClickinDbHelper extends SQLiteOpenHelper implements ChatRecordI {
     public static final String chatType = "chatType";
     public static final String content_url = "content_url";
     public static final String imageRatio = "imageRatio";
+    //Card parameter start
     public static final String card_owner = "card_owner";
     public static final String card_content = "card_content";
     public static final String is_CustomCard = "is_CustomCard";
@@ -37,6 +38,7 @@ public class ClickinDbHelper extends SQLiteOpenHelper implements ChatRecordI {
     public static final String card_id = "card_id";
     public static final String card_Played_Countered = "card_Played_Countered";
     public static final String card_originator = "card_originator";
+    // Card parameter end
     public static final String video_thumb = "video_thumb";
     public static final String chatId = "chatId";
     public static final String sentOn = "sentOn";
@@ -47,6 +49,7 @@ public class ClickinDbHelper extends SQLiteOpenHelper implements ChatRecordI {
     public static final String userId = "userId";
     public static final String senderUserToken = "senderUserToken";
     public static final String senderQbId = "senderQbId";
+    public static final String originalMessageID = "originalMessageID";
     private static final String DATABASE_CREATE = " CREATE TABLE "
             + TABLE_CHATRECORD + "(" + COLUMN_ID + " integer primary key autoincrement,"
             + partnerQbId + " text, "
@@ -62,6 +65,8 @@ public class ClickinDbHelper extends SQLiteOpenHelper implements ChatRecordI {
             + card_Accepted_Rejected + " text, "
             + card_heading + " text, "
             + card_url + " text, "
+            + card_id + " text, "
+            + originalMessageID + " text, "
             + card_Played_Countered + " text, "
             + card_originator + " text, "
             + video_thumb + " text, "
@@ -86,17 +91,13 @@ public class ClickinDbHelper extends SQLiteOpenHelper implements ChatRecordI {
 
     @Override
     public void onCreate(SQLiteDatabase database) {
-        Log.e("DBHELPER", "Oncreate DB");
         //   super.onCreate(database);
         database.execSQL(DATABASE_CREATE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Log.e(TAG,
-                "Upgrading database from version " + oldVersion + " to "
-                        + newVersion + ", which will destroy all old data"
-        );
+
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CHATRECORD);
         onCreate(db);
     }
@@ -120,33 +121,34 @@ public class ClickinDbHelper extends SQLiteOpenHelper implements ChatRecordI {
         int size = chatList.size();
         if (size > 20)
             limit = size - 20;
-        Log.e(TAG, "----i..>" + limit);
         for (int k = (size - 1); k >= limit; k--) {
             ChatMessageBody chat = chatList.get(k);
             ContentValues contentValues = new ContentValues();
-            Log.e(TAG, "----i..>" + k);
             contentValues.put(partnerQbId, chat.partnerQbId);
             contentValues.put(textMsg, chat.textMsg);
             contentValues.put(clicks, chat.clicks);
             contentValues.put(chatType, chat.chatType);
             contentValues.put(content_url, chat.content_url);
             contentValues.put(imageRatio, chat.imageRatio);
+            // card parameter start
             contentValues.put(card_owner, chat.card_owner);
             contentValues.put(card_content, chat.card_content);
-            contentValues.put(is_CustomCard, chat.is_CustomCard);
-
+            contentValues.put(is_CustomCard, Boolean.toString(chat.is_CustomCard));
             contentValues.put(card_DB_ID, chat.card_DB_ID);
             contentValues.put(card_Accepted_Rejected, chat.card_Accepted_Rejected);
             contentValues.put(card_heading, chat.card_heading);
             contentValues.put(card_url, chat.card_url);
+            contentValues.put(card_id, chat.card_id);
+            contentValues.put(originalMessageID, chat.originalMessageID);
             contentValues.put(card_Played_Countered, chat.card_Played_Countered);
             contentValues.put(card_originator, chat.card_originator);
+            // card parameter end
             contentValues.put(video_thumb, chat.video_thumb);
             contentValues.put(chatId, chat.chatId);
             contentValues.put(sentOn, chat.sentOn);
             contentValues.put(location_coordinates, chat.location_coordinates);
             contentValues.put(sharedMessage, chat.sharedMessage);
-            contentValues.put(isDelivered, chat.is_CustomCard);
+            contentValues.put(isDelivered, chat.isDelivered);
 
             contentValues.put(relationshipId, chat.relationshipId);
             contentValues.put(userId, chat.userId);
@@ -170,7 +172,6 @@ public class ClickinDbHelper extends SQLiteOpenHelper implements ChatRecordI {
         //String selectUserChats = "SELECT  * FROM " + TABLE_CHATRECORD + " ORDER BY "+COLUMN_TIMESTAMP +" DESC  WHERE ("+ COLUMN_SID + " = "+sQbId+" AND " +COLUMN_RID +" = "+rQbId+" ) OR ( "+ COLUMN_SID + " = "+rQbId+" AND " +COLUMN_RID +" = "+sQbId +" )";
         //String selectUserChats = "SELECT * FROM " + TABLE_CHATRECORD +" WHERE("+ COLUMN_SID + "="+sQbId+" AND " +COLUMN_RID +"="+rQbId+") OR ("+ COLUMN_SID + "="+rQbId+" AND " +COLUMN_RID +" = "+sQbId +")";
         //  String selectUserChats = "SELECT * FROM " + TABLE_CHATRECORD +  " WHERE "+ relationshipId + " = "+rId;
-        //Log.e(TAG,"selectUserChats--> "+selectUserChats);
 
         //Cursor chatCursor = dbObj. rawQuery( selectUserChats, null );
         Cursor chatCursor =
@@ -180,7 +181,7 @@ public class ClickinDbHelper extends SQLiteOpenHelper implements ChatRecordI {
                         new String[]{String.valueOf(rId)}, // d. selections args
                         null, // e. group by
                         null, // f. having
-                        null, // g. order by
+                        sentOn, // g. order by
                         null); // h. limit
         int si = chatCursor.getCount();
 
@@ -194,17 +195,19 @@ public class ClickinDbHelper extends SQLiteOpenHelper implements ChatRecordI {
                     chat.chatType = Integer.parseInt(chatCursor.getString(chatCursor.getColumnIndex(chatType)));
                     chat.content_url = chatCursor.getString(chatCursor.getColumnIndex(content_url));
                     chat.imageRatio = chatCursor.getString(chatCursor.getColumnIndex(imageRatio));
+                    // Card Start
                     chat.card_owner = (chatCursor.getString(chatCursor.getColumnIndex(card_owner)));
                     chat.card_content = (chatCursor.getString(chatCursor.getColumnIndex(card_content)));
                     chat.is_CustomCard = Boolean.parseBoolean((chatCursor.getString(chatCursor.getColumnIndex(is_CustomCard))));
-
-
                     chat.card_DB_ID = (chatCursor.getString(chatCursor.getColumnIndex(card_DB_ID)));
                     chat.card_Accepted_Rejected = (chatCursor.getString(chatCursor.getColumnIndex(card_Accepted_Rejected)));
                     chat.card_heading = (chatCursor.getString(chatCursor.getColumnIndex(card_heading)));
                     chat.card_url = (chatCursor.getString(chatCursor.getColumnIndex(card_url)));
+                    chat.card_id = (chatCursor.getString(chatCursor.getColumnIndex(card_id)));
+                    chat.originalMessageID = (chatCursor.getString(chatCursor.getColumnIndex(originalMessageID)));
                     chat.card_Played_Countered = (chatCursor.getString(chatCursor.getColumnIndex(card_Played_Countered)));
                     chat.card_originator = (chatCursor.getString(chatCursor.getColumnIndex(card_originator)));
+                    // Card End
                     chat.video_thumb = (chatCursor.getString(chatCursor.getColumnIndex(video_thumb)));
                     chat.chatId = (chatCursor.getString(chatCursor.getColumnIndex(chatId)));
                     chat.sentOn = (chatCursor.getString(chatCursor.getColumnIndex(sentOn)));
@@ -218,10 +221,7 @@ public class ClickinDbHelper extends SQLiteOpenHelper implements ChatRecordI {
                     chat.senderQbId = (chatCursor.getString(chatCursor.getColumnIndex(senderQbId)));
 
 
-                    Log.e(TAG, "" + chat.senderQbId + "--" + chat.senderUserToken + "--" + chat.userId + "--" + chat.relationshipId + "--" + chat.isDelivered + "--" + chat.sharedMessage
-                            + chat.location_coordinates + "--" + chat.sentOn + "--" + chat.chatId + "--" + chat.video_thumb + "--" + chat.card_originator + "--" + chat.card_Played_Countered
-                            + "--" + chat.card_url + "--" + chat.card_heading + "--" + chat.card_Accepted_Rejected + "--" + chat.card_DB_ID + "--" + chat.is_CustomCard + "" + chat.card_content + "--" + chat.card_owner + "--" + chat.imageRatio + "--" + chat.content_url + "--" + chat.chatType + "--" + chat.clicks
-                            + "--" + chat.textMsg + "--" + chat.partnerQbId);
+
 
                     chatList.add(chat);
                 }
@@ -240,7 +240,6 @@ public class ClickinDbHelper extends SQLiteOpenHelper implements ChatRecordI {
         //String deleteUserChats = "DELETE FROM " + TABLE_CHATRECORD +" WHERE ("+ COLUMN_SID + "="+sQbId+" AND " +COLUMN_RID +"="+rQbId+") OR ("+ COLUMN_SID + "="+rQbId+" AND " +COLUMN_RID +"="+sQbId +")";
 
       /*  String deleteUserChats  = "( "+ relationshipId + " = "+rId +")";
-        Log.e(TAG,"deleteUserChats--> "+deleteUserChats);
         dbObj.delete(TABLE_CHATRECORD, deleteUserChats, null);*/
 
         //monika- correct query to delete chat
@@ -253,5 +252,11 @@ public class ClickinDbHelper extends SQLiteOpenHelper implements ChatRecordI {
         return 1;
     }
 
+   public void clearDB() throws SQLException{
+       if (dbObj == null || !dbObj.isOpen())
+           openDataBase();
+       dbObj.delete(TABLE_CHATRECORD,null,null //table name
+            ); //selections args
+   }
 
 }

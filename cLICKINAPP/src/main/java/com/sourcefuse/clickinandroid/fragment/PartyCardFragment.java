@@ -1,8 +1,5 @@
 package com.sourcefuse.clickinandroid.fragment;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,17 +9,11 @@ import android.widget.GridView;
 
 import com.sourcefuse.clickinandroid.model.ChatManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
-import com.sourcefuse.clickinandroid.model.bean.CardBean;
 import com.sourcefuse.clickinandroid.model.bean.TabBean;
-
 import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinandroid.view.adapter.AdapterAll;
 import com.sourcefuse.clickinandroid.view.adapter.CardGridViewAdapter;
-
-
 import com.sourcefuse.clickinapp.R;
-
-import java.util.ArrayList;
 
 /**
  * Created by mukesh on 26/8/14.
@@ -30,13 +21,13 @@ import java.util.ArrayList;
 
 public class PartyCardFragment extends Fragment {
 
+    private static final String TAG = "PartyCardFragment";
     GridView gridView;
     private CardGridViewAdapter customGridAdapter;
-    private AdapterAll  Alladapter;
+    private AdapterAll Alladapter;
     private ChatManager chatManager;
     private TabBean bean = new TabBean();
-    private String card ;
-    private static final String TAG = "PartyCardFragment";
+    private String card;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -49,20 +40,17 @@ public class PartyCardFragment extends Fragment {
         card = bean.getTab_content();
 
         // chatManager.categories.get("All");
-        Log.e(TAG, "Msg CCard To check" + card);
 
         if (card.equals("All")) {
 
             Alladapter = new AdapterAll(getActivity(), R.layout.row_card_grid, R.layout.card1, chatManager.categories.get("All"));
             gridView.setAdapter(Alladapter);
-       }
-
-    else {
+        } else {
             customGridAdapter = new CardGridViewAdapter(getActivity(), R.layout.row_card_grid, chatManager.categories.get(card));
             gridView.setAdapter(customGridAdapter);
         }
         return rootView;
-        }
+    }
 
 
 //    public static PartyCardFragment newInstance(int pos) {
@@ -82,4 +70,4 @@ public class PartyCardFragment extends Fragment {
 //
 //        return f;
 //    }
-    }
+}

@@ -32,6 +32,7 @@ import com.sourcefuse.clickinandroid.model.SettingManager;
 import com.sourcefuse.clickinandroid.services.MyQbChatService;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.Constants;
+import com.sourcefuse.clickinandroid.utils.GPSTracker;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
 
@@ -42,17 +43,42 @@ import de.greenrobot.event.EventBus;
 
 public class SignInView extends Activity implements View.OnClickListener, TextWatcher {
     private static final String TAG = SignInView.class.getSimpleName();
+    public MyQbChatService myQbChatService;
+    private ServiceConnection mConnection = new ServiceConnection() {
+        public void onServiceConnected(ComponentName className, IBinder service) {
+            // This is called when the connection with the service has been
+            // established, giving us the service object we can use to
+            // interact with the service.  Because we have bound to a explicit
+            // service that we know is running in our own process, we can
+            // cast its IBinder to a concrete class and directly access it.
+            myQbChatService = ((MyQbChatService.LocalBinder) service).getService();
+           /* myQbChatService.createRoom(mRoomName);*/
+
+            // showMessages();
+
+            // Tell the user about this for our demo.
+//            Toast.makeText(Binding.this, R.string.local_service_connected,
+//                    Toast.LENGTH_SHORT).show();
+        }
+
+        public void onServiceDisconnected(ComponentName className) {
+            // This is called when the connection with the service has been
+            // unexpectedly disconnected -- that is, its process crashed.
+            // Because it is running in our same process, we should never
+            // see this happen.
+            myQbChatService = null;
+//            Toast.makeText(Binding.this, R.string.local_service_disconnected,
+//                    Toast.LENGTH_SHORT).show();
+        }
+    };
     private Button do_latter;
     private TextView forgotPwd, signUp;
     private EditText ephone, ePwd, getemailid;
     private boolean activeDone = false;
     private AuthManager authManager;
     private Dialog mDialog;
-    public MyQbChatService myQbChatService;
-    private boolean mIsBound;
-
-
     // private Typeface typeface, typefaceBold;
+    private boolean mIsBound;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,15 +87,26 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
         setContentView(R.layout.view_signin);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
+        authManager = ModelManager.getInstance().getAuthorizationManager();
+        try {
+            GPSTracker gpsTracker = new GPSTracker(this);
+            android.util.Log.e("in try--->", "in try");
+            String latlan = gpsTracker.getLatitude() + ";" + gpsTracker.getLongitude();
+            android.util.Log.e("latlan--->", "" + latlan);
+            authManager.setLatLan(latlan);
+        } catch (Exception e) {
+            e.printStackTrace();
+            android.util.Log.e("in exceptin anroid--->", "in exception---");
+        }
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
-        authManager = ModelManager.getInstance().getAuthorizationManager();
+
         Utils.deviceId = Utils.getRegId(SignInView.this);
-
-        com.sourcefuse.clickinandroid.utils.Log.e("reg id---->",Utils.deviceId);
-
+        android.util.Log.e("device reg id---->", "device reg id--->");
+        android.util.Log.e("device reg id aa---->", "" + Utils.getRegId(SignInView.this));
+        android.util.Log.e("device reg id aa---->", "" + Utils.deviceId);
         authManager.setDeviceRegistereId(Utils.deviceId);
         do_latter = (Button) findViewById(R.id.btn_get_clickin_signin);
         ephone = (EditText) findViewById(R.id.edt_email_phoneno);
@@ -109,17 +146,6 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
 
 //ends
 
-//        ePwd.setOnKeyListener(new View.OnKeyListener() {
-//            @Override
-//            public boolean onKey(View v, int keyCode, KeyEvent event) {
-//                if (keyCode == KeyEvent.KEYCODE_ENTER ) {
-//                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-//                    imm.hideSoftInputFromWindow(ePwd.getWindowToken(), 0);
-//                }
-//                return false;
-//            }
-//        });
-
 
 //            //akshit code for country Code
         try {
@@ -139,33 +165,9 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
         //No need. For this akshit
 
 
-//        ephone.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(Vie9w v, MotionEvent event) {
-//
-//           InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-//            inputMethodManager.showSoftInput(ephone, 0);
-//
-//
-//                if(ephone.getText().toString().contains("null"))
-//                {
-//                    if (ephone.getSelectionStart() <= 6) {
-//                        return false;
-//                    } else {
-//                        return true;
-//                    }
-//
-//                else {
-//                    if (ephone.getSelectionStart() <= 2) {
-//                        return false;
-//                    } else {
-//                        return true;
-//                    }
-//                }
-//            }
-//        });
-//
-//    }
+
+
+        /* to save default lat and lng */
 
 
     }
@@ -209,13 +211,15 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
 
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(layout.getWindowToken(), 0);
-//                Log.e(TAG,"ephone ewithout" +ephone.getText().toString());
-                if (activeDone && ephone.getText().toString().trim().length() > 0 && ephone.getText().toString() != "+null" && ePwd.getText().toString().length() > 0) {
+//                android.util.Log.e(TAG,"ephone ewithout" +ephone.getText().toString());
+                if (activeDone && ephone.getText().toString().trim().length() > 0 && ephone.getText().toString() != "+(null)" && ePwd.getText().toString().length() > 0) {
                     getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
                     authManager = ModelManager.getInstance().getAuthorizationManager();
                     Utils.launchBarDialog(SignInView.this);
+                    android.util.Log.e("device id from utils-->", "" + Utils.deviceId);
+                    android.util.Log.e("device id from auth-->", "" + authManager.getDeviceRegistereId());
                     authManager.signIn(ephone.getText().toString().trim(), ePwd.getText().toString().trim(), Utils.deviceId, Constants.DEVICETYPE);
-//                    Log.e(TAG,"Phone no without space" +ephone.getText().toString().trim());
+//                    android.util.Log.e(TAG,"Phone no without space" +ephone.getText().toString().trim());
                 } else if (ephone.getText().toString().length() == 0) {
                     Utils.fromSignalDialog(this, AlertMessage.enterPhoneEmail);
                 } else if (ePwd.getText().toString().length() == 0) {
@@ -236,14 +240,12 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
         }
     }
 
-
     private void switchView() {
         Intent intent = new Intent(SignInView.this, UserProfileView.class);
         //  intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();
     }
-
 
     @Override
     public void onStart() {
@@ -261,14 +263,18 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
     }
 
     public void onEventMainThread(String getMsg) {
-        Log.d(TAG, "onEventMainThread->" + getMsg);
+        android.util.Log.d(TAG, "onEventMainThread->" + getMsg);
         authManager = ModelManager.getInstance().getAuthorizationManager();
         if (getMsg.equalsIgnoreCase("SignIn True")) {
-            //save all user values in shared prefrence
+            //save only those values in sharedprefrence that required to sign in
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
             SharedPreferences.Editor editor = preferences.edit();
-            editor.putString("token", authManager.getUsrToken());
             editor.putString("myPhoneNo", authManager.getPhoneNo());
+            editor.putString("pwd", ePwd.getText().toString().trim());
+            editor.putString("DeviceId", Utils.deviceId);
+            editor.putString("authToken",ModelManager.getInstance().getAuthorizationManager().getUsrToken());
+            editor.putString("userid",ModelManager.getInstance().getAuthorizationManager().getUserId());
+            //  editor.putString("DeviceType",Constants.DEVICETYPE);
             editor.commit();
 
 
@@ -291,7 +297,7 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
             //save values of user in shared prefrence for later use
             Intent i = new Intent(this, MyQbChatService.class);
             startService(i);
-            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+     /*       SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
             SharedPreferences.Editor editor = preferences.edit();
             editor.putString("gender", authManager.getGender());
             editor.putString("follower", authManager.getFollower());
@@ -303,7 +309,7 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
             editor.putString("city", authManager.getUserCity());
             editor.putString("country", authManager.getUserCountry());
             editor.putString("email", authManager.getEmailId());
-            editor.commit();
+            editor.commit();*/
             RelationManager relationManager = ModelManager.getInstance().getRelationManager();
             relationManager.getRelationShips(authManager.getPhoneNo(), authManager.getUsrToken());
             // new ImageDownloadTask().execute();
@@ -361,7 +367,6 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
 
     }
 
-
     public void forgetPasswordAlert(final Activity contex) {
 
         // custom dialog
@@ -417,40 +422,6 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
 
         mDialog.show();
     }
-
-
-    public void callChatService() {
-        Intent i = new Intent(this, MyQbChatService.class);
-        bindService(i, mConnection, Context.BIND_AUTO_CREATE);
-    }
-
-    private ServiceConnection mConnection = new ServiceConnection() {
-        public void onServiceConnected(ComponentName className, IBinder service) {
-            // This is called when the connection with the service has been
-            // established, giving us the service object we can use to
-            // interact with the service.  Because we have bound to a explicit
-            // service that we know is running in our own process, we can
-            // cast its IBinder to a concrete class and directly access it.
-            myQbChatService = ((MyQbChatService.LocalBinder) service).getService();
-           /* myQbChatService.createRoom(mRoomName);*/
-
-            // showMessages();
-
-            // Tell the user about this for our demo.
-//            Toast.makeText(Binding.this, R.string.local_service_connected,
-//                    Toast.LENGTH_SHORT).show();
-        }
-
-        public void onServiceDisconnected(ComponentName className) {
-            // This is called when the connection with the service has been
-            // unexpectedly disconnected -- that is, its process crashed.
-            // Because it is running in our same process, we should never
-            // see this happen.
-            myQbChatService = null;
-//            Toast.makeText(Binding.this, R.string.local_service_disconnected,
-//                    Toast.LENGTH_SHORT).show();
-        }
-    };
 
 
     @Override

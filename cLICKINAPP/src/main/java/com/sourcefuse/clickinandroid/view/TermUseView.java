@@ -16,18 +16,18 @@ import com.sourcefuse.clickinapp.R;
 /**
  * Created by prafull on 20/9/14.
  */
-public class TermUseView extends Activity implements View.OnClickListener
-{
+public class TermUseView extends Activity implements View.OnClickListener {
     WebView webView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.view_term_use);
-        this.overridePendingTransition(R.anim.slide_in_right ,R.anim.slide_out_right);
+        this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
         findViewById(R.id.iv_back_noti).setOnClickListener(this);
 
-        webView=(WebView)findViewById(R.id.web_term_view);
+        webView = (WebView) findViewById(R.id.web_term_view);
         webView.getSettings().setAppCacheEnabled(false);
         webView.setWebViewClient(new MyBrowser());
         webView.getSettings().setLoadsImagesAutomatically(true);
@@ -43,13 +43,19 @@ public class TermUseView extends Activity implements View.OnClickListener
 
     @Override
     public void onClick(View view) {
-        switch (view.getId())
-        {
+        switch (view.getId()) {
             case R.id.iv_back_noti:
                 finish();
-                overridePendingTransition(0,R.anim.top_out);//akshit code for animation
+                overridePendingTransition(0, R.anim.top_out);//akshit code for animation
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        overridePendingTransition(0, R.anim.top_out);//akshit code for animation
     }
 
     private class MyBrowser extends WebViewClient {
@@ -71,12 +77,6 @@ public class TermUseView extends Activity implements View.OnClickListener
             Utils.dismissBarDialog();
 
         }
-    }
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        finish();
-        overridePendingTransition(0,R.anim.top_out);//akshit code for animation
     }
 
 

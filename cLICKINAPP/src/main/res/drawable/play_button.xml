@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:state_selected="true" android:drawable="@drawable/play_btn"/> <!-- pressed -->
-    <item android:state_focused="true" android:drawable="@drawable/play_btn"/>
-    <item android:state_checked="true" android:drawable="@drawable/play_btn"/>
-    <item android:state_pressed="true" android:drawable="@drawable/play_btn_dark"/>
-    <item android:state_long_pressable="true" android:drawable="@drawable/play_btn_dark"/>
+    <item android:drawable="@drawable/play_btn" android:state_selected="true" />
+    <!-- pressed -->
+    <item android:drawable="@drawable/play_btn" android:state_focused="true" />
+    <item android:drawable="@drawable/play_btn" android:state_checked="true" />
+    <item android:drawable="@drawable/play_btn_dark" android:state_pressed="true" />
+    <item android:drawable="@drawable/play_btn_dark" android:state_long_pressable="true" />
 
-    <item android:drawable="@drawable/play_btn"/> <!-- default -->
+    <item android:drawable="@drawable/play_btn" />
+    <!-- default -->
 
 
 </selector>

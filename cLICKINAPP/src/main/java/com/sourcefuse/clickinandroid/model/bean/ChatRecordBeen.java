@@ -23,6 +23,19 @@ public class ChatRecordBeen {
     private String isDelivered;
     private String imageRatio;
     private String cards;
+    // Card View Details start
+    private String card_clicks;
+    private String card_owner;
+    private String card_content;
+    private String is_CustomCard;
+    private String card_DB_ID;
+    private String card_heading;
+    private String card_Accepted_Rejected;
+    private String card_url;
+    private String card_id;
+    private String card_Played_Countered;
+    private String card_originator;
+    private String cardPartnerName;
 
     public String getClicksTxt() {
         return clicksTxt;
@@ -31,22 +44,6 @@ public class ChatRecordBeen {
     public void setClicksTxt(String clicksTxt) {
         this.clicksTxt = clicksTxt;
     }
-
-
-
-// Card View Details start
-    private String card_clicks;
-    private String card_owner;
-    private String card_content;
-    private String is_CustomCard;
-    private String card_DB_ID;
-    private String card_heading;
-    private String card_Accepted_Rejected ;
-    private String card_url;
-    private String card_id ;
-    private String card_Played_Countered ;
-    private String card_originator;
-    private String cardPartnerName;
 
     public String getCardPartnerName() {
         return cardPartnerName;
@@ -146,8 +143,6 @@ public class ChatRecordBeen {
 ///////////////// Card Details end
 
 
-
-
     public String get_id() {
         return _id;
     }
@@ -235,12 +230,6 @@ public class ChatRecordBeen {
     public void setCards(String cards) {
         this.cards = cards;
     }
-
-
-
-
-
-
 
 
     public String getChatImageUrl() {

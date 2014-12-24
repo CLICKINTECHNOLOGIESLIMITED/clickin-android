@@ -11,19 +11,6 @@
         android:layout_height="wrap_content"
         android:background="@drawable/owner_profile_hedder">
 
-        <ImageView
-            android:id="@+id/iv_menu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="6dp"
-            android:paddingBottom="5dp"
-            android:paddingRight="50dp"
-            android:paddingTop="5dp"
-            android:visibility="gone"
-            android:src="@drawable/back_arrow" />
-
         <com.sourcefuse.clickinandroid.utils.ClickInTextView
             android:id="@+id/tv_profile_txt"
             android:layout_width="wrap_content"
@@ -32,20 +19,11 @@
             android:layout_marginTop="10dp"
             android:text="EDIT PROFILE"
             android:textColor="@color/owner_profile_header_b"
-            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
             android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
 
-        <ImageView
-            android:id="@+id/iv_notification"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="4dp"
-            android:paddingLeft="50dp"
-            android:src="@drawable/owner_profile_hedder_icon"
-            />
+
     </RelativeLayout>
 
     <LinearLayout
@@ -53,29 +31,29 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rr_header"
+        android:layout_marginBottom="14dp"
         android:layout_marginLeft="29dp"
         android:layout_marginRight="30dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="19dp"
+        android:layout_marginTop="16dp"
         android:background="@color/edit_profile_clr"
         android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/iv_selfi"
             android:layout_width="118dp"
-            android:layout_height="118dp"
+            android:layout_height="121dp"
             android:layout_weight="1"
-            android:paddingLeft="-1dp"
             android:adjustViewBounds="true"
+            android:paddingLeft="-1dp"
             android:src="@drawable/c_selfie" />
 
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="3dp"
             android:layout_toRightOf="@+id/iv_selfi"
             android:layout_weight="1"
-            android:layout_marginLeft="3dp"
             android:orientation="vertical">
 
             <com.sourcefuse.clickinandroid.utils.ClickInTextView
@@ -84,11 +62,11 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginTop="2dp"
                 android:text="ADD YOUR PHOTO"
                 android:textColor="@color/add_your_photo"
                 android:textSize="17dp"
                 android:textStyle="bold"
-                android:layout_marginTop="2dp"
                 geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
 
 
@@ -104,20 +82,20 @@
                 android:layout_marginRight="10dp"
                 android:background="@drawable/c_edit_profile_line"
                 android:textSize="20sp"
-                android:textStyle="bold"
-                />
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/line"
                 android:layout_centerHorizontal="true"
-                android:weightSum="3"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:weightSum="3">
 
                 <LinearLayout
                     android:layout_width="90dp"
                     android:layout_height="wrap_content">
+
                     <ImageView
                         android:id="@+id/iv_edit_gallery"
                         android:layout_width="fill_parent"
@@ -125,25 +103,25 @@
                         android:layout_weight="1"
                         android:src="@drawable/c_gallery_img" />
 
-                    </LinearLayout>
+                </LinearLayout>
 
-                   <ImageView
+                <ImageView
                     android:layout_width="1dp"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/c_middle_line"
-                       android:layout_marginBottom="10dp"/>
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/c_middle_line" />
 
 
                 <LinearLayout
                     android:layout_width="90dp"
-                    android:layout_height="wrap_content"
-                    >
+                    android:layout_height="wrap_content">
+
                     <ImageView
                         android:id="@+id/iv_edit_camera"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
-                        android:layout_toRightOf="@+id/iv_gallery"
                         android:layout_gravity="center"
+                        android:layout_toRightOf="@+id/iv_gallery"
                         android:layout_weight="1"
                         android:src="@drawable/c_picture_img" />
 
@@ -161,7 +139,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/rr"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="12dp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginRight="28dp"
+        android:layout_marginTop="2dp"
         android:background="@drawable/c_editprofile_box"
         android:ems="10"
         android:hint="@string/txt_fname"
@@ -169,13 +149,10 @@
         android:padding="10dp"
         android:textColor="@color/black"
         android:textColorHint="@color/sign_hint"
-        android:textSize="16sp"
-        android:layout_marginLeft="28dp"
-        android:layout_marginRight="28dp"
-        >
+        android:textSize="16sp">
 
 
-        </EditText>
+    </EditText>
 
     <EditText
         android:id="@+id/edt_my_last"
@@ -183,7 +160,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/edt_my_name"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="12dp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginRight="28dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/c_editprofile_box"
         android:ems="10"
         android:hint="@string/txt_lname"
@@ -191,9 +170,7 @@
         android:padding="10dp"
         android:textColor="@color/black"
         android:textColorHint="@color/sign_hint"
-        android:textSize="16sp"
-        android:layout_marginLeft="28dp"
-        android:layout_marginRight="28dp"></EditText>
+        android:textSize="16sp"></EditText>
 
     <EditText
         android:id="@+id/edt_my_email"
@@ -201,7 +178,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/edt_my_last"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="12dp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginRight="28dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/c_editprofile_box"
         android:ems="10"
         android:hint="@string/txt_email"
@@ -209,10 +188,7 @@
         android:padding="10dp"
         android:textColor="@color/black"
         android:textColorHint="@color/sign_hint"
-        android:textSize="16sp"
-        android:layout_marginLeft="28dp"
-        android:layout_marginRight="28dp"
-        ></EditText>
+        android:textSize="16sp"></EditText>
 
     <EditText
         android:id="@+id/edt_my_city"
@@ -220,7 +196,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/edt_my_email"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="12dp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginRight="28dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/c_editprofile_box"
         android:ems="10"
         android:hint="@string/txt_city"
@@ -228,9 +206,7 @@
         android:padding="10dp"
         android:textColor="@color/black"
         android:textColorHint="@color/sign_hint"
-        android:textSize="16sp"
-        android:layout_marginLeft="28dp"
-        android:layout_marginRight="28dp"></EditText>
+        android:textSize="16sp"></EditText>
 
     <EditText
         android:id="@+id/edt_my_country"
@@ -238,7 +214,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/edt_my_city"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="12dp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginRight="28dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/c_editprofile_box"
         android:ems="10"
         android:hint="@string/txt_cntry"
@@ -246,9 +224,7 @@
         android:padding="10dp"
         android:textColor="@color/black"
         android:textColorHint="@color/sign_hint"
-        android:textSize="16sp"
-        android:layout_marginLeft="28dp"
-        android:layout_marginRight="28dp"></EditText>
+        android:textSize="16sp"></EditText>
 
     <Button
         android:id="@+id/btn_click_to_save"
@@ -256,8 +232,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/edt_my_country"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/c_save_btn_text"
         android:layout_marginLeft="28dp"
-        android:layout_marginRight="28dp"/>
+        android:layout_marginRight="28dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/c_save_btn_text" />
 </RelativeLayout>

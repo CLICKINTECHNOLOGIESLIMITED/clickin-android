@@ -26,10 +26,10 @@ import java.util.List;
 public class ClickInWithAdapter extends ArrayAdapter<GetrelationshipsBean> {
     Context context;
     int layoutResourceId;
+    List<GetrelationshipsBean> item1;
     private Typeface typeface;
 
-    List<GetrelationshipsBean> item1;
-    public ClickInWithAdapter(Context context, int layoutResourceId,List<GetrelationshipsBean> item) {
+    public ClickInWithAdapter(Context context, int layoutResourceId, List<GetrelationshipsBean> item) {
         super(context, layoutResourceId, item);
         this.layoutResourceId = layoutResourceId;
         this.context = context;
@@ -52,7 +52,7 @@ public class ClickInWithAdapter extends ArrayAdapter<GetrelationshipsBean> {
 
 
             typeface = Typeface.createFromAsset(context.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
-            holder.clickInUsrName.setTypeface(typeface,typeface.BOLD);
+            holder.clickInUsrName.setTypeface(typeface, typeface.BOLD);
 
             row.setTag(holder);
         } else {
@@ -60,42 +60,50 @@ public class ClickInWithAdapter extends ArrayAdapter<GetrelationshipsBean> {
         }
 
         final RecordHolder rholder = (RecordHolder) row.getTag();
-       if(!Utils.isEmptyString(item.getStatusAccepted()) && item.getStatusAccepted().matches("true")){
+        android.util.Log.e("in clickinwiht adapter---->","in clickinwiht adapter---->");
+        if (!Utils.isEmptyString(item.getStatusAccepted()) && item.getStatusAccepted().matches("true")) {
 
-               rholder.clickInUsrName.setText(item.getPartnerName());
-               rholder.unReadNo.setText("");
-           Log.e("item partner pic ---->",""+item.getPartnerPic());
-               if(!item.getPartnerPic().equalsIgnoreCase("")) {
-                   try{
-                       Picasso.with(context).load(item.getPartnerPic())
-                               .skipMemoryCache()
-                               .error(R.drawable.male_user)
-                               .into(rholder.clickInUsrimg);
-                   }catch(Exception e){
-                       rholder.clickInUsrimg.setImageResource(R.drawable.male_user);
-                   }
+            rholder.clickInUsrName.setText(item.getPartnerName());
 
-               }
-               else
-               {
-                   rholder.clickInUsrimg.setImageResource(R.drawable.male_user);
-               }
-           }
-           else
-           {
-               rholder.clickInUsrimg.setImageResource(R.drawable.male_user);
-           }
+            if (item.getUnreadMsg() != 0) {
+                rholder.unReadNo.setText("" + item.getUnreadMsg());
+                rholder.unReadNo.setVisibility(View.VISIBLE);
+                android.util.Log.e("counter on update---->",""+item.getUnreadMsg());
+            }
+            else {
+                rholder.unReadNo.setVisibility(View.GONE);
+                android.util.Log.e("counter on update---->","counter on update---->");
+            }
 
-        if(((item1.size()-1) == position))
-        row.findViewById(R.id.clcth_divider).setVisibility(View.GONE);
+            android.util.Log.e("item partner pic ---->", "" + item.getPartnerPic());
+            if (!item.getPartnerPic().equalsIgnoreCase("")) {
+                try {
+                    Picasso.with(context).load(item.getPartnerPic())
+                            .skipMemoryCache()
+                            .error(R.drawable.male_user)
+                            .into(rholder.clickInUsrimg);
+                } catch (Exception e) {
+                    rholder.clickInUsrimg.setImageResource(R.drawable.male_user);
+                }
+
+            } else {
+                rholder.clickInUsrimg.setImageResource(R.drawable.male_user);
+            }
+        } else {
+            rholder.clickInUsrimg.setImageResource(R.drawable.male_user);
+        }
+
+        if (((item1.size() - 1) == position))
+            row.findViewById(R.id.clcth_divider).setVisibility(View.GONE);
         else
-        row.findViewById(R.id.clcth_divider).setVisibility(View.VISIBLE);
+            row.findViewById(R.id.clcth_divider).setVisibility(View.VISIBLE);
+
 
         return row;
     }
 
     static class RecordHolder {
-        TextView clickInUsrName,unReadNo;
+        TextView clickInUsrName, unReadNo;
         ImageView clickInUsrimg;
 
 

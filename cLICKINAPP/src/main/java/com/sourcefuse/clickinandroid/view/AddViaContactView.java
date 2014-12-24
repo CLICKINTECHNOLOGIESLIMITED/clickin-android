@@ -3,7 +3,7 @@ package com.sourcefuse.clickinandroid.view;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Telephony;
 import android.text.Editable;
@@ -25,7 +25,6 @@ import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.FetchContactFromPhone;
 import com.sourcefuse.clickinandroid.utils.Utils;
-import com.sourcefuse.clickinandroid.view.adapter.ContactAdapter;
 import com.sourcefuse.clickinapp.R;
 import com.squareup.picasso.Picasso;
 
@@ -58,35 +57,34 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
             Bundle bundle = getIntent().getExtras();
             ((TextView) findViewById(R.id.tv_contact_name)).setText("" + bundle.getString("ConName"));
             mlPhNo = bundle.getString("ConNumber");
-            String onlyPhNo = null;
 
 
-            com.sourcefuse.clickinandroid.utils.Log.e("contact no--->", "" + mlPhNo);
+            //com.sourcefuse.clickinandroid.utils.android.util.Log.e("contact no--->", "" + mlPhNo);
             //first check country code from SIM and compare it with num
             countryCode = Utils.getCountryCodeFromSim(this);
-            com.sourcefuse.clickinandroid.utils.Log.e("county code from sim--->", "" + countryCode);
+           // com.sourcefuse.clickinandroid.utils.android.util.Log.e("county code from sim--->", "" + countryCode);
             if (countryCode != null) {
                 if (mlPhNo.startsWith(countryCode)) {
-                    onlyPhNo = mlPhNo.replace(countryCode, "");
+                    mlPhNo = mlPhNo.replace(countryCode, "");
 
-                    com.sourcefuse.clickinandroid.utils.Log.e("contact no point 1--->", "" + onlyPhNo);
+                   // com.sourcefuse.clickinandroid.utils.android.util.Log.e("contact no point 1--->", "" + mlPhNo);
                 } else {
-                    onlyPhNo = mlPhNo;
+                    mlPhNo = mlPhNo;
 
-                    com.sourcefuse.clickinandroid.utils.Log.e("contact no point 3--->", "" + onlyPhNo);
+                  //  com.sourcefuse.clickinandroid.utils.android.util.Log.e("contact no point 3--->", "" + mlPhNo);
                 }
             }
 
             /* to check country codetill present in no */
 
-            if (onlyPhNo.startsWith("+")) {
+            if (mlPhNo.startsWith("+")) {
                 String[] rl = this.getResources().getStringArray(R.array.CountryCodes);
                 for (int i = 0; i < rl.length; i++) {
                     String[] g = rl[i].split(",", 2);
                     String tempcountryCode = g[0];
                     tempcountryCode = "+" + tempcountryCode;
-                    if (onlyPhNo.startsWith(tempcountryCode)) {
-                        onlyPhNo = onlyPhNo.replace(tempcountryCode, "");
+                    if (mlPhNo.startsWith(tempcountryCode)) {
+                        mlPhNo = mlPhNo.replace(tempcountryCode, "");
                         countryCode = tempcountryCode;
 
                         break;
@@ -95,17 +93,17 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
             }
 
 
-            if (countryCode == null) {
+            if (countryCode == null || mlPhNo.startsWith("+")) {
                 countryCode = "+(null)";
                 if (mlPhNo.contains("+"))
-                    onlyPhNo = mlPhNo.replace("+", "");
+                    mlPhNo = mlPhNo.replace("+", "");
                 else
-                    onlyPhNo = mlPhNo;
+                    mlPhNo = mlPhNo;
             }
 
 
             cntry_cd.setText("" + countryCode);
-            phoneNo.setText("" + onlyPhNo);
+            phoneNo.setText("" + mlPhNo);
             String image_uri = bundle.getString("ConUri");
             try {
                 if (!Utils.isEmptyString(image_uri)) {
@@ -140,6 +138,14 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
 
         });
 
+        //akshit code to hide visibility for back button .
+        if (!getIntent().getBooleanExtra("fromsignup", false)) {
+            findViewById(R.id.rl_back).setVisibility(View.GONE);
+        } else {
+            findViewById(R.id.rl_back).setVisibility(View.VISIBLE);
+        }
+
+        //End
 
         ((TextView) findViewById(R.id.btn_go_back)).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -151,20 +157,15 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
         ProfileManager prfManager = ModelManager.getInstance().getProfileManager();
 
 
-        if (prfManager.currClickersPhoneNums.size() > 0) {
-
-        } else {
-
+        //both the list can't be empty at a time, so fetch contact webservice again
+        if (prfManager.currentClickerList.size() == 0 && prfManager.spreadTheWorldList.size() == 0) {
             Utils.launchBarDialog(this);
-            new FetchContactFromPhone(this).getClickerList(authManager.getPhoneNo(), authManager.getUsrToken(), 1);
+            new LoadContacts().execute();
+            //  new FetchContactFromPhone(this).getClickerList(authManager.getPhoneNo(), authManager.getUsrToken(), 1);
         }
 
+
     }
-
-
-
-
-
 
 
     @Override
@@ -248,7 +249,7 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-             com.sourcefuse.clickinandroid.utils.Log.e("on activity result","on activity result");
+        //com.sourcefuse.clickinandroid.utils.android.util.Log.e("on activity result", "on activity result");
     }
 
     @Override
@@ -282,7 +283,7 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
                 Utils.dismissBarDialog();
                 Intent intent = new Intent(this, UserProfileView.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                intent.putExtra("isChangeInList",true);
+                intent.putExtra("isChangeInList", true);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
                 finish();
@@ -292,17 +293,27 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
             Utils.dismissBarDialog();
 
             Utils.fromSignalDialog(this, authManager.getMessage());
-            Log.d("2", "message->" + message);
+            android.util.Log.d("2", "message->" + message);
         } else if (message.equalsIgnoreCase("RequestSend Network Error")) {
             Utils.dismissBarDialog();
             Utils.fromSignalDialog(this, AlertMessage.connectionError);
             // Utils.showAlert(AddViaContactView.this, AlertMessage.connectionError);
-            Log.d("3", "message->" + message);
+            android.util.Log.d("3", "message->" + message);
 
         }
         if (message.equalsIgnoreCase("CheckFriend True")) {
             Utils.dismissBarDialog();
-            com.sourcefuse.clickinandroid.utils.Log.e("current clickers list--->", "" + Utils.itData);
+            //com.sourcefuse.clickinandroid.utils.android.util.Log.e("current clickers list--->", "" + Utils.itData);
+        } else if (message.equalsIgnoreCase("CheckFriend False")) {
+            Utils.dismissBarDialog();
+            //  Utils.showAlert(this,authManager.getMessage());
+            //com.sourcefuse.clickinandroid.utils.android.util.Log.e("Add phone", "Message" + authManager.getMessage());
+            //   Utils.fromSignalDialog(this, authManager.getMessage());
+
+        } else if (message.equalsIgnoreCase("CheckFriend Network Error")) {
+            Utils.dismissBarDialog();
+            //    Utils.showAlert(this, AlertMessage.connectionError);
+            Utils.fromSignalDialog(this, AlertMessage.connectionError);
         }
     }
 
@@ -337,6 +348,20 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
     @Override
     public void afterTextChanged(Editable editable) {
 
+    }
+
+    private class LoadContacts extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            new FetchContactFromPhone(AddViaContactView.this).readContacts();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void voids) {
+            new FetchContactFromPhone(AddViaContactView.this).getClickerList(authManager.getPhoneNo(), authManager.getUsrToken(), 1);
+        }
     }
 // Ends
 }

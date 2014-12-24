@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/r_owner_profile_bg">
@@ -18,7 +17,8 @@
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:background="@drawable/back_arrow" />
+            android:background="@drawable/back_arrow"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_profile_txt"
@@ -31,17 +31,21 @@
             android:textSize="20sp"
             android:textStyle="bold" />
 
-   </RelativeLayout>
-
-        <ListView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/stars_list"
-            android:layout_below="@+id/rr_header"
-            android:padding="5dp"></ListView>
-
-
-
-
-
     </RelativeLayout>
+
+    <ListView
+        android:id="@+id/stars_list"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rr_header"
+        android:choiceMode="singleChoice"
+        android:divider="@null"
+        android:fadingEdge="none"
+        android:listSelector="#00000000"
+        android:overScrollMode="never"
+        android:padding="5dp"
+        android:scrollbars="none"
+        android:transcriptMode="alwaysScroll"></ListView>
+
+
+</RelativeLayout>

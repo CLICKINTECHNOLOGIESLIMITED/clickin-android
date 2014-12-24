@@ -22,8 +22,9 @@ import com.sourcefuse.clickinapp.R;
 
 public final class TestFragment extends Fragment {
 
-    static int imageS=0;
+    static int imageS = 0;
     Activity _activity;
+
     public static TestFragment newInstance(int imageS) {
         TestFragment fragment = new TestFragment();
 
@@ -36,26 +37,24 @@ public final class TestFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        _activity =super.getActivity();
-        if(getArguments() != null) {
+        _activity = super.getActivity();
+        if (getArguments() != null) {
             imageS = getArguments().getInt("img");
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        RelativeLayout mainlayout =new RelativeLayout(getActivity());
+        RelativeLayout mainlayout = new RelativeLayout(getActivity());
         mainlayout.setLayoutParams(new LayoutParams
                 (LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-
 
 
         ImageView img = new ImageView(getActivity());
         img.setImageDrawable(getActivity().getResources().getDrawable(imageS));
         img.setScaleType(ImageView.ScaleType.CENTER_CROP);
         mainlayout.addView(img);
-        if(imageS== R.drawable.sixth_page)
-        {
+        if (imageS == R.drawable.sixth_page) {
 
             ImageView clickHereToSignup = new ImageView(getActivity());
             clickHereToSignup.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.signup_btn));
@@ -71,9 +70,9 @@ public final class TestFragment extends Fragment {
             clickHereToSignup.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Log.e("ClickHereToSignUp Clicked","true");
+                    android.util.Log.e("ClickHereToSignUp Clicked", "true");
 
-                    Intent signup = new Intent(getActivity(),SignUpView.class);
+                    Intent signup = new Intent(getActivity(), SignUpView.class);
                     getActivity().startActivity(signup);
                     getActivity().finish();
 
@@ -98,8 +97,8 @@ public final class TestFragment extends Fragment {
             loginButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Log.e("Login Clicked","true");
-                    Intent signIn = new Intent(getActivity(),SignInView.class);
+                    android.util.Log.e("Login Clicked", "true");
+                    Intent signIn = new Intent(getActivity(), SignInView.class);
                     getActivity().startActivity(signIn);
                     coverFlowChecked();
                     getActivity().finish();
@@ -111,7 +110,6 @@ public final class TestFragment extends Fragment {
 
 
         }
-
 
 
         return mainlayout;

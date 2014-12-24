@@ -30,19 +30,18 @@ public class FeedVideoView extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         setContentView(R.layout.video_view);
-        this.overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_right);
+        this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
         Bundle bundle = getIntent().getExtras();
-        if(bundle!=null)
-        {
-           url = bundle.getString("url");
+        if (bundle != null) {
+            url = bundle.getString("url");
         }
         // Insert your Video URL
 //        String VideoURL = "http://www.androidbegin.com/tutorial/AndroidCommercial.3gp";
 
-        if(Utils.isConnectingToInternet(this)) {
+        if (Utils.isConnectingToInternet(this)) {
 //            try {
 //
-                 videoview = (VideoView) findViewById(R.id.videoview);
+            videoview = (VideoView) findViewById(R.id.videoview);
 //                MediaController mediaController = new MediaController(this);
 //                mediaController.setAnchorView(videoView);
 //                Uri video = Uri.parse(url);
@@ -55,52 +54,49 @@ public class FeedVideoView extends Activity {
 //            }
 
 
+            // Execute StreamVideo AsyncTask
 
-                // Execute StreamVideo AsyncTask
+            // Create a progressbar
+            pDialog = new ProgressDialog(this);
+            // Set progressbar title
+            pDialog.setTitle("Streaming Video");
+            // Set progressbar message
+            pDialog.setMessage("Buffering...");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(false);
+            // Show progressbar
+            pDialog.show();
 
-                // Create a progressbar
-                pDialog = new ProgressDialog(this);
-                // Set progressbar title
-                pDialog.setTitle("Streaming Video");
-                // Set progressbar message
-                pDialog.setMessage("Buffering...");
-                pDialog.setIndeterminate(false);
-                pDialog.setCancelable(false);
-                // Show progressbar
-                pDialog.show();
+            try {
+                // Start the MediaController
+                MediaController mediacontroller = new MediaController(
+                        this);
+                mediacontroller.setAnchorView(videoview);
+                // Get the URL from String VideoURL
+                Uri video = Uri.parse(url + ".mp4");
+                videoview.setMediaController(mediacontroller);
+                videoview.setVideoURI(video);
 
-                try {
-                    // Start the MediaController
-                    MediaController mediacontroller = new MediaController(
-                            this);
-                    mediacontroller.setAnchorView(videoview);
-                    // Get the URL from String VideoURL
-                    Uri video = Uri.parse(url+".mp4");
-                    videoview.setMediaController(mediacontroller);
-                    videoview.setVideoURI(video);
+            } catch (Exception e) {
+                this.finish();
+                Toast.makeText(this, "Error connecting", Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+            }
 
-                } catch (Exception e) {
-                    this.finish();
-                    Toast.makeText(this, "Error connecting", Toast.LENGTH_SHORT).show();
-                    e.printStackTrace();
+            videoview.requestFocus();
+            videoview.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                // Close the progress bar and play the video
+                public void onPrepared(MediaPlayer mp) {
+                    pDialog.dismiss();
+                    videoview.start();
                 }
-
-                videoview.requestFocus();
-                videoview.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                    // Close the progress bar and play the video
-                    public void onPrepared(MediaPlayer mp) {
-                        pDialog.dismiss();
-                        videoview.start();
-                    }
-                });
+            });
 
 
-
-        }
-        else
-        {
+        } else {
             Utils.fromSignalDialog(this, AlertMessage.connectionError);
-            this.finish();        }
+            this.finish();
+        }
     }
 
 }

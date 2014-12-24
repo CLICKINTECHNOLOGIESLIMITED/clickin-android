@@ -1,6 +1,5 @@
 package com.sourcefuse.clickinandroid.fragment;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,20 +17,22 @@ import com.sourcefuse.clickinapp.R;
  */
 public class FragmentCustomTab extends Fragment {
 
-    Context context ;
+    Context context;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-          View rootview ;
-          rootview = inflater.inflate(R.layout.custom_layout ,container,false);
-        FrameLayout layout = (FrameLayout)rootview.findViewById(R.id.framelayout);
+        View rootview;
+        rootview = inflater.inflate(R.layout.custom_layout, container, false);
+        FrameLayout layout = (FrameLayout) rootview.findViewById(R.id.framelayout);
         layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), ViewTradeCart.class);
+                intent.putExtra("ForCounter", false);
                 FragmentCustomTab.this.startActivity(intent);
                 //((Activity) context).overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
-                (getActivity()).overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+                getActivity().overridePendingTransition(R.anim.slide_in_up, R.anim.stay);
 
             }
         });
@@ -48,5 +49,5 @@ public class FragmentCustomTab extends Fragment {
 //
 //    }
 
-    }
+}
 

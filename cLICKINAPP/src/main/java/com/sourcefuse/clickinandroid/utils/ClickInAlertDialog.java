@@ -15,7 +15,7 @@ import com.sourcefuse.clickinapp.R;
 public class ClickInAlertDialog {
 
 
-    public static void clickInAlert(Activity contex,String msg,String tittleText,Boolean tittle) {
+    public static void clickInAlert(Activity contex, String msg, String tittleText, Boolean tittle) {
 
         // custom dialog
         final Dialog dialog = new Dialog(contex);
@@ -24,12 +24,12 @@ public class ClickInAlertDialog {
         dialog.setContentView(R.layout.alert_network_error);
         dialog.setCancelable(false);
         TextView text = (TextView) dialog.findViewById(R.id.text);
-        if(tittle) {
+        if (tittle) {
             TextView alertTittle = (TextView) dialog.findViewById(R.id.alert_tittle);
             alertTittle.setVisibility(View.VISIBLE);
             alertTittle.setText(tittleText);
         }
-       text.setText(msg);
+        text.setText(msg);
         Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
         // if button is clicked, close the custom dialog
         dialogButton.setOnClickListener(new View.OnClickListener() {
@@ -40,8 +40,6 @@ public class ClickInAlertDialog {
         });
         dialog.show();
     }
-
-
 
 
 }

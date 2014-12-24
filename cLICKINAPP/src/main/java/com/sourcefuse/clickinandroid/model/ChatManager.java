@@ -19,36 +19,28 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Observable;
 
 import de.greenrobot.event.EventBus;
 
-public class ChatManager  {
+public class ChatManager {
     private static final String TAG = ChatManager.class.getSimpleName();
-    StringEntity se = null;
-    AsyncHttpClient client;
-    private AuthManager authManager;
-    private ChatManager chatManager;
     public ArrayList<CardBean> tabArray = new ArrayList<CardBean>();
-    private CardBean cardBean = null;
-
-    private ChatRecordBeen chatRecordBeen = null;
-
-    private int myTotalClick = 0;
-    private String relationshipId;
-
-    private int partnerTotalClick =0 ;
-
     public ArrayList<ChatMessageBody> chatListFromServer = new ArrayList<ChatMessageBody>();
     public ArrayList<ChatMessageBody> refreshivechatList = new ArrayList<ChatMessageBody>();
     public HashMap<String, ArrayList<CardBean>> categories = new HashMap<String, ArrayList<CardBean>>();
-    ArrayList<ArrayList<CardBean>> lists = new ArrayList<ArrayList<CardBean>>();
     public ArrayList<CardBean> all = new ArrayList<CardBean>();
-
-
     //this list to maintain current chat list to view in chat record view
-   public ArrayList<ChatMessageBody>chatMessageList=new ArrayList<ChatMessageBody>();
-
+    public ArrayList<ChatMessageBody> chatMessageList = new ArrayList<ChatMessageBody>();
+    StringEntity se = null;
+    AsyncHttpClient client;
+    ArrayList<ArrayList<CardBean>> lists = new ArrayList<ArrayList<CardBean>>();
+    private AuthManager authManager;
+    private ChatManager chatManager;
+    private CardBean cardBean = null;
+    private ChatRecordBeen chatRecordBeen = null;
+    private int myTotalClick = 0;
+    private String relationshipId;
+    private int partnerTotalClick = 0;
 
     public String getRelationshipId() {
         return relationshipId;
@@ -65,7 +57,7 @@ public class ChatManager  {
 
     public void setMyTotalClick(int myTotalClick) {
 
-        myTotalClick = getMyTotalClick() +myTotalClick;
+        myTotalClick = getMyTotalClick() + myTotalClick;
         this.myTotalClick = myTotalClick;
     }
 
@@ -74,18 +66,12 @@ public class ChatManager  {
     }
 
     public void setPartnerTotalClick(int partnerTotalClick) {
-        partnerTotalClick = getPartnerTotalClick() +partnerTotalClick;
+        partnerTotalClick = getPartnerTotalClick() + partnerTotalClick;
         this.partnerTotalClick = partnerTotalClick;
     }
 
 
-
-
-
-
-
-
-    public void fetchChatRecord(String relationshipId, String phone,String usertoken,String chatId) {
+    public void fetchChatRecord(String relationshipId, String phone, String usertoken, String chatId) {
 
 
         chatManager = ModelManager.getInstance().getChatManager();
@@ -95,14 +81,14 @@ public class ChatManager  {
             userInputDetails.put("phone_no", phone);
             userInputDetails.put("user_token", usertoken);
             userInputDetails.put("relationship_id", relationshipId);
-            if(!Utils.isEmptyString(chatId)){
+            if (!Utils.isEmptyString(chatId)) {
                 userInputDetails.put("last_chat_id", chatId);
             }
 
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            Log.e(TAG, "userInputDetails-->" + userInputDetails);
+            android.util.Log.e(TAG, "userInputDetails-->" + userInputDetails);
         } catch (Exception e1) {
             e1.printStackTrace();
         }
@@ -114,7 +100,7 @@ public class ChatManager  {
                                           JSONObject errorResponse) {
                         super.onFailure(statusCode, e, errorResponse);
                         if (errorResponse != null) {
-                            Log.e("errorResponse", "->" + errorResponse);
+                            android.util.Log.e("errorResponse", "->" + errorResponse);
                             EventBus.getDefault().post("FecthChat False");
                         } else {
                             EventBus.getDefault().post("FecthChat Network Error");
@@ -127,65 +113,85 @@ public class ChatManager  {
                                           JSONObject response) {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
+                        ChatMessageBody temp = null;
                         try {
-                            Log.e(TAG,"response FecthChat ->" + response);
+                            android.util.Log.e(TAG, "response FecthChat ->" + response);
                             state = response.getBoolean("success");
                             if (state) {
-                            
+
                                 refreshivechatList.clear();
                                 Utils.clickCustomLog(response.toString());
                                 JSONArray list = response.getJSONArray("chats");
-                                for (int i = 0; i < list.length(); i++) {
-                                    ChatMessageBody temp = new ChatMessageBody();
-                                    JSONObject data = list.getJSONObject(i);
-                                    JSONObject chatObj = data.getJSONObject("Chat");
 
-                                   // if (chatObj.has("receiverQB_id"))
-                                     //   temp.re(chatObj.getString("receiverQB_id"));
-                                    if (chatObj.has("sharedMessage"))
-                                       temp.sharedMessage=chatObj.getString("sharedMessage");
-                                    if (chatObj.has("video_thumb"))
-                                        temp.video_thumb=chatObj.getString("video_thumb");
-                                    if (chatObj.has("QB_id"))
-                                        temp.senderQbId=chatObj.getString("QB_id");
-                                    if (chatObj.has("senderUserToken"))
-                                        temp.senderUserToken = chatObj.getString("senderUserToken");
-                                    if (chatObj.has("type"))
-                                        temp.chatType = Integer.parseInt(chatObj.getString("type"));
-                                    if (chatObj.has("message"))
-                                       temp.textMsg=chatObj.getString("message");
-                                    if (chatObj.has("content"))
-                                       temp.content_url=chatObj.getString("content");
-                                    if (chatObj.has("relationshipId"))
-                                        temp.relationshipId = chatObj.getString("relationshipId");
-                                    if (chatObj.has("_id"))
-                                        temp._id = chatObj.getString("_id");
-                                    if (chatObj.has("userId"))
-                                        temp.userId = chatObj.getString("userId");
-                                    if (chatObj.has("location_coordinates"))
-                                        temp.location_coordinates = chatObj.getString("location_coordinates");
-                                    if (chatObj.has("clicks")) {
-                                        temp.clicks = chatObj.getString("clicks");
-                                        if (Utils.isEmptyString(temp.clicks))
-                                            temp.clicks = "no";
+                                for (int i = 0; i < list.length(); i++) {
+                                    try {
+                                        temp = new ChatMessageBody();
+                                        JSONObject data = list.getJSONObject(i);
+                                        JSONObject chatObj = data.getJSONObject("Chat");
+
+                                        // if (chatObj.has("receiverQB_id"))
+                                        //   temp.re(chatObj.getString("receiverQB_id"));
+                                        if (chatObj.has("sharedMessage"))
+                                            temp.sharedMessage = chatObj.getString("sharedMessage");
+                                        if (chatObj.has("video_thumb"))
+                                            temp.video_thumb = chatObj.getString("video_thumb");
+                                        if (chatObj.has("QB_id"))
+                                            temp.senderQbId = chatObj.getString("QB_id");
+                                        if (chatObj.has("senderUserToken"))
+                                            temp.senderUserToken = chatObj.getString("senderUserToken");
+                                        if (chatObj.has("type"))
+                                            temp.chatType = Integer.parseInt(chatObj.getString("type"));
+                                        if (chatObj.has("message"))
+                                            temp.textMsg = chatObj.getString("message");
+                                        if (chatObj.has("content"))
+                                            temp.content_url = chatObj.getString("content");
+                                        if (chatObj.has("relationshipId"))
+                                            temp.relationshipId = chatObj.getString("relationshipId");
+                                        if (chatObj.has("_id"))
+                                            temp._id = chatObj.getString("_id");
+                                        if (chatObj.has("userId"))
+                                            temp.userId = chatObj.getString("userId");
+                                        if (chatObj.has("location_coordinates"))
+                                            temp.location_coordinates = chatObj.getString("location_coordinates");
+                                        if (chatObj.has("clicks")) {
+                                            temp.clicks = chatObj.getString("clicks");
+                                            if (Utils.isEmptyString(temp.clicks))
+                                                temp.clicks = "no";
+                                        }
+                                        if (chatObj.has("isDelivered"))
+                                            temp.isDelivered = chatObj.getString("isDelivered");
+                                        if (chatObj.has("imageRatio"))
+                                            temp.imageRatio = chatObj.getString("imageRatio");
+                                        if (chatObj.has("chatId"))
+                                            temp.chatId = chatObj.getString("chatId");
+
+                                        // temp.cardchatObj.getString("cards"));
+                                        if (chatObj.has("sentOn"))
+                                            temp.sentOn = chatObj.getString("sentOn");
+                                        JSONArray cards = chatObj.getJSONArray("cards");
+                                        if (cards != null) {
+                                            temp.card_id = (String) cards.get(0);
+                                            temp.card_heading = (String) cards.get(1);
+                                            temp.card_content = (String) cards.get(2);
+                                            temp.card_url = (String) cards.get(3);
+                                            temp.clicks = (String) cards.get(4);
+                                            temp.card_Accepted_Rejected = (String) cards.get(5);
+                                            temp.card_originator = (String) cards.get(6);
+                                            temp.is_CustomCard = Boolean.valueOf((String) cards.get(7));
+                                            temp.card_DB_ID = (String) cards.get(8);
+                                            temp.card_Played_Countered = (String) cards.get(9);
+                                        }
+                                        refreshivechatList.add(temp);
+                                    } catch (JSONException e) { //specially for cards array
+                                        e.printStackTrace();
+                                        refreshivechatList.add(temp);
                                     }
-                                    if (chatObj.has("isDelivered"))
-                                        temp.isDelivered = chatObj.getString("isDelivered");
-                                    if (chatObj.has("imageRatio"))
-                                        temp.imageRatio = chatObj.getString("imageRatio");
-                                    if (chatObj.has("chatId"))
-                                        temp.chatId = chatObj.getString("chatId");
-                                    if (chatObj.has("cards"))
-                                       // temp.cardchatObj.getString("cards"));
-                                    if (chatObj.has("sentOn"))
-                                        temp.sentOn = chatObj.getString("sentOn");
-                                    refreshivechatList.add(temp);
                                 }
 
-                                chatManager.chatMessageList.addAll(0,refreshivechatList);
+                                chatManager.chatMessageList.addAll(0, refreshivechatList);
 
                                 EventBus.getDefault().post("FecthChat True");
-                            }else{
+                            } else {
                                 EventBus.getDefault().post("FecthChat False");
                             }
 
@@ -208,7 +214,7 @@ public class ChatManager  {
 
             client.addHeader("User-Token", usertoken);
             client.addHeader("Phone-No", phone);
-            Log.e("usertoken-phone_no-othersphone-->", "" + usertoken + "-" + phone);
+            android.util.Log.e("usertoken-phone_no-othersphone-->", "" + usertoken + "-" + phone);
         } catch (Exception e1) {
             e1.printStackTrace();
         }
@@ -235,7 +241,7 @@ public class ChatManager  {
                                   org.apache.http.Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 try {
-                    Log.e("", "response--> " + response);
+                    android.util.Log.e("", "response--> " + response);
                     Utils.clickCustomLog(response.toString());
                     success = response.getBoolean("success");
 
@@ -254,10 +260,9 @@ public class ChatManager  {
 
                             //  lists.add(new ArrayList<CardBean>());
                             categories.put(categoryObj.getString("name"), new ArrayList<CardBean>());
-                            Log.e(TAG,"Catagories Values" +categories);
+                            android.util.Log.e(TAG, "Catagories Values" + categories);
 
                         }
-
 
 
                         JSONArray cardList = response.getJSONArray("cards");
@@ -298,7 +303,7 @@ public class ChatManager  {
 
     }
 
-    public void chatShare(String phone_no, String user_token, String relationshipId, String chatId, String media, String fbAccessToken, String twitterAccessToken, String twitterAccessTokenSecret, String googlePlusAccessToken, String comment,String accepted) {
+    public void chatShare(String phone_no, String user_token, String relationshipId, String chatId, String media, String fbAccessToken, String comment, String accepted) {
         authManager = ModelManager.getInstance().getAuthorizationManager();
         JSONObject userInputDetails = new JSONObject();
         try {
@@ -308,18 +313,17 @@ public class ChatManager  {
             userInputDetails.put("chat_id", chatId);
             userInputDetails.put("media", media);
             userInputDetails.put("fb_access_token", fbAccessToken);
-            userInputDetails.put("twitter_access_token", twitterAccessToken);
+           /* userInputDetails.put("twitter_access_token", twitterAccessToken);
             userInputDetails.put("twitter_access_token_secret", twitterAccessTokenSecret);
-            userInputDetails.put("googleplus_access_token", googlePlusAccessToken);
+            userInputDetails.put("googleplus_access_token", googlePlusAccessToken);*/
             userInputDetails.put("comment", comment);
             userInputDetails.put("accepted", accepted);
-
 
 
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            Log.e(TAG, "ChatShare-->" + userInputDetails);
+            android.util.Log.e(TAG, "ChatShare-->" + userInputDetails);
         } catch (Exception e1) {
             e1.printStackTrace();
         }
@@ -329,6 +333,8 @@ public class ChatManager  {
                     @Override
                     public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
                         super.onFailure(statusCode, e, errorResponse);
+
+                        android.util.Log.e(TAG, "response ChatShare ->" + errorResponse);
                         if (errorResponse != null) {
                             EventBus.getDefault().post("ChatShare False");
                         } else {
@@ -341,7 +347,7 @@ public class ChatManager  {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            Log.e(TAG, "response ChatShare ->" + response);
+                            android.util.Log.e(TAG, "response ChatShare ->" + response);
                             state = response.getBoolean("success");
                             if (state) {
 
@@ -370,7 +376,7 @@ public class ChatManager  {
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            Log.e(TAG, "ShareAction-->" + userInputDetails);
+            android.util.Log.e(TAG, "ShareAction-->" + userInputDetails);
         } catch (Exception e1) {
             e1.printStackTrace();
         }
@@ -392,7 +398,7 @@ public class ChatManager  {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            Log.e(TAG, "response ShareAction ->" + response);
+                            android.util.Log.e(TAG, "response ShareAction ->" + response);
                             state = response.getBoolean("success");
                             if (state) {
 
@@ -417,10 +423,10 @@ public class ChatManager  {
             userInputDetails.put("user_token", user_token);
             userInputDetails.put("title", title);
 
-                    client = new AsyncHttpClient();
+            client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            Log.e(TAG, "ShareCards-->" + userInputDetails);
+            android.util.Log.e(TAG, "ShareCards-->" + userInputDetails);
         } catch (Exception e1) {
             e1.printStackTrace();
         }
@@ -442,7 +448,7 @@ public class ChatManager  {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            Log.e(TAG, "response ShareCards ->" + response);
+                            android.util.Log.e(TAG, "response ShareCards ->" + response);
                             state = response.getBoolean("success");
                             if (state) {
 
@@ -470,7 +476,7 @@ public class ChatManager  {
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            Log.e(TAG, "GetUnReadMessageCount-->" + userInputDetails);
+            android.util.Log.e(TAG, "GetUnReadMessageCount-->" + userInputDetails);
         } catch (Exception e1) {
             e1.printStackTrace();
         }
@@ -492,7 +498,7 @@ public class ChatManager  {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            Log.e(TAG, "response GetUnReadMessageCount ->" + response);
+                            android.util.Log.e(TAG, "response GetUnReadMessageCount ->" + response);
                             state = response.getBoolean("success");
                             if (state) {
 
@@ -521,7 +527,7 @@ public class ChatManager  {
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            Log.e(TAG, "ResetUnReadMessageCount-->" + userInputDetails);
+            android.util.Log.e(TAG, "ResetUnReadMessageCount-->" + userInputDetails);
         } catch (Exception e1) {
             e1.printStackTrace();
         }
@@ -543,7 +549,7 @@ public class ChatManager  {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            Log.e(TAG, "response ResetUnReadMessageCount ->" + response);
+                            android.util.Log.e(TAG, "response ResetUnReadMessageCount ->" + response);
                             state = response.getBoolean("success");
                             if (state) {
 
@@ -570,7 +576,7 @@ public class ChatManager  {
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            Log.e(TAG, "ResetBadgeCount-->" + userInputDetails);
+            android.util.Log.e(TAG, "ResetBadgeCount-->" + userInputDetails);
         } catch (Exception e1) {
             e1.printStackTrace();
         }
@@ -592,7 +598,7 @@ public class ChatManager  {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            Log.e(TAG, "response ResetBadgeCount ->" + response);
+                            android.util.Log.e(TAG, "response ResetBadgeCount ->" + response);
                             state = response.getBoolean("success");
                             if (state) {
 

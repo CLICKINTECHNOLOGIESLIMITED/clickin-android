@@ -1,8 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:geekui="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rl_playitsafe_action"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/rl_playitsafe_action"
     android:background="@drawable/enterdigitmainbg">
 
 
@@ -10,42 +10,40 @@
         android:id="@+id/iv_topicon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_centerHorizontal="true"
         android:background="@drawable/c_header_bg"
+        android:orientation="vertical"
         android:weightSum="2">
 
         <com.sourcefuse.clickinandroid.utils.ClickInTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
             android:layout_gravity="center"
+            android:layout_marginLeft="2dp"
             android:layout_weight="0.8"
             android:gravity="center"
             android:text="PLAY IT"
-            android:layout_centerHorizontal="true"
             android:textColor="@color/screen_header"
             android:textSize="45sp"
-            android:layout_marginLeft="2dp"
             android:textStyle="bold"
 
 
-            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
-            />
+            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
 
         <com.sourcefuse.clickinandroid.utils.ClickInTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
             android:layout_gravity="center"
+            android:layout_marginTop="-28dp"
             android:layout_weight="0.8"
             android:gravity="top"
             android:text="SAFE"
-            android:layout_centerHorizontal="true"
             android:textColor="@color/screen_header"
             android:textSize="67sp"
             android:textStyle="bold"
-            android:layout_marginTop="-28dp"
-            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
-            />
+            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
 
 
     </LinearLayout>
@@ -72,9 +70,9 @@
             android:inputType="textPassword"
             android:padding="10dp"
             android:textColor="@color/black"
-            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
             android:textColorHint="@color/sign_hint"
-            android:textSize="16sp">
+            android:textSize="16sp"
+            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf">
 
             <requestFocus />
         </com.sourcefuse.clickinandroid.utils.ClickInEditBox>
@@ -101,8 +99,8 @@
             android:padding="10dp"
             android:textColor="@color/black"
             android:textColorHint="@color/sign_hint"
-            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
-            android:textSize="16sp"></com.sourcefuse.clickinandroid.utils.ClickInEditBox>
+            android:textSize="16sp"
+            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"></com.sourcefuse.clickinandroid.utils.ClickInEditBox>
 
 
     </RelativeLayout>

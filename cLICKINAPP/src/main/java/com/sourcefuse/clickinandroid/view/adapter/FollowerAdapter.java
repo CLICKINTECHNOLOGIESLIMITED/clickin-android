@@ -1,4 +1,3 @@
-
 package com.sourcefuse.clickinandroid.view.adapter;
 
 import android.app.Activity;
@@ -28,6 +27,7 @@ import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.FollowerList;
 import com.sourcefuse.clickinandroid.view.JumpOtherProfileView;
+import com.sourcefuse.clickinandroid.view.UserProfileView;
 import com.sourcefuse.clickinapp.R;
 import com.squareup.picasso.Picasso;
 
@@ -37,14 +37,11 @@ public class FollowerAdapter extends ArrayAdapter<FollowerFollowingBean> {
     private static final String TAG = FollowerAdapter.class.getSimpleName();
     Context context;
     int layoutResourceId;
-
+    RecordHolder vholder;
+    List<FollowerFollowingBean> item;
     private AuthManager authManager;
     private RelationManager relationManager;
     private ProfileManager profileManager;
-
-    RecordHolder vholder;
-
-    List<FollowerFollowingBean> item;
 
     public FollowerAdapter(Context context, int layoutResourceId,
                            List<FollowerFollowingBean> item1) {
@@ -64,7 +61,6 @@ public class FollowerAdapter extends ArrayAdapter<FollowerFollowingBean> {
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
             row = inflater.inflate(layoutResourceId, parent, false);
             holder = new RecordHolder();
-
 
 
             holder.usr_name = (TextView) row.findViewById(R.id.tv_clickers_name);
@@ -120,7 +116,6 @@ public class FollowerAdapter extends ArrayAdapter<FollowerFollowingBean> {
         }
 
 
-
         if (!Utils.isEmptyString(item.get(position).getAccepted()) && item.get(position).getAccepted().equalsIgnoreCase("true") && item.get(position).getFollowingAccepted().equalsIgnoreCase("true") && item.get(position).getIsFollowing().equalsIgnoreCase("true")) {
 
             holder.reqbtn.setVisibility(View.VISIBLE);
@@ -159,7 +154,7 @@ public class FollowerAdapter extends ArrayAdapter<FollowerFollowingBean> {
 
 
         } else {
-            Log.e(TAG, "DATA=" + item.get(position).getAccepted() + "---" + item.get(position).getIsFollowing() + "---" + item.get(position).getFollowingAccepted());
+            android.util.Log.e(TAG, "DATA=" + item.get(position).getAccepted() + "---" + item.get(position).getIsFollowing() + "---" + item.get(position).getFollowingAccepted());
         }
 
 
@@ -174,45 +169,45 @@ public class FollowerAdapter extends ArrayAdapter<FollowerFollowingBean> {
 
 
                 TextView textView = (TextView) v;
-                Log.e("getAccepted--->", "" + item.get(position).getAccepted());
-                Log.e("getAccepted--->", "" + item.get(position).getFollowingAccepted());
-                Log.e("getAccepted--->", "" + item.get(position).getIsFollowing());
+                android.util.Log.e("getAccepted--->", "" + item.get(position).getAccepted());
+                android.util.Log.e("getAccepted--->", "" + item.get(position).getFollowingAccepted());
+                android.util.Log.e("getAccepted--->", "" + item.get(position).getIsFollowing());
 
 /* condition for following and open unfollow dialog */
                 if (!Utils.isEmptyString(item.get(position).getAccepted()) && item.get(position).getAccepted().equalsIgnoreCase("true") && item.get(position).getFollowingAccepted().equalsIgnoreCase("true") && item.get(position).getIsFollowing().equalsIgnoreCase("true")) {
 
-                    Log.e("un follow----->","un follow----->");
+                    android.util.Log.e("un follow----->", "un follow----->");
 
                     unfallowDialog(position);
 
                 } else if (!Utils.isEmptyString(item.get(position).getAccepted()) && item.get(position).getAccepted().equalsIgnoreCase("true")
                         && item.get(position).getFollowingAccepted().equalsIgnoreCase("true") && item.get(position).getIsFollowing().equalsIgnoreCase("false")) {
 /* condition for requested  */
-                    Log.e("no change----->","no change----->");
+                    android.util.Log.e("no change----->", "no change----->");
                 } else if (!Utils.isEmptyString(item.get(position).getAccepted()) && item.get(position).getAccepted().equalsIgnoreCase("true") && item.get(position).getFollowingAccepted().equalsIgnoreCase("false") && item.get(position).getIsFollowing().equalsIgnoreCase("true")) {
-                    Log.e("no change----->","no change----->");
+                    android.util.Log.e("no change----->", "no change----->");
 /* condition for requested  */
                 } else if (!Utils.isEmptyString(item.get(position).getAccepted()) && item.get(position).getAccepted().equalsIgnoreCase("false") && item.get(position).getFollowingAccepted().equalsIgnoreCase("true") && item.get(position).getIsFollowing().equalsIgnoreCase("false")) {
 
-                    Log.e("requested----->","requested----->");
+                    android.util.Log.e("requested----->", "requested----->");
 /* condition for folloe change it to requested  */
                     textView.setBackgroundResource(R.drawable.requested_btn);
                     v.setBackgroundResource(R.drawable.requested_btn);
                     relationManager.followUser(item.get(position).getPhoneNo(), authManager.getPhoneNo(), authManager.getUsrToken());
                     item.get(position).setIsFollowing("true");
                     notifyDataSetChanged();
-                    Log.e(TAG, "Click - holder.requested_grey=" + item.get(position).getIsFollowing());
+                    android.util.Log.e(TAG, "Click - holder.requested_grey=" + item.get(position).getIsFollowing());
                     FollowerList.mListchangeVariable_flag = true;
 
                 } else if (!Utils.isEmptyString(item.get(position).getAccepted()) && item.get(position).getAccepted().equalsIgnoreCase("true") && item.get(position).getFollowingAccepted().equalsIgnoreCase("false") && item.get(position).getIsFollowing().equalsIgnoreCase("false")) {
 /* condition for folloe change it to requested  */
-                    Log.e("requested----->","requested----->");
+                    android.util.Log.e("requested----->", "requested----->");
                     textView.setBackgroundResource(R.drawable.requested_btn);
                     v.setBackgroundResource(R.drawable.requested_btn);
                     relationManager.followUser(item.get(position).getPhoneNo(), authManager.getPhoneNo(), authManager.getUsrToken());
                     item.get(position).setIsFollowing("true");
                     notifyDataSetChanged();
-                    Log.e(TAG, "Click - holder.requested_grey=" + item.get(position).getIsFollowing());
+                    android.util.Log.e(TAG, "Click - holder.requested_grey=" + item.get(position).getIsFollowing());
                     FollowerList.mListchangeVariable_flag = true;
                 }
 
@@ -224,7 +219,7 @@ public class FollowerAdapter extends ArrayAdapter<FollowerFollowingBean> {
             public void onClick(View v) {
 
       /* condition for accept request   */
-
+                Utils.launchBarDialog((FollowerList)getContext());
                 FollowerList.mListchangeVariable_flag = true;
                 item.get(position).setAccepted("false");
                 item.get(position).setFollowingAccepted("true");
@@ -244,7 +239,7 @@ public class FollowerAdapter extends ArrayAdapter<FollowerFollowingBean> {
                 profileManager.followRequesed.remove(position);
 
 
-                Log.e(TAG, "Click - holder.Accept=" + item.get(position).getAccepted());
+                android.util.Log.e(TAG, "Click - holder.Accept=" + item.get(position).getAccepted());
             }
         });
         rholder.resBtn.setTag(position);
@@ -256,13 +251,13 @@ public class FollowerAdapter extends ArrayAdapter<FollowerFollowingBean> {
                 authManager = ModelManager.getInstance().getAuthorizationManager();
 
                 relationManager = ModelManager.getInstance().getRelationManager();
-                Log.e("name--->", "" + profileManager.followers.get(position).getPhoneNo());
-                Log.e("getrFollowerId--->", "" + profileManager.followers.get(position).getrFollowerId());
+                android.util.Log.e("name--->", "" + profileManager.followers.get(position).getPhoneNo());
+                android.util.Log.e("getrFollowerId--->", "" + profileManager.followers.get(position).getrFollowerId());
                 relationManager.followupdatestatus(profileManager.followers.get(position).getrFollowerId(), "false", authManager.getPhoneNo(), authManager.getUsrToken());
                 profileManager.followRequesed.remove(position);
                 profileManager.followers.remove(position);
                /* notifyDataSetChanged();*/
-                Log.e(TAG, "Click - holder.resect");
+                android.util.Log.e(TAG, "Click - holder.resect");
                 FollowerList.mListchangeVariable_flag = true;
             }
         });
@@ -281,24 +276,13 @@ public class FollowerAdapter extends ArrayAdapter<FollowerFollowingBean> {
                 intent.putExtra("phNumber", item.get(position).getPhoneNo());
                 ((Activity) context).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
                 context.startActivity(intent);
-                Log.e("", "holder.usrimg");
+                android.util.Log.e("", "holder.usrimg");
 
             }
         });
 
 
         return row;
-    }
-
-    static class RecordHolder {
-        LinearLayout rlResectAccept;
-        TextView usr_name, hfollowersRequest, hfollowers;
-        ImageView usrimg, divider_;
-        TextView reqbtn;
-        Button resBtn;
-        Button accBtn;
-
-
     }
 
     // Akshit Code Starts to show pop-up for unfollowing friend
@@ -334,7 +318,7 @@ public class FollowerAdapter extends ArrayAdapter<FollowerFollowingBean> {
                 item.get(position).setIsFollowing("false");
                 item.get(position).setFollowingAccepted("false");
                 //FollowerList.adapter.notifyDataSetChanged();
-                Log.e(TAG, "Click - holder.follow=" + item.get(position).getIsFollowing());
+                android.util.Log.e(TAG, "Click - holder.follow=" + item.get(position).getIsFollowing());
                 dialog.dismiss();
 
                 FollowerList.mListchangeVariable_flag = true;
@@ -351,6 +335,17 @@ public class FollowerAdapter extends ArrayAdapter<FollowerFollowingBean> {
             }
         });
         dialog.show();
+    }
+
+    static class RecordHolder {
+        LinearLayout rlResectAccept;
+        TextView usr_name, hfollowersRequest, hfollowers;
+        ImageView usrimg, divider_;
+        TextView reqbtn;
+        Button resBtn;
+        Button accBtn;
+
+
     }
 // Ends
 

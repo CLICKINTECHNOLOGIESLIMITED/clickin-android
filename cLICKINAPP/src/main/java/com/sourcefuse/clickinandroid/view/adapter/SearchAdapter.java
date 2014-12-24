@@ -24,10 +24,10 @@ import java.util.List;
 public class SearchAdapter extends ArrayAdapter<FetchUsersByNameBean> {
     Context context;
     int layoutResourceId;
-      List<FetchUsersByNameBean> item;
+    List<FetchUsersByNameBean> item;
 
     public SearchAdapter(Context context, int layoutResourceId,
-                           List<FetchUsersByNameBean> item1) {
+                         List<FetchUsersByNameBean> item1) {
         super(context, layoutResourceId, item1);
         this.layoutResourceId = layoutResourceId;
         this.context = context;
@@ -56,40 +56,36 @@ public class SearchAdapter extends ArrayAdapter<FetchUsersByNameBean> {
         }
 
         RecordHolder rholder = (RecordHolder) row.getTag();
-        if(!Utils.isEmptyString(item.get(position).getCity()) && !Utils.isEmptyString(item.get(position).getCountry())) {
-            holder.user_address.setText(item.get(position).getCity()+","+item.get(position).getCountry());
-              Log.e("in 1 --->","in 1 --->");
-        }else if (Utils.isEmptyString(item.get(position).getCity())) {
+        if (!Utils.isEmptyString(item.get(position).getCity()) && !Utils.isEmptyString(item.get(position).getCountry())) {
+            holder.user_address.setText(item.get(position).getCity() + "," + item.get(position).getCountry());
+            android.util.Log.e("in 1 --->", "in 1 --->");
+        } else if (Utils.isEmptyString(item.get(position).getCity())) {
             holder.user_address.setText(item.get(position).getCity());
-              Log.e("in 2 --->","in 2 --->");
-              Log.e("name--->",""+item.get(position).getCity());
-        }else if (Utils.isEmptyString(item.get(position).getCountry())) {
+            android.util.Log.e("in 2 --->", "in 2 --->");
+            android.util.Log.e("name--->", "" + item.get(position).getCity());
+        } else if (Utils.isEmptyString(item.get(position).getCountry())) {
             holder.user_address.setText(item.get(position).getCountry());
-              Log.e("in 3 --->","in 3 --->");
-              Log.e("name--->",""+item.get(position).getCountry());
-        }else{
-              Log.e("in final --->","in final --->");
+            android.util.Log.e("in 3 --->", "in 3 --->");
+            android.util.Log.e("name--->", "" + item.get(position).getCountry());
+        } else {
+            android.util.Log.e("in final --->", "in final --->");
         }
 
         rholder.usr_name.setText(item.get(position).getName());
-        if(!item.get(position).getUserPic().equalsIgnoreCase("")) {
+        if (!Utils.isEmptyString(item.get(position).getUserPic()) && !item.get(position).getUserPic().equalsIgnoreCase("")) {
             try {
                 Picasso.with(context).load(item.get(position).getUserPic())
                         .skipMemoryCache()
                         .error(R.drawable.male_user)
                         .into(rholder.usrimg);
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 holder.usrimg.setImageResource(R.drawable.male_user);
             }
-        }
-        else
-        {
+        } else {
             holder.usrimg.setImageResource(R.drawable.male_user);
         }
 
-        if((item.size()-1) == position)
+        if ((item.size() - 1) == position)
             row.findViewById(R.id.divider).setVisibility(View.GONE);
         else
             row.findViewById(R.id.divider).setVisibility(View.VISIBLE);
@@ -98,7 +94,7 @@ public class SearchAdapter extends ArrayAdapter<FetchUsersByNameBean> {
     }
 
     static class RecordHolder {
-        TextView usr_name,user_address;
+        TextView usr_name, user_address;
         ImageView usrimg;
 
 

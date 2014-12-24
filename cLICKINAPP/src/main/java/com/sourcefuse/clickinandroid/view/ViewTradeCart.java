@@ -1,11 +1,14 @@
 package com.sourcefuse.clickinandroid.view;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -13,12 +16,15 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.sourcefuse.clickinandroid.model.AuthManager;
+import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinandroid.utils.Utils;
@@ -27,20 +33,21 @@ import com.sourcefuse.clickinapp.R;
 /**
  * Created by prafull on 29/9/14.
  */
-public class ViewTradeCart extends Activity implements View.OnClickListener
-{
-    TextWatcher textWatcher ;
-    ImageView mback ,btnPlay;
-    EditText card_text;
-    TextView trd_clicks_top,trd_clicks_bottom;
-    TextView trone,trtwo,trthree,trfour,trfive,tv_about_message;
-    RelativeLayout layout ;
-    String clicks,cardTitle,card_id;
-    String url ;
+public class ViewTradeCart extends Activity implements View.OnClickListener {
     private static final String TAG = "ViewTradeCart";
-    Context context ;
-
+    TextWatcher textWatcher;
+    ImageView mback, btnPlay;
+    EditText card_text;
+    TextView trd_clicks_top, trd_clicks_bottom;
+    TextView trone, trtwo, trthree, trfour, trfive, tv_about_message;
+    RelativeLayout layout;
+    String clicks, cardTitle, card_id = null;
+    String url;
+    Context context;
+    String card_originator;
     boolean forCounter = false;
+    private Dialog dialog;
+    private AuthManager authManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +56,12 @@ public class ViewTradeCart extends Activity implements View.OnClickListener
         setContentView(R.layout.view_tradecart);
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        layout = (RelativeLayout)findViewById(R.id.rr_send);
+        layout = (RelativeLayout) findViewById(R.id.rr_send);
 
+        authManager = ModelManager.getInstance().getAuthorizationManager();
+        ((TextView) findViewById(R.id.textView_clicks)).setText(authManager.ourClicks);
 
-        mback = (ImageView)findViewById(R.id.m_back);
+        mback = (ImageView) findViewById(R.id.m_back);
         mback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,15 +89,15 @@ public class ViewTradeCart extends Activity implements View.OnClickListener
 
 //ends
 
-        trone = (TextView)findViewById(R.id.btn_one);
-        trtwo = (TextView)findViewById(R.id.btn_two);
-        trthree = (TextView)findViewById(R.id.btn_three);
-        trfour = (TextView)findViewById(R.id.btn_four);
-        trfive = (TextView)findViewById(R.id.btn_five);
-        tv_about_message = (TextView)findViewById(R.id.custom_card_msg_t);
-        card_text=(EditText)findViewById(R.id.card_text12);
-        trd_clicks_top=(TextView)findViewById(R.id.trd_clicks_top);
-        trd_clicks_bottom=(TextView)findViewById(R.id.trd_clicks_bottom);
+        trone = (TextView) findViewById(R.id.btn_one);
+        trtwo = (TextView) findViewById(R.id.btn_two);
+        trthree = (TextView) findViewById(R.id.btn_three);
+        trfour = (TextView) findViewById(R.id.btn_four);
+        trfive = (TextView) findViewById(R.id.btn_five);
+        tv_about_message = (TextView) findViewById(R.id.custom_card_msg_t);
+        card_text = (EditText) findViewById(R.id.card_text12);
+        trd_clicks_top = (TextView) findViewById(R.id.trd_clicks_top);
+        trd_clicks_bottom = (TextView) findViewById(R.id.trd_clicks_bottom);
 
         trone.setOnClickListener(this);
         trtwo.setOnClickListener(this);
@@ -98,40 +107,59 @@ public class ViewTradeCart extends Activity implements View.OnClickListener
         card_text.setOnClickListener(this);
 
 
-        btnPlay = (ImageView)findViewById(R.id.btn_play);
+        btnPlay = (ImageView) findViewById(R.id.btn_play);
         btnPlay.setOnClickListener(this);
 
-            try {
-                Intent intent = getIntent();
-                if (null != intent) {
-                    forCounter = intent.getExtras().getBoolean("ForCounter");
-                    if (forCounter) {
-                        card_text.setVisibility(View.GONE);
-                        trd_clicks_bottom.setText(intent.getStringExtra("cardClicks"));
-                        trd_clicks_top.setText(intent.getStringExtra("cardClicks"));
-                        tv_about_message.setText("HOW MANY CLICKS DO YOU WANT FOR IT?");
-                        cardTitle = intent.getStringExtra("Title");
-                        Log.e(TAG,""+cardTitle);
-                        card_id = intent.getStringExtra("card_id");
-                        ((TextView)findViewById(R.id.card_heading)).setVisibility(View.VISIBLE);
-                        ((TextView)findViewById(R.id.card_heading)).setText(cardTitle);
-                        url = intent.getStringExtra("Url");
-                        card_text.setText(cardTitle);
-                    }else{
-                        card_text.setVisibility(View.VISIBLE);
-                        ((TextView)findViewById(R.id.card_heading)).setVisibility(View.GONE);
-                    }
-                } else {
-                    Log.e(TAG, "Value in intent in null");
+
+        AuthManager authManager = ModelManager.getInstance().getAuthorizationManager();
+        Intent intent = getIntent();
+        if (null != intent) {
+            forCounter = intent.getExtras().getBoolean("ForCounter");
+            if (forCounter) {
+
+                ((ImageView) findViewById(R.id.trade_image)).setImageResource(R.drawable.c_pink_counter);//akshit code
+                android.util.Log.e("Values Of Clicks","Clicks " +intent.getStringExtra("card_clicks"));
+
+                clicks = intent.getStringExtra("card_clicks");
+
+                if(clicks.equalsIgnoreCase("5"))//akshit code if th clicks are 5
+                {
+                    trd_clicks_bottom.setText("05");
+                    trd_clicks_top.setText("05");
+
+                }else {
+                    trd_clicks_bottom.setText(intent.getStringExtra("card_clicks"));
+                    trd_clicks_top.setText(intent.getStringExtra("card_clicks"));
                 }
-                }catch (Exception e){
-                e.printStackTrace();
+
+                card_id = intent.getStringExtra("card_id");
+                cardTitle = intent.getStringExtra("Title");
+
+                card_text.setBackground(getResources().getDrawable(R.color.transparent));//akshit code
+                card_text.setTextColor(Color.WHITE);//akshit code
+                card_text.setInputType(InputType.TYPE_NULL);//akshit code
+                card_text.setHorizontallyScrolling(false);//akshit code
+                card_text.setSingleLine(false);//akshit code
+                card_text.setLines(5);//akshit code
+                card_text.setTextSize(25);//akshit code
+                card_text.setText(cardTitle);
+
+                card_originator = intent.getExtras().getString("card_originator");
+                String msg;
+                if (card_originator.equalsIgnoreCase(authManager.getUserId())) {
+                    msg = "HOW MANY CLICKS ARE YOU WILLING TO OFFER?";
+                } else {
+                    msg = "HOW MANY CLICKS DO YOU WANT FOR IT?";
+                }
+                tv_about_message.setText(msg);
+
             }
 
+        } else {
+            android.util.Log.e(TAG, "Value in intent in null");
+        }
 
 
-
-        card_text.setMaxLines(5);
         card_text.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
@@ -167,12 +195,9 @@ public class ViewTradeCart extends Activity implements View.OnClickListener
     }
 
 
-
-
     @Override
     public void onClick(View view) {
-        switch (view.getId())
-        {
+        switch (view.getId()) {
 
             case R.id.btn_one:
 
@@ -231,42 +256,56 @@ public class ViewTradeCart extends Activity implements View.OnClickListener
                 trd_clicks_top.setText("25");
                 break;
             case R.id.btn_play:
+                AuthManager authManager = ModelManager.getInstance().getAuthorizationManager();
                 String text = card_text.getText().toString();
-                if (trd_clicks_top.getText().equals(" 0") && trd_clicks_bottom.getText().equals("0 "))
-                {
+                if (trd_clicks_top.getText().equals(" 0") && trd_clicks_bottom.getText().equals("0 ")) {
                     Utils.fromSignalDialog(this, AlertMessage.selectClicks);
-                }else if((text == null || text.equalsIgnoreCase("null")
+                } else if ((text == null || text.equalsIgnoreCase("null")
                         || text.equalsIgnoreCase("") || text.length() < 1)) {
                     Utils.fromSignalDialog(this, AlertMessage.enterCustomCardtext);
 
+                } else if (authManager.ourClicks.startsWith("-")) {
+                    Utils.fromSignalDialog(ViewTradeCart.this, "You don't have enough clicks to play this card");
+                    //isClickIsEnough(ViewTradeCart.this, "You don't have enough clicks to play this card");
+                } else if (authManager.ourClicks.startsWith("+0")) {
+                    int tempOurClicks = Integer.parseInt(authManager.ourClicks.substring(2));
+                    int tempclicks = 0;
+                    if (clicks.equalsIgnoreCase("05")) {
+                        tempclicks = 5;
+                    }
+                    tempclicks = Integer.parseInt(clicks);
+                    if (tempclicks > tempOurClicks)
+                        Utils.fromSignalDialog(ViewTradeCart.this, "You don't have enough clicks to play this card");
+                    // isClickIsEnough(ViewTradeCart.this, "You don't have enough clicks to play this card");
+
+                } else {
+                    cardTitle = card_text.getText().toString();
+
+                    Intent i = new Intent();
+                    i.setAction("CARD");
+                    i.putExtra("FromCard", true);
+                    if (forCounter) {
+                        i.putExtra("isCounter", true);
+                        i.putExtra("card_id", card_id);
+                        i.putExtra("card_Accepted_Rejected", "countered");
+                        i.putExtra("card_originator", card_originator);
+                    } else {
+                        i.putExtra("isCounter", false);
+                        i.putExtra("card_Accepted_Rejected", "nil");
+                    }
+                    i.putExtra("played_Countered", "playing");
+                    i.putExtra("is_CustomCard", true);
+                    i.putExtra("card_url", "");
+                    i.putExtra("card_clicks", clicks);
+                    i.putExtra("Title", cardTitle);
+                    i.setClass(this, ChatRecordView.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(i);
+                    overridePendingTransition(0, R.anim.slide_out_finish_up);//akshit code
+
                 }
 
-                else {
-                   cardTitle = card_text.getText().toString();
-                   Intent i=new Intent();
-                   i.setAction("CARD");
-                   i.putExtra("FromCard",true);
-                   if(forCounter){
-                       i.putExtra("isCounter",true);
-                       i.putExtra("card_id",card_id);
-                       i.putExtra("Title",cardTitle);
-                       i.putExtra("is_CustomCard","true");
-                       i.putExtra("card_url",url);
-                       i.putExtra("card_clicks",clicks);
-                   }else{
-                       i.putExtra("isCounter",false);
-                       i.putExtra("card_id","");
-                       i.putExtra("is_CustomCard","true");
-                       i.putExtra("Title",cardTitle);
-                       i.putExtra("card_url",url);
-                       i.putExtra("card_clicks",clicks);
-                   }
-                   i.setClass(this,ChatRecordView.class);
-                   i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                   i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                   startActivity(i);
-
-                }
             case R.id.card_text12:
                 card_text.setCursorVisible(true);
                 card_text.requestFocus();
@@ -275,7 +314,32 @@ public class ViewTradeCart extends Activity implements View.OnClickListener
         }
 
 
-           }
+    }
+
+    //akshit code starts
+    public void isClickIsEnough(Activity activity, String msgStrI) {
+
+        dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.setContentView(R.layout.alert_check_dialogs);
+        dialog.setCancelable(false);
+        TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
+        msgI.setText(msgStrI);
+
+
+        Button dismiss = (Button) dialog.findViewById(R.id.coolio);
+        dismiss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                dialog.dismiss();
+//                finish();
+//
+            }
+        });
+        dialog.show();
+    }
+
 
     @Override
     public void onBackPressed() {

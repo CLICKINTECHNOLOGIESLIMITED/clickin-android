@@ -3,7 +3,7 @@
 
     <declare-styleable name="MySwitch">
         <!-- Drawable to use as the "thumb" that switches back and forth. -->
-        <attr name="thumb"  format="reference"/>
+        <attr name="thumb" format="reference" />
         <!-- Drawable to use as the "track" that the switch thumb slides within. -->
         <attr name="track" format="reference" />
         <!-- Text to use when the switch is in the checked/"on" state. -->
@@ -35,7 +35,7 @@
         <!-- Minimum space between the switch and caption text -->
         <attr name="switchPadding" format="dimension" />
 
-        <attr name="orientation" >
+        <attr name="orientation">
             <!-- the switch moves only on the x-axis(horizontally) -->
             <enum name="horizontal" value="1" />
             <!-- the switch moves only on the y-axis(vertically) -->
@@ -45,22 +45,22 @@
         <!-- the track drawable will be drawn on top of these background. So if
              these back grounds were to be visible, the track has to have transparency -->
         <!-- The background when left side of the switch is visible -->
-        <attr name="leftBackground" format="reference"/>
+        <attr name="leftBackground" format="reference" />
 
         <!-- The background when right side of the switch is visible -->
-        <attr name="rightBackground" format="reference"/>
+        <attr name="rightBackground" format="reference" />
 
         <!-- We need a mask drawable to mask the background, then draw the track -->
-        <attr name="backgroundMask" format="reference"/>
+        <attr name="backgroundMask" format="reference" />
     </declare-styleable>
 
     <declare-styleable name="mySwitchTextAppearanceAttrib">
         <!-- Text color. -->
         <attr name="textColor" format="color" />
         <!-- Size of the text. Recommended dimension type for text is "sp" for scaled-pixels (example: 15sp). -->
-        <attr name="textSize"  format="dimension" />
+        <attr name="textSize" format="dimension" />
         <!-- Style (bold, italic, bolditalic) for the text. -->
-        <attr name="textStyle" >
+        <attr name="textStyle">
             <flag name="normal" value="0" />
             <flag name="bold" value="1" />
             <flag name="italic" value="2" />
@@ -86,12 +86,9 @@
     <attr name="mySwitchStyleAttr" format="reference" />
 
 
-
     <declare-styleable name="ClickInTextView">
         <attr name="customFont" format="string" />
     </declare-styleable>
-
-
 
 
 </resources>

@@ -19,21 +19,20 @@
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold"
-            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
-            />
+            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
 
         <!--<com.sourcefuse.clickinandroid.utils.ClickInTextView-->
-            <!--android:id="@+id/alert_msgII"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_below="@+id/alert_msgI"-->
-            <!--android:layout_centerHorizontal="true"-->
-            <!--android:layout_centerInParent="true"-->
-            <!--android:gravity="center_horizontal"-->
-            <!--android:text="just to make sure you didnt \nwrong number us"-->
-            <!--android:textColor="@color/white"-->
-            <!--geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"-->
-            <!--android:textSize="14sp" />-->
+        <!--android:id="@+id/alert_msgII"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/alert_msgI"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_centerInParent="true"-->
+        <!--android:gravity="center_horizontal"-->
+        <!--android:text="just to make sure you didnt \nwrong number us"-->
+        <!--android:textColor="@color/white"-->
+        <!--geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"-->
+        <!--android:textSize="14sp" />-->
 
         <Button
             android:id="@+id/coolio"
@@ -41,12 +40,12 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/alert_msgI"
             android:layout_centerHorizontal="true"
-            android:textSize="20dp"
-            android:text="OK"
-            android:textStyle="bold"
-            android:textColor="@color/white"
             android:layout_marginTop="40dp"
-            android:background="@drawable/blue_btn" />
+            android:background="@drawable/blue_btn"
+            android:text="OK"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:textStyle="bold" />
     </RelativeLayout>
 
 </RelativeLayout>

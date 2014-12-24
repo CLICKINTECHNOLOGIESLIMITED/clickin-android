@@ -17,138 +17,129 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Observable;
 
 import de.greenrobot.event.EventBus;
 
 public class RelationManager {
     private static final String TAG = RelationManager.class.getSimpleName();
-    StringEntity se = null;
-    AsyncHttpClient client;
-    private RelationManager relationManager;
-    // getrelation data
-    private GetrelationshipsBean getRelationShipList = null;
-    private ArrayList<GetrelationshipsBean> getRelationShipArray = null;
-
-    // fetch profile relationship data
-    private ProfileRelationShipBean ProfileRelationShipList = null;
-    private ArrayList<ProfileRelationShipBean> ProfileRelationShipArray = null;
-
-    private ArrayList<GetrelationshipsBean> clickWithData = new ArrayList<GetrelationshipsBean>();
-    private ArrayList<GetrelationshipsBean> clickRequestedData = new ArrayList<GetrelationshipsBean>();
-
-    private ArrayList<FetchUsersByNameBean> fetchUsersByNameArray = null;
-    private FetchUsersByNameBean FetchUsersByNameList = null;
-
     public ArrayList<ProfileRelationShipBean> usrRelationShipData = new ArrayList<ProfileRelationShipBean>();
     public ArrayList<ProfileRelationShipBean> profileRelationShipData = new ArrayList<ProfileRelationShipBean>();
     public ArrayList<GetrelationshipsBean> getrelationshipsData = new ArrayList<GetrelationshipsBean>();
     public ArrayList<FetchUsersByNameBean> fetchUsersByNameData = new ArrayList<FetchUsersByNameBean>();
-
-
     public ArrayList<GetrelationshipsBean> acceptedList = new ArrayList<GetrelationshipsBean>();
     public ArrayList<GetrelationshipsBean> initiatorList = new ArrayList<GetrelationshipsBean>();
     public ArrayList<GetrelationshipsBean> requestedList = new ArrayList<GetrelationshipsBean>();
-
+    public String getPartnerName = "";
+    public String partnerClicks = null;
+    StringEntity se = null;
+    AsyncHttpClient client;
+    String strService = null;
+    private RelationManager relationManager;
+    // getrelation data
+    private GetrelationshipsBean getRelationShipList = null;
+    private ArrayList<GetrelationshipsBean> getRelationShipArray = null;
+    // fetch profile relationship data
+    private ProfileRelationShipBean ProfileRelationShipList = null;
+    private ArrayList<ProfileRelationShipBean> ProfileRelationShipArray = null;
+    private ArrayList<GetrelationshipsBean> clickWithData = new ArrayList<GetrelationshipsBean>();
+    private ArrayList<GetrelationshipsBean> clickRequestedData = new ArrayList<GetrelationshipsBean>();
+    private ArrayList<FetchUsersByNameBean> fetchUsersByNameArray = null;
+    private FetchUsersByNameBean FetchUsersByNameList = null;
     private String followerListCount = "0";
     private String followingListCount = "0";
     private String followerOListCount = "0";
     private String followingOListCount = "0";
-    public String getPartnerName = "";
+    private String relationStatus;
+    private String statusMsg;
+    private String successstatus;
 
+    public void getRelationShips(String phone, String usertoken) {
+        // TODO Auto-generated method stub
+        relationManager = ModelManager.getInstance().getRelationManager();
+        JSONObject userInputDetails = new JSONObject();
+        try {
+            userInputDetails.put("phone_no", phone);
+            userInputDetails.put("user_token", usertoken);
 
-	String strService = null;
+            client = new AsyncHttpClient();
+            se = new StringEntity(userInputDetails.toString());
+            se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
 
+            android.util.Log.e("UsrInput-For-GETRELATIONSHIPS-> ", "" + userInputDetails);
+            strService = APIs.GETRELATIONSHIPS;
 
-	public void getRelationShips(String phone, String usertoken) {
-		// TODO Auto-generated method stub
-		relationManager = ModelManager.getInstance().getRelationManager();
-		JSONObject userInputDetails = new JSONObject();
-		try {
-			userInputDetails.put("phone_no", phone);
-			userInputDetails.put("user_token", usertoken);
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        client.post(null, strService, se, "application/json", new JsonHttpResponseHandler() {
+            @Override
+            public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
+                super.onFailure(statusCode, e, errorResponse);
+                android.util.Log.e(TAG, "errorResponse--> " + errorResponse);
+                if (errorResponse != null) {
+                    getrelationshipsData.clear();
+                    acceptedList.clear();
+                    initiatorList.clear();
+                    requestedList.clear();
+                    EventBus.getDefault().post("GetRelationShips False");
+                } else {
+                    EventBus.getDefault().post("GetRelationShips Network Error");
+                }
+            }
 
-			client = new AsyncHttpClient();
-			se = new StringEntity(userInputDetails.toString());
-			se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,"application/json"));
-
-			Log.e("UsrInput-For-GETRELATIONSHIPS-> ", ""+ userInputDetails);
-			strService = APIs.GETRELATIONSHIPS;
-
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
-		client.post(null, strService, se, "application/json",new JsonHttpResponseHandler() {
-					@Override
-					public void onFailure(int statusCode, Throwable e,JSONObject errorResponse) {
-						super.onFailure(statusCode, e, errorResponse);
-						Log.e(TAG,"errorResponse--> " + errorResponse);
-						if (errorResponse != null) {
-                            getrelationshipsData.clear();
-                            acceptedList.clear();
-                            initiatorList.clear();
-                            requestedList.clear();
-                            EventBus.getDefault().post("GetRelationShips False");
-						} else {
-                            EventBus.getDefault().post("GetRelationShips Network Error");
-						}
-					}
-
-					@Override
-					public void onSuccess(int statusCode,org.apache.http.Header[] headers,JSONObject response) {
-						super.onSuccess(statusCode, headers, response);
-						boolean state = false;
-						try {
-                            Log.e(TAG, "response--> " + response);
-							state = response.getBoolean("success");
-							if (state) {
-								getrelationshipsData.clear();
-								acceptedList.clear();
-								initiatorList.clear();
-								requestedList.clear();
-                                try {
-                                    relationManager.setFollowerListCount(response.getString("follower"));
-                                    relationManager.setFollowingListCount(response.getString("following"));
-                                }catch (Exception e){
-                                    e.printStackTrace();
-                                }
-
-
-								JSONArray list = response.getJSONArray("relationships");
-								getRelationShipArray = new ArrayList<GetrelationshipsBean>();
-								for (int i = 0; i < list.length(); i++) {
-									JSONObject data = list.getJSONObject(i);
-									getRelationShipList = new GetrelationshipsBean();
-
-									if (!Utils.isEmptyString(data.getString("partner_id"))) {
-										if(data.getString("accepted").matches("true")){
-                                            setArrayListForDifferentStatus(data,acceptedList);
-										}else{
-                                            setArrayListForDifferentStatus(data,requestedList);
-										}
-									}
-								}
-                                getrelationshipsData.addAll(requestedList);
-                                getrelationshipsData.addAll(acceptedList);
-								//getrelationshipsData.addAll(initiatorList);
-                                EventBus.getDefault().post("GetRelationShips True");
-							}else{
-                                getrelationshipsData.clear();
-                                acceptedList.clear();
-                                initiatorList.clear();
-                                requestedList.clear();
-                                EventBus.getDefault().post("GetRelationShips False");
-                            }
-						} catch (JSONException e) {
-							e.printStackTrace();
+            @Override
+            public void onSuccess(int statusCode, org.apache.http.Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                boolean state = false;
+                try {
+                    android.util.Log.e(TAG, "response--> " + response);
+                    state = response.getBoolean("success");
+                    if (state) {
+                        getrelationshipsData.clear();
+                        acceptedList.clear();
+                        initiatorList.clear();
+                        requestedList.clear();
+                        try {
+                            relationManager.setFollowerListCount(response.getString("follower"));
+                            relationManager.setFollowingListCount(response.getString("following"));
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
 
+
+                        JSONArray list = response.getJSONArray("relationships");
+                        getRelationShipArray = new ArrayList<GetrelationshipsBean>();
+                        for (int i = 0; i < list.length(); i++) {
+                            JSONObject data = list.getJSONObject(i);
+                            getRelationShipList = new GetrelationshipsBean();
+
+                            if (!Utils.isEmptyString(data.getString("partner_id"))) {
+                                if (data.getString("accepted").matches("true")) {
+                                    setArrayListForDifferentStatus(data, acceptedList);
+                                } else {
+                                    setArrayListForDifferentStatus(data, requestedList);
+                                }
+                            }
+                        }
+                        getrelationshipsData.addAll(requestedList);
+                        getrelationshipsData.addAll(acceptedList);
+                        //getrelationshipsData.addAll(initiatorList);
+                        EventBus.getDefault().post("GetRelationShips True");
+                    } else {
+                        getrelationshipsData.clear();
+                        acceptedList.clear();
+                        initiatorList.clear();
+                        requestedList.clear();
+                        EventBus.getDefault().post("GetRelationShips False");
                     }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
 
         });
     }
-
-
 
     private void setArrayListForDifferentStatus(JSONObject jsondata, ArrayList<GetrelationshipsBean> listdata) {
         getRelationShipList = new GetrelationshipsBean();
@@ -184,8 +175,6 @@ public class RelationManager {
         }
     }
 
-    private String relationStatus;
-
     public String getRelationStatus() {
         return relationStatus;
     }
@@ -193,7 +182,6 @@ public class RelationManager {
     public void setRelationStatus(String relationStatus) {
         this.relationStatus = relationStatus;
     }
-
 
     public void fetchprofilerelationships(String othersPhone, String phone,
                                           String usertoken) {
@@ -209,7 +197,7 @@ public class RelationManager {
 //			client.addHeader("phone_no", phone);
             client.addHeader("User-Token", usertoken);
             client.addHeader("Phone-No", phone);
-//			Log.e("INPUT_DATA-> ", "" + userInputDetails);
+//			android.util.Log.e("INPUT_DATA-> ", "" + userInputDetails);
             strService = APIs.FETCHPROFILERELATIONSHIPS
                     + othersPhone.substring(1);
         } catch (Exception e1) {
@@ -274,8 +262,6 @@ public class RelationManager {
                                     ProfileRelationShipList.setmStatuspublic(data.getString("public"));
                                 if (data.has("partner_name"))
                                     ProfileRelationShipList.setPartnerName(data.getString("partner_name"));
-
-
                                 ProfileRelationShipArray.add(ProfileRelationShipList);
                             }
                         }
@@ -291,7 +277,6 @@ public class RelationManager {
         });
     }
 
-
     public void changeUserVisibility(String relationshipIid, String mode,
                                      String phone, String usertoken) {
         // TODO Auto-generated method stub
@@ -306,7 +291,7 @@ public class RelationManager {
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            Log.e("change user visibility android-------> ", "" + userInputDetails);
+            android.util.Log.e("change user visibility android-------> ", "" + userInputDetails);
 
         } catch (Exception e1) {
             e1.printStackTrace();
@@ -315,7 +300,7 @@ public class RelationManager {
             @Override
             public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
                 super.onFailure(statusCode, e, errorResponse);
-                Log.e("errorResponse on change user visibility-------> ", "" + errorResponse);
+                android.util.Log.e("errorResponse on change user visibility-------> ", "" + errorResponse);
                 if (errorResponse != null) {
                     EventBus.getDefault().post("UserVisible true on error");
                 } else {
@@ -343,7 +328,6 @@ public class RelationManager {
         });
     }
 
-
     public void followUser(String followeePhoneNo, String phone,
                            String usertoken) {
         relationManager = ModelManager.getInstance().getRelationManager();
@@ -357,7 +341,7 @@ public class RelationManager {
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            Log.e("suserInputDetailse-FollowUser-> ", "" + userInputDetails);
+            android.util.Log.e("suserInputDetailse-FollowUser-> ", "" + userInputDetails);
 
         } catch (Exception e1) {
             e1.printStackTrace();
@@ -419,7 +403,7 @@ public class RelationManager {
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,
                     "application/json"));
-            Log.e("suserInputDetailse-UnFollowUser-> ", ""
+            android.util.Log.e("suserInputDetailse-UnFollowUser-> ", ""
                     + userInputDetails);
 
         } catch (Exception e1) {
@@ -464,7 +448,6 @@ public class RelationManager {
         );
     }
 
-
     public void updateStatus(String relationshipIid, String phone,
                              String usertoken, String mode) {
         relationManager = ModelManager.getInstance().getRelationManager();
@@ -478,7 +461,7 @@ public class RelationManager {
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            Log.e("suserInputDetailse-UPDATESTATUS-> ", "" + userInputDetails);
+            android.util.Log.e("suserInputDetailse-UPDATESTATUS-> ", "" + userInputDetails);
 
         } catch (Exception e1) {
             e1.printStackTrace();
@@ -487,7 +470,7 @@ public class RelationManager {
             @Override
             public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
                 super.onFailure(statusCode, e, errorResponse);
-                Log.e("UPDATESTATUS", "errorResponse--> " + errorResponse);
+                android.util.Log.e("UPDATESTATUS", "errorResponse--> " + errorResponse);
                 if (errorResponse != null) {
                     EventBus.getDefault().post("updateStatus false");
 
@@ -519,8 +502,7 @@ public class RelationManager {
 
     }
 
-    public void deleteRelationship(String relationshipIid, String phone,
-                                   String usertoken) {
+    public void deleteRelationship(String relationshipIid, String phone, String usertoken) {
         relationManager = ModelManager.getInstance().getRelationManager();
         JSONObject userInputDetails = new JSONObject();
         try {
@@ -531,7 +513,7 @@ public class RelationManager {
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            Log.e("suserInputDetailse-DELETERELATIONSHIP-> ", "" + userInputDetails);
+            android.util.Log.e("suserInputDetailse-DELETERELATIONSHIP-> ", "" + userInputDetails);
 
         } catch (Exception e1) {
             e1.printStackTrace();
@@ -574,7 +556,6 @@ public class RelationManager {
 
     }
 
-
     public void fetchusersbyname(String name, String phone, String usertoken) {
         relationManager = ModelManager.getInstance().getRelationManager();
         JSONObject userInputDetails = new JSONObject();
@@ -588,7 +569,7 @@ public class RelationManager {
 
 
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            Log.e("suserInputDetailse-fetchusersbyname-> ", "" + userInputDetails);
+            android.util.Log.e("suserInputDetailse-fetchusersbyname-> ", "" + userInputDetails);
         } catch (Exception e1) {
         }
         client.post(null, APIs.FETCHUSERSBYNAME, se, "application/json",
@@ -627,10 +608,13 @@ public class RelationManager {
                                     JSONObject data = list.getJSONObject(i);
                                     // JSONObject rId = data.getJSONObject("id");
                                     // FetchUsersByNameList.setrId(rId.getString("$id"));
-                                    FetchUsersByNameList.setName(data.getString("name"));
+                                    if (data.has("name"))
+                                        FetchUsersByNameList.setName(data.getString("name"));
                                     // FetchUsersByNameList.setqBId(data.getString("QB_id"));
-                                    FetchUsersByNameList.setPhoneNo(data.getString("phone_no"));
-                                    FetchUsersByNameList.setUserPic(data.getString("user_pic"));
+                                    if (data.has("phone_no"))
+                                        FetchUsersByNameList.setPhoneNo(data.getString("phone_no"));
+                                    if (data.has("user_pic"))
+                                        FetchUsersByNameList.setUserPic(data.getString("user_pic"));
                                     if (data.has("city"))
                                         FetchUsersByNameList.setCity(data.getString("city"));
                                     if (data.has("country"))
@@ -641,10 +625,13 @@ public class RelationManager {
                                 }
                                 fetchUsersByNameData.addAll(fetchUsersByNameArray);
                                 EventBus.getDefault().post("SearchResult true");
+                                //android.util.android.util.Log.e("in post ---->", "in post---->");
                             } else {
                                 EventBus.getDefault().post("SearchResult False");
                             }
                         } catch (Exception e) {
+                           // android.util.android.util.Log.e("on error ", "on error");
+                            EventBus.getDefault().post("SearchResult False");
                             e.printStackTrace();
                         }
 
@@ -653,7 +640,6 @@ public class RelationManager {
                 }
         );
     }
-
 
     public void followupdatestatus(String followId, String accepted, String phone, String usertoken) {
         relationManager = ModelManager.getInstance().getRelationManager();
@@ -666,7 +652,7 @@ public class RelationManager {
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            Log.e("suserInputDetailse-followupdatestatus-> ", "" + userInputDetails);
+            android.util.Log.e("suserInputDetailse-followupdatestatus-> ", "" + userInputDetails);
         } catch (Exception e1) {
         }
         client.post(null, APIs.FOLLOWUPDATESTATUS, se, "application/json",
@@ -703,9 +689,6 @@ public class RelationManager {
         );
     }
 
-
-    private String statusMsg;
-
     /**
      * @return the statusMsg
      */
@@ -733,9 +716,6 @@ public class RelationManager {
     public void setSuccessstatus(String successstatus) {
         this.successstatus = successstatus;
     }
-
-    private String successstatus;
-
 
     public String getFollowerListCount() {
         return followerListCount;

@@ -31,40 +31,57 @@ import de.greenrobot.event.EventBus;
 
 public class JumpOtherProfileView extends ClickInBaseView implements View.OnClickListener {
 
-    private TextView follower, following;
+    public String phone, phForOtherUser;
     TextView follow;
+    String dtails;
+    String partner_ID;
+    private TextView follower, following;
     private TextView profileHeader, tvclickintx, tvwith, othesProfileName, clickwithHead, clickwithNameHead;
     private ListView listView;
     private ImageView userimage;
-    private ImageView menu, noti_other;
     private RelativeLayout rlClickWith;
     private JumpOtherProfileAdapter adapter;
     private AuthManager authManager;
     private RelationManager relationManager;
     private TextView name, userdetails;
     private boolean othersUser = false;
-    public String phone, phForOtherUser;
     private Typeface typeface;
     private boolean whichList = false;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.view_othersprofile);
-        addMenu(false);
+
         this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
         typeface = Typeface.createFromAsset(JumpOtherProfileView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
 
         authManager = ModelManager.getInstance().getAuthorizationManager();
 
+        othersUser = getIntent().getExtras().getBoolean("FromOwnProfile");
+        if (othersUser) {
+            authManager = ModelManager.getInstance().getAuthorizationManager();
+            relationManager = ModelManager.getInstance().getRelationManager();
+            phForOtherUser = getIntent().getExtras().getString("phNumber");
+            partner_ID = getIntent().getExtras().getString("PartnerId");
+            Utils.launchBarDialog(this);
 
+            authManager.getProfileInfo(phForOtherUser, authManager.getPhoneNo(), authManager.getUsrToken());
+            relationManager.fetchprofilerelationships(phForOtherUser, authManager.getPhoneNo(), authManager.getUsrToken());
+        }
+
+
+    }
+
+    /* akshit code to set data */
+    public void setView() {
+        setContentView(R.layout.view_othersprofile);
+        dtails = "";
+
+        addMenu(false);
         listView = (ListView) findViewById(R.id.list_click_with_other);
         following = (TextView) findViewById(R.id.btn_following_other);
         follower = (TextView) findViewById(R.id.btn_follower_other);
         follow = (TextView) findViewById(R.id.btn_follow);
-        menu = (ImageView) findViewById(R.id.iv_menu_other);
-        noti_other = (ImageView) findViewById(R.id.iv_notification_other);
         userimage = (ImageView) findViewById(R.id.iv_usr_icon);
         name = (TextView) findViewById(R.id.tv_name_other);
         userdetails = (TextView) findViewById(R.id.tv_user_details_other);
@@ -81,9 +98,7 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
         rlClickWith.setOnClickListener(this);
         follow.setOnClickListener(this);
         following.setOnClickListener(this);
-        noti_other.setOnClickListener(this);
         follower.setOnClickListener(this);
-        menu.setOnClickListener(this);
         name.setTypeface(typeface, typeface.BOLD);
         othesProfileName.setTypeface(typeface, typeface.BOLD);
         profileHeader.setTypeface(typeface, typeface.BOLD);
@@ -96,14 +111,7 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
         userdetails.setTypeface(typeface);
 
 
-        othersUser = getIntent().getExtras().getBoolean("FromOwnProfile");
         if (othersUser) {
-            authManager = ModelManager.getInstance().getAuthorizationManager();
-            relationManager = ModelManager.getInstance().getRelationManager();
-            phForOtherUser = getIntent().getExtras().getString("phNumber");
-            authManager.getProfileInfo(phForOtherUser, authManager.getPhoneNo(), authManager.getUsrToken());
-            relationManager.fetchprofilerelationships(phForOtherUser, authManager.getPhoneNo(), authManager.getUsrToken());
-
             name.setText(getIntent().getExtras().getString("name"));
             profileHeader.setText(getIntent().getExtras().getString("name"));
             if (authManager.getUserName() != null) {
@@ -121,23 +129,28 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
 
         }
 
+        //akshit code for click if user is clicking on same User
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-                if (relationManager.profileRelationShipData.size() > 0) {
-                    Log.e("", "position--> " + position + "" + relationManager.profileRelationShipData.get(position).getPhoneNo());
+//                android.util.Log.e("JumpOtherprofile Partner Id","PartnerID"+relationManager.profileRelationShipData.get(position).getPartner_id());
+//                android.util.Log.e("JumpOtherprofile User Id","UserID"+authManager.getUserId());
+                if (relationManager.profileRelationShipData.size() > 0 && !relationManager.profileRelationShipData.get(position).getPartner_id().equalsIgnoreCase(authManager.getUserId())) {
+                    android.util.Log.e("", "position--> " + position + "" + relationManager.profileRelationShipData.get(position).getPhoneNo());
                     String phNo = relationManager.profileRelationShipData.get(position).getPhoneNo();
                     switchView(phNo);
+                } else {
+                    android.util.Log.e("Other Profile", "Same User");
                 }
             }
         });
 
-    }
+    }//ends
 
     public void setlist() {
         if (relationManager.profileRelationShipData.size() == 0) {
-            ((LinearLayout) findViewById(R.id.ll_clickin_header)).setVisibility(View.GONE);
+            findViewById(R.id.ll_clickin_header).setVisibility(View.GONE);
             ((View) findViewById(R.id.v_devider_header)).setVisibility(View.GONE);
         } else {
             ((LinearLayout) findViewById(R.id.ll_clickin_header)).setVisibility(View.VISIBLE);
@@ -184,40 +197,13 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
                 relationManager = ModelManager.getInstance().getRelationManager();
                 relationManager.followUser(phForOtherUser, authManager.getPhoneNo(), authManager.getUsrToken());
                 break;
-            case R.id.iv_menu_other:
-                slidemenu.showMenu(true);
-                break;
+
             case R.id.rl_add_someone:
                 if (Utils.isEmptyString(relationManager.getRelationStatus())) {
                     dialogClickwith();
-
-//                new AlertDialog.Builder(JumpOtherProfileView.this)
-//                        .setMessage(AlertMessage.MAKECLICKWITH + authManager.getTmpUserName())
-//                        .setPositiveButton("Yes Please",
-//                                new DialogInterface.OnClickListener() {
-//                                    @Override
-//                                    public void onClick(DialogInterface dialog,
-//                                                        int which) {
-//                                        authManager = ModelManager.getInstance().getAuthorizationManager();
-//
-//                                        authManager.sendNewRequest(authManager.getPhoneNo(), phForOtherUser, authManager.getUsrToken());
-//
-//                                    }
-//
-//                                }
-//                        ).setNegativeButton("No Thanks", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//
-//                        dialog.dismiss();
-//                    }
-//
-//                }).show();
                 }
                 break;
-            case R.id.iv_notification_other:
-                slidemenu.showSecondaryMenu(true);
-                break;
+
 
         }
 
@@ -259,9 +245,11 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
     public void onEventMainThread(String message) {
         super.onEventMainThread(message);
         relationManager = ModelManager.getInstance().getRelationManager();
-        Log.e("onEventMainThread", "-------" + message);
+        android.util.Log.e("onEventMainThread", "-------" + message);
         if (message.equalsIgnoreCase("ProfileInfo True")) {
+            setView();
             setProfileData();
+            Utils.dismissBarDialog();
         } else if (message.equalsIgnoreCase("ProfileInfo False")) {
             Utils.dismissBarDialog();
         } else if (message.equalsIgnoreCase("ProfileInfoNetwork Error")) {
@@ -361,7 +349,7 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
         if (othersUser) {
             othesProfileName.setText(authManager.getTmpUserName());
             name.setText(authManager.getTmpUserName());
-            String dtails;
+
 
             if (authManager.getTmpIsFollowingRequested() == 1) {
                 follow.setBackgroundResource(R.drawable.requested_otherprofile_new);
@@ -370,20 +358,46 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
             } else {
                 follow.setBackgroundResource(R.drawable.follow_other_profile);
             }
+            android.util.Log.e("Gender Other User", "" + authManager.getTmpGender());
 
-            if (authManager.getTmpGender().equalsIgnoreCase("girl")) {
-                dtails = getResources().getString(R.string.txt_male)
+            //akshit code ,solved gender
+            if (!Utils.isEmptyString(authManager.getTmpGender()) && authManager.getTmpGender().equalsIgnoreCase("girl")) {
+                dtails = getResources().getString(R.string.txt_female)//akshit was previously showing Reverse  gender
+                        + Utils.getCurrentYear(authManager.getTmpDOB()) + " "
+                        + getResources().getString(R.string.txt_yold);
+
+            } else if (!Utils.isEmptyString(authManager.getTmpGender()) && authManager.getTmpGender().equalsIgnoreCase("guy")) {
+                dtails = getResources().getString(R.string.txt_male)//akshit was previously showing Reverse  gender
                         + Utils.getCurrentYear(authManager.getTmpDOB()) + " "
                         + getResources().getString(R.string.txt_yold);
 
             } else {
-                dtails = getResources().getString(R.string.txt_female)
-                        + Utils.getCurrentYear(authManager.getTmpDOB()) + " "
+                dtails = "" + Utils.getCurrentYear(authManager.getTmpDOB()) + " "
                         + getResources().getString(R.string.txt_yold);
+            }
+
+            //akshit code For otherUser City and Country
+
+            if (!Utils.isEmptyString(authManager.getTmpCity()) && Utils.isEmptyString(authManager.getTmpCountry())) {
+                dtails = dtails + "\n" + authManager.getTmpCity();
+                userdetails.setText(dtails + "\n");
+
+            } else if (Utils.isEmptyString(authManager.getTmpCity()) && !Utils.isEmptyString(authManager.getTmpCountry())) {
+                dtails = dtails + "\n" + authManager.getTmpCountry();
+                userdetails.setText(dtails + "\n");
+
+            } else if (Utils.isEmptyString(authManager.getTmpCity()) && Utils.isEmptyString(authManager.getTmpCountry())) {
+                userdetails.setText(dtails + "\n" + "\n");
+
+            } else {
+                userdetails.setText(dtails + "\n" + authManager.getTmpCity() + "," + authManager.getTmpCountry() + "\n" + "\n");
 
             }
+
+            //ends
+
             Utils.getCurrentYear(authManager.getTmpDOB());
-            userdetails.setText(dtails + "\n");
+//            userdetails.setText(dtails + "\n");
 
             relationManager = ModelManager.getInstance().getRelationManager();
 

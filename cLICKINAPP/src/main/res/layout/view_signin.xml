@@ -3,8 +3,7 @@
     android:id="@+id/relative_layout_root_signin"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/enterdigitmainbg"
-    >
+    android:background="@drawable/enterdigitmainbg">
 
     <RelativeLayout
         android:id="@+id/relative_layout"
@@ -22,8 +21,8 @@
             <com.sourcefuse.clickinandroid.utils.ClickInTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
                 android:layout_centerHorizontal="true"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
                 android:text="SIGN IN"
@@ -49,20 +48,19 @@
                 android:id="@+id/edt_email_phoneno"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:background="@drawable/input_field"
-                android:hint="@string/hint_email_no"
-                android:inputType="text|textNoSuggestions"
                 android:layout_marginLeft="1dp"
-                android:paddingLeft="10dp"
+                android:background="@drawable/input_field"
                 android:ems="15"
+                android:hint="@string/hint_email_no"
+                android:imeOptions="actionNext"
+                android:inputType="text|textNoSuggestions"
+                android:paddingLeft="10dp"
                 android:text="@string/plus"
                 android:textColor="@color/signup_contry_code"
                 android:textColorHint="@color/sign_hint"
                 android:textSize="16sp"
-                geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
                 android:textStyle="bold"
-                android:imeOptions="actionNext">
-                </com.sourcefuse.clickinandroid.utils.ClickInEditBox>
+                geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"></com.sourcefuse.clickinandroid.utils.ClickInEditBox>
 
 
             <com.sourcefuse.clickinandroid.utils.ClickInEditBox
@@ -70,41 +68,40 @@
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_below="@+id/edt_email_phoneno"
-                android:layout_marginTop="7dp"
                 android:layout_marginLeft="1dp"
+                android:layout_marginTop="7dp"
                 android:background="@drawable/input_field"
+                android:ems="15"
                 android:hint="@string/hint_pwd"
+                android:imeOptions="actionDone"
                 android:inputType="textPassword|textNoSuggestions"
                 android:paddingLeft="10dp"
-                android:ems="15"
                 android:text=""
-                android:imeOptions="actionDone"
                 android:textColor="@color/signup_contry_code"
                 android:textColorHint="@color/sign_hint"
                 android:textSize="16sp"
-                geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
         </RelativeLayout>
-
 
 
         <RelativeLayout
             android:id="@+id/ll_search"
             android:layout_width="305dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
             android:layout_below="@+id/btn_get_clickin_signin"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="16dp">
+            android:layout_marginTop="10dp">
 
             <com.sourcefuse.clickinandroid.utils.ClickInTextView
                 android:id="@+id/tv_forgot_pwd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:padding="10dp"
                 android:layout_marginLeft="-10dp"
+                android:padding="10dp"
                 android:text="@string/txt_forget_pwd"
                 android:textColor="@color/signin_color"
                 android:textStyle="bold"
@@ -124,8 +121,7 @@
                 android:text="@string/txt_signup"
                 android:textColor="@color/signin_color"
                 android:textStyle="bold"
-                geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"
-                />
+                geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
         </RelativeLayout>
 
         <Button

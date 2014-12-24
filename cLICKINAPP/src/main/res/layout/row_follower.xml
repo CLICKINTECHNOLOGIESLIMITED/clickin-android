@@ -1,8 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:geekui="http://schemas.android.com/apk/res-auto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+    xmlns:geekui="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
 
     <com.sourcefuse.clickinandroid.utils.ClickInTextView
         android:id="@+id/tv_heading_rfollowers"
@@ -14,7 +14,7 @@
         android:textColor="@color/dark_gray"
         android:textSize="20sp"
         android:visibility="gone"
-        geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"/>
+        geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
 
     <com.sourcefuse.clickinandroid.utils.ClickInTextView
         android:id="@+id/tv_heading_followers"
@@ -27,7 +27,7 @@
         android:textColor="@color/dark_gray"
         android:textSize="20sp"
         android:visibility="gone"
-        geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"/>
+        geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
 
 
     <RelativeLayout
@@ -40,8 +40,7 @@
         <ImageView
             android:id="@+id/iv_usr"
             android:layout_width="60dp"
-            android:layout_height="60dp"
-            />
+            android:layout_height="60dp" />
 
         <com.sourcefuse.clickinandroid.utils.ClickInTextView
             android:id="@+id/tv_clickers_name"
@@ -56,7 +55,7 @@
             android:text="Bregenja hauddydhdydhdydhdauanjdubdsdggu"
             android:textSize="18sp"
             android:textStyle="bold"
-            geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"/>
+            geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
 
 
         <TextView
@@ -66,7 +65,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="15dp"
-            android:background="@drawable/c_owner_follow_btn"/>
+            android:background="@drawable/c_owner_follow_btn" />
 
         <LinearLayout
             android:id="@+id/rl_resect_accept"
@@ -77,8 +76,7 @@
             android:layout_marginRight="12dp"
             android:background="@color/white"
             android:orientation="horizontal"
-            android:visibility="gone"
-            >
+            android:visibility="gone">
 
             <Button
                 android:id="@+id/btn_f_accept"
@@ -87,7 +85,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
-                android:background="@drawable/c_owner_blue_tick"/>
+                android:background="@drawable/c_owner_blue_tick" />
 
             <Button
                 android:id="@+id/btn_f_resect"
@@ -96,7 +94,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
-                android:background="@drawable/c_owner_grey_corss"/>
+                android:background="@drawable/c_owner_grey_corss" />
         </LinearLayout>
 
     </RelativeLayout>
@@ -106,6 +104,6 @@
         android:layout_width="fill_parent"
         android:layout_height="5dp"
         android:layout_below="@+id/rl_layout"
-        android:background="@android:color/transparent"/>
+        android:background="@android:color/transparent" />
 
 </RelativeLayout>

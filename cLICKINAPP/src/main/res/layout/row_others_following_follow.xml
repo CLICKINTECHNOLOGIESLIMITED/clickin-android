@@ -15,7 +15,7 @@
         android:textColor="@color/dark_gray"
         android:textSize="20sp"
         android:visibility="gone"
-        geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"/>
+        geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
 
 
     <RelativeLayout
@@ -28,8 +28,7 @@
         <ImageView
             android:id="@+id/iv_usr_other"
             android:layout_width="60dp"
-            android:layout_height="60dp"
-            />
+            android:layout_height="60dp" />
 
         <com.sourcefuse.clickinandroid.utils.ClickInTextView
             android:id="@+id/tv_clickers_name_other"
@@ -44,7 +43,7 @@
             android:text="Bregenja hauddydhdydhdydhdauanjdubdsdggu"
             android:textSize="18sp"
             android:textStyle="bold"
-            geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"/>
+            geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
     </RelativeLayout>
 
     <ImageView
@@ -52,6 +51,6 @@
         android:layout_width="fill_parent"
         android:layout_height="5dp"
         android:layout_below="@+id/rl_layout"
-        android:background="@android:color/transparent"/>
+        android:background="@android:color/transparent" />
 
 </RelativeLayout>

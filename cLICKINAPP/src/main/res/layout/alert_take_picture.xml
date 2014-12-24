@@ -1,10 +1,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:geekui="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/white_border_alert"
-    >
+    android:orientation="vertical">
 
 
     <LinearLayout
@@ -16,11 +15,12 @@
         <com.sourcefuse.clickinandroid.utils.ClickInTextView
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:text="Add your photo"
             android:gravity="center"
+            android:text="Add your photo"
             android:textSize="15sp"
-            geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"
-            android:textStyle="normal"/>
+            android:textStyle="normal"
+            geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
+
         <View
             android:id="@+id/v_backdevider"
             android:layout_width="match_parent"
@@ -33,13 +33,13 @@
             android:id="@+id/take_picture"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:gravity="center"
             android:text="TAKE A PICTURE"
             android:textAllCaps="true"
-            android:textStyle="normal"
-            android:gravity="center"
+            android:textColor="@color/dialog_text"
             android:textSize="20sp"
-            geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"
-            android:textColor="@color/dialog_text"/>
+            android:textStyle="normal"
+            geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
 
         <View
             android:id="@+id/v_backdevider1"
@@ -52,13 +52,13 @@
             android:id="@+id/from_gallery"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:gravity="center"
             android:text="FROM YOUR GALLERY"
             android:textAllCaps="true"
-            android:textStyle="normal"
-            android:gravity="center"
+            android:textColor="@color/dialog_text"
             android:textSize="20sp"
-            geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"
-            android:textColor="@color/dialog_text"/>
+            android:textStyle="normal"
+            geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
 
         <View
             android:id="@+id/v_backdevider2"
@@ -71,13 +71,12 @@
             android:id="@+id/dialog_cancel"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:textAllCaps="true"
-            android:text="Cancel"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            android:textColor="@color/dialog_text"
             android:background="@null"
-            />
+            android:text="Cancel"
+            android:textAllCaps="true"
+            android:textColor="@color/dialog_text"
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 

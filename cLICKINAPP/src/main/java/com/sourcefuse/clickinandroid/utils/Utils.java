@@ -16,6 +16,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.drawable.ColorDrawable;
+import android.media.ExifInterface;
+import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -33,7 +35,12 @@ import android.widget.Toast;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.sourcefuse.clickinandroid.model.AuthManager;
+import com.sourcefuse.clickinandroid.model.ModelManager;
+import com.sourcefuse.clickinandroid.model.RelationManager;
+import com.sourcefuse.clickinandroid.model.SettingManager;
+import com.sourcefuse.clickinandroid.model.bean.ChatMessageBody;
 import com.sourcefuse.clickinandroid.model.bean.ContactBean;
+import com.sourcefuse.clickinandroid.model.bean.GetrelationshipsBean;
 import com.sourcefuse.clickinapp.R;
 
 import java.io.ByteArrayOutputStream;
@@ -41,6 +48,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -57,20 +65,18 @@ public class
     public static boolean DEBUG = true;
 
     public static String deviceId, PROJECT_NUMBER = "1058681021160";
-    private static CustomProgressDialog barProgressDialog;
-
+    public static boolean appSound;
     public static SharedPreferences prefrences;
     public static Activity acty;
-    private static Dialog dialog;
-    private static Uri mImageCaptureUri;
-    private AuthManager authManager;
+    public static ArrayList<ContactBean> itData = new ArrayList<ContactBean>();
+    public static ArrayList<String> groupSms = new ArrayList<String>();
+    public static HashMap<String, ContactBean> contactMap = new HashMap<String, ContactBean>();
     static GoogleCloudMessaging gcm;
     static String regid;
-    public static ArrayList<ContactBean> itData = new ArrayList<ContactBean>();
-
-    public static ArrayList<String> groupSms = new ArrayList<String>();
-
-    public static HashMap<String, ContactBean> contactMap = new HashMap<String, ContactBean>();
+    private static CustomProgressDialog barProgressDialog;
+    private static Dialog dialog;
+    private static Uri mImageCaptureUri;
+    public AuthManager authManager;
 
     public static void launchBarDialog(Activity activity) {
 
@@ -249,7 +255,7 @@ public class
         immagex.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] b = baos.toByteArray();
         String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
-        // Log.e("LOOK", imageEncoded);
+        // android.util.Log.e("LOOK", imageEncoded);
         return imageEncoded;
     }
 
@@ -419,7 +425,7 @@ public class
     }
 
 
-    public static  String decodeSampledBitmapFromUri(Context context, Uri uri, int reqWidth, int reqHeight) {
+    public static String decodeSampledBitmapFromUri(Context context, Uri uri, int reqWidth, int reqHeight) {
 
         Bitmap bm = null;
         String path = null;
@@ -436,9 +442,6 @@ public class
             e.printStackTrace();
             Toast.makeText(context, e.toString(), Toast.LENGTH_LONG).show();
         }
-
-
-
 
 
         return path;
@@ -471,6 +474,7 @@ public class
                         gcm = GoogleCloudMessaging.getInstance(contex);
                     }
                     regid = gcm.register(PROJECT_NUMBER);
+                    Utils.deviceId = regid;
                     msg = "Device registered, registration ID=" + regid;
                     Log.i("GCM", msg);
                 } catch (IOException ex) {
@@ -574,14 +578,14 @@ public class
     }
 
     public static String getLocalDate(String serverDate) {
-//        Log.e("serverDate",serverDate);
+//        android.util.Log.e("serverDate",serverDate);
 //         serverDate = "2014-10-09 09:46:50";
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
         TimeZone tz = TimeZone.getDefault();
 //        Calendar cal = Calendar.getInstance();
 //        TimeZone tz = cal.getTimeZone();
 //        TimeZone tz = TimeZone.getTimeZone("Asia/Calcutta");
-//        Log.e("tz",tz.toString());
+//        android.util.Log.e("tz",tz.toString());
         sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
         Date date = null;
         try {
@@ -612,7 +616,7 @@ public class
         String CountryZipCode = null;
         TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         int simState = telephonyManager.getSimState();
-        //Log.e("simState",""+simState+"/"+TelephonyManager.SIM_STATE_NETWORK_LOCKED+"/"+TelephonyManager.SIM_STATE_UNKNOWN+"/"+TelephonyManager.SIM_STATE_READY);
+        //android.util.Log.e("simState",""+simState+"/"+TelephonyManager.SIM_STATE_NETWORK_LOCKED+"/"+TelephonyManager.SIM_STATE_UNKNOWN+"/"+TelephonyManager.SIM_STATE_READY);
         switch (simState) {
 
             case (TelephonyManager.SIM_STATE_ABSENT):
@@ -632,7 +636,7 @@ public class
 
                 CountryZipCode = GetCountryZipCode(context);
                 CountryZipCode = "+" + CountryZipCode;
-                Log.e("COUNTRY ZIP CODE", CountryZipCode);
+                android.util.Log.e("COUNTRY ZIP CODE", CountryZipCode);
 
 
                 break;
@@ -658,7 +662,7 @@ public class
             String[] g = rl[i].split(",");
             if (g[1].trim().equals(CountryID.trim())) {
                 CountryZipCode = g[0];
-                Log.e("Code", "Tis is Code>>>>>" + CountryZipCode);
+                android.util.Log.e("Code", "Tis is Code>>>>>" + CountryZipCode);
                 break;
             }
         }
@@ -863,4 +867,266 @@ public class
         }
         return changeClicks;
     }
+
+    //function to update clicks value for ours and partner- in case of Cards only monika
+    public static void updateClicksValue(String oursClicks, String partnerClicks, String clicks, boolean ours) {
+        int tempOurClicks = Integer.parseInt(oursClicks);
+        int tempPartnerClicks = Integer.parseInt(partnerClicks);
+        int tempClicks;
+        RelationManager manager = ModelManager.getInstance().getRelationManager();
+        if (clicks.equalsIgnoreCase("05")) {
+            tempClicks = 5;
+        } else {
+            tempClicks = Integer.parseInt(clicks);
+        }
+        if (ours) {
+            tempOurClicks = tempOurClicks + tempClicks;
+            ModelManager.getInstance().getAuthorizationManager().ourClicks = String.valueOf(tempOurClicks);
+            tempPartnerClicks = tempPartnerClicks - tempClicks;
+            manager.partnerClicks = String.valueOf(tempPartnerClicks);
+        } else {
+            tempOurClicks = tempOurClicks - tempClicks;
+            ModelManager.getInstance().getAuthorizationManager().ourClicks = String.valueOf(tempOurClicks);
+            tempPartnerClicks = tempPartnerClicks + tempClicks;
+            manager.partnerClicks = String.valueOf(tempPartnerClicks);
+        }
+
+    }
+
+
+    /* find bitmap */
+
+    public static Bitmap path(Uri mpath) {
+        Bitmap resized = null;
+        try {
+
+                                          /* code prafull for camera */
+            Bitmap bitmap = BitmapFactory.decodeFile(mpath.getPath(), new BitmapFactory.Options());
+            try {
+                ExifInterface ei = new ExifInterface(mpath.getPath());
+                int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+
+                int angle = 0;
+
+                if (orientation == ExifInterface.ORIENTATION_ROTATE_90) {
+                    angle = 90;
+                } else if (orientation == ExifInterface.ORIENTATION_ROTATE_180) {
+                    angle = 180;
+                } else if (orientation == ExifInterface.ORIENTATION_ROTATE_270) {
+                    angle = 270;
+                }
+                Matrix mat = new Matrix();
+                mat.postRotate(angle);
+                android.util.Log.e("angle from camera --->", "" + angle);
+                bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), mat, true);
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+
+            if (bitmap.getWidth() >= bitmap.getHeight()) {
+
+                resized = Bitmap.createBitmap(
+                        bitmap,
+                        bitmap.getWidth() / 2 - bitmap.getHeight() / 2,
+                        0,
+                        bitmap.getHeight(),
+                        bitmap.getHeight()
+                );
+
+            } else {
+
+                resized = Bitmap.createBitmap(
+                        bitmap,
+                        0,
+                        bitmap.getHeight() / 2 - bitmap.getWidth() / 2,
+                        bitmap.getWidth(),
+                        bitmap.getWidth()
+                );
+            }
+
+        } catch (Exception ex) {
+            Log.e("Exception", "Exception-->" + ex.toString());
+            ex.printStackTrace();
+        }
+        return resized;
+
+    }
+
+    //monika-convert String clicks value to int
+    public static int convertToIntClicks(String clicks) {
+
+        int changeClicks = 0;
+
+        if (clicks.equalsIgnoreCase("1") || clicks.equalsIgnoreCase("01")) {
+            changeClicks = 1;
+        } else if (clicks.equalsIgnoreCase("2") || clicks.equalsIgnoreCase("02")) {
+            changeClicks = 2;
+        } else if (clicks.equalsIgnoreCase("3") || clicks.equalsIgnoreCase("03")) {
+            changeClicks = 3;
+        } else if (clicks.equalsIgnoreCase("4") || clicks.equalsIgnoreCase("04")) {
+            changeClicks = 4;
+        } else if (clicks.equalsIgnoreCase("5") || clicks.equalsIgnoreCase("05")) {
+            changeClicks = 5;
+        } else if (clicks.equalsIgnoreCase("6") || clicks.equalsIgnoreCase("06")) {
+            changeClicks = 6;
+        } else if (clicks.equalsIgnoreCase("7") || clicks.equalsIgnoreCase("07")) {
+            changeClicks = 7;
+        } else if (clicks.equalsIgnoreCase("8") || clicks.equalsIgnoreCase("08")) {
+            changeClicks = 8;
+        } else if (clicks.equalsIgnoreCase("9") || clicks.equalsIgnoreCase("09")) {
+            changeClicks = 9;
+        } else if (clicks.equalsIgnoreCase("10") || clicks.equalsIgnoreCase("10")) {
+            changeClicks = 10;
+        }
+        return changeClicks;
+    }
+
+
+    // //function to update clicks value for ours -without cards-monika
+    public static void updateClicksWithoutCard(String oursClicks, String clicks, boolean add) {
+        String tempOurClicksString = new String(oursClicks);
+        if (tempOurClicksString.startsWith("+") || tempOurClicksString.startsWith("-"))
+            tempOurClicksString = tempOurClicksString.substring(1);
+
+        int tempOurClicks = Integer.parseInt(tempOurClicksString);
+
+        int tempClicks = convertToIntClicks(clicks.substring(1));
+
+        if (add) {
+            tempOurClicks = tempOurClicks + tempClicks;
+            ModelManager.getInstance().getAuthorizationManager().ourClicks = String.valueOf(tempOurClicks);
+
+        } else {//minus cicks
+            tempOurClicks = tempOurClicks - tempClicks;
+            ModelManager.getInstance().getAuthorizationManager().ourClicks = String.valueOf(tempOurClicks);
+
+        }
+
+    }
+
+    //function to update clicks of partner without card
+    // //function to update clicks value for ours -without cards-monika
+    public static void updateClicksPartnerWithoutCard(String partnerClicks, String clicks, boolean add) {
+        String tempPartnerClicksString = new String(partnerClicks);
+        if (tempPartnerClicksString.startsWith("+") || tempPartnerClicksString.startsWith("-"))
+            tempPartnerClicksString = tempPartnerClicksString.substring(1);
+
+        int tempPartnerClicks = Integer.parseInt(tempPartnerClicksString);
+
+        int tempClicks = convertToIntClicks(clicks.substring(1));
+
+        if (add) {
+            tempPartnerClicks = tempPartnerClicks + tempClicks;
+            ModelManager.getInstance().getRelationManager().partnerClicks = String.valueOf(tempPartnerClicks);
+
+        } else {//minus cicks
+            tempPartnerClicks = tempPartnerClicks - tempClicks;
+            ModelManager.getInstance().getRelationManager().partnerClicks = String.valueOf(tempPartnerClicks);
+
+        }
+
+    }
+
+    //akshit code to play sound
+    public static void playSound(Activity activity, int resID) {
+
+
+        boolean check;
+
+        final MediaPlayer mplayer;
+        mplayer = MediaPlayer.create(activity, resID);
+        SettingManager mSettingManager = ModelManager.getInstance().getSettingManager();
+
+        if (mSettingManager.isAppSounds()) {
+            try {
+                android.util.Log.e("Utils App Sound", "Sounds Enabled");
+                //      if(check)
+                mplayer.start();
+//                else
+//                    mplayer.stop();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            android.util.Log.e("Utils App Sound", "Sounds Disabled");
+        }
+
+
+    }
+
+
+    //monika- code to
+
+
+    public static void Unregister(final Activity contex) {
+        new AsyncTask<Void, Void, String>() {
+            @Override
+            protected String doInBackground(Void... params) {
+                String msg = "";
+                try {
+                    if (gcm == null) {
+                        gcm = GoogleCloudMessaging.getInstance(contex);
+                    }
+                   gcm.unregister();
+
+                } catch (IOException ex) {
+                    msg = "Error :" + ex.getMessage();
+
+                }
+                return msg;
+            }
+
+            @Override
+            protected void onPostExecute(String msg) {
+                android.util.Log.e("GCM", "Rregid--->id" + msg);
+            }
+
+        }.execute(null, null, null);
+
+    }
+
+    //monika-function to update clicks for background messages
+    public static void updateClicksBackgroundMsgs(int relationIndex,ChatMessageBody obj){
+        ArrayList<GetrelationshipsBean>tempAcceptlist=ModelManager.getInstance().getRelationManager().acceptedList;
+        if(relationIndex<=tempAcceptlist.size()) {
+            GetrelationshipsBean temp = tempAcceptlist.get(relationIndex);
+            String oursClicks=temp.getUserClicks();
+            String partnerClicks=temp.getClicks();
+            int tempOurClicks = Integer.parseInt(oursClicks);
+            int tempPartnerClicks = Integer.parseInt(partnerClicks);
+            int tempClicks;
+            RelationManager manager = ModelManager.getInstance().getRelationManager();
+            if (obj.clicks.equalsIgnoreCase("05")) {
+                tempClicks = 5;
+            } else {
+                tempClicks = Integer.parseInt(obj.clicks);
+            }
+            //check card is there or not
+            if(!Utils.isEmptyString(obj.card_owner)){
+                //if we send the card, then clicks will get subtracted from our clicks
+                if(obj.card_originator.equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getUserId())){
+                    tempOurClicks=tempOurClicks-tempClicks;
+                    tempPartnerClicks=tempPartnerClicks+tempClicks;
+                }else{
+                    tempOurClicks=tempOurClicks+tempClicks;
+                    tempPartnerClicks=tempPartnerClicks-tempClicks;
+                }
+
+            }
+
+            //if card is not there, then clicks will be calculated from ours only
+            if(obj.clicks.startsWith("+")){
+                tempOurClicks=tempOurClicks+tempClicks;
+            }else if(obj.clicks.startsWith("-")){
+                tempOurClicks=tempOurClicks-tempClicks;
+            }
+
+            temp.setUserClicks(String.valueOf(tempOurClicks));
+            temp.setClicks(String.valueOf(tempPartnerClicks));
+        }
+    }
 }
+

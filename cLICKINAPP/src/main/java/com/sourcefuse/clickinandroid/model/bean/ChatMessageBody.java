@@ -15,7 +15,7 @@ public class ChatMessageBody {
 
     public String card_owner = null;
     public String card_content = null;
-    public Boolean is_CustomCard = null;
+    public Boolean is_CustomCard = false;
     public String card_DB_ID = null;
     public String card_Accepted_Rejected = null;
     public String card_heading = null;
@@ -24,6 +24,7 @@ public class ChatMessageBody {
     public String card_Played_Countered = null;
     public String card_originator = null;
     public String _id = null;
+    public String deliveredChatID = null;
 
     //for video
     public String video_thumb = null;
@@ -38,5 +39,15 @@ public class ChatMessageBody {
     public String userId = null;
     public String senderUserToken = null;
     public String senderQbId;
+
+// Share message
+
+    public String isMessageSender = null;
+    public String shareStatus = null;
+    public String shareComment = " ";
+    public String originalMessageID = null;
+    public String sharingMedia = null;
+    public String isAccepted = null;
+    public String facebookToken = null;
 
 }

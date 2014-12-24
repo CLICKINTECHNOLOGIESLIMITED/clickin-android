@@ -37,10 +37,10 @@ public class FollowingAdapter extends ArrayAdapter<FollowerFollowingBean> {
     private static final String TAG = FollowingAdapter.class.getSimpleName();
     Context context;
     int layoutResourceId;
-    private AuthManager authManager;
-    private RelationManager relationManager;
     RecordHolder rholder;
     List<FollowerFollowingBean> item;
+    private AuthManager authManager;
+    private RelationManager relationManager;
 
 
     public FollowingAdapter(Context context, int layoutResourceId,
@@ -60,7 +60,6 @@ public class FollowingAdapter extends ArrayAdapter<FollowerFollowingBean> {
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
             row = inflater.inflate(layoutResourceId, parent, false);
             holder = new RecordHolder();
-
 
 
             holder.usr_name = (TextView) row.findViewById(R.id.tv_clickers_name);
@@ -128,17 +127,16 @@ public class FollowingAdapter extends ArrayAdapter<FollowerFollowingBean> {
 /* condition to unfollow dialog*/
 
 
-
                 } else if (Utils.isEmptyString(item.get(position).getAccepted()) && item.get(position).getIsFollowing().equalsIgnoreCase("true")) {
 
 /*  conditoin to change follow into requested */
-                    TextView button = (TextView)layout.getChildAt(2);
+                    TextView button = (TextView) layout.getChildAt(2);
                     button.setBackgroundResource(R.drawable.requested_btn);
                     rholder.reqbtn.setBackgroundResource(R.drawable.requested_btn);
                     relationManager.followUser(item.get(position).getPhoneNo(), authManager.getPhoneNo(), authManager.getUsrToken());
                     item.get(position).setIsFollowing("false");
                     //FollowerList.adapter.notifyDataSetChanged();
-                    Log.e(TAG, "Click - holder.follow=");
+                    android.util.Log.e(TAG, "Click - holder.follow=");
                     FollowingListView.mchangeinList = true;
                 }
 
@@ -155,20 +153,13 @@ public class FollowingAdapter extends ArrayAdapter<FollowerFollowingBean> {
                 intent.putExtra("phNumber", item.get(position).getPhoneNo());
                 ((Activity) context).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
                 context.startActivity(intent);
-                Log.e("", "holder.usrimg");
+                android.util.Log.e("", "holder.usrimg");
 
             }
         });
 
 
         return row;
-    }
-
-    static class RecordHolder {
-        TextView usr_name, hfollowersRequest, hfollowers;
-        ImageView usrimg;
-        TextView reqbtn;
-
     }
 
     // Akshit Code Starts to show pop-up for unfollowing friend
@@ -222,6 +213,13 @@ public class FollowingAdapter extends ArrayAdapter<FollowerFollowingBean> {
         });
         dialog.show();
         dismiss.setTypeface(typefaceBold);//akshit to set bold for buttom
+    }
+
+    static class RecordHolder {
+        TextView usr_name, hfollowersRequest, hfollowers;
+        ImageView usrimg;
+        TextView reqbtn;
+
     }
 // Ends
 

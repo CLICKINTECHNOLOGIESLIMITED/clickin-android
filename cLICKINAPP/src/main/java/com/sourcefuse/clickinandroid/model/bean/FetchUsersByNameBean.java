@@ -6,6 +6,12 @@ package com.sourcefuse.clickinandroid.model.bean;
 public class FetchUsersByNameBean {
     private String qBId;
     private String rId;
+    private String name;
+    private String phoneNo;
+    private String userPic;
+    private String userToken;
+    private String city;
+    private String country;
 
     public String getCity() {
         return city;
@@ -22,14 +28,6 @@ public class FetchUsersByNameBean {
     public void setCountry(String country) {
         this.country = country;
     }
-
-    private String name;
-    private String phoneNo;
-    private String userPic;
-    private String userToken;
-
-    private String city;
-    private String country;
 
     public String getqBId() {
         return qBId;
