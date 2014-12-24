@@ -1060,7 +1060,6 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
 
         }
-
     }
 
     private void hideAttachView() {

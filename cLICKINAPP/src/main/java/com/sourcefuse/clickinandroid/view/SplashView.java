@@ -14,7 +14,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 
-import com.crashlytics.android.Crashlytics;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
@@ -41,7 +40,7 @@ public class SplashView extends Activity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Crashlytics.start(this);
+
         //Crashlytics.start(this);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.view_splash);

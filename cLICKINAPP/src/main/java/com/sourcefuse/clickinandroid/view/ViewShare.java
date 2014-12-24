@@ -344,12 +344,6 @@ public class ViewShare extends Activity implements View.OnClickListener {
                 session.requestNewPublishPermissions(newPermissionsRequest);
 
             }
-           /* chatManager = ModelManager.getInstance().getChatManager();
-            authManager = ModelManager.getInstance().getAuthorizationManager();
-            //chatManager.chatShare(String phone_no, String user_token, String relationshipId, String chatId, String media, String fbAccessToken, String twitterAccessToken, String twitterAccessTokenSecret, String googlePlusAccessToken, String comment) {
-            chatManager.chatShare(authManager.getPhoneNo(), authManager.getUsrToken(), chatManager.getRelationshipId(), originalChatId, "facebook", access_Token, mshr_comment.getText().toString(), "yes");*/
-
-
         }
 
     }

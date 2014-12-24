@@ -1104,8 +1104,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                        ImageView mSpeakerImage = (ImageView) row.findViewById(R.id.iv_play_btn_);
                        mSpeakerImage.setVisibility(View.VISIBLE);
                    }
-                }
                 ((ImageView) row.findViewById(R.id.iv_type_two_share_icon_r)).setVisibility(View.GONE);
+                }
+
             }//end of share view at reciver side
 
 
@@ -1181,7 +1182,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 context.startActivity(i);
 
                 ChatManager chatManager = ModelManager.getInstance().getChatManager();
-                chatManager.chatShare(authM.getPhoneNo(), authM.getUsrToken(), item.relationshipId, item.chatId, item.sharingMedia, item.facebookToken, item.shareComment, "no");
+                chatManager.chatShare(authM.getPhoneNo(), authM.getUsrToken(), item.relationshipId, item.originalMessageID, item.sharingMedia, item.facebookToken, item.shareComment, "no");
 
             }
         });
@@ -1219,7 +1220,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 context.startActivity(i);
 
                 ChatManager chatManager = ModelManager.getInstance().getChatManager();
-                chatManager.chatShare(authM.getPhoneNo(), authM.getUsrToken(), item.relationshipId, item.chatId, item.sharingMedia, item.facebookToken, item.shareComment, "yes");
+                chatManager.chatShare(authM.getPhoneNo(), authM.getUsrToken(), item.relationshipId, item.originalMessageID, item.sharingMedia, item.facebookToken, item.shareComment, "yes");
 
             }
         });
