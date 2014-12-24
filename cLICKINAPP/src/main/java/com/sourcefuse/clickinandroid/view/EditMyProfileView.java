@@ -47,7 +47,7 @@ public class EditMyProfileView extends ClickInBaseView implements View.OnClickLi
     /* test code prafull */
     public static final int MEDIA_TYPE_IMAGE = 1;
     private static final String TAG = EditMyProfileView.class.getSimpleName();
-    private static final String IMAGE_DIRECTORY_NAME = "FootGloryFlow Application";
+    private static final String IMAGE_DIRECTORY_NAME = "Clickin";
     private Button clickToSave;
     private ImageView mySelfy, OpenGallery, OpenCamera;
     private EditText myName, myLast, myEmail, myCity, myCountry;

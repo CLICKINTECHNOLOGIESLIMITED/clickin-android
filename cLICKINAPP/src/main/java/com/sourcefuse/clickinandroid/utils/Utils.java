@@ -16,6 +16,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.drawable.ColorDrawable;
+import android.media.AudioManager;
 import android.media.ExifInterface;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
@@ -77,6 +78,7 @@ public class
     private static Dialog dialog;
     private static Uri mImageCaptureUri;
     public AuthManager authManager;
+    private static MediaPlayer mplayer;
 
     public static void launchBarDialog(Activity activity) {
 
@@ -417,7 +419,13 @@ public class
             int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
             cursor.moveToFirst();
             return cursor.getString(column_index);
-        } finally {
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+            Log.e("on error in real path------>",e.toString());
+            return  "";
+        }
+        finally {
             if (cursor != null) {
                 cursor.close();
             }
@@ -1034,29 +1042,44 @@ public class
     public static void playSound(Activity activity, int resID) {
 
 
-        boolean check;
-
-        final MediaPlayer mplayer;
-        mplayer = MediaPlayer.create(activity, resID);
         SettingManager mSettingManager = ModelManager.getInstance().getSettingManager();
 
         if (mSettingManager.isAppSounds()) {
             try {
-                android.util.Log.e("Utils App Sound", "Sounds Enabled");
-                //      if(check)
-                mplayer.start();
-//                else
-//                    mplayer.stop();
+                Log.e("Utils App Sound", "Sounds Enabled");
+
+                if (mplayer == null) {
+                    mplayer = MediaPlayer.create(activity, resID);
+                    mplayer.setLooping(false);
+                    mplayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                    if (!mplayer.isPlaying())
+                        mplayer.start();
+
+                    mplayer.setVolume(100, 100);
+                    mplayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                        @Override
+                        public void onCompletion(MediaPlayer mediaPlayer) {
+                            mplayer.release();
+                            mplayer = null;
+                        }
+                    });
+                }
+
+            } catch (IllegalArgumentException e) {
+                Log.e("You might not set the URI correctly!", "" + e.toString());
+            } catch (SecurityException e) {
+                Log.e("You might not set the URI correctly!", "" + e.toString());
+            } catch (IllegalStateException e) {
+                Log.e("You might not set the URI correctly!", "" + e.toString());
             } catch (Exception e) {
                 e.printStackTrace();
+                Log.e("Utils App error", "" + e.toString());
             }
         } else {
-            android.util.Log.e("Utils App Sound", "Sounds Disabled");
+            Log.e("Utils App Sound", "Sounds Disabled");
         }
 
-
     }
-
 
     //monika- code to
 
@@ -1088,6 +1111,8 @@ public class
 
     }
 
+
+
     //monika-function to update clicks for background messages
     public static void updateClicksBackgroundMsgs(int relationIndex,ChatMessageBody obj){
         ArrayList<GetrelationshipsBean>tempAcceptlist=ModelManager.getInstance().getRelationManager().acceptedList;
@@ -1099,34 +1124,52 @@ public class
             int tempPartnerClicks = Integer.parseInt(partnerClicks);
             int tempClicks;
             RelationManager manager = ModelManager.getInstance().getRelationManager();
-            if (obj.clicks.equalsIgnoreCase("05")) {
-                tempClicks = 5;
-            } else {
-                tempClicks = Integer.parseInt(obj.clicks);
-            }
+
             //check card is there or not
             if(!Utils.isEmptyString(obj.card_owner)){
-                //if we send the card, then clicks will get subtracted from our clicks
-                if(obj.card_originator.equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getUserId())){
-                    tempOurClicks=tempOurClicks-tempClicks;
-                    tempPartnerClicks=tempPartnerClicks+tempClicks;
-                }else{
+                if(obj.card_Accepted_Rejected.equalsIgnoreCase("accepted")) {
+                    if (obj.clicks.equalsIgnoreCase("05")) {
+                        tempClicks = 5;
+                    } else {
+                        tempClicks = Integer.parseInt(obj.clicks);
+                    }
+                    //if we send the card, then clicks will get subtracted from our clicks
+                    if (obj.card_originator.equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getUserId())) {
+                        tempOurClicks = tempOurClicks - tempClicks;
+                        tempPartnerClicks = tempPartnerClicks + tempClicks;
+                    } else {
+                        tempOurClicks = tempOurClicks + tempClicks;
+                        tempPartnerClicks = tempPartnerClicks - tempClicks;
+                    }
+                }
+            }else{
+                if (obj.clicks.equalsIgnoreCase("05")) {
+                    tempClicks = 5;
+                } else {
+                    tempClicks = convertToIntClicks(obj.clicks.substring(1));
+                }
+
+                //if card is not there, then clicks will be calculated from ours only
+                if(obj.clicks.startsWith("+")){
                     tempOurClicks=tempOurClicks+tempClicks;
-                    tempPartnerClicks=tempPartnerClicks-tempClicks;
+                }else if(obj.clicks.startsWith("-")){
+                    tempOurClicks=tempOurClicks-tempClicks;
                 }
 
             }
 
-            //if card is not there, then clicks will be calculated from ours only
-            if(obj.clicks.startsWith("+")){
-                tempOurClicks=tempOurClicks+tempClicks;
-            }else if(obj.clicks.startsWith("-")){
-                tempOurClicks=tempOurClicks-tempClicks;
-            }
 
             temp.setUserClicks(String.valueOf(tempOurClicks));
             temp.setClicks(String.valueOf(tempPartnerClicks));
         }
+    }
+
+    public static void updateClicksInRelationshipList(int relationListIndex) {
+
+        //monika-swap values as per naming convention on server
+        ModelManager.getInstance().getRelationManager().acceptedList.get(relationListIndex).setClicks( ModelManager.getInstance().getRelationManager().partnerClicks);
+        ModelManager.getInstance().getRelationManager().acceptedList.get(relationListIndex).setUserClicks(ModelManager.getInstance().getAuthorizationManager().ourClicks);
+
     }
 }
 

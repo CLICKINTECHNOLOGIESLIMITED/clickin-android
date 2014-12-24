@@ -121,7 +121,7 @@ public class AttributionIdentifiers {
             }
             c.close();
         } catch (Exception e) {
-            Log.d(TAG, "Caught unexpected exception in getAttributionId(): " + e.toString());
+            android.util.Log.d(TAG, "Caught unexpected exception in getAttributionId(): " + e.toString());
             return null;
         }
 

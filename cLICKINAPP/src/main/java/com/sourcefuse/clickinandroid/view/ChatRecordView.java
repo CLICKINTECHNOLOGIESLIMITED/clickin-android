@@ -3,6 +3,7 @@ package com.sourcefuse.clickinandroid.view;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ComponentName;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -57,6 +58,7 @@ import com.sourcefuse.clickinandroid.model.ChatManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
 import com.sourcefuse.clickinandroid.model.bean.ChatMessageBody;
+import com.sourcefuse.clickinandroid.model.bean.GetrelationshipsBean;
 import com.sourcefuse.clickinandroid.services.MyQbChatService;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.AudioUtil;
@@ -72,6 +74,7 @@ import org.jivesoftware.smack.packet.DefaultPacketExtension;
 import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smack.packet.Presence;
 
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -124,7 +127,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     private SeekBar mybar;
     private TextView pos, neg, profileName, typingtext, myclicksView, partnerClicksView;
     private Button send, btnToCard;
-    private int relationListIndex;
+    private int relationListIndex=-1;
     private String qBId, partnerPic, partnerName, partnerId, partnerPh, myClicks, partnerClicks;
     private ChatManager chatManager;
     private AuthManager authManager;
@@ -225,15 +228,33 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         return mediaFile;
     }
 
-    public static String writePhotoJpg(Bitmap data, String pathName) {
-        String thumbpath = pathName + ".jpg";
+    public String writePhotoJpg(Bitmap data, String pathName) {
+        Random mRandom = new Random();
+        int mName = mRandom.nextInt();
+        mName = Math.abs(mName);
+
+        String thumbpath = "/storage/emulated/0/ClickIn/Clickin/Images" +mName+ ".jpg";
         File file = new File(thumbpath);
         try {
-            file.createNewFile();
+           /* file.mkdirs();
+            file.setWritable(true);
+            file.setReadable(true);*/
             FileOutputStream os = new FileOutputStream(file);
-            data.compress(Bitmap.CompressFormat.JPEG, 50, os);
+            BufferedOutputStream bos = new BufferedOutputStream(os);
+
+            data.compress(Bitmap.CompressFormat.JPEG, 50, bos);
             os.flush();
             os.close();
+
+            /* to show image in gallery */
+
+            ContentValues values = new ContentValues();
+            values.put(MediaStore.Images.Media.DATA, thumbpath);
+            values.put(MediaStore.Images.Media.DATE_TAKEN, file.lastModified());
+            Uri mImageCaptureUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values); // to notify change
+            getContentResolver().notifyChange(Uri.parse(thumbpath), null);
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -250,7 +271,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         ModelManager.getInstance().getChatManager().chatMessageList.clear();
         setlist();
         //  setlist();
-      //  Intent i = new Intent(this, MyQbChatService.class);
+        //  Intent i = new Intent(this, MyQbChatService.class);
         //bindService(i, mConnection, Context.BIND_AUTO_CREATE);
         addMenu(false);
         slidemenu.setTouchModeAbove(2);
@@ -465,44 +486,6 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         Utils.dismissBarDialog();
 
     }
-   /*
-    ///mukesh
-    QBChatRoster roster = QbChatService.getInstance().registerRoster(new QBChatRoster.QBRosterListener() {
-        @Override
-        public void entriesDeleted(Collection<String> users) {
-
-        }
-
-        @Override
-        public void entriesAdded(Collection<String> users) {
-            //List<Integer> usersId = qbChatRoster.getUsersId();
-            for (String s : users) {
-                Log.i(TAG, "roster added="+s);
-            }
-        }
-
-        @Override
-        public void entriesUpdated(Collection<String> users) {
-            for (String s : users) {
-                Log.i(TAG, "roster updated="+s);
-            }
-        }
-
-        @Override
-        public void presenceChanged(Presence presence) {
-            Log.i(TAG, "presence changed="+presence.getFrom() + " "+presence.getType());
-        }
-    });
-*/
-
-
-
-
-
-    ////Mukesh
-
-
-
 
     @Override
     protected void onPause() {
@@ -678,6 +661,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 chatManager.chatMessageList.clear();
                 chatManager.fetchChatRecord(rId, authManager.getPhoneNo(), authManager.getUsrToken(), "");
             } else {
+                int listsize = chatManager.chatMessageList.size();
+                chatListView.getRefreshableView().setSelection(0);
                 Utils.dismissBarDialog();
             }
 
@@ -727,18 +712,18 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                         chatText.setText("");
                         seekValue = 0;
                         mybar.setProgress(10);
-                       // android.util.android.util.Log.e("in 1--------->", "in 1--------->");
+                        // android.util.android.util.Log.e("in 1--------->", "in 1--------->");
                     } else if (mImageCaptureUri != null) {//image is attachedd
                         CHAT_TYPE = Constants.CHAT_TYPE_IMAGE;
                         sendMsgToQB(path);
-                       // android.util.android.util.Log.e("in 2--------->", "in 2--------->");
+                        // android.util.android.util.Log.e("in 2--------->", "in 2--------->");
                     } else if (!Utils.isEmptyString(audioFilePath)) { //Audio is attached
                         //android.util.android.util.Log.e("in 3--------->", "in 3--------->");
                         CHAT_TYPE = Constants.CHAT_TYPE_AUDIO;
                         sendMsgToQB(audioFilePath);
 
                     } else if (!Utils.isEmptyString(videofilePath)) { //Video is attached
-                       // android.util.android.util.Log.e("in 4--------->", "in 4--------->");
+                        // android.util.android.util.Log.e("in 4--------->", "in 4--------->");
                         CHAT_TYPE = Constants.CHAT_TYPE_VIDEO;
                         sendMsgToQB(videofilePath);
                     }
@@ -771,6 +756,16 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 break;
 
             case R.id.iv_attach:
+
+                // to set previous values to null once image is pressed again
+
+                attachBtn.setImageBitmap(null);
+                attachBtn.setImageResource(R.drawable.attachedfileiconx);
+
+                mImageCaptureUri = null;
+                audioFilePath = null;
+                videofilePath = null;
+
                 if (showAttachmentView) {
                     Utils.playSound(ChatRecordView.this, R.raw.menu_attachments);//akshit code to play app sound
                     if (llAttachment.getVisibility() == View.GONE) {
@@ -846,7 +841,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     }
 
     //monika-fucntion to upload file on Qb
-    private void uploadImageFileOnQB(String tempUrl, String msgId, int type) {
+    private void uploadImageFileOnQB(final String tempUrl, String msgId, int type) {
         System.out.println("tempUrl---> " + tempUrl);
         File mfile = new File(tempUrl);
         final String chatId = msgId;
@@ -865,6 +860,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             public void onError(List<String> errors) {
                 // error
                 android.util.Log.e(TAG, "uploadImageFileOnQB--> " + "error");
+                android.util.Log.e(TAG, "uploadImageFileOnQB--> " + errors);
+                android.util.Log.e(TAG, "uploadImageFileOnQB tempUrl --> " + tempUrl);
             }
         });
 
@@ -1171,16 +1168,23 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
     protected void onResume(){
         super.onResume();
-        myclicksView.setText("" + ModelManager.getInstance().getAuthorizationManager().ourClicks);
-        partnerClicksView.setText("" + ModelManager.getInstance().getRelationManager().partnerClicks);
-        //add relationship id in receive messages, so we can get them back from db-monika
-      //  if(ModelManager.getInstance().getChatManager().chatMessageList !=null)
-        int size = ModelManager.getInstance().getChatManager().chatMessageList.size();
-//        ChatMessageBody currentMsg = chatManager.chatMessageList.get(size - 1);
-  //      currentMsg.relationshipId = rId;
-        updateClicksInRelationshipList();
+        if(relationListIndex == -1){
+            searchRelationIndex();
+        }
+
+        //fetch latest clicks from accepted list everytime
+        int size=ModelManager.getInstance().getRelationManager().acceptedList.size();
+        if(relationListIndex<size) {
+            GetrelationshipsBean tempObj = ModelManager.getInstance().getRelationManager().acceptedList.get(relationListIndex);
+            ModelManager.getInstance().getAuthorizationManager().ourClicks=tempObj.getUserClicks();
+            ModelManager.getInstance().getRelationManager().partnerClicks=tempObj.getClicks();
+            myclicksView.setText("" + ModelManager.getInstance().getAuthorizationManager().ourClicks);
+            partnerClicksView.setText("" + ModelManager.getInstance().getRelationManager().partnerClicks);
+        }
+
+
         if(adapter!=null)
-        adapter.notifyDataSetChanged();
+            adapter.notifyDataSetChanged();
 
     }
 
@@ -1203,7 +1207,9 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                         public void run() {
                             // TODO Auto-generated method stub
                             if (chatListSize > 0) {
-                                chatListView.getRefreshableView().setSelection(chatListSize - 1);
+                                // show last chat when use pull to refresh --"Mukesh"
+                                int listsize = chatManager.chatMessageList.size();
+                                chatListView.getRefreshableView().setSelection((listsize-chatListSize));
                             }
                         }
                     });
@@ -1220,20 +1226,27 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
             /* on dismiss */
             Utils.dismissBarDialog();
-           // android.util.android.util.Log.d("2", "message->" + message);
+            // android.util.android.util.Log.d("2", "message->" + message);
         } else if (message.equalsIgnoreCase("FecthChat Network Error")) {
             Utils.fromSignalDialog(ChatRecordView.this, AlertMessage.connectionError);
-          //  android.util.android.util.Log.d("3", "message->" + message);
+            //  android.util.android.util.Log.d("3", "message->" + message);
         } else if (message.equalsIgnoreCase("Chat Message Recieve")) {
-            myclicksView.setText("" + authManager.ourClicks);
-            partnerClicksView.setText("" + relationManager.partnerClicks);
-            //add relationship id in receive messages, so we can get them back from db-monika
-            int size = chatManager.chatMessageList.size();
-            ChatMessageBody currentMsg = chatManager.chatMessageList.get(size - 1);
-            currentMsg.relationshipId = rId;
-            updateClicksInRelationshipList();
+            if(relationListIndex == -1){
+                searchRelationIndex();
+            }
+            int size=ModelManager.getInstance().getRelationManager().acceptedList.size();
+            if(relationListIndex<size) {
+                GetrelationshipsBean tempObj = ModelManager.getInstance().getRelationManager().acceptedList.get(relationListIndex);
+                ModelManager.getInstance().getAuthorizationManager().ourClicks=tempObj.getUserClicks();
+                ModelManager.getInstance().getRelationManager().partnerClicks=tempObj.getClicks();
+                myclicksView.setText("" + ModelManager.getInstance().getAuthorizationManager().ourClicks);
+                partnerClicksView.setText("" + ModelManager.getInstance().getRelationManager().partnerClicks);
+            }
+
+
+
             adapter.notifyDataSetChanged();
-          //  new DBTask().execute(rId);
+            //  new DBTask().execute(rId);
         } else if (message.equalsIgnoreCase("Composing YES")) {
             typingtext.setVisibility(View.VISIBLE);
             typingtext.setText("Typing..");
@@ -1286,14 +1299,14 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                                 startActivityForResult(intent, Constants.CROP_PICTURE);
                             } catch (Exception e) {
                                 e.printStackTrace();
-                              //  android.util.android.util.Log.e("exception 5 --->", "exception 5--->");
+                                //  android.util.android.util.Log.e("exception 5 --->", "exception 5--->");
                             }
                         }
                         mImageCaptureUri = Utils.decodeUri(ChatRecordView.this, mImageCaptureUri, 550);
                         path = Utils.getRealPathFromURI(mImageCaptureUri, this);
                         currentImagepath = mImageCaptureUri.toString();
-                      //  android.util.android.util.Log.e("uri---->", "" + mImageCaptureUri);
-                      //  android.util.android.util.Log.e("uri path ---->", "" + path);
+                        //  android.util.android.util.Log.e("uri---->", "" + mImageCaptureUri);
+                        //  android.util.android.util.Log.e("uri path ---->", "" + path);
 
                         break;
                     case Constants.SELECT_PICTURE:
@@ -1321,7 +1334,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                                 startActivityForResult(intent, Constants.CROP_PICTURE);
                             } catch (Exception e) {
                                 e.printStackTrace();
-                              //  android.util.android.util.Log.e("exception 6 --->", "exception 6--->");
+                                //  android.util.android.util.Log.e("exception 6 --->", "exception 6--->");
                             }
                         }
                         mImageCaptureUri = Utils.decodeUri(ChatRecordView.this, data.getData(), 550);
@@ -1329,7 +1342,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                         currentImagepath = mImageCaptureUri.toString();
 
                         //android.util.android.util.Log.e("uri---->", "" + mImageCaptureUri);
-                       // android.util.android.util.Log.e("uri---->", "" + path);
+                        // android.util.android.util.Log.e("uri---->", "" + path);
 
                         break;
                     case VideoUtil.REQUEST_VIDEO_CAPTURED:
@@ -1338,8 +1351,12 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                             videofilePath = VideoUtil.videofilePath;
                             Bitmap bMap = ThumbnailUtils.createVideoThumbnail(VideoUtil.videofilePath, MediaStore.Video.Thumbnails.MICRO_KIND);
                             if (videofilePath.contains(".mp4")) {
-                                thumurl = videofilePath.replace(".mp4", "thumb");
+                                Random mRandom = new Random();
+                                int mName = mRandom.nextInt();
+                                mName = Math.abs(mName);
+                                thumurl = videofilePath.replace(".mp4", "" + mName);
                                 thumurl = writePhotoJpg(bMap, thumurl);
+                                //thumurl = Utils.getRealPathFromURI(Uri.parse(thumurl),ChatRecordView.this);
                             }
                             attachBtn.setImageBitmap(bMap);
                             //akshit code to check wether image buton contains image or not;
@@ -1355,12 +1372,16 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                         }
                         break;
                     case VideoUtil.REQUEST_VIDEO_CAPTURED_FROM_GALLERY:
-                        mImageCaptureUri = data.getData();
-                        path = Utils.getRealPathFromURI(mImageCaptureUri, ChatRecordView.this);
+                        // mImageCaptureUri = data.getData();
+                        path = Utils.getRealPathFromURI(data.getData(), ChatRecordView.this);
                         videofilePath = path;
                         Bitmap bMap = ThumbnailUtils.createVideoThumbnail(VideoUtil.videofilePath, MediaStore.Video.Thumbnails.MICRO_KIND);
                         if (videofilePath.contains(".mp4")) {
-                            thumurl = videofilePath.replace(".mp4", "thumb");
+                            Random mRandom = new Random();
+                            int mName = mRandom.nextInt();
+                            mName = Math.abs(mName);
+
+                            thumurl = videofilePath.replace(".mp4", "" + mName);
                             thumurl = writePhotoJpg(bMap, thumurl);
                         }
                         attachBtn.setImageBitmap(bMap);
@@ -1386,7 +1407,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                             intent1.putExtra(MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
                             startActivityForResult(intent1, Constants.CAMERA_REQUEST);
                         } else if (data.getStringExtra("retake").equalsIgnoreCase("fromchatGallery")) {
-                           // android.util.android.util.Log.e("in 2---->", "in 2---->");
+                            // android.util.android.util.Log.e("in 2---->", "in 2---->");
                             Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                             startActivityForResult(pickPhoto, Constants.SELECT_PICTURE);
                         } else if (authManager.getmResizeBitmap() != null) {
@@ -1394,6 +1415,16 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                             ImageView view = (ImageView) findViewById(R.id.iv_attach);
                             view.setImageBitmap(authManager.getmResizeBitmap());
                             authManager.setmResizeBitmap(null);
+
+                            String mPath = data.getStringExtra("path");
+
+                            android.util.Log.e("path after crop------>", "" + mPath);
+
+                            //mImageCaptureUri = Uri.parse(path);
+                            path = mPath;
+                            //currentImagepath = mImageCaptureUri.toString();
+
+                            android.util.Log.e("real path after crop------>", "" + path);
 
                             //akshit code to check wether image buton contains image or not;
                             if (view.getDrawable().getConstantState() == getResources().getDrawable(R.drawable.r_footer_icon).getConstantState()) {
@@ -1427,7 +1458,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             //android.util.android.util.Log.e("point 7", "point 7");
             //android.util.android.util.Log.d(TAG, "" + e);
         } catch (Error e) {
-           // android.util.android.util.Log.e("point 8", "point 8");
+            // android.util.android.util.Log.e("point 8", "point 8");
             //android.util.android.util.Log.d(TAG, "" + e);
         }
     }
@@ -1857,7 +1888,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 // get Chat record From server
             chatManager = ModelManager.getInstance().getChatManager();
             chatManager.chatListFromServer.clear();
-
+            relationListIndex = bundle.getInt("relationListIndex");
             //chatManager.fetchChatRecord(rId, authManager.getPhoneNo(), authManager.getUsrToken(),"");
 
 
@@ -2048,6 +2079,27 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             sendMsgToQB(imagepath);
             Utils.dismissBarDialog();
         }
+    }
+
+    public void searchRelationIndex() {
+        if (ModelManager.getInstance().getChatManager().chatMessageList.size() > 0) {
+            ChatMessageBody tempObj = ModelManager.getInstance().getChatManager().chatMessageList.get(0);
+
+            int relationIndex = -1;
+            ArrayList<GetrelationshipsBean> partnerList = ModelManager.getInstance().getRelationManager().acceptedList;
+            for (GetrelationshipsBean temp : partnerList) {
+                relationIndex++;
+                if (temp.getRelationshipId().equalsIgnoreCase(tempObj.relationshipId)) {
+                    break;
+                    //update clicks value in accepted list
+
+                }
+            }
+
+            relationListIndex = relationIndex;
+        }
+
+
     }
 }
 

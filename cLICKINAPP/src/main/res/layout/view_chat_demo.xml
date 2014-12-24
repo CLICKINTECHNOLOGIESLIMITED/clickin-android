@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="2dp"
                 android:layout_marginTop="2dp"
-                android:text="mahi"
+
 
                 android:textColor="@color/signin_color" />
 
@@ -200,7 +200,7 @@
                     android:maxEms="12"
                     android:padding="2dp"
                     android:singleLine="false"
-                    android:text="hi "
+
                     android:textColor="@color/black"
                     android:textSize="14sp"
                     android:visibility="gone" />

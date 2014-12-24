@@ -327,13 +327,13 @@ public final class Utility {
 
     public static void logd(String tag, Exception e) {
         if (BuildConfig.DEBUG && tag != null && e != null) {
-            Log.d(tag, e.getClass().getSimpleName() + ": " + e.getMessage());
+            android.util.Log.d(tag, e.getClass().getSimpleName() + ": " + e.getMessage());
         }
     }
 
     public static void logd(String tag, String msg) {
         if (BuildConfig.DEBUG && tag != null && msg != null) {
-            Log.d(tag, msg);
+            android.util.Log.d(tag, msg);
         }
     }
 

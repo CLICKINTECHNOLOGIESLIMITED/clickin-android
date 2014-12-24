@@ -31,13 +31,9 @@ import com.quickblox.module.auth.model.QBSession;
 import com.quickblox.module.chat.QBChat;
 import com.quickblox.module.chat.QBChatService;
 import com.quickblox.module.chat.QBPrivateChat;
-import com.quickblox.module.chat.QBRoster;
 import com.quickblox.module.chat.exception.QBChatException;
 import com.quickblox.module.chat.listeners.QBMessageListener;
-import com.quickblox.module.chat.listeners.QBRosterListener;
-import com.quickblox.module.chat.listeners.QBSubscriptionListener;
 import com.quickblox.module.chat.model.QBChatMessage;
-import com.quickblox.module.chat.model.QBPresence;
 import com.quickblox.module.users.model.QBUser;
 import com.sourcefuse.clickinandroid.dbhelper.ClickinDbHelper;
 import com.sourcefuse.clickinandroid.model.AuthManager;
@@ -61,7 +57,6 @@ import org.json.XML;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.List;
 import java.util.TimeZone;
 import java.util.regex.Pattern;
@@ -87,7 +82,6 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
     private QBPrivateChat chatObject;
     private AuthManager authManager;
     private QBUser mUser;
-    private QBRoster chatRoster;
 
     public ChatThread(Application context, Handler handler) {
         application = context;
@@ -95,7 +89,7 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
         authManager = ModelManager.getInstance().getAuthorizationManager();
 
         QBSettings.getInstance().fastConfigInit(Constants.CLICKIN_APP_ID, Constants.CLICKIN_AUTH_KEY, Constants.CLICKIN_AUTH_SECRET);
-      //   QBSettings.getInstance().setServerApiDomain("apiclickin.quickblox.com");
+        //   QBSettings.getInstance().setServerApiDomain("apiclickin.quickblox.com");
         //QBSettings.getInstance().setContentBucketName("qb-clickin");
         //QBSettings.getInstance().setChatServerDomain("chatclickin.quickblox.com");
         QBChatService.setDebugEnabled(true);
@@ -280,14 +274,6 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
 
                 //monika-connection listener
                 QBChatService.getInstance().addConnectionListener(this);
-
-                chatRoster = QBChatService.getInstance().getRoster(QBRoster.SubscriptionMode.mutual, subscriptionListener);
-                chatRoster.addRosterListener(rosterListener);
-
-
-
-                
-
             }else{
                 showDialog("Please Sign in again");
             }
@@ -313,59 +299,8 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
     }
 
 
-    QBRosterListener rosterListener = new QBRosterListener() {
-        @Override
-        public void entriesDeleted(Collection<Integer> userIds) {
-
-        }
-
-        @Override
-        public void entriesAdded(Collection<Integer> userIds) {
-
-        }
-
-        @Override
-        public void entriesUpdated(Collection<Integer> userIds) {
-
-        }
-
-        @Override
-        public void presenceChanged(QBPresence presence) {
-
-        }
-    };
-
-    QBSubscriptionListener subscriptionListener = new QBSubscriptionListener() {
-        @Override
-        public void subscriptionRequested(int userId) {
-
-        }
-    };
-
-
-    public  boolean getPresence(int userId){
-
-        boolean isOnline = false;
-        QBPresence presence = chatRoster.getPresence(userId);
-        /*if (presence == null) {
-            // No user in your roster
-            return;
-        }*/
-
-        if (presence.getType() == QBPresence.Type.online) {
-            // User is online
-            isOnline = true;
-        }else{
-            // User is offline
-            isOnline = false;
-        }
-        return isOnline;
-    }
-
-
-
-
     @Override
+
     public void processMessage(QBChat qbChat, QBChatMessage qbChatMessage) {
         android.util.Log.e(TAG, "processMessage--->");
         JSONObject jSONObj = null;
@@ -514,7 +449,7 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
                     chatObject = QBChatService.getInstance().getPrivateChatManager().getChat(partnerQBId);
                     if (chatObject == null) {
                         chatObject = QBChatService.getInstance().getPrivateChatManager().createChat(partnerQBId, ChatThread.this);
-                       Log.e(TAG ,"  R U ON LINE    "+getPresence(partnerQBId));
+                      // Log.e(TAG ,"  R U ON LINE    "+getPresence(partnerQBId));
                     }
 
                 }
@@ -574,6 +509,9 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
             }
         }
 
+        if(!Utils.isEmptyString(obj.clicks) && !obj.clicks.equalsIgnoreCase("no"))
+            Utils.updateClicksBackgroundMsgs(relationIndex,obj);
+
         //check whether our activity is on top or not
         ActivityManager am = (ActivityManager)application.getSystemService(Application.ACTIVITY_SERVICE);
         List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
@@ -581,23 +519,24 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
         String className = componentInfo.getClassName();
         if (obj.senderQbId.equalsIgnoreCase(authManager.partnerQbId)){
             if (className.equalsIgnoreCase("com.sourcefuse.clickinandroid.view.ChatRecordView")) {
-            ModelManager.getInstance().getChatManager().chatMessageList.add(obj);
-            EventBus.getDefault().postSticky("Chat Message Recieve");
-          //  saveMessageInDB(temp);
-            }else{
-                //only if clicks are there
-             //   if(!Utils.isEmptyString(obj.clicks) && !obj.clicks.equalsIgnoreCase("no"))
-               // Utils.updateClicksBackgroundMsgs(relationIndex,obj);
-                EventBus.getDefault().postSticky("UpdateMessageCounter###"+partnerRId);
                 ModelManager.getInstance().getChatManager().chatMessageList.add(obj);
-                EventBus.getDefault().postSticky("Chat Message Recieve");
+                EventBus.getDefault().post("Chat Message Recieve");
+                //  saveMessageInDB(temp);
+            }else{
+
+                GetrelationshipsBean tempObject=partnerList.get(relationIndex);
+                tempObject.setUnreadMsg(tempObject.getUnreadMsg()+1);
+                EventBus.getDefault().post("UpdateMessageCounter###"+partnerRId);
+                ModelManager.getInstance().getChatManager().chatMessageList.add(obj);
+                //EventBus.getDefault().post("Chat Message Recieve");
             }
         }else {
             //only if clicks are there
-            if(!Utils.isEmptyString(obj.clicks) && !obj.clicks.equalsIgnoreCase("no"))
-                Utils.updateClicksBackgroundMsgs(relationIndex,obj);
+
             Log.e("post value------>",""+partnerRId);
-            EventBus.getDefault().postSticky("UpdateMessageCounter###"+partnerRId);
+            GetrelationshipsBean tempObject=partnerList.get(relationIndex);
+            tempObject.setUnreadMsg(tempObject.getUnreadMsg()+1);
+            EventBus.getDefault().post("UpdateMessageCounter###"+partnerRId);
         }
         if (!Utils.isEmptyString(partnerRId)) {
             if (messageInDb != null) {
@@ -719,4 +658,3 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
         dialog.show();
     }
 }
-

@@ -121,7 +121,7 @@ public class PullToRefreshLayout extends FrameLayout {
     @Override
     public final boolean onInterceptTouchEvent(MotionEvent event) {
         if (DEBUG) {
-            Log.d(LOG_TAG, "onInterceptTouchEvent. " + event.toString());
+            android.util.Log.d(LOG_TAG, "onInterceptTouchEvent. " + event.toString());
         }
         if (isEnabled() && mPullToRefreshAttacher != null && getChildCount() > 0) {
             return mPullToRefreshAttacher.onInterceptTouchEvent(event);
@@ -132,7 +132,7 @@ public class PullToRefreshLayout extends FrameLayout {
     @Override
     public final boolean onTouchEvent(MotionEvent event) {
         if (DEBUG) {
-            Log.d(LOG_TAG, "onTouchEvent. " + event.toString());
+            android.util.Log.d(LOG_TAG, "onTouchEvent. " + event.toString());
         }
         if (isEnabled() && mPullToRefreshAttacher != null) {
             return mPullToRefreshAttacher.onTouchEvent(event);

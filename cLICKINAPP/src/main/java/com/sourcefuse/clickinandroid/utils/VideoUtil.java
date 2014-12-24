@@ -18,7 +18,7 @@ import java.io.File;
 public class VideoUtil {
     public static final int REQUEST_VIDEO_CAPTURED = 99;
     public static final int REQUEST_VIDEO_CAPTURED_FROM_GALLERY = 100;
-    private static final String VIDEO_RECORDER_FOLDER = "/ClickIn/Video";
+    private static final String VIDEO_RECORDER_FOLDER = "ClickIn/Clickin/Video";
     public static String videofilePath = null;
     private static Uri fileUri = null;
     public Dialog mdialog;
@@ -66,51 +66,7 @@ public class VideoUtil {
         dialog.dismiss();
 
 
-        /*final Dialog mdialog = new Dialog(contex);
-        mdialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        mdialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        *//*mdialog.getWindow().setSoftInputMode(
-                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);*//*
-        mdialog.setContentView(R.layout.alert_take_vedio);
-        mdialog.setCancelable(false);
 
-        TextView takepicture = (TextView) mdialog.findViewById(R.id.take_picture);
-        TextView gallery = (TextView) mdialog.findViewById(R.id.from_gallery);
-        Button cancel = (Button) mdialog.findViewById(R.id.dialog_cancel);
-        takepicture.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                try {
-                    Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-                    fileUri = getOutputMediaFileUri();
-                    intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
-                    intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, REQUEST_VIDEO_CAPTURED);
-                    contex.startActivityForResult(intent, REQUEST_VIDEO_CAPTURED);
-                } catch (ActivityNotFoundException e) {
-                }
-                mdialog.dismiss();
-
-
-            }
-        });
-        gallery.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-                photoPickerIntent.setType("video*//*");
-                contex.startActivityForResult(photoPickerIntent, REQUEST_VIDEO_CAPTURED_FROM_GALLERY);
-                mdialog.dismiss();
-            }
-        });
-
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mdialog.dismiss();
-            }
-        });
-        mdialog.show();*/
     }
 
     /**

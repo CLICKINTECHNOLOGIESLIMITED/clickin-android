@@ -677,7 +677,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
             EventBus.getDefault().unregister(this);
         }
 
-        EventBus.getDefault().register(this);
+        EventBus.getDefault().registerSticky(this);
     }
 
 
@@ -771,6 +771,11 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         setLeftMenuList();
     }
 
+    protected void onResume(){
+        super.onResume();
+        if(clickInadapter !=null)
+            clickInadapter.notifyDataSetChanged();
+    }
 
     public void onEventMainThread(String message) {
         Log.e("onEventMainThread", "onEventMainThread->");
@@ -778,7 +783,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         String mTestString = new String(message);
 
         if (mTestString.contains("UpdateMessageCounter###")) { /* prafulll code to set counter to zero */
-            String mMessage = new String(message);
+        /*    String mMessage = new String(message);
             String[] mSplit = mMessage.split("###", 2);
             String mRelationId = mSplit[1];
             Log.e("relation ship id on update counter ---->", "" + mRelationId);
@@ -789,8 +794,8 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 
                     Log.e("found---->", "found---->");
                 }
-            }
-
+            }*/
+            clickInadapter.notifyDataSetChanged();
         } else if (message.equalsIgnoreCase("SearchResult True")) {
             Log.e("on true---->", "on true");
             stopSearch = true;

@@ -218,27 +218,29 @@ public class FollowerAdapter extends ArrayAdapter<FollowerFollowingBean> {
         rholder.accBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-      /* condition for accept request   */
-                Utils.launchBarDialog((FollowerList)getContext());
-                FollowerList.mListchangeVariable_flag = true;
-                item.get(position).setAccepted("false");
-                item.get(position).setFollowingAccepted("true");
-                item.get(position).setIsFollowing("false");
                 authManager = ModelManager.getInstance().getAuthorizationManager();
                 relationManager = ModelManager.getInstance().getRelationManager();
-                profileManager.followers.get(position).setAccepted("false");
-                profileManager.followers.get(position).setFollowingAccepted("true");
-                profileManager.followers.get(position).setIsFollowing("false");
 
-                relationManager.followupdatestatus(profileManager.followers.get(position).getrFollowerId(), "true", authManager.getPhoneNo(), authManager.getUsrToken());
-                profileManager.Replacement.add(0, item.get(position));
-                profileManager.followers.remove(position);
-                profileManager.followers.add(profileManager.followers.size(), profileManager.Replacement.get(0));
-                profileManager.Replacement.clear();
-                profileManager.pfollowerList.add(profileManager.followRequesed.get(position));
-                profileManager.followRequesed.remove(position);
+      /* condition for accept request   */
+                if(profileManager.followers.size() >= position) {
+                    Utils.launchBarDialog((FollowerList) getContext());
+                    FollowerList.mListchangeVariable_flag = true;
+                    item.get(position).setAccepted("false");
+                    item.get(position).setFollowingAccepted("true");
+                    item.get(position).setIsFollowing("false");
+                ;
+                    profileManager.followers.get(position).setAccepted("false");
+                    profileManager.followers.get(position).setFollowingAccepted("true");
+                    profileManager.followers.get(position).setIsFollowing("false");
 
-
+                    relationManager.followupdatestatus(profileManager.followers.get(position).getrFollowerId(), "true", authManager.getPhoneNo(), authManager.getUsrToken());
+                    profileManager.Replacement.add(0, item.get(position));
+                    profileManager.followers.remove(position);
+                    profileManager.followers.add(profileManager.followers.size(), profileManager.Replacement.get(0));
+                    profileManager.Replacement.clear();
+                    profileManager.pfollowerList.add(profileManager.followRequesed.get(position));
+                    profileManager.followRequesed.remove(position);
+                }
                 android.util.Log.e(TAG, "Click - holder.Accept=" + item.get(position).getAccepted());
             }
         });

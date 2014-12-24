@@ -125,7 +125,7 @@ public class LoginButton extends Button {
             }
             if (currentSession != null && currentSession.isOpened()) {
                 if (!Utility.isSubset(permissions, currentSession.getPermissions())) {
-                    Log.e(TAG, "Cannot set additional permissions when session is already open.");
+                    android.util.Log.e(TAG, "Cannot set additional permissions when session is already open.");
                     return false;
                 }
             }

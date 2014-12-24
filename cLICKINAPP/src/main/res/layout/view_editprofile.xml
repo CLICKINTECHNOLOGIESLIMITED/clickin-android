@@ -45,6 +45,7 @@
             android:layout_weight="1"
             android:adjustViewBounds="true"
             android:paddingLeft="-1dp"
+            android:scaleType="fitXY"
             android:src="@drawable/c_selfie" />
 
 

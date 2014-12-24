@@ -48,6 +48,7 @@
                 android:layout_centerVertical="true"
                 android:text="@string/txt_share"
                 android:textColor="@color/white"
+                android:paddingBottom="8dp"
                 android:textSize="20sp"
                 android:textStyle="bold" />
         </RelativeLayout>

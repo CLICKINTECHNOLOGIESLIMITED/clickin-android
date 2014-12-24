@@ -141,6 +141,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     sendStatusView.setImageResource(R.drawable.double_check);
                     Picasso.with(context).load(temp.content_url).resize(300, 300).centerCrop().into(image_attached);
                 }
+
+
+
                 image_attached.setScaleType(ImageView.ScaleType.FIT_XY);
                 image_attached.setVisibility(View.VISIBLE);
   /* for map to set text location shared */
@@ -244,18 +247,32 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     row.findViewById(R.id.iv_type_two_share_icon_r).setVisibility(View.GONE);
                     sendStatusView.setImageResource(R.drawable.r_single_tick);
 
+
+/* case when thumb is not uploaded form server prafull*/
+                    Bitmap bitmap = null;
+                    if (!temp.video_thumb.contains("http")) {
+                        bitmap = Utils.path(Uri.parse(temp.video_thumb));
+                    }
+                    if (bitmap != null) {
+                        image_attached.setImageBitmap(bitmap);
+                    } else {
+                        Picasso.with(context).load(temp.video_thumb)
+                                .into(image_attached);
+                    }
+
                 } else if (!(Utils.isEmptyString(temp.isDelivered)) && temp.isDelivered.equalsIgnoreCase(Constants.MSG_SENT)) {
 
-                   // android.util.android.util.Log.e("in two video", "in two video");
+                    // android.util.android.util.Log.e("in two video", "in two video");
 
                     row.findViewById(R.id.pb_loding).setVisibility(View.GONE);
                     row.findViewById(R.id.iv_type_two_share_icon_r).setVisibility(View.VISIBLE);
                     sendStatusView.setImageResource(R.drawable.double_check);
+                    /* case when text is uploaded */
+                    Picasso.with(context).load(temp.video_thumb)
+                            .into(image_attached);
                 }
 
-                Picasso.with(context).load(temp.video_thumb)
 
-                        .into(image_attached);
 
                 image_attached.setScaleType(ImageView.ScaleType.FIT_XY);
                 image_attached.setVisibility(View.VISIBLE);
@@ -408,8 +425,17 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     mShareText.setVisibility(View.VISIBLE);
                     mShareText.setText("" + temp.textMsg);
                     mShareText.setTextColor(context.getResources().getColor(R.color.black));
+//                    RelativeLayout.LayoutParams mTextParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//                    mTextParams.setMargins(0, 0, 0, 100);
+//                    mShareLayout.setLayoutParams(mTextParams);
+                    // mShareLayout.setPadding(0,0,0,50);
                 } else {
+                    LinearLayout clicksArea = (LinearLayout) row.findViewById(R.id.clicks_area);
+                    clicksArea.setVisibility(View.VISIBLE);
+                    TextView chatText = (TextView) row.findViewById(R.id.long_chat_text); // prafull code
                     parent_shared_layout.setBackgroundResource(R.drawable.newbg_grey);
+                    chatText.setVisibility(View.VISIBLE);
+                    chatText.setTextColor(context.getResources().getColor(R.color.black));
                     chatText.setBackgroundResource(R.drawable.grey_square);
                     chatText.setText("" + temp.textMsg);
                     LinearLayout.LayoutParams mTextParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -494,6 +520,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     if (temp.textMsg.length() > Constants.CHAT_LENTH_LIMIT) {
                         mShareSort.setText(temp.textMsg.substring(0, 12));
                         mShareSort.setVisibility(View.VISIBLE);
+                        mShareLong.setText(temp.textMsg.substring(13));//akshit changes
                         mShareLong.setTextColor(context.getResources().getColor(R.color.white));
                         mShareLong.setVisibility(View.VISIBLE);
 
@@ -522,6 +549,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     ((RelativeLayout) row.findViewById(R.id.shared_header_view)).setVisibility(View.VISIBLE);
                     ((TextView) row.findViewById(R.id.shared_by_name)).setText("You");
                     ((TextView) row.findViewById(R.id.shared_message)).setText(" want to share");
+
+
+                    /* for share prafull code   */
                 }
                 ((ImageView) row.findViewById(R.id.iv_type_two_share_icon_r)).setVisibility(View.GONE);
             }//end of share view at Sender side
@@ -627,6 +657,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                /* for map to set text location shared */
 
             } else if (!Utils.isEmptyString(temp.content_url) && Utils.isEmptyString(temp.video_thumb)) {//start of audio-RECIVER case
+
 
                 ImageView mAudioImage = (ImageView) row.findViewById(R.id.iv_play_btn);
                 mAudioImage.setVisibility(View.VISIBLE);
@@ -1067,7 +1098,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     ((TextView) row.findViewById(R.id.shared_by_name)).setTextColor(Color.BLACK);//akshit Code
                     ((TextView) row.findViewById(R.id.shared_by_name)).setText(splitted[0]);
                     ((TextView) row.findViewById(R.id.shared_message)).setText(" wants to share");
+
                     ((LinearLayout) row.findViewById(R.id.parent_clicks_area_share)).setVisibility(View.GONE);
+                }
 
                     // Mukesh share audio layout
                    if(!Utils.isEmptyString(temp.content_url) && Utils.isEmptyString(temp.video_thumb) &&  Utils.isEmptyString(temp.imageRatio)){
@@ -1157,7 +1190,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 context.startActivity(i);
 
                 ChatManager chatManager = ModelManager.getInstance().getChatManager();
-                chatManager.chatShare(authM.getPhoneNo(), authM.getUsrToken(), item.relationshipId, item.originalMessageID, item.sharingMedia, item.facebookToken, item.shareComment, "no");
+                chatManager.chatShare(authM.getPhoneNo(), authM.getUsrToken(), item.relationshipId, item.chatId, item.sharingMedia, item.facebookToken, item.shareComment, "no");
 
             }
         });
@@ -1195,7 +1228,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 context.startActivity(i);
 
                 ChatManager chatManager = ModelManager.getInstance().getChatManager();
-                chatManager.chatShare(authM.getPhoneNo(), authM.getUsrToken(), item.relationshipId, item.originalMessageID, item.sharingMedia, item.facebookToken, item.shareComment, "yes");
+                chatManager.chatShare(authM.getPhoneNo(), authM.getUsrToken(), item.relationshipId, item.chatId, item.sharingMedia, item.facebookToken, item.shareComment, "yes");
 
             }
         });
@@ -1208,7 +1241,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
             //android.util.android.util.Log.e("open map--->", "open map--->");
             String coordinates = item.location_coordinates;
-           // android.util.android.util.Log.e("location coordinates-->", "" + coordinates);
+            // android.util.android.util.Log.e("location coordinates-->", "" + coordinates);
             Intent intent = new Intent(context, MapView.class);
             intent.putExtra("from", "chatrecord");
             intent.putExtra("coordinates", coordinates);
