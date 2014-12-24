@@ -425,17 +425,8 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     mShareText.setVisibility(View.VISIBLE);
                     mShareText.setText("" + temp.textMsg);
                     mShareText.setTextColor(context.getResources().getColor(R.color.black));
-//                    RelativeLayout.LayoutParams mTextParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-//                    mTextParams.setMargins(0, 0, 0, 100);
-//                    mShareLayout.setLayoutParams(mTextParams);
-                    // mShareLayout.setPadding(0,0,0,50);
                 } else {
-                    LinearLayout clicksArea = (LinearLayout) row.findViewById(R.id.clicks_area);
-                    clicksArea.setVisibility(View.VISIBLE);
-                    TextView chatText = (TextView) row.findViewById(R.id.long_chat_text); // prafull code
                     parent_shared_layout.setBackgroundResource(R.drawable.newbg_grey);
-                    chatText.setVisibility(View.VISIBLE);
-                    chatText.setTextColor(context.getResources().getColor(R.color.black));
                     chatText.setBackgroundResource(R.drawable.grey_square);
                     chatText.setText("" + temp.textMsg);
                     LinearLayout.LayoutParams mTextParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -1117,7 +1108,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 ((ImageView) row.findViewById(R.id.iv_type_two_share_icon_r)).setVisibility(View.GONE);
             }//end of share view at reciver side
 
-        }//end of reciver
+
 
 
         /* prafull code for clicklistener on image audio and video */
