@@ -1044,10 +1044,10 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 TextView mShareLong = (TextView) row.findViewById(R.id.long_chat_text_share);
                 ImageView mHertImage = (ImageView) row.findViewById(R.id.iv_clicks_heart_share);
                 mHertImage.setVisibility(View.VISIBLE);
+                mShareText.setVisibility(View.VISIBLE);
                 mShareText.setText(temp.clicks);
                 mShareText.setVisibility(View.VISIBLE);
                 if (!(Utils.isEmptyString(temp.textMsg))) {
-
 
                     if (temp.textMsg.length() > Constants.CHAT_LENTH_LIMIT) {
                         mShareSort.setText(temp.textMsg.substring(0, 12));
@@ -1056,6 +1056,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                         mShareLong.setVisibility(View.VISIBLE);
 
                     } else {
+                        mShareSort.setVisibility(View.VISIBLE);
                         mShareSort.setText(temp.textMsg);
                         mShareSort.setVisibility(View.VISIBLE);
                     }
@@ -1081,6 +1082,8 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     ((RelativeLayout) row.findViewById(R.id.shared_header_view)).setVisibility(View.GONE);
                     ((LinearLayout) row.findViewById(R.id.shared_footer_view)).setVisibility(View.GONE);
                 } else if (temp.shareStatus.equalsIgnoreCase("shared")) {
+
+
                     ((ImageView) row.findViewById(R.id.iv_type_two_share_icon_r)).setVisibility(View.GONE);
                     ((RelativeLayout) row.findViewById(R.id.shared_header_view)).setVisibility(View.VISIBLE);
                     ((LinearLayout) row.findViewById(R.id.shared_footer_view)).setVisibility(View.VISIBLE);

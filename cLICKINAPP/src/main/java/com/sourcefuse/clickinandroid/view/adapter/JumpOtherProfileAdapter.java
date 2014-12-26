@@ -65,8 +65,6 @@ public class JumpOtherProfileAdapter extends ArrayAdapter<ProfileRelationShipBea
             if (!item.getPartnerPic().equalsIgnoreCase("")) {
                 try {
                     Picasso.with(context).load(item.getPartnerPic())
-                            .skipMemoryCache()
-                            .error(R.drawable.male_user)
                             .into(rholder.usrimg);
                 } catch (Exception e) {
                     holder.usrimg.setImageResource(R.drawable.male_user);
