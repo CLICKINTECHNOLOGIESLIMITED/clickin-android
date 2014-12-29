@@ -512,9 +512,11 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
     }
 
+
     @Override
     protected void onPause() {
         super.onPause();
+        CHECK_ONLINE_STATUS_FLAG=false;
 
         //  new DBTask().execute(rId);
     }
@@ -1123,14 +1125,19 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
         Intent i = new Intent(this, MyQbChatService.class);
         bindService(i, mConnection, Context.BIND_AUTO_CREATE);
+        myHandler = new Handler();
+        myHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //code to check online status or not
+                if(!Utils.isEmptyString(ModelManager.getInstance().getAuthorizationManager().partnerQbId)){
 
-        try {
-            authManager = ModelManager.getInstance().getAuthorizationManager();
-            //chatObject = authManager.getqBPrivateChat();
-            // chatObject.removeChatMessageListener(this);
-            //chatObject.addChatMessageListener(this);
-        } catch (Exception e) {
-        }
+                    if(myQbChatService != null)
+                        myQbChatService.CheckOnlineStatus(Integer.parseInt(ModelManager.getInstance().getAuthorizationManager().partnerQbId));
+
+                }
+            }
+        },5000);
 
 
     }
@@ -1172,19 +1179,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             myclicksView.setText("" + ModelManager.getInstance().getAuthorizationManager().ourClicks);
             partnerClicksView.setText("" + ModelManager.getInstance().getRelationManager().partnerClicks);
         }
-        myHandler = new Handler();
-        myHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                //code to check online status or not
-                if(!Utils.isEmptyString(ModelManager.getInstance().getAuthorizationManager().partnerQbId)){
-                    CHECK_ONLINE_STATUS_FLAG=true;
-                    if(myQbChatService != null)
-                        myQbChatService.CheckOnlineStatus(Integer.parseInt(ModelManager.getInstance().getAuthorizationManager().partnerQbId));
-
-                }
-            }
-        },10000);
+      //set the flag value to true again -monika
+        CHECK_ONLINE_STATUS_FLAG=true;
 
         if(adapter!=null)
             adapter.notifyDataSetChanged();

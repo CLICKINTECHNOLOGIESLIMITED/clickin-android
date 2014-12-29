@@ -336,7 +336,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|center_vertical"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:text="@string/txt_profile"
             android:textAllCaps="true"
             android:textColor="@color/owner_profile_header_b"
@@ -348,7 +348,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|center_vertical"
-            android:text="@string/txt_typing"
             android:textColor="@color/owner_profile_header_b"
             android:textSize="12sp"
             android:visibility="visible" />

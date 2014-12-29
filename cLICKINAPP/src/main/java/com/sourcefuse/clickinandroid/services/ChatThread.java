@@ -98,7 +98,7 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
     private AuthManager authManager;
     private QBUser mUser;
     QBRoster chatRoster;
-    int userId;
+    int userId=0;
     public ChatThread(Application context, Handler handler) {
         application = context;
         mHandler = handler;
@@ -255,7 +255,7 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
                         break;
                     case CHECK_PRESENCE:
                         Bundle data1 = msg.getData();
-                        final int userID = data1.getInt("partnerQBId");
+                        userId = data1.getInt("partnerQBId");
                         //  checkOnlineStatus(userId);
 
                         new Thread(checkstatusRunnable).start();
@@ -776,11 +776,11 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
             try {
                 if(chatRoster != null)
                 chatRoster.confirmSubscription(userID);
-                else{
+           /*     else{
                     chatRoster = QBChatService.getInstance().getRoster(QBRoster.SubscriptionMode.mutual, subscriptionListener);
                     chatRoster.confirmSubscription(userID);
                     chatRoster.addRosterListener(rosterListener);
-                }
+                }*/
             } catch (SmackException.NotConnectedException e) {
 
             } catch (SmackException.NotLoggedInException e) {
@@ -798,7 +798,7 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
         @Override
         public void run() {
             while(ChatRecordView.CHECK_ONLINE_STATUS_FLAG){
-                checkOnlineStatus(userId);
+                checkOnlineStatus();
                 try {
                     Thread.sleep(15000);
                 } catch (InterruptedException e) {
@@ -808,14 +808,16 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
         }
     };
 
-    public void checkOnlineStatus(int userID){
-        QBPresence presence;
-        if(chatRoster !=null)
-         presence = chatRoster.getPresence(userID);
-        else{
-            chatRoster = QBChatService.getInstance().getRoster(QBRoster.SubscriptionMode.mutual, subscriptionListener);
-            presence = chatRoster.getPresence(userID);
-            chatRoster.addRosterListener(rosterListener);
+    public void checkOnlineStatus(){
+        QBPresence presence=null;
+        if(userId !=0) {
+            if (chatRoster != null)
+                presence = chatRoster.getPresence(userId);
+            else {
+                chatRoster = QBChatService.getInstance().getRoster(QBRoster.SubscriptionMode.mutual, subscriptionListener);
+                presence = chatRoster.getPresence(userId);
+                chatRoster.addRosterListener(rosterListener);
+            }
         }
         if (presence == null) {
             // No user in your roster
@@ -874,7 +876,13 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
        }
        long sentOntime = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis();
        String chatId = ModelManager.getInstance().getAuthorizationManager().getQBId() + senderQBID + sentOntime;
-       HashMap<String, Object> fields = new HashMap<String, Object>();
+       ChatMessageBody tempChat=new ChatMessageBody();
+       tempChat.deliveredChatID=msgId;
+       tempChat.chatType=Constants.CHAT_TYPE_DELIVERED;
+       tempChat.chatId=chatId;
+       tempChat.sentOn=String.valueOf(sentOntime);
+     
+     /*  HashMap<String, Object> fields = new HashMap<String, Object>();
        fields.put("relationshipId", relationshipId);
        fields.put("userId", ModelManager.getInstance().getAuthorizationManager().getUserId());
        fields.put("senderUserToken", ModelManager.getInstance().getAuthorizationManager().getUsrToken());
@@ -916,7 +924,7 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
                    android.util.Log.e("Errors", result.getErrors().toString());
                }
            }
-       });
+       });*/
 
 
     }
