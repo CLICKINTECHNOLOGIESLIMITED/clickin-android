@@ -1171,5 +1171,47 @@ public class
         ModelManager.getInstance().getRelationManager().acceptedList.get(relationListIndex).setUserClicks(ModelManager.getInstance().getAuthorizationManager().ourClicks);
 
     }
+
+
+    public static long ConvertIntoTimeStamp() {
+        return System.currentTimeMillis();
+    }
+
+    public static String getMonth(long timeStamp) {
+        DateFormat sdf = new SimpleDateFormat("MM");
+        Date netDate = (new Date(timeStamp));
+        return sdf.format(netDate);
+    }
+
+    public static String getDay(long timeStamp) {
+        DateFormat sdf = new SimpleDateFormat("DD");
+        Date netDate = (new Date(timeStamp));
+        return sdf.format(netDate);
+    }
+
+    public static String getCompareDate(long timeStamp) {
+        DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Date netDate = (new Date(timeStamp));
+        return sdf.format(netDate);
+    }
+
+    public static String getTodaySeenDate(long timeStamp) {
+        DateFormat sdf = new SimpleDateFormat("hh:mm a");
+        Date netDate = (new Date(timeStamp));
+        String date = sdf.format(netDate);
+        String mReturnValue = "last seen today at " + date;
+        return mReturnValue;
+    }
+
+    public static String getLastSeenDate(long timeStamp) {
+        DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        DateFormat sdf1 = new SimpleDateFormat("hh:mm a");
+        Date netDate = (new Date(timeStamp));
+        Date netDate1 = (new Date(timeStamp));
+        String date = sdf.format(netDate);
+        String date1 = sdf1.format(netDate);
+        String mReturnValue = "last seen on " + date + " at " + date1;
+        return mReturnValue;
+    }
 }
 

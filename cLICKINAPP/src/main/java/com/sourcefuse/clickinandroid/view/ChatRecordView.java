@@ -108,6 +108,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     };
     private static final String IMAGE_DIRECTORY_NAME = "Clickin Application";
     public static String rId = "";
+  
     public MyQbChatService myQbChatService;
     int myvalue = 0, min = -10;//akshit ,To set my value initially to zero for send paper rocket condition
     String chatString = "";
@@ -144,6 +145,9 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     private String audioFilePath = null;
     private int CHAT_TYPE;
     private boolean mIsBound;
+    private String onlineStatus;
+    //flag to start and stop thread to check online status
+   public static boolean CHECK_ONLINE_STATUS_FLAG=false;
     private ServiceConnection mConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
             // This is called when the connection with the service has been
@@ -230,13 +234,21 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         int mName = mRandom.nextInt();
         mName = Math.abs(mName);
 
-        String thumbpath = "/storage/emulated/0/ClickIn/Clickin/Images" +mName+ ".jpg";
+        String thumbpath = "/storage/emulated/0/Clickin/Clickin Images";
         File file = new File(thumbpath);
+        String mPath = file.getAbsolutePath() + "/" + System.currentTimeMillis() + ".jpg";
+        File mFile = new File(mPath);
         try {
+            if(!file.exists())
+            {
+                file.mkdirs();
+                file.setWritable(true);
+                file.setReadable(true);
+            }
            /* file.mkdirs();
             file.setWritable(true);
             file.setReadable(true);*/
-            FileOutputStream os = new FileOutputStream(file);
+            FileOutputStream os = new FileOutputStream(mFile);
             BufferedOutputStream bos = new BufferedOutputStream(os);
 
             data.compress(Bitmap.CompressFormat.JPEG, 50, bos);
@@ -246,23 +258,25 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             /* to show image in gallery */
 
             ContentValues values = new ContentValues();
-            values.put(MediaStore.Images.Media.DATA, thumbpath);
-            values.put(MediaStore.Images.Media.DATE_TAKEN, file.lastModified());
+            values.put(MediaStore.Images.Media.DATA, mPath);
+            values.put(MediaStore.Images.Media.DATE_TAKEN, mFile.lastModified());
             Uri mImageCaptureUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values); // to notify change
-            getContentResolver().notifyChange(Uri.parse(thumbpath), null);
+            getContentResolver().notifyChange(Uri.parse(mPath), null);
 
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return thumbpath;
+        return mPath;
     }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_chat_layout);
-        //     Utils.launchBarDialog(ChatRecordView.this);
+        Utils.launchBarDialog(ChatRecordView.this);
         rId = getIntent().getExtras().getString("rId");
         //clear the message list always to initiate a new chat
         ModelManager.getInstance().getChatManager().chatMessageList.clear();
@@ -349,11 +363,11 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             if (imageBitmap != null)
                 mypix.setImageBitmap(imageBitmap);
             else if (Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("guy"))
-                Picasso.with(this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.male_user).into(mypix);
+                Picasso.with(this).load(authManager.getUserPic()).error(R.drawable.male_user).into(mypix);
             else if (Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl"))
-                Picasso.with(this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.female_user).into(mypix);
+                Picasso.with(this).load(authManager.getUserPic()).error(R.drawable.female_user).into(mypix);
             else if (Utils.isEmptyString(authManager.getGender()))
-                Picasso.with(this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.male_user).into(mypix);
+                Picasso.with(this).load(authManager.getUserPic()).error(R.drawable.male_user).into(mypix);
 
         } catch (Exception e) {
             if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("guy"))
@@ -479,8 +493,19 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
 
 
+        //code to check online of offline status
+
         /* on create */
-        Utils.dismissBarDialog();
+
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                Utils.dismissBarDialog();
+            }
+        }, 3000);
+
 
     }
 
@@ -552,41 +577,6 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         dialog.dismiss();
 
 
-     /*   final Dialog mdialog = new Dialog(ChatRecordView.this);
-        mdialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        mdialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        mdialog.setContentView(R.layout.alert_take_picture);
-        Button cancel = (Button) mdialog.findViewById(R.id.dialog_cancel);
-        TextView textcamera = (TextView) mdialog.findViewById(R.id.take_picture);
-        TextView textgallery = (TextView) mdialog.findViewById(R.id.from_gallery);
-        textcamera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                mImageCaptureUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
-                cameraIntent.putExtra("return-data", true);
-                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
-                startActivityForResult(cameraIntent, Constants.CAMERA_REQUEST);
-
-                mdialog.dismiss();
-            }
-        });
-        textgallery.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(i, Constants.SELECT_PICTURE);
-                mdialog.dismiss();
-            }
-        });
-
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mdialog.dismiss();
-            }
-        });
-        mdialog.show(); */
     }
 
     public void alertDialog() {
@@ -644,7 +634,6 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     }
 
     public void setlist() {
-        Utils.launchBarDialog(ChatRecordView.this);
         try {
             dbHelper = new ClickinDbHelper(this);
             dbHelper.openDataBase();
@@ -660,7 +649,6 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             } else {
                 int listsize = chatManager.chatMessageList.size();
                 chatListView.getRefreshableView().setSelection(0);
-                Utils.dismissBarDialog();
             }
 
 
@@ -677,6 +665,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             case R.id.textview_send://akshit code for event on send
                 //   break;
             case R.id.btn_send:
+                //code to check online status or not
+
                 String chatString = chatText.getText().toString();
 
                 if ((chatString.length() > 0 || isClicks() == true || mImageCaptureUri != null) || audioFilePath != null || videofilePath != null) {
@@ -921,6 +911,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         temp.sentOn = "" + sentOntime;
         temp.chatId = authManager.getQBId() + authManager.partnerQbId + sentOntime;
         temp.isDelivered = Constants.MSG_SENDING;
+        temp.content_uri=tempPath;
         //     setValueForHistory(temp);
         ShowValueinChat(temp);
 
@@ -945,8 +936,9 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         relationManager = ModelManager.getInstance().getRelationManager();
         authManager = ModelManager.getInstance().getAuthorizationManager();
         String actionReq = intent.getAction();
+        typingtext.setText("");
         if (actionReq.equalsIgnoreCase("UPDATE")) {
-            //Utils.launchBarDialog(this);
+            Utils.launchBarDialog(this);
             Intent i = new Intent(this, MyQbChatService.class);
             bindService(i, mConnection, Context.BIND_AUTO_CREATE);
 
@@ -1165,7 +1157,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
     protected void onResume(){
         super.onResume();
-        if(relationListIndex == -1){
+        if (relationListIndex == -1) {
             searchRelationIndex();
         }
 
@@ -1178,7 +1170,19 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             myclicksView.setText("" + ModelManager.getInstance().getAuthorizationManager().ourClicks);
             partnerClicksView.setText("" + ModelManager.getInstance().getRelationManager().partnerClicks);
         }
+        myHandler = new Handler();
+        myHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //code to check online status or not
+                if(!Utils.isEmptyString(ModelManager.getInstance().getAuthorizationManager().partnerQbId)){
+                    CHECK_ONLINE_STATUS_FLAG=true;
+                    if(myQbChatService != null)
+                        myQbChatService.CheckOnlineStatus(Integer.parseInt(ModelManager.getInstance().getAuthorizationManager().partnerQbId));
 
+                }
+            }
+        },10000);
 
         if(adapter!=null)
         adapter.notifyDataSetChanged();
@@ -1245,13 +1249,13 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             adapter.notifyDataSetChanged();
           //  new DBTask().execute(rId);
         } else if (message.equalsIgnoreCase("Composing YES")) {
-            typingtext.setVisibility(View.VISIBLE);
+          //  typingtext.setVisibility(View.VISIBLE);
             typingtext.setText("Typing..");
         } else if (message.equalsIgnoreCase("Composing NO")) {
-            typingtext.setVisibility(View.VISIBLE);
+          //  typingtext.setVisibility(View.VISIBLE);
             typingtext.setText("online");
-        } else if (message.startsWith("Delivered Msg")) {
-            String chatId = message.substring(13);
+        } else if (message.equalsIgnoreCase("Delivered")) {
+          adapter.notifyDataSetChanged();
             //  updateChatDeliverStatusInList(chatId);
 
         } else if (message.startsWith("ChatShare True")) {
@@ -1264,7 +1268,37 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             // Toast.makeText(this,"Sorry,got disconnected",Toast.LENGTH_SHORT).show();
             send.setEnabled(false);
             send_text.setEnabled(false);
+            ModelManager.getInstance().getSettingManager().changeLastSeenTime(
+                    ModelManager.getInstance().getAuthorizationManager().getPhoneNo(),
+                    ModelManager.getInstance().getAuthorizationManager().getUsrToken());
+        }else if (message.equalsIgnoreCase("online")) {
+
+            typingtext.setText("Online");
+            /* to update value of last seen time prafull code */
+            long timestamp = Utils.ConvertIntoTimeStamp() / 1000;
+            relationManager.acceptedList.get(relationListIndex).mLastSeenTime = String.valueOf(timestamp);
+        } else if (message.equalsIgnoreCase("offline")) {
+
+
+            long timestamp = Utils.ConvertIntoTimeStamp() / 1000;
+            //relationManager.acceptedList.get(relationListIndex).mLastSeenTime = String.valueOf(timestamp);
+
+/* code for check when user is offline prafull code */
+            String lastSeenTime = "";
+            long mLastSeenTimeStamp = 0;
+            Log.e("value ofmLastSeenTime --->",""+relationManager.acceptedList.get(relationListIndex).mLastSeenTime);
+            if(!Utils.isEmptyString(relationManager.acceptedList.get(relationListIndex).mLastSeenTime))
+                mLastSeenTimeStamp = Long.parseLong(relationManager.acceptedList.get(relationListIndex).mLastSeenTime);
+            if (mLastSeenTimeStamp != 0) {
+                if (Utils.getCompareDate(timestamp * 1000).equalsIgnoreCase(Utils.getCompareDate(mLastSeenTimeStamp * 1000))) {// if both are equals than time for
+                    typingtext.setText(Utils.getTodaySeenDate(mLastSeenTimeStamp * 1000));
+                } else { // when not equal
+                    typingtext.setText(Utils.getLastSeenDate(mLastSeenTimeStamp * 1000));
+                }
+            }
+
         }
+
 
     }
 
@@ -1885,11 +1919,11 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 if (imageBitmap != null)
                     mypix.setImageBitmap(imageBitmap);
                 else if (Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("guy"))
-                    Picasso.with(this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.male_user).into(mypix);
+                    Picasso.with(this).load(authManager.getUserPic()).error(R.drawable.male_user).into(mypix);
                 else if (Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl"))
-                    Picasso.with(this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.female_user).into(mypix);
+                    Picasso.with(this).load(authManager.getUserPic()).error(R.drawable.female_user).into(mypix);
                 else if (Utils.isEmptyString(authManager.getGender()))
-                    Picasso.with(this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.male_user).into(mypix);
+                    Picasso.with(this).load(authManager.getUserPic()).error(R.drawable.male_user).into(mypix);
             } catch (Exception e) {
                 if (Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("guy"))
                     mypix.setImageResource(R.drawable.male_user);
@@ -1922,7 +1956,13 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         adapter = null;
         adapter = new ChatRecordAdapter(this, R.layout.view_chat_demo, chatManager.chatMessageList);
         chatListView.setAdapter(adapter);
-        Utils.dismissBarDialog();
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                Utils.dismissBarDialog();
+            }
+        }, 3000);
     }
 
     public Uri getImageUri(Context inContext, Bitmap inImage) {
@@ -1964,7 +2004,14 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                     } else {
                         temp.content_url = fileUrl;
                         temp.isDelivered = Constants.MSG_SENT;
-                        myQbChatService.sendMessage(temp);
+//value is trimmed while showing in list, so adding it again
+                        ChatMessageBody tempObj = new ChatMessageBody(temp);
+                        // code to change value when send copy constructor
+                        if (!temp.clicks.equalsIgnoreCase("no")) {
+
+                            temp.textMsg = temp.clicks + "        " + temp.textMsg;
+                        }
+                        myQbChatService.sendMessage(tempObj); // copy constructor
 
                         adapter.notifyDataSetChanged();
                         createRecordForHistory(temp);

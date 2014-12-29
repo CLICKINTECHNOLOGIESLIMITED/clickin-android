@@ -429,6 +429,9 @@ public class SettingView extends Activity implements View.OnClickListener, Compo
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.clear();
                 editor.apply();
+                ModelManager.getInstance().getSettingManager().changeLastSeenTime(
+                        ModelManager.getInstance().getAuthorizationManager().getPhoneNo(),
+                        ModelManager.getInstance().getAuthorizationManager().getUsrToken());
                 //monika- stop service running in background
                 Intent i = new Intent(this, MyQbChatService.class);
                 stopService(i);

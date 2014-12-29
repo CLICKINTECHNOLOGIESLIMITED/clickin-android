@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.sourcefuse.clickinandroid.model.bean.NotificationBean;
+import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.FeedView;
 import com.sourcefuse.clickinandroid.view.FollowerList;
 import com.sourcefuse.clickinandroid.view.FollowingListView;
@@ -79,10 +80,11 @@ public class NotificationAdapter extends ArrayAdapter<NotificationBean> {
         holder.mNotificationLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-             //   ClickInBaseView.slidemenu.showContent();
+                //   ClickInBaseView.slidemenu.showContent();
                 if (item.getNotificationType().matches(context.getResources().getString(R.string.txt_relationstatus)) ||
                         item.getNotificationType().matches(context.getResources().getString(R.string.txt_relation_visibility))
                         || item.getNotificationType().equalsIgnoreCase(context.getResources().getString(R.string.txt_relationrequest))) {
+                    Utils.launchBarDialog((Activity)context);
                     Intent intent = new Intent(getContext(), UserProfileView.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     intent.putExtra("isChangeInList", true);

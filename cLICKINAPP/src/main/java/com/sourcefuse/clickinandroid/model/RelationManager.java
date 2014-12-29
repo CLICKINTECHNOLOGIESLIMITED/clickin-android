@@ -2,6 +2,7 @@ package com.sourcefuse.clickinandroid.model;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.qb.gson.JsonObject;
 import com.sourcefuse.clickinandroid.model.bean.FetchUsersByNameBean;
 import com.sourcefuse.clickinandroid.model.bean.GetrelationshipsBean;
 import com.sourcefuse.clickinandroid.model.bean.ProfileRelationShipBean;
@@ -113,7 +114,7 @@ public class RelationManager {
                             JSONObject data = list.getJSONObject(i);
                             getRelationShipList = new GetrelationshipsBean();
 
-                            if (!Utils.isEmptyString(data.getString("partner_id"))) {
+                            if (!Utils.isEmptyString(data.getString("partner_QB_id"))) {
                                 if (data.getString("accepted").matches("true")) {
                                     setArrayListForDifferentStatus(data, acceptedList);
                                 } else {
@@ -169,6 +170,15 @@ public class RelationManager {
             }
             if (jsondata.has("partner_name"))
                 getRelationShipList.setPartnerName(jsondata.getString("partner_name"));
+            if (jsondata.has("last_seen_time")) {
+                try {
+                    JSONObject mLastSeenTime = jsondata.getJSONObject("last_seen_time");
+                    if (mLastSeenTime.has("sec"))
+                        getRelationShipList.mLastSeenTime = mLastSeenTime.getString("sec");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
             listdata.add(getRelationShipList);
         } catch (JSONException e) {
             e.printStackTrace();
