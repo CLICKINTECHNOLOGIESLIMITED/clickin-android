@@ -4,11 +4,14 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
+import android.content.ContentValues;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.*;
 
 import java.io.File;
 
@@ -16,9 +19,9 @@ import java.io.File;
  * Created by mukesh on 17/7/14.
  */
 public class VideoUtil {
-    public static final int REQUEST_VIDEO_CAPTURED = 99;
+    public static final int REQUEST_VIDEO_CAPTURED = 20;
     public static final int REQUEST_VIDEO_CAPTURED_FROM_GALLERY = 100;
-    private static final String VIDEO_RECORDER_FOLDER = "ClickIn/Clickin/Video";
+    private static final String VIDEO_RECORDER_FOLDER = "ClickIn/Clickin/Clickin Video";
     public static String videofilePath = null;
     private static Uri fileUri = null;
     public Dialog mdialog;
@@ -46,10 +49,12 @@ public class VideoUtil {
                             case 1:
                                 try {
                                     Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-                                    fileUri = getOutputMediaFileUri();
+                                    fileUri = getOutputMediaFileUri(contex);
                                     intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
-                                    intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, REQUEST_VIDEO_CAPTURED);
+                                    intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 0);
                                     contex.startActivityForResult(intent, REQUEST_VIDEO_CAPTURED);
+
+
                                 } catch (ActivityNotFoundException e) {
                                 }
 
@@ -66,27 +71,38 @@ public class VideoUtil {
         dialog.dismiss();
 
 
-
     }
 
     /**
      * Create a file Uri for saving  video
      */
-    private static Uri getOutputMediaFileUri() {
-        videofilePath = getOutputMediaFile();
+    private static Uri getOutputMediaFileUri(Context context) {
+        videofilePath = getOutputMediaFile(context);
         return Uri.fromFile(new File(videofilePath));
     }
 
     /**
      * Create a File for saving  video
      */
-    private static String getOutputMediaFile() {
+    private static String getOutputMediaFile(Context context) {
         String filepath = Environment.getExternalStorageDirectory().getAbsolutePath();
         File file = new File(filepath, VIDEO_RECORDER_FOLDER);
         if (!file.exists()) {
             file.mkdirs();
         }
-        return (file.getAbsolutePath() + "/" + System.currentTimeMillis() + ".mp4");
+        String path = file.getAbsolutePath() + "/" + System.currentTimeMillis() + ".mp4";
+
+        try {
+            ContentValues values = new ContentValues();
+            values.put(MediaStore.Images.Media.DATA, path);
+            values.put(MediaStore.Video.Media.DATE_TAKEN, file.lastModified());
+            Uri mImageCaptureUri = context.getContentResolver().insert(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, values); // to notify change
+            context.getContentResolver().notifyChange(Uri.parse(path), null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            android.util.Log.e("exception on saving---->", "" + e.toString());
+        }
+        return path;
     }
 
 

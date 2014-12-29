@@ -156,7 +156,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
             } else {
                 if (!(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().equalsIgnoreCase("null"))) {
                     if (!eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().trim().equalsIgnoreCase("")) {
-                        android.util.Log.e("msg", eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message());
+                        Log.e("msg", eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message());
                         typeface = Typeface.createFromAsset(getContext().getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
                         holder.clickedIn.setVisibility(View.VISIBLE);
                         holder.layout_clickin.setVisibility(View.VISIBLE);
@@ -337,7 +337,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
 //                intent.putExtra("url",eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content());
 //                context.startActivity(intent);
 
-                android.util.Log.e("video url", eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content());
+                Log.e("video url", eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content());
             }
         });
         holder.feed_menu.setOnClickListener(new View.OnClickListener() {

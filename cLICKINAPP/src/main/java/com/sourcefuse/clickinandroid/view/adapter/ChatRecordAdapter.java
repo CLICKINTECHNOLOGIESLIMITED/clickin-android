@@ -120,29 +120,29 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     chatClickTextLayout.setLayoutParams(paramsrr);
                 }
                 //code to set msg deilvery notification
-                ImageView sendStatusView = (ImageView) row.findViewById(R.id.iv_send_status);
+              //  ImageView sendStatusView = (ImageView) row.findViewById(R.id.iv_send_status);
                 if (!(Utils.isEmptyString(temp.isDelivered)) && temp.isDelivered.equalsIgnoreCase(Constants.MSG_SENDING)) {
                     ((ProgressBar) row.findViewById(R.id.pb_loding)).setVisibility(View.VISIBLE);
                     ((ImageView) row.findViewById(R.id.iv_type_two_share_icon_r)).setVisibility(View.GONE);
-                    sendStatusView.setImageResource(R.drawable.r_single_tick);
-                    Bitmap bitmap = null;
-                    if (!temp.content_url.contains("http")) {
-                        bitmap = Utils.path(Uri.parse(temp.content_url));
-                    }
-                    if (bitmap != null) {
-                        image_attached.setImageBitmap(bitmap);
-                    } else {
-                        Picasso.with(context).load(temp.content_url)
-                                .into(image_attached);
-                    }
+                  //  sendStatusView.setImageResource(R.drawable.r_single_tick);
+                 //   Bitmap bitmap = null;
+
                 } else if (!(Utils.isEmptyString(temp.isDelivered)) && temp.isDelivered.equalsIgnoreCase(Constants.MSG_SENT)) {
                     ((ProgressBar) row.findViewById(R.id.pb_loding)).setVisibility(View.GONE);
                     ((ImageView) row.findViewById(R.id.iv_type_two_share_icon_r)).setVisibility(View.VISIBLE);
-                    sendStatusView.setImageResource(R.drawable.double_check);
+                   // sendStatusView.setImageResource(R.drawable.double_check);
                     Picasso.with(context).load(temp.content_url).resize(300, 300).centerCrop().into(image_attached);
                 }
 
+                //common code to display image from URI-monika
 
+                if (!Utils.isEmptyString(temp.content_uri)) {
+                    image_attached.setImageURI(Uri.parse(temp.content_uri));
+                }
+                else {
+                    Picasso.with(context).load(temp.content_url)
+                            .into(image_attached);
+                }
 
                 image_attached.setScaleType(ImageView.ScaleType.FIT_XY);
                 image_attached.setVisibility(View.VISIBLE);
@@ -194,23 +194,23 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
 
                 //code to set msg deilvery notificatio
-                ImageView sendStatusView = (ImageView) row.findViewById(R.id.iv_send_status);
+              //  ImageView sendStatusView = (ImageView) row.findViewById(R.id.iv_send_status);
                 if (!(Utils.isEmptyString(temp.isDelivered)) && temp.isDelivered.equalsIgnoreCase(Constants.MSG_SENDING)) {
                     ((ProgressBar) row.findViewById(R.id.pb_loding)).setVisibility(View.VISIBLE);
                     ((ImageView) row.findViewById(R.id.iv_type_two_share_icon_r)).setVisibility(View.GONE);
 
-                    sendStatusView.setImageResource(R.drawable.r_single_tick);
+                //    sendStatusView.setImageResource(R.drawable.r_single_tick);
 
 
                 } else if (!(Utils.isEmptyString(temp.isDelivered)) && temp.isDelivered.equalsIgnoreCase(Constants.MSG_SENT)) {
                     ((ProgressBar) row.findViewById(R.id.pb_loding)).setVisibility(View.GONE);
                     ((ImageView) row.findViewById(R.id.iv_type_two_share_icon_r)).setVisibility(View.VISIBLE);
-                    sendStatusView.setImageResource(R.drawable.double_check);
+                //    sendStatusView.setImageResource(R.drawable.double_check);
 
                 }
             } else if (!Utils.isEmptyString(temp.video_thumb)) {//end of audio code sender START VIDEO VIEW FOR SENDER
 
-                ImageView sendStatusView = (ImageView) row.findViewById(R.id.iv_send_status);
+           //     ImageView sendStatusView = (ImageView) row.findViewById(R.id.iv_send_status);
                 ImageView image_attached = (ImageView) row.findViewById(R.id.iv_chat_image);
                 ImageView play_buttom = (ImageView) row.findViewById(R.id.iv_play_btn);
                 play_buttom.setVisibility(View.VISIBLE);
@@ -245,20 +245,10 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     //android.util.android.util.Log.e("in one video", "in one video");
                     row.findViewById(R.id.pb_loding).setVisibility(View.VISIBLE);
                     row.findViewById(R.id.iv_type_two_share_icon_r).setVisibility(View.GONE);
-                    sendStatusView.setImageResource(R.drawable.r_single_tick);
+                   // sendStatusView.setImageResource(R.drawable.r_single_tick);
 
 
-/* case when thumb is not uploaded form server prafull*/
-                    Bitmap bitmap = null;
-                    if (!temp.video_thumb.contains("http")) {
-                        bitmap = Utils.path(Uri.parse(temp.video_thumb));
-                    }
-                    if (bitmap != null) {
-                        image_attached.setImageBitmap(bitmap);
-                    } else {
-                        Picasso.with(context).load(temp.video_thumb)
-                                .into(image_attached);
-                    }
+
 
                 } else if (!(Utils.isEmptyString(temp.isDelivered)) && temp.isDelivered.equalsIgnoreCase(Constants.MSG_SENT)) {
 
@@ -266,12 +256,19 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
                     row.findViewById(R.id.pb_loding).setVisibility(View.GONE);
                     row.findViewById(R.id.iv_type_two_share_icon_r).setVisibility(View.VISIBLE);
-                    sendStatusView.setImageResource(R.drawable.double_check);
+                   // sendStatusView.setImageResource(R.drawable.double_check);
                     /* case when text is uploaded */
+
+                }
+
+                //common code to display image from URI-monika
+                if (!Utils.isEmptyString(temp.content_uri)) {
+                    image_attached.setImageURI(Uri.parse(temp.content_uri));
+                }
+                else {
                     Picasso.with(context).load(temp.video_thumb)
                             .into(image_attached);
                 }
-
 
 
                 image_attached.setScaleType(ImageView.ScaleType.FIT_XY);
@@ -548,6 +545,11 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
             }//end of share view at Sender side
 
 
+            //common for all type chat-delivered chat status-monika
+            if(!Utils.isEmptyString(temp.deliveredChatID)){
+                ImageView sendStatusView = (ImageView) row.findViewById(R.id.iv_send_status);
+                sendStatusView.setImageResource(R.drawable.double_check);
+            }
         }//end of sender loop
         else {
 
@@ -681,7 +683,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
             } else if (!Utils.isEmptyString(temp.video_thumb)) {//end of audio code sender START VIDEO VIEW FOR RECEIVER
 
-                ImageView sendStatusView = (ImageView) row.findViewById(R.id.iv_send_status);
+              //  ImageView sendStatusView = (ImageView) row.findViewById(R.id.iv_send_status);
                 ImageView image_attached = (ImageView) row.findViewById(R.id.iv_chat_image);
                 ImageView play_buttom = (ImageView) row.findViewById(R.id.iv_play_btn);
                 play_buttom.setVisibility(View.VISIBLE);
@@ -732,12 +734,12 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
                     ((ProgressBar) row.findViewById(R.id.pb_loding)).setVisibility(View.VISIBLE);
                     ((ImageView) row.findViewById(R.id.iv_type_two_share_icon_r)).setVisibility(View.GONE);
-                    sendStatusView.setImageResource(R.drawable.r_single_tick);
+                  //  sendStatusView.setImageResource(R.drawable.r_single_tick);
 
                 } else if (!(Utils.isEmptyString(temp.isDelivered)) && temp.isDelivered.equalsIgnoreCase(Constants.MSG_SENT)) {
                     row.findViewById(R.id.pb_loding).setVisibility(View.GONE);
                     row.findViewById(R.id.iv_type_two_share_icon_r).setVisibility(View.VISIBLE);
-                    sendStatusView.setImageResource(R.drawable.double_check);
+                    //sendStatusView.setImageResource(R.drawable.double_check);
                     //android.util.android.util.Log.e("in two video", "in two video");
                 }
 

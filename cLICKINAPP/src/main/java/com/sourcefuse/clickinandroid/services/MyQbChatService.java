@@ -272,6 +272,18 @@ public class MyQbChatService extends Service {
         handler.sendMessage(msg);
     }
 
+    //function to send online status of partner
+    public void CheckOnlineStatus(int partnerQBId){
+        Handler handler = mChatThread.getHandler();
+        android.os.Message msg = new android.os.Message();
+        Bundle data = new Bundle();
+        data.putInt("partnerQBId",partnerQBId);
+        msg.setData(data);
+        msg.what = ChatThread.CHECK_PRESENCE;
+        handler.sendMessage(msg);
+    }
+
+
     public void logoutFromQb() {
         Handler handler = mChatThread.getHandler();
         android.os.Message msg = new android.os.Message();

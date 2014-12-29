@@ -1,5 +1,7 @@
 package com.sourcefuse.clickinandroid.model.bean;
 
+import android.net.Uri;
+
 /**
  * Created by mukesh on 17/11/14.
  */
@@ -49,5 +51,56 @@ public class ChatMessageBody {
     public String sharingMedia = null;
     public String isAccepted = null;
     public String facebookToken = null;
+    //monika- to show image from uri
+    public String content_uri=null;
+    public ChatMessageBody() {
+
+    }
+
+    public ChatMessageBody(ChatMessageBody body) {
+        this.textMsg =  body.textMsg;
+        partnerQbId = body.partnerQbId;
+        clicks = body.clicks;
+        chatType = body.chatType;
+        content_url = body.content_url;
+        imageRatio = body.imageRatio;
+        card_owner = body.card_owner;
+
+        //Card params
+        card_content = body.card_content;
+        is_CustomCard = body.is_CustomCard;
+        card_DB_ID = body.card_DB_ID;
+        card_Accepted_Rejected = body.card_Accepted_Rejected;
+        card_heading = body.card_url;
+        card_url = body.card_url;
+        card_id = body.card_id;
+        card_Played_Countered = body.card_Played_Countered;
+        card_originator = body.card_originator;
+        _id = body._id;
+        deliveredChatID = body.deliveredChatID;
+        //for video
+        video_thumb = body.video_thumb;
+        chatId = body.chatId;
+        sentOn = body.sentOn;
+        location_coordinates = body.location_coordinates;
+        locationId = body.locationId;
+        sharedMessage = body.sharedMessage;
+        isDelivered = body.isDelivered;
+        relationshipId = body.relationshipId;
+        userId = body.userId;
+        senderUserToken = body.senderUserToken;
+        senderQbId = body.senderQbId;
+        isMessageSender = body.isMessageSender;
+
+        // Share message
+        shareStatus = body.shareStatus;
+        shareComment = body.shareComment;
+        originalMessageID = body.originalMessageID;
+        sharingMedia = body.sharingMedia;
+        isAccepted = body.isAccepted;
+        facebookToken = body.facebookToken;
+
+    }
+
 
 }
