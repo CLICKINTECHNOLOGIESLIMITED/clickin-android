@@ -408,10 +408,10 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
                     temp.card_id = extraParamsObj.getString("card_id");
                     temp.card_Played_Countered = extraParamsObj.getString("card_Played_Countered");
                      temp.card_originator = extraParamsObj.getString("card_originator");
-                    if (temp.senderQbId.equalsIgnoreCase(authManager.partnerQbId)) {
+            /*        if (temp.senderQbId.equalsIgnoreCase(authManager.partnerQbId)) {
                         if (temp.card_Accepted_Rejected.equalsIgnoreCase("accepted"))
                             updateValuesClicks(temp);
-                    }
+                    }*/
                 } else if (extraParamsObj.has("sharingMedia")) {
 
                     temp.facebookToken = extraParamsObj.getString("facebookToken");
@@ -440,14 +440,13 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
                 } else if ((!extraParamsObj.has("card_owner"))) {
                     // if(!temp.clicks.equalsIgnoreCase(body))
                     //update value of clicks-add or subtract-monika
-                    if (temp.senderQbId.equalsIgnoreCase(authManager.partnerQbId)) {
+                  /*  if (temp.senderQbId.equalsIgnoreCase(authManager.partnerQbId)) {
                         if (temp.clicks.startsWith("+"))
                             Utils.updateClicksWithoutCard(authManager.ourClicks, temp.clicks, true);
                         else
                             Utils.updateClicksWithoutCard(authManager.ourClicks, temp.clicks, false);
-
-                    if (body.length() > 3)
-
+                    }*/
+                    if (body.length() > 3){
                         temp.textMsg = body.substring(3).trim();
                     temp.clicks = Utils.convertClicks(temp.clicks).trim();
                 }
