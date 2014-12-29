@@ -226,7 +226,7 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
                     String partnerId = relationManager.getrelationshipsData.get(pos).getPartner_id();
 
                     Intent intent = new Intent(context, JumpOtherProfileView.class);
-                    //    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra("PartnerId", partnerId);
                     intent.putExtra("FromOwnProfile", true);
                     intent.putExtra("phNumber", itemList.get(position).getPhoneNo());

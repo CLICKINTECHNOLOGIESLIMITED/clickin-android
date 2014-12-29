@@ -67,10 +67,10 @@ public class JumpOtherProfileAdapter extends ArrayAdapter<ProfileRelationShipBea
                     Picasso.with(context).load(item.getPartnerPic())
                             .into(rholder.usrimg);
                 } catch (Exception e) {
-                    holder.usrimg.setImageResource(R.drawable.male_user);
+                    //holder.usrimg.setImageResource(R.drawable.male_user);
                 }
             } else {
-                holder.usrimg.setImageResource(R.drawable.male_user);
+               // holder.usrimg.setImageResource(R.drawable.male_user);
             }
         } catch (Exception e) {
         }
