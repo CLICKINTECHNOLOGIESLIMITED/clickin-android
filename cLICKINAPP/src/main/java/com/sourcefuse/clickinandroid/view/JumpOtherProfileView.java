@@ -66,7 +66,7 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
             Utils.launchBarDialog(this);
 
             authManager.getProfileInfo(phForOtherUser, authManager.getPhoneNo(), authManager.getUsrToken());
-            relationManager.fetchprofilerelationships(phForOtherUser, authManager.getPhoneNo(), authManager.getUsrToken());
+
         }
 
 
@@ -152,12 +152,15 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
         if (relationManager.profileRelationShipData.size() == 0) {
             findViewById(R.id.ll_clickin_header).setVisibility(View.GONE);
             ((View) findViewById(R.id.v_devider_header)).setVisibility(View.GONE);
+            adapter = new JumpOtherProfileAdapter(this, R.layout.row_othersprofile, relationManager.profileRelationShipData);
+            listView.setAdapter(adapter);
         } else {
             ((LinearLayout) findViewById(R.id.ll_clickin_header)).setVisibility(View.VISIBLE);
             ((View) findViewById(R.id.v_devider_header)).setVisibility(View.VISIBLE);
+            adapter = new JumpOtherProfileAdapter(this, R.layout.row_othersprofile, relationManager.profileRelationShipData);
+            listView.setAdapter(adapter);
         }
-        adapter = new JumpOtherProfileAdapter(this, R.layout.row_othersprofile, relationManager.profileRelationShipData);
-        listView.setAdapter(adapter);
+
 
 
     }
@@ -249,12 +252,14 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
         if (message.equalsIgnoreCase("ProfileInfo True")) {
             setView();
             setProfileData();
-            Utils.dismissBarDialog();
+            relationManager.fetchprofilerelationships(phForOtherUser, authManager.getPhoneNo(), authManager.getUsrToken());
+
         } else if (message.equalsIgnoreCase("ProfileInfo False")) {
             Utils.dismissBarDialog();
         } else if (message.equalsIgnoreCase("ProfileInfoNetwork Error")) {
             Utils.fromSignalDialog(this, AlertMessage.connectionError);
         } else if (message.equalsIgnoreCase("Fetchprofilerelationships True")) {
+            Utils.dismissBarDialog();
             setlist();
         } else if (message.equalsIgnoreCase("Fetchprofilerelationships False")) {
             Utils.dismissBarDialog();
@@ -413,7 +418,7 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
                         if (!authManager.getTmpUserPic().equalsIgnoreCase("")) {
                             Picasso.with(JumpOtherProfileView.this)
                                     .load(authManager.getTmpUserPic())
-                                    .skipMemoryCache()
+
                                     .error(R.drawable.male_user).into(userimage);
                         } else {
                             userimage.setImageResource(R.drawable.male_user);
@@ -426,7 +431,6 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
                         if (!authManager.getTmpUserPic().equalsIgnoreCase("")) {
                             Picasso.with(JumpOtherProfileView.this)
                                     .load(authManager.getTmpUserPic())
-                                    .skipMemoryCache()
                                     .error(R.drawable.female_user).into(userimage);
                         } else {
                             userimage.setImageResource(R.drawable.female_user);
@@ -444,7 +448,6 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
                 if (!authManager.getTmpUserPic().equalsIgnoreCase("")) {
                     Picasso.with(JumpOtherProfileView.this)
                             .load(authManager.getTmpUserPic())
-                            .skipMemoryCache()
                             .error(R.drawable.male_user).into(userimage);
                 } else {
                     userimage.setImageResource(R.drawable.male_user);

@@ -105,7 +105,7 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
         authManager = ModelManager.getInstance().getAuthorizationManager();
 
         QBSettings.getInstance().fastConfigInit(Constants.CLICKIN_APP_ID, Constants.CLICKIN_AUTH_KEY, Constants.CLICKIN_AUTH_SECRET);
-      //   QBSettings.getInstance().setServerApiDomain("apiclickin.quickblox.com");
+        //   QBSettings.getInstance().setServerApiDomain("apiclickin.quickblox.com");
         //QBSettings.getInstance().setContentBucketName("qb-clickin");
         //QBSettings.getInstance().setChatServerDomain("chatclickin.quickblox.com");
         QBChatService.setDebugEnabled(true);
@@ -408,10 +408,10 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
                     temp.card_id = extraParamsObj.getString("card_id");
                     temp.card_Played_Countered = extraParamsObj.getString("card_Played_Countered");
                      temp.card_originator = extraParamsObj.getString("card_originator");
-            /*        if (temp.senderQbId.equalsIgnoreCase(authManager.partnerQbId)) {
+                    if (temp.senderQbId.equalsIgnoreCase(authManager.partnerQbId)) {
                         if (temp.card_Accepted_Rejected.equalsIgnoreCase("accepted"))
                             updateValuesClicks(temp);
-                    }*/
+                    }
                 } else if (extraParamsObj.has("sharingMedia")) {
 
                     temp.facebookToken = extraParamsObj.getString("facebookToken");
@@ -431,6 +431,7 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
                     temp.isAccepted = extraParamsObj.getString("isAccepted");
 
 
+
                 }
 
 
@@ -439,13 +440,14 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
                 } else if ((!extraParamsObj.has("card_owner"))) {
                     // if(!temp.clicks.equalsIgnoreCase(body))
                     //update value of clicks-add or subtract-monika
-                  /*  if (temp.senderQbId.equalsIgnoreCase(authManager.partnerQbId)) {
+                    if (temp.senderQbId.equalsIgnoreCase(authManager.partnerQbId)) {
                         if (temp.clicks.startsWith("+"))
                             Utils.updateClicksWithoutCard(authManager.ourClicks, temp.clicks, true);
                         else
                             Utils.updateClicksWithoutCard(authManager.ourClicks, temp.clicks, false);
-                    }*/
-                    if (body.length() > 3){
+
+                    if (body.length() > 3)
+
                         temp.textMsg = body.substring(3).trim();
                     temp.clicks = Utils.convertClicks(temp.clicks).trim();
                 }
@@ -507,30 +509,33 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
                     int partnerQBId = Integer.parseInt(temp.getPartnerQBId());
                     QBPrivateChat chatObject = null;
                     chatObject = QBChatService.getInstance().getPrivateChatManager().getChat(partnerQBId);
-                    if (chatObject == null)
+                    if (chatObject == null) {
                         chatObject = QBChatService.getInstance().getPrivateChatManager().createChat(partnerQBId, ChatThread.this);
-                    if (chatRoster.contains(partnerQBId)) {
-                        try {
-                            chatRoster.subscribe(partnerQBId);
-                        } catch (SmackException.NotConnectedException e) {
+
+                        if (chatRoster.contains(partnerQBId)) {
+                            try {
+                                chatRoster.subscribe(partnerQBId);
+                            } catch (SmackException.NotConnectedException e) {
+
+                            }
+                        } else {
+                            try {
+                                chatRoster.createEntry(partnerQBId, null);
+                            } catch (XMPPException e) {
+
+                            } catch (SmackException.NotLoggedInException e) {
+
+                            } catch (SmackException.NotConnectedException e) {
+
+                            } catch (SmackException.NoResponseException e) {
+
+                            }
 
                         }
-                    } else {
-                        try {
-                            chatRoster.createEntry(partnerQBId, null);
-                        } catch (XMPPException e) {
 
-                        } catch (SmackException.NotLoggedInException e) {
-
-                        } catch (SmackException.NotConnectedException e) {
-
-                        } catch (SmackException.NoResponseException e) {
-
-                        }
                     }
 
                 }
-
             }
         }
     }
@@ -596,9 +601,9 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
         String className = componentInfo.getClassName();
         if (obj.senderQbId.equalsIgnoreCase(authManager.partnerQbId)){
             if (className.equalsIgnoreCase("com.sourcefuse.clickinandroid.view.ChatRecordView")) {
-            ModelManager.getInstance().getChatManager().chatMessageList.add(obj);
-            EventBus.getDefault().post("Chat Message Recieve");
-          //  saveMessageInDB(temp);
+                ModelManager.getInstance().getChatManager().chatMessageList.add(obj);
+                EventBus.getDefault().post("Chat Message Recieve");
+                //  saveMessageInDB(temp);
             }else{
 
                 GetrelationshipsBean tempObject=partnerList.get(relationIndex);
@@ -944,4 +949,3 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
     }
  
 }
-

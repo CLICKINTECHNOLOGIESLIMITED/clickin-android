@@ -87,11 +87,9 @@ public class FollowerAdapter extends ArrayAdapter<FollowerFollowingBean> {
         if (!item.get(position).getFolloweePic().equalsIgnoreCase("")) {
             try {
                 Picasso.with(context).load(item.get(position).getFolloweePic())
-                        .skipMemoryCache()
-                        .error(R.drawable.male_user)
                         .into(rholder.usrimg);
             } catch (Exception e) {
-                holder.usrimg.setImageResource(R.drawable.male_user);
+                //holder.usrimg.setImageResource(R.drawable.male_user);
             }
         } else {
             holder.usrimg.setImageResource(R.drawable.male_user);
@@ -222,13 +220,13 @@ public class FollowerAdapter extends ArrayAdapter<FollowerFollowingBean> {
                 relationManager = ModelManager.getInstance().getRelationManager();
 
       /* condition for accept request   */
-                if(profileManager.followers.size() >= position) {
+                if(profileManager.followers.size() > position) {
                     Utils.launchBarDialog((FollowerList) getContext());
                     FollowerList.mListchangeVariable_flag = true;
                     item.get(position).setAccepted("false");
                     item.get(position).setFollowingAccepted("true");
                     item.get(position).setIsFollowing("false");
-                ;
+
                     profileManager.followers.get(position).setAccepted("false");
                     profileManager.followers.get(position).setFollowingAccepted("true");
                     profileManager.followers.get(position).setIsFollowing("false");
@@ -249,18 +247,18 @@ public class FollowerAdapter extends ArrayAdapter<FollowerFollowingBean> {
             public void onClick(View v) {
 
 /* condition for reject request   */
-
-                authManager = ModelManager.getInstance().getAuthorizationManager();
-
-                relationManager = ModelManager.getInstance().getRelationManager();
-                android.util.Log.e("name--->", "" + profileManager.followers.get(position).getPhoneNo());
-                android.util.Log.e("getrFollowerId--->", "" + profileManager.followers.get(position).getrFollowerId());
-                relationManager.followupdatestatus(profileManager.followers.get(position).getrFollowerId(), "false", authManager.getPhoneNo(), authManager.getUsrToken());
-                profileManager.followRequesed.remove(position);
-                profileManager.followers.remove(position);
+                if(profileManager.followers.size() > position &&  profileManager.followRequesed.size() > position) {
+                    authManager = ModelManager.getInstance().getAuthorizationManager();
+                    relationManager = ModelManager.getInstance().getRelationManager();
+                    android.util.Log.e("name--->", "" + profileManager.followers.get(position).getPhoneNo());
+                    android.util.Log.e("getrFollowerId--->", "" + profileManager.followers.get(position).getrFollowerId());
+                    relationManager.followupdatestatus(profileManager.followers.get(position).getrFollowerId(), "false", authManager.getPhoneNo(), authManager.getUsrToken());
+                    profileManager.followRequesed.remove(position);
+                    profileManager.followers.remove(position);
                /* notifyDataSetChanged();*/
-                android.util.Log.e(TAG, "Click - holder.resect");
-                FollowerList.mListchangeVariable_flag = true;
+                    android.util.Log.e(TAG, "Click - holder.resect");
+                    FollowerList.mListchangeVariable_flag = true;
+                }
             }
         });
 

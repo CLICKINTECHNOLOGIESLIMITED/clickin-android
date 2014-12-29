@@ -76,11 +76,9 @@ public class CurrentClickersAdapter extends ArrayAdapter<CurrentClickerBean> {
             if (!item.getClickerPix().equalsIgnoreCase("")) {
                 Picasso.with(context)
                         .load(item.getClickerPix())
-                        .skipMemoryCache()
-
-                        .error(R.drawable.male_user).into(holder.usrimg);
+                        .into(holder.usrimg);
             } else {
-                holder.usrimg.setImageResource(R.drawable.male_user);
+               // holder.usrimg.setImageResource(R.drawable.male_user);
             }
         } catch (Exception e) {
             holder.usrimg.setImageResource(R.drawable.male_user);

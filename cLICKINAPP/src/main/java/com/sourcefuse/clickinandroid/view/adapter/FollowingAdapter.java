@@ -101,11 +101,9 @@ public class FollowingAdapter extends ArrayAdapter<FollowerFollowingBean> {
         if (!item.get(position).getFolloweePic().equalsIgnoreCase("")) {
             try {
                 Picasso.with(context).load(item.get(position).getFolloweePic())
-                        .skipMemoryCache()
-                        .error(R.drawable.male_user)
                         .into(rholder.usrimg);
             } catch (Exception e) {
-                holder.usrimg.setImageResource(R.drawable.male_user);
+                //holder.usrimg.setImageResource(R.drawable.male_user);
             }
         } else {
             holder.usrimg.setImageResource(R.drawable.male_user);

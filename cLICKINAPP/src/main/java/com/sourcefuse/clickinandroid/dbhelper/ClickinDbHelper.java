@@ -51,6 +51,7 @@ public class ClickinDbHelper extends SQLiteOpenHelper implements ChatRecordI {
     public static final String userId = "userId";
     public static final String senderUserToken = "senderUserToken";
     public static final String senderQbId = "senderQbId";
+    public static final String originalMessageID = "originalMessageID";
     private static final String DATABASE_CREATE = " CREATE TABLE "
             + TABLE_CHATRECORD + "(" + COLUMN_ID + " integer primary key autoincrement,"
             + partnerQbId + " text, "
@@ -67,6 +68,7 @@ public class ClickinDbHelper extends SQLiteOpenHelper implements ChatRecordI {
             + card_heading + " text, "
             + card_url + " text, "
             + card_id + " text, "
+            + originalMessageID + " text, "
             + card_Played_Countered + " text, "
             + card_originator + " text, "
             + video_thumb + " text, "
@@ -141,6 +143,7 @@ public class ClickinDbHelper extends SQLiteOpenHelper implements ChatRecordI {
             contentValues.put(card_heading, chat.card_heading);
             contentValues.put(card_url, chat.card_url);
             contentValues.put(card_id, chat.card_id);
+            contentValues.put(originalMessageID, chat.originalMessageID);
             contentValues.put(card_Played_Countered, chat.card_Played_Countered);
             contentValues.put(card_originator, chat.card_originator);
             // card parameter end
@@ -206,6 +209,7 @@ public class ClickinDbHelper extends SQLiteOpenHelper implements ChatRecordI {
                     chat.card_heading = (chatCursor.getString(chatCursor.getColumnIndex(card_heading)));
                     chat.card_url = (chatCursor.getString(chatCursor.getColumnIndex(card_url)));
                     chat.card_id = (chatCursor.getString(chatCursor.getColumnIndex(card_id)));
+                    chat.originalMessageID = (chatCursor.getString(chatCursor.getColumnIndex(originalMessageID)));
                     chat.card_Played_Countered = (chatCursor.getString(chatCursor.getColumnIndex(card_Played_Countered)));
                     chat.card_originator = (chatCursor.getString(chatCursor.getColumnIndex(card_originator)));
                     // Card End

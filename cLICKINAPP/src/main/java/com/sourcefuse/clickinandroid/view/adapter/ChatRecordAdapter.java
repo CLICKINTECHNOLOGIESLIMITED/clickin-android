@@ -252,7 +252,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
                 } else if (!(Utils.isEmptyString(temp.isDelivered)) && temp.isDelivered.equalsIgnoreCase(Constants.MSG_SENT)) {
 
-                   // android.util.android.util.Log.e("in two video", "in two video");
+                    // android.util.android.util.Log.e("in two video", "in two video");
 
                     row.findViewById(R.id.pb_loding).setVisibility(View.GONE);
                     row.findViewById(R.id.iv_type_two_share_icon_r).setVisibility(View.VISIBLE);
@@ -407,9 +407,13 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 //code to hide share icon for text messages-monika
                 if (Utils.isEmptyString(temp.content_url))
                     ((LinearLayout) row.findViewById(R.id.ll_for_share_icon)).setVisibility(View.GONE);
+
                 chatClickTextLayout.setVisibility(View.VISIBLE);
-
-
+                LinearLayout clicksArea = (LinearLayout) row.findViewById(R.id.clicks_area);
+                clicksArea.setVisibility(View.VISIBLE);
+                TextView chatText = (TextView) row.findViewById(R.id.long_chat_text); // prafull code
+                chatText.setVisibility(View.VISIBLE);
+                chatText.setTextColor(context.getResources().getColor(R.color.black));
                 if (!Utils.isEmptyString(temp.sharingMedia)) { // for share case-praful
                     LinearLayout mShareLayout = (LinearLayout) row.findViewById(R.id.parent_clicks_area_share);
                     mShareLayout.setBackgroundResource(R.color.white);
@@ -418,17 +422,8 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     mShareText.setVisibility(View.VISIBLE);
                     mShareText.setText("" + temp.textMsg);
                     mShareText.setTextColor(context.getResources().getColor(R.color.black));
-//                    RelativeLayout.LayoutParams mTextParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-//                    mTextParams.setMargins(0, 0, 0, 100);
-//                    mShareLayout.setLayoutParams(mTextParams);
-                    // mShareLayout.setPadding(0,0,0,50);
                 } else {
-                    LinearLayout clicksArea = (LinearLayout) row.findViewById(R.id.clicks_area);
-                    clicksArea.setVisibility(View.VISIBLE);
-                    TextView chatText = (TextView) row.findViewById(R.id.long_chat_text); // prafull code
                     parent_shared_layout.setBackgroundResource(R.drawable.newbg_grey);
-                    chatText.setVisibility(View.VISIBLE);
-                    chatText.setTextColor(context.getResources().getColor(R.color.black));
                     chatText.setBackgroundResource(R.drawable.grey_square);
                     chatText.setText("" + temp.textMsg);
                     LinearLayout.LayoutParams mTextParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -534,8 +529,10 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     parent_shared_layout.setBackgroundResource(R.drawable.sharedleft);
                     row.findViewById(R.id.parent_clicks_area).setVisibility(View.GONE);
                     row.findViewById(R.id.parent_clicks_area_share).setVisibility(View.GONE);
+                    ((ImageView) row.findViewById(R.id.iv_chat_image)).setVisibility(View.GONE);
                 } else if (temp.shareStatus.equalsIgnoreCase("shareRejected")) {//// set tip iamge for share Rejected
                     parent_shared_layout.setBackgroundResource(R.drawable.shareddeniedleft);
+                    ((ImageView) row.findViewById(R.id.iv_chat_image)).setVisibility(View.GONE);
                 } else if (temp.shareStatus.equalsIgnoreCase("shared")) {
                     ((RelativeLayout) row.findViewById(R.id.shared_header_view)).setVisibility(View.VISIBLE);
                     ((TextView) row.findViewById(R.id.shared_by_name)).setText("You");
@@ -544,7 +541,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
                     /* for share prafull code   */
                 }
-
+                ((ImageView) row.findViewById(R.id.iv_type_two_share_icon_r)).setVisibility(View.GONE);
             }//end of share view at Sender side
 
 
@@ -838,6 +835,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 } else if (temp.card_Accepted_Rejected.equalsIgnoreCase("accepted")) {//enf of first time played card-receiver
                     ((RelativeLayout) row.findViewById(R.id.rl_acc_rej_card)).setVisibility(View.VISIBLE);
                     ((LinearLayout) row.findViewById(R.id.ll_for_share_icon)).setVisibility(View.VISIBLE);
+                    ((ImageView) row.findViewById(R.id.iv_type_two_share_icon_r)).setVisibility(View.VISIBLE);
                     ((LinearLayout) row.findViewById(R.id.acc_rej_layout_second)).setVisibility(View.VISIBLE);
                     String[] splitted = relationManager.getPartnerName.split("\\s+");
                     ((TextView) row.findViewById(R.id.tv_acc_res_name)).setText(splitted[0]);
@@ -1048,10 +1046,10 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 TextView mShareLong = (TextView) row.findViewById(R.id.long_chat_text_share);
                 ImageView mHertImage = (ImageView) row.findViewById(R.id.iv_clicks_heart_share);
                 mHertImage.setVisibility(View.VISIBLE);
+                mShareText.setVisibility(View.VISIBLE);
                 mShareText.setText(temp.clicks);
                 mShareText.setVisibility(View.VISIBLE);
                 if (!(Utils.isEmptyString(temp.textMsg))) {
-
 
                     if (temp.textMsg.length() > Constants.CHAT_LENTH_LIMIT) {
                         mShareSort.setText(temp.textMsg.substring(0, 12));
@@ -1060,6 +1058,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                         mShareLong.setVisibility(View.VISIBLE);
 
                     } else {
+                        mShareSort.setVisibility(View.VISIBLE);
                         mShareSort.setText(temp.textMsg);
                         mShareSort.setVisibility(View.VISIBLE);
                     }
@@ -1085,6 +1084,8 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     ((RelativeLayout) row.findViewById(R.id.shared_header_view)).setVisibility(View.GONE);
                     ((LinearLayout) row.findViewById(R.id.shared_footer_view)).setVisibility(View.GONE);
                 } else if (temp.shareStatus.equalsIgnoreCase("shared")) {
+
+
                     ((ImageView) row.findViewById(R.id.iv_type_two_share_icon_r)).setVisibility(View.GONE);
                     ((RelativeLayout) row.findViewById(R.id.shared_header_view)).setVisibility(View.VISIBLE);
                     ((LinearLayout) row.findViewById(R.id.shared_footer_view)).setVisibility(View.VISIBLE);
@@ -1097,9 +1098,23 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     ((LinearLayout) row.findViewById(R.id.parent_clicks_area_share)).setVisibility(View.GONE);
                 }
 
+                    // Mukesh share audio layout
+                   if(!Utils.isEmptyString(temp.content_url) && Utils.isEmptyString(temp.video_thumb) &&  Utils.isEmptyString(temp.imageRatio)){
+                       RelativeLayout mRelative = (RelativeLayout) row.findViewById(R.id.temp_layout);
+                       mRelative.setVisibility(View.VISIBLE);
+
+                       ImageView mAudioImage = (ImageView) row.findViewById(R.id.iv_play_btn);
+                       mAudioImage.setVisibility(View.VISIBLE);
+
+                       ImageView mSpeakerImage = (ImageView) row.findViewById(R.id.iv_play_btn_);
+                       mSpeakerImage.setVisibility(View.VISIBLE);
+                   }
+                ((ImageView) row.findViewById(R.id.iv_type_two_share_icon_r)).setVisibility(View.GONE);
+                }
+
             }//end of share view at reciver side
 
-        }//end of reciver
+
 
 
         /* prafull code for clicklistener on image audio and video */
@@ -1172,7 +1187,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 context.startActivity(i);
 
                 ChatManager chatManager = ModelManager.getInstance().getChatManager();
-                chatManager.chatShare(authM.getPhoneNo(), authM.getUsrToken(), item.relationshipId, item.chatId, item.sharingMedia, item.facebookToken, item.shareComment, "no");
+                chatManager.chatShare(authM.getPhoneNo(), authM.getUsrToken(), item.relationshipId, item.originalMessageID, item.sharingMedia, item.facebookToken, item.shareComment, "no");
 
             }
         });
@@ -1210,7 +1225,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 context.startActivity(i);
 
                 ChatManager chatManager = ModelManager.getInstance().getChatManager();
-                chatManager.chatShare(authM.getPhoneNo(), authM.getUsrToken(), item.relationshipId, item.chatId, item.sharingMedia, item.facebookToken, item.shareComment, "yes");
+                chatManager.chatShare(authM.getPhoneNo(), authM.getUsrToken(), item.relationshipId, item.originalMessageID, item.sharingMedia, item.facebookToken, item.shareComment, "yes");
 
             }
         });
@@ -1223,7 +1238,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
             //android.util.android.util.Log.e("open map--->", "open map--->");
             String coordinates = item.location_coordinates;
-           // android.util.android.util.Log.e("location coordinates-->", "" + coordinates);
+            // android.util.android.util.Log.e("location coordinates-->", "" + coordinates);
             Intent intent = new Intent(context, MapView.class);
             intent.putExtra("from", "chatrecord");
             intent.putExtra("coordinates", coordinates);
@@ -1330,9 +1345,14 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
         if (!Utils.isEmptyString(item.imageRatio)) {
             i.putExtra("imageRatio", item.imageRatio);
             i.putExtra("fileId", item.content_url);
+        }else if (!Utils.isEmptyString(item.card_owner)) {
+            i.putExtra("card_owner", item.card_owner);
+            i.putExtra("card_url", item.card_url);
+           // i.putExtra("card_clicks", item.clicks);
         } else if (!Utils.isEmptyString(item.video_thumb)) {
             i.putExtra("videoThumbnail", item.video_thumb);
             i.putExtra("videoID", item.content_url);
+
         } else if (!Utils.isEmptyString(item.content_url) && Utils.isEmptyString(item.imageRatio) && Utils.isEmptyString(item.video_thumb)) {
             i.putExtra("audioID", item.content_url);
         }

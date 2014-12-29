@@ -677,7 +677,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
             EventBus.getDefault().unregister(this);
         }
 
-        EventBus.getDefault().registerSticky(this);
+        EventBus.getDefault().register(this);
     }
 
 
