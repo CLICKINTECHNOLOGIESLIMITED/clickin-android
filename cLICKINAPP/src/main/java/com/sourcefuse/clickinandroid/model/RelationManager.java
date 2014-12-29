@@ -160,7 +160,12 @@ public class RelationManager {
             if (jsondata.has("phone_no"))
                 getRelationShipList.setPhoneNo(jsondata.getString("phone_no"));
             if (jsondata.has("partner_pic"))
-                getRelationShipList.setPartnerPic(jsondata.getString("partner_pic"));
+                if (jsondata.getString("partner_pic").contains("profile_pic")){
+                   String pthumbImage =  jsondata.getString("partner_pic").replace("profile_pic", "thumb_profile_pic");
+                    getRelationShipList.setPartnerPic(pthumbImage);
+                }else{
+                    getRelationShipList.setPartnerPic("");
+                }
             if (jsondata.has("request_initiator"))
                 getRelationShipList.setRequestInitiator(jsondata.getString("request_initiator"));
             else
