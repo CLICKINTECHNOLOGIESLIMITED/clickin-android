@@ -36,7 +36,7 @@ public class AudioUtil {
         recorder = new MediaRecorder();
         recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         recorder.setOutputFormat(output_formats[currentFormat]);
-        recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+        recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
         fileName = getFilename();
         recorder.setOutputFile(fileName);
         android.util.Log.e("Filename:", "" + fileName);

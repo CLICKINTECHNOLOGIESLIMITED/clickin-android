@@ -881,7 +881,7 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
        tempChat.chatType=Constants.CHAT_TYPE_DELIVERED;
        tempChat.chatId=chatId;
        tempChat.sentOn=String.valueOf(sentOntime);
-     
+
      /*  HashMap<String, Object> fields = new HashMap<String, Object>();
        fields.put("relationshipId", relationshipId);
        fields.put("userId", ModelManager.getInstance().getAuthorizationManager().getUserId());
