@@ -263,7 +263,6 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
     }
 
     public void onEventMainThread(String getMsg) {
-        android.util.Log.d(TAG, "onEventMainThread->" + getMsg);
         authManager = ModelManager.getInstance().getAuthorizationManager();
         if (getMsg.equalsIgnoreCase("SignIn True")) {
             //save only those values in sharedprefrence that required to sign in

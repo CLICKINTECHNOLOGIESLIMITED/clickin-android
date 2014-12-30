@@ -149,6 +149,9 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     private int CHAT_TYPE;
     private boolean mIsBound;
     private String onlineStatus;
+
+    private String mChatId;
+
     //flag to start and stop thread to check online status
    public static boolean CHECK_ONLINE_STATUS_FLAG=false;
     private ServiceConnection mConnection = new ServiceConnection() {
@@ -237,9 +240,9 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         int mName = mRandom.nextInt();
         mName = Math.abs(mName);
 
-        String thumbpath = "/storage/emulated/0/Clickin/Clickin Images";
+        String thumbpath = "/storage/emulated/0/Clickin/ClickinImages";
         File file = new File(thumbpath);
-        String mPath = file.getAbsolutePath() + "/" + System.currentTimeMillis() + ".jpg";
+        String mPath = file.getAbsolutePath() + "/" + mChatId + ".jpg";
         File mFile = new File(mPath);
         try {
             if(!file.exists())
@@ -691,7 +694,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                         long sentOntime = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis();
 
                         temp.sentOn = "" + sentOntime;
-                        temp.chatId = authManager.getQBId() + authManager.partnerQbId + sentOntime;
+                        temp.chatId = authManager.getQBId() + authManager.partnerQbId + sentOntime;   // chat id for text and clicks
 
 
                         myQbChatService.sendMessage(temp);
@@ -735,6 +738,10 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 slidemenu.showSecondaryMenu(true);
                 break;*/
             case R.id.btn_to_card:
+
+                long sentOntime1 = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis();
+                mChatId =  authManager.getQBId() + authManager.partnerQbId + sentOntime1;
+
                 //akshit code to hide keyboard
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(chatText.getWindowToken(), 0);
@@ -748,6 +755,9 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             case R.id.iv_attach:
 
                 // to set previous values to null once image is pressed again
+
+                long sentOntime = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis();
+                mChatId =  authManager.getQBId() + authManager.partnerQbId + sentOntime;
 
                 attachBtn.setImageBitmap(null);
                 attachBtn.setImageResource(R.drawable.attachedfileiconx);
@@ -912,7 +922,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         long sentOntime = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis();
 
         temp.sentOn = "" + sentOntime;
-        temp.chatId = authManager.getQBId() + authManager.partnerQbId + sentOntime;
+        temp.chatId = mChatId;    // chat id for audio/video/image/map
         temp.isDelivered = Constants.MSG_SENDING;
         temp.content_uri=tempPath;
         //     setValueForHistory(temp);
@@ -981,7 +991,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             temp.chatType = Constants.CHAT_TYPE_CARD;
             temp.partnerQbId = authManager.partnerQbId;
             temp.textMsg = "   ";
-            temp.chatId = authManager.getQBId() + temp.partnerQbId + sentOntime;
+            temp.chatId = authManager.getQBId() + temp.partnerQbId + sentOntime;  // chat id for cards
             //code for updating clicks value if card is in accepted stage
             String card_action_status = intent.getExtras().getString("card_Accepted_Rejected");
 
@@ -1035,7 +1045,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             temp.isDelivered = Constants.MSG_SENT;
             long sentOntime = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis();
             temp.sentOn = "" + sentOntime;
-            temp.chatId = authManager.getQBId() + authManager.partnerQbId + sentOntime;
+            temp.chatId = authManager.getQBId() + authManager.partnerQbId + sentOntime;  // chat id for sharing
 
             temp.partnerQbId = authManager.partnerQbId;
             if (!Utils.isEmptyString(temp.clicks) && !temp.clicks.equalsIgnoreCase("no")) {
@@ -1193,7 +1203,6 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
     public void onEventMainThread(String message) {
         super.onEventMainThread(message);
-        //android.util.android.util.Log.d(TAG, "onEventMainThread->" + message);
         authManager = ModelManager.getInstance().getAuthorizationManager();
         if (message.equalsIgnoreCase("FecthChat True")) {
             Utils.dismissBarDialog();
@@ -1327,6 +1336,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                             try {
                                 authManager.setOrginalBitmap(bitmap);
                                 Intent intent = new Intent(ChatRecordView.this, CropView.class);
+                                intent.putExtra("name",mChatId);  // save image name
                                 intent.putExtra("from", "fromchatCamare");
                                 intent.putExtra("uri", mImageCaptureUri);
                                 startActivityForResult(intent, Constants.CROP_PICTURE);
@@ -1362,6 +1372,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                             try {
                                 authManager.setOrginalBitmap(bitmap1);
                                 Intent intent = new Intent(ChatRecordView.this, CropView.class);
+                                intent.putExtra("name",mChatId);   // save image by name
                                 intent.putExtra("from", "fromchatGallery");
                                 intent.putExtra("uri", data.getData());
                                 startActivityForResult(intent, Constants.CROP_PICTURE);
@@ -1389,6 +1400,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                                 mName = Math.abs(mName);
                                 thumurl = videofilePath.replace(".mp4", "" + mName);
                                 thumurl = writePhotoJpg(bMap, thumurl);
+                                android.util.Log.e("image path--->",""+thumurl);
                                 //thumurl = Utils.getRealPathFromURI(Uri.parse(thumurl),ChatRecordView.this);
                             }
                             attachBtn.setImageBitmap(bMap);
@@ -1416,6 +1428,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
                             thumurl = videofilePath.replace(".mp4", "" + mName);
                             thumurl = writePhotoJpg(bMap, thumurl);
+                            android.util.Log.e("image path--->",""+thumurl);
                         }
                         attachBtn.setImageBitmap(bMap);
                         //akshit code to check wether image buton contains image or not;
@@ -1458,6 +1471,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                             //currentImagepath = mImageCaptureUri.toString();
 
                             android.util.Log.e("real path after crop------>", "" + path);
+                            ((ImageView) findViewById(R.id.iv_attach)).setImageURI(Uri.parse(path));
 
                             //akshit code to check wether image buton contains image or not;
                             if (view.getDrawable().getConstantState() == getResources().getDrawable(R.drawable.r_footer_icon).getConstantState()) {
@@ -2119,7 +2133,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             String path = newpath + "" + rn.nextInt();
             String imagepath = writePhotoJpg(result, path);
             CHAT_TYPE = Constants.CHAT_TYPE_LOCATION;
-
+            android.util.Log.e("image path---->",""+imagepath);
 
 
             sendMsgToQB(imagepath);

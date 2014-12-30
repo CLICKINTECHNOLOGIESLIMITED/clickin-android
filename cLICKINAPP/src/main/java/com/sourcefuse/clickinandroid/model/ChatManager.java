@@ -115,7 +115,6 @@ public class ChatManager {
                         boolean state = false;
                         ChatMessageBody temp = null;
                         try {
-                            android.util.Log.e(TAG, "response FecthChat ->" + response);
                             state = response.getBoolean("success");
                             if (state) {
 

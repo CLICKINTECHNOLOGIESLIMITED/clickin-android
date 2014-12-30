@@ -171,13 +171,12 @@ public class EditMyProfileView extends ClickInBaseView implements View.OnClickLi
 
         //prafull code to set image bitmap
         try {
-            android.util.Log.e("in try---->", "in try--->");
+
             Bitmap imagebitmap1 = authManager.getUserbitmap();
             /*if (imagebitmap1 != null)
                 com.sourcefuse.clickinandroid.utils.android.util.Log.e("user bit map not null", "user bit map not null");*/
             boolean userpic = Utils.isEmptyString(authManager.getUserPic());
-            android.util.Log.e("user pic url ---->", "" + authManager.getUserPic());
-            android.util.Log.e("user pc --->", "" + authManager.getUserPic());
+
             if (imagebitmap1 != null)
                 mySelfy.setImageBitmap(imagebitmap1);
             else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl") && !userpic)
@@ -456,7 +455,6 @@ public class EditMyProfileView extends ClickInBaseView implements View.OnClickLi
 
     public void onEventMainThread(String getMsg) {
         super.onEventMainThread(getMsg);
-        android.util.Log.d(TAG, "onEventMainThread->" + getMsg);
         authManager = ModelManager.getInstance().getAuthorizationManager();
         if (getMsg.equalsIgnoreCase("UpdateProfile True")) {
             Utils.dismissBarDialog();

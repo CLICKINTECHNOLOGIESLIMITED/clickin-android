@@ -44,6 +44,7 @@ import com.sourcefuse.clickinandroid.model.bean.ContactBean;
 import com.sourcefuse.clickinandroid.model.bean.GetrelationshipsBean;
 import com.sourcefuse.clickinapp.R;
 
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -58,6 +59,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Random;
 import java.util.TimeZone;
 
 public class
@@ -1213,5 +1215,102 @@ public class
         String mReturnValue = "last seen on " + date + " at " + date1;
         return mReturnValue;
     }
+
+
+
+    public static String storeImage(Bitmap imageData, String filename,Context context) { //to store image once croped
+        String iconsStoragePath = null;
+        String filePath = null;
+
+        if (Utils.isEmptyString(iconsStoragePath)) {
+            String newpath = "/storage/emulated/0/ClickIn/ClickinImages"; // path to store image
+            Random rn = new Random();
+            iconsStoragePath = newpath;
+        }
+
+        File sdIconStorageDir = new File(iconsStoragePath);
+
+        //create storage directories, if they don't exist
+        if (!sdIconStorageDir.exists()) {
+            sdIconStorageDir.mkdirs();
+        }
+        sdIconStorageDir.setWritable(true);
+        sdIconStorageDir.setReadable(true);
+
+        try {
+            filePath = sdIconStorageDir.getAbsolutePath() + "/" + filename + ".jpg";
+
+            FileOutputStream fileOutputStream = new FileOutputStream(filePath);
+            BufferedOutputStream bos = new BufferedOutputStream(fileOutputStream);
+            //choose another format if PNG doesn't suit you
+            imageData.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+            bos.flush();
+            bos.close();
+            // sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse(filePath)));
+
+
+            ContentValues values = new ContentValues();
+            values.put(MediaStore.Images.Media.DATA, filePath);
+            values.put(MediaStore.Images.Media.DATE_TAKEN, sdIconStorageDir.lastModified());
+            Uri mImageCaptureUri = context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values); // to notify change
+            context.getContentResolver().notifyChange(Uri.parse(filePath), null);
+
+        } catch (FileNotFoundException e) {
+            Log.e("TAG", "Error saving image file: " + e.getMessage());
+
+            return "";
+        } catch (IOException e) {
+            Log.e("TAG", "Error saving image file: " + e.getMessage());
+            return "";
+        } catch (Exception e) {
+            Log.e("TAG", "Error saving image file: " + e.getMessage());
+            e.printStackTrace();
+            return "";
+        }
+
+        return filePath;
+    }
+
+    public static Uri getImageContentUri(Context context, File imageFile) {
+        String filePath = imageFile.getAbsolutePath();
+        Cursor cursor = context.getContentResolver().query(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                new String[] { MediaStore.Images.Media._ID },
+                MediaStore.Images.Media.DATA + "=? ",
+                new String[] { filePath }, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            int id = cursor.getInt(cursor
+                    .getColumnIndex(MediaStore.MediaColumns._ID));
+            int id1 = cursor.getInt(cursor.getColumnIndex(MediaStore.MediaColumns._ID));
+            return Uri.withAppendedPath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "" + id1);
+        } else {
+            if (imageFile.exists()) {
+                ContentValues values = new ContentValues();
+                values.put(MediaStore.Images.Media.DATA, filePath);
+                return context.getContentResolver().insert(
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+            } else {
+                return null;
+            }
+        }
+    }
+
+
+    public static Uri getUriFromPath(String filePath, Context context) {
+        long photoId;
+        Uri photoUri = MediaStore.Images.Media.getContentUri("external");
+
+        String[] projection = {MediaStore.Images.ImageColumns._ID};
+        // TODO This will break if we have no matching item in the MediaStore.
+        Cursor cursor = context.getContentResolver().query(photoUri, projection, MediaStore.Images.ImageColumns.DATA + " LIKE ?", new String[] { filePath }, null);
+        cursor.moveToFirst();
+
+        int columnIndex = cursor.getColumnIndex(projection[0]);
+        photoId = cursor.getLong(columnIndex);
+
+        cursor.close();
+        return Uri.parse(photoUri.toString() + "/" + photoId);
+    }
+
 }
 

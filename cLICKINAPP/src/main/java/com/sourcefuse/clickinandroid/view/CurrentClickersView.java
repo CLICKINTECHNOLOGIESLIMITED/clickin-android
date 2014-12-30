@@ -249,7 +249,6 @@ public class CurrentClickersView extends Activity implements OnClickListener {
     }
 
     public void onEventMainThread(String message) {
-        android.util.Log.d(TAG, "onEventMainThread->" + message);
         authManager = ModelManager.getInstance().getAuthorizationManager();
         if (message.equalsIgnoreCase("CheckFriend True")) {
             Utils.dismissBarDialog();

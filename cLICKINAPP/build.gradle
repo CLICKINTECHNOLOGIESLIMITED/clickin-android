@@ -39,6 +39,7 @@ dependencies {
     compile project(':facebookSDK')
     compile project(':library_header')
     compile project(':library')
+    compile files('libs/volley.jar')
 //    compile project(':library_pull')
     compile 'com.navercorp.pulltorefresh:library:3.2.0@aar'
     compile 'com.android.support:support-v4:20.0.0'

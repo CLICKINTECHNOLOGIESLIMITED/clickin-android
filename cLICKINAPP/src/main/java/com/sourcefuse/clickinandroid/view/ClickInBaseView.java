@@ -377,13 +377,12 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 
         //prafull code to set image bitmap
         try {
-            Log.e("in try---->", "in try--->");
+
             Bitmap imagebitmap1 = authManager.getUserbitmap();
             //  if (imagebitmap1 != null)
             //com.sourcefuse.clickinandroid.utils.android.util.Log.e("user bit map not null", "user bit map not null");
             boolean userpic = Utils.isEmptyString(authManager.getUserPic());
-            Log.e("user pic url ---->", "" + authManager.getUserPic());
-            Log.e("user pc --->", "" + authManager.getUserPic());
+
             if (imagebitmap1 != null)
                 userPic.setImageBitmap(imagebitmap1);
             else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl") && !userpic)
@@ -745,13 +744,12 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 
         /* to set downloaded image from server*/
         try {
-            Log.e("in try---->", "in try--->");
+
             Bitmap imagebitmap1 = authManager.getUserbitmap();
             //   if (imagebitmap1 != null)
             //     com.sourcefuse.clickinandroid.utils.android.util.Log.e("user bit map not null", "user bit map not null");
             boolean userpic = Utils.isEmptyString(authManager.getUserPic());
-            Log.e("user pic url ---->", "" + authManager.getUserPic());
-            Log.e("user pc --->", "" + authManager.getUserPic());
+
             if (imagebitmap1 != null)
                 userPic.setImageBitmap(imagebitmap1);
             else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl") && !userpic)
@@ -778,7 +776,6 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
     }
 
     public void onEventMainThread(String message) {
-        Log.e("onEventMainThread", "onEventMainThread->");
         authManager = ModelManager.getInstance().getAuthorizationManager();
         String mTestString = new String(message);
 
@@ -921,13 +918,12 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         try {
             userName.setText(authManager.getUserName());//akshit code
 
-            Log.e("in try---->", "in try--->");
+
             Bitmap imagebitmap1 = authManager.getUserbitmap();
             //   if (imagebitmap1 != null)
             //     com.sourcefuse.clickinandroid.utils.android.util.Log.e("user bit map not null", "user bit map not null");
             boolean userpic = Utils.isEmptyString(authManager.getUserPic());
-            Log.e("user pic url ---->", "" + authManager.getUserPic());
-            Log.e("user pc --->", "" + authManager.getUserPic());
+
             if (imagebitmap1 != null)
                 userPic.setImageBitmap(imagebitmap1);
             else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl") && !userpic)

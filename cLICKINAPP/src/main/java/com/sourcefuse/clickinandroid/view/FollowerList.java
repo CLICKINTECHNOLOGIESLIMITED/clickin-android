@@ -136,7 +136,6 @@ public class FollowerList extends ClickInBaseView implements
     public void onEventMainThread(String getMsg) {
         super.onEventMainThread(getMsg);
         Utils.dismissBarDialog();
-        android.util.Log.d(TAG, "onEventMainThread->" + getMsg);
         authManager = ModelManager.getInstance().getAuthorizationManager();
         if (getMsg.equalsIgnoreCase("UnFollowUser true")) {
 
