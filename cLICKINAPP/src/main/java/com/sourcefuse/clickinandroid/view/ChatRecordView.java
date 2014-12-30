@@ -240,7 +240,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         int mName = mRandom.nextInt();
         mName = Math.abs(mName);
 
-        String thumbpath = "/storage/emulated/0/Clickin/ClickinImages";
+        String thumbpath = Utils.mImagePath;
         File file = new File(thumbpath);
         String mPath = file.getAbsolutePath() + "/" + mChatId + ".jpg";
         File mFile = new File(mPath);
@@ -461,6 +461,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             @Override
             public void onClick(View arg0) {
                 hideAttachView();
+                VideoUtil.name= mChatId;
                 VideoUtil.videoDialog(ChatRecordView.this);
             }
         });
@@ -2124,7 +2125,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
         @Override
         protected void onPostExecute(Bitmap result) {
-            String newpath = "/storage/emulated/0/ClickIn/Audio/";
+            String newpath = Utils.mAudioPath;
             Random rn = new Random();
             String path = newpath + "" + rn.nextInt();
             String imagepath = writePhotoJpg(result, path);

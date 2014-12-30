@@ -446,6 +446,7 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
         @Override
         protected Bitmap doInBackground(String... URL) {
 
+
             String imageURL = URL[0];
 
             Bitmap bitmap = null;

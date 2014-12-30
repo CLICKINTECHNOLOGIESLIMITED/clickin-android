@@ -2,10 +2,15 @@ package com.sourcefuse.clickinandroid.view.adapter;
 
 
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.AsyncTask;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -37,13 +42,20 @@ import com.sourcefuse.clickinandroid.view.ViewTradeCart;
 import com.sourcefuse.clickinapp.R;
 import com.squareup.picasso.Picasso;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 
 public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
     private static final String TAG = ChatRecordAdapter.class.getSimpleName();
-    Context context;
+    public Context context;
 
     ArrayList<ChatMessageBody> currentChatList;
     private AuthManager authManager;
@@ -140,9 +152,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 //common code to display image from URI-monika
 
                 /* path where clickin image are stored */
-                String mContentUri = "/storage/emulated/0/ClickIn/ClickinImages/" + temp.chatId + ".jpg"; // featch data from
-                Log.e("chat id on image upload---.",""+temp.chatId);
-                Log.e("path on image upload---.",""+mContentUri);
+                String mContentUri = Utils.mImagePath + temp.chatId + ".jpg"; // featch data from
+                Log.e("chat id on image upload---.", "" + temp.chatId);
+                Log.e("path on image upload---.", "" + mContentUri);
                 Uri mUri = Utils.getImageContentUri(context, new File(mContentUri));  //check file exist or not
                 if (!Utils.isEmptyString("" + mUri)) {
                     try {
@@ -284,7 +296,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 //common code to display image from URI-monika
 
                 /* deafult path where image are stored */
-                String mContentUri = "/storage/emulated/0/ClickIn/ClickinImages/" + temp.chatId + ".jpg"; // featch data from
+                String mContentUri = Utils.mImagePath + temp.chatId + ".jpg"; // featch data from
                 Uri mUri = Utils.getImageContentUri(context, new File(mContentUri));
                 if (!Utils.isEmptyString("" + mUri)) {  // check video thumb exists or not
                     try {
@@ -671,7 +683,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
 
                 /* deafult path where clickin images are stored */
-                String mContentUri = "/storage/emulated/0/ClickIn/ClickinImages/" + temp.chatId + ".jpg"; // featch data from
+                String mContentUri = Utils.mImagePath + temp.chatId + ".jpg"; // featch data from
                 Uri mUri = Utils.getImageContentUri(context, new File(mContentUri));
                 if (!Utils.isEmptyString("" + mUri)) {  // check if image exists on uri
 
@@ -814,7 +826,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 //common code to display image from URI-monika
 
                 /* deafult path where clickin image are stored */
-                String mContentUri = "/storage/emulated/0/ClickIn/ClickinImages/" + temp.chatId + ".jpg"; // featch data from
+                String mContentUri = Utils.mImagePath + temp.chatId + ".jpg"; // featch data from
                 Uri mUri = Utils.getImageContentUri(context, new File(mContentUri));
                 if (!Utils.isEmptyString("" + mUri)) {  // chdeck video thumb exist or not
                     try {
@@ -831,6 +843,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                         @Override
                         public void onError(VolleyError volleyError) {
                         }
+
                         @Override
                         public void onSuccess(ImageLoader.ImageContainer loader) {
                             if (loader.getBitmap() != null) {
@@ -1360,17 +1373,21 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
             }
         } else if (!Utils.isEmptyString(item.video_thumb)) {
 
+            Utils.mName = item.chatId;
 
-            Uri intentUri = Uri.parse(item.content_url);
-
-            Intent intent1 = new Intent();
-            intent1.setAction(Intent.ACTION_VIEW);
-            intent1.setDataAndType(intentUri, "video/*");
-            try {
-                context.startActivity(intent1);
-            } catch (Exception e) {
-                e.printStackTrace();
+            Log.e("name--->",""+Utils.mName);
+            String mPath = Utils.mVideoPath + Utils.mName + ".mp4";
+            Uri uri = Utils.getVideoContentUri(context, new File(mPath));  //check file exist or not
+            if (Utils.isEmptyString("" + uri)) {  // dowonload video
+                Log.e("Download video---->", "Download video---->");
+                if(Utils.isConnectingToInternet((Activity)context))
+                    new DownloadMusicfromInternet().execute(item.content_url);
+            } else {  // play video
+                Log.e("play video---->", "play video---->");
+                Log.e("uri---->", "" + uri);
+                Utils.playvideo(context, uri.toString());
             }
+
 
         } else if (!Utils.isEmptyString(item.content_url) && Utils.isEmptyString(item.video_thumb)) {
 
@@ -1466,4 +1483,124 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
     }
 */
+
+    public class DownloadMusicfromInternet extends AsyncTask<String, String, String> { // Async task to download video
+
+        String path = Utils.mVideoPath;  // default video path
+        String mPath;
+        File mFile;
+        URLConnection conection = null;
+        OutputStream output = null;
+        InputStream input = null;
+        private ProgressDialog prgDialog;
+        int precentage;
+
+        // Show Progress bar before downloading Music
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            prgDialog = new ProgressDialog(context);
+            prgDialog.setMessage("Downloading file. Please wait...");
+            prgDialog.setIndeterminate(false);
+            prgDialog.setMax(100);
+            prgDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            prgDialog.setCancelable(true);
+            prgDialog.show();
+
+        }
+
+        // Download Music File from Internet
+        @Override
+        protected String doInBackground(final String... f_url) {
+            int count;
+            try {
+                URL url = new URL(f_url[0]);
+                prgDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialogInterface) {
+                        if (output != null && input != null) {
+                            try {
+                                cancel(true);
+                                String mPath = Utils.mVideoPath + Utils.mName + ".mp4";
+                                if (precentage != 100) {   // delate file if video download intrupted
+                                    File file = new File(mPath);
+                                    if (file.exists()) {
+                                        file.delete();
+                                    }
+                                }
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                Log.e("Exvaption close--->", "" + e.toString());
+                            }
+                        }
+                    }
+                });
+                conection = url.openConnection();
+                conection.connect();
+                int lenghtOfFile = conection.getContentLength();
+                input = new BufferedInputStream(url.openStream(), 10 * 1024);
+                mFile = new File(path);
+                if (!mFile.exists()) {
+                    mFile.mkdir();
+                }
+                mFile.setWritable(true);
+                mFile.setReadable(true);
+
+                mPath = mFile.getAbsolutePath() + "/" + Utils.mName + ".mp4";
+                output = new FileOutputStream(mPath);
+                byte data[] = new byte[1024];
+                long total = 0;
+                while ((count = input.read(data)) != -1) {
+                    total += count;
+                    publishProgress("" + (int) ((total * 100) / lenghtOfFile));
+                    output.write(data, 0, count);
+                }
+                output.flush();
+                output.close();
+                input.close();
+            } catch (Exception e) {
+                Log.e("Error: ", e.getMessage());
+            }
+            return null;
+        }
+
+        // While Downloading Music File
+        protected void onProgressUpdate(String... progress) {
+            prgDialog.setProgress(Integer.parseInt(progress[0]));
+            precentage = Integer.parseInt(progress[0]);
+        }
+
+        // Once Music File is downloaded
+        @Override
+        protected void onPostExecute(String file_url) {
+
+
+            if (precentage == 100) {
+                /* to mount media in gallery */
+                ContentValues values = new ContentValues();
+                values.put(MediaStore.Video.Media.DATA, mPath);
+                values.put(MediaStore.Video.Media.DATE_TAKEN, mFile.lastModified());
+                Uri mImageCaptureUri = context.getContentResolver().insert(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, values); // to notify change
+                context.getContentResolver().notifyChange(Uri.parse(mPath), null);
+                Log.e("url ---->", "" + mImageCaptureUri);
+
+                /* play video */
+                Uri uri = Utils.getVideoContentUri(context, new File(mPath));  //check file exist or not
+                Log.e("uri---->", "" + uri);
+                Utils.playvideo(context, uri.toString());
+                prgDialog.dismiss();
+            } else {
+                String mPath = Utils.mVideoPath + Utils.mName + ".mp4";
+                File file = new File(mPath);
+                if (file.exists()) {
+                    file.delete();
+                }
+
+            }
+
+        }
+    }
+
+
 }

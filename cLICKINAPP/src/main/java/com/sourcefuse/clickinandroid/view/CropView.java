@@ -209,7 +209,7 @@ public class CropView extends Activity implements View.OnClickListener {
         String filePath = null;
 
         if (Utils.isEmptyString(iconsStoragePath)) {
-            String newpath = "/storage/emulated/0/ClickIn/ClickinImages/"; // path to store image
+            String newpath = Utils.mImagePath; // path to store image
             Random rn = new Random();
             iconsStoragePath = newpath;
         }

@@ -43,7 +43,7 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
     /*RecordHolder rholder;*/
     private RelationManager relationManager;
     private boolean showpending = false;
-    String imagespath = "/storage/emulated/0/ClickIn/Images/";
+    String imagespath = Utils.mImagePath;
 
     public UserRelationAdapter(Context context, int layoutResourceId,
                                List<GetrelationshipsBean> item) {

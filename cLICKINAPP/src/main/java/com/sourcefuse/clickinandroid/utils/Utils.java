@@ -11,6 +11,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -19,7 +20,9 @@ import android.graphics.Matrix;
 import android.graphics.drawable.ColorDrawable;
 import android.media.AudioManager;
 import android.media.ExifInterface;
+import android.media.MediaActionSound;
 import android.media.MediaPlayer;
+import android.media.MediaScannerConnection;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -50,6 +53,7 @@ import com.sourcefuse.clickinandroid.model.bean.ContactBean;
 import com.sourcefuse.clickinandroid.model.bean.GetrelationshipsBean;
 import com.sourcefuse.clickinapp.R;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -58,6 +62,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -68,12 +74,17 @@ import java.util.HashMap;
 import java.util.Random;
 import java.util.TimeZone;
 
+import static android.provider.MediaStore.Images.Media.query;
+
 public class
         Utils {
 
     public static boolean DEBUG = true;
 
     public static String deviceId, PROJECT_NUMBER = "1058681021160";
+    public static String mVideoPath = "/storage/emulated/0/ClickIn/ClickinVideo/";
+    public static String mImagePath = "/storage/emulated/0/ClickIn/ClickinImages/";
+    public static String mAudioPath= "/storage/emulated/0/ClickIn/ClickinAudio/";
     public static boolean appSound;
     public static SharedPreferences prefrences;
     public static Activity acty;
@@ -1230,7 +1241,7 @@ public class
         String filePath = null;
 
         if (Utils.isEmptyString(iconsStoragePath)) {
-            String newpath = "/storage/emulated/0/ClickIn/ClickinImages"; // path to store image
+            String newpath = mImagePath; // path to store image
             Random rn = new Random();
             iconsStoragePath = newpath;
         }
@@ -1302,6 +1313,30 @@ public class
         }
     }
 
+    public static Uri getVideoContentUri(Context context, File imageFile) {
+        String filePath = imageFile.getAbsolutePath();
+        Cursor cursor = context.getContentResolver().query(
+                MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
+                new String[] { MediaStore.Video.Media._ID },
+                MediaStore.Video.Media.DATA + "=? ",
+                new String[] { filePath }, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            int id = cursor.getInt(cursor
+                    .getColumnIndex(MediaStore.MediaColumns._ID));
+            int id1 = cursor.getInt(cursor.getColumnIndex(MediaStore.MediaColumns._ID));
+            return Uri.withAppendedPath(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, "" + id1);
+        } else {
+            if (imageFile.exists()) {
+                ContentValues values = new ContentValues();
+                values.put(MediaStore.Video.Media.DATA, filePath);
+                return context.getContentResolver().insert(
+                        MediaStore.Video.Media.EXTERNAL_CONTENT_URI, values);
+            } else {
+                return null;
+            }
+        }
+    }
+
 
     public static Uri getUriFromPath(String filePath, Context context) {
         long photoId;
@@ -1318,6 +1353,33 @@ public class
         cursor.close();
         return Uri.parse(photoUri.toString() + "/" + photoId);
     }
+
+
+
+    /* download video from url */
+
+    public static String mName;
+
+    public static void playvideo(Context context,String Url)
+    {
+    /* play video */
+
+        Uri uri=Uri.parse(Url);
+        Intent intent1 = new Intent();
+        intent1.setAction(Intent.ACTION_VIEW);
+        intent1.putExtra(MediaStore.EXTRA_FINISH_ON_COMPLETION, false);
+        intent1.setDataAndType(uri, "video/*");
+        try {
+            context.startActivity(intent1);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e("exception---->",""+e.toString());
+        }
+    }
+
+
+
+
 
 
 }
