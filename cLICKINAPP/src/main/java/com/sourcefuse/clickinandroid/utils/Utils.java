@@ -2,6 +2,7 @@ package com.sourcefuse.clickinandroid.utils;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Application;
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
@@ -35,6 +36,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.quickblox.core.QBCallbackImpl;
+import com.quickblox.core.result.Result;
+import com.quickblox.module.custom.QBCustomObjects;
+import com.quickblox.module.custom.model.QBCustomObject;
+import com.quickblox.module.custom.result.QBCustomObjectResult;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
@@ -1218,6 +1224,7 @@ public class
 
 
 
+
     public static String storeImage(Bitmap imageData, String filename,Context context) { //to store image once croped
         String iconsStoragePath = null;
         String filePath = null;
@@ -1311,6 +1318,7 @@ public class
         cursor.close();
         return Uri.parse(photoUri.toString() + "/" + photoId);
     }
+
 
 }
 
