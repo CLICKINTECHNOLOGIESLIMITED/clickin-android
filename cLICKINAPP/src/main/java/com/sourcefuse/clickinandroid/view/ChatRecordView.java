@@ -944,6 +944,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         authManager = ModelManager.getInstance().getAuthorizationManager();
         String actionReq = intent.getAction();
         typingtext.setText("");
+        chatText.setText("");//akshit code to Refresh Chat box text
+
         if (actionReq.equalsIgnoreCase("UPDATE")) {
             Utils.launchBarDialog(this);
             Intent i = new Intent(this, MyQbChatService.class);

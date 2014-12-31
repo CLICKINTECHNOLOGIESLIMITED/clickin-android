@@ -1,7 +1,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:geekui="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
+    android:layout_width="280dp"
     android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:layout_centerVertical="true"
     android:background="@drawable/dialog_blue_bg">
 
     <RelativeLayout
@@ -36,28 +38,28 @@
 
         <Button
             android:id="@+id/coolio"
-            android:layout_width="130dp"
+            android:layout_width="110dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/alert_msgI"
-            android:layout_marginTop="45dp"
+            android:layout_marginTop="65dp"
             android:background="@drawable/blue_btn"
             android:text="Yes Please"
             android:textColor="@color/white"
-            android:textSize="20dp"
+            android:textSize="18dp"
             android:textStyle="bold" />
 
         <Button
             android:id="@+id/coolio1"
-            android:layout_width="130dp"
+            android:layout_width="110dp"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/alert_msgI"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="45dp"
+            android:layout_marginTop="65dp"
             android:background="@drawable/pink_btn"
             android:text="No Thanks"
             android:textColor="@color/white"
-            android:textSize="20dp"
+            android:textSize="18dp"
             android:textStyle="bold" />
     </RelativeLayout>
 
