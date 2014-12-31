@@ -113,7 +113,7 @@ public class RelationManager {
                             JSONObject data = list.getJSONObject(i);
                             getRelationShipList = new GetrelationshipsBean();
 
-                            if (!Utils.isEmptyString(data.getString("partner_id"))) {
+                            if (!Utils.isEmptyString(data.getString("partner_QB_id"))) {
                                 if (data.getString("accepted").matches("true")) {
                                     setArrayListForDifferentStatus(data, acceptedList);
                                 } else {

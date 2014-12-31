@@ -573,6 +573,7 @@
             android:background="@color/profile_name_b"
             android:gravity="center_vertical"
             android:orientation="vertical"
+            android:layout_marginBottom="3dp"
             android:visibility="gone">
 
             <LinearLayout
@@ -731,7 +732,7 @@
                 android:id="@+id/iv_send_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/double_check"
+                android:background="@drawable/r_single_tick"
                 android:visibility="visible" />
         </LinearLayout>
 

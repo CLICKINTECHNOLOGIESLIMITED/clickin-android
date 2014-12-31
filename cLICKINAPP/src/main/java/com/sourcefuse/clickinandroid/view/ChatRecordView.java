@@ -144,6 +144,9 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     private String audioFilePath = null;
     private int CHAT_TYPE;
     private boolean mIsBound;
+    private String onlineStatus;
+    //flag to start and stop thread to check online status
+   public static boolean CHECK_ONLINE_STATUS_FLAG=false;
     private ServiceConnection mConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
             // This is called when the connection with the service has been
@@ -257,6 +260,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         }
         return thumbpath;
     }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -479,6 +484,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
 
 
+        //code to check online of offline status
+
         /* on create */
         Utils.dismissBarDialog();
 
@@ -677,6 +684,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             case R.id.textview_send://akshit code for event on send
                 //   break;
             case R.id.btn_send:
+                //code to check online status or not
+
                 String chatString = chatText.getText().toString();
 
                 if ((chatString.length() > 0 || isClicks() == true || mImageCaptureUri != null) || audioFilePath != null || videofilePath != null) {
@@ -1178,7 +1187,19 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             myclicksView.setText("" + ModelManager.getInstance().getAuthorizationManager().ourClicks);
             partnerClicksView.setText("" + ModelManager.getInstance().getRelationManager().partnerClicks);
         }
+        myHandler = new Handler();
+        myHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //code to check online status or not
+                if(!Utils.isEmptyString(ModelManager.getInstance().getAuthorizationManager().partnerQbId)){
+                    CHECK_ONLINE_STATUS_FLAG=true;
+                    if(myQbChatService != null)
+                        myQbChatService.CheckOnlineStatus(Integer.parseInt(ModelManager.getInstance().getAuthorizationManager().partnerQbId));
 
+                }
+            }
+        },10000);
 
         if(adapter!=null)
         adapter.notifyDataSetChanged();
@@ -1245,13 +1266,13 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             adapter.notifyDataSetChanged();
           //  new DBTask().execute(rId);
         } else if (message.equalsIgnoreCase("Composing YES")) {
-            typingtext.setVisibility(View.VISIBLE);
+          //  typingtext.setVisibility(View.VISIBLE);
             typingtext.setText("Typing..");
         } else if (message.equalsIgnoreCase("Composing NO")) {
-            typingtext.setVisibility(View.VISIBLE);
+          //  typingtext.setVisibility(View.VISIBLE);
             typingtext.setText("online");
-        } else if (message.startsWith("Delivered Msg")) {
-            String chatId = message.substring(13);
+        } else if (message.equalsIgnoreCase("Delivered")) {
+          adapter.notifyDataSetChanged();
             //  updateChatDeliverStatusInList(chatId);
 
         } else if (message.startsWith("ChatShare True")) {
@@ -1264,7 +1285,14 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             // Toast.makeText(this,"Sorry,got disconnected",Toast.LENGTH_SHORT).show();
             send.setEnabled(false);
             send_text.setEnabled(false);
+        }else if(message.equalsIgnoreCase("Online")){
+          //  typingtext.setVisibility(View.VISIBLE);
+                typingtext.setText("Online");
+        }else if(message.equalsIgnoreCase("Offline")){
+            //typingtext.setVisibility(View.VISIBLE);
+                typingtext.setText("Offline");
         }
+
 
     }
 

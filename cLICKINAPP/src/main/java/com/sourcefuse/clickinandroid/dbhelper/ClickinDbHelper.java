@@ -45,6 +45,7 @@ public class ClickinDbHelper extends SQLiteOpenHelper implements ChatRecordI {
     public static final String location_coordinates = "location_coordinates";
     public static final String sharedMessage = "sharedMessage";
     public static final String isDelivered = "isDelivered";
+    public static final String deliveredChatId = "deliveredChatId";
     public static final String relationshipId = "relationshipId";
     public static final String userId = "userId";
     public static final String senderUserToken = "senderUserToken";
@@ -73,6 +74,7 @@ public class ClickinDbHelper extends SQLiteOpenHelper implements ChatRecordI {
             + location_coordinates + " text, "
             + sharedMessage + " text, "
             + isDelivered + " text, "
+            + deliveredChatId +  " text, "
             + relationshipId + " text, "
             + userId + " text, "
             + senderUserToken + " text, "
@@ -146,6 +148,7 @@ public class ClickinDbHelper extends SQLiteOpenHelper implements ChatRecordI {
             contentValues.put(location_coordinates, chat.location_coordinates);
             contentValues.put(sharedMessage, chat.sharedMessage);
             contentValues.put(isDelivered, chat.isDelivered);
+            contentValues.put(deliveredChatId, chat.deliveredChatID);
 
             contentValues.put(relationshipId, chat.relationshipId);
             contentValues.put(userId, chat.userId);
@@ -254,5 +257,24 @@ public class ClickinDbHelper extends SQLiteOpenHelper implements ChatRecordI {
        dbObj.delete(TABLE_CHATRECORD,null,null //table name
             ); //selections args
    }
+
+    //monika-funtion to update msg delivered status in chat
+
+    public int updateDeliverStatusInChat(String msgId) throws SQLException {
+
+        if (dbObj == null || !dbObj.isOpen())
+            openDataBase();
+        ContentValues values=new ContentValues();
+        values.put("deliveredChatId",msgId
+             );
+
+        dbObj.update(TABLE_CHATRECORD,values,
+                deliveredChatId + " =?",
+                new String[]{msgId});
+
+
+
+        return 1;
+    }
 
 }

@@ -31,9 +31,13 @@ import com.quickblox.module.auth.model.QBSession;
 import com.quickblox.module.chat.QBChat;
 import com.quickblox.module.chat.QBChatService;
 import com.quickblox.module.chat.QBPrivateChat;
+import com.quickblox.module.chat.QBRoster;
 import com.quickblox.module.chat.exception.QBChatException;
 import com.quickblox.module.chat.listeners.QBMessageListener;
+import com.quickblox.module.chat.listeners.QBRosterListener;
+import com.quickblox.module.chat.listeners.QBSubscriptionListener;
 import com.quickblox.module.chat.model.QBChatMessage;
+import com.quickblox.module.chat.model.QBPresence;
 import com.quickblox.module.users.model.QBUser;
 import com.sourcefuse.clickinandroid.dbhelper.ClickinDbHelper;
 import com.sourcefuse.clickinandroid.model.AuthManager;
@@ -43,6 +47,7 @@ import com.sourcefuse.clickinandroid.model.bean.ChatMessageBody;
 import com.sourcefuse.clickinandroid.model.bean.GetrelationshipsBean;
 import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.Utils;
+import com.sourcefuse.clickinandroid.view.ChatRecordView;
 import com.sourcefuse.clickinandroid.view.SplashView;
 import com.sourcefuse.clickinapp.R;
 
@@ -55,8 +60,10 @@ import org.json.JSONObject;
 import org.json.XML;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.List;
 import java.util.TimeZone;
 import java.util.regex.Pattern;
@@ -68,6 +75,8 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
     public static final int SEND_CHAT = 0;
     public static final int ADD_CHAT_LISTENERS = 1;
     public static final int CHAT_LOGOUT = 2;
+    public static final int CHECK_PRESENCE=3;
+    public static final int DELIVERED_CHAT=4;
 
     private static final String TAG = ChatThread.class.getSimpleName();
     private final Handler mHandler;
@@ -82,7 +91,8 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
     private QBPrivateChat chatObject;
     private AuthManager authManager;
     private QBUser mUser;
-
+    QBRoster chatRoster;
+    int userId;
     public ChatThread(Application context, Handler handler) {
         application = context;
         mHandler = handler;
@@ -192,6 +202,10 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
 
                                     }
                                     break;
+                                case Constants.CHAT_TYPE_DELIVERED:
+                                    message.setProperty("isDelivered",data.getString("isDelivered"));
+                                    message.setProperty("messageID",data.getString("messageID"));
+                                    break;
 
                             }
                             if (!(data.getInt("ChatType") == Constants.CHAT_TYPE_CARD)) {
@@ -205,7 +219,8 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
                                 message.setBody(data.getString("textMsg"));
 
                             //set the delivered notification property in msg
-                            if (!(data.getInt("ChatType") == Constants.CHAT_TYPE_NOFITICATION)) {
+                            if (!(data.getInt("ChatType") == Constants.CHAT_TYPE_NOFITICATION) &&
+                                    !(data.getInt("ChatType") == Constants.CHAT_TYPE_DELIVERED) ) {
                                 message.setMarkable(true);
                                 message.setProperty("common_platform_id", data.getString("ChatId"));
                             }
@@ -230,6 +245,12 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
                         break;
                     case CHAT_LOGOUT:
                         logoutQB();
+                        break;
+                    case CHECK_PRESENCE:
+                        Bundle data1 = msg.getData();
+                        int userId=data1.getInt("partnerQBId");
+                      //  checkOnlineStatus(userId);
+                        new Thread(checkstatusRunnable).start();
 
                 }
             }
@@ -274,6 +295,10 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
 
                 //monika-connection listener
                 QBChatService.getInstance().addConnectionListener(this);
+                if(chatRoster == null) {
+                    chatRoster = QBChatService.getInstance().getRoster(QBRoster.SubscriptionMode.mutual, subscriptionListener);
+                    chatRoster.addRosterListener(rosterListener);
+                }
             }else{
                 showDialog("Please Sign in again");
             }
@@ -320,8 +345,16 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
                     EventBus.getDefault().post("Composing NO");
 
             } else if (messageObj.has("body") && messageObj.getString("body").equalsIgnoreCase("Delivered.")) {//here we sent the msg , its delivr notification only
+                String from = messageObj.getString("from");
+                String[] words = from.split("-");
+                String senderQBId=words[0];
+                String msgId=extraParamsObj.getString("messageID");
+                //function to update deliver status in list
+                updateDeliverStatusInList(senderQBId,msgId);
                 EventBus.getDefault().post("Msg Delivered");
             } else {//here we recieved proper chat msg and need to update list
+
+
 
                 ChatMessageBody temp = new ChatMessageBody();
                 String from = messageObj.getString("from");
@@ -331,8 +364,8 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
                 if (messageObj.has("body"))
                     body = messageObj.getString("body");
 
-                if (messageObj.has("common_platform_id"))
-                    temp.chatId = messageObj.getString("common_platform_id");
+                if (extraParamsObj.has("common_platform_id"))
+                    temp.chatId = extraParamsObj.getString("common_platform_id");
 
                 if (extraParamsObj.has("clicks")) {
                     temp.clicks = extraParamsObj.getString("clicks");
@@ -414,6 +447,23 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
                 temp.sentOn = "" + Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis();
 
                 saveMessageInDB(temp);
+                //code to send Delivered chat notification to partner
+                if (extraParamsObj.has("common_platform_id")){
+                    Bundle data=new Bundle();
+                    data.putString("partnerQBId",temp.senderQbId);
+                    String msgId=extraParamsObj.getString("common_platform_id");
+                    data.putString("messageID",msgId);
+                    data.putString("textMsg","Delivered.");
+                    data.putString("isDelivered","yes");
+                    data.putInt("ChatType",Constants.CHAT_TYPE_DELIVERED);
+                    android.os.Message msg = new android.os.Message();
+                 //   msg.what=DELIVERED_CHAT;
+                    msg.setData(data);
+                   //Handler myHandler=getHandler();
+                    //myHandler.sendMessage(msg);
+                    sendDeliveredChatMsg(msg);
+
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -430,6 +480,7 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
     @Override
     public void processMessageDelivered(QBChat qbChat, String msgId) {
         EventBus.getDefault().post("Delivered Msg" + msgId);
+        Log.e("Receiveid",msgId);
     }
 
     @Override
@@ -448,6 +499,25 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
                     chatObject = QBChatService.getInstance().getPrivateChatManager().getChat(partnerQBId);
                     if (chatObject == null)
                         chatObject = QBChatService.getInstance().getPrivateChatManager().createChat(partnerQBId, ChatThread.this);
+                    if (chatRoster.contains(partnerQBId)) {
+                        try {
+                            chatRoster.subscribe(partnerQBId);
+                        } catch (SmackException.NotConnectedException e) {
+
+                        }
+                    } else {
+                        try {
+                            chatRoster.createEntry(partnerQBId, null);
+                        } catch (XMPPException e) {
+
+                        } catch (SmackException.NotLoggedInException e) {
+
+                        } catch (SmackException.NotConnectedException e) {
+
+                        } catch (SmackException.NoResponseException e) {
+
+                        }
+                    }
 
                 }
 
@@ -564,6 +634,9 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
     public void connectionClosed() {
         //    if(!QBChatService.getInstance().isLoggedIn())
         //      loginToChat();
+        ModelManager.getInstance().getSettingManager().changeLastSeenTime(
+                ModelManager.getInstance().getAuthorizationManager().getPhoneNo(),
+                ModelManager.getInstance().getAuthorizationManager().getUsrToken());
         EventBus.getDefault().post("Disconnected QB");
     }
 
@@ -572,6 +645,9 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
         //   if(!QBChatService.getInstance().isLoggedIn())
         // loginToChat();
         EventBus.getDefault().post("Disconnected QB");
+        ModelManager.getInstance().getSettingManager().changeLastSeenTime(
+                ModelManager.getInstance().getAuthorizationManager().getPhoneNo(),
+                ModelManager.getInstance().getAuthorizationManager().getUsrToken());
     }
 
     @Override
@@ -653,6 +729,146 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
             }
         });
         dialog.show();
+    }
+
+    QBRosterListener rosterListener = new QBRosterListener() {
+        @Override
+        public void entriesDeleted(Collection<Integer> userIds) {
+
+        }
+
+        @Override
+        public void entriesAdded(Collection<Integer> userIds) {
+
+        }
+
+        @Override
+        public void entriesUpdated(Collection<Integer> userIds) {
+
+        }
+
+        @Override
+        public void presenceChanged(QBPresence presence) {
+
+        }
+    };
+
+    QBSubscriptionListener subscriptionListener = new QBSubscriptionListener() {
+        @Override
+        public void subscriptionRequested(int userID) {
+            try {
+                if(chatRoster != null)
+                chatRoster.confirmSubscription(userID);
+                else{
+                    chatRoster = QBChatService.getInstance().getRoster(QBRoster.SubscriptionMode.mutual, subscriptionListener);
+                    chatRoster.confirmSubscription(userID);
+                    chatRoster.addRosterListener(rosterListener);
+                }
+            } catch (SmackException.NotConnectedException e) {
+
+            } catch (SmackException.NotLoggedInException e) {
+
+            } catch (XMPPException e) {
+
+            } catch (SmackException.NoResponseException e) {
+
+            }
+        }
+    };
+
+
+    Runnable checkstatusRunnable=new Runnable() {
+        @Override
+        public void run() {
+            while(ChatRecordView.CHECK_ONLINE_STATUS_FLAG){
+                checkOnlineStatus(userId);
+                try {
+                    Thread.sleep(15000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    };
+
+    public void checkOnlineStatus(int userID){
+        QBPresence presence;
+        if(chatRoster !=null)
+         presence = chatRoster.getPresence(userID);
+        else{
+            chatRoster = QBChatService.getInstance().getRoster(QBRoster.SubscriptionMode.mutual, subscriptionListener);
+            presence = chatRoster.getPresence(userID);
+            chatRoster.addRosterListener(rosterListener);
+        }
+        if (presence == null) {
+            // No user in your roster
+            return;
+        }
+
+        if (presence.getType() == QBPresence.Type.online) {
+            EventBus.getDefault().post("Online");
+            // User is online
+        }else{
+            EventBus.getDefault().post("Offline");
+
+            // User is offline
+        }
+    }
+
+    //monika-function to update deliver status in list
+   private void  updateDeliverStatusInList(String senderQBID, String msgId){
+        //if senderQBId is currently in chat
+       //check whether our activity is on top or not
+       ActivityManager am = (ActivityManager)application.getSystemService(Application.ACTIVITY_SERVICE);
+       List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
+       ComponentName componentInfo = taskInfo.get(0).topActivity;
+       String className = componentInfo.getClassName();
+       if (senderQBID.equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().partnerQbId)){
+           if (className.equalsIgnoreCase("com.sourcefuse.clickinandroid.view.ChatRecordView")) {
+               for(ChatMessageBody temp:ModelManager.getInstance().getChatManager().chatMessageList){
+                   if(temp.chatId.equalsIgnoreCase(msgId)){
+                       temp.deliveredChatID=msgId;
+                       EventBus.getDefault().post("Delivered");
+                   }
+               }
+               //  saveMessageInDB(temp);
+           }
+       }else{
+           //update value in Db
+           ClickinDbHelper dbHelper = new ClickinDbHelper(mContext);
+           try {
+               dbHelper.updateDeliverStatusInChat(msgId);
+           } catch (SQLException e) {
+               e.printStackTrace();
+           }
+
+       }
+    }
+
+
+    //temp code to send Delivered chat message-monika
+    private void sendDeliveredChatMsg(android.os.Message msg){
+        Bundle data = msg.getData();
+        if (QBChatService.getInstance().isLoggedIn()) {
+            int partnerQBId = Integer.parseInt(data.getString("partnerQBId"));
+            QBPrivateChat chatObject = null;
+            chatObject = QBChatService.getInstance().getPrivateChatManager().getChat(partnerQBId);
+            if (chatObject == null)
+                chatObject = QBChatService.getInstance().getPrivateChatManager().createChat(partnerQBId, ChatThread.this);
+            QBChatMessage message = new QBChatMessage();
+            message.setProperty("isDelivered",data.getString("isDelivered"));
+            message.setProperty("messageID",data.getString("messageID"));
+
+            if (data.containsKey("textMsg"))
+                message.setBody(data.getString("textMsg"));
+            try {
+                chatObject.sendMessage(message);
+            } catch (XMPPException e) {
+                e.printStackTrace();
+            } catch (SmackException.NotConnectedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
 
