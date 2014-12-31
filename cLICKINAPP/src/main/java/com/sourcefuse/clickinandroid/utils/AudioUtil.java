@@ -14,7 +14,7 @@ public class AudioUtil {
     private static final String AUDIO_RECORDER_FILE_EXT_3GP = ".3gp";
     private static final String AUDIO_RECORDER_FILE_EXT_MP4 = ".mp4";
     private static String file_exts[] = {AUDIO_RECORDER_FILE_EXT_MP4, AUDIO_RECORDER_FILE_EXT_3GP};
-    private static final String AUDIO_RECORDER_FOLDER = "/ClickIn/Audio";
+    private static final String AUDIO_RECORDER_FOLDER = "ClickIn/ClickinAudio";
     private static MediaRecorder recorder = null;
     private static int currentFormat = 0;
     private static int output_formats[] = {MediaRecorder.OutputFormat.MPEG_4, MediaRecorder.OutputFormat.THREE_GPP};
@@ -34,9 +34,9 @@ public class AudioUtil {
 
     public static void startRecording() {
         recorder = new MediaRecorder();
-        recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+        recorder.setAudioSource(MediaRecorder.AudioSource.DEFAULT);
         recorder.setOutputFormat(output_formats[currentFormat]);
-        recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+        recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
         fileName = getFilename();
         recorder.setOutputFile(fileName);
         android.util.Log.e("Filename:", "" + fileName);

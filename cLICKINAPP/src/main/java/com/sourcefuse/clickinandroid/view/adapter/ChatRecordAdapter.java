@@ -1392,6 +1392,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
         } else if (!Utils.isEmptyString(item.content_url) && Utils.isEmptyString(item.video_thumb)) {
 
 
+            Log.e("i audio case--->",""+item.content_url);
             Uri intentUri = Uri.parse(item.content_url);
             Intent intent = new Intent();
             intent.setAction(Intent.ACTION_VIEW);

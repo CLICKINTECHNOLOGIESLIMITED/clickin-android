@@ -147,7 +147,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     private boolean mIsBound;
     private String onlineStatus;
 
-    private String mChatId;
+    private String mChatId;  // to save image qbchatid and systemmillseconds
 
     //flag to start and stop thread to check online status
    public static boolean CHECK_ONLINE_STATUS_FLAG=false;
@@ -239,7 +239,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
         String thumbpath = Utils.mImagePath;
         File file = new File(thumbpath);
-        String mPath = file.getAbsolutePath() + "/" + mChatId + ".jpg";
+        String mPath = file.getAbsolutePath() + "/" + mChatId + ".jpg";  // save image by mChatIdname
         File mFile = new File(mPath);
         try {
             if(!file.exists())
@@ -458,7 +458,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             @Override
             public void onClick(View arg0) {
                 hideAttachView();
-                VideoUtil.name= mChatId;
+                VideoUtil.name= mChatId;  // name of video
                 VideoUtil.videoDialog(ChatRecordView.this);
             }
         });
@@ -740,7 +740,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             case R.id.btn_to_card:
 
                 long sentOntime1 = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis();
-                mChatId =  authManager.getQBId() + authManager.partnerQbId + sentOntime1;
+                mChatId =  authManager.getQBId() + authManager.partnerQbId + sentOntime1;  // put value in mChatId once button is pressed
 
                 //akshit code to hide keyboard
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -757,7 +757,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 // to set previous values to null once image is pressed again
 
                 long sentOntime = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis();
-                mChatId =  authManager.getQBId() + authManager.partnerQbId + sentOntime;
+                mChatId =  authManager.getQBId() + authManager.partnerQbId + sentOntime;  // put value in mChatId once button is pressed
 
                 attachBtn.setImageBitmap(null);
                 attachBtn.setImageResource(R.drawable.attachedfileiconx);
