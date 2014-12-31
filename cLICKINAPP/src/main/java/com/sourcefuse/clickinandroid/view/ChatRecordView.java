@@ -799,11 +799,13 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     //monika- function to show chat in listview
     private void ShowValueinChat(ChatMessageBody obj) {
 
-        //calculate and updates clicks value-monika
-        if (obj.clicks.startsWith("+")) {
-            Utils.updateClicksPartnerWithoutCard(relationManager.partnerClicks, obj.clicks, true);
-        } else {
-            Utils.updateClicksPartnerWithoutCard(relationManager.partnerClicks, obj.clicks, false);
+        //calculate and updates clicks value only when card is not present-monika
+        if(Utils.isEmptyString(obj.card_id)) {
+            if (obj.clicks.startsWith("+")) {
+                Utils.updateClicksPartnerWithoutCard(relationManager.partnerClicks, obj.clicks, true);
+            } else if (obj.clicks.startsWith("-")) {
+                Utils.updateClicksPartnerWithoutCard(relationManager.partnerClicks, obj.clicks, false);
+            }
         }
         myclicksView.setText("" + authManager.ourClicks);
         partnerClicksView.setText("" + relationManager.partnerClicks);
@@ -1261,7 +1263,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             typingtext.setText("Typing..");
         } else if (message.equalsIgnoreCase("Composing NO")) {
           //  typingtext.setVisibility(View.VISIBLE);
-            typingtext.setText("online");
+            typingtext.setText("Online");
         } else if (message.equalsIgnoreCase("Delivered")) {
           adapter.notifyDataSetChanged();
             //  updateChatDeliverStatusInList(chatId);
@@ -2033,7 +2035,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                         // code to change value when send copy constructor
                         if (!temp.clicks.equalsIgnoreCase("no")) {
 
-                            temp.textMsg = temp.clicks + "        " + temp.textMsg;
+                            tempObj.textMsg = temp.clicks + "        " + temp.textMsg;
                         }
                         myQbChatService.sendMessage(tempObj); // copy constructor
 

@@ -345,17 +345,23 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
 
             JSONObject messageObj = jSONObj.getJSONObject("message");
             JSONObject extraParamsObj = messageObj.getJSONObject("extraParams");
+            String from = messageObj.getString("from");
+            String[] words = from.split("-");
+            String senderQBId=words[0];
 
             if (extraParamsObj.has("isComposing")) { //means user is composing msg now
-                if (extraParamsObj.getString("isComposing").equalsIgnoreCase("YES"))
-                    EventBus.getDefault().post("Composing YES");
-                else
-                    EventBus.getDefault().post("Composing NO");
+                //only if we currently in chat with partner
+                if (senderQBId.equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().partnerQbId)) {
+                    if (extraParamsObj.getString("isComposing").equalsIgnoreCase("YES"))
+                        EventBus.getDefault().post("Composing YES");
+                    else
+                        EventBus.getDefault().post("Composing NO");
+                }
 
             } else if (messageObj.has("body") && messageObj.getString("body").equalsIgnoreCase("Delivered.")) {//here we sent the msg , its delivr notification only
-                String from = messageObj.getString("from");
+            /*    String from = messageObj.getString("from");
                 String[] words = from.split("-");
-                String senderQBId=words[0];
+                String senderQBId=words[0];*/
                 String msgId=extraParamsObj.getString("messageID");
                 //function to update deliver status in list
                 updateDeliverStatusInList(senderQBId,msgId);
@@ -365,9 +371,9 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
 
 
                 ChatMessageBody temp = new ChatMessageBody();
-                String from = messageObj.getString("from");
-                String[] words = from.split("-");
-                temp.senderQbId = words[0];
+          /*      String from = messageObj.getString("from");
+                String[] words = from.split("-");*/
+                temp.senderQbId = senderQBId;
                 String body = " ";
                 if (messageObj.has("body"))
                     body = messageObj.getString("body");
@@ -876,13 +882,13 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
        }
        long sentOntime = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis();
        String chatId = ModelManager.getInstance().getAuthorizationManager().getQBId() + senderQBID + sentOntime;
-       ChatMessageBody tempChat=new ChatMessageBody();
+ /*      ChatMessageBody tempChat=new ChatMessageBody();
        tempChat.deliveredChatID=msgId;
        tempChat.chatType=Constants.CHAT_TYPE_DELIVERED;
        tempChat.chatId=chatId;
-       tempChat.sentOn=String.valueOf(sentOntime);
+       tempChat.sentOn=String.valueOf(sentOntime);*/
 
-     /*  HashMap<String, Object> fields = new HashMap<String, Object>();
+       HashMap<String, Object> fields = new HashMap<String, Object>();
        fields.put("relationshipId", relationshipId);
        fields.put("userId", ModelManager.getInstance().getAuthorizationManager().getUserId());
        fields.put("senderUserToken", ModelManager.getInstance().getAuthorizationManager().getUsrToken());
@@ -913,6 +919,8 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
        QBCustomObject qbCustomObject = new QBCustomObject();
        qbCustomObject.setClassName("chats");  // your Class name
        qbCustomObject.setFields(fields);
+
+      // Activity currentActivity = application.getApplicationContext().getCurrentActivity();
        QBCustomObjects.createObject(qbCustomObject, new QBCallbackImpl() {
            @Override
            public void onComplete(Result result) {
@@ -924,7 +932,7 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
                    android.util.Log.e("Errors", result.getErrors().toString());
                }
            }
-       });*/
+       });
 
 
     }
