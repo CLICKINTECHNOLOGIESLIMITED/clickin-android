@@ -86,6 +86,14 @@
                     android:layout_marginTop="2dp"
                     android:adjustViewBounds="true"
                     android:visibility="gone" />
+
+                <com.sourcefuse.clickinandroid.utils.FeedImageView
+                    android:id="@+id/iv_chat_image_"
+                    android:layout_width="206dp"
+                    android:layout_height="180dp"
+                    android:layout_marginTop="2dp"
+                    android:adjustViewBounds="true"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <RelativeLayout
@@ -120,6 +128,15 @@
                     android:adjustViewBounds="true"
                     android:src="@drawable/audio_play"
                     android:visibility="gone" />
+
+
+                <ProgressBar
+                    android:id="@+id/progress_bar"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_vertical"
+                    android:adjustViewBounds="true"
+                    android:visibility="gone" />/>
             </RelativeLayout>
 
 
@@ -570,10 +587,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/media_layout"
+            android:layout_marginBottom="3dp"
             android:background="@color/profile_name_b"
             android:gravity="center_vertical"
             android:orientation="vertical"
-            android:layout_marginBottom="3dp"
             android:visibility="gone">
 
             <LinearLayout

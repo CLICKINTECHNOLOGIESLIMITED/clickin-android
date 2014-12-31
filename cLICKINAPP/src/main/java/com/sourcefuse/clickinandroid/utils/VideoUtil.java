@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.*;
+import android.util.Log;
 
 import java.io.File;
 
@@ -21,10 +22,11 @@ import java.io.File;
 public class VideoUtil {
     public static final int REQUEST_VIDEO_CAPTURED = 20;
     public static final int REQUEST_VIDEO_CAPTURED_FROM_GALLERY = 100;
-    private static final String VIDEO_RECORDER_FOLDER = "ClickIn/Clickin/Clickin Video";
+    private static final String VIDEO_RECORDER_FOLDER = "ClickIn/ClickinVideo";
     public static String videofilePath = null;
     private static Uri fileUri = null;
     public Dialog mdialog;
+    public static String name;
 
     public static void videoDialog(final Activity contex) {
 
@@ -90,8 +92,9 @@ public class VideoUtil {
         if (!file.exists()) {
             file.mkdirs();
         }
-        String path = file.getAbsolutePath() + "/" + System.currentTimeMillis() + ".mp4";
+        String path = file.getAbsolutePath() + "/" + name + ".mp4";
 
+        Log.e("file path on video making---->",""+path);
         try {
             ContentValues values = new ContentValues();
             values.put(MediaStore.Images.Media.DATA, path);

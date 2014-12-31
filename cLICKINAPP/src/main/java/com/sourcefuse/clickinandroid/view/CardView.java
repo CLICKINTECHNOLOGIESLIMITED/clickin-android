@@ -235,7 +235,6 @@ public class CardView extends FragmentActivity {
 
 
     public void onEventMainThread(String getMsg) {
-        android.util.Log.d(TAG, "onEventMainThread->" + getMsg);
         authManager = ModelManager.getInstance().getAuthorizationManager();
         if (getMsg.equalsIgnoreCase("FetchCard True")) {
             setView();

@@ -316,7 +316,6 @@ public class SpreadWordView extends Activity implements OnClickListener {
 
 
     public void onEventMainThread(String message) {
-        // android.util.android.util.Log.d(TAG, "onEventMainThread->" + message);
         if (message.equalsIgnoreCase("CheckFriend True")) {
             Utils.dismissBarDialog();
             setlist();
