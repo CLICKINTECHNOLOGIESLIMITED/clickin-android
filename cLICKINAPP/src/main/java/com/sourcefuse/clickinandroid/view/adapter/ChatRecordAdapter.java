@@ -45,7 +45,6 @@ import com.squareup.picasso.Picasso;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
@@ -1102,7 +1101,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 TextView clicksText = (TextView) row.findViewById(R.id.clicks_text);
                 clicksText.setPadding(10, 0, 10, 0); // set padding for clicks prafull code
                 clicksText.setVisibility(View.VISIBLE);
-                clicksText.setText(temp.clicks);
+                clicksText.setText(temp.clicks.toString().trim());//akshit,to remove unwanted space from clicks
                 clicksText.setTextColor(context.getResources().getColor(R.color.white));
                 ImageView clicksHeart = (ImageView) row.findViewById(R.id.iv_clicks_heart);
                 clicksHeart.setVisibility(View.VISIBLE);
