@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.sourcefuse.clickinandroid.model.ChatManager;
 import com.sourcefuse.clickinandroid.model.bean.CardBean;
-import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinandroid.view.Card;
 import com.sourcefuse.clickinapp.R;
 

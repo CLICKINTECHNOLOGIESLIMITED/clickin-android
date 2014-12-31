@@ -2,12 +2,10 @@ package com.sourcefuse.clickinandroid.model;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.qb.gson.JsonObject;
 import com.sourcefuse.clickinandroid.model.bean.FetchUsersByNameBean;
 import com.sourcefuse.clickinandroid.model.bean.GetrelationshipsBean;
 import com.sourcefuse.clickinandroid.model.bean.ProfileRelationShipBean;
 import com.sourcefuse.clickinandroid.utils.APIs;
-import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinandroid.utils.Utils;
 
 import org.apache.http.entity.StringEntity;
@@ -160,10 +158,10 @@ public class RelationManager {
             if (jsondata.has("phone_no"))
                 getRelationShipList.setPhoneNo(jsondata.getString("phone_no"));
             if (jsondata.has("partner_pic"))
-                if (jsondata.getString("partner_pic").contains("profile_pic")){
-                   String pthumbImage =  jsondata.getString("partner_pic").replace("profile_pic", "thumb_profile_pic");
+                if (jsondata.getString("partner_pic").contains("profile_pic")) {
+                    String pthumbImage = jsondata.getString("partner_pic").replace("profile_pic", "thumb_profile_pic");
                     getRelationShipList.setPartnerPic(pthumbImage);
-                }else{
+                } else {
                     getRelationShipList.setPartnerPic("");
                 }
             if (jsondata.has("request_initiator"))
@@ -645,7 +643,7 @@ public class RelationManager {
                                 EventBus.getDefault().post("SearchResult False");
                             }
                         } catch (Exception e) {
-                           // android.util.android.util.Log.e("on error ", "on error");
+                            // android.util.android.util.Log.e("on error ", "on error");
                             EventBus.getDefault().post("SearchResult False");
                             e.printStackTrace();
                         }

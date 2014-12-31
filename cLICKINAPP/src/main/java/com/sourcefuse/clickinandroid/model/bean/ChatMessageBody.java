@@ -1,7 +1,5 @@
 package com.sourcefuse.clickinandroid.model.bean;
 
-import android.net.Uri;
-
 /**
  * Created by mukesh on 17/11/14.
  */
@@ -52,13 +50,14 @@ public class ChatMessageBody {
     public String isAccepted = null;
     public String facebookToken = null;
     //monika- to show image from uri
-    public String content_uri=null;
+    public String content_uri = null;
+
     public ChatMessageBody() {
 
     }
 
     public ChatMessageBody(ChatMessageBody body) {
-        this.textMsg =  body.textMsg;
+        this.textMsg = body.textMsg;
         partnerQbId = body.partnerQbId;
         clicks = body.clicks;
         chatType = body.chatType;

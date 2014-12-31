@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,14 +22,11 @@ import com.sourcefuse.clickinandroid.model.RelationManager;
 import com.sourcefuse.clickinandroid.model.bean.GetrelationshipsBean;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.Constants;
-import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.JumpOtherProfileView;
 import com.sourcefuse.clickinapp.R;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
-import java.io.File;
 import java.util.List;
 
 public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
@@ -38,12 +34,12 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
     int layoutResourceId;
     List<GetrelationshipsBean> itemList;
     TextView privacy;
+    String imagespath = Utils.mImagePath;
     private AuthManager authManager;
     private ProfileManager profileManager;
     /*RecordHolder rholder;*/
     private RelationManager relationManager;
     private boolean showpending = false;
-    String imagespath = Utils.mImagePath;
 
     public UserRelationAdapter(Context context, int layoutResourceId,
                                List<GetrelationshipsBean> item) {
@@ -159,7 +155,7 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
         if (!itemList.get(position).getPartnerPic().equalsIgnoreCase("")) {
             try {
 
-               // File file = new File(imagespath);
+                // File file = new File(imagespath);
 
               /*  File file = new File(Environment.getExternalStorageDirectory(),"ClickIn/Images/Mukesh/");
                 file.mkdir();
@@ -181,7 +177,7 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
                         .into(usrimg);
             } catch (Exception e) {
                 e.printStackTrace();
-               // usrimg.setImageResource(R.drawable.male_user);
+                // usrimg.setImageResource(R.drawable.male_user);
             }
         } else {
             usrimg.setImageResource(R.drawable.male_user);
@@ -286,7 +282,6 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
         skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
 
 
                 TextView button1 = (TextView) view.getTag();

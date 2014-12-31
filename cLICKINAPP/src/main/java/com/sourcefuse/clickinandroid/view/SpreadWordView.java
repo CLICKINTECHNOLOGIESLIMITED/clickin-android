@@ -23,7 +23,6 @@ import com.sourcefuse.clickinandroid.model.bean.ContactBean;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.FetchContactFromPhone;
-import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.adapter.SpreadWordAdapter;
 import com.sourcefuse.clickinapp.R;
@@ -243,7 +242,7 @@ public class SpreadWordView extends Activity implements OnClickListener {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-      //  com.sourcefuse.clickinandroid.utils.android.util.Log.e("on activity result", "on activity result");
+        //  com.sourcefuse.clickinandroid.utils.android.util.Log.e("on activity result", "on activity result");
         try {
             super.onActivityResult(requestCode, resultCode, data);
             try {

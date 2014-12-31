@@ -17,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 
-import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinapp.R;
 
 public final class TestFragment extends Fragment {

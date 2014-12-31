@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.widget.Toast;
 
 import com.sourcefuse.clickinandroid.model.bean.ChatMessageBody;
 import com.sourcefuse.clickinandroid.utils.Log;
@@ -77,7 +76,7 @@ public class ClickinDbHelper extends SQLiteOpenHelper implements ChatRecordI {
             + location_coordinates + " text, "
             + sharedMessage + " text, "
             + isDelivered + " text, "
-            + deliveredChatId +  " text, "
+            + deliveredChatId + " text, "
             + relationshipId + " text, "
             + userId + " text, "
             + senderUserToken + " text, "
@@ -219,14 +218,12 @@ public class ClickinDbHelper extends SQLiteOpenHelper implements ChatRecordI {
                     chat.location_coordinates = (chatCursor.getString(chatCursor.getColumnIndex(location_coordinates)));
                     chat.sharedMessage = (chatCursor.getString(chatCursor.getColumnIndex(sharedMessage)));
                     chat.isDelivered = (chatCursor.getString(chatCursor.getColumnIndex(isDelivered)));
-                    chat.deliveredChatID=(chatCursor.getString(chatCursor.getColumnIndex(deliveredChatId)));
+                    chat.deliveredChatID = (chatCursor.getString(chatCursor.getColumnIndex(deliveredChatId)));
 
                     chat.relationshipId = (chatCursor.getString(chatCursor.getColumnIndex(relationshipId)));
                     chat.userId = (chatCursor.getString(chatCursor.getColumnIndex(userId)));
                     chat.senderUserToken = (chatCursor.getString(chatCursor.getColumnIndex(senderUserToken)));
                     chat.senderQbId = (chatCursor.getString(chatCursor.getColumnIndex(senderQbId)));
-
-
 
 
                     chatList.add(chat);
@@ -258,12 +255,12 @@ public class ClickinDbHelper extends SQLiteOpenHelper implements ChatRecordI {
         return 1;
     }
 
-   public void clearDB() throws SQLException{
-       if (dbObj == null || !dbObj.isOpen())
-           openDataBase();
-       dbObj.delete(TABLE_CHATRECORD,null,null //table name
-            ); //selections args
-   }
+    public void clearDB() throws SQLException {
+        if (dbObj == null || !dbObj.isOpen())
+            openDataBase();
+        dbObj.delete(TABLE_CHATRECORD, null, null //table name
+        ); //selections args
+    }
 
     //monika-funtion to update msg delivered status in chat
 
@@ -271,24 +268,21 @@ public class ClickinDbHelper extends SQLiteOpenHelper implements ChatRecordI {
 
         if (dbObj == null || !dbObj.isOpen())
             openDataBase();
-        ContentValues values=new ContentValues();
-        values.put("deliveredChatId",msgId
-             );
+        ContentValues values = new ContentValues();
+        values.put("deliveredChatId", msgId
+        );
 
-       long update= dbObj.update(TABLE_CHATRECORD,values,
-               chatId + " =?",
+        long update = dbObj.update(TABLE_CHATRECORD, values,
+                chatId + " =?",
                 new String[]{msgId});
 
         //temp code-monika
-        if(update>=0)
-        {
-            Log.e("DbHelper"," Updated");
+        if (update >= 0) {
+            Log.e("DbHelper", " Updated");
 
 
-        }
-        else
-        {
-            Log.e("DbHelper","Not Updated");
+        } else {
+            Log.e("DbHelper", "Not Updated");
 
         }
 

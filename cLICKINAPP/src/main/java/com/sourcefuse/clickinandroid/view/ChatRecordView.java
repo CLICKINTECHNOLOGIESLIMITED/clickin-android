@@ -45,7 +45,6 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.quickblox.core.QBCallbackImpl;
 import com.quickblox.core.QBEntityCallbackImpl;
 import com.quickblox.core.result.Result;
-import com.quickblox.module.chat.QBChatService;
 import com.quickblox.module.content.QBContent;
 import com.quickblox.module.content.model.QBFile;
 import com.quickblox.module.content.result.QBFileUploadTaskResult;
@@ -72,7 +71,6 @@ import com.squareup.picasso.Picasso;
 
 import org.jivesoftware.smack.packet.DefaultPacketExtension;
 import org.jivesoftware.smack.packet.Message;
-import org.jivesoftware.smack.packet.Presence;
 
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
@@ -83,7 +81,6 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -109,16 +106,16 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
         }
     };
-    private static final String IMAGE_DIRECTORY_NAME = "Clickin Application";
+    private static final String IMAGE_DIRECTORY_NAME ="ClickIn/ClickinImages";
     public static String rId = "";
-  
+    //flag to start and stop thread to check online status
+    public static boolean CHECK_ONLINE_STATUS_FLAG = false;
     public MyQbChatService myQbChatService;
     int myvalue = 0, min = -10;//akshit ,To set my value initially to zero for send paper rocket condition
     String chatString = "";
     int seekValue = 0;
     int maxValue = 20; // Double of range
     int initialProgresss = maxValue / 2;
-
     //private QBPrivateChat chatObject;
     String firstname;
     String[] splitted;
@@ -128,7 +125,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     private SeekBar mybar;
     private TextView pos, neg, profileName, typingtext, myclicksView, partnerClicksView;
     private Button send, btnToCard;
-    private int relationListIndex=-1;
+    private int relationListIndex = -1;
     private String qBId, partnerPic, partnerName, partnerId, partnerPh, myClicks, partnerClicks;
     private ChatManager chatManager;
     private AuthManager authManager;
@@ -148,12 +145,6 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     private String audioFilePath = null;
     private int CHAT_TYPE;
     private boolean mIsBound;
-    private String onlineStatus;
-
-    private String mChatId;  // to save image qbchatid and systemmillseconds
-
-    //flag to start and stop thread to check online status
-   public static boolean CHECK_ONLINE_STATUS_FLAG=false;
     private ServiceConnection mConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
             // This is called when the connection with the service has been
@@ -183,6 +174,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 //                    Toast.LENGTH_SHORT).show();
         }
     };
+    private String onlineStatus;
+    private String mChatId;  // to save image qbchatid and systemmillseconds
     private String mLocation_Coordinates = "";
     private int chatListSize = 0;
 
@@ -245,8 +238,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         String mPath = file.getAbsolutePath() + "/" + mChatId + ".jpg";  // save image by mChatIdname
         File mFile = new File(mPath);
         try {
-            if(!file.exists())
-            {
+            if (!file.exists()) {
                 file.mkdirs();
                 file.setWritable(true);
                 file.setReadable(true);
@@ -275,7 +267,6 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         }
         return mPath;
     }
-
 
 
     @Override
@@ -452,6 +443,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             @Override
             public void onClick(View arg0) {
                 hideAttachView();
+                AudioUtil.mAudioName = mChatId;
                 alertDialog();
 
             }
@@ -461,7 +453,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             @Override
             public void onClick(View arg0) {
                 hideAttachView();
-                VideoUtil.name= mChatId;  // name of video
+                VideoUtil.name = mChatId;  // name of video
                 VideoUtil.videoDialog(ChatRecordView.this);
             }
         });
@@ -499,7 +491,6 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         chatListView.setAdapter(adapter);
 
 
-
         //code to check online of offline status
 
         /* on create */
@@ -520,7 +511,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     @Override
     protected void onPause() {
         super.onPause();
-        CHECK_ONLINE_STATUS_FLAG=false;
+        CHECK_ONLINE_STATUS_FLAG = false;
 
         //  new DBTask().execute(rId);
     }
@@ -651,7 +642,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
             chatManager.chatMessageList = dbHelper.getAllChat(rId);
 
-            if (chatManager.chatMessageList.size() <20 ) {
+            if (chatManager.chatMessageList.size() < 20) {
                 //emptyDb = true;
                 chatManager.chatMessageList.clear();
                 chatManager.fetchChatRecord(rId, authManager.getPhoneNo(), authManager.getUsrToken(), "");
@@ -743,7 +734,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             case R.id.btn_to_card:
 
                 long sentOntime1 = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis();
-                mChatId =  authManager.getQBId() + authManager.partnerQbId + sentOntime1;  // put value in mChatId once button is pressed
+                mChatId = authManager.getQBId() + authManager.partnerQbId + sentOntime1;  // put value in mChatId once button is pressed
 
                 //akshit code to hide keyboard
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -760,7 +751,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 // to set previous values to null once image is pressed again
 
                 long sentOntime = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis();
-                mChatId =  authManager.getQBId() + authManager.partnerQbId + sentOntime;  // put value in mChatId once button is pressed
+                mChatId = authManager.getQBId() + authManager.partnerQbId + sentOntime;  // put value in mChatId once button is pressed
 
                 attachBtn.setImageBitmap(null);
                 attachBtn.setImageResource(R.drawable.attachedfileiconx);
@@ -927,7 +918,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         temp.sentOn = "" + sentOntime;
         temp.chatId = mChatId;    // chat id for audio/video/image/map
         temp.isDelivered = Constants.MSG_SENDING;
-        temp.content_uri=tempPath;
+        temp.content_uri = tempPath;
         //     setValueForHistory(temp);
         ShowValueinChat(temp);
 
@@ -1123,7 +1114,6 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         }
 
 
-
     }
 
     @Override
@@ -1141,14 +1131,14 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             @Override
             public void run() {
                 //code to check online status or not
-                if(!Utils.isEmptyString(ModelManager.getInstance().getAuthorizationManager().partnerQbId)){
+                if (!Utils.isEmptyString(ModelManager.getInstance().getAuthorizationManager().partnerQbId)) {
 
-                    if(myQbChatService != null)
+                    if (myQbChatService != null)
                         myQbChatService.CheckOnlineStatus(Integer.parseInt(ModelManager.getInstance().getAuthorizationManager().partnerQbId));
 
                 }
             }
-        },5000);
+        }, 5000);
 
 
     }
@@ -1175,25 +1165,25 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
        }*/
 
 
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
         if (relationListIndex == -1) {
             searchRelationIndex();
         }
 
         //fetch latest clicks from accepted list everytime
-        int size=ModelManager.getInstance().getRelationManager().acceptedList.size();
-        if(relationListIndex<size) {
+        int size = ModelManager.getInstance().getRelationManager().acceptedList.size();
+        if (relationListIndex < size) {
             GetrelationshipsBean tempObj = ModelManager.getInstance().getRelationManager().acceptedList.get(relationListIndex);
-            ModelManager.getInstance().getAuthorizationManager().ourClicks=tempObj.getUserClicks();
-            ModelManager.getInstance().getRelationManager().partnerClicks=tempObj.getClicks();
+            ModelManager.getInstance().getAuthorizationManager().ourClicks = tempObj.getUserClicks();
+            ModelManager.getInstance().getRelationManager().partnerClicks = tempObj.getClicks();
             myclicksView.setText("" + ModelManager.getInstance().getAuthorizationManager().ourClicks);
             partnerClicksView.setText("" + ModelManager.getInstance().getRelationManager().partnerClicks);
         }
-      //set the flag value to true again -monika
-        CHECK_ONLINE_STATUS_FLAG=true;
+        //set the flag value to true again -monika
+        CHECK_ONLINE_STATUS_FLAG = true;
 
-        if(adapter!=null)
+        if (adapter != null)
             adapter.notifyDataSetChanged();
 
     }
@@ -1218,7 +1208,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                             if (chatListSize > 0) {
                                 // show last chat when use pull to refresh --"Mukesh"
                                 int listsize = chatManager.chatMessageList.size();
-                                chatListView.getRefreshableView().setSelection((listsize-chatListSize));
+                                chatListView.getRefreshableView().setSelection((listsize - chatListSize));
                             }
                         }
                     });
@@ -1240,30 +1230,29 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             Utils.fromSignalDialog(ChatRecordView.this, AlertMessage.connectionError);
             //  android.util.android.util.Log.d("3", "message->" + message);
         } else if (message.equalsIgnoreCase("Chat Message Recieve")) {
-            if(relationListIndex == -1){
+            if (relationListIndex == -1) {
                 searchRelationIndex();
             }
-            int size=ModelManager.getInstance().getRelationManager().acceptedList.size();
-            if(relationListIndex<size) {
+            int size = ModelManager.getInstance().getRelationManager().acceptedList.size();
+            if (relationListIndex < size) {
                 GetrelationshipsBean tempObj = ModelManager.getInstance().getRelationManager().acceptedList.get(relationListIndex);
-                ModelManager.getInstance().getAuthorizationManager().ourClicks=tempObj.getUserClicks();
-                ModelManager.getInstance().getRelationManager().partnerClicks=tempObj.getClicks();
+                ModelManager.getInstance().getAuthorizationManager().ourClicks = tempObj.getUserClicks();
+                ModelManager.getInstance().getRelationManager().partnerClicks = tempObj.getClicks();
                 myclicksView.setText("" + ModelManager.getInstance().getAuthorizationManager().ourClicks);
                 partnerClicksView.setText("" + ModelManager.getInstance().getRelationManager().partnerClicks);
             }
 
 
-
             adapter.notifyDataSetChanged();
             //  new DBTask().execute(rId);
         } else if (message.equalsIgnoreCase("Composing YES")) {
-          //  typingtext.setVisibility(View.VISIBLE);
+            //  typingtext.setVisibility(View.VISIBLE);
             typingtext.setText("Typing..");
         } else if (message.equalsIgnoreCase("Composing NO")) {
-          //  typingtext.setVisibility(View.VISIBLE);
+            //  typingtext.setVisibility(View.VISIBLE);
             typingtext.setText("online");
         } else if (message.equalsIgnoreCase("Delivered")) {
-          adapter.notifyDataSetChanged();
+            adapter.notifyDataSetChanged();
             //  updateChatDeliverStatusInList(chatId);
 
         } else if (message.startsWith("ChatShare True")) {
@@ -1279,7 +1268,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             ModelManager.getInstance().getSettingManager().changeLastSeenTime(
                     ModelManager.getInstance().getAuthorizationManager().getPhoneNo(),
                     ModelManager.getInstance().getAuthorizationManager().getUsrToken());
-        }else if (message.equalsIgnoreCase("online")) {
+        } else if (message.equalsIgnoreCase("online")) {
 
             typingtext.setText("Online");
             /* to update value of last seen time prafull code */
@@ -1294,8 +1283,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 /* code for check when user is offline prafull code */
             String lastSeenTime = "";
             long mLastSeenTimeStamp = 0;
-            Log.e("value ofmLastSeenTime --->",""+relationManager.acceptedList.get(relationListIndex).mLastSeenTime);
-            if(!Utils.isEmptyString(relationManager.acceptedList.get(relationListIndex).mLastSeenTime))
+            Log.e("value ofmLastSeenTime --->", "" + relationManager.acceptedList.get(relationListIndex).mLastSeenTime);
+            if (!Utils.isEmptyString(relationManager.acceptedList.get(relationListIndex).mLastSeenTime))
                 mLastSeenTimeStamp = Long.parseLong(relationManager.acceptedList.get(relationListIndex).mLastSeenTime);
             if (mLastSeenTimeStamp != 0) {
                 if (Utils.getCompareDate(timestamp * 1000).equalsIgnoreCase(Utils.getCompareDate(mLastSeenTimeStamp * 1000))) {// if both are equals than time for
@@ -1333,7 +1322,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                             try {
                                 authManager.setOrginalBitmap(bitmap);
                                 Intent intent = new Intent(ChatRecordView.this, CropView.class);
-                                intent.putExtra("name",mChatId);  // save image name
+                                intent.putExtra("name", mChatId);  // save image name
                                 intent.putExtra("from", "fromchatCamare");
                                 intent.putExtra("uri", mImageCaptureUri);
                                 startActivityForResult(intent, Constants.CROP_PICTURE);
@@ -1369,7 +1358,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                             try {
                                 authManager.setOrginalBitmap(bitmap1);
                                 Intent intent = new Intent(ChatRecordView.this, CropView.class);
-                                intent.putExtra("name",mChatId);   // save image by name
+                                intent.putExtra("name", mChatId);   // save image by name
                                 intent.putExtra("from", "fromchatGallery");
                                 intent.putExtra("uri", data.getData());
                                 startActivityForResult(intent, Constants.CROP_PICTURE);
@@ -1397,7 +1386,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                                 mName = Math.abs(mName);
                                 thumurl = videofilePath.replace(".mp4", "" + mName);
                                 thumurl = writePhotoJpg(bMap, thumurl);
-                                android.util.Log.e("image path--->",""+thumurl);
+                                android.util.Log.e("image path--->", "" + thumurl);
                                 //thumurl = Utils.getRealPathFromURI(Uri.parse(thumurl),ChatRecordView.this);
                             }
                             attachBtn.setImageBitmap(bMap);
@@ -1425,7 +1414,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
                             thumurl = videofilePath.replace(".mp4", "" + mName);
                             thumurl = writePhotoJpg(bMap, thumurl);
-                            android.util.Log.e("image path--->",""+thumurl);
+                            android.util.Log.e("image path--->", "" + thumurl);
                         }
                         attachBtn.setImageBitmap(bMap);
                         //akshit code to check wether image buton contains image or not;
@@ -2078,6 +2067,30 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         }
     }
 
+    public void searchRelationIndex() {
+        if (ModelManager.getInstance().getChatManager().chatMessageList.size() > 0) {
+            ChatMessageBody tempObj = ModelManager.getInstance().getChatManager().chatMessageList.get(0);
+
+            int relationIndex = -1;
+            ArrayList<GetrelationshipsBean> partnerList = ModelManager.getInstance().getRelationManager().acceptedList;
+            for (GetrelationshipsBean temp : partnerList) {
+                relationIndex++;
+                if (temp.getRelationshipId().equalsIgnoreCase(tempObj.relationshipId)) {
+                    break;
+                    //update clicks value in accepted list
+
+                }
+            }
+
+            relationListIndex = relationIndex;
+        }
+
+
+    }
+
+
+     /* downoad image from server */
+
     class DBTask extends AsyncTask<String, Void, Void> {
 
         @Override
@@ -2093,9 +2106,6 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
         }
     }
-
-
-     /* downoad image from server */
 
     private class DownloadImage extends AsyncTask<String, Void, Bitmap> {
 
@@ -2130,33 +2140,12 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             String path = newpath + "" + rn.nextInt();
             String imagepath = writePhotoJpg(result, path);
             CHAT_TYPE = Constants.CHAT_TYPE_LOCATION;
-            android.util.Log.e("image path---->",""+imagepath);
+            android.util.Log.e("image path---->", "" + imagepath);
 
 
             sendMsgToQB(imagepath);
             Utils.dismissBarDialog();
         }
-    }
-
-    public void searchRelationIndex() {
-        if (ModelManager.getInstance().getChatManager().chatMessageList.size() > 0) {
-            ChatMessageBody tempObj = ModelManager.getInstance().getChatManager().chatMessageList.get(0);
-
-            int relationIndex = -1;
-            ArrayList<GetrelationshipsBean> partnerList = ModelManager.getInstance().getRelationManager().acceptedList;
-            for (GetrelationshipsBean temp : partnerList) {
-                relationIndex++;
-                if (temp.getRelationshipId().equalsIgnoreCase(tempObj.relationshipId)) {
-                    break;
-                    //update clicks value in accepted list
-
-                }
-            }
-
-            relationListIndex = relationIndex;
-        }
-
-
     }
 }
 

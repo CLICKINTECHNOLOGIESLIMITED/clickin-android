@@ -10,7 +10,7 @@ public class Constants {
     public static final int CROP_PICTURE = 12;
     public static final int CALL_CHAT_INSTANC = 45 * 1000;
     //QB for staging
-   public static final String CLICKIN_APP_ID = "6768";
+    public static final String CLICKIN_APP_ID = "6768";
     public static final String CLICKIN_AUTH_KEY = "QVr4uK5tt6cu6dN";
     public static final String CLICKIN_AUTH_SECRET = "4thHbq-eyLVJrhe";
     public static final String ACCOUNTKEY = "gBv3BjZnFzkVPUZEqEXm";

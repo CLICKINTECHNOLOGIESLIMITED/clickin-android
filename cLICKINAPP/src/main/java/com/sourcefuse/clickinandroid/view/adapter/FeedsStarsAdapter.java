@@ -14,7 +14,6 @@ import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.ProfileManager;
 import com.sourcefuse.clickinandroid.model.bean.FeedStarsBean;
-import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinapp.R;
 import com.squareup.picasso.Picasso;
 

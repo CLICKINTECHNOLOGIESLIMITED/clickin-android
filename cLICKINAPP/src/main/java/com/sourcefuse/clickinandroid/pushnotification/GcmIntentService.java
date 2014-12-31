@@ -16,10 +16,7 @@ import android.util.Log;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.sourcefuse.clickinandroid.model.AuthManager;
-import com.sourcefuse.clickinandroid.model.ClickInNotificationManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
-import com.sourcefuse.clickinandroid.model.RelationManager;
-import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.FollowerList;
 import com.sourcefuse.clickinandroid.view.UserProfileView;
 import com.sourcefuse.clickinapp.R;
@@ -127,6 +124,7 @@ public class GcmIntentService extends IntentService {
         /*if(isAppOnForeground(getApplicationContext()))
             Utils.playSound(getApplicationContext(), R.raw.notification_inapp);*/
     }
+
     private void sendNotification(String title, String msg, Intent intent) {
 
 
@@ -157,13 +155,11 @@ public class GcmIntentService extends IntentService {
 
         NOTIFICATION_ID = NOTIFICATION_ID + 1;
 
-        if(!isAppOnForeground(getApplicationContext()))
+        if (!isAppOnForeground(getApplicationContext()))
             mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
 
 
-
     }
-
 
 
     private boolean isAppOnForeground(Context context) { // check application state
