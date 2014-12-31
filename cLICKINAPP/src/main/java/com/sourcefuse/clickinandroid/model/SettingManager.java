@@ -307,7 +307,6 @@ public class SettingManager {
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            android.util.Log.e(TAG, "reportaproblem-->" + se);
         } catch (Exception e1) {
             e1.printStackTrace();
         }
@@ -329,7 +328,7 @@ public class SettingManager {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            android.util.Log.e(TAG, "response ChangeLastSeenTime ->" + response);
+
                             state = response.getBoolean("success");
                             if (state) {
 

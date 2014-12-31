@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.sourcefuse.clickinandroid.model.bean.GetrelationshipsBean;
 import com.sourcefuse.clickinandroid.utils.Constants;
-import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
 import com.squareup.picasso.Picasso;
@@ -60,30 +59,28 @@ public class ClickInWithAdapter extends ArrayAdapter<GetrelationshipsBean> {
         }
 
         final RecordHolder rholder = (RecordHolder) row.getTag();
-        android.util.Log.e("in clickinwiht adapter---->","in clickinwiht adapter---->");
-        if (!Utils.isEmptyString(item.getStatusAccepted()) && item.getStatusAccepted().matches("true")) {
+
+        if (!Utils.isEmptyString(item.getStatusAccepted()) && item.getStatusAccepted().equalsIgnoreCase("true")) {
 
             rholder.clickInUsrName.setText(item.getPartnerName());
 
             if (item.getUnreadMsg() != 0) {
                 rholder.unReadNo.setText("" + item.getUnreadMsg());
                 rholder.unReadNo.setVisibility(View.VISIBLE);
-                android.util.Log.e("counter on update---->",""+item.getUnreadMsg());
+
             }
             else {
                 rholder.unReadNo.setVisibility(View.GONE);
-                android.util.Log.e("counter on update---->","counter on update---->");
+
             }
 
-            android.util.Log.e("item partner pic ---->", "" + item.getPartnerPic());
             if (!item.getPartnerPic().equalsIgnoreCase("")) {
                 try {
                     Picasso.with(context).load(item.getPartnerPic())
-                            .skipMemoryCache()
-                            .error(R.drawable.male_user)
+
                             .into(rholder.clickInUsrimg);
                 } catch (Exception e) {
-                    rholder.clickInUsrimg.setImageResource(R.drawable.male_user);
+                   // rholder.clickInUsrimg.setImageResource(R.drawable.male_user);
                 }
 
             } else {

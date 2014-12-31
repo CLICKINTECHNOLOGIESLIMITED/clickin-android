@@ -2,6 +2,7 @@ package com.sourcefuse.clickinandroid.model;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.qb.gson.JsonObject;
 import com.sourcefuse.clickinandroid.model.bean.FetchUsersByNameBean;
 import com.sourcefuse.clickinandroid.model.bean.GetrelationshipsBean;
 import com.sourcefuse.clickinandroid.model.bean.ProfileRelationShipBean;
@@ -159,7 +160,12 @@ public class RelationManager {
             if (jsondata.has("phone_no"))
                 getRelationShipList.setPhoneNo(jsondata.getString("phone_no"));
             if (jsondata.has("partner_pic"))
-                getRelationShipList.setPartnerPic(jsondata.getString("partner_pic"));
+                if (jsondata.getString("partner_pic").contains("profile_pic")){
+                   String pthumbImage =  jsondata.getString("partner_pic").replace("profile_pic", "thumb_profile_pic");
+                    getRelationShipList.setPartnerPic(pthumbImage);
+                }else{
+                    getRelationShipList.setPartnerPic("");
+                }
             if (jsondata.has("request_initiator"))
                 getRelationShipList.setRequestInitiator(jsondata.getString("request_initiator"));
             else
@@ -169,6 +175,15 @@ public class RelationManager {
             }
             if (jsondata.has("partner_name"))
                 getRelationShipList.setPartnerName(jsondata.getString("partner_name"));
+            if (jsondata.has("last_seen_time")) {
+                try {
+                    JSONObject mLastSeenTime = jsondata.getJSONObject("last_seen_time");
+                    if (mLastSeenTime.has("sec"))
+                        getRelationShipList.mLastSeenTime = mLastSeenTime.getString("sec");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
             listdata.add(getRelationShipList);
         } catch (JSONException e) {
             e.printStackTrace();

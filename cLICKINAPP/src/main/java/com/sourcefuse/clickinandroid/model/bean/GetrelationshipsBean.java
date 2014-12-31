@@ -2,6 +2,7 @@ package com.sourcefuse.clickinandroid.model.bean;
 
 public class GetrelationshipsBean {
 
+    public String mLastSeenTime = null;
     private String partner_id;
     private String statusAccepted;
     private String userClicks;

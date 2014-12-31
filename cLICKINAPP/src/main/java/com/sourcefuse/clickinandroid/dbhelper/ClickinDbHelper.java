@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 import com.sourcefuse.clickinandroid.model.bean.ChatMessageBody;
 import com.sourcefuse.clickinandroid.utils.Log;
@@ -50,6 +51,7 @@ public class ClickinDbHelper extends SQLiteOpenHelper implements ChatRecordI {
     public static final String userId = "userId";
     public static final String senderUserToken = "senderUserToken";
     public static final String senderQbId = "senderQbId";
+    public static final String originalMessageID = "originalMessageID";
     private static final String DATABASE_CREATE = " CREATE TABLE "
             + TABLE_CHATRECORD + "(" + COLUMN_ID + " integer primary key autoincrement,"
             + partnerQbId + " text, "
@@ -66,6 +68,7 @@ public class ClickinDbHelper extends SQLiteOpenHelper implements ChatRecordI {
             + card_heading + " text, "
             + card_url + " text, "
             + card_id + " text, "
+            + originalMessageID + " text, "
             + card_Played_Countered + " text, "
             + card_originator + " text, "
             + video_thumb + " text, "
@@ -80,13 +83,14 @@ public class ClickinDbHelper extends SQLiteOpenHelper implements ChatRecordI {
             + senderUserToken + " text, "
             + senderQbId + " text);";
     private static final String DATABASE_NAME = "ClickInChatRecords.sqlite";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     public static SQLiteDatabase dbObj;
     private String TAG = ClickinDbHelper.class.getName();
 
 
     public ClickinDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+
     }
 
     @Override
@@ -139,6 +143,7 @@ public class ClickinDbHelper extends SQLiteOpenHelper implements ChatRecordI {
             contentValues.put(card_heading, chat.card_heading);
             contentValues.put(card_url, chat.card_url);
             contentValues.put(card_id, chat.card_id);
+            contentValues.put(originalMessageID, chat.originalMessageID);
             contentValues.put(card_Played_Countered, chat.card_Played_Countered);
             contentValues.put(card_originator, chat.card_originator);
             // card parameter end
@@ -204,6 +209,7 @@ public class ClickinDbHelper extends SQLiteOpenHelper implements ChatRecordI {
                     chat.card_heading = (chatCursor.getString(chatCursor.getColumnIndex(card_heading)));
                     chat.card_url = (chatCursor.getString(chatCursor.getColumnIndex(card_url)));
                     chat.card_id = (chatCursor.getString(chatCursor.getColumnIndex(card_id)));
+                    chat.originalMessageID = (chatCursor.getString(chatCursor.getColumnIndex(originalMessageID)));
                     chat.card_Played_Countered = (chatCursor.getString(chatCursor.getColumnIndex(card_Played_Countered)));
                     chat.card_originator = (chatCursor.getString(chatCursor.getColumnIndex(card_originator)));
                     // Card End
@@ -213,6 +219,7 @@ public class ClickinDbHelper extends SQLiteOpenHelper implements ChatRecordI {
                     chat.location_coordinates = (chatCursor.getString(chatCursor.getColumnIndex(location_coordinates)));
                     chat.sharedMessage = (chatCursor.getString(chatCursor.getColumnIndex(sharedMessage)));
                     chat.isDelivered = (chatCursor.getString(chatCursor.getColumnIndex(isDelivered)));
+                    chat.deliveredChatID=(chatCursor.getString(chatCursor.getColumnIndex(deliveredChatId)));
 
                     chat.relationshipId = (chatCursor.getString(chatCursor.getColumnIndex(relationshipId)));
                     chat.userId = (chatCursor.getString(chatCursor.getColumnIndex(userId)));
@@ -268,11 +275,22 @@ public class ClickinDbHelper extends SQLiteOpenHelper implements ChatRecordI {
         values.put("deliveredChatId",msgId
              );
 
-        dbObj.update(TABLE_CHATRECORD,values,
-                deliveredChatId + " =?",
+       long update= dbObj.update(TABLE_CHATRECORD,values,
+               chatId + " =?",
                 new String[]{msgId});
 
+        //temp code-monika
+        if(update>=0)
+        {
+            Log.e("DbHelper"," Updated");
 
+
+        }
+        else
+        {
+            Log.e("DbHelper","Not Updated");
+
+        }
 
         return 1;
     }

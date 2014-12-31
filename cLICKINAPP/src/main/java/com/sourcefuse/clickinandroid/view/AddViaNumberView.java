@@ -152,10 +152,9 @@ public class AddViaNumberView extends Activity implements View.OnClickListener, 
             } else {
                 ((RelativeLayout) findViewById(R.id.rl_back)).setVisibility(View.GONE);
                 Intent intent = new Intent(this, UserProfileView.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 intent.putExtra("isChangeInList", true);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 startActivity(intent);
-
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
                 finish();
             }

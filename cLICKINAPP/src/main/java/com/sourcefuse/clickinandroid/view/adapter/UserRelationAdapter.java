@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +28,9 @@ import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.JumpOtherProfileView;
 import com.sourcefuse.clickinapp.R;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
+import java.io.File;
 import java.util.List;
 
 public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
@@ -40,7 +43,7 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
     /*RecordHolder rholder;*/
     private RelationManager relationManager;
     private boolean showpending = false;
-
+    String imagespath = Utils.mImagePath;
 
     public UserRelationAdapter(Context context, int layoutResourceId,
                                List<GetrelationshipsBean> item) {
@@ -155,12 +158,30 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
 
         if (!itemList.get(position).getPartnerPic().equalsIgnoreCase("")) {
             try {
+
+               // File file = new File(imagespath);
+
+              /*  File file = new File(Environment.getExternalStorageDirectory(),"ClickIn/Images/Mukesh/");
+                file.mkdir();
+                Picasso.with(context)
+                        .load(itemList.get(position).getPartnerPic())
+                        .into((Target) file);*/
+/*
+                File file = new File(Environment.getExternalStorageDirectory(),
+                        "Android/data/com.usd.pop");
+                file.mkdirs();
+
+                Picasso.with(context)
+                        .load(itemList.get(position).getPartnerPic())
+                        .into((Target) file);*/
+
+
                 Picasso.with(context).load(itemList.get(position).getPartnerPic())
-                        .skipMemoryCache()
-                        .error(R.drawable.male_user)
+
                         .into(usrimg);
             } catch (Exception e) {
-                usrimg.setImageResource(R.drawable.male_user);
+                e.printStackTrace();
+               // usrimg.setImageResource(R.drawable.male_user);
             }
         } else {
             usrimg.setImageResource(R.drawable.male_user);
@@ -205,7 +226,7 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
                     String partnerId = relationManager.getrelationshipsData.get(pos).getPartner_id();
 
                     Intent intent = new Intent(context, JumpOtherProfileView.class);
-                    //    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra("PartnerId", partnerId);
                     intent.putExtra("FromOwnProfile", true);
                     intent.putExtra("phNumber", itemList.get(position).getPhoneNo());

@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -19,8 +18,6 @@ import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
-
-import android.widget.Toast;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -35,7 +32,9 @@ import java.util.Random;
 public class CropView extends Activity implements View.OnClickListener {
     Bitmap bitmap;
     CropImageView mCropImageView;
+    Uri mImageCaptureUri;
     private AuthManager authManager;
+    private String mName = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,25 +54,31 @@ public class CropView extends Activity implements View.OnClickListener {
                 if (getIntent().getStringExtra("from").equalsIgnoreCase("fromgallery") || getIntent().getStringExtra("from").equalsIgnoreCase("fromchatGallery")) {
                     ((TextView) findViewById(R.id.btn_retake)).setText(getString(R.string.cancel));
                     ((TextView) findViewById(R.id.btn_use)).setText(getString(R.string.choose));
+
+
                 }
-
-
-
+                if (getIntent().getStringExtra("from").equalsIgnoreCase("fromchatCamare") || getIntent().getStringExtra("from").equalsIgnoreCase("fromchatGallery")) {
+                    try {
+                        mName = getIntent().getStringExtra("name");  // name to save image by chatid when came from chat
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
                        /* Uri uri = Uri.parse(getIntent().getStringExtra("uri"));*/
                 bitmap = authManager.getOrginalBitmap();
 
                 if (bitmap == null) {
-                    android.util.Log.e("bit null", "bit null");
+                    Log.e("bit null", "bit null");
                     finish();
                 } else {
-                    android.util.Log.e("bit not  null", "bit not  null");
+                    Log.e("bit not  null", "bit not  null");
                     ((CropImageView) findViewById(R.id.crop_image)).setImageBitmap(bitmap);
 
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                android.util.Log.e("exception --->", "exception --->");
-                android.util.Log.e("exception --->", "" + e.toString());
+                Log.e("exception --->", "exception --->");
+                Log.e("exception --->", "" + e.toString());
             }
 
 
@@ -84,7 +89,7 @@ public class CropView extends Activity implements View.OnClickListener {
     public void onBackPressed() {
 
         if (getIntent().getStringExtra("from").equalsIgnoreCase("fromchatGallery") || getIntent().getStringExtra("from").equalsIgnoreCase("fromchatCamare")) {
-            android.util.Log.e("in crop 1", "in crop 1");
+            Log.e("in crop 1", "in crop 1");
             try {
                 authManager.setmResizeBitmap(null);
                 Intent intent = new Intent(CropView.this, ChatRecordView.class);
@@ -95,10 +100,10 @@ public class CropView extends Activity implements View.OnClickListener {
 
             } catch (Exception e) {
                 e.printStackTrace();
-                android.util.Log.e("Exception----->", e.toString());
+                Log.e("Exception----->", e.toString());
             }
         } else {
-            android.util.Log.e("in crop 2", "in crop 2");
+            Log.e("in crop 2", "in crop 2");
             super.onBackPressed();
             finish();
             overridePendingTransition(0, R.anim.top_out);
@@ -122,7 +127,7 @@ public class CropView extends Activity implements View.OnClickListener {
 
                     } catch (Exception e) {
                         e.printStackTrace();
-                        android.util.Log.e("Exception----->", e.toString());
+                        Log.e("Exception----->", e.toString());
                     }
                 } else if (getIntent().getStringExtra("from").equalsIgnoreCase("fromgallery")) {
                     try {
@@ -134,7 +139,7 @@ public class CropView extends Activity implements View.OnClickListener {
                         overridePendingTransition(0, R.anim.top_out);
                     } catch (Exception e) {
                         e.printStackTrace();
-                        android.util.Log.e("Exception----->", e.toString());
+                        Log.e("Exception----->", e.toString());
                     }
                 } else if (getIntent().getStringExtra("from").equalsIgnoreCase("fromchatGallery") || getIntent().getStringExtra("from").equalsIgnoreCase("fromchatCamare")) {
                     try {
@@ -145,7 +150,7 @@ public class CropView extends Activity implements View.OnClickListener {
                         overridePendingTransition(0, R.anim.top_out);
                     } catch (Exception e) {
                         e.printStackTrace();
-                        android.util.Log.e("Exception----->", e.toString());
+                        Log.e("Exception----->", e.toString());
                     }
                 }
 
@@ -165,8 +170,8 @@ public class CropView extends Activity implements View.OnClickListener {
 
                 String path = storeImage(resizebitmap, "" + mName);
                 Log.e("path on save bitmap  ---->", "" + path);
-                Log.e("uri on save bitmap------->",""+mImageCaptureUri);
-                Log.e("uri on save bitmap mName------->",""+mName);
+                Log.e("uri on save bitmap------->", "" + mImageCaptureUri);
+                Log.e("uri on save bitmap mName------->", "" + mName);
                 if (!Utils.isEmptyString(path)) {
                     resizebitmap = BitmapFactory.decodeFile(path);
                 }
@@ -175,11 +180,11 @@ public class CropView extends Activity implements View.OnClickListener {
                         /*test code*/
 
 
-                if (getIntent().getStringExtra("from").equalsIgnoreCase("fromchatGallery") || getIntent().getStringExtra("from").equalsIgnoreCase("fromchatCamare") ) {
+                if (getIntent().getStringExtra("from").equalsIgnoreCase("fromchatGallery") || getIntent().getStringExtra("from").equalsIgnoreCase("fromchatCamare")) {
                     authManager.setmResizeBitmap(resizebitmap);
                     Intent intent = new Intent(getApplicationContext(), EditMyProfileView.class);
                     intent.putExtra("retake", "fckoff");
-                    intent.putExtra("path",""+path);
+                    intent.putExtra("path", path);
                     setResult(Activity.RESULT_OK, intent);
                     finish();
                     //Utils.dismissBarDialog();
@@ -189,7 +194,7 @@ public class CropView extends Activity implements View.OnClickListener {
                         authManager.setUserImageUri(Uri.parse(getIntent().getStringExtra("uri")));
                         Intent intent = new Intent(getApplicationContext(), EditMyProfileView.class);
                         intent.putExtra("retake", "fckoff");
-                        intent.putExtra("path",""+path);
+                        intent.putExtra("path", path);
                         setResult(Activity.RESULT_OK, intent);
                     }
                     finish();
@@ -199,22 +204,12 @@ public class CropView extends Activity implements View.OnClickListener {
         }
     }
 
-
-    Uri mImageCaptureUri;
     private String storeImage(Bitmap imageData, String filename) { //to store image once croped
         String iconsStoragePath = null;
         String filePath = null;
-        //get path to external storage (SD card)
-        /*if (Environment.getExternalStorageDirectory().exists()) {
 
-            Log.e("in external storage-------->", "in external storage-------->");
-            iconsStoragePath = Environment.getExternalStorageDirectory() + "/Clickin/Images/";
-        } else {
-            Log.e("in Root storage-------->", "in Root storage-------->");
-            iconsStoragePath = Environment.getRootDirectory() + "/Clickin/Images/";
-        }*/
         if (Utils.isEmptyString(iconsStoragePath)) {
-            String newpath = "/storage/emulated/0/ClickIn/Clickin/Images"; // path to store image
+            String newpath = Utils.mImagePath; // path to store image
             Random rn = new Random();
             iconsStoragePath = newpath;
         }
@@ -229,11 +224,16 @@ public class CropView extends Activity implements View.OnClickListener {
         sdIconStorageDir.setReadable(true);
 
         try {
-            filePath = sdIconStorageDir.toString() + filename + ".jpg";
+            if (mName != null) {
+                filePath = sdIconStorageDir.getAbsolutePath() + "/" + mName + ".jpg";
+            } else {
+                filePath = sdIconStorageDir.getAbsolutePath() + "/" + System.currentTimeMillis() + ".jpg";
+            }
+
             FileOutputStream fileOutputStream = new FileOutputStream(filePath);
             BufferedOutputStream bos = new BufferedOutputStream(fileOutputStream);
             //choose another format if PNG doesn't suit you
-            imageData.compress(Bitmap.CompressFormat.JPEG, 40, bos);
+            imageData.compress(Bitmap.CompressFormat.JPEG, 100, bos);
             bos.flush();
             bos.close();
             // sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse(filePath)));

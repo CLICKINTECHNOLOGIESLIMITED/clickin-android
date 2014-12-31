@@ -126,7 +126,6 @@ public class FollowingListView extends ClickInBaseView implements View.OnClickLi
 
     public void onEventMainThread(String getMsg) {
         super.onEventMainThread(getMsg);
-        android.util.Log.d(TAG, "onEventMainThread->" + getMsg);
         authManager = ModelManager.getInstance().getAuthorizationManager();
         if (getMsg.equalsIgnoreCase("GetFollower True")) {
             Utils.dismissBarDialog();

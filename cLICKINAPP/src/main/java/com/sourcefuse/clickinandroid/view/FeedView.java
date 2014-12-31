@@ -159,7 +159,6 @@ public class FeedView extends ClickInBaseView implements View.OnClickListener {
 
         super.onEventMainThread(message);
 
-       // android.util.android.util.Log.d("onEventMainThread", "onEventMainThread->");
         authManager = ModelManager.getInstance().getAuthorizationManager();
 
         if (message.equalsIgnoreCase("NewsFeed True")) {
