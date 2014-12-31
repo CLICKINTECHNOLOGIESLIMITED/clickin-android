@@ -3,6 +3,7 @@ package com.sourcefuse.clickinandroid.view.adapter;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -45,7 +46,6 @@ import com.squareup.picasso.Picasso;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
@@ -58,9 +58,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
     public Context context;
 
     ArrayList<ChatMessageBody> currentChatList;
+    ImageLoader imageLoader = AppController.getInstance().getImageLoader();
     private AuthManager authManager;
     private RelationManager relationManager;
-    ImageLoader imageLoader = AppController.getInstance().getImageLoader();
 
     public ChatRecordAdapter(Context context, int layoutResourceId,
                              ArrayList<ChatMessageBody> chatList) {
@@ -1102,7 +1102,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 TextView clicksText = (TextView) row.findViewById(R.id.clicks_text);
                 clicksText.setPadding(10, 0, 10, 0); // set padding for clicks prafull code
                 clicksText.setVisibility(View.VISIBLE);
-                clicksText.setText(temp.clicks);
+                clicksText.setText(temp.clicks.toString().trim());//akshit,to remove unwanted space from clicks
                 clicksText.setTextColor(context.getResources().getColor(R.color.white));
                 ImageView clicksHeart = (ImageView) row.findViewById(R.id.iv_clicks_heart);
                 clicksHeart.setVisibility(View.VISIBLE);
@@ -1375,16 +1375,15 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
             Utils.mName = item.chatId;
 
-            Log.e("name--->",""+Utils.mName);
+
             String mPath = Utils.mVideoPath + Utils.mName + ".mp4";
             Uri uri = Utils.getVideoContentUri(context, new File(mPath));  //check file exist or not
             if (Utils.isEmptyString("" + uri)) {  // dowonload video
-                Log.e("Download video---->", "Download video---->");
-                if(Utils.isConnectingToInternet((Activity)context))
-                    new DownloadMusicfromInternet().execute(item.content_url);
+
+                if (Utils.isConnectingToInternet((Activity) context))
+                    path = Utils.mVideoPath;
+                new DownloadMusicfromInternet().execute(item.content_url);
             } else {  // play video
-                Log.e("play video---->", "play video---->");
-                Log.e("uri---->", "" + uri);
                 Utils.playvideo(context, uri.toString());
             }
 
@@ -1392,14 +1391,15 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
         } else if (!Utils.isEmptyString(item.content_url) && Utils.isEmptyString(item.video_thumb)) {
 
 
-            Uri intentUri = Uri.parse(item.content_url);
-            Intent intent = new Intent();
-            intent.setAction(Intent.ACTION_VIEW);
-            intent.setDataAndType(intentUri, "audio/*");
-            try {
-                context.startActivity(intent);
-            } catch (Exception e) {
-                e.printStackTrace();
+            Utils.mName = item.chatId; // set Audio name
+            String mPath = Utils.mAudioPath + Utils.mName + ".mp4";
+            Uri uri = Utils.getAudioContentUri(context, new File(mPath));  //check file exist or not
+            if (Utils.isEmptyString("" + uri)) {  // dowonload Audio
+                path = Utils.mAudioPath;
+                if (Utils.isConnectingToInternet((Activity) context))
+                    new DownloadMusicfromInternet().execute(item.content_url);
+            } else {  // play Audio
+                Utils.playvideo(context, uri.toString());
             }
         }
     }
@@ -1483,17 +1483,18 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
     }
 */
+    String path;
 
     public class DownloadMusicfromInternet extends AsyncTask<String, String, String> { // Async task to download video
 
-        String path = Utils.mVideoPath;  // default video path
+        // default video path
         String mPath;
         File mFile;
         URLConnection conection = null;
         OutputStream output = null;
         InputStream input = null;
-        private ProgressDialog prgDialog;
         int precentage;
+        private ProgressDialog prgDialog;
 
         // Show Progress bar before downloading Music
         @Override
@@ -1521,8 +1522,8 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                         if (output != null && input != null) {
                             try {
                                 cancel(true);
-                                String mPath = Utils.mVideoPath + Utils.mName + ".mp4";
-                                if (precentage != 100) {   // delate file if video download intrupted
+                                String mPath = path + Utils.mName + ".mp4";
+                                if (precentage != 100) {   // delate file if video/Audio download intrupted
                                     File file = new File(mPath);
                                     if (file.exists()) {
                                         file.delete();
@@ -1578,20 +1579,46 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
             if (precentage == 100) {
                 /* to mount media in gallery */
-                ContentValues values = new ContentValues();
-                values.put(MediaStore.Video.Media.DATA, mPath);
-                values.put(MediaStore.Video.Media.DATE_TAKEN, mFile.lastModified());
-                Uri mImageCaptureUri = context.getContentResolver().insert(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, values); // to notify change
-                context.getContentResolver().notifyChange(Uri.parse(mPath), null);
-                Log.e("url ---->", "" + mImageCaptureUri);
+                if (path.contains(Utils.mAudioPath)) {  // code to mount Audio
+                    Log.e("in audio mount--->","in audio mount--->");
 
-                /* play video */
-                Uri uri = Utils.getVideoContentUri(context, new File(mPath));  //check file exist or not
-                Log.e("uri---->", "" + uri);
-                Utils.playvideo(context, uri.toString());
+                    // add new file to your media library
+                    ContentValues values = new ContentValues();
+                    long current = System.currentTimeMillis();
+                    values.put(MediaStore.Audio.Media.TITLE, "audio" + Utils.mName);
+                    values.put(MediaStore.Audio.Media.DATE_ADDED, (int) (current / 1000));
+                    values.put(MediaStore.Audio.Media.MIME_TYPE, "audio/mp4");
+                    values.put(MediaStore.Audio.Media.DATA, mFile.getAbsolutePath());
+                    ContentResolver contentResolver = context.getContentResolver();
+                    Uri base = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+                    Uri newUri = contentResolver.insert(base, values);
+
+// Notifiy the media application on the device
+                    context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, newUri));
+
+                    /* play video */
+                    Uri uri = Utils.getAudioContentUri(context, new File(mPath));  //check file exist or not
+                    Log.e("uri---->", "" + uri);
+                    Utils.playvideo(context, uri.toString());
+
+                } else if (path.contains(Utils.mVideoPath)) {  // code to mount Video
+                    Log.e("in video mount--->","in video mount--->");
+                    ContentValues values = new ContentValues();
+                    values.put(MediaStore.Video.Media.DATA, mPath);
+                    values.put(MediaStore.Video.Media.DATE_TAKEN, mFile.lastModified());
+                    Uri mImageCaptureUri = context.getContentResolver().insert(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, values); // to notify change
+                    context.getContentResolver().notifyChange(Uri.parse(mPath), null);
+                    /* play video */
+                    Uri uri = Utils.getVideoContentUri(context, new File(mPath));  //check file exist or not
+                    Log.e("uri---->", "" + uri);
+                    Utils.playvideo(context, uri.toString());
+                }
+
+
+
                 prgDialog.dismiss();
             } else {
-                String mPath = Utils.mVideoPath + Utils.mName + ".mp4";
+                String mPath = path + Utils.mName + ".mp4";
                 File file = new File(mPath);
                 if (file.exists()) {
                     file.delete();

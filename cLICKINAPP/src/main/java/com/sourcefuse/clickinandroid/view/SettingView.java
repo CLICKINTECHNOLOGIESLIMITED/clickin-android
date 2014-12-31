@@ -22,7 +22,6 @@ import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
 import com.facebook.widget.FacebookDialog;
-import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.SettingManager;
@@ -35,29 +34,27 @@ import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.adapter.DeactivateAccountView;
 import com.sourcefuse.clickinapp.R;
 
-import java.io.IOException;
-
 import de.greenrobot.event.EventBus;
 
 public class SettingView extends Activity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
     private static final String TAG = ChatRecordView.class.getSimpleName();
-    private FacebookDialog.Callback dialogCallback = new FacebookDialog.Callback() {
-        @Override
-        public void onError(FacebookDialog.PendingCall pendingCall, Exception error, Bundle data) {
-           // android.util.android.util.Log.e(TAG, String.format("Error: %s", error.toString()));
-        }
-
-        @Override
-        public void onComplete(FacebookDialog.PendingCall pendingCall, Bundle data) {
-           // android.util.android.util.Log.e(TAG, "Success!");
-        }
-    };
     public CompoundButton appSound;
     boolean checkboolean = false, checkboolean1 = false, checkboolean2 = false, checkboolean3 = false, checkboolean4 = false, checkboolean5 = false, checkboolean6 = false;
     LinearLayout sharing_layout, main_password_layout, password_layout, report_layout, not_working_layout,
             general_feed_layout, logout_layout;
     int height;
     String problem_type = " ";
+    private FacebookDialog.Callback dialogCallback = new FacebookDialog.Callback() {
+        @Override
+        public void onError(FacebookDialog.PendingCall pendingCall, Exception error, Bundle data) {
+            // android.util.android.util.Log.e(TAG, String.format("Error: %s", error.toString()));
+        }
+
+        @Override
+        public void onComplete(FacebookDialog.PendingCall pendingCall, Bundle data) {
+            // android.util.android.util.Log.e(TAG, "Success!");
+        }
+    };
     private ImageView backarrow;
     //      private Typeface typefacemedium;
 //      private Typeface typefaceBold;
@@ -138,7 +135,7 @@ public class SettingView extends Activity implements View.OnClickListener, Compo
 
             if (settingManager.isAppSounds()) {//to check to sate on activity launch,By Default app sound is set Enabled,and To set the position of switch
                 appSound.setChecked(true);
-               // android.util.android.util.Log.e("Setting View", "True");
+                // android.util.android.util.Log.e("Setting View", "True");
             } else {
                 appSound.setChecked(false);
                 //android.util.android.util.Log.e("Setting View", "False");
@@ -159,16 +156,16 @@ public class SettingView extends Activity implements View.OnClickListener, Compo
                     if (b) {
                         try {
                             Utils.getRegId(SettingView.this);
-                           // SettingManager.mNotification_Enable = true;
-                            settingManager.enableDisablePushNotifications(authManager.getPhoneNo(),authManager.getUsrToken(),"true");
+                            // SettingManager.mNotification_Enable = true;
+                            settingManager.enableDisablePushNotifications(authManager.getPhoneNo(), authManager.getUsrToken(), "true");
                         } catch (Exception e) {
                             e.printStackTrace();
-                           // android.util.android.util.Log.e("in exception ----", "in exception ----");
+                            // android.util.android.util.Log.e("in exception ----", "in exception ----");
                         }
                     } else {
                         try {
-                          //  SettingManager.mNotification_Enable = false;
-                            settingManager.enableDisablePushNotifications(authManager.getPhoneNo(),authManager.getUsrToken(),"false");
+                            //  SettingManager.mNotification_Enable = false;
+                            settingManager.enableDisablePushNotifications(authManager.getPhoneNo(), authManager.getUsrToken(), "false");
                             Utils.Unregister(SettingView.this);
                         } catch (Exception e) {
                             /*android.util.android.util.Log.e("exception---->", "" + e.toString());
@@ -211,7 +208,7 @@ public class SettingView extends Activity implements View.OnClickListener, Compo
                     if (b) {
                         try {
                             Utils.getRegId(SettingView.this);
-                            settingManager.enableDisablePushNotifications(authManager.getPhoneNo(),authManager.getUsrToken(),"true");
+                            settingManager.enableDisablePushNotifications(authManager.getPhoneNo(), authManager.getUsrToken(), "true");
                             //SettingManager.mNotification_Enable = true;
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -220,7 +217,7 @@ public class SettingView extends Activity implements View.OnClickListener, Compo
                     } else {
                         try {
                             Utils.Unregister(SettingView.this);
-                            settingManager.enableDisablePushNotifications(authManager.getPhoneNo(),authManager.getUsrToken(),"false");
+                            settingManager.enableDisablePushNotifications(authManager.getPhoneNo(), authManager.getUsrToken(), "false");
                             //SettingManager.mNotification_Enable = false;
                         } catch (Exception e) {
                             /*android.util.android.util.Log.e("exception---->", "" + e.toString());
@@ -438,7 +435,7 @@ public class SettingView extends Activity implements View.OnClickListener, Compo
 
                 ModelManager.setInstance();
 
-               // android.util.android.util.Log.e("", "holder.logoutYes");
+                // android.util.android.util.Log.e("", "holder.logoutYes");
                 Intent intent5 = new Intent(SettingView.this, SplashView.class);
                 intent5.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent5.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -463,7 +460,7 @@ public class SettingView extends Activity implements View.OnClickListener, Compo
                     uiHelper.trackPendingDialogCall(shareDialog.present());
 
                 } else {
-                   // android.util.android.util.Log.e(TAG, "Success!");
+                    // android.util.android.util.Log.e(TAG, "Success!");
                 }
 
 

@@ -68,8 +68,7 @@ public class ClickInWithAdapter extends ArrayAdapter<GetrelationshipsBean> {
                 rholder.unReadNo.setText("" + item.getUnreadMsg());
                 rholder.unReadNo.setVisibility(View.VISIBLE);
 
-            }
-            else {
+            } else {
                 rholder.unReadNo.setVisibility(View.GONE);
 
             }
@@ -80,7 +79,7 @@ public class ClickInWithAdapter extends ArrayAdapter<GetrelationshipsBean> {
 
                             .into(rholder.clickInUsrimg);
                 } catch (Exception e) {
-                   // rholder.clickInUsrimg.setImageResource(R.drawable.male_user);
+                    // rholder.clickInUsrimg.setImageResource(R.drawable.male_user);
                 }
 
             } else {

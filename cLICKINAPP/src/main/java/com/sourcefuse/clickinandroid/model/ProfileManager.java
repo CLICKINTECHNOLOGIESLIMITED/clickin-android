@@ -1,7 +1,5 @@
 package com.sourcefuse.clickinandroid.model;
 
-import android.util.Log;
-
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.sourcefuse.clickinandroid.model.bean.ContactBean;
@@ -204,20 +202,20 @@ public class ProfileManager {
                                 JSONObject rId = data.getJSONObject("_id");
                                 followingList.setrFollowerId(rId.getString("$id"));
                                 if (data.has("followee_id"))
-                                followingList.setFolloweeId(data.getString("followee_id"));
+                                    followingList.setFolloweeId(data.getString("followee_id"));
                                 if (data.has("followee_name"))
-                                followingList.setFolloweeName(data.getString("followee_name"));
+                                    followingList.setFolloweeName(data.getString("followee_name"));
                                 if (data.has("followee_pic"))
-                                    if (data.getString("followee_pic").contains("profile_pic")){
-                                        String pthumbImage =  data.getString("followee_pic").replace("profile_pic", "thumb_profile_pic");
+                                    if (data.getString("followee_pic").contains("profile_pic")) {
+                                        String pthumbImage = data.getString("followee_pic").replace("profile_pic", "thumb_profile_pic");
                                         followingList.setFolloweePic(pthumbImage);
-                                    }else{
+                                    } else {
                                         followingList.setFolloweePic("");
                                     }
 
                                 followingList.setFolloweePic(data.getString("followee_pic"));
                                 if (data.has("phone_no"))
-                                followingList.setPhoneNo(data.getString("phone_no"));
+                                    followingList.setPhoneNo(data.getString("phone_no"));
                                 followingList.setIsFollowing("false");
                                 /*data.has("following_id");
                                 followingList.setFollowingId(data.getString("following_id"));*/
@@ -227,18 +225,18 @@ public class ProfileManager {
                                 JSONObject rId = data.getJSONObject("_id");
                                 followingList.setrFollowerId(rId.getString("$id"));
                                 if (data.has("followee_id"))
-                                followingList.setFolloweeId(data.getString("followee_id"));
+                                    followingList.setFolloweeId(data.getString("followee_id"));
                                 if (data.has("followee_name"))
-                                followingList.setFolloweeName(data.getString("followee_name"));
+                                    followingList.setFolloweeName(data.getString("followee_name"));
                                 if (data.has("followee_pic"))
-                                        if (data.getString("followee_pic").contains("profile_pic")){
-                                            String pthumbImage =  data.getString("followee_pic").replace("profile_pic", "thumb_profile_pic");
-                                            followingList.setFolloweePic(pthumbImage);
-                                        }else{
-                                            followingList.setFolloweePic("");
-                                        }
+                                    if (data.getString("followee_pic").contains("profile_pic")) {
+                                        String pthumbImage = data.getString("followee_pic").replace("profile_pic", "thumb_profile_pic");
+                                        followingList.setFolloweePic(pthumbImage);
+                                    } else {
+                                        followingList.setFolloweePic("");
+                                    }
                                 if (data.has("phone_no"))
-                                followingList.setPhoneNo(data.getString("phone_no"));
+                                    followingList.setPhoneNo(data.getString("phone_no"));
                                 followingList.setIsFollowing("false");
                                 /*data.has("following_id");
                                 followingList.setFollowingId(data.getString("following_id"));*/
@@ -258,19 +256,19 @@ public class ProfileManager {
                                     followerList.setrFollowerId(rId.getString("$id"));
                                     if (data.has("follower_id"))
                                         followerList.setFolloweeId(data.getString("follower_id"));
-                                    if(data.has("follower_name"))
-                                    followerList.setFolloweeName(data.getString("follower_name"));
-                                    if(data.has("follower_pic"))
+                                    if (data.has("follower_name"))
+                                        followerList.setFolloweeName(data.getString("follower_name"));
+                                    if (data.has("follower_pic"))
 
-                                        if (data.getString("follower_pic").contains("profile_pic")){
-                                            String pthumbImage =  data.getString("follower_pic").replace("profile_pic", "thumb_profile_pic");
+                                        if (data.getString("follower_pic").contains("profile_pic")) {
+                                            String pthumbImage = data.getString("follower_pic").replace("profile_pic", "thumb_profile_pic");
                                             followerList.setFolloweePic(data.getString(pthumbImage));
-                                        }else{
+                                        } else {
                                             followerList.setFolloweePic("");
                                         }
 
-                                    if(data.has("phone_no"))
-                                    followerList.setPhoneNo(data.getString("phone_no"));
+                                    if (data.has("phone_no"))
+                                        followerList.setPhoneNo(data.getString("phone_no"));
 
                                     if (data.has("following_id")) {
                                         followerList.setFollowingId(data.getString("following_id"));
@@ -301,18 +299,18 @@ public class ProfileManager {
                                     followerList.setrFollowerId(rId.getString("$id"));
                                     if (data.has("follower_id"))
                                         followerList.setFolloweeId(data.getString("follower_id"));
-                                    if(data.has("follower_name"))
-                                    followerList.setFolloweeName(data.getString("follower_name"));
-                                    if(data.has("follower_pic"))
-                                        if (data.getString("follower_pic").contains("profile_pic")){
-                                            String pthumbImage =  data.getString("follower_pic").replace("profile_pic", "thumb_profile_pic");
+                                    if (data.has("follower_name"))
+                                        followerList.setFolloweeName(data.getString("follower_name"));
+                                    if (data.has("follower_pic"))
+                                        if (data.getString("follower_pic").contains("profile_pic")) {
+                                            String pthumbImage = data.getString("follower_pic").replace("profile_pic", "thumb_profile_pic");
                                             followerList.setFolloweePic(data.getString(pthumbImage));
-                                        }else{
+                                        } else {
                                             followerList.setFolloweePic("");
                                         }
 
-                                    if(data.has("phone_no"))
-                                    followerList.setPhoneNo(data.getString("phone_no"));
+                                    if (data.has("phone_no"))
+                                        followerList.setPhoneNo(data.getString("phone_no"));
 
                                     if (data.has("following_id")) {
                                         followerList.setFollowingId(data.getString("following_id"));

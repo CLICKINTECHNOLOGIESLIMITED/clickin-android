@@ -10,7 +10,6 @@ import android.widget.GridView;
 import com.sourcefuse.clickinandroid.model.ChatManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.bean.TabBean;
-import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinandroid.view.adapter.AdapterAll;
 import com.sourcefuse.clickinandroid.view.adapter.CardGridViewAdapter;
 import com.sourcefuse.clickinapp.R;

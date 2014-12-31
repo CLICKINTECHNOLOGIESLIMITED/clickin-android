@@ -1,6 +1,5 @@
 package com.sourcefuse.clickinandroid.view;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -13,9 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -35,8 +32,6 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-
-import de.greenrobot.event.EventBus;
 
 /**
  * Created by mukesh on 1/9/14.
@@ -127,7 +122,6 @@ public class EditMyProfileView extends ClickInBaseView implements View.OnClickLi
         OpenGallery.setOnClickListener(this);
 
 
-
         // akshit code for closing keypad if touched anywhere outside
         ((RelativeLayout) findViewById(R.id.relative_layout_root_editprofile)).setOnClickListener(new View.OnClickListener() {
 
@@ -189,7 +183,7 @@ public class EditMyProfileView extends ClickInBaseView implements View.OnClickLi
                 mySelfy.setImageResource(R.drawable.male_user);
 
         } catch (Exception e) {
-           // com.sourcefuse.clickinandroid.utils.android.util.Log.e("on exception", "on exception");
+            // com.sourcefuse.clickinandroid.utils.android.util.Log.e("on exception", "on exception");
             mySelfy.setImageResource(R.drawable.male_user);
         }
 
@@ -468,7 +462,7 @@ public class EditMyProfileView extends ClickInBaseView implements View.OnClickLi
             if (authManager.getmResizeBitmap() == null) {
                 //com.sourcefuse.clickinandroid.utils.android.util.Log.e("save 2--->","save 2--->");
                 authManager.setUserbitmap(authManager.getUserbitmap());
-            } else  if(authManager.getmResizeBitmap() != null){
+            } else if (authManager.getmResizeBitmap() != null) {
                 //com.sourcefuse.clickinandroid.utils.android.util.Log.e("save 1--->","save 1--->");
                 authManager.setUserbitmap(authManager.getmResizeBitmap());
             }
@@ -495,7 +489,7 @@ public class EditMyProfileView extends ClickInBaseView implements View.OnClickLi
     @Override
     public void onBackPressed() {
 
-        if(authManager == null)
+        if (authManager == null)
             authManager = ModelManager.getInstance().getAuthorizationManager();
 
         authManager.setmResizeBitmap(null);

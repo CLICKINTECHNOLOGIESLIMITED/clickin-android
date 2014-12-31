@@ -14,30 +14,19 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.facebook.FacebookRequestError;
-import com.facebook.HttpMethod;
-import com.facebook.Request;
-import com.facebook.RequestAsyncTask;
-import com.facebook.Response;
 import com.facebook.Session;
 import com.facebook.SessionState;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ChatManager;
-import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
-import java.util.TimeZone;
 
 import de.greenrobot.event.EventBus;
 
@@ -53,10 +42,10 @@ public class ViewShare extends Activity implements View.OnClickListener {
     TextView mshr_point, mshr_comment;
     String fileId, clicks, textMsg, chatType, originalChatId, isMessageSender;
     EditText shr_caption;
+    String image_url;//akshit to make common variable for image ,vedio Url .
     private ChatManager chatManager;
     private AuthManager authManager;
     private String access_Token = "-";
-    String image_url ;//akshit to make common variable for image ,vedio Url .
     //Methods for Facebook
     private Session.StatusCallback callback = new Session.StatusCallback() {
         @Override
@@ -70,7 +59,7 @@ public class ViewShare extends Activity implements View.OnClickListener {
     private String videoID = null;
     private String audioID = null;
     private String cardOwner = null;
-    private String shareMedia ;
+    private String shareMedia;
 
 
     @Override
@@ -114,16 +103,16 @@ public class ViewShare extends Activity implements View.OnClickListener {
                 clicks = intent.getStringExtra("clicks");
                 videoThumbnail = intent.getStringExtra("videoThumbnail");
                 videoID = intent.getStringExtra("videoID");
-                image_url= videoThumbnail;
-            }else if (intent.hasExtra("card_owner")) {
+                image_url = videoThumbnail;
+            } else if (intent.hasExtra("card_owner")) {
                 clicks = "no";
                 videoThumbnail = intent.getStringExtra("card_url");
                 cardOwner = intent.getStringExtra("card_owner");
-                image_url= videoThumbnail;
+                image_url = videoThumbnail;
             } else if (intent.hasExtra("audioID")) {
                 clicks = intent.getStringExtra("clicks");
                 audioID = intent.getStringExtra("audioID");
-            }else{
+            } else {
                 clicks = intent.getStringExtra("clicks");
             }
 
@@ -139,19 +128,17 @@ public class ViewShare extends Activity implements View.OnClickListener {
                 ImageView shr_image = (ImageView) findViewById(R.id.shr_user_image);
                 shr_image.setVisibility(View.VISIBLE);
                 Picasso.with(ViewShare.this).load(image_url)
-                        .resize(200,200).centerCrop()
+                        .resize(200, 200).centerCrop()
                         .into(shr_image);
                 shr_caption.setHint("Write your caption \nhere...");
-            }
-            else if (!Utils.isEmptyString(audioID))
-            {
+            } else if (!Utils.isEmptyString(audioID)) {
                 ImageView shr_image = (ImageView) findViewById(R.id.shr_user_image);
                 shr_image.setVisibility(View.VISIBLE);
                 shr_image.setBackgroundResource(R.drawable.soundicon_);
                 shr_caption.setHint("Write your caption \nhere...");
             }
 
-            if(!clicks.equalsIgnoreCase("no")) {
+            if (!clicks.equalsIgnoreCase("no")) {
                 ((LinearLayout) findViewById(R.id.share_clicks_area)).setVisibility(View.VISIBLE);
                 TextView clicktxt = (TextView) findViewById(R.id.share_clicks_text);
                 clicktxt.setVisibility(View.VISIBLE);
@@ -168,7 +155,7 @@ public class ViewShare extends Activity implements View.OnClickListener {
                 }
 
 
-            }else{
+            } else {
 
                 if (!Utils.isEmptyString(textMsg)) {
                     ((LinearLayout) findViewById(R.id.share_clicks_area)).setVisibility(View.VISIBLE);
@@ -220,7 +207,7 @@ public class ViewShare extends Activity implements View.OnClickListener {
         switch (view.getId()) {
 
             case R.id.shr_facebook:
-                Toast.makeText(this,"Will be implemented later on", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Will be implemented later on", Toast.LENGTH_SHORT).show();
                 if (Utils.isConnectingToInternet(ViewShare.this)) {
 
                     Session session = Session.getActiveSession();
@@ -261,19 +248,19 @@ public class ViewShare extends Activity implements View.OnClickListener {
                     i.putExtra("videoID", videoID);
                 } else if (!Utils.isEmptyString(audioID)) {
                     i.putExtra("audioID", audioID);
-                }else if (!Utils.isEmptyString(cardOwner)) {
+                } else if (!Utils.isEmptyString(cardOwner)) {
                     // i.putExtra("audioID", audioID);
                 }
 
-                if(Utils.isEmptyString(cardOwner))
+                if (Utils.isEmptyString(cardOwner))
                     i.putExtra("clicks", clicks);
                 i.putExtra("originalChatId", originalChatId);
                 i.putExtra("chatType", chatType);
                 i.putExtra("textMsg", textMsg);
                 i.putExtra("caption", commentStr);
-                if(access_Token.length()>5){
+                if (access_Token.length() > 5) {
                     shareMedia = "clickin,facebook";
-                }else{
+                } else {
                     shareMedia = "clickin";
                 }
                 i.putExtra("facebookToken", access_Token);
@@ -308,14 +295,14 @@ public class ViewShare extends Activity implements View.OnClickListener {
             access_Token = session.getAccessToken();
             Log.e("access_Token", "access_Token->" + access_Token);
             publishStory();
-            if(access_Token.length()>5) {
+            if (access_Token.length() > 5) {
                 findViewById(R.id.shr_facebook).setBackgroundResource(R.drawable.facebook_blue);
-            }else{
+            } else {
                 findViewById(R.id.shr_facebook).setBackgroundResource(R.drawable.facebook_share_background);
             }
         } else if (state.isClosed()) {
             Log.e("access_Token", "access_Token->" + access_Token);
-            System.out.println("Logged out..." +access_Token+" -------");
+            System.out.println("Logged out..." + access_Token + " -------");
         }
     }
 

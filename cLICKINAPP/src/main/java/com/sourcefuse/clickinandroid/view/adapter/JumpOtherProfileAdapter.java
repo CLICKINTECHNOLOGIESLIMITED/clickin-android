@@ -70,7 +70,7 @@ public class JumpOtherProfileAdapter extends ArrayAdapter<ProfileRelationShipBea
                     //holder.usrimg.setImageResource(R.drawable.male_user);
                 }
             } else {
-               // holder.usrimg.setImageResource(R.drawable.male_user);
+                // holder.usrimg.setImageResource(R.drawable.male_user);
             }
         } catch (Exception e) {
         }

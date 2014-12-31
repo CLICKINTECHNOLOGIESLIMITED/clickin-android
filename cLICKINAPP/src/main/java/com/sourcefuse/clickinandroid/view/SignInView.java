@@ -15,7 +15,6 @@ import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -271,8 +270,8 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
             editor.putString("myPhoneNo", authManager.getPhoneNo());
             editor.putString("pwd", ePwd.getText().toString().trim());
             editor.putString("DeviceId", Utils.deviceId);
-            editor.putString("authToken",ModelManager.getInstance().getAuthorizationManager().getUsrToken());
-            editor.putString("userid",ModelManager.getInstance().getAuthorizationManager().getUserId());
+            editor.putString("authToken", ModelManager.getInstance().getAuthorizationManager().getUsrToken());
+            editor.putString("userid", ModelManager.getInstance().getAuthorizationManager().getUserId());
             //  editor.putString("DeviceType",Constants.DEVICETYPE);
             editor.commit();
 

@@ -2,10 +2,8 @@ package com.sourcefuse.clickinandroid.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -43,7 +41,6 @@ public class FollowingListView extends ClickInBaseView implements View.OnClickLi
         mFollowingListView = (RelativeLayout) findViewById(R.id.rl_followingdata);
         mFollowingListEmpty = (RelativeLayout) findViewById(R.id.rl_empty_following);
         profileName = (TextView) findViewById(R.id.tv_profile_txt_ing);
-
 
 
         profManager = ModelManager.getInstance().getProfileManager();

@@ -2,7 +2,6 @@ package com.sourcefuse.clickinandroid.utils;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Application;
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
@@ -11,7 +10,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -20,9 +18,7 @@ import android.graphics.Matrix;
 import android.graphics.drawable.ColorDrawable;
 import android.media.AudioManager;
 import android.media.ExifInterface;
-import android.media.MediaActionSound;
 import android.media.MediaPlayer;
-import android.media.MediaScannerConnection;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -39,11 +35,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
-import com.quickblox.core.QBCallbackImpl;
-import com.quickblox.core.result.Result;
-import com.quickblox.module.custom.QBCustomObjects;
-import com.quickblox.module.custom.model.QBCustomObject;
-import com.quickblox.module.custom.result.QBCustomObjectResult;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
@@ -53,17 +44,13 @@ import com.sourcefuse.clickinandroid.model.bean.ContactBean;
 import com.sourcefuse.clickinandroid.model.bean.GetrelationshipsBean;
 import com.sourcefuse.clickinapp.R;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.URL;
-import java.net.URLConnection;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -74,8 +61,6 @@ import java.util.HashMap;
 import java.util.Random;
 import java.util.TimeZone;
 
-import static android.provider.MediaStore.Images.Media.query;
-
 public class
         Utils {
 
@@ -84,20 +69,21 @@ public class
     public static String deviceId, PROJECT_NUMBER = "1058681021160";
     public static String mVideoPath = "/storage/emulated/0/ClickIn/ClickinVideo/";
     public static String mImagePath = "/storage/emulated/0/ClickIn/ClickinImages/";
-    public static String mAudioPath= "/storage/emulated/0/ClickIn/ClickinAudio/";
+    public static String mAudioPath = "/storage/emulated/0/ClickIn/ClickinAudio/";
     public static boolean appSound;
     public static SharedPreferences prefrences;
     public static Activity acty;
     public static ArrayList<ContactBean> itData = new ArrayList<ContactBean>();
     public static ArrayList<String> groupSms = new ArrayList<String>();
     public static HashMap<String, ContactBean> contactMap = new HashMap<String, ContactBean>();
+    public static String mName;
     static GoogleCloudMessaging gcm;
     static String regid;
     private static CustomProgressDialog barProgressDialog;
     private static Dialog dialog;
     private static Uri mImageCaptureUri;
-    public AuthManager authManager;
     private static MediaPlayer mplayer;
+    public AuthManager authManager;
 
     public static void launchBarDialog(Activity activity) {
 
@@ -156,6 +142,7 @@ public class
 
     }
 
+    //akshit code dialog
 
     //akshit code starts
     public static void fromSignalDialog1(Activity activity, String msgStrI, String msgStrII) {
@@ -180,8 +167,6 @@ public class
         dialog.show();
     }
 
-    //akshit code dialog
-
     public static void fromSignalertDialogDammit(Activity activity) {
         dialog = new Dialog(activity);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -203,6 +188,7 @@ public class
         });
         dialog.show();
     }
+    // Ends
 
     // Akshit Code Starts
     public static void fromSignalDialog(Activity activity, String str) {
@@ -226,8 +212,6 @@ public class
         });
         dialog.show();
     }
-    // Ends
-
 
     public static String getCardURLForAndroid(String url) {
 
@@ -341,6 +325,9 @@ public class
         return false;
     }
 
+
+    //Check for Internet Connection
+
     public static String getCurrentYear(String str) {
         int len = str.length();
         int pastYear = Integer.parseInt(str.substring((len - 4)));
@@ -348,9 +335,6 @@ public class
         int thisYear = calendar.get(Calendar.YEAR);
         return Integer.toString((thisYear - pastYear));
     }
-
-
-    //Check for Internet Connection
 
     public static boolean isConnectingToInternet(Activity act) {
         ConnectivityManager connMgr = (ConnectivityManager) act.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -389,7 +373,6 @@ public class
         String date = df.format(Calendar.getInstance().getTime());
         return date;
     }
-
 
     public static void imageDialog(final Activity contex) {
         String[] addPhoto;
@@ -438,19 +421,16 @@ public class
             int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
             cursor.moveToFirst();
             return cursor.getString(column_index);
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
-            Log.e("on error in real path------>",e.toString());
-            return  "";
-        }
-        finally {
+            Log.e("on error in real path------>", e.toString());
+            return "";
+        } finally {
             if (cursor != null) {
                 cursor.close();
             }
         }
     }
-
 
     public static String decodeSampledBitmapFromUri(Context context, Uri uri, int reqWidth, int reqHeight) {
 
@@ -489,7 +469,6 @@ public class
         }
         return inSampleSize;
     }
-
 
     public static String getRegId(final Activity contex) {
         new AsyncTask<Void, Void, String>() {
@@ -573,7 +552,6 @@ public class
         return tenCharPerLineString;
     }
 
-
     public static Uri decodeUri(Context c, Uri uri, final int requiredSize)
             throws FileNotFoundException {
         BitmapFactory.Options o = new BitmapFactory.Options();
@@ -636,7 +614,6 @@ public class
         return dateFormatted;
     }
 
-
     //monika- function to get country code from Sim
     public static String getCountryCodeFromSim(Context context) {
 
@@ -673,6 +650,10 @@ public class
     }
 
 
+
+
+      /* code for camera*/
+
     public static String GetCountryZipCode(Context context) {
         String CountryID = "";
         String CountryZipCode = "";
@@ -695,12 +676,6 @@ public class
         }
         return CountryZipCode;
     }
-
-
-
-
-      /* code for camera*/
-
 
     public static final String insertImage(ContentResolver cr,
                                            Bitmap source,
@@ -802,7 +777,6 @@ public class
         }
     }
 
-
     public static Uri savePhoto(Bitmap bmp) {
         //File imageFileFolder = new File(Environment.getExternalStorageDirectory(),"MyFolder"); //when you need to save the image inside your own folder in the SD Card
         File path = Environment.getDataDirectory(); //this is the default location inside SD Card - Pictures folder
@@ -829,7 +803,6 @@ public class
         return Uri.fromFile(imageFileName);
     }
 
-
     public static String fromInt(int val) {
         return String.valueOf(val);
     }
@@ -842,7 +815,6 @@ public class
         //this.cordova.getContext().sendBroadcast(mediaScanIntent); //this is deprecated
 
     }
-
 
     public static String convertClicks(String clicks) {
 
@@ -895,6 +867,9 @@ public class
         return changeClicks;
     }
 
+
+    /* find bitmap */
+
     //function to update clicks value for ours and partner- in case of Cards only monika
     public static void updateClicksValue(String oursClicks, String partnerClicks, String clicks, boolean ours) {
         int tempOurClicks = Integer.parseInt(oursClicks);
@@ -919,9 +894,6 @@ public class
         }
 
     }
-
-
-    /* find bitmap */
 
     public static Bitmap path(Uri mpath) {
         Bitmap resized = null;
@@ -1011,7 +983,6 @@ public class
         return changeClicks;
     }
 
-
     // //function to update clicks value for ours -without cards-monika
     public static void updateClicksWithoutCard(String oursClicks, String clicks, boolean add) {
         String tempOurClicksString = new String(oursClicks);
@@ -1057,6 +1028,8 @@ public class
 
     }
 
+    //monika- code to
+
     //akshit code to play sound
     public static void playSound(Activity activity, int resID) {
 
@@ -1100,9 +1073,6 @@ public class
 
     }
 
-    //monika- code to
-
-
     public static void Unregister(final Activity contex) {
         new AsyncTask<Void, Void, String>() {
             @Override
@@ -1112,7 +1082,7 @@ public class
                     if (gcm == null) {
                         gcm = GoogleCloudMessaging.getInstance(contex);
                     }
-                   gcm.unregister();
+                    gcm.unregister();
 
                 } catch (IOException ex) {
                     msg = "Error :" + ex.getMessage();
@@ -1130,23 +1100,21 @@ public class
 
     }
 
-
-
     //monika-function to update clicks for background messages
-    public static void updateClicksBackgroundMsgs(int relationIndex,ChatMessageBody obj){
-        ArrayList<GetrelationshipsBean>tempAcceptlist=ModelManager.getInstance().getRelationManager().acceptedList;
-        if(relationIndex<=tempAcceptlist.size()) {
+    public static void updateClicksBackgroundMsgs(int relationIndex, ChatMessageBody obj) {
+        ArrayList<GetrelationshipsBean> tempAcceptlist = ModelManager.getInstance().getRelationManager().acceptedList;
+        if (relationIndex <= tempAcceptlist.size()) {
             GetrelationshipsBean temp = tempAcceptlist.get(relationIndex);
-            String oursClicks=temp.getUserClicks();
-            String partnerClicks=temp.getClicks();
+            String oursClicks = temp.getUserClicks();
+            String partnerClicks = temp.getClicks();
             int tempOurClicks = Integer.parseInt(oursClicks);
             int tempPartnerClicks = Integer.parseInt(partnerClicks);
             int tempClicks;
             RelationManager manager = ModelManager.getInstance().getRelationManager();
 
             //check card is there or not
-            if(!Utils.isEmptyString(obj.card_owner)){
-                if(obj.card_Accepted_Rejected.equalsIgnoreCase("accepted")) {
+            if (!Utils.isEmptyString(obj.card_owner)) {
+                if (obj.card_Accepted_Rejected.equalsIgnoreCase("accepted")) {
                     if (obj.clicks.equalsIgnoreCase("05")) {
                         tempClicks = 5;
                     } else {
@@ -1161,7 +1129,7 @@ public class
                         tempPartnerClicks = tempPartnerClicks - tempClicks;
                     }
                 }
-            }else{
+            } else {
                 if (obj.clicks.equalsIgnoreCase("05")) {
                     tempClicks = 5;
                 } else {
@@ -1169,10 +1137,10 @@ public class
                 }
 
                 //if card is not there, then clicks will be calculated from ours only
-                if(obj.clicks.startsWith("+")){
-                    tempOurClicks=tempOurClicks+tempClicks;
-                }else if(obj.clicks.startsWith("-")){
-                    tempOurClicks=tempOurClicks-tempClicks;
+                if (obj.clicks.startsWith("+")) {
+                    tempOurClicks = tempOurClicks + tempClicks;
+                } else if (obj.clicks.startsWith("-")) {
+                    tempOurClicks = tempOurClicks - tempClicks;
                 }
 
             }
@@ -1186,11 +1154,10 @@ public class
     public static void updateClicksInRelationshipList(int relationListIndex) {
 
         //monika-swap values as per naming convention on server
-        ModelManager.getInstance().getRelationManager().acceptedList.get(relationListIndex).setClicks( ModelManager.getInstance().getRelationManager().partnerClicks);
+        ModelManager.getInstance().getRelationManager().acceptedList.get(relationListIndex).setClicks(ModelManager.getInstance().getRelationManager().partnerClicks);
         ModelManager.getInstance().getRelationManager().acceptedList.get(relationListIndex).setUserClicks(ModelManager.getInstance().getAuthorizationManager().ourClicks);
 
     }
-
 
     public static long ConvertIntoTimeStamp() {
         return System.currentTimeMillis();
@@ -1233,10 +1200,7 @@ public class
         return mReturnValue;
     }
 
-
-
-
-    public static String storeImage(Bitmap imageData, String filename,Context context) { //to store image once croped
+    public static String storeImage(Bitmap imageData, String filename, Context context) { //to store image once croped
         String iconsStoragePath = null;
         String filePath = null;
 
@@ -1293,9 +1257,9 @@ public class
         String filePath = imageFile.getAbsolutePath();
         Cursor cursor = context.getContentResolver().query(
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                new String[] { MediaStore.Images.Media._ID },
+                new String[]{MediaStore.Images.Media._ID},
                 MediaStore.Images.Media.DATA + "=? ",
-                new String[] { filePath }, null);
+                new String[]{filePath}, null);
         if (cursor != null && cursor.moveToFirst()) {
             int id = cursor.getInt(cursor
                     .getColumnIndex(MediaStore.MediaColumns._ID));
@@ -1317,9 +1281,9 @@ public class
         String filePath = imageFile.getAbsolutePath();
         Cursor cursor = context.getContentResolver().query(
                 MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
-                new String[] { MediaStore.Video.Media._ID },
+                new String[]{MediaStore.Video.Media._ID},
                 MediaStore.Video.Media.DATA + "=? ",
-                new String[] { filePath }, null);
+                new String[]{filePath}, null);
         if (cursor != null && cursor.moveToFirst()) {
             int id = cursor.getInt(cursor
                     .getColumnIndex(MediaStore.MediaColumns._ID));
@@ -1338,13 +1302,40 @@ public class
     }
 
 
+    public static Uri getAudioContentUri(Context context, File imageFile) {
+        String filePath = imageFile.getAbsolutePath();
+        Cursor cursor = context.getContentResolver().query(
+                MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+                new String[]{MediaStore.Audio.Media._ID},
+                MediaStore.Audio.Media.DATA + "=? ",
+                new String[]{filePath}, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            int id = cursor.getInt(cursor
+                    .getColumnIndex(MediaStore.MediaColumns._ID));
+            int id1 = cursor.getInt(cursor.getColumnIndex(MediaStore.MediaColumns._ID));
+            return Uri.withAppendedPath(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, "" + id1);
+        } else {
+            if (imageFile.exists()) {
+                ContentValues values = new ContentValues();
+                values.put(MediaStore.Audio.Media.DATA, filePath);
+                return context.getContentResolver().insert(
+                        MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, values);
+            } else {
+                return null;
+            }
+        }
+    }
+
+
+    /* download video from url */
+
     public static Uri getUriFromPath(String filePath, Context context) {
         long photoId;
         Uri photoUri = MediaStore.Images.Media.getContentUri("external");
 
         String[] projection = {MediaStore.Images.ImageColumns._ID};
         // TODO This will break if we have no matching item in the MediaStore.
-        Cursor cursor = context.getContentResolver().query(photoUri, projection, MediaStore.Images.ImageColumns.DATA + " LIKE ?", new String[] { filePath }, null);
+        Cursor cursor = context.getContentResolver().query(photoUri, projection, MediaStore.Images.ImageColumns.DATA + " LIKE ?", new String[]{filePath}, null);
         cursor.moveToFirst();
 
         int columnIndex = cursor.getColumnIndex(projection[0]);
@@ -1354,17 +1345,10 @@ public class
         return Uri.parse(photoUri.toString() + "/" + photoId);
     }
 
-
-
-    /* download video from url */
-
-    public static String mName;
-
-    public static void playvideo(Context context,String Url)
-    {
+    public static void playvideo(Context context, String Url) {
     /* play video */
 
-        Uri uri=Uri.parse(Url);
+        Uri uri = Uri.parse(Url);
         Intent intent1 = new Intent();
         intent1.setAction(Intent.ACTION_VIEW);
         intent1.putExtra(MediaStore.EXTRA_FINISH_ON_COMPLETION, false);
@@ -1373,13 +1357,26 @@ public class
             context.startActivity(intent1);
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e("exception---->",""+e.toString());
+            Log.e("exception---->", "" + e.toString());
         }
     }
 
+    public static void playAudio(Context context, String Url) {
+    /* playAudio */
 
-
-
+        Uri uri = Uri.parse(Url);
+        Intent intent1 = new Intent();
+        intent1.setAction(Intent.ACTION_VIEW);
+        intent1.putExtra(MediaStore.EXTRA_FINISH_ON_COMPLETION, false);
+        intent1.putExtra(Intent.EXTRA_TEXT, "textMessage");
+        intent1.setDataAndType(uri, "audio/*");
+        try {
+            context.startActivity(intent1);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e("exception---->", "" + e.toString());
+        }
+    }
 
 
 }

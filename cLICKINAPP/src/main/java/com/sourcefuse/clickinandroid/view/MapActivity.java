@@ -13,7 +13,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -314,7 +313,7 @@ public class MapActivity extends Activity implements ConnectionCallbacks, OnConn
     protected void onResume() {
         super.onResume();
         if (checkGPSEnabled()) {
-           // com.sourcefuse.clickinandroid.utils.android.util.Log.e("in if part-->", "in if part-->");
+            // com.sourcefuse.clickinandroid.utils.android.util.Log.e("in if part-->", "in if part-->");
             if (alertDialog != null && !alertDialog.isShowing())
                 buildAlertMessageNoGps();
         } else {

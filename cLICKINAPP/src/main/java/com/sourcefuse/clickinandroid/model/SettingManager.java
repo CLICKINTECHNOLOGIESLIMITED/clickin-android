@@ -3,7 +3,6 @@ package com.sourcefuse.clickinandroid.model;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.sourcefuse.clickinandroid.utils.APIs;
-import com.sourcefuse.clickinandroid.utils.Log;
 
 import org.apache.http.entity.StringEntity;
 import org.apache.http.message.BasicHeader;
