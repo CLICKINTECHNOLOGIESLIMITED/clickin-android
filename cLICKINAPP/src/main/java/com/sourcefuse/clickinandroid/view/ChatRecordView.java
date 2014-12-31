@@ -45,7 +45,6 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.quickblox.core.QBCallbackImpl;
 import com.quickblox.core.QBEntityCallbackImpl;
 import com.quickblox.core.result.Result;
-import com.quickblox.module.chat.QBChatService;
 import com.quickblox.module.content.QBContent;
 import com.quickblox.module.content.model.QBFile;
 import com.quickblox.module.content.result.QBFileUploadTaskResult;
@@ -72,7 +71,6 @@ import com.squareup.picasso.Picasso;
 
 import org.jivesoftware.smack.packet.DefaultPacketExtension;
 import org.jivesoftware.smack.packet.Message;
-import org.jivesoftware.smack.packet.Presence;
 
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
@@ -83,7 +81,6 @@ import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -953,6 +950,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         authManager = ModelManager.getInstance().getAuthorizationManager();
         String actionReq = intent.getAction();
         typingtext.setText("");
+        chatText.setText("");//akshit code to Refresh Chat box text
+
         if (actionReq.equalsIgnoreCase("UPDATE")) {
             Utils.launchBarDialog(this);
             Intent i = new Intent(this, MyQbChatService.class);

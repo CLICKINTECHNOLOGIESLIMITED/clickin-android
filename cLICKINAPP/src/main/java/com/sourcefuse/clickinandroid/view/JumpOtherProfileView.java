@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Html;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -469,7 +468,7 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
         TextView msgII = (TextView) dialog.findViewById(R.id.alert_msgII);
 //        msgI.setText(str);
 //        msgI.setText(AlertMessage.CURRENTCLICKERPAGE);
-        msgII.setText(AlertMessage.MAKECLICKWITH + authManager.getTmpUserName());
+        msgII.setText(AlertMessage.MAKECLICKWITH +"\n" +authManager.getTmpUserName());//akshit change for fixing UI Related bug
         Button skip = (Button) dialog.findViewById(R.id.coolio);
         skip.setOnClickListener(new View.OnClickListener() {
             @Override

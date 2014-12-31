@@ -591,7 +591,6 @@
             android:background="@color/profile_name_b"
             android:gravity="center_vertical"
             android:orientation="vertical"
-            android:layout_marginBottom="3dp"
             android:visibility="gone">
 
             <LinearLayout
