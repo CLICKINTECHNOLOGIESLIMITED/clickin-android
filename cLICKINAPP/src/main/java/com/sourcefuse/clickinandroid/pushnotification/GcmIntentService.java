@@ -78,7 +78,7 @@ public class GcmIntentService extends IntentService {
                 if (extras.containsKey("Tp")) {
                     Log.e("contains Tp", "contains TP");
                     Log.e("value of Tp", "" + extras.getString("TP"));
-                    if (extras.getString("Tp").equalsIgnoreCase("CR") || extras.getString("Tp").equalsIgnoreCase("RD") ||
+                    if (extras.getString("Tp").equalsIgnoreCase("CR") ||
                             extras.getString("Tp").equalsIgnoreCase("CRA") || extras.getString("Tp").equalsIgnoreCase("RV")
                             ) {
                         data.setClass(getApplicationContext(), UserProfileView.class);
@@ -102,6 +102,13 @@ public class GcmIntentService extends IntentService {
                         if (extras.getString("message").contains(getResources().getString(R.string.chat_image))) {
                             sendNotification("Clickin'", extras.getString("chat_message"), data);
                         }
+                    } else if (extras.getString("Tp").equalsIgnoreCase("RD")) {
+                        data.setClass(getApplicationContext(), UserProfileView.class);
+                        UpdateCounter();
+                        sendNotification("Clickin'", extras.getString("message"), null);
+                    } else if (extras.getString("Tp").equalsIgnoreCase("media")) {
+                        data.setClass(getApplicationContext(), UserProfileView.class);
+                        sendNotification("Clickin'", extras.getString("message"), null);
                     }
 
 

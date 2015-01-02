@@ -394,12 +394,12 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
                 }
                 if (extraParamsObj.has("fileID")) {
                     temp.content_url = extraParamsObj.getString("fileID");
-                } else if (extraParamsObj.has("audioID")) {
+                }  if (extraParamsObj.has("audioID")) {
                     temp.content_url = extraParamsObj.getString("audioID");
-                } else if (extraParamsObj.has("videoThumbnail")) {
+                }  if (extraParamsObj.has("videoThumbnail")) {
                     temp.video_thumb = extraParamsObj.getString("videoThumbnail");
                     temp.content_url = extraParamsObj.getString("videoID");
-                } else if (extraParamsObj.has("card_owner")) {
+                }  if (extraParamsObj.has("card_owner")) {
 
                     temp.clicks = extraParamsObj.getString("card_clicks");
                     temp.card_owner = Integer.toString(extraParamsObj.getInt("card_owner"));
@@ -418,7 +418,7 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
                         if (temp.card_Accepted_Rejected.equalsIgnoreCase("accepted"))
                             updateValuesClicks(temp);
                     }*/
-                } else if (extraParamsObj.has("sharingMedia")) {
+                } if (extraParamsObj.has("sharingMedia")) {
 
                     temp.facebookToken = extraParamsObj.getString("facebookToken");
                     if (extraParamsObj.has("imageRatio"))

@@ -160,8 +160,11 @@ public class ChatManager {
                                             temp.isDelivered = chatObj.getString("isDelivered");
                                         if (chatObj.has("imageRatio"))
                                             temp.imageRatio = chatObj.getString("imageRatio");
-                                        if (chatObj.has("chatId"))
+                                        if (chatObj.has("chatId")) {
                                             temp.chatId = chatObj.getString("chatId");
+                                            //temp code- will handle properly later on-monika
+                                            temp.deliveredChatID=temp.chatId;
+                                        }
 
                                         // temp.cardchatObj.getString("cards"));
                                         if (chatObj.has("sentOn"))
