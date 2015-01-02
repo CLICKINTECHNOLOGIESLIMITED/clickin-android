@@ -1352,6 +1352,7 @@ public class
         Intent intent1 = new Intent();
         intent1.setAction(Intent.ACTION_VIEW);
         intent1.putExtra(MediaStore.EXTRA_FINISH_ON_COMPLETION, false);
+
         intent1.setDataAndType(uri, "video/*");
         try {
             context.startActivity(intent1);
@@ -1368,7 +1369,9 @@ public class
         Intent intent1 = new Intent();
         intent1.setAction(Intent.ACTION_VIEW);
         intent1.putExtra(MediaStore.EXTRA_FINISH_ON_COMPLETION, false);
-        intent1.putExtra(Intent.EXTRA_TEXT, "textMessage");
+
+
+
         intent1.setDataAndType(uri, "audio/*");
         try {
             context.startActivity(intent1);

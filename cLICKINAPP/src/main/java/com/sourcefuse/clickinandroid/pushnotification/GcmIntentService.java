@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
@@ -27,6 +28,8 @@ import org.json.JSONObject;
 import java.util.List;
 
 import de.greenrobot.event.EventBus;
+
+import static android.telephony.TelephonyManager.EXTRA_STATE_IDLE;
 
 
 public class GcmIntentService extends IntentService {
@@ -162,9 +165,15 @@ public class GcmIntentService extends IntentService {
 
         NOTIFICATION_ID = NOTIFICATION_ID + 1;
 
-        if (!isAppOnForeground(getApplicationContext()))
+        PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+        boolean isScreenOn = pm.isScreenOn();  // check screen state to show notification
+        Log.e("value of isScreenOn --->",""+isScreenOn);
+
+
+        if (!isAppOnForeground(getApplicationContext()) || !isScreenOn)
             mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
 
+        Log.e("value of --->",""+isAppOnForeground(getApplicationContext()));
 
     }
 
@@ -175,8 +184,12 @@ public class GcmIntentService extends IntentService {
         if (appProcesses == null) {
             return false;
         }
+
+
+
         final String packageName = context.getPackageName();
         for (ActivityManager.RunningAppProcessInfo appProcess : appProcesses) {
+            Log.e("value of importence---.",""+appProcess.importance);
             if (appProcess.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND && appProcess.processName.equals(packageName)) {
                 return true;
             }

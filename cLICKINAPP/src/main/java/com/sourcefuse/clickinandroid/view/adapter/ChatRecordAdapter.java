@@ -1451,7 +1451,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 if (Utils.isConnectingToInternet((Activity) context))
                     new DownloadMusicfromInternet().execute(item.content_url);
             } else {  // play Audio
-                Utils.playvideo(context, uri.toString());
+                Utils.playAudio(context, uri.toString());
             }
         }
     }
@@ -1651,7 +1651,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     /* play video */
                     Uri uri = Utils.getAudioContentUri(context, new File(mPath));  //check file exist or not
 
-                    Utils.playvideo(context, uri.toString());
+                    Utils.playAudio(context, uri.toString());
 
                 } else if (path.contains(Utils.mVideoPath)) {  // code to mount Video
 
