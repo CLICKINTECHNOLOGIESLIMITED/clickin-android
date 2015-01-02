@@ -84,7 +84,7 @@ public class NotificationAdapter extends ArrayAdapter<NotificationBean> {
                 if (item.getNotificationType().matches(context.getResources().getString(R.string.txt_relationstatus)) ||
                         item.getNotificationType().matches(context.getResources().getString(R.string.txt_relation_visibility))
                         || item.getNotificationType().equalsIgnoreCase(context.getResources().getString(R.string.txt_relationrequest))) {
-                    Utils.launchBarDialog((Activity)context);
+                    Utils.launchBarDialog((Activity) context);
                     Intent intent = new Intent(getContext(), UserProfileView.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     intent.putExtra("isChangeInList", true);

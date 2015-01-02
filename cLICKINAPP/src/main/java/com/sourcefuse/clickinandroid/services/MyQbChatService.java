@@ -218,7 +218,7 @@ public class MyQbChatService extends Service {
         EventBus.getDefault().unregister(this);
         logoutFromQb();
         ClickinDbHelper dbHelper = new ClickinDbHelper(this);
-        android.util.Log.e("Service","Delete Db");
+        android.util.Log.e("Service", "Delete Db");
         try {
             dbHelper.clearDB();
         } catch (SQLException e) {
@@ -273,11 +273,11 @@ public class MyQbChatService extends Service {
     }
 
     //function to send online status of partner
-    public void CheckOnlineStatus(int partnerQBId){
+    public void CheckOnlineStatus(int partnerQBId) {
         Handler handler = mChatThread.getHandler();
         android.os.Message msg = new android.os.Message();
         Bundle data = new Bundle();
-        data.putInt("partnerQBId",partnerQBId);
+        data.putInt("partnerQBId", partnerQBId);
         msg.setData(data);
         msg.what = ChatThread.CHECK_PRESENCE;
         handler.sendMessage(msg);

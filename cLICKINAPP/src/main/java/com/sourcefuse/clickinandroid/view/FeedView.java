@@ -2,7 +2,6 @@ package com.sourcefuse.clickinandroid.view;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 
@@ -12,7 +11,6 @@ import com.sourcefuse.clickinandroid.model.NewsFeedManager;
 import com.sourcefuse.clickinandroid.model.bean.NewsFeedBean;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.Constants;
-import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.adapter.FeedsAdapter;
 import com.sourcefuse.clickinandroid.view.adapter.SimpleSectionedListAdapter2;
@@ -57,7 +55,6 @@ public class FeedView extends ClickInBaseView implements View.OnClickListener {
 
         newsFeedManager = ModelManager.getInstance().getNewsFeedManager();
         authManager = ModelManager.getInstance().getAuthorizationManager();
-
 
 
         Utils.launchBarDialog(FeedView.this);
@@ -179,7 +176,7 @@ public class FeedView extends ClickInBaseView implements View.OnClickListener {
             stopSearch = true;
             Utils.dismissBarDialog();
             Utils.fromSignalDialog(FeedView.this, AlertMessage.connectionError);
-           // android.util.android.util.Log.d("3", "message->" + message);
+            // android.util.android.util.Log.d("3", "message->" + message);
         } else if (message.equalsIgnoreCase("NewsFeedDelete False")) {
         } else if (message.equalsIgnoreCase("NewsFeedDelete True")) {
             newsFeedManager.fetchNewsFeed("", ModelManager.getInstance().getAuthorizationManager().getPhoneNo(), ModelManager.getInstance().getAuthorizationManager().getUsrToken());

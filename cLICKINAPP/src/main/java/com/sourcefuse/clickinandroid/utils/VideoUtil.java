@@ -11,7 +11,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.*;
 import android.util.Log;
 
 import java.io.File;
@@ -24,9 +23,9 @@ public class VideoUtil {
     public static final int REQUEST_VIDEO_CAPTURED_FROM_GALLERY = 100;
     private static final String VIDEO_RECORDER_FOLDER = "ClickIn/ClickinVideo";
     public static String videofilePath = null;
+    public static String name;
     private static Uri fileUri = null;
     public Dialog mdialog;
-    public static String name;
 
     public static void videoDialog(final Activity contex) {
 
@@ -53,7 +52,7 @@ public class VideoUtil {
                                     Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
                                     fileUri = getOutputMediaFileUri(contex);
                                     intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
-                                    intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 0);
+                                    intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, REQUEST_VIDEO_CAPTURED); // Set video Quality
                                     contex.startActivityForResult(intent, REQUEST_VIDEO_CAPTURED);
 
 
@@ -94,7 +93,7 @@ public class VideoUtil {
         }
         String path = file.getAbsolutePath() + "/" + name + ".mp4";
 
-        Log.e("file path on video making---->",""+path);
+        Log.e("file path on video making---->", "" + path);
         try {
             ContentValues values = new ContentValues();
             values.put(MediaStore.Images.Media.DATA, path);

@@ -17,6 +17,7 @@ public class AudioUtil {
     private static final String AUDIO_RECORDER_FOLDER = "ClickIn/ClickinAudio";
     private static MediaRecorder recorder = null;
     private static int currentFormat = 0;
+    public static String mAudioName;
     private static int output_formats[] = {MediaRecorder.OutputFormat.MPEG_4, MediaRecorder.OutputFormat.THREE_GPP};
     private static String fileName;
     private static MediaRecorder.OnErrorListener errorListener = new MediaRecorder.OnErrorListener() {
@@ -72,7 +73,7 @@ public class AudioUtil {
             file.mkdirs();
         }
 
-        return (file.getAbsolutePath() + "/" + System.currentTimeMillis() + file_exts[currentFormat]);
+        return (file.getAbsolutePath() + "/" + mAudioName + file_exts[currentFormat]);
     }
 
 }

@@ -14,7 +14,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 
-
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
@@ -120,8 +119,8 @@ public class SplashView extends Activity implements View.OnClickListener {
             editor.putString("myPhoneNo", authManager.getPhoneNo());
             editor.putString("pwd", pwd);
             editor.putString("DeviceId", Utils.deviceId);
-            editor.putString("authToken",ModelManager.getInstance().getAuthorizationManager().getUsrToken());
-            editor.putString("userid",ModelManager.getInstance().getAuthorizationManager().getUserId());
+            editor.putString("authToken", ModelManager.getInstance().getAuthorizationManager().getUsrToken());
+            editor.putString("userid", ModelManager.getInstance().getAuthorizationManager().getUserId());
             //  editor.putString("DeviceType",Constants.DEVICETYPE);
             editor.commit();
 

@@ -78,7 +78,7 @@ public class CurrentClickersAdapter extends ArrayAdapter<CurrentClickerBean> {
                         .load(item.getClickerPix())
                         .into(holder.usrimg);
             } else {
-               // holder.usrimg.setImageResource(R.drawable.male_user);
+                // holder.usrimg.setImageResource(R.drawable.male_user);
             }
         } catch (Exception e) {
             holder.usrimg.setImageResource(R.drawable.male_user);

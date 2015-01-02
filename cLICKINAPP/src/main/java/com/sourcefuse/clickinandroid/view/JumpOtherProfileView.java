@@ -161,7 +161,6 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
         }
 
 
-
     }
 
     @Override

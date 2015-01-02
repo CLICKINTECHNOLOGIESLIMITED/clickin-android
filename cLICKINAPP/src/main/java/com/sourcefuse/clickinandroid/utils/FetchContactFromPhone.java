@@ -4,7 +4,6 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.provider.ContactsContract;
-import android.util.Log;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -314,7 +313,7 @@ public class FetchContactFromPhone {
                         else
                             key1 = key1;
                     }
-                   // com.sourcefuse.clickinandroid.utils.android.util.Log.e("key 2----->", "key 2--->" + key1);
+                    // com.sourcefuse.clickinandroid.utils.android.util.Log.e("key 2----->", "key 2--->" + key1);
                     list.add(key1);
 
                 }
@@ -370,7 +369,7 @@ public class FetchContactFromPhone {
                             clickerArray = new ArrayList<CurrentClickerBean>();
                             //com.sourcefuse.clickinandroid.utils.android.util.Log.e("clickerArray --->", "" + clickerArray);
                             for (int i = 0; i < list.length(); i++) {
-                               // com.sourcefuse.clickinandroid.utils.android.util.Log.e("no of times---->", "" + i);
+                                // com.sourcefuse.clickinandroid.utils.android.util.Log.e("no of times---->", "" + i);
                                 JSONObject data = list.getJSONObject(i);
                                 int existcode = data.getInt("exists");
                                 //com.sourcefuse.clickinandroid.utils.android.util.Log.e("Exit code ----->", "" + existcode);

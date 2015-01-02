@@ -23,11 +23,9 @@ import com.sourcefuse.clickinandroid.model.RelationManager;
 import com.sourcefuse.clickinandroid.model.bean.FollowerFollowingBean;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.Constants;
-import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.FollowerList;
 import com.sourcefuse.clickinandroid.view.JumpOtherProfileView;
-import com.sourcefuse.clickinandroid.view.UserProfileView;
 import com.sourcefuse.clickinapp.R;
 import com.squareup.picasso.Picasso;
 
@@ -220,7 +218,7 @@ public class FollowerAdapter extends ArrayAdapter<FollowerFollowingBean> {
                 relationManager = ModelManager.getInstance().getRelationManager();
 
       /* condition for accept request   */
-                if(profileManager.followers.size() > position) {
+                if (profileManager.followers.size() > position) {
                     Utils.launchBarDialog((FollowerList) getContext());
                     FollowerList.mListchangeVariable_flag = true;
                     item.get(position).setAccepted("false");
@@ -247,7 +245,7 @@ public class FollowerAdapter extends ArrayAdapter<FollowerFollowingBean> {
             public void onClick(View v) {
 
 /* condition for reject request   */
-                if(profileManager.followers.size() > position &&  profileManager.followRequesed.size() > position) {
+                if (profileManager.followers.size() > position && profileManager.followRequesed.size() > position) {
                     authManager = ModelManager.getInstance().getAuthorizationManager();
                     relationManager = ModelManager.getInstance().getRelationManager();
                     android.util.Log.e("name--->", "" + profileManager.followers.get(position).getPhoneNo());

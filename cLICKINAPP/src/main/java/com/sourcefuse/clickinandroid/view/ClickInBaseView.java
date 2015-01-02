@@ -38,7 +38,6 @@ import com.sourcefuse.clickinandroid.model.ClickInNotificationManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.NewsFeedManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
-import com.sourcefuse.clickinandroid.model.bean.GetrelationshipsBean;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.Utils;
@@ -769,9 +768,9 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         setLeftMenuList();
     }
 
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
-        if(clickInadapter !=null)
+        if (clickInadapter != null)
             clickInadapter.notifyDataSetChanged();
     }
 

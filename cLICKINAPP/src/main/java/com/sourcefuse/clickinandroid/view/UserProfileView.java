@@ -1,6 +1,5 @@
 package com.sourcefuse.clickinandroid.view;
 
-import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -10,7 +9,6 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -37,7 +35,6 @@ import com.sourcefuse.clickinapp.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class UserProfileView extends ClickInBaseView implements View.OnClickListener {
@@ -429,10 +426,10 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
             Utils.fromSignalDialog(this, AlertMessage.connectionError);
         } else if (message.equalsIgnoreCase("UserVisible Network Error")) {
             /*if (Utils.DEBUG)*/
-                //com.sourcefuse.clickinandroid.utils.android.util.Log.e("on error when change type", "on error when change type");
+            //com.sourcefuse.clickinandroid.utils.android.util.Log.e("on error when change type", "on error when change type");
         } else if (message.equalsIgnoreCase("UserVisible true on error")) {
            /* if (Utils.DEBUG)*/
-               // com.sourcefuse.clickinandroid.utils.android.util.Log.e("on error when change type on error", "on error when change type on error");
+            // com.sourcefuse.clickinandroid.utils.android.util.Log.e("on error when change type on error", "on error when change type on error");
         }
 
 

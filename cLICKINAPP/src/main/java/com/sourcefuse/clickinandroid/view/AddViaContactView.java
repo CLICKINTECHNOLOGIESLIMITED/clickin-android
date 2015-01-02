@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.provider.Telephony;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
@@ -62,16 +61,16 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
             //com.sourcefuse.clickinandroid.utils.android.util.Log.e("contact no--->", "" + mlPhNo);
             //first check country code from SIM and compare it with num
             countryCode = Utils.getCountryCodeFromSim(this);
-           // com.sourcefuse.clickinandroid.utils.android.util.Log.e("county code from sim--->", "" + countryCode);
+            // com.sourcefuse.clickinandroid.utils.android.util.Log.e("county code from sim--->", "" + countryCode);
             if (countryCode != null) {
                 if (mlPhNo.startsWith(countryCode)) {
                     mlPhNo = mlPhNo.replace(countryCode, "");
 
-                   // com.sourcefuse.clickinandroid.utils.android.util.Log.e("contact no point 1--->", "" + mlPhNo);
+                    // com.sourcefuse.clickinandroid.utils.android.util.Log.e("contact no point 1--->", "" + mlPhNo);
                 } else {
                     mlPhNo = mlPhNo;
 
-                  //  com.sourcefuse.clickinandroid.utils.android.util.Log.e("contact no point 3--->", "" + mlPhNo);
+                    //  com.sourcefuse.clickinandroid.utils.android.util.Log.e("contact no point 3--->", "" + mlPhNo);
                 }
             }
 

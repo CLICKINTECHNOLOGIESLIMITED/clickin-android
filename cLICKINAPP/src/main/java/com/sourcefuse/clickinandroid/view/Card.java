@@ -16,7 +16,6 @@ import android.widget.TextView;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
-import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
 import com.squareup.picasso.Callback;
@@ -91,12 +90,12 @@ public class Card extends Activity implements View.OnClickListener, TextWatcher 
             if (forCounter) {
                 clicks = intent.getStringExtra("card_clicks");
 
-                if(clicks.equalsIgnoreCase("5"))//akshit code if th clicks ar 5
+                if (clicks.equalsIgnoreCase("5"))//akshit code if th clicks ar 5
                 {
                     trd_clicks_bottom.setText("05");
                     trd_clicks_top.setText("05");
 
-                }else {
+                } else {
                     trd_clicks_bottom.setText(intent.getStringExtra("card_clicks"));
                     trd_clicks_top.setText(intent.getStringExtra("card_clicks"));
                 }
