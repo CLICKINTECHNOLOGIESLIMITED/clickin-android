@@ -12,7 +12,6 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -89,7 +88,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         /*setContentView(R.layout.view_baseview);*/
-        Log.e("ClickInBaseView1", "onCreate");
+
 
         authManager = ModelManager.getInstance().getAuthorizationManager();
 
@@ -103,7 +102,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         header.findViewById(R.id.iv_open_left_menu).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                com.sourcefuse.clickinandroid.utils.Log.e("in left menu", "in left menu");
+
                 slidemenu.showMenu();
             }
         });
@@ -111,7 +110,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         header.findViewById(R.id.iv_open_right_menu).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                com.sourcefuse.clickinandroid.utils.Log.e("in right menu", "in right menu");
+
                 slidemenu.showSecondaryMenu();
             }
         });
@@ -211,16 +210,16 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 
             if (mNotificationValue > 99) {
                 mValue = "99+";
-                com.sourcefuse.clickinandroid.utils.Log.e("in notification value", "" + mValue);
+
             } else {
                 mValue = String.valueOf(mNotificationValue);
-                com.sourcefuse.clickinandroid.utils.Log.e("in notification value", "" + mValue);
+
 
             }
             mNotificationText.setText("" + mValue);
             mNotificationText.setTextColor(Color.parseColor("#39cad4"));
         } else {
-            com.sourcefuse.clickinandroid.utils.Log.e("in else part", "in else part");
+
             mNotificationText.setText("0");
             mNotificationText.setTextColor(Color.parseColor("#000000"));
         }
@@ -303,7 +302,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
                 //praful code
                 boolean handled = false;
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    Log.e("00000", "00000000000");
+
                     if (!(edt_search.getText().toString().length() > 0)) {
                         hideSearchlist.setVisibility(View.GONE);
                         searchList.setVisibility(View.GONE);
@@ -378,8 +377,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         try {
 
             Bitmap imagebitmap1 = authManager.getUserbitmap();
-            //  if (imagebitmap1 != null)
-            //com.sourcefuse.clickinandroid.utils.android.util.Log.e("user bit map not null", "user bit map not null");
+
             boolean userpic = Utils.isEmptyString(authManager.getUserPic());
 
             if (imagebitmap1 != null)
@@ -394,7 +392,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
                 userPic.setImageResource(R.drawable.male_user);
 
         } catch (Exception e) {
-            //   com.sourcefuse.clickinandroid.utils.android.util.Log.e("on exception", "on exception");
+
             userPic.setImageResource(R.drawable.male_user);
         }
 
@@ -413,7 +411,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
                         userClicks = relationManager.acceptedList.get(position - 2).getClicks();
                         myClicks = relationManager.acceptedList.get(position - 2).getUserClicks();
                         partnerPh = relationManager.acceptedList.get(position - 2).getPhoneNo();
-                        Log.e("", "position--In..> " + rId);
+
                         relationListIndex = (position - 2);
 
 /* prafulll code to set counter to zero */
@@ -441,7 +439,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-//                com.sourcefuse.clickinandroid.utils.android.util.Log.e("in cickin baseview on searchInviteView ----->", "in cickin baseview on searchInviteView ----->");
+
                 Intent intent = new Intent(ClickInBaseView.this, AddSomeoneView.class);
                 intent.putExtra("fromsignup", false);
                 startActivity(intent);
@@ -529,7 +527,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                Log.e("", "00000000-userPic" + slidemenu);
+
                 Intent intent = new Intent(ClickInBaseView.this, UserProfileView.class);
                 intent.putExtra("isChangeInList", true);
                 intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -566,7 +564,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                Log.e("", "00000000-SettingView Intent");
+
                 Intent intent = new Intent(ClickInBaseView.this, SettingView.class);
                 startActivity(intent);
 
@@ -588,7 +586,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
                 Intent intent = new Intent(ClickInBaseView.this, AddSomeoneView.class);
                 intent.putExtra("FromOwnProfile", true);
                 startActivity(intent);
-//                com.sourcefuse.clickinandroid.utils.android.util.Log.e("in cickin baseview on searchInviteView ----->", "in cickin baseview on searchInviteView ----->");
+
                         /* code for animation prafull*/
 
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
@@ -612,7 +610,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                        Log.e("searchList", "searchList Click-->" + position);
+
 
                         String partnerPhone = relationManager.fetchUsersByNameData.get(position).getPhoneNo();
                         Intent intent = new Intent(ClickInBaseView.this, JumpOtherProfileView.class);
@@ -660,7 +658,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
     public void setNotificationList() {
 
         notificationMngr = ModelManager.getInstance().getNotificationManagerManager();
-        Log.e("NotificationList", "Size" + notificationMngr.notificationData.size());
+
         notificationAdapter = new NotificationAdapter(ClickInBaseView.this, R.layout.row_notification, notificationMngr.notificationData);
         notificationList.setAdapter(notificationAdapter);
 
@@ -682,7 +680,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
     @Override
     protected void onStop() {
         super.onStop();
-        Log.e("2", "onStopClickInBaseView");
+
 
         EventBus.getDefault().unregister(this);
 
@@ -705,7 +703,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-        Log.e("00000", "00000000000");
+
 
         String search_date = edt_search.getText().toString();
         if (!Utils.isEmptyString(search_date) && search_date.length() < 3) {
@@ -731,7 +729,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         relationManager = ModelManager.getInstance().getRelationManager();
         setLeftMenuList();
         notificationMngr = ModelManager.getInstance().getNotificationManagerManager();
-        Log.e("notifacation---->", "notification--->");
+
         notificationMngr.getNotification(getApplicationContext(), "", authManager.getPhoneNo(), authManager.getUsrToken());
     }
 
@@ -745,8 +743,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         try {
 
             Bitmap imagebitmap1 = authManager.getUserbitmap();
-            //   if (imagebitmap1 != null)
-            //     com.sourcefuse.clickinandroid.utils.android.util.Log.e("user bit map not null", "user bit map not null");
+
             boolean userpic = Utils.isEmptyString(authManager.getUserPic());
 
             if (imagebitmap1 != null)
@@ -761,7 +758,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
                 userPic.setImageResource(R.drawable.male_user);
 
         } catch (Exception e) {
-//            com.sourcefuse.clickinandroid.utils.android.util.Log.e("on exception", "on exception");
+
             userPic.setImageResource(R.drawable.male_user);
         }
 
@@ -779,21 +776,10 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         String mTestString = new String(message);
 
         if (mTestString.contains("UpdateMessageCounter###")) { /* prafulll code to set counter to zero */
-        /*    String mMessage = new String(message);
-            String[] mSplit = mMessage.split("###", 2);
-            String mRelationId = mSplit[1];
-            Log.e("relation ship id on update counter ---->", "" + mRelationId);
-            for (GetrelationshipsBean mRelationShipBean : relationManager.acceptedList) {
-                if (mRelationShipBean.getRelationshipId().equalsIgnoreCase(mRelationId)) {
-                    mRelationShipBean.setUnreadMsg(mRelationShipBean.getUnreadMsg() + 1);
-                    clickInadapter.notifyDataSetChanged();
 
-                    Log.e("found---->", "found---->");
-                }
-            }*/
             clickInadapter.notifyDataSetChanged();
         } else if (message.equalsIgnoreCase("SearchResult True")) {
-            Log.e("on true---->", "on true");
+
             stopSearch = true;
             Utils.dismissBarDialog();
             slidemenu.findViewById(R.id.btn_clear).setVisibility(View.VISIBLE);
@@ -804,7 +790,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            Log.d("1", "message aya->" + message);
+
             searchList.setVisibility(View.VISIBLE);
             setSearchList();
         } else if (message.equalsIgnoreCase("SearchResult False")) {
@@ -821,15 +807,15 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
             searchList.setVisibility(View.VISIBLE);
             setSearchList();
 
-            Log.d("2", "message->" + message);
+
         } else if (message.equalsIgnoreCase("SearchResult Error")) {
             stopSearch = true;
             Utils.dismissBarDialog();
             Utils.fromSignalDialog(ClickInBaseView.this, AlertMessage.connectionError);
-            Log.d("3", "message->" + message);
+
         } else if (message.equalsIgnoreCase("NewsFeed  True")) {
             Utils.dismissBarDialog();
-            Log.d("1", "message aya->" + message);
+
             try {
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
@@ -844,7 +830,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
             this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
         }  //akshit code
         else if (message.equalsIgnoreCase("NewsFeed False")) {
-            Log.d("2", "message->" + message);
+
             stopSearch = true;
             Utils.dismissBarDialog();
             newsFeedManager = ModelManager.getInstance().getNewsFeedManager();
@@ -864,8 +850,8 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
             stopSearch = true;
             Utils.dismissBarDialog();
             Utils.fromSignalDialog(ClickInBaseView.this, AlertMessage.connectionError);
-            Log.d("3", "message->" + message);
-        } else if (message.equalsIgnoreCase("Notification true")) {
+
+        } else if (message.equalsIgnoreCase("Notification true") || message.equalsIgnoreCase("Notification error")) {
             setNotificationList();
         } else if (message.equalsIgnoreCase("Update DB Message")) {
             //temp code
@@ -911,7 +897,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 
     @Override
     public void onOpen() {
-        Log.e("y", "if onOpen");
+
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
         authManager = ModelManager.getInstance().getAuthorizationManager();
         try {
@@ -919,8 +905,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 
 
             Bitmap imagebitmap1 = authManager.getUserbitmap();
-            //   if (imagebitmap1 != null)
-            //     com.sourcefuse.clickinandroid.utils.android.util.Log.e("user bit map not null", "user bit map not null");
+
             boolean userpic = Utils.isEmptyString(authManager.getUserPic());
 
             if (imagebitmap1 != null)
@@ -935,7 +920,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
                 userPic.setImageResource(R.drawable.male_user);
 
         } catch (Exception e) {
-//            com.sourcefuse.clickinandroid.utils.android.util.Log.e("on exception", "on exception");
+
             userPic.setImageResource(R.drawable.male_user);
         }
         try {
@@ -954,12 +939,12 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 
     public void onDestroy() {
         super.onDestroy();
-        Log.e("CLickinbaseview", "Destroy");
+
     }
 
     @Override
     public void onClose() {
-        Log.e("y", "if onClose");
+
 
     }
 

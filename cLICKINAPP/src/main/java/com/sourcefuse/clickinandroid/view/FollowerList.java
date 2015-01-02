@@ -12,6 +12,7 @@ import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.ProfileManager;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
+import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.adapter.FollowerAdapter;
 import com.sourcefuse.clickinapp.R;
@@ -88,7 +89,7 @@ public class FollowerList extends ClickInBaseView implements
         if (profManager.followers.size() > 0) {
             mFollowerListView.setVisibility(View.VISIBLE);
             mFollowerListEmpty.setVisibility(View.GONE);
-            //com.sourcefuse.clickinandroid.utils.android.util.Log.e("size---->", "" + profManager.followers.size());
+
             adapter = new FollowerAdapter(this, R.layout.row_follower, profManager.followers);
             int index = listView.getFirstVisiblePosition();
             View v = listView.getChildAt(0);
@@ -134,21 +135,21 @@ public class FollowerList extends ClickInBaseView implements
     public void onEventMainThread(String getMsg) {
         super.onEventMainThread(getMsg);
         Utils.dismissBarDialog();
+        android.util.Log.e("getMsg---->", "" + getMsg);
         authManager = ModelManager.getInstance().getAuthorizationManager();
         if (getMsg.equalsIgnoreCase("UnFollowUser true")) {
 
-            // profManager.getFollwer("", authManager.getPhoneNo(), authManager.getUsrToken());
+
             adapter.notifyDataSetChanged();
         } else if (getMsg.equalsIgnoreCase("UnFollowUser false")) {
-               /* Utils.fromSignalDialog(this,authManager.getMessage());*/
-            //Utils.showAlert(FollowerList.this, authManager.getMessage());
+
         } else if (getMsg.equalsIgnoreCase("UnFollowUser Network Error")) {
             Utils.fromSignalDialog(FollowerList.this, AlertMessage.connectionError);
         } else if (getMsg.equalsIgnoreCase("FollowUser true")) {
 
             adapter.notifyDataSetChanged();
         } else if (getMsg.equalsIgnoreCase("FollowUser false")) {
-                  /*Utils.fromSignalDialog(FollowerList.this, authManager.getMessage());*/
+
         } else if (getMsg.equalsIgnoreCase("FollowUser Network Error")) {
             Utils.fromSignalDialog(FollowerList.this, AlertMessage.connectionError);
         } else if (getMsg.equalsIgnoreCase("GetFollower True")) {

@@ -1,5 +1,7 @@
 package com.sourcefuse.clickinandroid.model;
 
+import android.util.Log;
+
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.sourcefuse.clickinandroid.model.bean.ContactBean;
@@ -7,6 +9,7 @@ import com.sourcefuse.clickinandroid.model.bean.CurrentClickerBean;
 import com.sourcefuse.clickinandroid.model.bean.FollowerFollowingBean;
 import com.sourcefuse.clickinandroid.utils.APIs;
 import com.sourcefuse.clickinandroid.utils.Utils;
+import com.sourcefuse.clickinapp.R;
 
 import org.apache.http.entity.StringEntity;
 import org.apache.http.message.BasicHeader;
@@ -84,6 +87,7 @@ public class ProfileManager {
                     "application/json"));
         } catch (Exception e1) {
             e1.printStackTrace();
+
         }
         client.post(null, APIs.UPDATEPROFILE, se, "application/json",
                 new JsonHttpResponseHandler() {
@@ -100,6 +104,7 @@ public class ProfileManager {
                             } catch (JSONException e1) {
                                 // TODO Auto-generated catch block
                                 e1.printStackTrace();
+
                             }
                             EventBus.getDefault().post("UpdateProfile False");
                         } else {
@@ -128,6 +133,7 @@ public class ProfileManager {
 
                         } catch (JSONException e) {
                             e.printStackTrace();
+
                         }
 
                     }
@@ -149,6 +155,7 @@ public class ProfileManager {
             client.addHeader("Phone-No", phone);
         } catch (Exception e1) {
             e1.printStackTrace();
+
         }
 
         String str = null;
@@ -157,7 +164,7 @@ public class ProfileManager {
         } else {
             str = phone.substring(1);
         }
-        android.util.Log.e("APIs.GETUSERFOLLOWER+", "----> " + APIs.GETUSERFOLLOWER + ":%2B" + str);
+
         client.get(APIs.GETUSERFOLLOWER + ":%2B" + str, new JsonHttpResponseHandler() {
             boolean success = false;
 
@@ -170,6 +177,7 @@ public class ProfileManager {
                     try {
                         authManager.setMessage(errorResponse.getString("message"));
                     } catch (JSONException e1) {
+
                     }
                     EventBus.getDefault().post("GetFollower False");
                 } else {
@@ -195,24 +203,31 @@ public class ProfileManager {
                         for (int i = 0; i < list.length(); i++) {
                             JSONObject data = list.getJSONObject(i);
                             followingList = new FollowerFollowingBean();
-                            android.util.Log.e("get accepted ---->", "" + data.getString("accepted"));
+
                             if (!Utils.isEmptyString(data.getString("accepted"))) {
                                 followingList.setAccepted(data.getString("accepted"));
-                                android.util.Log.e("get accepted ---->", "" + data.getString("accepted"));
+
                                 JSONObject rId = data.getJSONObject("_id");
                                 followingList.setrFollowerId(rId.getString("$id"));
                                 if (data.has("followee_id"))
                                     followingList.setFolloweeId(data.getString("followee_id"));
                                 if (data.has("followee_name"))
                                     followingList.setFolloweeName(data.getString("followee_name"));
-                                if (data.has("followee_pic"))
-                                    if (data.getString("followee_pic").contains("profile_pic")) {
-                                        String pthumbImage = data.getString("followee_pic").replace("profile_pic", "thumb_profile_pic");
-                                        followingList.setFolloweePic(pthumbImage);
-                                    } else {
-                                        followingList.setFolloweePic("");
-                                    }
+                                try {
+                                    if (data.has("followee_pic"))
+                                        if (data.getString("followee_pic").contains("profile_pic")) {
 
+                                            String mPic = new String(data.getString("followee_pic"));
+                                            String pthumbImage = mPic.replace("profile_pic", "thumb_profile_pic");
+                                            followingList.setFolloweePic(pthumbImage);
+                                        } else {
+                                            followingList.setFolloweePic("");
+                                        }
+                                }catch (Exception e)
+                                {
+                                    e.printStackTrace();
+
+                                }
                                 followingList.setFolloweePic(data.getString("followee_pic"));
                                 if (data.has("phone_no"))
                                     followingList.setPhoneNo(data.getString("phone_no"));
@@ -228,13 +243,21 @@ public class ProfileManager {
                                     followingList.setFolloweeId(data.getString("followee_id"));
                                 if (data.has("followee_name"))
                                     followingList.setFolloweeName(data.getString("followee_name"));
-                                if (data.has("followee_pic"))
-                                    if (data.getString("followee_pic").contains("profile_pic")) {
-                                        String pthumbImage = data.getString("followee_pic").replace("profile_pic", "thumb_profile_pic");
-                                        followingList.setFolloweePic(pthumbImage);
-                                    } else {
-                                        followingList.setFolloweePic("");
-                                    }
+                                try {
+                                    if (data.has("followee_pic"))
+                                        if (data.getString("followee_pic").contains("profile_pic")) {
+
+                                            String following_pic= new String(data.getString("followee_pic"));
+                                            String pthumbImage = following_pic.replace("profile_pic", "thumb_profile_pic");
+                                            followingList.setFolloweePic(pthumbImage);
+                                        } else {
+                                            followingList.setFolloweePic("");
+                                        }
+                                }catch (Exception e)
+                                {
+                                    e.printStackTrace();
+
+                                }
                                 if (data.has("phone_no"))
                                     followingList.setPhoneNo(data.getString("phone_no"));
                                 followingList.setIsFollowing("false");
@@ -260,13 +283,20 @@ public class ProfileManager {
                                         followerList.setFolloweeName(data.getString("follower_name"));
                                     if (data.has("follower_pic"))
 
-                                        if (data.getString("follower_pic").contains("profile_pic")) {
-                                            String pthumbImage = data.getString("follower_pic").replace("profile_pic", "thumb_profile_pic");
-                                            followerList.setFolloweePic(data.getString(pthumbImage));
-                                        } else {
-                                            followerList.setFolloweePic("");
-                                        }
+                                        try {
+                                            if (data.getString("follower_pic").contains("profile_pic")) {
 
+                                                String mPic = new String(data.getString("follower_pic"));
+                                                String pthumbImage = mPic.replace("profile_pic", "thumb_profile_pic");
+                                                followerList.setFolloweePic(pthumbImage);
+                                            } else {
+                                                followerList.setFolloweePic("");
+                                            }
+                                        }catch (Exception e)
+                                        {
+                                            e.printStackTrace();
+
+                                        }
                                     if (data.has("phone_no"))
                                         followerList.setPhoneNo(data.getString("phone_no"));
 
@@ -301,14 +331,20 @@ public class ProfileManager {
                                         followerList.setFolloweeId(data.getString("follower_id"));
                                     if (data.has("follower_name"))
                                         followerList.setFolloweeName(data.getString("follower_name"));
-                                    if (data.has("follower_pic"))
-                                        if (data.getString("follower_pic").contains("profile_pic")) {
-                                            String pthumbImage = data.getString("follower_pic").replace("profile_pic", "thumb_profile_pic");
-                                            followerList.setFolloweePic(data.getString(pthumbImage));
-                                        } else {
-                                            followerList.setFolloweePic("");
-                                        }
+                                    try {
+                                        if (data.has("follower_pic"))
+                                            if (data.getString("follower_pic").contains("profile_pic")) {
 
+                                                String mPic = new String(data.getString("follower_pic"));
+                                                String pthumbImage = mPic.replace("profile_pic", "thumb_profile_pic");
+                                                followerList.setFolloweePic(pthumbImage);
+                                            } else {
+                                                followerList.setFolloweePic("");
+                                            }
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+
+                                    }
                                     if (data.has("phone_no"))
                                         followerList.setPhoneNo(data.getString("phone_no"));
 
@@ -335,7 +371,7 @@ public class ProfileManager {
                                     }
                                     // followerArray.add(followerList);
                                     followRequesed.add(followerList);
-                                    android.util.Log.e("followRequesed size in Mgr", "" + followRequesed.size());
+
                                 }
                             }
                         }
@@ -343,10 +379,12 @@ public class ProfileManager {
                         followers.addAll(followRequesed);
                         followers.addAll(pfollowerList);
                         following.addAll(followingArray);
-                        EventBus.getDefault().post("GetFollower True");
+                        EventBus.getDefault().postSticky("GetFollower True");
+
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+
                 }
             }
         });
@@ -366,6 +404,7 @@ public class ProfileManager {
             client.addHeader("Phone-No", phone);
         } catch (Exception e1) {
             e1.printStackTrace();
+
         }
 
         String str = null;
@@ -374,7 +413,7 @@ public class ProfileManager {
         } else {
             str = phone.substring(1);
         }
-        android.util.Log.e("APIs.GETUSERFOLLOWER+", "----> " + APIs.GETUSERFOLLOWER + ":%2B" + str);
+
         client.get(APIs.GETUSERFOLLOWER + ":%2B" + str, new JsonHttpResponseHandler() {
             boolean success = false;
 
@@ -387,6 +426,8 @@ public class ProfileManager {
                     try {
                         authManager.setMessage(errorResponse.getString("message"));
                     } catch (JSONException e1) {
+
+
                     }
                     EventBus.getDefault().post("GetFollower False");
                 } else {
@@ -412,10 +453,8 @@ public class ProfileManager {
                         for (int i = 0; i < list.length(); i++) {
                             JSONObject data = list.getJSONObject(i);
                             followingList_other = new FollowerFollowingBean();
-                            android.util.Log.e("get accepted ---->", "" + data.getString("accepted"));
                             if (!Utils.isEmptyString(data.getString("accepted"))) {
                                 followingList_other.setAccepted(data.getString("accepted"));
-                                android.util.Log.e("get accepted ---->", "" + data.getString("accepted"));
                                 JSONObject rId = data.getJSONObject("_id");
                                 followingList_other.setrFollowerId(rId.getString("$id"));
                                 data.has("followee_id");
@@ -427,8 +466,6 @@ public class ProfileManager {
                                 data.has("phone_no");
                                 followingList_other.setPhoneNo(data.getString("phone_no"));
                                 followingList_other.setIsFollowing("false");
-                                /*data.has("following_id");
-                                followingList.setFollowingId(data.getString("following_id"));*/
                                 followingArray_other.add(followingList_other);
                             } else {
                                 followingList_other.setAccepted("");
@@ -527,7 +564,7 @@ public class ProfileManager {
                                     }
                                     // followerArray.add(followerList);
                                     followRequesed_other.add(followerList_other);
-                                    android.util.Log.e("followRequesed size in Mgr", "" + followRequesed_other.size());
+
                                 }
                             }
                         }
@@ -539,6 +576,7 @@ public class ProfileManager {
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+
                 }
             }
         });
@@ -556,10 +594,12 @@ public class ProfileManager {
             //client.addHeader("phone_no", phone);
             client.addHeader("User-Token", usertoken);
             client.addHeader("Phone-No", phone);
-            android.util.Log.e("", "usertoken--" + usertoken + ",," + phone + "--partner_phone--" + partner_phone);
+
         } catch (Exception e1) {
             e1.printStackTrace();
+
         }
+
         String ss = APIs.FETCHOTHERPROFILEINFO + ":" + partner_phone;
         client.get(ss, new JsonHttpResponseHandler() {
             boolean success = false;
@@ -576,6 +616,7 @@ public class ProfileManager {
                     } catch (JSONException e1) {
                         // TODO Auto-generated catch block
                         e1.printStackTrace();
+
                     }
                     //triggerObservers("ProfileInfo False");
                 } else {
@@ -606,6 +647,7 @@ public class ProfileManager {
 
                 } catch (JSONException e) {
                     e.printStackTrace();
+
                 }
 
             }
@@ -625,9 +667,10 @@ public class ProfileManager {
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            android.util.Log.e("suserInputDetailse--> ", "" + userInputDetails);
+
         } catch (Exception e1) {
             e1.printStackTrace();
+
         }
         client.post(null, APIs.GETRELATIONSHIPS, se, "application/json",
                 new JsonHttpResponseHandler() {
@@ -664,6 +707,7 @@ public class ProfileManager {
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
+
                         }
 
                     }

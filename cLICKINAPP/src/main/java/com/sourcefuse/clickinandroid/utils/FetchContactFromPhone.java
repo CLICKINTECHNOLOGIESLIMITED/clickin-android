@@ -230,7 +230,6 @@ public class FetchContactFromPhone {
                             String countryCode = authManager.getCountrycode();
 
                             try {
-                                android.util.Log.e("initial contactNumber---->", "initial contactNumber------>" + mPhone);
                                 if (phone.contains("-")) {
                                     phone = phone.replaceAll("-", "");
                                 }

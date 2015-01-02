@@ -87,7 +87,7 @@ public class FollowerAdapter extends ArrayAdapter<FollowerFollowingBean> {
                 Picasso.with(context).load(item.get(position).getFolloweePic())
                         .into(rholder.usrimg);
             } catch (Exception e) {
-                //holder.usrimg.setImageResource(R.drawable.male_user);
+                e.printStackTrace();
             }
         } else {
             holder.usrimg.setImageResource(R.drawable.male_user);
