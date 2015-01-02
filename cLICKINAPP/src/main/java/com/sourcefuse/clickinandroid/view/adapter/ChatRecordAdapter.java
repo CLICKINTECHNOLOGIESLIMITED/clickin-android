@@ -74,7 +74,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
     public View getView(int position, View convertView, ViewGroup parent) {
         final ChatMessageBody temp = currentChatList.get(position);
         LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-        View row = inflater.inflate(R.layout.view_chat_demo, parent, false);
+        final View row = inflater.inflate(R.layout.view_chat_demo, parent, false);
         String oursQbId = ModelManager.getInstance().getAuthorizationManager().getQBId();
         RelativeLayout parentChatLayout = (RelativeLayout) row.findViewById(R.id.chat_parent_layout);
         relationManager = ModelManager.getInstance().getRelationManager();
@@ -110,7 +110,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 FeedImageView iv_chat_image_ = (FeedImageView) row.findViewById(R.id.iv_chat_image_);
                 if (!Utils.isEmptyString(temp.textMsg) && !temp.clicks.equalsIgnoreCase("no")) // case for image with click
                 {
-                    mImageParams.setMargins(5, 2, 5, 7);
+                    mImageParams.setMargins(5,5,9,5);//akshit line of code
                     mImageLayout.setLayoutParams(mImageParams);
                     image_attached.setPadding(5, 0, 0, 0);
                 } else {
@@ -208,19 +208,26 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 parentChatLayout.setBackgroundResource(R.color.transparent);
                 parent_shared_layout.setBackgroundResource(R.drawable.newbg_grey);
 
+
+                RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
+                        RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);//akshit code to set margin.
+
+
                 ImageView mAudioImage = (ImageView) row.findViewById(R.id.iv_play_btn);
                 mAudioImage.setVisibility(View.VISIBLE);
 
                 row.findViewById(R.id.temp_layout).setVisibility(View.VISIBLE);
+                row.findViewById(R.id.temp_layout).setLayoutParams(layoutParams);
 
                 ImageView mSpeakerImage = (ImageView) row.findViewById(R.id.iv_play_btn_);
                 mSpeakerImage.setVisibility(View.VISIBLE);
 
                 TextView mLongTextView = (TextView) row.findViewById(R.id.long_chat_text);
-                mLongTextView.setEms(11);
+                mLongTextView.setEms(10);//akshit change
 
 
                 if (!(Utils.isEmptyString(temp.textMsg)) || (!(temp.clicks.equalsIgnoreCase("no")))) {
+                    layoutParams.setMargins(7,7,7,7);//akshit line of code to set margin
                     chatClickTextLayout.setVisibility(View.VISIBLE);
                     RelativeLayout.LayoutParams paramsrr = new RelativeLayout.LayoutParams(
                             RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
@@ -404,6 +411,11 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 //common for accept. reject and countered card-display card from local and set values
                 if (!Utils.isEmptyString(temp.card_id) && !temp.card_Accepted_Rejected.equalsIgnoreCase("nil")) {//end of reject card
                     ((RelativeLayout) row.findViewById(R.id.rl_acc_rej_card)).setVisibility(View.VISIBLE);
+                    if(temp.card_Played_Countered.equalsIgnoreCase("played")){//akshit Code for making button in active .
+                        ((ImageView) row.findViewById(R.id.tv_counter_card_action)).setImageResource(R.drawable.counterbtnx_deactive);
+                        ((ImageView) row.findViewById(R.id.iv_again_counter_acc)).setBackgroundResource(R.drawable.c_card_accepted_deactive);
+                        ((ImageView) row.findViewById(R.id.iv_again_counter_rej)).setBackgroundResource(R.drawable.c_card_reject_deactive);
+                    }//ends
                     String clicks = temp.clicks;
                     if (clicks.equalsIgnoreCase("5"))
                         clicks = "05";
@@ -636,15 +648,19 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
                 if (!Utils.isEmptyString(temp.textMsg) && !temp.clicks.equalsIgnoreCase("no")) // case for image with click
                 {
-                    mImageParams.setMargins(15, 2, 5, 7);
+                    mImageParams.setMargins(3, 7, 7, 0);//akshit line of code
                     mImageLayout.setLayoutParams(mImageParams);
                     image_attached.setPadding(5, 0, 0, 0);
                 } else if (!temp.clicks.equalsIgnoreCase("no")) //text without click
                 {
-                    mImageParams.setMargins(5, 4, 5, 11);
+                    mImageParams.setMargins(9, 9, 9, 9);
                     mImageLayout.setLayoutParams(mImageParams);
+                } else if(temp.clicks.equalsIgnoreCase("no") && Utils.isEmptyString(temp.textMsg)) {//akshit code to set margin if no clicks and text present
+                    mImageParams.setMargins(11, 7, 27, 11);
+                    mImageLayout.setLayoutParams(mImageParams);
+
                 } else {
-                    mImageParams.setMargins(7, 4, 25, 11);
+                    mImageParams.setMargins(9, 9, 11, 9);//akshit line of code
                     mImageLayout.setLayoutParams(mImageParams);
                 }
 
@@ -720,6 +736,8 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
             } else if (!Utils.isEmptyString(temp.content_url) && Utils.isEmptyString(temp.video_thumb)) {//start of audio-RECIVER case
 
 
+                RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
+                        RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);//akshit code to set margin.
                 ImageView mAudioImage = (ImageView) row.findViewById(R.id.iv_play_btn);
                 mAudioImage.setVisibility(View.VISIBLE);
 
@@ -734,17 +752,25 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 }
 
                 row.findViewById(R.id.temp_layout).setVisibility(View.VISIBLE);
+                row.findViewById(R.id.temp_layout).setLayoutParams(layoutParams);//akshit code to set margin.
 
                 ImageView mSpeakerImage = (ImageView) row.findViewById(R.id.iv_play_btn_);
                 mSpeakerImage.setVisibility(View.VISIBLE);
 
 
                 if (!(Utils.isEmptyString(temp.textMsg)) || (!(temp.clicks.equalsIgnoreCase("no")))) {
+
+                    layoutParams.setMargins(7,11,1,7);//akshit line of code to set margin
+
                     chatClickTextLayout.setVisibility(View.VISIBLE);
                     RelativeLayout.LayoutParams paramsrr2 = new RelativeLayout.LayoutParams(
                             RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
                     paramsrr2.addRule(RelativeLayout.BELOW, R.id.temp_layout);
                     chatClickTextLayout.setLayoutParams(paramsrr2);
+
+                    if(temp.clicks.equalsIgnoreCase("no")){//akshit code to set margin in case of no clicks but only text and audio
+                        layoutParams.setMargins(9,11,8,7);//akshit line of code to set margin
+                    }
                 }
 
             } else if (!Utils.isEmptyString(temp.video_thumb)) {//end of audio code sender START VIDEO VIEW FOR RECEIVER
@@ -838,6 +864,16 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
             } else if (!Utils.isEmptyString(temp.card_id)) {//end of video- start of card first time-receiver end
                 //Card RECEIVE at 1st Time
                 //share should not be present for first time case
+                if(temp.card_Played_Countered.equalsIgnoreCase("played")){//akshit Code to Disable buttons  ,Receiver
+                    ((ImageView) row.findViewById(R.id.tv_counter_card_action)).setImageResource(R.drawable.counterbtnx_deactive);
+                    ((ImageView) row.findViewById(R.id.iv_again_counter_acc)).setBackgroundResource(R.drawable.c_card_accepted_deactive);
+                    ((ImageView) row.findViewById(R.id.iv_again_counter_rej)).setBackgroundResource(R.drawable.c_card_reject_deactive);
+
+                    ((ImageView) row.findViewById(R.id.tv_counter_card)).setImageResource(R.drawable.counterbtnx_deactive);
+                    ((ImageView) row.findViewById(R.id.iv_accept_card)).setBackgroundResource(R.drawable.c_card_accepted_deactive);
+                    ((ImageView) row.findViewById(R.id.iv_reject_card)).setBackgroundResource(R.drawable.c_card_reject_deactive);
+
+                }//akshit code ends for making button inactive
                 ((LinearLayout) row.findViewById(R.id.ll_for_share_icon)).setVisibility(View.GONE);
                 if (temp.card_Accepted_Rejected.equalsIgnoreCase("nil")) { //first time played
                     // parentChatLayout.setBackgroundResource(R.drawable.whitechatbg);
@@ -907,7 +943,14 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                             if (temp.card_Played_Countered.equalsIgnoreCase("playing")) {
                                 sendUpdateCardValues(position, "rejected", "REJECTED!");
                                 temp.card_Played_Countered = "played";
-                            }
+                           }
+                            //akshit code to disable button after making counter ,accept ,reject.
+                            ((ImageView) row.findViewById(R.id.tv_counter_card)).setImageResource(R.drawable.counterbtnx_deactive);
+                            ((ImageView) row.findViewById(R.id.iv_accept_card)).setBackgroundResource(R.drawable.c_card_accepted_deactive);
+                            ((ImageView) row.findViewById(R.id.iv_reject_card)).setBackgroundResource(R.drawable.c_card_reject_deactive);
+                            //akshit code ends for making button inactive
+
+
 
                         }
                     });
@@ -922,7 +965,12 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                             if (temp.card_Played_Countered.equalsIgnoreCase("playing")) {
                                 sendUpdateCardValues(position, "accepted", "ACCEPTED!");
                                 temp.card_Played_Countered = "played";
-                            }
+                              }
+                            //akshit code to disable button after making counter ,accept ,reject.
+                            ((ImageView) row.findViewById(R.id.tv_counter_card)).setImageResource(R.drawable.counterbtnx_deactive);
+                            ((ImageView) row.findViewById(R.id.iv_accept_card)).setBackgroundResource(R.drawable.c_card_accepted_deactive);
+                            ((ImageView) row.findViewById(R.id.iv_reject_card)).setBackgroundResource(R.drawable.c_card_reject_deactive);
+                            //akshit code ends for making button inactive
 
 
                         }
@@ -938,6 +986,11 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                                 sendUpdateCardValues(position, "countered", "COUNTERED CARD!");
                                 temp.card_Played_Countered = "played";
                             }
+                            //akshit code to disable button after making counter ,accept ,reject.
+                            ((ImageView) row.findViewById(R.id.tv_counter_card)).setImageResource(R.drawable.counterbtnx_deactive);
+                            ((ImageView) row.findViewById(R.id.iv_accept_card)).setBackgroundResource(R.drawable.c_card_accepted_deactive);
+                            ((ImageView) row.findViewById(R.id.iv_reject_card)).setBackgroundResource(R.drawable.c_card_reject_deactive);
+                            //akshit code ends for making button inactive
 
                         }
                     });
@@ -1024,6 +1077,8 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 //common for accept. reject and countered card-display card from local and set values
                 if (!Utils.isEmptyString(temp.card_id) && !temp.card_Accepted_Rejected.equalsIgnoreCase("nil")) {//end of reject card
                     ((RelativeLayout) row.findViewById(R.id.rl_acc_rej_card)).setVisibility(View.VISIBLE);
+
+
                     String clicks = temp.clicks;
                     if (clicks.equalsIgnoreCase("5"))
                         clicks = "05";
