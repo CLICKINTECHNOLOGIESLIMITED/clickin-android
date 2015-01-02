@@ -1089,7 +1089,9 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
         } else {
             setVisibilityForSendButton();//akshit code if length is 0
-            myQbChatService.sendTypeNotification("NO", authManager.partnerQbId);
+            if (chatText.hasFocus())//akshit code to check focus on edit box.if not focused then isComposing will not appear.
+                myQbChatService.sendTypeNotification("NO", authManager.partnerQbId);
+
         }
 
     }
@@ -1963,6 +1965,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
                 @Override
                 public void onClick(View arg0) {
+
 
                     InputMethodManager imm = (InputMethodManager) getSystemService(
                             INPUT_METHOD_SERVICE);
