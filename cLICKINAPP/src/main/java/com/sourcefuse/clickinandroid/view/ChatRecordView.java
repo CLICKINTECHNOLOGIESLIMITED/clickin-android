@@ -62,7 +62,6 @@ import com.sourcefuse.clickinandroid.services.MyQbChatService;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.AudioUtil;
 import com.sourcefuse.clickinandroid.utils.Constants;
-import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.utils.VideoUtil;
 import com.sourcefuse.clickinandroid.view.adapter.ChatRecordAdapter;
@@ -98,7 +97,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         @Override
         public void run() {
             //Do Something
-            android.util.Log.e(TAG, "Start Recording");
+
             AudioUtil.startRecording();
             /*
              * Timer if required
@@ -396,7 +395,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
                 setVisibilityForSend();//akshit
                 myvalue = progress - 10;
-                android.util.Log.e("", "progress---->" + progress);
+
                 if (myvalue > 0) {
                     // pos.setText("" + myvalue);
                     setVisibilityForSend();//akshit code
@@ -478,7 +477,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                     chatManager.fetchChatRecord(rId, authManager.getPhoneNo(), authManager.getUsrToken(), lastChatId);
                 } catch (Exception e) {
 
-                    //android.util.android.util.Log.e("point 1", "point 1");
+
 
                 }
             }
@@ -601,7 +600,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                         try {
                             myHandler.removeCallbacks(myRunnable);
                             audioFilePath = AudioUtil.stopRecording();
-                            android.util.Log.e(TAG, "stop Recording AND File Name is ->" + audioFilePath);
+
                             if (!Utils.isEmptyString(audioFilePath)) {
                                 attachBtn.setImageResource(R.drawable.ic_voicerecordicon);
                                 //akshit code to check wether image buton contains image or not;
@@ -654,7 +653,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
 
         } catch (Exception e) {
-            android.util.Log.e(TAG, "Exception-> " + e.toString());
+            e.printStackTrace();
         }
 
 
@@ -700,18 +699,18 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                         chatText.setText("");
                         seekValue = 0;
                         mybar.setProgress(10);
-                        // android.util.android.util.Log.e("in 1--------->", "in 1--------->");
+
                     } else if (mImageCaptureUri != null) {//image is attachedd
                         CHAT_TYPE = Constants.CHAT_TYPE_IMAGE;
                         sendMsgToQB(path);
-                        // android.util.android.util.Log.e("in 2--------->", "in 2--------->");
+
                     } else if (!Utils.isEmptyString(audioFilePath)) { //Audio is attached
-                        //android.util.android.util.Log.e("in 3--------->", "in 3--------->");
+
                         CHAT_TYPE = Constants.CHAT_TYPE_AUDIO;
                         sendMsgToQB(audioFilePath);
 
                     } else if (!Utils.isEmptyString(videofilePath)) { //Video is attached
-                        // android.util.android.util.Log.e("in 4--------->", "in 4--------->");
+
                         CHAT_TYPE = Constants.CHAT_TYPE_VIDEO;
                         sendMsgToQB(videofilePath);
                     }
@@ -855,16 +854,14 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             public void onSuccess(QBFile file, Bundle params) {
 
                 String fileUrl = file.getPublicUrl().toString();
-                android.util.Log.e(TAG, "uploadImageFileOnQB--> " + fileUrl);
+
                 sendMediaMsgToQB(fileUrl, chatId, chatType);
             }
 
             @Override
             public void onError(List<String> errors) {
                 // error
-                android.util.Log.e(TAG, "uploadImageFileOnQB--> " + "error");
-                android.util.Log.e(TAG, "uploadImageFileOnQB--> " + errors);
-                android.util.Log.e(TAG, "uploadImageFileOnQB tempUrl --> " + tempUrl);
+
             }
         });
 
@@ -955,6 +952,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         typingtext.setText("");
         chatText.setText("");//akshit code to Refresh Chat box text
 
+
         if (actionReq.equalsIgnoreCase("UPDATE")) {
           //  Utils.launchBarDialog(this);
             Intent i = new Intent(this, MyQbChatService.class);
@@ -962,7 +960,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
             updateValues(intent);
         } else if (actionReq.equalsIgnoreCase("CARD")) {
-            android.util.Log.e(TAG + "onNewIntent", "onNewIntent");
+
             ChatMessageBody temp = new ChatMessageBody();
 
 
@@ -1118,7 +1116,9 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
         } else {
             setVisibilityForSendButton();//akshit code if length is 0
-            myQbChatService.sendTypeNotification("NO", authManager.partnerQbId);
+            if (chatText.hasFocus())//akshit code to check focus on edit box.if not focused then isComposing will not appear.
+                myQbChatService.sendTypeNotification("NO", authManager.partnerQbId);
+
         }
 
     }
@@ -1319,7 +1319,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 /* code for check when user is offline prafull code */
             String lastSeenTime = "";
             long mLastSeenTimeStamp = 0;
-            Log.e("value ofmLastSeenTime --->", "" + relationManager.acceptedList.get(relationListIndex).mLastSeenTime);
+
             if (!Utils.isEmptyString(relationManager.acceptedList.get(relationListIndex).mLastSeenTime))
                 mLastSeenTimeStamp = Long.parseLong(relationManager.acceptedList.get(relationListIndex).mLastSeenTime);
             if (mLastSeenTimeStamp != 0) {
@@ -2004,6 +2004,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
                 @Override
                 public void onClick(View arg0) {
+
 
                     InputMethodManager imm = (InputMethodManager) getSystemService(
                             INPUT_METHOD_SERVICE);

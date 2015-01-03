@@ -237,7 +237,7 @@ public class MyQbChatService extends Service {
         EventBus.getDefault().unregister(this);
         logoutFromQb();
         ClickinDbHelper dbHelper = new ClickinDbHelper(this);
-        android.util.Log.e("Service", "Delete Db");
+
         try {
             dbHelper.clearDB();
         } catch (SQLException e) {

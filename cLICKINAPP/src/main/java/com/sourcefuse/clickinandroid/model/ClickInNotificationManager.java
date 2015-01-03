@@ -56,8 +56,15 @@ public class ClickInNotificationManager implements NotificationManagerI {
                         if (errorResponse != null) {
                             android.util.Log.e("errorResponse", "->" + errorResponse);
                             EventBus.getDefault().postSticky("Notification false");
-                        } else {
-                            EventBus.getDefault().postSticky("Notification error");
+                        } else  if(errorResponse.has("message")){
+                            try {
+                                if(errorResponse.getString("message").equalsIgnoreCase("User don't have any notification.")) {
+                                    notificationData.clear(); // to clear notification list as no notification is available
+                                    EventBus.getDefault().postSticky("Notification error");
+                                }
+                            } catch (JSONException e1) {
+                                e1.printStackTrace();
+                            }
                         }
                     }
 

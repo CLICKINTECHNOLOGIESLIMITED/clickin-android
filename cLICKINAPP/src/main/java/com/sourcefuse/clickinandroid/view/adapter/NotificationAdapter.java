@@ -69,9 +69,10 @@ public class NotificationAdapter extends ArrayAdapter<NotificationBean> {
             rholder.notificationType.setBackgroundResource(R.drawable.ic_follow);
         } else if (item.getNotificationType().equalsIgnoreCase(context.getResources().getString(R.string.type_share))) {
             rholder.notificationType.setBackgroundResource(R.drawable.c_noti_share);
-        } else {
+        } else if (item.getNotificationType().equalsIgnoreCase(context.getResources().getString(R.string.txt_relationdelete))) {
+            rholder.notificationType.setBackgroundResource(R.drawable.p_delete_relation);
+        }else {
             rholder.notificationType.setBackgroundResource(R.drawable.ic_request_clickin);//akshit code added toset image other than ic_launcher
-
         }
 
 

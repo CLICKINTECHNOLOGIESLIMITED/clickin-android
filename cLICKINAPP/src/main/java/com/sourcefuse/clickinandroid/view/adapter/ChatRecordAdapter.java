@@ -12,7 +12,6 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,6 +40,7 @@ import com.sourcefuse.clickinandroid.view.MapView;
 import com.sourcefuse.clickinandroid.view.ViewShare;
 import com.sourcefuse.clickinandroid.view.ViewTradeCart;
 import com.sourcefuse.clickinapp.R;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.io.BufferedInputStream;
@@ -74,7 +74,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
     public View getView(int position, View convertView, ViewGroup parent) {
         final ChatMessageBody temp = currentChatList.get(position);
         LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-        View row = inflater.inflate(R.layout.view_chat_demo, parent, false);
+        final View row = inflater.inflate(R.layout.view_chat_demo, parent, false);
         String oursQbId = ModelManager.getInstance().getAuthorizationManager().getQBId();
         RelativeLayout parentChatLayout = (RelativeLayout) row.findViewById(R.id.chat_parent_layout);
         relationManager = ModelManager.getInstance().getRelationManager();
@@ -110,7 +110,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 FeedImageView iv_chat_image_ = (FeedImageView) row.findViewById(R.id.iv_chat_image_);
                 if (!Utils.isEmptyString(temp.textMsg) && !temp.clicks.equalsIgnoreCase("no")) // case for image with click
                 {
-                    mImageParams.setMargins(5, 2, 5, 7);
+                    mImageParams.setMargins(5,5,9,5);//akshit line of code
                     mImageLayout.setLayoutParams(mImageParams);
                     image_attached.setPadding(5, 0, 0, 0);
                 } else {
@@ -158,9 +158,13 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 }
 
                 /* path where clickin image are stored */
+<<<<<<< HEAD
                 String mContentUri = Utils.mImagePath + tempChatid + ".jpg"; // featch data from
                 Log.e("chat id on image upload---.", "" + temp.chatId);
                 Log.e("path on image upload---.", "" + mContentUri);
+=======
+                String mContentUri = Utils.mImagePath + temp.chatId + ".jpg"; // featch data from
+>>>>>>> 54c291f1fee10ae07b301ba625954cc9f514d846
                 Uri mUri = Utils.getImageContentUri(context, new File(mContentUri));  //check file exist or not
                 if (!Utils.isEmptyString("" + mUri)) {
                     try {
@@ -219,19 +223,26 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 parentChatLayout.setBackgroundResource(R.color.transparent);
                 parent_shared_layout.setBackgroundResource(R.drawable.newbg_grey);
 
+
+                RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
+                        RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);//akshit code to set margin.
+
+
                 ImageView mAudioImage = (ImageView) row.findViewById(R.id.iv_play_btn);
                 mAudioImage.setVisibility(View.VISIBLE);
 
                 row.findViewById(R.id.temp_layout).setVisibility(View.VISIBLE);
+                row.findViewById(R.id.temp_layout).setLayoutParams(layoutParams);
 
                 ImageView mSpeakerImage = (ImageView) row.findViewById(R.id.iv_play_btn_);
                 mSpeakerImage.setVisibility(View.VISIBLE);
 
                 TextView mLongTextView = (TextView) row.findViewById(R.id.long_chat_text);
-                mLongTextView.setEms(11);
+                mLongTextView.setEms(10);//akshit change
 
 
                 if (!(Utils.isEmptyString(temp.textMsg)) || (!(temp.clicks.equalsIgnoreCase("no")))) {
+                    layoutParams.setMargins(7,7,7,7);//akshit line of code to set margin
                     chatClickTextLayout.setVisibility(View.VISIBLE);
                     RelativeLayout.LayoutParams paramsrr = new RelativeLayout.LayoutParams(
                             RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
@@ -378,6 +389,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     } else {
                         try {
                             String url_to_load = (temp.card_url).replaceFirst("cards\\/(\\d+)\\.jpg", "cards\\/a\\/1080\\/$1\\.jpg");
+
                             Picasso.with(context).load(url_to_load)
                                     .into(trade_image);
 
@@ -419,44 +431,17 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     // ((TextView) row.findViewById(R.id.tv_acc_res_status)).setText("COUNTER OFFER");
 
                     // listeners for countered actions- not required at sender side
-                 /*   ((ImageView) row.findViewById(R.id.iv_again_counter_rej)).setTag(position);
-                    ((ImageView) row.findViewById(R.id.iv_again_counter_rej)).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            //Card Reject Action`
-                            int position = (Integer) v.getTag();
-                            sendUpdateCardValues(position, "rejected", "REJECTED!");
 
-                        }
-                    });
-
-                    ((ImageView) row.findViewById(R.id.iv_again_counter_acc)).setTag(position);
-                    ((ImageView) row.findViewById(R.id.iv_again_counter_acc)).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            //Card ACCEPT Action
-                            int position = (Integer) v.getTag();
-                            sendUpdateCardValues(position, "accepted", "ACCEPTED!");
-
-
-                        }
-                    });
-                    ((ImageView) row.findViewById(R.id.tv_counter_card_action)).setTag(position);
-                    ((ImageView) row.findViewById(R.id.tv_counter_card_action)).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            //Card countered Action
-                            int position = (Integer) v.getTag();
-                            sendUpdateCardValues(position, "countered", "COUNTERED CARD!");
-
-
-                        }
-                    }); */
 
                 }//end of countered card
                 //common for accept. reject and countered card-display card from local and set values
                 if (!Utils.isEmptyString(temp.card_id) && !temp.card_Accepted_Rejected.equalsIgnoreCase("nil")) {//end of reject card
                     ((RelativeLayout) row.findViewById(R.id.rl_acc_rej_card)).setVisibility(View.VISIBLE);
+                    if(temp.card_Played_Countered.equalsIgnoreCase("played")){//akshit Code for making button in active .
+                        ((ImageView) row.findViewById(R.id.tv_counter_card_action)).setImageResource(R.drawable.counterbtnx_deactive);
+                        ((ImageView) row.findViewById(R.id.iv_again_counter_acc)).setBackgroundResource(R.drawable.c_card_accepted_deactive);
+                        ((ImageView) row.findViewById(R.id.iv_again_counter_rej)).setBackgroundResource(R.drawable.c_card_reject_deactive);
+                    }//ends
                     String clicks = temp.clicks;
                     if (clicks.equalsIgnoreCase("5"))
                         clicks = "05";
@@ -609,9 +594,18 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     row.findViewById(R.id.parent_clicks_area).setVisibility(View.GONE);
                     row.findViewById(R.id.parent_clicks_area_share).setVisibility(View.GONE);
                     ((ImageView) row.findViewById(R.id.iv_chat_image)).setVisibility(View.GONE);
+                    row.findViewById(R.id.chat_text).setVisibility(View.GONE);
+                    row.findViewById(R.id.long_chat_text_share).setVisibility(View.GONE);
+                    row.findViewById(R.id.temp_layout).setVisibility(View.GONE);
+                    row.findViewById(R.id.long_chat_text).setVisibility(View.GONE);
                 } else if (temp.shareStatus.equalsIgnoreCase("shareRejected")) {//// set tip iamge for share Rejected
                     parent_shared_layout.setBackgroundResource(R.drawable.shareddeniedleft);
                     ((ImageView) row.findViewById(R.id.iv_chat_image)).setVisibility(View.GONE);
+                    row.findViewById(R.id.temp_layout).setVisibility(View.GONE);
+                    row.findViewById(R.id.long_chat_text_share).setVisibility(View.GONE);
+                    row.findViewById(R.id.long_chat_text).setVisibility(View.GONE);
+                    row.findViewById(R.id.chat_text).setVisibility(View.GONE);
+
                 } else if (temp.shareStatus.equalsIgnoreCase("shared")) {
                     ((RelativeLayout) row.findViewById(R.id.shared_header_view)).setVisibility(View.VISIBLE);
                     ((TextView) row.findViewById(R.id.shared_by_name)).setText("You");
@@ -681,15 +675,19 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
                 if (!Utils.isEmptyString(temp.textMsg) && !temp.clicks.equalsIgnoreCase("no")) // case for image with click
                 {
-                    mImageParams.setMargins(15, 2, 5, 7);
+                    mImageParams.setMargins(3, 7, 7, 0);//akshit line of code
                     mImageLayout.setLayoutParams(mImageParams);
                     image_attached.setPadding(5, 0, 0, 0);
                 } else if (!temp.clicks.equalsIgnoreCase("no")) //text without click
                 {
-                    mImageParams.setMargins(5, 4, 5, 11);
+                    mImageParams.setMargins(9, 9, 9, 9);
                     mImageLayout.setLayoutParams(mImageParams);
+                } else if(temp.clicks.equalsIgnoreCase("no") && Utils.isEmptyString(temp.textMsg)) {//akshit code to set margin if no clicks and text present
+                    mImageParams.setMargins(11, 7, 27, 11);
+                    mImageLayout.setLayoutParams(mImageParams);
+
                 } else {
-                    mImageParams.setMargins(7, 4, 25, 11);
+                    mImageParams.setMargins(9, 9, 11, 9);//akshit line of code
                     mImageLayout.setLayoutParams(mImageParams);
                 }
 
@@ -776,6 +774,8 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
             } else if (!Utils.isEmptyString(temp.content_url) && Utils.isEmptyString(temp.video_thumb)) {//start of audio-RECIVER case
 
 
+                RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
+                        RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);//akshit code to set margin.
                 ImageView mAudioImage = (ImageView) row.findViewById(R.id.iv_play_btn);
                 mAudioImage.setVisibility(View.VISIBLE);
 
@@ -790,17 +790,25 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 }
 
                 row.findViewById(R.id.temp_layout).setVisibility(View.VISIBLE);
+                row.findViewById(R.id.temp_layout).setLayoutParams(layoutParams);//akshit code to set margin.
 
                 ImageView mSpeakerImage = (ImageView) row.findViewById(R.id.iv_play_btn_);
                 mSpeakerImage.setVisibility(View.VISIBLE);
 
 
                 if (!(Utils.isEmptyString(temp.textMsg)) || (!(temp.clicks.equalsIgnoreCase("no")))) {
+
+                    layoutParams.setMargins(7,11,1,7);//akshit line of code to set margin
+
                     chatClickTextLayout.setVisibility(View.VISIBLE);
                     RelativeLayout.LayoutParams paramsrr2 = new RelativeLayout.LayoutParams(
                             RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
                     paramsrr2.addRule(RelativeLayout.BELOW, R.id.temp_layout);
                     chatClickTextLayout.setLayoutParams(paramsrr2);
+
+                    if(temp.clicks.equalsIgnoreCase("no")){//akshit code to set margin in case of no clicks but only text and audio
+                        layoutParams.setMargins(9,11,8,7);//akshit line of code to set margin
+                    }
                 }
 
             } else if (!Utils.isEmptyString(temp.video_thumb)) {//end of audio code sender START VIDEO VIEW FOR RECEIVER
@@ -903,6 +911,16 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
             } else if (!Utils.isEmptyString(temp.card_id)) {//end of video- start of card first time-receiver end
                 //Card RECEIVE at 1st Time
                 //share should not be present for first time case
+                if(temp.card_Played_Countered.equalsIgnoreCase("played")){//akshit Code to Disable buttons  ,Receiver
+                    ((ImageView) row.findViewById(R.id.tv_counter_card_action)).setImageResource(R.drawable.counterbtnx_deactive);
+                    ((ImageView) row.findViewById(R.id.iv_again_counter_acc)).setBackgroundResource(R.drawable.c_card_accepted_deactive);
+                    ((ImageView) row.findViewById(R.id.iv_again_counter_rej)).setBackgroundResource(R.drawable.c_card_reject_deactive);
+
+                    ((ImageView) row.findViewById(R.id.tv_counter_card)).setImageResource(R.drawable.counterbtnx_deactive);
+                    ((ImageView) row.findViewById(R.id.iv_accept_card)).setBackgroundResource(R.drawable.c_card_accepted_deactive);
+                    ((ImageView) row.findViewById(R.id.iv_reject_card)).setBackgroundResource(R.drawable.c_card_reject_deactive);
+
+                }//akshit code ends for making button inactive
                 ((LinearLayout) row.findViewById(R.id.ll_for_share_icon)).setVisibility(View.GONE);
                 if (temp.card_Accepted_Rejected.equalsIgnoreCase("nil")) { //first time played
                     // parentChatLayout.setBackgroundResource(R.drawable.whitechatbg);
@@ -937,8 +955,29 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                         trade_image.setImageResource(R.drawable.tradecardpink_big);//Akshit code
                     } else {
                         String url_to_load = (temp.card_url).replaceFirst("cards\\/(\\d+)\\.jpg", "cards\\/a\\/1080\\/$1\\.jpg");
+                        final RelativeLayout mTempLayout = (RelativeLayout) row.findViewById(R.id.temp_layout);
+                        final ProgressBar mProgressBar = (ProgressBar) row.findViewById(R.id.progress_bar);
+                        RelativeLayout.LayoutParams mTempLayoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        mTempLayoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
+                        mTempLayout.setLayoutParams(mTempLayoutParams);
+                        mTempLayout.setBackgroundDrawable(null);
+                        mTempLayout.setVisibility(View.VISIBLE);
+                        mProgressBar.setVisibility(View.VISIBLE);
+
                         Picasso.with(context).load(url_to_load)
-                                .into(trade_image);
+                                .into(trade_image, new Callback() {
+                                    @Override
+                                    public void onSuccess() {
+                                        mTempLayout.setVisibility(View.GONE);
+                                        mProgressBar.setVisibility(View.GONE);
+                                    }
+
+                                    @Override
+                                    public void onError() {
+                                        mTempLayout.setVisibility(View.GONE);
+                                        mProgressBar.setVisibility(View.GONE);
+                                    }
+                                });
                     }
 
                     ((ImageView) row.findViewById(R.id.iv_reject_card)).setTag(position);
@@ -951,7 +990,14 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                             if (temp.card_Played_Countered.equalsIgnoreCase("playing")) {
                                 sendUpdateCardValues(position, "rejected", "REJECTED!");
                                 temp.card_Played_Countered = "played";
-                            }
+                           }
+                            //akshit code to disable button after making counter ,accept ,reject.
+                            ((ImageView) row.findViewById(R.id.tv_counter_card)).setImageResource(R.drawable.counterbtnx_deactive);
+                            ((ImageView) row.findViewById(R.id.iv_accept_card)).setBackgroundResource(R.drawable.c_card_accepted_deactive);
+                            ((ImageView) row.findViewById(R.id.iv_reject_card)).setBackgroundResource(R.drawable.c_card_reject_deactive);
+                            //akshit code ends for making button inactive
+
+
 
                         }
                     });
@@ -966,7 +1012,12 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                             if (temp.card_Played_Countered.equalsIgnoreCase("playing")) {
                                 sendUpdateCardValues(position, "accepted", "ACCEPTED!");
                                 temp.card_Played_Countered = "played";
-                            }
+                              }
+                            //akshit code to disable button after making counter ,accept ,reject.
+                            ((ImageView) row.findViewById(R.id.tv_counter_card)).setImageResource(R.drawable.counterbtnx_deactive);
+                            ((ImageView) row.findViewById(R.id.iv_accept_card)).setBackgroundResource(R.drawable.c_card_accepted_deactive);
+                            ((ImageView) row.findViewById(R.id.iv_reject_card)).setBackgroundResource(R.drawable.c_card_reject_deactive);
+                            //akshit code ends for making button inactive
 
 
                         }
@@ -982,6 +1033,11 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                                 sendUpdateCardValues(position, "countered", "COUNTERED CARD!");
                                 temp.card_Played_Countered = "played";
                             }
+                            //akshit code to disable button after making counter ,accept ,reject.
+                            ((ImageView) row.findViewById(R.id.tv_counter_card)).setImageResource(R.drawable.counterbtnx_deactive);
+                            ((ImageView) row.findViewById(R.id.iv_accept_card)).setBackgroundResource(R.drawable.c_card_accepted_deactive);
+                            ((ImageView) row.findViewById(R.id.iv_reject_card)).setBackgroundResource(R.drawable.c_card_reject_deactive);
+                            //akshit code ends for making button inactive
 
                         }
                     });
@@ -1068,6 +1124,8 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 //common for accept. reject and countered card-display card from local and set values
                 if (!Utils.isEmptyString(temp.card_id) && !temp.card_Accepted_Rejected.equalsIgnoreCase("nil")) {//end of reject card
                     ((RelativeLayout) row.findViewById(R.id.rl_acc_rej_card)).setVisibility(View.VISIBLE);
+
+
                     String clicks = temp.clicks;
                     if (clicks.equalsIgnoreCase("5"))
                         clicks = "05";
@@ -1463,7 +1521,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 if (Utils.isConnectingToInternet((Activity) context))
                     new DownloadMusicfromInternet().execute(item.content_url);
             } else {  // play Audio
-                Utils.playvideo(context, uri.toString());
+                Utils.playAudio(context, uri.toString());
             }
         }
     }
@@ -1604,7 +1662,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
                             } catch (Exception e) {
                                 e.printStackTrace();
-                                Log.e("Exvaption close--->", "" + e.toString());
+
                             }
                         }
                     }
@@ -1633,7 +1691,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 output.close();
                 input.close();
             } catch (Exception e) {
-                Log.e("Error: ", e.getMessage());
+
             }
             return null;
         }
@@ -1652,7 +1710,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
             if (precentage == 100) {
                 /* to mount media in gallery */
                 if (path.contains(Utils.mAudioPath)) {  // code to mount Audio
-                    Log.e("in audio mount--->","in audio mount--->");
+
 
                     // add new file to your media library
                     ContentValues values = new ContentValues();
@@ -1670,11 +1728,11 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
                     /* play video */
                     Uri uri = Utils.getAudioContentUri(context, new File(mPath));  //check file exist or not
-                    Log.e("uri---->", "" + uri);
-                    Utils.playvideo(context, uri.toString());
+
+                    Utils.playAudio(context, uri.toString());
 
                 } else if (path.contains(Utils.mVideoPath)) {  // code to mount Video
-                    Log.e("in video mount--->","in video mount--->");
+
                     ContentValues values = new ContentValues();
                     values.put(MediaStore.Video.Media.DATA, mPath);
                     values.put(MediaStore.Video.Media.DATE_TAKEN, mFile.lastModified());
@@ -1682,7 +1740,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     context.getContentResolver().notifyChange(Uri.parse(mPath), null);
                     /* play video */
                     Uri uri = Utils.getVideoContentUri(context, new File(mPath));  //check file exist or not
-                    Log.e("uri---->", "" + uri);
+
                     Utils.playvideo(context, uri.toString());
                 }
 

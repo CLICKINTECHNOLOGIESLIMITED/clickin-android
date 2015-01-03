@@ -265,8 +265,11 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
                         }
                         break;
                     case ADD_CHAT_LISTENERS:
-                        if (QBChatService.getInstance().isLoggedIn())
+                        if (QBChatService.getInstance().isLoggedIn()) {
                             registerListeners();
+                            Log.e("is logged in --->","is logged in --->");
+                        }else
+                            Log.e("is not logged in --->","is not logged in --->");
                         break;
                     case CHAT_LOGOUT:
                         logoutQB();
@@ -520,6 +523,7 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
     private void registerListeners() {
         if (QBChatService.getInstance().isLoggedIn()) {
             ArrayList<GetrelationshipsBean> clickInPartnerList = ModelManager.getInstance().getRelationManager().acceptedList;
+            Log.e("size of--->",""+clickInPartnerList.size());
             if (clickInPartnerList.size() != 0) {
                 for (GetrelationshipsBean temp : clickInPartnerList) {
                     int partnerQBId = Integer.parseInt(temp.getPartnerQBId());
@@ -530,21 +534,23 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
 
                         if (chatRoster.contains(partnerQBId)) {
                             try {
+                                Log.e("in one----.","in one----.");
                                 chatRoster.subscribe(partnerQBId);
                             } catch (SmackException.NotConnectedException e) {
-
+                               Log.e("exception 1---->","exception 1---->");
                             }
                         } else {
                             try {
+                                Log.e("in two----.","in two----.");
                                 chatRoster.createEntry(partnerQBId, null);
                             } catch (XMPPException e) {
-
+                                Log.e("exception 2---->","exception 2---->");
                             } catch (SmackException.NotLoggedInException e) {
-
+                                Log.e("exception 3---->","exception 3---->");
                             } catch (SmackException.NotConnectedException e) {
-
+                                Log.e("exception 4---->","exception 4---->");
                             } catch (SmackException.NoResponseException e) {
-
+                                Log.e("exception 5---->","exception 5---->");
                             }
 
                         }
