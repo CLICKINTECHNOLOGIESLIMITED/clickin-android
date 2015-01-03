@@ -121,9 +121,14 @@ public class MyQbChatService extends Service {
         data.putString("partnerQBId", msgObject.partnerQbId);
         // if(Utils.isEmptyString(msgObject.textMsg))
         data.putString("textMsg", msgObject.textMsg);
-        data.putString("clicks", msgObject.clicks);
         data.putInt("ChatType", msgObject.chatType);
+
+        if(Utils.isEmptyString(msgObject.isAccepted)) { //in case of shared accept/reject no clicks there, no chatid
+            data.putString("clicks", msgObject.clicks);
+
+        }
         data.putString("ChatId", msgObject.chatId);
+
         switch (msgObject.chatType) {
             case Constants.CHAT_TYPE_CARD:
                 if (!msgObject.is_CustomCard) {
@@ -165,13 +170,25 @@ public class MyQbChatService extends Service {
                 } else if (!Utils.isEmptyString(msgObject.video_thumb)) {
                     data.putString("videoThumbnail", msgObject.video_thumb);
                     data.putString("FileId", msgObject.content_url);
-                } else if (Utils.isEmptyString(msgObject.imageRatio) && Utils.isEmptyString(msgObject.video_thumb)) {
+                } else if (!Utils.isEmptyString(msgObject.imageRatio) && !Utils.isEmptyString(msgObject.video_thumb)) {
                     data.putString("FileId", msgObject.content_url);
+                }else if (!Utils.isEmptyString(msgObject.card_originator)) {
+
+                    if (!msgObject.is_CustomCard) {
+                        data.putString("card_DB_ID", msgObject.card_DB_ID);
+                        data.putString("card_content", msgObject.card_content);
+                        data.putString("card_url", msgObject.card_url);
+                    }
+                    data.putString("card_owner", msgObject.card_owner);
+                    data.putBoolean("is_CustomCard", msgObject.is_CustomCard);
+                    data.putString("accepted_Rejected", msgObject.card_Accepted_Rejected);
+                    data.putString("card_heading", msgObject.card_heading);
+                    data.putString("card_id", msgObject.card_id);
+                    data.putString("card_Played_Countered", msgObject.card_Played_Countered);
+                    data.putString("card_originator", msgObject.card_originator);
                 }
                 data.putString("sharingMedia", msgObject.sharingMedia);
                 data.putString("originalChatId", msgObject.originalMessageID);
-                data.putString("clicks", msgObject.clicks);
-                data.putString("textMsg", msgObject.textMsg);
                 data.putString("caption", msgObject.shareComment);
                 data.putString("isMessageSender", msgObject.isMessageSender);
                 data.putString("shareStatus", msgObject.shareStatus);
@@ -181,6 +198,8 @@ public class MyQbChatService extends Service {
                 } else {
                     data.putString("isAccepted", msgObject.isAccepted);
                 }
+
+
 
 
                 break;

@@ -273,7 +273,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_chat_layout);
-        Utils.launchBarDialog(ChatRecordView.this);
+      //  Utils.launchBarDialog(ChatRecordView.this);
         rId = getIntent().getExtras().getString("rId");
         //clear the message list always to initiate a new chat
         ModelManager.getInstance().getChatManager().chatMessageList.clear();
@@ -615,6 +615,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                             }
                             dialog.dismiss();
                         } catch (Exception e) {
+                            e.printStackTrace();
                         }
                         break;
                 }
@@ -790,36 +791,44 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     //monika- function to show chat in listview
     private void ShowValueinChat(ChatMessageBody obj) {
 
-        //calculate and updates clicks value only when card is not present-monika
-        if(Utils.isEmptyString(obj.card_id)) {
-            if (obj.clicks.startsWith("+")) {
-                Utils.updateClicksPartnerWithoutCard(relationManager.partnerClicks, obj.clicks, true);
-            } else if (obj.clicks.startsWith("-")) {
-                Utils.updateClicksPartnerWithoutCard(relationManager.partnerClicks, obj.clicks, false);
+        //if its is not a shared message either accepted or rejected- monika
+        if(Utils.isEmptyString(obj.isAccepted)) {
+            //calculate and updates clicks value only when card is not present-monika
+            if (Utils.isEmptyString(obj.card_id)) {
+                if (obj.clicks.startsWith("+")) {
+                    Utils.updateClicksPartnerWithoutCard(relationManager.partnerClicks, obj.clicks, true);
+                } else if (obj.clicks.startsWith("-")) {
+                    Utils.updateClicksPartnerWithoutCard(relationManager.partnerClicks, obj.clicks, false);
+                }
             }
+            myclicksView.setText("" + authManager.ourClicks);
+            partnerClicksView.setText("" + relationManager.partnerClicks);
+            authManager = ModelManager.getInstance().getAuthorizationManager();
+
+
+            obj.sharedMessage = null;
+            //   obj.deliveredChatID=null;
+            // obj.cardDetails=null;
+
+
+
+            //monika- remove click value from text msg
+            if ((!obj.clicks.equalsIgnoreCase("no"))) {
+                if (obj.textMsg.length() > 3) {
+                    obj.textMsg = obj.textMsg.substring(3).trim();
+                } else
+                    obj.textMsg = " ";
+            }
+
+
+
+            updateClicksInRelationshipList();
         }
-        myclicksView.setText("" + authManager.ourClicks);
-        partnerClicksView.setText("" + relationManager.partnerClicks);
-        authManager = ModelManager.getInstance().getAuthorizationManager();
-
-
-        obj.sharedMessage = null;
-        //   obj.deliveredChatID=null;
-        // obj.cardDetails=null;
 
         obj.relationshipId = rId;
         obj.userId = authManager.getUserId();
         obj.senderUserToken = authManager.getUsrToken();
         obj.senderQbId = authManager.getQBId();
-
-        //monika- remove click value from text msg
-        if ((!obj.clicks.equalsIgnoreCase("no"))) {
-            if (obj.textMsg.length() > 3) {
-                obj.textMsg = obj.textMsg.substring(3).trim();
-            } else
-                obj.textMsg = " ";
-        }
-
         ArrayList<ChatMessageBody> tempChatList = ModelManager.getInstance().getChatManager().chatMessageList;
         tempChatList.add(obj);
 
@@ -829,8 +838,6 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         } else {
             adapter.notifyDataSetChanged();
         }
-
-        updateClicksInRelationshipList();
         //  return obj;
         //  createRecordForHistory(obj);
 
@@ -949,7 +956,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         chatText.setText("");//akshit code to Refresh Chat box text
 
         if (actionReq.equalsIgnoreCase("UPDATE")) {
-            Utils.launchBarDialog(this);
+          //  Utils.launchBarDialog(this);
             Intent i = new Intent(this, MyQbChatService.class);
             bindService(i, mConnection, Context.BIND_AUTO_CREATE);
 
@@ -1020,6 +1027,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
             temp.chatType = Constants.CHAT_TYPE_SHARING;
 
+            if(intent.hasExtra("clicks"))
+                temp.clicks = intent.getExtras().getString("clicks");
             if (intent.hasExtra("imageRatio")) {
                 temp.imageRatio = intent.getExtras().getString("imageRatio");
                 temp.content_url = intent.getExtras().getString("fileId");
@@ -1028,16 +1037,33 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 temp.content_url = intent.getExtras().getString("videoID");
             } else if (intent.hasExtra("audioID")) {
                 temp.content_url = intent.getExtras().getString("audioID");
+            }else if(intent.hasExtra("card_originator")) {
+                temp.card_Accepted_Rejected = intent.getExtras().getString("card_Accepted_Rejected");
+                temp.card_DB_ID = intent.getExtras().getString("card_DB_ID");
+                temp.card_Played_Countered = intent.getExtras().getString("card_Played_Countered");
+                temp.card_content = intent.getExtras().getString("card_content");
+                temp.card_heading = intent.getExtras().getString("card_heading");
+                temp.card_originator = intent.getExtras().getString("card_originator");
+                temp.card_owner = intent.getExtras().getString("card_owner");
+                temp.card_url = intent.getExtras().getString("card_url");
+                temp.card_id = intent.getExtras().getString("card_id");
+                temp.card_originator = intent.getExtras().getString("card_originator");
+                temp.is_CustomCard = intent.getExtras().getBoolean("is_CustomCard");
+
             }
 
             temp.sharingMedia = intent.getExtras().getString("sharingMedia");
             temp.originalMessageID = intent.getExtras().getString("originalChatId");
-            temp.clicks = intent.getExtras().getString("clicks");
+
             temp.textMsg = intent.getExtras().getString("textMsg");
             temp.shareComment = intent.getExtras().getString("caption");
             temp.isMessageSender = intent.getExtras().getString("isMessageSender");
             temp.shareStatus = intent.getExtras().getString("shareStatus");
             temp.facebookToken = intent.getExtras().getString("facebookToken");
+            if(intent.hasExtra("isAccepted"))
+            temp.isAccepted=intent.getExtras().getString("isAccepted");
+            else
+            temp.isAccepted=null;
 
             //delivered status here is always delivered or sent
             temp.isDelivered = Constants.MSG_SENT;
@@ -1049,7 +1075,11 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             if (!Utils.isEmptyString(temp.clicks) && !temp.clicks.equalsIgnoreCase("no")) {
                 temp.textMsg = temp.clicks + "        " + temp.textMsg;
             } else {
+                //check chat for shared accept and reject case
+                if(Utils.isEmptyString(temp.isAccepted))
                 temp.clicks = "no";
+
+
 
             }
 
@@ -1057,7 +1087,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
             if (myQbChatService != null)
                 myQbChatService.sendMessage(temp);
-
+             createRecordForHistory(temp);
 
         }
     }
@@ -1810,9 +1840,11 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         String clicks = obj.clicks;
 
         fields.put("message", obj.textMsg);
-        //monika-change value of clicks to null if no click is there
-        if (obj.clicks.equalsIgnoreCase("no"))
-            clicks = null;
+       //first check whether clicks value is null- in case of shared aaccept/reject this value is null
+        if(!Utils.isEmptyString(obj.clicks)) {
+            if (obj.clicks.equalsIgnoreCase("no"))  //monika-change value of clicks to null if no click is there
+                clicks = null;
+        }
         fields.put("clicks", clicks);
         fields.put("content", obj.content_url);
         fields.put("imageRatio", obj.imageRatio);
@@ -1887,6 +1919,16 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     }
 
     private void updateValues(Intent intent) {
+
+        //reset all values for chat
+        chatText.setText("");
+        seekValue = 0;
+        mybar.setProgress(10);
+        path = null;
+        audioFilePath = null;
+        thumurl = null;
+        videofilePath = null;
+        attachBtn.setImageDrawable(getResources().getDrawable(R.drawable.attachedfileiconx));
         //save previous chat here
         String temprId = intent.getExtras().getString("rId");
         //     Utils.launchBarDialog(ChatRecordView.this);

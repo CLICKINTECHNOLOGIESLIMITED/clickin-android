@@ -51,8 +51,9 @@ public class VideoUtil {
                                 try {
                                     Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
                                     fileUri = getOutputMediaFileUri(contex);
+
                                     intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
-                                    intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, REQUEST_VIDEO_CAPTURED); // Set video Quality
+                                    intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 0);
                                     contex.startActivityForResult(intent, REQUEST_VIDEO_CAPTURED);
 
 

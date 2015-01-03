@@ -51,6 +51,12 @@ public class ClickinDbHelper extends SQLiteOpenHelper implements ChatRecordI {
     public static final String senderUserToken = "senderUserToken";
     public static final String senderQbId = "senderQbId";
     public static final String originalMessageID = "originalMessageID";
+    public static final String sharingMedia = "sharingMedia";
+    public static final String shareStatus = "shareStatus";
+    public static final String isAccepted = "isAccepted";
+    public static final String facebookToken = "facebookToken";
+    public static final String shareComment = "shareComment";
+    public static final String isMessageSender = "isMessageSender";
     private static final String DATABASE_CREATE = " CREATE TABLE "
             + TABLE_CHATRECORD + "(" + COLUMN_ID + " integer primary key autoincrement,"
             + partnerQbId + " text, "
@@ -80,6 +86,12 @@ public class ClickinDbHelper extends SQLiteOpenHelper implements ChatRecordI {
             + relationshipId + " text, "
             + userId + " text, "
             + senderUserToken + " text, "
+            + sharingMedia + " text, "
+            + shareStatus + " text, "
+            + isAccepted + " text, "
+            + shareComment + " text, "
+            + facebookToken + " text, "
+            + isMessageSender + " text, "
             + senderQbId + " text);";
     private static final String DATABASE_NAME = "ClickInChatRecords.sqlite";
     private static final int DATABASE_VERSION = 2;
@@ -158,6 +170,12 @@ public class ClickinDbHelper extends SQLiteOpenHelper implements ChatRecordI {
             contentValues.put(userId, chat.userId);
             contentValues.put(senderUserToken, chat.senderUserToken);
             contentValues.put(senderQbId, chat.senderQbId);
+            contentValues.put(sharingMedia, chat.sharingMedia);
+            contentValues.put(shareStatus, chat.shareStatus);
+            contentValues.put(isAccepted, chat.isAccepted);
+            contentValues.put(shareComment, chat.shareComment);
+            contentValues.put(facebookToken, chat.facebookToken);
+            contentValues.put(isMessageSender, chat.isMessageSender);
             long n = dbObj.insert(TABLE_CHATRECORD, null, contentValues);
             numRecordInsert++;
         }
@@ -224,8 +242,13 @@ public class ClickinDbHelper extends SQLiteOpenHelper implements ChatRecordI {
                     chat.userId = (chatCursor.getString(chatCursor.getColumnIndex(userId)));
                     chat.senderUserToken = (chatCursor.getString(chatCursor.getColumnIndex(senderUserToken)));
                     chat.senderQbId = (chatCursor.getString(chatCursor.getColumnIndex(senderQbId)));
-
-
+//code for share-monika
+                    chat.sharingMedia = (chatCursor.getString(chatCursor.getColumnIndex(sharingMedia)));
+                    chat.shareStatus = (chatCursor.getString(chatCursor.getColumnIndex(shareStatus)));
+                    chat.isAccepted = (chatCursor.getString(chatCursor.getColumnIndex(isAccepted)));
+                    chat.shareComment = (chatCursor.getString(chatCursor.getColumnIndex(shareComment)));
+                    chat.facebookToken = (chatCursor.getString(chatCursor.getColumnIndex(facebookToken)));
+                    chat.isMessageSender = (chatCursor.getString(chatCursor.getColumnIndex(isMessageSender)));
                     chatList.add(chat);
                 }
                 while (chatCursor.moveToNext());

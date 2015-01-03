@@ -3,6 +3,7 @@ package com.sourcefuse.clickinandroid.view;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -19,11 +20,13 @@ import com.facebook.SessionState;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ChatManager;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
+import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -40,7 +43,13 @@ public class ViewShare extends Activity implements View.OnClickListener {
     public static final List<String> PERMISSIONS = Arrays.asList("publish_actions");
     private static final String TAG = ViewShare.class.getSimpleName();
     TextView mshr_point, mshr_comment;
-    String fileId, clicks, textMsg, chatType, originalChatId, isMessageSender;
+    String fileId, clicks, textMsg, originalChatId, isMessageSender;
+    String card_Accepted_Rejected ,card_DB_ID,card_Played_Countered,card_id,card_content,card_heading,card_originator,card_owner,card_clicks;
+    boolean is_CustomCard;
+
+
+
+
     EditText shr_caption;
     String image_url;//akshit to make common variable for image ,vedio Url .
     private ChatManager chatManager;
@@ -105,10 +114,17 @@ public class ViewShare extends Activity implements View.OnClickListener {
                 videoID = intent.getStringExtra("videoID");
                 image_url = videoThumbnail;
             } else if (intent.hasExtra("card_owner")) {
-                clicks = "no";
-                videoThumbnail = intent.getStringExtra("card_url");
-                cardOwner = intent.getStringExtra("card_owner");
-                image_url = videoThumbnail;
+                card_Accepted_Rejected  = intent.getStringExtra("card_Accepted_Rejected");
+                card_DB_ID = intent.getStringExtra("card_DB_ID");
+                card_Played_Countered = intent.getStringExtra("card_Played_Countered");
+                card_id = intent.getStringExtra("card_id");
+               clicks = intent.getStringExtra("clicks");
+                card_content = intent.getStringExtra("card_content");
+                card_heading = intent.getStringExtra("card_heading");
+                card_originator = intent.getStringExtra("card_originator");
+                card_owner = intent.getStringExtra("card_owner");
+                image_url = intent.getStringExtra("card_url");
+                is_CustomCard  = intent.getBooleanExtra("is_CustomCard",false);
             } else if (intent.hasExtra("audioID")) {
                 clicks = intent.getStringExtra("clicks");
                 audioID = intent.getStringExtra("audioID");
@@ -118,19 +134,34 @@ public class ViewShare extends Activity implements View.OnClickListener {
 
 
             textMsg = intent.getStringExtra("textMsg");
-            chatType = intent.getStringExtra("chatType");
+
             isMessageSender = intent.getStringExtra("isMessageSender");
             originalChatId = intent.getStringExtra("originalChatId");
 
-
+            shr_caption.setHint("Write your caption \nhere...");
             //akshit Code Starts ,To Upload Image ,Vedio ,Audio.
             if (!Utils.isEmptyString(image_url)) {
                 ImageView shr_image = (ImageView) findViewById(R.id.shr_user_image);
                 shr_image.setVisibility(View.VISIBLE);
-                Picasso.with(ViewShare.this).load(image_url)
-                        .resize(200, 200).centerCrop()
-                        .into(shr_image);
-                shr_caption.setHint("Write your caption \nhere...");
+                //check whether image is already downloaded or not
+                   /* default path where image are stored */
+                String mContentUri = Utils.mImagePath + originalChatId + ".jpg"; // fetch data from
+                Uri mUri = Utils.getImageContentUri(this, new File(mContentUri));
+                if (!Utils.isEmptyString("" + mUri)) {  // check image exists or not
+                    try {
+                        shr_image.setImageURI(mUri);  // set thumb from uri
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }else{
+
+                    Picasso.with(ViewShare.this).load(image_url)
+                            .resize(200, 200).centerCrop()
+                            .into(shr_image);
+                }
+
+
             } else if (!Utils.isEmptyString(audioID)) {
                 ImageView shr_image = (ImageView) findViewById(R.id.shr_user_image);
                 shr_image.setVisibility(View.VISIBLE);
@@ -157,7 +188,7 @@ public class ViewShare extends Activity implements View.OnClickListener {
 
             } else {
 
-                if (!Utils.isEmptyString(textMsg)) {
+                if (!Utils.isEmptyString(textMsg) && Utils.isEmptyString(card_originator)) {
                     ((LinearLayout) findViewById(R.id.share_clicks_area)).setVisibility(View.VISIBLE);
                     ((LinearLayout) findViewById(R.id.share_clicks_area)).setBackgroundColor(getResources().getColor(R.color.white));
                     TextView textMsgchat = (TextView) findViewById(R.id.share_chat_text);
@@ -207,7 +238,7 @@ public class ViewShare extends Activity implements View.OnClickListener {
         switch (view.getId()) {
 
             case R.id.shr_facebook:
-                Toast.makeText(this, "Will be implemented later on", Toast.LENGTH_SHORT).show();
+     //           Toast.makeText(this, "Will be implemented later on", Toast.LENGTH_SHORT).show();
                 if (Utils.isConnectingToInternet(ViewShare.this)) {
 
                     Session session = Session.getActiveSession();
@@ -248,14 +279,24 @@ public class ViewShare extends Activity implements View.OnClickListener {
                     i.putExtra("videoID", videoID);
                 } else if (!Utils.isEmptyString(audioID)) {
                     i.putExtra("audioID", audioID);
-                } else if (!Utils.isEmptyString(cardOwner)) {
-                    // i.putExtra("audioID", audioID);
+                } else if (!Utils.isEmptyString(card_originator)) {
+                    i.putExtra("card_Accepted_Rejected", card_Accepted_Rejected);
+                    i.putExtra("card_DB_ID", card_DB_ID);
+                    i.putExtra("card_Played_Countered", card_Played_Countered);
+                  
+                    i.putExtra("card_content", card_content);
+                    i.putExtra("card_heading", card_heading);
+                    i.putExtra("card_originator", card_originator);
+                    i.putExtra("card_owner", card_owner);
+                    i.putExtra("card_url", image_url);
+                    i.putExtra("card_id", card_id);
+                    i.putExtra("is_CustomCard", is_CustomCard);
                 }
 
-                if (Utils.isEmptyString(cardOwner))
-                    i.putExtra("clicks", clicks);
+            
                 i.putExtra("originalChatId", originalChatId);
-                i.putExtra("chatType", chatType);
+
+                i.putExtra("clicks",clicks);
                 i.putExtra("textMsg", textMsg);
                 i.putExtra("caption", commentStr);
                 if (access_Token.length() > 5) {
@@ -267,6 +308,7 @@ public class ViewShare extends Activity implements View.OnClickListener {
                 i.putExtra("sharingMedia", shareMedia);
                 i.putExtra("shareStatus", "shared");
                 i.putExtra("isMessageSender", isMessageSender);
+
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 i.setAction("SHARE");
