@@ -170,7 +170,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
                 /* path where clickin image are stored */
 
-                String mContentUri = Utils.mImagePath + temp.chatId + ".jpg"; // featch data from
+                String mContentUri = Utils.mImagePath + tempChatid + ".jpg"; // featch data from
 
                 Uri mUri = Utils.getImageContentUri(context, new File(mContentUri));  //check file exist or not
                 if (!Utils.isEmptyString("" + mUri)) {
@@ -1397,7 +1397,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     i.putExtra("sharingMedia", item.sharingMedia);
 
                     //update the shareStatus value for current chat item
-                    item.shareStatus = "shareRejected";
+
                     item.isAccepted = "no";
                     i.putExtra("shareStatus", "shareRejected");
                     i.putExtra("isAccepted", "no");
