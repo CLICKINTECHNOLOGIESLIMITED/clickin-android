@@ -241,7 +241,6 @@
             android:value="AIzaSyABvxiiwy0AjxyFUbVCsOgoIAiqZgVWV3o" />
 
 
-
         <activity
             android:name="com.sourcefuse.clickinandroid.view.FeedView"
             android:launchMode="standard"
@@ -284,7 +283,7 @@
 
         <meta-data
             android:name="com.crashlytics.ApiKey"
-            android:value="3bcf050521edeb5967467d700b8aadf40e0664cc" />
+            android:value="d9e80395ff1cf43b754406126aac3d0734cbaa5e" />
     </application>
 
 </manifest>

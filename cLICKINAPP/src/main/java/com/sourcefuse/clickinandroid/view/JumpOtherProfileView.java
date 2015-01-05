@@ -133,14 +133,10 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-//                android.util.Log.e("JumpOtherprofile Partner Id","PartnerID"+relationManager.profileRelationShipData.get(position).getPartner_id());
-//                android.util.Log.e("JumpOtherprofile User Id","UserID"+authManager.getUserId());
                 if (relationManager.profileRelationShipData.size() > 0 && !relationManager.profileRelationShipData.get(position).getPartner_id().equalsIgnoreCase(authManager.getUserId())) {
-                    android.util.Log.e("", "position--> " + position + "" + relationManager.profileRelationShipData.get(position).getPhoneNo());
                     String phNo = relationManager.profileRelationShipData.get(position).getPhoneNo();
                     switchView(phNo);
                 } else {
-                    android.util.Log.e("Other Profile", "Same User");
                 }
             }
         });
@@ -246,7 +242,6 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
     public void onEventMainThread(String message) {
         super.onEventMainThread(message);
         relationManager = ModelManager.getInstance().getRelationManager();
-        android.util.Log.e("onEventMainThread", "-------" + message);
         if (message.equalsIgnoreCase("ProfileInfo True")) {
             setView();
             setProfileData();
@@ -361,7 +356,6 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
             } else {
                 follow.setBackgroundResource(R.drawable.follow_other_profile);
             }
-            android.util.Log.e("Gender Other User", "" + authManager.getTmpGender());
 
             //akshit code ,solved gender
             if (!Utils.isEmptyString(authManager.getTmpGender()) && authManager.getTmpGender().equalsIgnoreCase("girl")) {
@@ -467,7 +461,7 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
         TextView msgII = (TextView) dialog.findViewById(R.id.alert_msgII);
 //        msgI.setText(str);
 //        msgI.setText(AlertMessage.CURRENTCLICKERPAGE);
-        msgII.setText(AlertMessage.MAKECLICKWITH +"\n" +authManager.getTmpUserName());//akshit change for fixing UI Related bug
+        msgII.setText(AlertMessage.MAKECLICKWITH + "\n" + authManager.getTmpUserName());//akshit change for fixing UI Related bug
         Button skip = (Button) dialog.findViewById(R.id.coolio);
         skip.setOnClickListener(new View.OnClickListener() {
             @Override

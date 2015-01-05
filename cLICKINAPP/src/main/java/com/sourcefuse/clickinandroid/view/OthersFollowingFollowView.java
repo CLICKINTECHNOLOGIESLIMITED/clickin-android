@@ -155,15 +155,12 @@ public class OthersFollowingFollowView extends ClickInBaseView implements View.O
         if (getMsg.equalsIgnoreCase("GetFollower True")) {
             Utils.dismissBarDialog();
             setlist();
-            android.util.Log.d("1", "message->" + getMsg);
         } else if (getMsg.equalsIgnoreCase("GetFollower False")) {
             Utils.dismissBarDialog();
-            android.util.Log.d("2", "message->" + getMsg);
         } else if (getMsg.equalsIgnoreCase("GetFollower Network Error")) {
             Utils.dismissBarDialog();
             Utils.fromSignalDialog(this, AlertMessage.connectionError);
             //Utils.showAlert(FollowingListView.this, AlertMessage.connectionError);
-            android.util.Log.d("3", "message->" + getMsg);
         }
     }
 

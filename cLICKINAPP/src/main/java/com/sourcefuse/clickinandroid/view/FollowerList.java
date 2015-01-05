@@ -12,7 +12,6 @@ import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.ProfileManager;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
-import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.adapter.FollowerAdapter;
 import com.sourcefuse.clickinapp.R;
@@ -135,7 +134,6 @@ public class FollowerList extends ClickInBaseView implements
     public void onEventMainThread(String getMsg) {
         super.onEventMainThread(getMsg);
         Utils.dismissBarDialog();
-        android.util.Log.e("getMsg---->", "" + getMsg);
         authManager = ModelManager.getInstance().getAuthorizationManager();
         if (getMsg.equalsIgnoreCase("UnFollowUser true")) {
 
@@ -155,14 +153,11 @@ public class FollowerList extends ClickInBaseView implements
         } else if (getMsg.equalsIgnoreCase("GetFollower True")) {
             Utils.dismissBarDialog();
             setlist();
-            android.util.Log.d("1", "message->" + getMsg);
         } else if (getMsg.equalsIgnoreCase("GetFollower False")) {
             Utils.dismissBarDialog();
-            android.util.Log.d("2", "message->" + getMsg);
         } else if (getMsg.equalsIgnoreCase("GetFollower Network Error")) {
             Utils.dismissBarDialog();
             Utils.fromSignalDialog(FollowerList.this, AlertMessage.connectionError);
-            android.util.Log.d("3", "message->" + getMsg);
         } else if (getMsg.equalsIgnoreCase("followUpdateStatus True")) {
 
 

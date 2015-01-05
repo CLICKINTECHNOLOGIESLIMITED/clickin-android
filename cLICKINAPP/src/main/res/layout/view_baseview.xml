@@ -31,7 +31,6 @@
         android:paddingLeft="10dp"
         android:paddingRight="50dp"
         android:paddingTop="10dp"
-        android:src="@drawable/owner_profile_top_icon"
-        />
+        android:src="@drawable/owner_profile_top_icon" />
 
 </RelativeLayout>

@@ -60,7 +60,6 @@ public class CurrentClickersView extends Activity implements OnClickListener {
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.view_currentclickers);
-        //com.sourcefuse.clickinandroid.utils.android.util.Log.e(TAG, "on create");
         this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
         phonebook = (Button) findViewById(R.id.btn_phb);
         facebook = (Button) findViewById(R.id.btn_fb);
@@ -223,9 +222,7 @@ public class CurrentClickersView extends Activity implements OnClickListener {
 
             }
         } catch (Exception e) {
-            android.util.Log.d(TAG, "" + e);
         } catch (Error e) {
-            android.util.Log.d(TAG, "" + e);
         }
         Utils.dismissBarDialog();
     }
@@ -234,14 +231,13 @@ public class CurrentClickersView extends Activity implements OnClickListener {
                                       Exception exception) {
         if (state.isOpened()) {
             final String access_Token = session.getAccessToken();
-            android.util.Log.d(TAG, access_Token);
 
             NewsFeedManager newsFeedManager = ModelManager.getInstance().getNewsFeedManager();
             authManager = ModelManager.getInstance().getAuthorizationManager();
             newsFeedManager.fetchFbFriends(access_Token, authManager.getPhoneNo(), authManager.getUsrToken());
 
         } else if (state.isClosed()) {
-            System.out.println("Logged out...");
+
             Utils.dismissBarDialog();
         }
 
@@ -252,12 +248,10 @@ public class CurrentClickersView extends Activity implements OnClickListener {
         if (message.equalsIgnoreCase("CheckFriend True")) {
             Utils.dismissBarDialog();
             tempCurrentClickers = new ArrayList<CurrentClickerBean>(profilemanager.currentClickerList);
-            android.util.Log.e("featch contact---->", "featch contact---->");
             setlist();
         } else if (message.equalsIgnoreCase("CheckFriend False")) {
             Utils.dismissBarDialog();
             //  Utils.showAlert(this,authManager.getMessage());
-            //com.sourcefuse.clickinandroid.utils.android.util.Log.e("Add phone", "Message" + authManager.getMessage());
             //   Utils.fromSignalDialog(this, authManager.getMessage());
 
         } else if (message.equalsIgnoreCase("CheckFriend Network Error")) {
@@ -275,7 +269,6 @@ public class CurrentClickersView extends Activity implements OnClickListener {
             Utils.fromSignalDialog(this, AlertMessage.connectionError);
             //Utils.showAlert(CurrentClickersView.this, AlertMessage.connectionError);
         } /*else if (message.equalsIgnoreCase("NewsFeed False")) {
-            android.util.Log.d("2", "message->" + message);
             Utils.dismissBarDialog();
             Intent intent = new Intent(CurrentClickersView.this, FeedView.class);
             startActivity(intent);

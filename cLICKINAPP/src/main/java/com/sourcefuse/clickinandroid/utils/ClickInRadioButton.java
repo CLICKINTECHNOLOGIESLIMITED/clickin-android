@@ -37,7 +37,7 @@ public class ClickInRadioButton extends RadioButton {
         try {
             setTypeface(FontLoader.getInstance(ctx).getFont(asset));
         } catch (Exception e) {
-            Log.e("font not found:::::::::::::::::::::::::::::", "font not found:::::::::::::::::::::::::::::");
+
             e.printStackTrace();
 
         }

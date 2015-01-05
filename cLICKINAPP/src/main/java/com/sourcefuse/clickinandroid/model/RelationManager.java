@@ -64,7 +64,7 @@ public class RelationManager {
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
 
-            android.util.Log.e("UsrInput-For-GETRELATIONSHIPS-> ", "" + userInputDetails);
+
             strService = APIs.GETRELATIONSHIPS;
 
         } catch (Exception e1) {
@@ -74,7 +74,7 @@ public class RelationManager {
             @Override
             public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
                 super.onFailure(statusCode, e, errorResponse);
-                android.util.Log.e(TAG, "errorResponse--> " + errorResponse);
+
                 if (errorResponse != null) {
                     getrelationshipsData.clear();
                     acceptedList.clear();
@@ -91,7 +91,7 @@ public class RelationManager {
                 super.onSuccess(statusCode, headers, response);
                 boolean state = false;
                 try {
-                    android.util.Log.e(TAG, "response--> " + response);
+
                     state = response.getBoolean("success");
                     if (state) {
                         getrelationshipsData.clear();
@@ -210,7 +210,7 @@ public class RelationManager {
 //			client.addHeader("phone_no", phone);
             client.addHeader("User-Token", usertoken);
             client.addHeader("Phone-No", phone);
-//			android.util.Log.e("INPUT_DATA-> ", "" + userInputDetails);
+
             strService = APIs.FETCHPROFILERELATIONSHIPS
                     + othersPhone.substring(1);
         } catch (Exception e1) {
@@ -222,7 +222,7 @@ public class RelationManager {
             public void onFailure(int statusCode, Throwable e,
                                   JSONObject errorResponse) {
                 super.onFailure(statusCode, e, errorResponse);
-                System.out.println("errorResponse--> " + errorResponse);
+
                 if (errorResponse != null) {
                     EventBus.getDefault().post("Fetchprofilerelationships False");
                 } else {
@@ -236,7 +236,7 @@ public class RelationManager {
                 super.onSuccess(statusCode, headers, response);
                 boolean state = false;
                 try {
-                    System.out.println("response--> " + response);
+
                     state = response.getBoolean("success");
                     if (state) {
                         profileRelationShipData.clear();
@@ -304,7 +304,6 @@ public class RelationManager {
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            android.util.Log.e("change user visibility android-------> ", "" + userInputDetails);
 
         } catch (Exception e1) {
             e1.printStackTrace();
@@ -313,7 +312,7 @@ public class RelationManager {
             @Override
             public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
                 super.onFailure(statusCode, e, errorResponse);
-                android.util.Log.e("errorResponse on change user visibility-------> ", "" + errorResponse);
+
                 if (errorResponse != null) {
                     EventBus.getDefault().post("UserVisible true on error");
                 } else {
@@ -327,7 +326,7 @@ public class RelationManager {
                 super.onSuccess(statusCode, headers, response);
                 boolean state = false;
                 try {
-                    System.out.println("response--> " + response);
+
                     state = response.getBoolean("success");
                     if (state) {
                         EventBus.getDefault().post("UserVisible true");
@@ -354,7 +353,7 @@ public class RelationManager {
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            android.util.Log.e("suserInputDetailse-FollowUser-> ", "" + userInputDetails);
+
 
         } catch (Exception e1) {
             e1.printStackTrace();
@@ -366,7 +365,7 @@ public class RelationManager {
                                           JSONObject errorResponse) {
                         super.onFailure(statusCode, e, errorResponse);
                         try {
-                            System.out.println("errorResponse--> " + errorResponse);
+
                             if (errorResponse != null) {
                                 relationManager.setStatusMsg(errorResponse.getString("message"));
                                 EventBus.getDefault().post("FollowUser false");
@@ -384,7 +383,7 @@ public class RelationManager {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            System.out.println("FOLLOWUSER--> " + response);
+
                             state = response.getBoolean("success");
                             if (state) {
                                 relationManager.setStatusMsg(response.getString("message"));
@@ -416,8 +415,7 @@ public class RelationManager {
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,
                     "application/json"));
-            android.util.Log.e("suserInputDetailse-UnFollowUser-> ", ""
-                    + userInputDetails);
+
 
         } catch (Exception e1) {
             e1.printStackTrace();
@@ -429,7 +427,7 @@ public class RelationManager {
                                           JSONObject errorResponse) {
                         super.onFailure(statusCode, e, errorResponse);
                         try {
-                            System.out.println("errorResponse--> " + errorResponse);
+
                             if (errorResponse != null) {
                                 relationManager.setStatusMsg(errorResponse.getString("message"));
                                 EventBus.getDefault().post("UnFollowUser  false");
@@ -447,7 +445,7 @@ public class RelationManager {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            System.out.println("UnFollowUser--> " + response);
+
                             state = response.getBoolean("success");
                             if (state) {
                                 relationManager.setStatusMsg(response.getString("message"));
@@ -474,7 +472,7 @@ public class RelationManager {
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            android.util.Log.e("suserInputDetailse-UPDATESTATUS-> ", "" + userInputDetails);
+
 
         } catch (Exception e1) {
             e1.printStackTrace();
@@ -483,7 +481,7 @@ public class RelationManager {
             @Override
             public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
                 super.onFailure(statusCode, e, errorResponse);
-                android.util.Log.e("UPDATESTATUS", "errorResponse--> " + errorResponse);
+
                 if (errorResponse != null) {
                     EventBus.getDefault().post("updateStatus false");
 
@@ -500,7 +498,7 @@ public class RelationManager {
                 super.onSuccess(statusCode, headers, response);
                 boolean state = false;
                 try {
-                    System.out.println("response--> " + response);
+
                     state = response.getBoolean("success");
                     if (state) {
                         EventBus.getDefault().post("updateStatus true");
@@ -526,7 +524,7 @@ public class RelationManager {
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            android.util.Log.e("suserInputDetailse-DELETERELATIONSHIP-> ", "" + userInputDetails);
+
 
         } catch (Exception e1) {
             e1.printStackTrace();
@@ -537,7 +535,7 @@ public class RelationManager {
                     public void onFailure(int statusCode, Throwable e,
                                           JSONObject errorResponse) {
                         super.onFailure(statusCode, e, errorResponse);
-                        System.out.println("errorResponse--> " + errorResponse);
+
                         if (errorResponse != null) {
 
                             EventBus.getDefault().post("deleteRelationship false");
@@ -553,7 +551,7 @@ public class RelationManager {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            System.out.println("response--> " + response);
+
                             state = response.getBoolean("success");
                             if (state) {
                                 EventBus.getDefault().post("deleteRelationship true");
@@ -582,7 +580,7 @@ public class RelationManager {
 
 
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            android.util.Log.e("suserInputDetailse-fetchusersbyname-> ", "" + userInputDetails);
+
         } catch (Exception e1) {
         }
         client.post(null, APIs.FETCHUSERSBYNAME, se, "application/json",
@@ -590,7 +588,7 @@ public class RelationManager {
                     @Override
                     public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
                         super.onFailure(statusCode, e, errorResponse);
-                        System.out.println("errorResponse--> " + errorResponse);
+
                         if (errorResponse != null) {
 
 
@@ -610,7 +608,7 @@ public class RelationManager {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            System.out.println("response--> " + response);
+
                             state = response.getBoolean("success");
                             fetchUsersByNameData.clear();
                             if (state) {
@@ -638,12 +636,12 @@ public class RelationManager {
                                 }
                                 fetchUsersByNameData.addAll(fetchUsersByNameArray);
                                 EventBus.getDefault().post("SearchResult true");
-                                //android.util.android.util.Log.e("in post ---->", "in post---->");
+
                             } else {
                                 EventBus.getDefault().post("SearchResult False");
                             }
                         } catch (Exception e) {
-                            // android.util.android.util.Log.e("on error ", "on error");
+
                             EventBus.getDefault().post("SearchResult False");
                             e.printStackTrace();
                         }
@@ -665,7 +663,7 @@ public class RelationManager {
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            android.util.Log.e("suserInputDetailse-followupdatestatus-> ", "" + userInputDetails);
+
         } catch (Exception e1) {
         }
         client.post(null, APIs.FOLLOWUPDATESTATUS, se, "application/json",
@@ -673,7 +671,7 @@ public class RelationManager {
                     @Override
                     public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
                         super.onFailure(statusCode, e, errorResponse);
-                        System.out.println("errorResponse--> " + errorResponse);
+
                         if (errorResponse != null) {
 
                             EventBus.getDefault().post("followUpdateStatus false");
@@ -687,7 +685,7 @@ public class RelationManager {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            System.out.println("response--> " + response);
+
                             state = response.getBoolean("success");
                             if (state) {
                                 EventBus.getDefault().post("followUpdateStatus true");

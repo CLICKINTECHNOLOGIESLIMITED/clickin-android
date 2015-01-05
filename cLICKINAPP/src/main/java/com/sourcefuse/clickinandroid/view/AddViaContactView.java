@@ -58,19 +58,15 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
             mlPhNo = bundle.getString("ConNumber");
 
 
-            //com.sourcefuse.clickinandroid.utils.android.util.Log.e("contact no--->", "" + mlPhNo);
             //first check country code from SIM and compare it with num
             countryCode = Utils.getCountryCodeFromSim(this);
-            // com.sourcefuse.clickinandroid.utils.android.util.Log.e("county code from sim--->", "" + countryCode);
             if (countryCode != null) {
                 if (mlPhNo.startsWith(countryCode)) {
                     mlPhNo = mlPhNo.replace(countryCode, "");
 
-                    // com.sourcefuse.clickinandroid.utils.android.util.Log.e("contact no point 1--->", "" + mlPhNo);
                 } else {
                     mlPhNo = mlPhNo;
 
-                    //  com.sourcefuse.clickinandroid.utils.android.util.Log.e("contact no point 3--->", "" + mlPhNo);
                 }
             }
 
@@ -248,7 +244,6 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        //com.sourcefuse.clickinandroid.utils.android.util.Log.e("on activity result", "on activity result");
     }
 
     @Override
@@ -292,21 +287,17 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
             Utils.dismissBarDialog();
 
             Utils.fromSignalDialog(this, authManager.getMessage());
-            android.util.Log.d("2", "message->" + message);
         } else if (message.equalsIgnoreCase("RequestSend Network Error")) {
             Utils.dismissBarDialog();
             Utils.fromSignalDialog(this, AlertMessage.connectionError);
             // Utils.showAlert(AddViaContactView.this, AlertMessage.connectionError);
-            android.util.Log.d("3", "message->" + message);
 
         }
         if (message.equalsIgnoreCase("CheckFriend True")) {
             Utils.dismissBarDialog();
-            //com.sourcefuse.clickinandroid.utils.android.util.Log.e("current clickers list--->", "" + Utils.itData);
         } else if (message.equalsIgnoreCase("CheckFriend False")) {
             Utils.dismissBarDialog();
             //  Utils.showAlert(this,authManager.getMessage());
-            //com.sourcefuse.clickinandroid.utils.android.util.Log.e("Add phone", "Message" + authManager.getMessage());
             //   Utils.fromSignalDialog(this, authManager.getMessage());
 
         } else if (message.equalsIgnoreCase("CheckFriend Network Error")) {

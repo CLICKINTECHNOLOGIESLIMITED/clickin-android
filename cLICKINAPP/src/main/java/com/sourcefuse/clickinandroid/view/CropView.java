@@ -8,7 +8,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
@@ -68,17 +67,13 @@ public class CropView extends Activity implements View.OnClickListener {
                 bitmap = authManager.getOrginalBitmap();
 
                 if (bitmap == null) {
-                    Log.e("bit null", "bit null");
                     finish();
                 } else {
-                    Log.e("bit not  null", "bit not  null");
                     ((CropImageView) findViewById(R.id.crop_image)).setImageBitmap(bitmap);
 
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                Log.e("exception --->", "exception --->");
-                Log.e("exception --->", "" + e.toString());
             }
 
 
@@ -89,7 +84,6 @@ public class CropView extends Activity implements View.OnClickListener {
     public void onBackPressed() {
 
         if (getIntent().getStringExtra("from").equalsIgnoreCase("fromchatGallery") || getIntent().getStringExtra("from").equalsIgnoreCase("fromchatCamare")) {
-            Log.e("in crop 1", "in crop 1");
             try {
                 authManager.setmResizeBitmap(null);
                 Intent intent = new Intent(CropView.this, ChatRecordView.class);
@@ -100,10 +94,8 @@ public class CropView extends Activity implements View.OnClickListener {
 
             } catch (Exception e) {
                 e.printStackTrace();
-                Log.e("Exception----->", e.toString());
             }
         } else {
-            Log.e("in crop 2", "in crop 2");
             super.onBackPressed();
             finish();
             overridePendingTransition(0, R.anim.top_out);
@@ -127,7 +119,6 @@ public class CropView extends Activity implements View.OnClickListener {
 
                     } catch (Exception e) {
                         e.printStackTrace();
-                        Log.e("Exception----->", e.toString());
                     }
                 } else if (getIntent().getStringExtra("from").equalsIgnoreCase("fromgallery")) {
                     try {
@@ -139,7 +130,6 @@ public class CropView extends Activity implements View.OnClickListener {
                         overridePendingTransition(0, R.anim.top_out);
                     } catch (Exception e) {
                         e.printStackTrace();
-                        Log.e("Exception----->", e.toString());
                     }
                 } else if (getIntent().getStringExtra("from").equalsIgnoreCase("fromchatGallery") || getIntent().getStringExtra("from").equalsIgnoreCase("fromchatCamare")) {
                     try {
@@ -150,7 +140,6 @@ public class CropView extends Activity implements View.OnClickListener {
                         overridePendingTransition(0, R.anim.top_out);
                     } catch (Exception e) {
                         e.printStackTrace();
-                        Log.e("Exception----->", e.toString());
                     }
                 }
 
@@ -169,9 +158,6 @@ public class CropView extends Activity implements View.OnClickListener {
                 mName = Math.abs(mName);
 
                 String path = storeImage(resizebitmap, "" + mName);
-                Log.e("path on save bitmap  ---->", "" + path);
-                Log.e("uri on save bitmap------->", "" + mImageCaptureUri);
-                Log.e("uri on save bitmap mName------->", "" + mName);
                 if (!Utils.isEmptyString(path)) {
                     resizebitmap = BitmapFactory.decodeFile(path);
                 }
@@ -246,14 +232,11 @@ public class CropView extends Activity implements View.OnClickListener {
             getContentResolver().notifyChange(Uri.parse(filePath), null);
 
         } catch (FileNotFoundException e) {
-            Log.e("TAG", "Error saving image file: " + e.getMessage());
 
             return "";
         } catch (IOException e) {
-            Log.e("TAG", "Error saving image file: " + e.getMessage());
             return "";
         } catch (Exception e) {
-            Log.e("TAG", "Error saving image file: " + e.getMessage());
             e.printStackTrace();
             return "";
         }

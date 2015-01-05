@@ -15,21 +15,19 @@ public class AudioUtil {
     private static final String AUDIO_RECORDER_FILE_EXT_MP4 = ".mp4";
     private static String file_exts[] = {AUDIO_RECORDER_FILE_EXT_MP4, AUDIO_RECORDER_FILE_EXT_3GP};
     private static final String AUDIO_RECORDER_FOLDER = "ClickIn/ClickinAudio";
+    public static String mAudioName;
     private static MediaRecorder recorder = null;
     private static int currentFormat = 0;
-    public static String mAudioName;
     private static int output_formats[] = {MediaRecorder.OutputFormat.MPEG_4, MediaRecorder.OutputFormat.THREE_GPP};
     private static String fileName;
     private static MediaRecorder.OnErrorListener errorListener = new MediaRecorder.OnErrorListener() {
         @Override
         public void onError(MediaRecorder mr, int what, int extra) {
-            android.util.Log.e("Error: ", "what-> " + what + ", " + extra);
         }
     };
     private static MediaRecorder.OnInfoListener infoListener = new MediaRecorder.OnInfoListener() {
         @Override
         public void onInfo(MediaRecorder mr, int what, int extra) {
-            android.util.Log.e("Warning: ", "what-> " + what + ", " + extra);
         }
     };
 
@@ -40,7 +38,6 @@ public class AudioUtil {
         recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
         fileName = getFilename();
         recorder.setOutputFile(fileName);
-        android.util.Log.e("Filename:", "" + fileName);
         recorder.setOnErrorListener(errorListener);
         recorder.setOnInfoListener(infoListener);
 

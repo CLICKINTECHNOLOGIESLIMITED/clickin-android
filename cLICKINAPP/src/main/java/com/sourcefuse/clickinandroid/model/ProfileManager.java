@@ -1,6 +1,5 @@
 package com.sourcefuse.clickinandroid.model;
 
-import android.util.Log;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -9,7 +8,6 @@ import com.sourcefuse.clickinandroid.model.bean.CurrentClickerBean;
 import com.sourcefuse.clickinandroid.model.bean.FollowerFollowingBean;
 import com.sourcefuse.clickinandroid.utils.APIs;
 import com.sourcefuse.clickinandroid.utils.Utils;
-import com.sourcefuse.clickinapp.R;
 
 import org.apache.http.entity.StringEntity;
 import org.apache.http.message.BasicHeader;
@@ -80,7 +78,7 @@ public class ProfileManager {
             userInputDetails.put("first_name", fname);
             userInputDetails.put("last_name", lname);
             // userInputDetails.put("fb_access_token", "jh");
-//			android.util.Log.d("", "userInputDetails---> " + userInputDetails);
+
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,
@@ -97,7 +95,7 @@ public class ProfileManager {
                     public void onFailure(int statusCode, Throwable e,
                                           JSONObject errorResponse) {
                         super.onFailure(statusCode, e, errorResponse);
-                        System.out.println("errorResponse--> " + errorResponse);
+
                         if (errorResponse != null) {
                             try {
                                 authManager.setMessage(errorResponse.getString("message"));
@@ -119,7 +117,7 @@ public class ProfileManager {
                                           JSONObject response) {
                         super.onSuccess(statusCode, headers, response);
                         try {
-                            System.out.println("response--> " + response);
+
                             success = response.getBoolean("success");
                             if (success) {
 
@@ -172,7 +170,7 @@ public class ProfileManager {
             public void onFailure(int statusCode, Throwable e,
                                   JSONObject errorResponse) {
                 super.onFailure(statusCode, e, errorResponse);
-                System.out.println("errorResponse--> " + errorResponse);
+
                 if (errorResponse != null) {
                     try {
                         authManager.setMessage(errorResponse.getString("message"));
@@ -191,7 +189,7 @@ public class ProfileManager {
                                   org.apache.http.Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 try {
-                    System.out.println("response--> " + response);
+
                     success = response.getBoolean("success");
                     if (success) {
                         following.clear();
@@ -223,8 +221,7 @@ public class ProfileManager {
                                         } else {
                                             followingList.setFolloweePic("");
                                         }
-                                }catch (Exception e)
-                                {
+                                } catch (Exception e) {
                                     e.printStackTrace();
 
                                 }
@@ -247,14 +244,13 @@ public class ProfileManager {
                                     if (data.has("followee_pic"))
                                         if (data.getString("followee_pic").contains("profile_pic")) {
 
-                                            String following_pic= new String(data.getString("followee_pic"));
+                                            String following_pic = new String(data.getString("followee_pic"));
                                             String pthumbImage = following_pic.replace("profile_pic", "thumb_profile_pic");
                                             followingList.setFolloweePic(pthumbImage);
                                         } else {
                                             followingList.setFolloweePic("");
                                         }
-                                }catch (Exception e)
-                                {
+                                } catch (Exception e) {
                                     e.printStackTrace();
 
                                 }
@@ -292,8 +288,7 @@ public class ProfileManager {
                                             } else {
                                                 followerList.setFolloweePic("");
                                             }
-                                        }catch (Exception e)
-                                        {
+                                        } catch (Exception e) {
                                             e.printStackTrace();
 
                                         }
@@ -421,7 +416,7 @@ public class ProfileManager {
             public void onFailure(int statusCode, Throwable e,
                                   JSONObject errorResponse) {
                 super.onFailure(statusCode, e, errorResponse);
-                System.out.println("errorResponse--> " + errorResponse);
+
                 if (errorResponse != null) {
                     try {
                         authManager.setMessage(errorResponse.getString("message"));
@@ -441,7 +436,7 @@ public class ProfileManager {
                                   org.apache.http.Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 try {
-                    System.out.println("response--> " + response);
+
                     success = response.getBoolean("success");
                     if (success) {
                         following_other.clear();
@@ -608,7 +603,7 @@ public class ProfileManager {
             public void onFailure(int statusCode, Throwable e,
                                   JSONObject errorResponse) {
                 super.onFailure(statusCode, e, errorResponse);
-                System.out.println("errorResponse--> " + errorResponse);
+
                 if (errorResponse != null) {
                     try {
                         authManager.setMessage(errorResponse
@@ -630,7 +625,7 @@ public class ProfileManager {
                                   org.apache.http.Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 try {
-                    System.out.println("response--> " + response);
+
                     success = response.getBoolean("success");
                     if (success) {
                         JSONObject jobj = new JSONObject(response.getString("user"));
@@ -678,7 +673,7 @@ public class ProfileManager {
                     public void onFailure(int statusCode, Throwable e,
                                           JSONObject errorResponse) {
                         super.onFailure(statusCode, e, errorResponse);
-                        System.out.println("errorResponse--> " + errorResponse);
+
                         if (errorResponse != null) {
 //								try {
 //									
@@ -699,7 +694,7 @@ public class ProfileManager {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            System.out.println("response--> " + response);
+
                             state = response.getBoolean("success");
                             if (state) {
 
