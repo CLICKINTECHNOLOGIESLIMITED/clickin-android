@@ -424,7 +424,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     ((LinearLayout) row.findViewById(R.id.acc_rej_layout_second)).setVisibility(View.VISIBLE);
                     ((TextView) row.findViewById(R.id.tv_acc_res_name)).setText("You" + " made a");
                     ((LinearLayout) row.findViewById(R.id.ll_cc_action)).setVisibility(View.GONE);
-                    // ((TextView) row.findViewById(R.id.tv_acc_res_status)).setText("COUNTER OFFER");
+//                     ((TextView) row.findViewById(R.id.tv_acc_res_status)).setText("COUNTER OFFER");
 
                     // listeners for countered actions- not required at sender side
 

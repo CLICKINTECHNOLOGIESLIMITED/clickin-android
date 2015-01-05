@@ -13,14 +13,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.facebook.Session;
 import com.facebook.SessionState;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ChatManager;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
-import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
@@ -138,11 +136,12 @@ public class ViewShare extends Activity implements View.OnClickListener {
             isMessageSender = intent.getStringExtra("isMessageSender");
             originalChatId = intent.getStringExtra("originalChatId");
 
-            shr_caption.setHint("Write your caption \nhere...");
+
             //akshit Code Starts ,To Upload Image ,Vedio ,Audio.
             if (!Utils.isEmptyString(image_url)) {
                 ImageView shr_image = (ImageView) findViewById(R.id.shr_user_image);
                 shr_image.setVisibility(View.VISIBLE);
+                shr_caption.setHint("Write your caption \nhere...");//changed by akshit
                 //check whether image is already downloaded or not
                    /* default path where image are stored */
                 String mContentUri = Utils.mImagePath + originalChatId + ".jpg"; // fetch data from
