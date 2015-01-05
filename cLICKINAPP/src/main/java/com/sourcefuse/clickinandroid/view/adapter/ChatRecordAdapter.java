@@ -149,10 +149,18 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     // Picasso.with(context).load(temp.content_url).resize(300, 300).centerCrop().into(image_attached);
                 }
 
-                //common code to display image from URI-monika
+              //if sharing media is there, then chatId will be fetched from originalChatIdMessage-monika
+                String tempChatid=null;
+                if(!Utils.isEmptyString(temp.sharingMedia)){
+                    tempChatid=temp.originalMessageID;
+                }else{
+                    tempChatid=temp.chatId;
+                }
 
                 /* path where clickin image are stored */
+
                 String mContentUri = Utils.mImagePath + temp.chatId + ".jpg"; // featch data from
+
                 Uri mUri = Utils.getImageContentUri(context, new File(mContentUri));  //check file exist or not
                 if (!Utils.isEmptyString("" + mUri)) {
                     try {
@@ -172,6 +180,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
                     mTempLayout.setVisibility(View.VISIBLE);
                     iv_chat_image_.setImageUrl(temp.content_url, imageLoader);
+
+                    //chatId by which image got saved-monika
+                    final String chatIdForImage=tempChatid;
                     iv_chat_image_.setResponseObserver(new FeedImageView.ResponseObserver() { // download image
                         @Override
                         public void onError(VolleyError volleyError) {
@@ -180,7 +191,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                         @Override
                         public void onSuccess(ImageLoader.ImageContainer loader) {
                             if (loader.getBitmap() != null) {
-                                String path = Utils.storeImage(loader.getBitmap(), temp.chatId, context);  // save image bitmap by chat id
+                                String path = Utils.storeImage(loader.getBitmap(), chatIdForImage, context);  // save image bitmap by chat id
                                 image_attached.setImageURI(Utils.getImageContentUri(context, new File(path))); // set image form uri once downloadedd
                                 progressBar.setVisibility(View.GONE);
                                 mTempLayout.setVisibility(View.GONE);
@@ -298,10 +309,19 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 } else if (!(Utils.isEmptyString(temp.isDelivered)) && temp.isDelivered.equalsIgnoreCase(Constants.MSG_SENT)) {
                     row.findViewById(R.id.pb_loding).setVisibility(View.GONE);
                 }
-                //common code to display image from URI-monika
 
-                /* deafult path where image are stored */
-                String mContentUri = Utils.mImagePath + temp.chatId + ".jpg"; // featch data from
+                //if sharing media is there, then chatId will be fetched from originalChatIdMessage-monika
+                String tempChatid=null;
+                if(!Utils.isEmptyString(temp.sharingMedia)){
+                    tempChatid=temp.originalMessageID;
+                }else{
+                    tempChatid=temp.chatId;
+                }
+
+                /* path where clickin image are stored */
+                String mContentUri = Utils.mImagePath + tempChatid + ".jpg"; // fetch data from
+
+
                 Uri mUri = Utils.getImageContentUri(context, new File(mContentUri));
                 if (!Utils.isEmptyString("" + mUri)) {  // check video thumb exists or not
                     try {
@@ -315,6 +335,8 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     progressBar.setVisibility(View.VISIBLE);
                     play_buttom.setVisibility(View.GONE);
                     iv_chat_image_.setImageUrl(temp.video_thumb, imageLoader);  // download image from server
+                    //chat Id by which image got saved
+                    final String chatIdForImage=tempChatid;
                     iv_chat_image_.setResponseObserver(new FeedImageView.ResponseObserver() {  // response observer
                         @Override
                         public void onError(VolleyError volleyError) {
@@ -323,7 +345,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                         @Override
                         public void onSuccess(ImageLoader.ImageContainer loader) {
                             if (loader.getBitmap() != null) {
-                                String path = Utils.storeImage(loader.getBitmap(), temp.chatId, context);
+                                String path = Utils.storeImage(loader.getBitmap(), chatIdForImage, context);
                                 image_attached.setImageURI(Utils.getImageContentUri(context, new File(path)));
                                 progressBar.setVisibility(View.GONE);
                                 /*mTempLayout.setVisibility(View.GONE);*/
@@ -439,7 +461,8 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
             }
 
             //only text-SENDER CASE
-            if (!Utils.isEmptyString(temp.textMsg) && temp.clicks.equalsIgnoreCase("no")) {
+            //in case share accept/reject, ignore the text
+            if (!Utils.isEmptyString(temp.textMsg) && temp.clicks.equalsIgnoreCase("no") && Utils.isEmptyString(temp.isAccepted)) {
                 //  RelativeLayout textViewLayout = (RelativeLayout) row.findViewById(R.id.chat_parent_layout);
                 //code to hide share icon for text messages-monika
                 if (Utils.isEmptyString(temp.content_url))
@@ -673,9 +696,18 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     chatClickTextLayout.setLayoutParams(paramsr2);
                 }
 
+                //if sharing media is there, then chatId will be fetched from originalChatIdMessage-monika
+                String tempChatid=null;
+                if(!Utils.isEmptyString(temp.sharingMedia)){
+                    tempChatid=temp.originalMessageID;
+                }else{
+                    tempChatid=temp.chatId;
+                }
 
-                /* deafult path where clickin images are stored */
-                String mContentUri = Utils.mImagePath + temp.chatId + ".jpg"; // featch data from
+                /* path where clickin image are stored */
+                String mContentUri = Utils.mImagePath + tempChatid + ".jpg"; // fetch data from
+
+
                 Uri mUri = Utils.getImageContentUri(context, new File(mContentUri));
                 if (!Utils.isEmptyString("" + mUri)) {  // check if image exists on uri
 
@@ -698,6 +730,8 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     mTempLayout.setVisibility(View.VISIBLE);
                     mTempLayout.setBackgroundResource(R.color.transparent);
                     iv_chat_image_.setImageUrl(temp.content_url, imageLoader);
+                    //chat Id by which image got saved
+                    final String chatIdForImage=tempChatid;
                     iv_chat_image_.setResponseObserver(new FeedImageView.ResponseObserver() {
                         @Override
                         public void onError(VolleyError volleyError) {
@@ -706,7 +740,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                         @Override
                         public void onSuccess(ImageLoader.ImageContainer loader) {
                             if (loader.getBitmap() != null) {
-                                String path = Utils.storeImage(loader.getBitmap(), temp.chatId, context);
+                                String path = Utils.storeImage(loader.getBitmap(), chatIdForImage, context);
                                 image_attached.setImageURI(Utils.getImageContentUri(context, new File(path)));
                                 progressBar.setVisibility(View.GONE);
                                 mTempLayout.setVisibility(View.GONE);
@@ -825,10 +859,17 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
                 }
 
-                //common code to display image from URI-monika
+                //if sharing media is there, then chatId will be fetched from originalChatIdMessage-monika
+                String tempChatid=null;
+                if(!Utils.isEmptyString(temp.sharingMedia)){
+                    tempChatid=temp.originalMessageID;
+                }else{
+                    tempChatid=temp.chatId;
+                }
 
-                /* deafult path where clickin image are stored */
-                String mContentUri = Utils.mImagePath + temp.chatId + ".jpg"; // featch data from
+                /* path where clickin image are stored */
+                String mContentUri = Utils.mImagePath + tempChatid + ".jpg"; // fetch data from
+
                 Uri mUri = Utils.getImageContentUri(context, new File(mContentUri));
                 if (!Utils.isEmptyString("" + mUri)) {  // chdeck video thumb exist or not
                     try {
@@ -841,6 +882,8 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     progressBar.setVisibility(View.VISIBLE);
                     play_buttom.setVisibility(View.GONE);
                     iv_chat_image_.setImageUrl(temp.video_thumb, imageLoader);  // download image from server
+                    //chat Id by which image got saved
+                    final String chatIdForImage=tempChatid;
                     iv_chat_image_.setResponseObserver(new FeedImageView.ResponseObserver() {  // response observer
                         @Override
                         public void onError(VolleyError volleyError) {
@@ -849,7 +892,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                         @Override
                         public void onSuccess(ImageLoader.ImageContainer loader) {
                             if (loader.getBitmap() != null) {
-                                String path = Utils.storeImage(loader.getBitmap(), temp.chatId, context);
+                                String path = Utils.storeImage(loader.getBitmap(), chatIdForImage, context);
                                 image_attached.setImageURI(Utils.getImageContentUri(context, new File(path)));
                                 progressBar.setVisibility(View.GONE);
                                 /*mTempLayout.setVisibility(View.GONE);*/
@@ -1105,7 +1148,8 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
             
             /* only text reciver case*/
-            if ((!Utils.isEmptyString(temp.textMsg) && temp.clicks.equalsIgnoreCase("no"))) {
+            //in case share accept/reject, ignore the text
+            if (!Utils.isEmptyString(temp.textMsg) && temp.clicks.equalsIgnoreCase("no") && Utils.isEmptyString(temp.isAccepted)) {
                 //code to hide share icon for text messages-monika
                 if (Utils.isEmptyString(temp.content_url))
                     ((LinearLayout) row.findViewById(R.id.ll_for_share_icon)).setVisibility(View.GONE);
@@ -1315,7 +1359,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
         });
 
 
-        // Click Action On Share With REJECT
+        // Click Action On Share With REJECT//akshit latest
         ((TextView) row.findViewById(R.id.shared_message_reject)).setTag(position);
         ((TextView) row.findViewById(R.id.shared_message_reject)).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1323,9 +1367,10 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 AuthManager authM = ModelManager.getInstance().getAuthorizationManager();
                 int position = (Integer) v.getTag();
                 ChatMessageBody item = ModelManager.getInstance().getChatManager().chatMessageList.get(position);
-
-                Intent i = new Intent(context, ChatRecordView.class);
-                if (!Utils.isEmptyString(item.imageRatio)) {
+                if (Utils.isEmptyString(item.isAccepted)) { //it means no action was taken on share request-monika
+                    Intent i = new Intent(context, ChatRecordView.class);
+                    //not required these params at all-monika
+             /*   if (!Utils.isEmptyString(item.imageRatio)) {
                     i.putExtra("imageRatio", item.imageRatio);
                     i.putExtra("fileId", item.content_url);
                 } else if (!Utils.isEmptyString(item.video_thumb)) {
@@ -1333,62 +1378,101 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     i.putExtra("videoID", item.content_url);
                 } else if (!Utils.isEmptyString(item.content_url) && Utils.isEmptyString(item.imageRatio) && Utils.isEmptyString(item.video_thumb)) {
                     i.putExtra("audioID", item.content_url);
+                }*/
+                    i.putExtra("originalChatId", item.originalMessageID);
+
+                    i.putExtra("textMsg", "SHARING DENIED");
+                    i.putExtra("caption", item.shareComment);
+                    i.putExtra("facebookToken", item.facebookToken);
+                    i.putExtra("sharingMedia", item.sharingMedia);
+
+                    //update the shareStatus value for current chat item
+                    item.shareStatus = "shareRejected";
+                    item.isAccepted = "no";
+                    i.putExtra("shareStatus", "shareRejected");
+                    i.putExtra("isAccepted", "no");
+                    i.putExtra("isMessageSender", item.isMessageSender);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    i.setAction("SHARE");
+                    context.startActivity(i);
+
+                    ChatManager chatManager = ModelManager.getInstance().getChatManager();
+                    chatManager.chatShare(authM.getPhoneNo(), authM.getUsrToken(), item.relationshipId, item.originalMessageID, item.sharingMedia, item.facebookToken, item.shareComment, "no");
+
+                    //akshit code to change images to deactive state
+                    ((TextView) row.findViewById(R.id.shared_message_reject)).setBackgroundResource(R.drawable.c_card_reject_deactive);
+                    ((TextView) row.findViewById(R.id.shared_message_accept)).setBackgroundResource(R.drawable.c_card_accepted_deactive);
+                     //ends
+
+
                 }
-                i.putExtra("originalChatId", item.originalMessageID);
-                i.putExtra("chatType", item.chatType);
-                i.putExtra("clicks", item.clicks);
-                i.putExtra("textMsg", item.textMsg);
-                i.putExtra("caption", item.shareComment);
-                i.putExtra("facebookToken", item.facebookToken);
-                i.putExtra("sharingMedia", item.sharingMedia);
-                i.putExtra("shareStatus", "shareRejected");
-                i.putExtra("isMessageSender", item.isMessageSender);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                i.setAction("SHARE");
-                context.startActivity(i);
-
-                ChatManager chatManager = ModelManager.getInstance().getChatManager();
-                chatManager.chatShare(authM.getPhoneNo(), authM.getUsrToken(), item.relationshipId, item.originalMessageID, item.sharingMedia, item.facebookToken, item.shareComment, "no");
-
             }
         });
         // Click Action On Share With ACCEPT-mukesh
         ((TextView) row.findViewById(R.id.shared_message_accept)).setTag(position);
-        ((TextView) row.findViewById(R.id.shared_message_accept)).setOnClickListener(new View.OnClickListener() {
+
+        if (!Utils.isEmptyString(temp.isAccepted))//akshit code to change images to deactivate state
+        {
+            ((TextView) row.findViewById(R.id.shared_message_reject)).setBackgroundResource(R.drawable.c_card_reject_deactive);
+            ((TextView) row.findViewById(R.id.shared_message_accept)).setBackgroundResource(R.drawable.c_card_accepted_deactive);
+        }//akshit code ends
+
+            ((TextView) row.findViewById(R.id.shared_message_accept)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AuthManager authM = ModelManager.getInstance().getAuthorizationManager();
                 int position = (Integer) v.getTag();
                 ChatMessageBody item = ModelManager.getInstance().getChatManager().chatMessageList.get(position);
-
-                Intent i = new Intent(context, ChatRecordView.class);
-                if (!Utils.isEmptyString(item.imageRatio)) {
+                if (Utils.isEmptyString(item.isAccepted)) { //it means no action was taken on share request-monika
+                    Intent i = new Intent(context, ChatRecordView.class);
+                    //not required these parameters at all-monika
+              /*  if (!Utils.isEmptyString(item.imageRatio)) {
                     i.putExtra("imageRatio", item.imageRatio);
                     i.putExtra("fileId", item.content_url);
                 } else if (!Utils.isEmptyString(item.video_thumb)) {
                     i.putExtra("videoThumbnail", item.video_thumb);
                     i.putExtra("videoID", item.content_url);
-                } else if (!Utils.isEmptyString(item.content_url) && Utils.isEmptyString(item.imageRatio) && Utils.isEmptyString(item.video_thumb)) {
+                }   else if (!Utils.isEmptyString(item.card_originator)) {
+                    i.putExtra("card_Accepted_Rejected", item.card_Accepted_Rejected);
+                    i.putExtra("card_DB_ID", item.card_DB_ID);
+                    i.putExtra("card_Played_Countered", item.card_Played_Countered);
+                    i.putExtra("card_clicks", item.clicks);
+                    i.putExtra("card_content", item.card_content);
+                    i.putExtra("card_heading", item.card_heading);
+                    i.putExtra("card_originator", item.card_originator);
+                    i.putExtra("card_owner", item.card_owner);
+                    i.putExtra("card_url", item.card_url);
+                    i.putExtra("is_CustomCard", item.is_CustomCard);
+
+                }else if (!Utils.isEmptyString(item.content_url) && Utils.isEmptyString(item.imageRatio) && Utils.isEmptyString(item.video_thumb)) {
                     i.putExtra("audioID", item.content_url);
+                }*/
+                    i.putExtra("originalChatId", item.originalMessageID);
+
+                    i.putExtra("textMsg", "SHARED");
+                    i.putExtra("caption", item.shareComment);
+                    i.putExtra("facebookToken", item.facebookToken);
+                    i.putExtra("sharingMedia", item.sharingMedia);
+                    //update value in current chat item
+
+                    item.isAccepted = "yes";
+                    i.putExtra("shareStatus", "shareAccepted");
+                    i.putExtra("isAccepted", "yes");
+                    i.putExtra("isMessageSender", item.isMessageSender);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    i.setAction("SHARE");
+                    context.startActivity(i);
+
+                    ChatManager chatManager = ModelManager.getInstance().getChatManager();
+                    chatManager.chatShare(authM.getPhoneNo(), authM.getUsrToken(), item.relationshipId, item.originalMessageID, item.sharingMedia, item.facebookToken, item.shareComment, "yes");
+
+                    //akshit code to set image to deactivate state .
+                    ((TextView) row.findViewById(R.id.shared_message_reject)).setBackgroundResource(R.drawable.c_card_reject_deactive);
+                    ((TextView) row.findViewById(R.id.shared_message_accept)).setBackgroundResource(R.drawable.c_card_accepted_deactive);
+                      //ends
                 }
-                i.putExtra("originalChatId", item.originalMessageID);
-                i.putExtra("chatType", item.chatType);
-                i.putExtra("clicks", item.clicks);
-                i.putExtra("textMsg", item.textMsg);
-                i.putExtra("caption", item.shareComment);
-                i.putExtra("facebookToken", item.facebookToken);
-                i.putExtra("sharingMedia", item.sharingMedia);
-                i.putExtra("shareStatus", "shareAccepted");
-                i.putExtra("isMessageSender", item.isMessageSender);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                i.setAction("SHARE");
-                context.startActivity(i);
-
-                ChatManager chatManager = ModelManager.getInstance().getChatManager();
-                chatManager.chatShare(authM.getPhoneNo(), authM.getUsrToken(), item.relationshipId, item.originalMessageID, item.sharingMedia, item.facebookToken, item.shareComment, "yes");
-
             }
         });
         return row;
@@ -1496,7 +1580,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
         ChatMessageBody item = ModelManager.getInstance().getChatManager().chatMessageList.get(index);
         String isMessageSender = "false";
         Intent i = new Intent();
-        i.putExtra("chatType", item.chatType);
+    //    i.putExtra("chatType", item.chatType);
         i.putExtra("clicks", item.clicks);
         i.putExtra("textMsg", item.textMsg);
         i.putExtra("originalChatId", item.chatId);
@@ -1505,15 +1589,23 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
         if (!Utils.isEmptyString(item.imageRatio)) {
             i.putExtra("imageRatio", item.imageRatio);
             i.putExtra("fileId", item.content_url);
-        } else if (!Utils.isEmptyString(item.card_owner)) {
-            i.putExtra("card_owner", item.card_owner);
-            i.putExtra("card_url", item.card_url);
-            // i.putExtra("card_clicks", item.clicks);
-        } else if (!Utils.isEmptyString(item.video_thumb)) {
+        }else if (!Utils.isEmptyString(item.video_thumb)) {
             i.putExtra("videoThumbnail", item.video_thumb);
             i.putExtra("videoID", item.content_url);
+        } else if (!Utils.isEmptyString(item.card_originator)) {
+            i.putExtra("card_Accepted_Rejected", item.card_Accepted_Rejected);
+            i.putExtra("card_DB_ID", item.card_DB_ID);
+            i.putExtra("card_id", item.card_id);
+            i.putExtra("card_Played_Countered", item.card_Played_Countered);
+            i.putExtra("card_clicks", item.clicks);
+            i.putExtra("card_content", item.card_content);
+            i.putExtra("card_heading", item.card_heading);
+            i.putExtra("card_originator", item.card_originator);
+            i.putExtra("card_owner", item.card_owner);
+            i.putExtra("card_url", item.card_url);
+            i.putExtra("is_CustomCard", item.is_CustomCard);
 
-        } else if (!Utils.isEmptyString(item.content_url) && Utils.isEmptyString(item.imageRatio) && Utils.isEmptyString(item.video_thumb)) {
+        }else if (!Utils.isEmptyString(item.content_url) && Utils.isEmptyString(item.imageRatio) && Utils.isEmptyString(item.video_thumb)) {
             i.putExtra("audioID", item.content_url);
         }
 
