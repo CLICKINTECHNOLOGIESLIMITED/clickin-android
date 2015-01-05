@@ -158,13 +158,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 }
 
                 /* path where clickin image are stored */
-<<<<<<< HEAD
-                String mContentUri = Utils.mImagePath + tempChatid + ".jpg"; // featch data from
-                Log.e("chat id on image upload---.", "" + temp.chatId);
-                Log.e("path on image upload---.", "" + mContentUri);
-=======
+
                 String mContentUri = Utils.mImagePath + temp.chatId + ".jpg"; // featch data from
->>>>>>> 54c291f1fee10ae07b301ba625954cc9f514d846
+
                 Uri mUri = Utils.getImageContentUri(context, new File(mContentUri));  //check file exist or not
                 if (!Utils.isEmptyString("" + mUri)) {
                     try {
