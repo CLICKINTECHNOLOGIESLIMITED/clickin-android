@@ -207,6 +207,21 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
                                         //  message.setProperty("isAudioUploading", data.getString("FileId"));
 
                                     }
+                                    if (data.containsKey("card_originator")) {
+                                        if (!data.getBoolean("is_CustomCard")) {
+                                            message.setProperty("card_DB_ID", data.getString("card_DB_ID"));
+                                            message.setProperty("card_url", data.getString("card_url"));
+                                            message.setProperty("card_content", data.getString("card_content"));
+                                        }
+                                        message.setProperty("is_CustomCard", String.valueOf(data.getBoolean("is_CustomCard")));
+                                        message.setProperty("card_clicks", data.getString("clicks"));
+                                        message.setProperty("card_owner", data.getString("card_owner"));
+                                        message.setProperty("card_Accepted_Rejected", data.getString("accepted_Rejected"));
+                                        message.setProperty("card_heading", data.getString("card_heading"));
+                                        message.setProperty("card_id", data.getString("card_id"));
+                                        message.setProperty("card_Played_Countered", data.getString("card_Played_Countered"));
+                                        message.setProperty("card_originator", data.getString("card_originator"));
+                                    }
                                     break;
                                 case Constants.CHAT_TYPE_DELIVERED:
                                     message.setProperty("isDelivered",data.getString("isDelivered"));
@@ -214,7 +229,10 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
                                     break;
 
                             }
-                            if (!(data.getInt("ChatType") == Constants.CHAT_TYPE_CARD)) {
+
+                            //check for trade card and also when trade card is shared
+                            if (!data.containsKey("card_originator")) {
+
                                 if (data.containsKey("clicks"))
                                     message.setProperty("clicks", data.getString("clicks"));
                                 //  message.setBody("");
@@ -260,7 +278,7 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
                         Bundle data1 = msg.getData();
                         userId = data1.getInt("partnerQBId");
                         //  checkOnlineStatus(userId);
-
+                        if(userId !=0)
                         new Thread(checkstatusRunnable).start();
 
                 }
@@ -430,7 +448,7 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
                     temp.sharingMedia = extraParamsObj.getString("sharingMedia");
                     temp.isMessageSender = extraParamsObj.getString("isMessageSender");
 
-
+                    if(extraParamsObj.has("clicks"))
                     temp.clicks = extraParamsObj.getString("clicks");
                     temp.originalMessageID = extraParamsObj.getString("originalMessageID");
                     //  temp.is = extraParamsObj.getString("isFileUploading");
@@ -443,25 +461,18 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
 
                 }
 
+                if(!Utils.isEmptyString(temp.clicks)) {// in case of shared accept reject- no clicks are there-monika
+                    if (temp.clicks.equalsIgnoreCase("no")) {
+                        temp.textMsg = body.trim();
+                    } else if ((!extraParamsObj.has("card_owner"))) {
 
-                if (temp.clicks.equalsIgnoreCase("no")) {
-                    temp.textMsg = body.trim();
-                } else if ((!extraParamsObj.has("card_owner"))) {
-                    // if(!temp.clicks.equalsIgnoreCase(body))
-                    //update value of clicks-add or subtract-monika
-                  /*  if (temp.senderQbId.equalsIgnoreCase(authManager.partnerQbId)) {
-                        if (temp.clicks.startsWith("+"))
-                            Utils.updateClicksWithoutCard(authManager.ourClicks, temp.clicks, true);
-                        else
-                            Utils.updateClicksWithoutCard(authManager.ourClicks, temp.clicks, false);
-                    }*/
-                    if (body.length() > 3){
-                        temp.textMsg = body.substring(3).trim();
-                    temp.clicks = Utils.convertClicks(temp.clicks).trim();
-                }
-                    else { //only clicks
-                        temp.textMsg = "";
-                        temp.clicks = Utils.convertClicks(temp.clicks).trim();
+                        if (body.length() > 3) {
+                            temp.textMsg = body.substring(3).trim();
+                            temp.clicks = Utils.convertClicks(temp.clicks).trim();
+                        } else { //only clicks
+                            temp.textMsg = "";
+                            temp.clicks = Utils.convertClicks(temp.clicks).trim();
+                        }
                     }
                 }
                 temp.sentOn = "" + Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis();
@@ -825,11 +836,11 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
         if(userId !=0) {
             if (chatRoster != null)
                 presence = chatRoster.getPresence(userId);
-            else {
+          /*  else {
                 chatRoster = QBChatService.getInstance().getRoster(QBRoster.SubscriptionMode.mutual, subscriptionListener);
                 presence = chatRoster.getPresence(userId);
                 chatRoster.addRosterListener(rosterListener);
-            }
+            }*/
         }
         if (presence == null) {
             // No user in your roster

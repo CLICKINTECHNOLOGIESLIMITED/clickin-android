@@ -182,6 +182,22 @@ public class ChatManager {
                                             temp.card_DB_ID = (String) cards.get(8);
                                             temp.card_Played_Countered = (String) cards.get(9);
                                         }
+
+                                        //code to fetch share array, if exists-monika
+                                        JSONArray sharedMessage = chatObj.getJSONArray("sharedMessage");
+                                        if (sharedMessage != null) {
+                                            temp.originalMessageID = (String) sharedMessage.get(0);
+                                            temp.shareStatus = (String) sharedMessage.get(1);
+                                            temp.senderQbId = (String) sharedMessage.get(2);
+                                            temp.isAccepted = (String) sharedMessage.get(3);
+                                            temp.isMessageSender = (String) sharedMessage.get(4);
+                                            temp.shareComment = (String) sharedMessage.get(5);
+                                            temp.sharingMedia = (String) sharedMessage.get(6);
+
+                                            temp.facebookToken = (String) sharedMessage.get(7);
+
+                                        }
+
                                         refreshivechatList.add(temp);
                                     } catch (JSONException e) { //specially for cards array
                                         e.printStackTrace();
