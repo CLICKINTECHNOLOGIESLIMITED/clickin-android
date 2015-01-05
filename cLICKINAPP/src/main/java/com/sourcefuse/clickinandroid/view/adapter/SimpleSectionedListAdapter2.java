@@ -236,7 +236,6 @@ public class SimpleSectionedListAdapter2 extends BaseAdapter implements PinnedSe
                                                 .load(mSections.get(position).senderImages)
                                                 .skipMemoryCache()
                                                 .error(R.drawable.female_user).into(imageview);
-
                                     } else {
                                         imageview.setImageResource(R.drawable.female_user);
                                     }

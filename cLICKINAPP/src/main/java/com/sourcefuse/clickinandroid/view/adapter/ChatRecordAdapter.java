@@ -1359,7 +1359,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
         });
 
 
-        // Click Action On Share With REJECT
+        // Click Action On Share With REJECT//akshit latest
         ((TextView) row.findViewById(R.id.shared_message_reject)).setTag(position);
         ((TextView) row.findViewById(R.id.shared_message_reject)).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1399,12 +1399,26 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
                     ChatManager chatManager = ModelManager.getInstance().getChatManager();
                     chatManager.chatShare(authM.getPhoneNo(), authM.getUsrToken(), item.relationshipId, item.originalMessageID, item.sharingMedia, item.facebookToken, item.shareComment, "no");
+
+                    //akshit code to change images to deactive state
+                    ((TextView) row.findViewById(R.id.shared_message_reject)).setBackgroundResource(R.drawable.c_card_reject_deactive);
+                    ((TextView) row.findViewById(R.id.shared_message_accept)).setBackgroundResource(R.drawable.c_card_accepted_deactive);
+                     //ends
+
+
                 }
             }
         });
         // Click Action On Share With ACCEPT-mukesh
         ((TextView) row.findViewById(R.id.shared_message_accept)).setTag(position);
-        ((TextView) row.findViewById(R.id.shared_message_accept)).setOnClickListener(new View.OnClickListener() {
+
+        if (!Utils.isEmptyString(temp.isAccepted))//akshit code to change images to deactivate state
+        {
+            ((TextView) row.findViewById(R.id.shared_message_reject)).setBackgroundResource(R.drawable.c_card_reject_deactive);
+            ((TextView) row.findViewById(R.id.shared_message_accept)).setBackgroundResource(R.drawable.c_card_accepted_deactive);
+        }//akshit code ends
+
+            ((TextView) row.findViewById(R.id.shared_message_accept)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AuthManager authM = ModelManager.getInstance().getAuthorizationManager();
@@ -1454,6 +1468,10 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     ChatManager chatManager = ModelManager.getInstance().getChatManager();
                     chatManager.chatShare(authM.getPhoneNo(), authM.getUsrToken(), item.relationshipId, item.originalMessageID, item.sharingMedia, item.facebookToken, item.shareComment, "yes");
 
+                    //akshit code to set image to deactivate state .
+                    ((TextView) row.findViewById(R.id.shared_message_reject)).setBackgroundResource(R.drawable.c_card_reject_deactive);
+                    ((TextView) row.findViewById(R.id.shared_message_accept)).setBackgroundResource(R.drawable.c_card_accepted_deactive);
+                      //ends
                 }
             }
         });
