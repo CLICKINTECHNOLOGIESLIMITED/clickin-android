@@ -973,8 +973,6 @@ public class AuthManager {
             client.addHeader("Phone-No", phone);
 
 
-
-
             if (!Utils.isEmptyString(othersphone)) {
                 str = othersphone.substring(1);
             } else {
@@ -1022,7 +1020,6 @@ public class AuthManager {
                                 authManager.setTmpGender(jobj.getString("gender"));
                             else
                                 authManager.setTmpGender("");
-
 
 
                             if (jobj.has("follower"))

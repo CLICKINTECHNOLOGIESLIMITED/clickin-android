@@ -27,8 +27,6 @@ import java.util.List;
 
 import de.greenrobot.event.EventBus;
 
-import static android.telephony.TelephonyManager.EXTRA_STATE_IDLE;
-
 
 public class GcmIntentService extends IntentService {
     private static final String TAG = AuthManager.class.getSimpleName();
@@ -45,7 +43,6 @@ public class GcmIntentService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         Bundle extras = intent.getExtras();
-
 
 
         GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
@@ -166,10 +163,8 @@ public class GcmIntentService extends IntentService {
         boolean isScreenOn = pm.isScreenOn();  // check screen state to show notification
 
 
-
         if (!isAppOnForeground(getApplicationContext()) || !isScreenOn)
             mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
-
 
 
     }
@@ -181,7 +176,6 @@ public class GcmIntentService extends IntentService {
         if (appProcesses == null) {
             return false;
         }
-
 
 
         final String packageName = context.getPackageName();

@@ -638,7 +638,6 @@ public class
                 CountryZipCode = "+" + CountryZipCode;
 
 
-
                 break;
             }
         }
@@ -1365,7 +1364,6 @@ public class
         Intent intent1 = new Intent();
         intent1.setAction(Intent.ACTION_VIEW);
         intent1.putExtra(MediaStore.EXTRA_FINISH_ON_COMPLETION, false);
-
 
 
         intent1.setDataAndType(uri, "audio/*");

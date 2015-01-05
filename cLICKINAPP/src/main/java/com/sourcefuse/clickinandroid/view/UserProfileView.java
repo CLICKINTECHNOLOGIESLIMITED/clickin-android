@@ -388,7 +388,6 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         } else if (message.equalsIgnoreCase("UserVisible true")) {
 
 
-
         } else if (message.equalsIgnoreCase("GetrelationShips True")) {
             Utils.dismissBarDialog();
             myQbChatService.setChatListeners();

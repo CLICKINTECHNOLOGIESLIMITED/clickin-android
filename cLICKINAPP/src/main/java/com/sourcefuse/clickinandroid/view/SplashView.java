@@ -13,6 +13,7 @@ import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
@@ -23,9 +24,10 @@ import com.sourcefuse.clickinandroid.utils.GPSTracker;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
 import com.splunk.mint.Mint;
-import java.io.InputStream;
-import de.greenrobot.event.EventBus;
 
+import java.io.InputStream;
+
+import de.greenrobot.event.EventBus;
 
 
 public class SplashView extends Activity implements View.OnClickListener {

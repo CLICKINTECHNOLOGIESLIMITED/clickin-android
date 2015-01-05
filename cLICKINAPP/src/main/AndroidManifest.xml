@@ -241,7 +241,6 @@
             android:value="AIzaSyABvxiiwy0AjxyFUbVCsOgoIAiqZgVWV3o" />
 
 
-
         <activity
             android:name="com.sourcefuse.clickinandroid.view.FeedView"
             android:launchMode="standard"

@@ -372,7 +372,6 @@ public class FetchContactFromPhone {
                                     ContactBean cb = Utils.contactMap.get(data.getString("phone_no"));
 
 
-
                                     if (cb != null) {
                                         clickerList = new CurrentClickerBean();
                                         if (data.has("phone_no")) {

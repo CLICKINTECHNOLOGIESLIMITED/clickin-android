@@ -371,7 +371,6 @@ public class EditMyProfileView extends ClickInBaseView implements View.OnClickLi
                 mat.postRotate(angle);
 
 
-
                 bitmap = Bitmap.createBitmap(bitmap1, 0, 0, bitmap1.getWidth(), bitmap1.getHeight(), mat, true);
 
 

@@ -8,7 +8,6 @@ import com.sourcefuse.clickinandroid.model.bean.CurrentClickerBean;
 import com.sourcefuse.clickinandroid.model.bean.FollowerFollowingBean;
 import com.sourcefuse.clickinandroid.utils.APIs;
 import com.sourcefuse.clickinandroid.utils.Utils;
-import com.sourcefuse.clickinapp.R;
 
 import org.apache.http.entity.StringEntity;
 import org.apache.http.message.BasicHeader;
@@ -222,8 +221,7 @@ public class ProfileManager {
                                         } else {
                                             followingList.setFolloweePic("");
                                         }
-                                }catch (Exception e)
-                                {
+                                } catch (Exception e) {
                                     e.printStackTrace();
 
                                 }
@@ -246,14 +244,13 @@ public class ProfileManager {
                                     if (data.has("followee_pic"))
                                         if (data.getString("followee_pic").contains("profile_pic")) {
 
-                                            String following_pic= new String(data.getString("followee_pic"));
+                                            String following_pic = new String(data.getString("followee_pic"));
                                             String pthumbImage = following_pic.replace("profile_pic", "thumb_profile_pic");
                                             followingList.setFolloweePic(pthumbImage);
                                         } else {
                                             followingList.setFolloweePic("");
                                         }
-                                }catch (Exception e)
-                                {
+                                } catch (Exception e) {
                                     e.printStackTrace();
 
                                 }
@@ -291,8 +288,7 @@ public class ProfileManager {
                                             } else {
                                                 followerList.setFolloweePic("");
                                             }
-                                        }catch (Exception e)
-                                        {
+                                        } catch (Exception e) {
                                             e.printStackTrace();
 
                                         }

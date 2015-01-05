@@ -123,7 +123,7 @@ public class MyQbChatService extends Service {
         data.putString("textMsg", msgObject.textMsg);
         data.putInt("ChatType", msgObject.chatType);
 
-        if(Utils.isEmptyString(msgObject.isAccepted)) { //in case of shared accept/reject no clicks there, no chatid
+        if (Utils.isEmptyString(msgObject.isAccepted)) { //in case of shared accept/reject no clicks there, no chatid
             data.putString("clicks", msgObject.clicks);
 
         }
@@ -172,7 +172,7 @@ public class MyQbChatService extends Service {
                     data.putString("FileId", msgObject.content_url);
                 } else if (!Utils.isEmptyString(msgObject.imageRatio) && !Utils.isEmptyString(msgObject.video_thumb)) {
                     data.putString("FileId", msgObject.content_url);
-                }else if (!Utils.isEmptyString(msgObject.card_originator)) {
+                } else if (!Utils.isEmptyString(msgObject.card_originator)) {
 
                     if (!msgObject.is_CustomCard) {
                         data.putString("card_DB_ID", msgObject.card_DB_ID);
@@ -198,8 +198,6 @@ public class MyQbChatService extends Service {
                 } else {
                     data.putString("isAccepted", msgObject.isAccepted);
                 }
-
-
 
 
                 break;

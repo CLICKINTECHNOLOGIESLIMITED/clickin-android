@@ -6,7 +6,6 @@ import com.sourcefuse.clickinandroid.model.bean.CurrentClickerBean;
 import com.sourcefuse.clickinandroid.model.bean.FeedStarsBean;
 import com.sourcefuse.clickinandroid.model.bean.NewsFeedBean;
 import com.sourcefuse.clickinandroid.utils.APIs;
-import com.sourcefuse.clickinandroid.utils.Utils;
 
 import org.apache.http.entity.StringEntity;
 import org.apache.http.message.BasicHeader;
@@ -36,7 +35,6 @@ public class NewsFeedManager {
             userInputDetails.put("phone_no", phone);
             userInputDetails.put("user_token", usertoken);
             userInputDetails.put("last_newsfeed_id", lastNewsfeedId);
-
 
 
             client = new AsyncHttpClient();
@@ -293,7 +291,6 @@ public class NewsFeedManager {
                         }
 
 
-
                     }
 
                 }
@@ -491,7 +488,7 @@ public class NewsFeedManager {
                                 feedStars.setUserPic(recordsArray.getJSONObject(i).getString("user_pic"));
                                 if (recordsArray.getJSONObject(i).getJSONObject("modified").has("sec"))
 
-                                feedStars.setcreated_sec(recordsArray.getJSONObject(i).getJSONObject("modified").getString("sec"));
+                                    feedStars.setcreated_sec(recordsArray.getJSONObject(i).getJSONObject("modified").getString("sec"));
 
                                 if (recordsArray.getJSONObject(i).getJSONObject("modified").has("usec"))
                                     feedStars.setcreated_usec(recordsArray.getJSONObject(i).getJSONObject("modified").getString("usec"));

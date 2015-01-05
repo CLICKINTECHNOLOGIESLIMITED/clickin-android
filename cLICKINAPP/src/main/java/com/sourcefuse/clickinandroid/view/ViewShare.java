@@ -13,18 +13,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.facebook.Session;
 import com.facebook.SessionState;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ChatManager;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
-<<<<<<< HEAD
-=======
-import com.sourcefuse.clickinandroid.utils.Constants;
-import com.sourcefuse.clickinandroid.utils.Log;
->>>>>>> a72b39571a168830c25377886e46d86ccc2e5614
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
 import com.squareup.picasso.Picasso;
@@ -47,10 +41,8 @@ public class ViewShare extends Activity implements View.OnClickListener {
     private static final String TAG = ViewShare.class.getSimpleName();
     TextView mshr_point, mshr_comment;
     String fileId, clicks, textMsg, originalChatId, isMessageSender;
-    String card_Accepted_Rejected ,card_DB_ID,card_Played_Countered,card_id,card_content,card_heading,card_originator,card_owner,card_clicks;
+    String card_Accepted_Rejected, card_DB_ID, card_Played_Countered, card_id, card_content, card_heading, card_originator, card_owner, card_clicks;
     boolean is_CustomCard;
-
-
 
 
     EditText shr_caption;
@@ -117,17 +109,17 @@ public class ViewShare extends Activity implements View.OnClickListener {
                 videoID = intent.getStringExtra("videoID");
                 image_url = videoThumbnail;
             } else if (intent.hasExtra("card_owner")) {
-                card_Accepted_Rejected  = intent.getStringExtra("card_Accepted_Rejected");
+                card_Accepted_Rejected = intent.getStringExtra("card_Accepted_Rejected");
                 card_DB_ID = intent.getStringExtra("card_DB_ID");
                 card_Played_Countered = intent.getStringExtra("card_Played_Countered");
                 card_id = intent.getStringExtra("card_id");
-               clicks = intent.getStringExtra("clicks");
+                clicks = intent.getStringExtra("clicks");
                 card_content = intent.getStringExtra("card_content");
                 card_heading = intent.getStringExtra("card_heading");
                 card_originator = intent.getStringExtra("card_originator");
                 card_owner = intent.getStringExtra("card_owner");
                 image_url = intent.getStringExtra("card_url");
-                is_CustomCard  = intent.getBooleanExtra("is_CustomCard",false);
+                is_CustomCard = intent.getBooleanExtra("is_CustomCard", false);
             } else if (intent.hasExtra("audioID")) {
                 clicks = intent.getStringExtra("clicks");
                 audioID = intent.getStringExtra("audioID");
@@ -157,7 +149,7 @@ public class ViewShare extends Activity implements View.OnClickListener {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                }else{
+                } else {
 
                     Picasso.with(ViewShare.this).load(image_url)
                             .resize(200, 200).centerCrop()
@@ -241,7 +233,7 @@ public class ViewShare extends Activity implements View.OnClickListener {
         switch (view.getId()) {
 
             case R.id.shr_facebook:
-     //           Toast.makeText(this, "Will be implemented later on", Toast.LENGTH_SHORT).show();
+                //           Toast.makeText(this, "Will be implemented later on", Toast.LENGTH_SHORT).show();
                 if (Utils.isConnectingToInternet(ViewShare.this)) {
 
                     Session session = Session.getActiveSession();
@@ -286,7 +278,7 @@ public class ViewShare extends Activity implements View.OnClickListener {
                     i.putExtra("card_Accepted_Rejected", card_Accepted_Rejected);
                     i.putExtra("card_DB_ID", card_DB_ID);
                     i.putExtra("card_Played_Countered", card_Played_Countered);
-                  
+
                     i.putExtra("card_content", card_content);
                     i.putExtra("card_heading", card_heading);
                     i.putExtra("card_originator", card_originator);
@@ -296,10 +288,10 @@ public class ViewShare extends Activity implements View.OnClickListener {
                     i.putExtra("is_CustomCard", is_CustomCard);
                 }
 
-            
+
                 i.putExtra("originalChatId", originalChatId);
 
-                i.putExtra("clicks",clicks);
+                i.putExtra("clicks", clicks);
                 i.putExtra("textMsg", textMsg);
                 i.putExtra("caption", commentStr);
                 if (access_Token.length() > 5) {

@@ -163,7 +163,7 @@ public class ChatManager {
                                         if (chatObj.has("chatId")) {
                                             temp.chatId = chatObj.getString("chatId");
                                             //temp code- will handle properly later on-monika
-                                            temp.deliveredChatID=temp.chatId;
+                                            temp.deliveredChatID = temp.chatId;
                                         }
 
                                         // temp.cardchatObj.getString("cards"));

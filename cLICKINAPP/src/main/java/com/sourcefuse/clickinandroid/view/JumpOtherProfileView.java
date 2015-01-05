@@ -461,7 +461,7 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
         TextView msgII = (TextView) dialog.findViewById(R.id.alert_msgII);
 //        msgI.setText(str);
 //        msgI.setText(AlertMessage.CURRENTCLICKERPAGE);
-        msgII.setText(AlertMessage.MAKECLICKWITH +"\n" +authManager.getTmpUserName());//akshit change for fixing UI Related bug
+        msgII.setText(AlertMessage.MAKECLICKWITH + "\n" + authManager.getTmpUserName());//akshit change for fixing UI Related bug
         Button skip = (Button) dialog.findViewById(R.id.coolio);
         skip.setOnClickListener(new View.OnClickListener() {
             @Override

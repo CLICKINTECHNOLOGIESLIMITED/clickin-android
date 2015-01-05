@@ -302,7 +302,6 @@ public class ClickinDbHelper extends SQLiteOpenHelper implements ChatRecordI {
         if (update >= 0) {
 
 
-
         } else {
 
 

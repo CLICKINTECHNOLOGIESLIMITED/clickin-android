@@ -15,8 +15,6 @@ public class GcmBroadcastReceiver extends WakefulBroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
 
 
-
-
         if (SettingManager.mNotification_Enable) {
 
             ComponentName comp = new ComponentName(context.getPackageName(), GcmIntentService.class.getName());

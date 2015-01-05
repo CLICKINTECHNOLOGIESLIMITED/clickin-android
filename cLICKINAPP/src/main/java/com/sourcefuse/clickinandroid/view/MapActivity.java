@@ -175,7 +175,6 @@ public class MapActivity extends Activity implements ConnectionCallbacks, OnConn
         final Double lng = Double.parseDouble(arg[1]);
 
 
-
         if (!Utils.isEmptyString(authManager.getLatLan()) && lat != 0.0) {
             new Geo().execute(latlng);
             showMarker(lat, lng);
@@ -257,7 +256,6 @@ public class MapActivity extends Activity implements ConnectionCallbacks, OnConn
     public void onCameraChange(CameraPosition position) {
 
 
-
     }
 
     public void defaultposition(Double lat, Double lng) {
@@ -310,7 +308,6 @@ public class MapActivity extends Activity implements ConnectionCallbacks, OnConn
             Double mLng = gpsTracker.getLongitude();
             LatLng latLng = new LatLng(mLat, mLng);
             mlatLng = latLng;
-
 
 
             showMarker(mLat, mLng);
