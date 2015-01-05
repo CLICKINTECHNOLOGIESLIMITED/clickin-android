@@ -575,16 +575,16 @@ public class AuthManager {
             userInputDetails.put("device_token", deviceToken);
             userInputDetails.put("password", password);
             userInputDetails.put("device_type", deviceType);
-            android.util.Log.e(TAG, "userInputDetails-> " + userInputDetails);
+
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
         } catch (Exception e1) {
             e1.printStackTrace();
-            android.util.Log.e("in catch block-->", "in catch block-->");
+
         }
 
-        android.util.Log.e("SIGNIN url", APIs.SIGNIN);
+
         client.post(null, APIs.SIGNIN, se, "application/json",
                 new JsonHttpResponseHandler() {
 
@@ -593,7 +593,7 @@ public class AuthManager {
                                           JSONObject errorResponse) {
                         super.onFailure(statusCode, e, errorResponse);
                         if (errorResponse != null) {
-                            android.util.Log.e("errorResponse", "->" + errorResponse);
+
                             try {
                                 authManager.setMessage(errorResponse.getString("message"));
                             } catch (JSONException e1) {
@@ -610,7 +610,7 @@ public class AuthManager {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            android.util.Log.e(TAG, "response  SIGNIN->" + response);
+
                             state = response.getBoolean("success");
                             if (state) {
 
@@ -670,7 +670,7 @@ public class AuthManager {
             @Override
             public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
                 super.onFailure(statusCode, e, errorResponse);
-                System.out.println("errorResponse--> " + errorResponse);
+
                 if (errorResponse != null) {
                     try {
                         authManager.setMessage(errorResponse.getString("message"));
@@ -688,7 +688,7 @@ public class AuthManager {
                 super.onSuccess(statusCode, headers, response);
                 boolean state = false;
                 try {
-                    System.out.println("response--> " + response);
+
                     state = response.getBoolean("success");
                     if (state) {
                         EventBus.getDefault().post("SignUp True");
@@ -713,7 +713,7 @@ public class AuthManager {
             inputDetails.put("device_token", deviceToken);
             inputDetails.put("device_type", deviceType);
 
-            System.out.println("inputDetails--> " + inputDetails);
+
             client = new AsyncHttpClient();
             se = new StringEntity(inputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
@@ -726,7 +726,7 @@ public class AuthManager {
                     @Override
                     public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
                         super.onFailure(statusCode, e, errorResponse);
-                        android.util.Log.e("Auth", "errorResponse--> " + errorResponse);
+
                         if (errorResponse != null) {
                             try {
                                 authManager.setMessage(errorResponse.getString("message"));
@@ -747,7 +747,7 @@ public class AuthManager {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            System.out.println("response--> " + response);
+
                             state = response.getBoolean("success");
                             if (state) {
                                 if (response.has("QB_id"))
@@ -756,7 +756,7 @@ public class AuthManager {
                                     authManager.setUserId(response.getString("user_id"));
                                 if (response.has("user_token"))
                                     authManager.setUsrToken(response.getString("user_token"));
-                                android.util.Log.e("getUsrToken--", "" + authManager.getUsrToken());
+
                                 EventBus.getDefault().post("Verify True");
                             }
                         } catch (JSONException e) {
@@ -794,7 +794,7 @@ public class AuthManager {
                     public void onFailure(int statusCode, Throwable e,
                                           JSONObject errorResponse) {
                         super.onFailure(statusCode, e, errorResponse);
-                        System.out.println("errorResponse--> " + errorResponse);
+
                         if (errorResponse != null) {
                             try {
                                 authManager.setMessage(errorResponse
@@ -817,7 +817,7 @@ public class AuthManager {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            System.out.println("response-INSERTEMAIL--> " + response);
+
                             state = response.getBoolean("success");
                             if (state) {
 
@@ -848,7 +848,7 @@ public class AuthManager {
             client = new AsyncHttpClient();
             se = new StringEntity(inputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            android.util.Log.e("", "inputDetails-->" + inputDetails);
+
         } catch (Exception e1) {
             e1.printStackTrace();
         }
@@ -856,7 +856,7 @@ public class AuthManager {
             @Override
             public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
                 super.onFailure(statusCode, e, errorResponse);
-                android.util.Log.e("Auth", "errorResponse--> " + errorResponse);
+
                 if (errorResponse != null) {
                     try {
                         authManager.setMessage(errorResponse.getString("message"));
@@ -878,7 +878,7 @@ public class AuthManager {
                 super.onSuccess(statusCode, headers, response);
                 boolean state = false;
                 try {
-                    System.out.println("response-INSERTEMAIL--> " + response);
+
                     state = response.getBoolean("success");
                     if (state) {
                         EventBus.getDefault().post("ReSendVerifyCode True");
@@ -908,7 +908,7 @@ public class AuthManager {
             se = new StringEntity(inputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,
                     "application/json"));
-            android.util.Log.e("", "inputDetails-->" + inputDetails);
+
         } catch (Exception e1) {
             e1.printStackTrace();
         }
@@ -917,7 +917,7 @@ public class AuthManager {
                     @Override
                     public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
                         super.onFailure(statusCode, e, errorResponse);
-                        System.out.println("errorResponse--> " + errorResponse);
+
                         if (errorResponse != null) {
                             try {
                                 authManager.setMessage(errorResponse.getString("message"));
@@ -939,7 +939,7 @@ public class AuthManager {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            android.util.Log.e("respone ----->", "" + response);
+
                             state = response.getBoolean("success");
                             if (state) {
                                 EventBus.getDefault().post("RequestSend True");
@@ -972,7 +972,7 @@ public class AuthManager {
             client.addHeader("User-Token", usertoken);
             client.addHeader("Phone-No", phone);
 
-            android.util.Log.e("usertoken-phone_no-othersphone-->", "" + usertoken + "-" + phone + "-" + othersphone);
+
 
 
             if (!Utils.isEmptyString(othersphone)) {
@@ -983,14 +983,14 @@ public class AuthManager {
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        android.util.Log.e("othersphone url-->", "" + APIs.FETCHPROFILEINFO + "%2B" + str);
+
         client.get(APIs.FETCHPROFILEINFO + "%2B" + str, new JsonHttpResponseHandler() {
             boolean success = false;
 
             @Override
             public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
                 super.onFailure(statusCode, e, errorResponse);
-                System.out.println("errorResponse--> " + errorResponse);
+
                 if (errorResponse != null) {
                     try {
                         authManager.setMessage(errorResponse.getString("message"));
@@ -1011,7 +1011,7 @@ public class AuthManager {
                 super.onSuccess(statusCode, headers, response);
                 try {
 
-                    android.util.Log.e(TAG, "response--> " + response);
+
                     success = response.getBoolean("success");
                     if (success) {
 
@@ -1023,7 +1023,7 @@ public class AuthManager {
                             else
                                 authManager.setTmpGender("");
 
-                            //   android.util.android.util.Log.e("value of gender from server ---",""+jobj.getString("gender"));
+
 
                             if (jobj.has("follower"))
                                 authManager.setTmpFollower(jobj.getString("follower"));

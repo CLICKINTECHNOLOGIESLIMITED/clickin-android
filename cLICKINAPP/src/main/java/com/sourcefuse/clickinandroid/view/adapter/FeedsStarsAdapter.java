@@ -70,11 +70,8 @@ public class FeedsStarsAdapter extends ArrayAdapter<FeedStarsBean> {
         }
         ProfileManager prMgr = ModelManager.getInstance().getProfileManager();
         if (prMgr.following != null) {
-            android.util.Log.e("followRequesed", "" + prMgr.following.size());
 //            for (int i = 0; i < prMgr.following.size();i++)
 //            {
-//                android.util.Log.e("getUserId",""+eachNewsFeed.get(position).getUserId());
-//                android.util.Log.e("getFollowingId",""+prMgr.following.get(i).getFolloweeName());
 //                if(eachNewsFeed.get(position).getUserId().equalsIgnoreCase(prMgr.following.get(i).getFolloweeId()))
 //                {
 //                    if(prMgr.following.get(i).getAccepted().equalsIgnoreCase("true"))

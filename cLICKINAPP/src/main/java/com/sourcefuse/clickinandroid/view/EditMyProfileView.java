@@ -167,8 +167,7 @@ public class EditMyProfileView extends ClickInBaseView implements View.OnClickLi
         try {
 
             Bitmap imagebitmap1 = authManager.getUserbitmap();
-            /*if (imagebitmap1 != null)
-                com.sourcefuse.clickinandroid.utils.android.util.Log.e("user bit map not null", "user bit map not null");*/
+
             boolean userpic = Utils.isEmptyString(authManager.getUserPic());
 
             if (imagebitmap1 != null)
@@ -183,7 +182,6 @@ public class EditMyProfileView extends ClickInBaseView implements View.OnClickLi
                 mySelfy.setImageResource(R.drawable.male_user);
 
         } catch (Exception e) {
-            // com.sourcefuse.clickinandroid.utils.android.util.Log.e("on exception", "on exception");
             mySelfy.setImageResource(R.drawable.male_user);
         }
 
@@ -212,7 +210,6 @@ public class EditMyProfileView extends ClickInBaseView implements View.OnClickLi
             case R.id.btn_click_to_save:
                 if (updateProfileValidation()) {
                     if (Utils.isEmailValid(myEmail.getText().toString())) {
-                        android.util.Log.e(TAG, "btn_click_to_save");
                         Utils.launchBarDialog(EditMyProfileView.this);
                         try {
 
@@ -236,20 +233,17 @@ public class EditMyProfileView extends ClickInBaseView implements View.OnClickLi
                                 profileManager.setProfile(userName, userLastName, authManager.getPhoneNo(),
                                         authManager.getUsrToken(), "", "", userCity, userCountry, userEmail, "", Utils.encodeTobase64(bitmap));
                             } else {
-                                android.util.Log.e(TAG, "btn_click_to_save2");
                                 try {
                                     // imageBitmap = Picasso.with(EditMyProfileView.this).load(authManager.getUserPic()).get();
                                     //Utils.encodeTobase64(imageBitmap)
                                     profileManager.setProfile(userName, userLastName, authManager.getPhoneNo(),
                                             authManager.getUsrToken(), "", "", userCity, userCountry, userEmail, "", "");
                                 } catch (Exception e) {
-                                    android.util.Log.e(TAG, "1" + e.toString());
                                 }
                             }
 
 
                         } catch (Exception e) {
-                            android.util.Log.e(TAG, "2" + e.toString());
                         }
                     } else {
 
@@ -318,7 +312,6 @@ public class EditMyProfileView extends ClickInBaseView implements View.OnClickLi
                     }
                     Matrix mat = new Matrix();
                     mat.postRotate(angle);
-                    android.util.Log.e("angle from camera 1 --->", "" + angle);
 
                     Bitmap resize;
                     resize = Bitmap.createBitmap(bitmap1, 0, 0, bitmap1.getWidth(), bitmap1.getHeight(), mat, true);
@@ -332,7 +325,6 @@ public class EditMyProfileView extends ClickInBaseView implements View.OnClickLi
                             startActivityForResult(intent, Constants.CROP_PICTURE);
                         } catch (Exception e) {
                             e.printStackTrace();
-                            android.util.Log.e("exception--->", "exception--->");
                         }
                     }
                     userImageUri = mImageCaptureUri;
@@ -379,7 +371,6 @@ public class EditMyProfileView extends ClickInBaseView implements View.OnClickLi
                 mat.postRotate(angle);
 
 
-                android.util.Log.e("angle from gallery --->", "" + angle);
 
                 bitmap = Bitmap.createBitmap(bitmap1, 0, 0, bitmap1.getWidth(), bitmap1.getHeight(), mat, true);
 
@@ -400,7 +391,6 @@ public class EditMyProfileView extends ClickInBaseView implements View.OnClickLi
                     startActivityForResult(intent, Constants.CROP_PICTURE);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    android.util.Log.e("exception--->", "exception--->");
                 }
             }
 
@@ -460,10 +450,8 @@ public class EditMyProfileView extends ClickInBaseView implements View.OnClickLi
             authManager.setMenuUserInfoFlag(true);
 
             if (authManager.getmResizeBitmap() == null) {
-                //com.sourcefuse.clickinandroid.utils.android.util.Log.e("save 2--->","save 2--->");
                 authManager.setUserbitmap(authManager.getUserbitmap());
             } else if (authManager.getmResizeBitmap() != null) {
-                //com.sourcefuse.clickinandroid.utils.android.util.Log.e("save 1--->","save 1--->");
                 authManager.setUserbitmap(authManager.getmResizeBitmap());
             }
 

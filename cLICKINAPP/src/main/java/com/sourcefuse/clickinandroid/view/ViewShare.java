@@ -19,7 +19,6 @@ import com.facebook.SessionState;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ChatManager;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
-import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
 import com.squareup.picasso.Picasso;
@@ -293,7 +292,6 @@ public class ViewShare extends Activity implements View.OnClickListener {
     private void onSessionStateChange(Session session, SessionState state, Exception exception) {
         if (state.isOpened()) {
             access_Token = session.getAccessToken();
-            Log.e("access_Token", "access_Token->" + access_Token);
             publishStory();
             if (access_Token.length() > 5) {
                 findViewById(R.id.shr_facebook).setBackgroundResource(R.drawable.facebook_blue);
@@ -301,14 +299,12 @@ public class ViewShare extends Activity implements View.OnClickListener {
                 findViewById(R.id.shr_facebook).setBackgroundResource(R.drawable.facebook_share_background);
             }
         } else if (state.isClosed()) {
-            Log.e("access_Token", "access_Token->" + access_Token);
-            System.out.println("Logged out..." + access_Token + " -------");
+
         }
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        android.util.Log.e("publishStory", "publishStory--onActivityResult");
         super.onActivityResult(requestCode, resultCode, data);
         try {
             Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
@@ -320,7 +316,6 @@ public class ViewShare extends Activity implements View.OnClickListener {
 
     private void publishStory() {
 
-        android.util.Log.e("publishStory", "publishStory mth");
         Session session = Session.getActiveSession();
 
         if (session != null) {

@@ -102,7 +102,6 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
             privacy.setBackgroundResource(R.drawable.owner_profile_eye_icon);
             privacy.setTag(position);
         } else if (Utils.isEmptyString(itemList.get(position).getStatusAccepted()) && itemList.get(position).getRequestInitiator().equalsIgnoreCase("true")) {
-                  /*android.util.android.Utils.Log.e("getRequestInitiator", "getRequestInitiator");*/
             //sent request ClickIcon
             showpending = true;
             privacy.setBackgroundResource(R.drawable.pending_status);

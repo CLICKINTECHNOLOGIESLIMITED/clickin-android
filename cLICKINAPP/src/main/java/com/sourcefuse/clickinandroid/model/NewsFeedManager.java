@@ -38,7 +38,7 @@ public class NewsFeedManager {
             userInputDetails.put("last_newsfeed_id", lastNewsfeedId);
 
 
-            System.out.println(userInputDetails);
+
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,
@@ -55,7 +55,7 @@ public class NewsFeedManager {
                         super.onFailure(statusCode, e, errorResponse);
                         userFeed.clear();
                         if (errorResponse != null) {
-                            android.util.Log.e("errorResponse", "->" + errorResponse);
+
                             EventBus.getDefault().post("NewsFeed False");
                         } else {
                             EventBus.getDefault().post("NewsFeed Network Error");
@@ -69,8 +69,8 @@ public class NewsFeedManager {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            Utils.clickCustomLog(response.toString());
-                            android.util.Log.e(TAG, "response  News Feed->" + response);
+
+
                             state = response.getBoolean("success");
                             /*if (state) {
 
@@ -79,7 +79,7 @@ public class NewsFeedManager {
 
                             JSONArray newsfeedArray = response.getJSONArray("newsfeedArray");
                             userFeed.clear();
-                            android.util.Log.e("FeedSize-InManager before getting data", String.valueOf(userFeed.size()));
+
                             for (int i = 0; i < newsfeedArray.length(); i++) {
                                 NewsFeedBean allNewsFeed = new NewsFeedBean();
 
@@ -117,7 +117,7 @@ public class NewsFeedManager {
                                  */
 //                                if (!Utils.isEmptyString(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").toString())) {
                                 if (!newsfeedArray.getJSONObject(i).isNull("chatDetail")) {
-                                    android.util.Log.e("parsing", "inside chatdetail");
+
                                     JSONObject chatObj = newsfeedArray.getJSONObject(i).getJSONObject("chatDetail");
                                     if (chatObj.has("QB_id"))
                                         allNewsFeed.setNewsFeedArray_chatDetail_QB_id(chatObj.getString("QB_id"));
@@ -206,10 +206,10 @@ public class NewsFeedManager {
                                 if (!newsfeedArray.getJSONObject(i).isNull("commentArray")) {
                                     JSONArray commentArray = newsfeedArray.getJSONObject(i).getJSONArray("commentArray");
                                     ArrayList<NewsFeedBean> eachCommentArray = new ArrayList<NewsFeedBean>();
-//                                    android.util.Log.e("CommentArray", String.valueOf(commentArray.length()) + newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getString("_id"));
+
                                     for (int l = 0; l < commentArray.length(); l++) {
                                         NewsFeedBean commentUserData = new NewsFeedBean();
-                                        android.util.Log.e("DataNumber", String.valueOf(l));
+
                                         commentUserData.setNewsFeedArray_commentArray_id(commentArray.getJSONObject(l).getString("_id"));
                                         commentUserData.setNewsFeedArray_commentArray_chat_id(commentArray.getJSONObject(l).getString("chat_id"));
                                         commentUserData.setNewsFeedArray_commentArray_newsfeed_id(commentArray.getJSONObject(l).getString("newsfeed_id"));
@@ -237,7 +237,7 @@ public class NewsFeedManager {
                                         NewsFeedBean starredUserData = new NewsFeedBean();
                                         starredUserData.setNewsFeedArray_starredArray_id(starredArray.getJSONObject(k).getString("_id"));
                                         starredUserData.setNewsFeedArray_starredArray_user_name(starredArray.getJSONObject(k).getString("user_name"));
-                                        android.util.Log.e("user_name", starredArray.getJSONObject(k).getString("user_name"));
+
                                         eachStarredArray.add(starredUserData);
                                     }
                                     allNewsFeed.setStarredArrayList(eachStarredArray);
@@ -262,7 +262,7 @@ public class NewsFeedManager {
                                 Sender Details
                                  */
                                 if (!newsfeedArray.getJSONObject(i).isNull("senderDetail")) {
-                                    android.util.Log.e("sender id", newsfeedArray.getJSONObject(i).getJSONObject("senderDetail").getString("_id"));
+
                                     if (!newsfeedArray.getJSONObject(i).getJSONObject("senderDetail").getString("_id").equalsIgnoreCase("null")) {
                                         allNewsFeed.setNewsFeedArray_senderDetail_id(newsfeedArray.getJSONObject(i).getJSONObject("senderDetail").getString("_id"));
                                         allNewsFeed.setNewsFeedArray_senderDetail_name(newsfeedArray.getJSONObject(i).getJSONObject("senderDetail").getString("name"));
@@ -270,7 +270,7 @@ public class NewsFeedManager {
                                         allNewsFeed.setNewsFeedArray_senderDetail_phno(newsfeedArray.getJSONObject(i).getJSONObject("senderDetail").getString("phone_no"));
 
                                         userFeed.add(allNewsFeed);
-                                        android.util.Log.e("userFeed", "" + userFeed.size());
+
                                     }
 
                                 }
@@ -283,7 +283,7 @@ public class NewsFeedManager {
 
 
                             }
-                            android.util.Log.e("FeedSize-InManager", String.valueOf(userFeed.size()));
+
                             if (state) {
                                 EventBus.getDefault().post("NewsFeed True");
                             }
@@ -292,7 +292,7 @@ public class NewsFeedManager {
                             e.printStackTrace();
                         }
 
-                        //Log.i("Id",userFeed.get(0).getFollowerList().get(1).getNewsFeedArray_follower_user_id_$id());
+
 
                     }
 
@@ -315,7 +315,7 @@ public class NewsFeedManager {
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            android.util.Log.e("suserInputDetailse-CHANGEVISIBILITY-> ", "" + userInputDetails);
+
 
         } catch (Exception e1) {
             e1.printStackTrace();
@@ -325,7 +325,7 @@ public class NewsFeedManager {
                     @Override
                     public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
                         super.onFailure(statusCode, e, errorResponse);
-                        System.out.println("errorResponse--> " + errorResponse);
+
                         if (errorResponse != null) {
                             EventBus.getDefault().post("FetchFbFriend false");
                         } else {
@@ -338,7 +338,7 @@ public class NewsFeedManager {
                         super.onSuccess(statusCode, headers, response);
                         boolean success = false;
                         try {
-                            System.out.println("response--> " + response);
+
                             success = response.getBoolean("success");
                             profilemanager.currentClickerListFB.clear();
                             if (success) {
@@ -396,7 +396,7 @@ public class NewsFeedManager {
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,
                     "application/json"));
 
-            System.out.println(userInputDetails);
+
         } catch (Exception e1) {
             e1.printStackTrace();
         }
@@ -409,7 +409,7 @@ public class NewsFeedManager {
                         super.onFailure(statusCode, e, errorResponse);
 
                         if (errorResponse != null) {
-                            android.util.Log.e("errorResponse", "->" + errorResponse);
+
                             EventBus.getDefault().post("SaveStarComment False");
                         } else {
                             EventBus.getDefault().post("SaveStarComment Network Error");
@@ -423,7 +423,7 @@ public class NewsFeedManager {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            android.util.Log.e(TAG, "response SaveStarComment ->" + response);
+
                             state = response.getBoolean("success");
                             if (state) {
                                 EventBus.getDefault().post("SaveStarComment True");
@@ -452,7 +452,7 @@ public class NewsFeedManager {
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            android.util.Log.e(TAG, "FetchCommentStatus-->" + userInputDetails);
+
         } catch (Exception e1) {
             e1.printStackTrace();
         }
@@ -475,7 +475,7 @@ public class NewsFeedManager {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            android.util.Log.e(TAG, "response FetchCommentStatus ->" + response);
+
                             state = response.getBoolean("success");
                             JSONArray recordsArray = response.getJSONArray("records");
                             feedStarsList.clear();
@@ -490,7 +490,7 @@ public class NewsFeedManager {
                                 feedStars.setUserName(recordsArray.getJSONObject(i).getString("user_name"));
                                 feedStars.setUserPic(recordsArray.getJSONObject(i).getString("user_pic"));
                                 if (recordsArray.getJSONObject(i).getJSONObject("modified").has("sec"))
-                                    android.util.Log.e("sec", recordsArray.getJSONObject(i).getJSONObject("modified").getString("sec"));
+
                                 feedStars.setcreated_sec(recordsArray.getJSONObject(i).getJSONObject("modified").getString("sec"));
 
                                 if (recordsArray.getJSONObject(i).getJSONObject("modified").has("usec"))
@@ -538,7 +538,7 @@ public class NewsFeedManager {
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            android.util.Log.e(TAG, "NewsFeedDelete-->" + userInputDetails);
+
         } catch (Exception e1) {
             e1.printStackTrace();
         }
@@ -560,7 +560,7 @@ public class NewsFeedManager {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            android.util.Log.e(TAG, "response NewsFeedDelete ->" + response);
+
                             state = response.getBoolean("success");
                             if (state) {
 
@@ -590,7 +590,7 @@ public class NewsFeedManager {
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            android.util.Log.e(TAG, "ReportInAppReporte-->" + userInputDetails);
+
         } catch (Exception e1) {
             e1.printStackTrace();
         }
@@ -612,7 +612,7 @@ public class NewsFeedManager {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            android.util.Log.e(TAG, "response ReportInAppReporte ->" + response);
+
                             state = response.getBoolean("success");
                             if (state) {
 
@@ -642,7 +642,7 @@ public class NewsFeedManager {
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            android.util.Log.e(TAG, "UnStarredNewsFeed-->" + userInputDetails);
+
         } catch (Exception e1) {
             e1.printStackTrace();
         }
@@ -664,7 +664,7 @@ public class NewsFeedManager {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            android.util.Log.e(TAG, "response UnStarredNewsFeed ->" + response);
+
                             state = response.getBoolean("success");
                             if (state) {
 

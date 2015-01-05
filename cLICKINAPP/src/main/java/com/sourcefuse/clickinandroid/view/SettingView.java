@@ -28,7 +28,6 @@ import com.sourcefuse.clickinandroid.model.SettingManager;
 import com.sourcefuse.clickinandroid.services.MyQbChatService;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.Constants;
-import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinandroid.utils.MyCustomAnimation;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.adapter.DeactivateAccountView;
@@ -47,12 +46,10 @@ public class SettingView extends Activity implements View.OnClickListener, Compo
     private FacebookDialog.Callback dialogCallback = new FacebookDialog.Callback() {
         @Override
         public void onError(FacebookDialog.PendingCall pendingCall, Exception error, Bundle data) {
-            // android.util.android.util.Log.e(TAG, String.format("Error: %s", error.toString()));
         }
 
         @Override
         public void onComplete(FacebookDialog.PendingCall pendingCall, Bundle data) {
-            // android.util.android.util.Log.e(TAG, "Success!");
         }
     };
     private ImageView backarrow;
@@ -135,10 +132,8 @@ public class SettingView extends Activity implements View.OnClickListener, Compo
 
             if (settingManager.isAppSounds()) {//to check to sate on activity launch,By Default app sound is set Enabled,and To set the position of switch
                 appSound.setChecked(true);
-                // android.util.android.util.Log.e("Setting View", "True");
             } else {
                 appSound.setChecked(false);
-                //android.util.android.util.Log.e("Setting View", "False");
             }
             appSound.setOnCheckedChangeListener(this);
 
@@ -160,7 +155,6 @@ public class SettingView extends Activity implements View.OnClickListener, Compo
                             settingManager.enableDisablePushNotifications(authManager.getPhoneNo(), authManager.getUsrToken(), "true");
                         } catch (Exception e) {
                             e.printStackTrace();
-                            // android.util.android.util.Log.e("in exception ----", "in exception ----");
                         }
                     } else {
                         try {
@@ -168,8 +162,6 @@ public class SettingView extends Activity implements View.OnClickListener, Compo
                             settingManager.enableDisablePushNotifications(authManager.getPhoneNo(), authManager.getUsrToken(), "false");
                             Utils.Unregister(SettingView.this);
                         } catch (Exception e) {
-                            /*android.util.android.util.Log.e("exception---->", "" + e.toString());
-                            android.util.android.util.Log.e("in exception unregister----", "in exception unregister----");*/
                         }
                     }
                 }
@@ -181,10 +173,8 @@ public class SettingView extends Activity implements View.OnClickListener, Compo
             checkBox.setChecked(true);
             if (settingManager.isAppSounds()) {//to check to sate on activity launch,By Default app sound is set Enabled,and To set the position of switch
                 checkBox.setChecked(true);
-                //android.util.android.util.Log.e("Setting View", "True");
             } else {
                 checkBox.setChecked(false);
-                //android.util.android.util.Log.e("Setting View", "False");
             }
 
             checkBox.setOnCheckedChangeListener(this);
@@ -212,7 +202,6 @@ public class SettingView extends Activity implements View.OnClickListener, Compo
                             //SettingManager.mNotification_Enable = true;
                         } catch (Exception e) {
                             e.printStackTrace();
-                            //android.util.android.util.Log.e("in exception ----", "in exception ----");
                         }
                     } else {
                         try {
@@ -220,8 +209,7 @@ public class SettingView extends Activity implements View.OnClickListener, Compo
                             settingManager.enableDisablePushNotifications(authManager.getPhoneNo(), authManager.getUsrToken(), "false");
                             //SettingManager.mNotification_Enable = false;
                         } catch (Exception e) {
-                            /*android.util.android.util.Log.e("exception---->", "" + e.toString());
-                            android.util.android.util.Log.e("in exception unregister----", "in exception unregister----");*/
+
                         }
                     }
                 }
@@ -435,7 +423,6 @@ public class SettingView extends Activity implements View.OnClickListener, Compo
 
                 ModelManager.setInstance();
 
-                // android.util.android.util.Log.e("", "holder.logoutYes");
                 Intent intent5 = new Intent(SettingView.this, SplashView.class);
                 intent5.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent5.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -460,7 +447,6 @@ public class SettingView extends Activity implements View.OnClickListener, Compo
                     uiHelper.trackPendingDialogCall(shareDialog.present());
 
                 } else {
-                    // android.util.android.util.Log.e(TAG, "Success!");
                 }
 
 
@@ -501,7 +487,6 @@ public class SettingView extends Activity implements View.OnClickListener, Compo
 // Not working problem
 
             case R.id.btn_send_not_working:
-                //android.util.android.util.Log.e("Setting View", "Send Pressed");
                 String mphone_no, muser_token, spam_or_abuse_type, comment;
                 mphone_no = authManager.getPhoneNo();
                 muser_token = authManager.getUsrToken();
@@ -526,7 +511,6 @@ public class SettingView extends Activity implements View.OnClickListener, Compo
 
 // general feedback
             case R.id.btn_send_general_problem:
-                //android.util.android.util.Log.e("Setting View", "Send Pressed");
 
 
                 String mphone_no_general, muser_token_general, spam_or_abuse_type_general, comment_general;
@@ -634,9 +618,7 @@ public class SettingView extends Activity implements View.OnClickListener, Compo
 
     private void onSessionStateChange(Session session, SessionState state, Exception exception) {
         if (state.isOpened()) {
-            Log.i(TAG, "Logged in...");
         } else if (state.isClosed()) {
-            Log.i(TAG, "Logged out...");
         }
     }
 
@@ -648,7 +630,6 @@ public class SettingView extends Activity implements View.OnClickListener, Compo
 
     public void onDestroy() {
         super.onDestroy();
-        //android.util.android.util.Log.e("SettingsView", "Destroy");
     }
 
 
@@ -657,10 +638,8 @@ public class SettingView extends Activity implements View.OnClickListener, Compo
 
         if (b) {
             settingManager.setAppSounds(true);
-            //android.util.android.util.Log.e("Setting View ", "b True");
         } else {
             settingManager.setAppSounds(false);
-            //android.util.android.util.Log.e("Setting View ", "b false");
         }
     }
 }

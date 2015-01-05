@@ -11,9 +11,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.PowerManager;
-import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.sourcefuse.clickinandroid.model.AuthManager;
@@ -40,7 +38,7 @@ public class GcmIntentService extends IntentService {
 
     public GcmIntentService() {
         super("GcmIntentService");
-        android.util.Log.e(" In GcmIntentService.....", "In GcmIntentService");
+
 
     }
 
@@ -48,7 +46,7 @@ public class GcmIntentService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         Bundle extras = intent.getExtras();
 
-        android.util.Log.e("gcm notification---->", "" + extras);
+
 
         GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
         String messageType = gcm.getMessageType(intent);
@@ -56,7 +54,7 @@ public class GcmIntentService extends IntentService {
 
         if (!extras.isEmpty()) {
             if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)) {
-                Log.i("working", "Completed work @ " + SystemClock.elapsedRealtime());
+
                 try {
                     JSONObject jsonObject = new JSONObject();
                     for (String key : extras.keySet()) {
@@ -79,8 +77,7 @@ public class GcmIntentService extends IntentService {
 /* chat when send chat */
 
                 if (extras.containsKey("Tp")) {
-                    Log.e("contains Tp", "contains TP");
-                    Log.e("value of Tp", "" + extras.getString("TP"));
+
                     if (extras.getString("Tp").equalsIgnoreCase("CR") ||
                             extras.getString("Tp").equalsIgnoreCase("CRA") || extras.getString("Tp").equalsIgnoreCase("RV")
                             ) {
@@ -167,13 +164,13 @@ public class GcmIntentService extends IntentService {
 
         PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
         boolean isScreenOn = pm.isScreenOn();  // check screen state to show notification
-        Log.e("value of isScreenOn --->",""+isScreenOn);
+
 
 
         if (!isAppOnForeground(getApplicationContext()) || !isScreenOn)
             mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
 
-        Log.e("value of --->",""+isAppOnForeground(getApplicationContext()));
+
 
     }
 
@@ -189,7 +186,7 @@ public class GcmIntentService extends IntentService {
 
         final String packageName = context.getPackageName();
         for (ActivityManager.RunningAppProcessInfo appProcess : appProcesses) {
-            Log.e("value of importence---.",""+appProcess.importance);
+
             if (appProcess.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND && appProcess.processName.equals(packageName)) {
                 return true;
             }

@@ -58,7 +58,6 @@ public class AdapterAll extends ArrayAdapter<CardBean> {
 
             } catch (Exception e) {
                 e.printStackTrace();
-                android.util.Log.e("Exception", " Exception in " + e.toString());
             }
         }
 
@@ -87,7 +86,6 @@ public class AdapterAll extends ArrayAdapter<CardBean> {
                     intent.putExtra("card_url", url);
                     intent.putExtra("card_DB_ID", bean.getCard_Id());
                     // intent.putExtra("card_id", bean.getCard_Id());
-                    android.util.Log.e("CARD DETAILS", "----->" + Title + "," + Discription + "," + bean.getCard_Id());
 
                     context.startActivity(intent);
                     ((Activity) context).overridePendingTransition(R.anim.slide_in_up, R.anim.stay);

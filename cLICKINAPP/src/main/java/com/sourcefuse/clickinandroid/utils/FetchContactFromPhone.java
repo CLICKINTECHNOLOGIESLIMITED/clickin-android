@@ -87,7 +87,7 @@ public class FetchContactFromPhone {
 
 		@Override
 		protected void onPostExecute(String result) {
-            android.util.Log.e("onPostExecute", "-----> ");
+
 			
 		}
 
@@ -99,7 +99,7 @@ public class FetchContactFromPhone {
 		@Override
 		protected void onProgressUpdate(String... text) {
 			// finalResult.setText(text[0]);
-			android.util.Log.e("onProgressUpdate", "-----> " + text[0]);
+
 			//Toast.makeText(context, "" + text[0], Toast.LENGTH_SHORT).show();
 		}
 	}*/
@@ -124,7 +124,7 @@ public class FetchContactFromPhone {
             userInputDetails.put("phone_no", authManager.getPhoneNo());
             userInputDetails.put("user_token", authManager.getUsrToken());
             userInputDetails.put("phone_nos", new JSONArray(list));
-            //   android.util.Log.d("", "userInputDetails---> " + userInputDetails);
+
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
         } catch (Exception e1) {
@@ -138,7 +138,7 @@ public class FetchContactFromPhone {
             @Override
             public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
                 super.onFailure(statusCode, e, errorResponse);
-                android.util.Log.d("", "errorResponse--> " + errorResponse);
+
                 if (errorResponse != null) {
                     try {
                         authManager.setMessage(errorResponse.getString("message"));
@@ -157,7 +157,7 @@ public class FetchContactFromPhone {
             public void onSuccess(int statusCode, org.apache.http.Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 try {
-                    android.util.Log.d("", "Current Clickers response--> " + response);
+
                     success = response.getBoolean("success");
                     String eventBusRes = "Num Not Registered";
                     if (success) {
@@ -245,25 +245,19 @@ public class FetchContactFromPhone {
                                 mPhone = phone.replaceAll("\\s", "");
                                 mcantactBean.setConName(name);
                                 mcantactBean.setChecked(false);
-                                android.util.Log.e("contactNumber", "contactNumber " + mPhone + " , ");
+
                                 mcantactBean.setConNumber(mPhone);
                             } catch (Exception e) {
                                 e.printStackTrace();
 
                             }
-                        /*l = mPhone.length();
-                         if((l-10)>=0){
-						 mcantactBean.setConName(name);
-                         mcantactBean.setChecked(false);
-                             android.util.Log.d("contactNumber","contactNumber->"+mPhone+" , ");
-						 mcantactBean.setConNumber("+91" + mPhone.substring((l - 10)));
-						 }*/
+
 
                             if (image_uri != null) {
                                 try {
                                     // bitmap =
                                     // MediaStore.Images.Media.getBitmap(this.getContentResolver(),Uri.parse(image_uri));
-                                    // System.out.println(bitmap);
+
                                     mcantactBean.setConUri(image_uri);
 
                                 } catch (Exception e) {
@@ -283,7 +277,7 @@ public class FetchContactFromPhone {
                 }
             }
 
-            //com.sourcefuse.clickinandroid.utils.android.util.Log.e("contact in Featch contact--->", "" + Utils.itData);
+
             Collections.sort(Utils.itData, FetchContactFromPhone.NameComparator);
         }
     }
@@ -305,14 +299,14 @@ public class FetchContactFromPhone {
                 while (myiterator.hasNext()) {
                     String key1 = (String) myiterator.next();
                     ContactBean value = (ContactBean) Utils.contactMap.get(key1);
-                    //com.sourcefuse.clickinandroid.utils.android.util.Log.e("key 1----->", "key 1--->" + key1);
+
                     if (!(key1.contains("+"))) {
                         if (!Utils.isEmptyString(countryCode))
                             key1 = countryCode + key1;
                         else
                             key1 = key1;
                     }
-                    // com.sourcefuse.clickinandroid.utils.android.util.Log.e("key 2----->", "key 2--->" + key1);
+
                     list.add(key1);
 
                 }
@@ -320,7 +314,7 @@ public class FetchContactFromPhone {
                 userInputDetails.put("phone_no", phone);
                 userInputDetails.put("user_token", usertoken);
                 userInputDetails.put("phone_nos", new JSONArray(list));
-                android.util.Log.d("", "userInputDetails---> " + userInputDetails);
+
                 se = new StringEntity(userInputDetails.toString());
                 se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
 
@@ -334,7 +328,7 @@ public class FetchContactFromPhone {
                 @Override
                 public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
                     super.onFailure(statusCode, e, errorResponse);
-                    android.util.Log.d("", "errorResponse--> " + errorResponse);
+
                     if (errorResponse != null) {
                         try {
                             if (authManager == null)
@@ -356,7 +350,7 @@ public class FetchContactFromPhone {
                 public void onSuccess(int statusCode, org.apache.http.Header[] headers, JSONObject response) {
                     super.onSuccess(statusCode, headers, response);
                     try {
-                        android.util.Log.d("", "Current Clickers response--> " + response);
+
 
                         success = response.getBoolean("success");
                         if (success) {
@@ -366,25 +360,25 @@ public class FetchContactFromPhone {
                             profilemanager.spreadTheWorldList.clear();
                             JSONArray list = response.getJSONArray("phone_nos");
                             clickerArray = new ArrayList<CurrentClickerBean>();
-                            //com.sourcefuse.clickinandroid.utils.android.util.Log.e("clickerArray --->", "" + clickerArray);
+
                             for (int i = 0; i < list.length(); i++) {
-                                // com.sourcefuse.clickinandroid.utils.android.util.Log.e("no of times---->", "" + i);
+
                                 JSONObject data = list.getJSONObject(i);
                                 int existcode = data.getInt("exists");
-                                //com.sourcefuse.clickinandroid.utils.android.util.Log.e("Exit code ----->", "" + existcode);
+
                                 if (clickers == existcode) {
 
-                                    //com.sourcefuse.clickinandroid.utils.android.util.Log.e("String phone no--->", "" + data.getString("phone_no"));
-                                    ContactBean cb = Utils.contactMap.get(data.getString("phone_no"));
-                                    android.util.Log.e("ContactBean", "ContactBean" + cb);
 
-                                    //com.sourcefuse.clickinandroid.utils.android.util.Log.e("Contact map--->", "" + Utils.contactMap);
+                                    ContactBean cb = Utils.contactMap.get(data.getString("phone_no"));
+
+
+
                                     if (cb != null) {
                                         clickerList = new CurrentClickerBean();
                                         if (data.has("phone_no")) {
                                             clickerList.setGetClickerPhone(data.getString("phone_no"));
                                             profilemanager.currClickersPhoneNums.add(data.getString("phone_no"));
-                                            //com.sourcefuse.clickinandroid.utils.android.util.Log.e("on sucess----->", "" + data.getString("phone_no"));
+
                                         }
                                         if (data.has("user_pic")) {
                                             clickerList.setClickerPix(data.getString("user_pic"));
@@ -395,7 +389,7 @@ public class FetchContactFromPhone {
                                             clickerList.setFollow(0);
                                         }
                                         clickerList.setName(cb.getConName());
-                                        //com.sourcefuse.clickinandroid.utils.android.util.Log.e("point 1", "point 1");
+
                                         profilemanager.currentClickerList.add(clickerList);
 
                                     }
@@ -409,7 +403,7 @@ public class FetchContactFromPhone {
                                         contactBean.setChecked(false);
                                         contactBean.setConUri(cb.getConUri());
                                         profilemanager.spreadTheWorldList.add(contactBean);
-                                        //com.sourcefuse.clickinandroid.utils.android.util.Log.e("point 2", "point 2");
+
                                     }
                                 }
                             }

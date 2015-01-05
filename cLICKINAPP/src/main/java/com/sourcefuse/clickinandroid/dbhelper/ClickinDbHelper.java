@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.sourcefuse.clickinandroid.model.bean.ChatMessageBody;
-import com.sourcefuse.clickinandroid.utils.Log;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -278,11 +277,11 @@ public class ClickinDbHelper extends SQLiteOpenHelper implements ChatRecordI {
 
         //temp code-monika
         if (update >= 0) {
-            Log.e("DbHelper", " Updated");
+
 
 
         } else {
-            Log.e("DbHelper", "Not Updated");
+
 
         }
 

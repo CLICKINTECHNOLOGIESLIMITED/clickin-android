@@ -18,7 +18,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -229,7 +228,7 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
                                     !(data.getInt("ChatType") == Constants.CHAT_TYPE_DELIVERED) ) {
                                 message.setMarkable(true);
                                 message.setProperty("common_platform_id", data.getString("ChatId"));
-                                Log.e("Common platform id",data.getString("ChatId"));
+
                             }
 
                             try {
@@ -249,9 +248,11 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
                     case ADD_CHAT_LISTENERS:
                         if (QBChatService.getInstance().isLoggedIn()) {
                             registerListeners();
-                            Log.e("is logged in --->","is logged in --->");
+
                         }else
-                            Log.e("is not logged in --->","is not logged in --->");
+                        {
+
+                        }
                         break;
                     case CHAT_LOGOUT:
                         logoutQB();
@@ -295,7 +296,7 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
                 userId=preferences.getString("userid",null);
                 userToken=preferences.getString("authToken",null);
             }
-            android.util.Log.e("ChatThread Login", "authManager.getUsrToken()");
+
             if(!Utils.isEmptyString(userId) && !Utils.isEmptyString(userToken)) {
                 mUser.setLogin(userId);
                 mUser.setPassword(userToken);
@@ -338,13 +339,13 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
     @Override
 
     public void processMessage(QBChat qbChat, QBChatMessage qbChatMessage) {
-        android.util.Log.e(TAG, "processMessage--->");
+
         JSONObject jSONObj = null;
 
         Message message = qbChatMessage.getSmackMessage();
         try {
             jSONObj = XML.toJSONObject(message.toXML().toString());
-            android.util.Log.e(TAG, "--- xmlJSONObj--->" + jSONObj);
+
 
             JSONObject messageObj = jSONObj.getJSONObject("message");
             JSONObject extraParamsObj = messageObj.getJSONObject("extraParams");
@@ -500,7 +501,7 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
     @Override
     public void processMessageDelivered(QBChat qbChat, String msgId) {
         EventBus.getDefault().post("Delivered Msg" + msgId);
-        Log.e("Receiveid",msgId);
+
     }
 
     @Override
@@ -512,7 +513,7 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
     private void registerListeners() {
         if (QBChatService.getInstance().isLoggedIn()) {
             ArrayList<GetrelationshipsBean> clickInPartnerList = ModelManager.getInstance().getRelationManager().acceptedList;
-            Log.e("size of--->",""+clickInPartnerList.size());
+
             if (clickInPartnerList.size() != 0) {
                 for (GetrelationshipsBean temp : clickInPartnerList) {
                     int partnerQBId = Integer.parseInt(temp.getPartnerQBId());
@@ -523,23 +524,23 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
 
                         if (chatRoster.contains(partnerQBId)) {
                             try {
-                                Log.e("in one----.","in one----.");
+
                                 chatRoster.subscribe(partnerQBId);
                             } catch (SmackException.NotConnectedException e) {
-                               Log.e("exception 1---->","exception 1---->");
+
                             }
                         } else {
                             try {
-                                Log.e("in two----.","in two----.");
+
                                 chatRoster.createEntry(partnerQBId, null);
                             } catch (XMPPException e) {
-                                Log.e("exception 2---->","exception 2---->");
+
                             } catch (SmackException.NotLoggedInException e) {
-                                Log.e("exception 3---->","exception 3---->");
+
                             } catch (SmackException.NotConnectedException e) {
-                                Log.e("exception 4---->","exception 4---->");
+
                             } catch (SmackException.NoResponseException e) {
-                                Log.e("exception 5---->","exception 5---->");
+
                             }
 
                         }
@@ -626,7 +627,7 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
         }else {
             //only if clicks are there
 
-            Log.e("post value------>",""+partnerRId);
+
             GetrelationshipsBean tempObject=partnerList.get(relationIndex);
             tempObject.setUnreadMsg(tempObject.getUnreadMsg()+1);
             EventBus.getDefault().post("UpdateMessageCounter###"+partnerRId);
@@ -746,7 +747,7 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
 
                 ModelManager.setInstance();
 
-                // android.util.android.util.Log.e("", "holder.logoutYes");
+
                 Intent intent5 = new Intent(application, SplashView.class);
                 intent5.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent5.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -921,7 +922,7 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
 
        ArrayList<String> sharedMessage = null;
        fields.put("sharedMessage", sharedMessage);
-       Log.e("DeliveredChatId",msgId);
+
        QBCustomObject qbCustomObject = new QBCustomObject();
        qbCustomObject.setClassName("chats");  // your Class name
        qbCustomObject.setFields(fields);
@@ -935,7 +936,7 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
                    QBCustomObject qbCustomObject = qbCustomObjectResult.getCustomObject();
 
                } else {
-                   android.util.Log.e("Errors", result.getErrors().toString());
+
                }
            }
        });

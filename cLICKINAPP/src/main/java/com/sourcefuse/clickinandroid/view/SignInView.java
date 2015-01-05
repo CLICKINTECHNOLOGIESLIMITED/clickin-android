@@ -89,13 +89,10 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
         authManager = ModelManager.getInstance().getAuthorizationManager();
         try {
             GPSTracker gpsTracker = new GPSTracker(this);
-            android.util.Log.e("in try--->", "in try");
             String latlan = gpsTracker.getLatitude() + ";" + gpsTracker.getLongitude();
-            android.util.Log.e("latlan--->", "" + latlan);
             authManager.setLatLan(latlan);
         } catch (Exception e) {
             e.printStackTrace();
-            android.util.Log.e("in exceptin anroid--->", "in exception---");
         }
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
@@ -103,9 +100,6 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
 
 
         Utils.deviceId = Utils.getRegId(SignInView.this);
-        android.util.Log.e("device reg id---->", "device reg id--->");
-        android.util.Log.e("device reg id aa---->", "" + Utils.getRegId(SignInView.this));
-        android.util.Log.e("device reg id aa---->", "" + Utils.deviceId);
         authManager.setDeviceRegistereId(Utils.deviceId);
         do_latter = (Button) findViewById(R.id.btn_get_clickin_signin);
         ephone = (EditText) findViewById(R.id.edt_email_phoneno);
@@ -210,15 +204,11 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
 
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(layout.getWindowToken(), 0);
-//                android.util.Log.e(TAG,"ephone ewithout" +ephone.getText().toString());
                 if (activeDone && ephone.getText().toString().trim().length() > 0 && ephone.getText().toString() != "+(null)" && ePwd.getText().toString().length() > 0) {
                     getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
                     authManager = ModelManager.getInstance().getAuthorizationManager();
                     Utils.launchBarDialog(SignInView.this);
-                    android.util.Log.e("device id from utils-->", "" + Utils.deviceId);
-                    android.util.Log.e("device id from auth-->", "" + authManager.getDeviceRegistereId());
                     authManager.signIn(ephone.getText().toString().trim(), ePwd.getText().toString().trim(), Utils.deviceId, Constants.DEVICETYPE);
-//                    android.util.Log.e(TAG,"Phone no without space" +ephone.getText().toString().trim());
                 } else if (ephone.getText().toString().length() == 0) {
                     Utils.fromSignalDialog(this, AlertMessage.enterPhoneEmail);
                 } else if (ePwd.getText().toString().length() == 0) {

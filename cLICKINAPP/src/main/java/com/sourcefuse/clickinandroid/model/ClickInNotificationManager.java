@@ -32,7 +32,7 @@ public class ClickInNotificationManager implements NotificationManagerI {
     @Override
     public void getNotification(Context context, String lastNotificationId, String phone, String usertoken) {
 
-        android.util.Log.e("in getnotification list", "in getnotification list");
+
         JSONObject userInputDetails = new JSONObject();
         try {
             userInputDetails.put("phone_no", phone);
@@ -42,7 +42,7 @@ public class ClickInNotificationManager implements NotificationManagerI {
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            android.util.Log.e("Input Data", "FETCHNOTIFICATIONS-->" + userInputDetails);
+
         } catch (Exception e1) {
             e1.printStackTrace();
         }
@@ -54,7 +54,7 @@ public class ClickInNotificationManager implements NotificationManagerI {
                                           JSONObject errorResponse) {
                         super.onFailure(statusCode, e, errorResponse);
                         if (errorResponse != null) {
-                            android.util.Log.e("errorResponse", "->" + errorResponse);
+
                             EventBus.getDefault().postSticky("Notification false");
                         } else  if(errorResponse.has("message")){
                             try {
@@ -73,7 +73,7 @@ public class ClickInNotificationManager implements NotificationManagerI {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            System.out.println("response Notification ->" + response);
+
                             state = response.getBoolean("success");
                             notificationData.clear(); // to clear notification list as we featch all data
                             if (state) {

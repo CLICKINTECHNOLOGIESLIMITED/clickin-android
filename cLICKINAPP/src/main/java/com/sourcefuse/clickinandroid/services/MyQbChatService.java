@@ -394,7 +394,6 @@ public class MyQbChatService extends Service {
         import android.os.Handler;
         import android.os.IBinder;
         import android.support.v4.app.NotificationCompat;
-        import android.util.Log;
 
 
         import com.quickblox.module.chat.QBChatService;
@@ -432,7 +431,6 @@ public class QbChatService extends Service {
     @Override
     public void onCreate() {
 
-        android.util.Log.e(TAG, "CS started");
         systemService = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         mNM =systemService;
         Handler handler = new Handler() {
