@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -246,9 +247,12 @@ public class SplashView extends Activity implements View.OnClickListener {
 
         @Override
         protected void onPostExecute(Bitmap result) {
+            String mPath = Utils.storeImage(result, ""+ModelManager.getInstance().getAuthorizationManager().getUserId(), SplashView.this);
             if (authManager == null)
                 authManager = ModelManager.getInstance().getAuthorizationManager();
-            if (result != null)
+            if (!Utils.isEmptyString(""+mPath))
+                authManager.setUserImageUri(Uri.parse(mPath));
+            if(result != null)
                 authManager.setUserbitmap(result);
             Utils.dismissBarDialog();
             switchView();

@@ -1217,6 +1217,10 @@ public class
         try {
             filePath = sdIconStorageDir.getAbsolutePath() + "/" + filename + ".jpg";
 
+            File file = new File(filePath);
+            if(file.exists())
+                file.delete();
+
             FileOutputStream fileOutputStream = new FileOutputStream(filePath);
             BufferedOutputStream bos = new BufferedOutputStream(fileOutputStream);
             //choose another format if PNG doesn't suit you

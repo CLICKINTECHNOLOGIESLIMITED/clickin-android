@@ -797,7 +797,6 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
                                           profileimg.setImageBitmap(resized1);
 
                                           userImageUri = data.getData();*/
-                            //    authManager.setUserImageUri(userImageUri);
                             //  authManager.setUserbitmap(resized1);
 
 
@@ -821,7 +820,6 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
                         } else if (authManager.getmResizeBitmap() != null) {
                             profileimg.setImageBitmap(authManager.getmResizeBitmap());
 
-                            authManager.setUserImageUri(userImageUri);
                             authManager.setUserbitmap(authManager.getmResizeBitmap());
                             authManager.setOrginalBitmap(null);
                             authManager.setmResizeBitmap(null);
