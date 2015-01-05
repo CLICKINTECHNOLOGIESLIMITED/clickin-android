@@ -27,7 +27,6 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.telephony.TelephonyManager;
 import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -260,7 +259,7 @@ public class
         immagex.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] b = baos.toByteArray();
         String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
-        // android.util.Log.e("LOOK", imageEncoded);
+
         return imageEncoded;
     }
 
@@ -270,9 +269,9 @@ public class
         float scaleWidth;
         float scaleHeight;
         width = inPutBm.getWidth();
-        Log.i("Old width................", width + "");
+
         height = inPutBm.getHeight();
-        Log.i("Old height................", height + "");
+
 
         Matrix matrix = new Matrix();
         scaleWidth = ((float) width) / width;
@@ -285,9 +284,9 @@ public class
         OutPutBm.compress(Bitmap.CompressFormat.JPEG, 50, outputStream);
 
         width = OutPutBm.getWidth();
-        Log.i("new width................", width + "");
+
         height = OutPutBm.getHeight();
-        Log.i("new height................", height + "");
+
         return OutPutBm;
     }
 
@@ -423,7 +422,7 @@ public class
             return cursor.getString(column_index);
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e("on error in real path------>", e.toString());
+
             return "";
         } finally {
             if (cursor != null) {
@@ -482,7 +481,7 @@ public class
                     regid = gcm.register(PROJECT_NUMBER);
                     Utils.deviceId = regid;
                     msg = "Device registered, registration ID=" + regid;
-                    Log.i("GCM", msg);
+
                 } catch (IOException ex) {
                     msg = "Error :" + ex.getMessage();
 
@@ -492,7 +491,7 @@ public class
 
             @Override
             protected void onPostExecute(String msg) {
-                Log.i("GCM", "Rregid--->id" + regid);
+
             }
 
         }.execute(null, null, null);
@@ -583,14 +582,11 @@ public class
     }
 
     public static String getLocalDate(String serverDate) {
-//        android.util.Log.e("serverDate",serverDate);
-//         serverDate = "2014-10-09 09:46:50";
+
+
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
         TimeZone tz = TimeZone.getDefault();
-//        Calendar cal = Calendar.getInstance();
-//        TimeZone tz = cal.getTimeZone();
-//        TimeZone tz = TimeZone.getTimeZone("Asia/Calcutta");
-//        android.util.Log.e("tz",tz.toString());
+
         sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
         Date date = null;
         try {
@@ -620,7 +616,7 @@ public class
         String CountryZipCode = null;
         TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         int simState = telephonyManager.getSimState();
-        //android.util.Log.e("simState",""+simState+"/"+TelephonyManager.SIM_STATE_NETWORK_LOCKED+"/"+TelephonyManager.SIM_STATE_UNKNOWN+"/"+TelephonyManager.SIM_STATE_READY);
+
         switch (simState) {
 
             case (TelephonyManager.SIM_STATE_ABSENT):
@@ -640,7 +636,6 @@ public class
 
                 CountryZipCode = GetCountryZipCode(context);
                 CountryZipCode = "+" + CountryZipCode;
-                android.util.Log.e("COUNTRY ZIP CODE", CountryZipCode);
 
 
                 break;
@@ -670,7 +665,7 @@ public class
             String[] g = rl[i].split(",");
             if (g[1].trim().equals(CountryID.trim())) {
                 CountryZipCode = g[0];
-                android.util.Log.e("Code", "Tis is Code>>>>>" + CountryZipCode);
+
                 break;
             }
         }
@@ -916,7 +911,7 @@ public class
                 }
                 Matrix mat = new Matrix();
                 mat.postRotate(angle);
-                android.util.Log.e("angle from camera --->", "" + angle);
+
                 bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), mat, true);
 
 
@@ -947,7 +942,7 @@ public class
             }
 
         } catch (Exception ex) {
-            Log.e("Exception", "Exception-->" + ex.toString());
+
             ex.printStackTrace();
         }
         return resized;
@@ -1038,7 +1033,7 @@ public class
 
         if (mSettingManager.isAppSounds()) {
             try {
-                Log.e("Utils App Sound", "Sounds Enabled");
+
 
                 if (mplayer == null) {
                     mplayer = MediaPlayer.create(activity, resID);
@@ -1058,17 +1053,17 @@ public class
                 }
 
             } catch (IllegalArgumentException e) {
-                Log.e("You might not set the URI correctly!", "" + e.toString());
+
             } catch (SecurityException e) {
-                Log.e("You might not set the URI correctly!", "" + e.toString());
+
             } catch (IllegalStateException e) {
-                Log.e("You might not set the URI correctly!", "" + e.toString());
+
             } catch (Exception e) {
                 e.printStackTrace();
-                Log.e("Utils App error", "" + e.toString());
+
             }
         } else {
-            Log.e("Utils App Sound", "Sounds Disabled");
+
         }
 
     }
@@ -1093,7 +1088,7 @@ public class
 
             @Override
             protected void onPostExecute(String msg) {
-                android.util.Log.e("GCM", "Rregid--->id" + msg);
+
             }
 
         }.execute(null, null, null);
@@ -1238,14 +1233,14 @@ public class
             context.getContentResolver().notifyChange(Uri.parse(filePath), null);
 
         } catch (FileNotFoundException e) {
-            Log.e("TAG", "Error saving image file: " + e.getMessage());
+
 
             return "";
         } catch (IOException e) {
-            Log.e("TAG", "Error saving image file: " + e.getMessage());
+
             return "";
         } catch (Exception e) {
-            Log.e("TAG", "Error saving image file: " + e.getMessage());
+
             e.printStackTrace();
             return "";
         }
@@ -1358,7 +1353,7 @@ public class
             context.startActivity(intent1);
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e("exception---->", "" + e.toString());
+
         }
     }
 
@@ -1371,13 +1366,12 @@ public class
         intent1.putExtra(MediaStore.EXTRA_FINISH_ON_COMPLETION, false);
 
 
-
         intent1.setDataAndType(uri, "audio/*");
         try {
             context.startActivity(intent1);
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e("exception---->", "" + e.toString());
+
         }
     }
 

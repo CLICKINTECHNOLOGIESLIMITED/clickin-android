@@ -221,8 +221,8 @@ public class SimpleSectionedListAdapter2 extends BaseAdapter implements PinnedSe
                                         Picasso.with(mContext)
                                                 .load(mSections.get(position).senderImages)
                                                 .skipMemoryCache()
-
                                                 .error(R.drawable.male_user).into(imageview);
+
                                     } else {
                                         imageview.setImageResource(R.drawable.male_user);
                                     }
@@ -235,7 +235,6 @@ public class SimpleSectionedListAdapter2 extends BaseAdapter implements PinnedSe
                                         Picasso.with(mContext)
                                                 .load(mSections.get(position).senderImages)
                                                 .skipMemoryCache()
-
                                                 .error(R.drawable.female_user).into(imageview);
                                     } else {
                                         imageview.setImageResource(R.drawable.female_user);
@@ -375,7 +374,6 @@ public class SimpleSectionedListAdapter2 extends BaseAdapter implements PinnedSe
                 }
             });
             if (mSections.get(position).timeOfFeed != null) {
-                android.util.Log.e("timeOfFeed=", mSections.get(position).timeOfFeed);
                 feed_time.setText(Utils.getLocalDate(mSections.get(position).timeOfFeed));
             }
             if ((mSections.get(position).senderId) == null)

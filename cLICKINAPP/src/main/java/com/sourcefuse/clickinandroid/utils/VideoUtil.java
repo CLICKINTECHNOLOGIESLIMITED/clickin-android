@@ -11,7 +11,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.Log;
 
 import java.io.File;
 
@@ -93,7 +92,6 @@ public class VideoUtil {
         }
         String path = file.getAbsolutePath() + "/" + name + ".mp4";
 
-        Log.e("file path on video making---->", "" + path);
         try {
             ContentValues values = new ContentValues();
             values.put(MediaStore.Images.Media.DATA, path);
@@ -102,7 +100,6 @@ public class VideoUtil {
             context.getContentResolver().notifyChange(Uri.parse(path), null);
         } catch (Exception e) {
             e.printStackTrace();
-            android.util.Log.e("exception on saving---->", "" + e.toString());
         }
         return path;
     }

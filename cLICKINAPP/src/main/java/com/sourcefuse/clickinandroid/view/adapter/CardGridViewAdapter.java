@@ -71,7 +71,6 @@ public class CardGridViewAdapter extends ArrayAdapter<CardBean> {
             @Override
             public void onClick(View view) {
 
-                android.util.Log.e(TAG, "View is Clicked" + pos);
 
                 CardBean bean = getItem(position);
                 String url = bean.getCardUrl();
@@ -87,7 +86,6 @@ public class CardGridViewAdapter extends ArrayAdapter<CardBean> {
                 intent.putExtra("card_url", url);
                 intent.putExtra("card_DB_ID", bean.getCard_Id());
                 // intent.putExtra("card_id", bean.getCard_Id());
-                android.util.Log.e("CARD DETAILS", "----->" + Title + "," + Discription + "," + bean.getCard_Id());
 
                 context.startActivity(intent);
                 ((Activity) context).overridePendingTransition(R.anim.slide_in_up, R.anim.stay);

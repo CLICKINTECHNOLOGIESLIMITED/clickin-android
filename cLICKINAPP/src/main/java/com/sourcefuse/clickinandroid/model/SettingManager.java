@@ -46,7 +46,7 @@ public class SettingManager {
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            android.util.Log.e(TAG, "changePassword-->" + userInputDetails);
+
         } catch (Exception e1) {
             e1.printStackTrace();
         }
@@ -68,7 +68,7 @@ public class SettingManager {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            android.util.Log.e(TAG, "response ChangePassword ->" + response);
+
                             state = response.getBoolean("success");
                             if (state) {
 
@@ -97,7 +97,7 @@ public class SettingManager {
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            android.util.Log.e(TAG, "PushNotifications-->" + se);
+
         } catch (Exception e1) {
             e1.printStackTrace();
         }
@@ -119,7 +119,7 @@ public class SettingManager {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            android.util.Log.e(TAG, "response ChangePassword ->" + response);
+
                             state = response.getBoolean("success");
                             if (state) {
 
@@ -151,11 +151,11 @@ public class SettingManager {
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            android.util.Log.e(TAG, "changePassword-->" + se);
+
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        android.util.Log.e(TAG, "send json ->" + userInputDetails);
+
         client.post(null, APIs.SETTINGCHANGEDEACTIVATE, se, "application/json",
                 new JsonHttpResponseHandler() {
 
@@ -174,7 +174,7 @@ public class SettingManager {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            android.util.Log.e(TAG, "response DeactivteAccount ->" + response);
+
                             state = response.getBoolean("success");
                             if (state) {
 
@@ -204,7 +204,7 @@ public class SettingManager {
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            android.util.Log.e(TAG, "reportaproblem-->" + userInputDetails);
+
         } catch (Exception e1) {
             e1.printStackTrace();
         }
@@ -226,7 +226,7 @@ public class SettingManager {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            android.util.Log.e(TAG, "response ReportaProblem ->" + response);
+
                             state = response.getBoolean("success");
                             if (state) {
 
@@ -252,7 +252,7 @@ public class SettingManager {
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            android.util.Log.e(TAG, "ForgotPassword-->" + se);
+
         } catch (Exception e1) {
             e1.printStackTrace();
         }
@@ -277,7 +277,7 @@ public class SettingManager {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            System.out.println("response ForgotPassword ->" + response);
+
                             state = response.getBoolean("success");
                             if (state) {
                                 authManager.setMessage(response.getString("message"));

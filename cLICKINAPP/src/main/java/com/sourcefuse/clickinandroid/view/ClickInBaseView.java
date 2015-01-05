@@ -704,7 +704,6 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
     public void onTextChanged(CharSequence s, int start, int before, int count) {
 
 
-
         String search_date = edt_search.getText().toString();
         if (!Utils.isEmptyString(search_date) && search_date.length() < 3) {
             slidemenu.findViewById(R.id.btn_clear).setVisibility(View.VISIBLE);

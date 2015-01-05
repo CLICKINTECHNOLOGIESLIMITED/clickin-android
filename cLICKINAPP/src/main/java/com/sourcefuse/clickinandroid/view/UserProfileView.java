@@ -162,7 +162,6 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
             //   relationManager = ModelManager.getInstance().getRelationManager();
             // relationManager.getRelationShips(authManager.getPhoneNo(), authManager.getUsrToken());
         }
-        android.util.Log.e(TAG, "vv" + authManager.getPhoneNo() + "" + authManager.getUsrToken());
 
 
         findViewById(R.id.iv_usr_icon).setOnClickListener(new View.OnClickListener() {
@@ -185,7 +184,6 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         String dob = "";
         try {
             try {
-                android.util.Log.e(TAG, "Gender -->" + authManager.getGender());
                 if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl")) {
                     dtails = "Female, ";
                     gender = "girl";
@@ -202,17 +200,13 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         if (!Utils.isEmptyString(authManager.getUserCity()) && Utils.isEmptyString(authManager.getUserCountry())) {
             dtails = dtails + "\n" + authManager.getUserCity();
             userdetails.setText(dtails);
-            android.util.Log.e("in else 1", "in else 1");
         } else if (Utils.isEmptyString(authManager.getUserCity()) && !Utils.isEmptyString(authManager.getUserCountry())) {
             dtails = dtails + "\n" + authManager.getUserCountry();
             userdetails.setText(dtails);
-            android.util.Log.e("in else 2", "in else 2");
         } else if (!Utils.isEmptyString(authManager.getUserCity()) && !Utils.isEmptyString(authManager.getUserCountry())) {
             userdetails.setText(dtails + "\n" + authManager.getUserCity() + "," + authManager.getUserCountry());
-            android.util.Log.e("in else 3", "in else 3");
         } else {
             userdetails.setText(dtails + "\n");
-            android.util.Log.e("in else 4", "in else 4");
         }
         setFollowAndFollowingCount();
 
@@ -220,8 +214,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         try {
 
             Bitmap imagebitmap1 = authManager.getUserbitmap();
-           /* if (imagebitmap1 != null)
-                com.sourcefuse.clickinandroid.utils.android.util.Log.e("user bit map not null", "user bit map not null");*/
+
             boolean userpic = Utils.isEmptyString(authManager.getUserPic());
 
             if (imagebitmap1 != null)
@@ -236,7 +229,6 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
                 userimage.setImageResource(R.drawable.male_user);
 
         } catch (Exception e) {
-            //com.sourcefuse.clickinandroid.utils.android.util.Log.e("on exception", "on exception");
             userimage.setImageResource(R.drawable.male_user);
         }
 
@@ -257,7 +249,6 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
 
     @Override
     protected void onResume() {
-        android.util.Log.e("onResume", "onResume UserProfile");
         super.onResume();
         authManager = ModelManager.getInstance().getAuthorizationManager();
         if (authManager.isEditProfileFlag()) {
@@ -368,7 +359,6 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
 
     public void onEventMainThread(String message) {
         super.onEventMainThread(message);
-        android.util.Log.e(TAG, "onEventMainThread-->" + message);
         authManager = ModelManager.getInstance().getAuthorizationManager();
         relationManager = ModelManager.getInstance().getRelationManager();
         if (message.equalsIgnoreCase("deleteRelationship True")) {
@@ -397,10 +387,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
             mChangeinList = true;
         } else if (message.equalsIgnoreCase("UserVisible true")) {
 
-            /*if (Utils.DEBUG)
-                com.sourcefuse.clickinandroid.utils.android.util.Log.e("on error when change type", "on error when change type");*/
 
-            android.util.Log.d("3", "message->" + message);
         } else if (message.equalsIgnoreCase("GetrelationShips True")) {
             Utils.dismissBarDialog();
             myQbChatService.setChatListeners();
@@ -410,7 +397,6 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
             }
             setlist();
         } else if (message.equalsIgnoreCase("ProfileInfo True")) {
-            android.util.Log.e(TAG, "ProfileInfo True");
             //monika-start service in case of sign up only, else it will be done from sign in
             Intent i = new Intent(this, MyQbChatService.class);
             startService(i);
@@ -425,11 +411,9 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
             Utils.dismissBarDialog();
             Utils.fromSignalDialog(this, AlertMessage.connectionError);
         } else if (message.equalsIgnoreCase("UserVisible Network Error")) {
-            /*if (Utils.DEBUG)*/
-            //com.sourcefuse.clickinandroid.utils.android.util.Log.e("on error when change type", "on error when change type");
+
         } else if (message.equalsIgnoreCase("UserVisible true on error")) {
-           /* if (Utils.DEBUG)*/
-            // com.sourcefuse.clickinandroid.utils.android.util.Log.e("on error when change type on error", "on error when change type on error");
+
         }
 
 
@@ -467,7 +451,6 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
 
-        //com.sourcefuse.clickinandroid.utils.android.util.Log.e("on new Inent---", "on new Inent---");
         if (intent.getExtras() != null && intent.getExtras().containsKey("isChangeInList")) {
             if (intent.getExtras().getBoolean("isChangeInList")) {
                 if (slidemenu.isMenuShowing())
@@ -483,6 +466,5 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
     public void onDestroy() {
         super.onDestroy();
 
-        android.util.Log.e("UserprofileView", "Destroy");
     }
 }

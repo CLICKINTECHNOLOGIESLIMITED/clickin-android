@@ -83,7 +83,6 @@ public class MapView extends FragmentActivity implements LocationListener {
 
                 double latitude = Double.parseDouble(coordinates.substring(0, coordinates.indexOf(",")));
                 double longitude = Double.parseDouble(coordinates.substring(coordinates.indexOf(",") + 1));
-                android.util.Log.e("lat/long", "" + latitude + "/" + longitude);
                 LatLng latLng = new LatLng(latitude, longitude);
                 googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
                 googleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
@@ -128,7 +127,6 @@ public class MapView extends FragmentActivity implements LocationListener {
             Geocoder geocoder = new Geocoder(getBaseContext(), Locale.getDefault());
             List<Address> addresses = null;
 
-            //android.util.android.util.Log.e("value of bla bla -->", "" + locationName[0]);
 
             try {
                 String arg[] = locationName[0].split(",", 2);

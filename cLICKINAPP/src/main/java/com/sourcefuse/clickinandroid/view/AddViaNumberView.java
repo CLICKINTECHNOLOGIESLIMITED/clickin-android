@@ -46,7 +46,6 @@ public class AddViaNumberView extends Activity implements View.OnClickListener, 
         edtCountryCode = (EditText) findViewById(R.id.edt_cntry_cd);
         edtPhoneNo.addTextChangedListener(AddViaNumberView.this);
 
-        //com.sourcefuse.clickinandroid.utils.android.util.Log.e("add some one view--->", "" + getIntent().getBooleanExtra("fromsignup", false));
         getClickInVn.setOnClickListener(this);
         ((RelativeLayout) findViewById(R.id.rl_addvia_no_action)).setOnClickListener(new View.OnClickListener() {
 
@@ -252,7 +251,6 @@ public class AddViaNumberView extends Activity implements View.OnClickListener, 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        //com.sourcefuse.clickinandroid.utils.android.util.Log.e("on activity result", "on activity result");
 
     }
 

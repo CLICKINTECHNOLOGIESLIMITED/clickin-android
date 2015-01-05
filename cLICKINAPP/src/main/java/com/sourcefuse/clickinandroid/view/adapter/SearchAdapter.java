@@ -57,17 +57,11 @@ public class SearchAdapter extends ArrayAdapter<FetchUsersByNameBean> {
         RecordHolder rholder = (RecordHolder) row.getTag();
         if (!Utils.isEmptyString(item.get(position).getCity()) && !Utils.isEmptyString(item.get(position).getCountry())) {
             holder.user_address.setText(item.get(position).getCity() + "," + item.get(position).getCountry());
-            android.util.Log.e("in 1 --->", "in 1 --->");
         } else if (Utils.isEmptyString(item.get(position).getCity())) {
             holder.user_address.setText(item.get(position).getCity());
-            android.util.Log.e("in 2 --->", "in 2 --->");
-            android.util.Log.e("name--->", "" + item.get(position).getCity());
         } else if (Utils.isEmptyString(item.get(position).getCountry())) {
             holder.user_address.setText(item.get(position).getCountry());
-            android.util.Log.e("in 3 --->", "in 3 --->");
-            android.util.Log.e("name--->", "" + item.get(position).getCountry());
         } else {
-            android.util.Log.e("in final --->", "in final --->");
         }
 
         rholder.usr_name.setText(item.get(position).getName());

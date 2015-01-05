@@ -127,28 +127,21 @@ public class FollowingListView extends ClickInBaseView implements View.OnClickLi
         if (getMsg.equalsIgnoreCase("GetFollower True")) {
             Utils.dismissBarDialog();
             setlist();
-            android.util.Log.d("1", "message->" + getMsg);
         } else if (getMsg.equalsIgnoreCase("GetFollower False")) {
             Utils.dismissBarDialog();
-            android.util.Log.d("2", "message->" + getMsg);
         } else if (getMsg.equalsIgnoreCase("GetFollower Network Error")) {
             Utils.dismissBarDialog();
             Utils.fromSignalDialog(this, AlertMessage.connectionError);
             //Utils.showAlert(FollowingListView.this, AlertMessage.connectionError);
-            android.util.Log.d("3", "message->" + getMsg);
         } else if (getMsg.equalsIgnoreCase("UnFollowUser true")) {
             // adapter.notifyDataSetChanged();
-            android.util.Log.d("1", "message->" + getMsg);
         } else if (getMsg.equalsIgnoreCase("UnFollowUser false")) {
             Utils.dismissBarDialog();
-            android.util.Log.d("2", "message->" + getMsg);
         } else if (getMsg.equalsIgnoreCase("UnFollowUser Network Error")) {
             Utils.dismissBarDialog();
             Utils.fromSignalDialog(this, AlertMessage.connectionError);
             //Utils.showAlert(FollowingListView.this, AlertMessage.connectionError);
-            android.util.Log.d("3", "message->" + getMsg);
         } else if (getMsg.equalsIgnoreCase("update")) {
-            android.util.Log.e("list on notify--->", "" + profManager.following);
             adapter.notifyDataSetChanged();
 
         }

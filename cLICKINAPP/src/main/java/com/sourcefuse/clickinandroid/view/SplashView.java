@@ -23,12 +23,12 @@ import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.GPSTracker;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
+import com.splunk.mint.Mint;
 
 import java.io.InputStream;
 
 import de.greenrobot.event.EventBus;
 
-//import com.crashlytics.android.Crashlytics;
 
 public class SplashView extends Activity implements View.OnClickListener {
     AuthManager authManager = ModelManager.getInstance().getAuthorizationManager();
@@ -40,6 +40,9 @@ public class SplashView extends Activity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Mint.initAndStartSession(SplashView.this, Constants.mSplunk_Api);  // to start the session of Splunk Crashlytics
+        Mint.enableDebug();
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.view_splash);
