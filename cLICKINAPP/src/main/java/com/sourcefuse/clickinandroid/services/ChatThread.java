@@ -203,7 +203,7 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
                                         message.setProperty("videoID", data.getString("FileId"));
                                     }
                                     if (!data.containsKey("imageRatio") && !data.containsKey("videoThumbnail") && !Utils.isEmptyString(data.getString("FileId"))) {
-                                        message.setProperty("audioStreamURL", data.getString("FileId"));
+                                        message.setProperty("audioID", data.getString("FileId"));
                                         //  message.setProperty("isAudioUploading", data.getString("FileId"));
 
                                     }
