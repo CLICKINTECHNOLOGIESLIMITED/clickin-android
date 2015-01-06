@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -47,6 +48,7 @@ import com.sourcefuse.clickinandroid.view.adapter.SimpleSectionedListAdapter;
 import com.sourcefuse.clickinapp.R;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -375,12 +377,21 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 
         //prafull code to set image bitmap
         try {
-
+            String mUserImagePath = null;
+            Uri mUserImageUri = null;
             Bitmap imagebitmap1 = authManager.getUserbitmap();
 
             boolean userpic = Utils.isEmptyString(authManager.getUserPic());
+            if(authManager.getUserImageUri() != null)
+                mUserImagePath = ""+authManager.getUserImageUri().toString();
+            if(!Utils.isEmptyString(mUserImagePath))
+            mUserImageUri = Utils.getImageContentUri(ClickInBaseView.this,new File(mUserImagePath));
 
-            if (imagebitmap1 != null)
+
+
+            if(!Utils.isEmptyString(""+mUserImageUri))
+                userPic.setImageURI(mUserImageUri);
+            else if (imagebitmap1 != null)
                 userPic.setImageBitmap(imagebitmap1);
             else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl") && !userpic)
                 Picasso.with(ClickInBaseView.this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.female_user).into(userPic);
@@ -741,11 +752,20 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         /* to set downloaded image from server*/
         try {
 
+            String mUserImagePath = null;
+            Uri mUserImageUri = null;
             Bitmap imagebitmap1 = authManager.getUserbitmap();
 
             boolean userpic = Utils.isEmptyString(authManager.getUserPic());
+            if(authManager.getUserImageUri() != null)
+                mUserImagePath = ""+authManager.getUserImageUri().toString();
+            if(!Utils.isEmptyString(mUserImagePath))
+                mUserImageUri = Utils.getImageContentUri(ClickInBaseView.this,new File(mUserImagePath));
 
-            if (imagebitmap1 != null)
+
+            if(!Utils.isEmptyString(""+mUserImageUri))
+                userPic.setImageURI(mUserImageUri);
+            else if (imagebitmap1 != null)
                 userPic.setImageBitmap(imagebitmap1);
             else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl") && !userpic)
                 Picasso.with(ClickInBaseView.this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.female_user).into(userPic);
@@ -903,11 +923,21 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
             userName.setText(authManager.getUserName());//akshit code
 
 
+            String mUserImagePath = null;
+            Uri mUserImageUri = null;
             Bitmap imagebitmap1 = authManager.getUserbitmap();
 
             boolean userpic = Utils.isEmptyString(authManager.getUserPic());
+            if(authManager.getUserImageUri() != null)
+                mUserImagePath = ""+authManager.getUserImageUri().toString();
+            if(!Utils.isEmptyString(mUserImagePath))
+                mUserImageUri = Utils.getImageContentUri(ClickInBaseView.this,new File(mUserImagePath));
 
-            if (imagebitmap1 != null)
+
+
+            if(!Utils.isEmptyString(""+mUserImageUri))
+                userPic.setImageURI(mUserImageUri);
+            else if (imagebitmap1 != null)
                 userPic.setImageBitmap(imagebitmap1);
             else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl") && !userpic)
                 Picasso.with(ClickInBaseView.this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.female_user).into(userPic);
