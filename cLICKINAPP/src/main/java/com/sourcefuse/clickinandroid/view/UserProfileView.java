@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.text.Html;
@@ -34,6 +35,7 @@ import com.sourcefuse.clickinandroid.view.adapter.UserRelationAdapter;
 import com.sourcefuse.clickinapp.R;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.ArrayList;
 
 
@@ -214,10 +216,17 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         try {
 
             Bitmap imagebitmap1 = authManager.getUserbitmap();
-
+            String mUserImagePath = null;
+            Uri mUserImageUri = null;
             boolean userpic = Utils.isEmptyString(authManager.getUserPic());
+            if (authManager.getUserImageUri() != null)
+                mUserImagePath = "" + authManager.getUserImageUri().toString();
+            if (!Utils.isEmptyString(mUserImagePath))
+                mUserImageUri = Utils.getImageContentUri(UserProfileView.this, new File(mUserImagePath));
 
-            if (imagebitmap1 != null)
+            if (!Utils.isEmptyString("" + mUserImageUri))
+                userimage.setImageURI(mUserImageUri);
+            else if (imagebitmap1 != null)
                 userimage.setImageBitmap(imagebitmap1);
             else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl") && !userpic)
                 Picasso.with(UserProfileView.this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.female_user).into(userimage);

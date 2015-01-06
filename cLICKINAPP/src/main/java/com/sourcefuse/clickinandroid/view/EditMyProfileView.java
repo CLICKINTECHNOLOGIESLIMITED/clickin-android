@@ -167,10 +167,18 @@ public class EditMyProfileView extends ClickInBaseView implements View.OnClickLi
         try {
 
             Bitmap imagebitmap1 = authManager.getUserbitmap();
-
+            String mUserImagePath = null;
             boolean userpic = Utils.isEmptyString(authManager.getUserPic());
+            Uri mUserImageUri = null;
+            if(authManager.getUserImageUri() != null)
+                mUserImagePath = "" + authManager.getUserImageUri().toString();
+            if (!Utils.isEmptyString(mUserImagePath))
+                mUserImageUri = Utils.getImageContentUri(EditMyProfileView.this, new File(mUserImagePath));
 
-            if (imagebitmap1 != null)
+
+            if ( !Utils.isEmptyString("" + mUserImageUri))
+                mySelfy.setImageURI(mUserImageUri);
+            else if (imagebitmap1 != null)
                 mySelfy.setImageBitmap(imagebitmap1);
             else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl") && !userpic)
                 Picasso.with(EditMyProfileView.this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.female_user).into(mySelfy);
@@ -328,8 +336,6 @@ public class EditMyProfileView extends ClickInBaseView implements View.OnClickLi
                         }
                     }
                     userImageUri = mImageCaptureUri;
-                        /*authManager.setUserImageUri(userImageUri);*/
-                    // authManager.setUserPic(imageBitmap.toString());
                     mImageCaptureUri = null;
                     authManager.setMenuUserInfoFlag(true);
 
@@ -394,10 +400,6 @@ public class EditMyProfileView extends ClickInBaseView implements View.OnClickLi
             }
 
 
-
-                  /*authManager.setUserImageUri(userImageUri);*/
-            // authManager.setUserPic(imageBitmap.toString());
-
             authManager.setMenuUserInfoFlag(true);
 
 
@@ -454,7 +456,7 @@ public class EditMyProfileView extends ClickInBaseView implements View.OnClickLi
                 authManager.setUserbitmap(authManager.getmResizeBitmap());
             }
 
-            authManager.setUserImageUri(userImageUri);
+
             authManager.setOrginalBitmap(null);
             authManager.setmResizeBitmap(null);
             finish();

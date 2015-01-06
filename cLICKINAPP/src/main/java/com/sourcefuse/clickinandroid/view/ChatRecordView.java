@@ -23,6 +23,7 @@ import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
@@ -313,8 +314,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
         chatText.setMovementMethod(new ScrollingMovementMethod());// akshit Code to scroll text smoothly inside edit text
 
-        //profileName.setTypeface(typeface, typeface.BOLD);
-        // typingtext.setTypeface(typeface);
+
         pos.setText("+" + mybar.getMax());
         neg.setText("-" + mybar.getMax());
 
@@ -355,8 +355,20 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         profileName.setText("" + splitted[0]);
         try {
             Bitmap imageBitmap;
+            String mUserImagePath = null;
+            Uri mUserImageUri = null;
             imageBitmap = authManager.getUserbitmap();
-            if (imageBitmap != null)
+            if(authManager.getUserImageUri() != null)
+                mUserImagePath = ""+authManager.getUserImageUri().toString();
+
+            if(!Utils.isEmptyString(mUserImagePath))
+            mUserImageUri = Utils.getImageContentUri(ChatRecordView.this,new File(mUserImagePath));
+
+
+
+            if(!Utils.isEmptyString(""+mUserImageUri))
+                mypix.setImageURI(mUserImageUri);
+            else if (imageBitmap != null)
                 mypix.setImageBitmap(imageBitmap);
             else if (Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("guy"))
                 Picasso.with(this).load(authManager.getUserPic()).error(R.drawable.male_user).into(mypix);
@@ -947,6 +959,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         authManager = ModelManager.getInstance().getAuthorizationManager();
         String actionReq = intent.getAction();
         typingtext.setText("");
+        typingtext.setVisibility(View.GONE);
         chatText.setText("");//akshit code to Refresh Chat box text
 
 
@@ -1273,11 +1286,11 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             adapter.notifyDataSetChanged();
             //  new DBTask().execute(rId);
         } else if (message.equalsIgnoreCase("Composing YES")) {
-            //  typingtext.setVisibility(View.VISIBLE);
+            typingtext.setVisibility(View.VISIBLE);
             typingtext.setText("Typing..");
         } else if (message.equalsIgnoreCase("Composing NO")) {
 
-            //  typingtext.setVisibility(View.VISIBLE);
+            typingtext.setVisibility(View.VISIBLE);
             typingtext.setText("Online");
 
         } else if (message.equalsIgnoreCase("Delivered")) {
@@ -1298,7 +1311,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                     ModelManager.getInstance().getAuthorizationManager().getPhoneNo(),
                     ModelManager.getInstance().getAuthorizationManager().getUsrToken());
         } else if (message.equalsIgnoreCase("online")) {
-
+            typingtext.setVisibility(View.VISIBLE);
             typingtext.setText("Online");
             /* to update value of last seen time prafull code */
             long timestamp = Utils.ConvertIntoTimeStamp() / 1000;
@@ -1316,11 +1329,14 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             if (!Utils.isEmptyString(relationManager.acceptedList.get(relationListIndex).mLastSeenTime))
                 mLastSeenTimeStamp = Long.parseLong(relationManager.acceptedList.get(relationListIndex).mLastSeenTime);
             if (mLastSeenTimeStamp != 0) {
+                typingtext.setVisibility(View.VISIBLE);
                 if (Utils.getCompareDate(timestamp * 1000).equalsIgnoreCase(Utils.getCompareDate(mLastSeenTimeStamp * 1000))) {// if both are equals than time for
                     typingtext.setText(Utils.getTodaySeenDate(mLastSeenTimeStamp * 1000));
                 } else { // when not equal
                     typingtext.setText(Utils.getLastSeenDate(mLastSeenTimeStamp * 1000));
                 }
+            } else {
+                typingtext.setVisibility(View.GONE);
             }
 
         }
@@ -1346,10 +1362,9 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
                         Bitmap bitmap = null;
                         bitmap = decodeSampledBitmapFromUri(targetUri, width, height);
-
                         if (bitmap != null) {
                             try {
-                                authManager.setOrginalBitmap(bitmap);
+                                authManager.setOrginalBitmap(bitmap.copy(Bitmap.Config.ARGB_8888,true));
                                 Intent intent = new Intent(ChatRecordView.this, CropView.class);
                                 intent.putExtra("name", mChatId);  // save image name
                                 intent.putExtra("from", "fromchatCamare");
@@ -1363,6 +1378,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                         path = Utils.getRealPathFromURI(mImageCaptureUri, this);
                         currentImagepath = mImageCaptureUri.toString();
 
+                        bitmap.recycle();
                         break;
                     case Constants.SELECT_PICTURE:
 
@@ -1763,42 +1779,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
     }
 
-    public Bitmap ShrinkBitmap(String file, int width, int height) {
 
-        BitmapFactory.Options bmpFactoryOptions = new BitmapFactory.Options();
-        bmpFactoryOptions.inJustDecodeBounds = true;
-        Bitmap bitmap = BitmapFactory.decodeFile(file, bmpFactoryOptions);
-
-        int heightRatio = (int) Math.ceil(bmpFactoryOptions.outHeight / (float) height);
-        int widthRatio = (int) Math.ceil(bmpFactoryOptions.outWidth / (float) width);
-
-        if (heightRatio > 1 || widthRatio > 1) {
-            if (heightRatio > widthRatio) {
-                bmpFactoryOptions.inSampleSize = heightRatio;
-            } else {
-                bmpFactoryOptions.inSampleSize = widthRatio;
-            }
-        }
-
-        bmpFactoryOptions.inJustDecodeBounds = false;
-        bitmap = BitmapFactory.decodeFile(file, bmpFactoryOptions);
-
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-        byte[] imageInByte = stream.toByteArray();
-        //this gives the size of the compressed image in kb
-        long lengthbmp = imageInByte.length / 1024;
-
-        try {
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, new FileOutputStream("/sdcard/mediaAppPhotos/compressed_new.jpg"));
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-
-        return bitmap;
-    }
 
     private void createRecordForHistory(final ChatMessageBody obj) {
         HashMap<String, Object> fields = new HashMap<String, Object>();
@@ -1939,8 +1920,19 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             profileName.setText("" + splitted[0]);
             try {
                 Bitmap imageBitmap;
+                String mUserImagePath = null;
+                Uri mUserImageUri = null;
                 imageBitmap = authManager.getUserbitmap();
-                if (imageBitmap != null)
+                if(authManager.getUserImageUri() != null)
+                    mUserImagePath = ""+authManager.getUserImageUri().toString();
+
+                if(!Utils.isEmptyString(mUserImagePath))
+                    mUserImageUri = Utils.getImageContentUri(ChatRecordView.this,new File(mUserImagePath));
+
+
+                if(!Utils.isEmptyString(""+mUserImageUri))
+                    mypix.setImageURI(mUserImageUri);
+                else if (imageBitmap != null)
                     mypix.setImageBitmap(imageBitmap);
                 else if (Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("guy"))
                     Picasso.with(this).load(authManager.getUserPic()).error(R.drawable.male_user).into(mypix);

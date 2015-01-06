@@ -2,7 +2,7 @@ package com.sourcefuse.clickinandroid.utils;
 
 public class Log {
 
-    private static final boolean enableLogging = false;
+    private static final boolean enableLogging = true;
 
     public static void i(String tag, String msg) {
         if (enableLogging) {
@@ -19,7 +19,7 @@ public class Log {
     public static void e(String tag, Throwable e) {
         if (enableLogging) {
             Log.e("" + tag, "" + e.getMessage());
-            e.printStackTrace();
+            //e.printStackTrace();
         }
     }
 

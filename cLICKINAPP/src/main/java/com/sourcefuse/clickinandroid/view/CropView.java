@@ -69,7 +69,8 @@ public class CropView extends Activity implements View.OnClickListener {
                 if (bitmap == null) {
                     finish();
                 } else {
-                    ((CropImageView) findViewById(R.id.crop_image)).setImageBitmap(bitmap);
+                    ((CropImageView) findViewById(R.id.crop_image)).setImageBitmap(bitmap.copy(Bitmap.Config.ARGB_8888,true));
+                    bitmap.recycle();
 
                 }
             } catch (Exception e) {
@@ -167,20 +168,23 @@ public class CropView extends Activity implements View.OnClickListener {
 
 
                 if (getIntent().getStringExtra("from").equalsIgnoreCase("fromchatGallery") || getIntent().getStringExtra("from").equalsIgnoreCase("fromchatCamare")) {
-                    authManager.setmResizeBitmap(resizebitmap);
+                    authManager.setmResizeBitmap(resizebitmap.copy(Bitmap.Config.ARGB_8888,true));
                     Intent intent = new Intent(getApplicationContext(), EditMyProfileView.class);
                     intent.putExtra("retake", "fckoff");
                     intent.putExtra("path", path);
                     setResult(Activity.RESULT_OK, intent);
+                    resizebitmap.recycle();
                     finish();
+
                     //Utils.dismissBarDialog();
                 } else {
                     if (resizebitmap != null) {
-                        authManager.setmResizeBitmap(resizebitmap);
-                        authManager.setUserImageUri(Uri.parse(getIntent().getStringExtra("uri")));
+                        authManager.setmResizeBitmap(resizebitmap.copy(Bitmap.Config.ARGB_8888,true));
+                        authManager.setUserImageUri(Uri.parse(path));
                         Intent intent = new Intent(getApplicationContext(), EditMyProfileView.class);
                         intent.putExtra("retake", "fckoff");
                         intent.putExtra("path", path);
+                        resizebitmap.recycle();
                         setResult(Activity.RESULT_OK, intent);
                     }
                     finish();

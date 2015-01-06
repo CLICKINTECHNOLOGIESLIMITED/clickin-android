@@ -9,12 +9,14 @@ import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -35,6 +37,7 @@ import com.sourcefuse.clickinandroid.utils.GPSTracker;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
 
+import java.io.File;
 import java.io.InputStream;
 
 import de.greenrobot.event.EventBus;
@@ -329,9 +332,13 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
         } else if (getMsg.equalsIgnoreCase("GetRelationShips False")) {
             if (authManager == null)
                 authManager = ModelManager.getInstance().getAuthorizationManager();
-            if (authManager.getUserPic() != null)
+            if (authManager.getUserPic() != null) {
+
                 new DownloadImage().execute(authManager.getUserPic());
+
+            }
             else {
+
                 Utils.dismissBarDialog();
                 switchView();
             }
@@ -345,9 +352,12 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
 
             if (authManager == null)
                 authManager = ModelManager.getInstance().getAuthorizationManager();
-            if (authManager.getUserPic() != null)
+            if (authManager.getUserPic() != null) {
+
                 new DownloadImage().execute(authManager.getUserPic());
+            }
             else {
+
                 Utils.dismissBarDialog();
                 switchView();
             }
@@ -452,9 +462,12 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
 
         @Override
         protected void onPostExecute(Bitmap result) {
+            String mPath = Utils.storeImage(result, ""+ModelManager.getInstance().getAuthorizationManager().getUserId(), SignInView.this);
             if (authManager == null)
                 authManager = ModelManager.getInstance().getAuthorizationManager();
-            if (result != null)
+            if (!Utils.isEmptyString(""+mPath))
+                authManager.setUserImageUri(Uri.parse(mPath)); // save image Uri
+            if(result != null)
                 authManager.setUserbitmap(result);
             Utils.dismissBarDialog();
             switchView();
