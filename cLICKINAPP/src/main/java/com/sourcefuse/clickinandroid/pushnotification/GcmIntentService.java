@@ -16,6 +16,7 @@ import android.support.v4.app.NotificationCompat;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
+import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.FollowerList;
 import com.sourcefuse.clickinandroid.view.UserProfileView;
 import com.sourcefuse.clickinapp.R;
@@ -125,8 +126,7 @@ public class GcmIntentService extends IntentService {
         int counter = authManager.getNotificationCounter();
         authManager.setNotificationCounter(counter + 1);
         EventBus.getDefault().postSticky("update Counter");
-        /*if(isAppOnForeground(getApplicationContext()))
-            Utils.playSound(getApplicationContext(), R.raw.notification_inapp);*/
+
     }
 
     private void sendNotification(String title, String msg, Intent intent) {
