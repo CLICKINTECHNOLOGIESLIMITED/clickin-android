@@ -238,7 +238,7 @@
 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyABvxiiwy0AjxyFUbVCsOgoIAiqZgVWV3o" />
+            android:value="AIzaSyAS7VfqyQxeX-gkr7aldnovWi9c6znopAg" />
 
 
         <activity
