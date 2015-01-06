@@ -83,7 +83,7 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
     public static final int DELIVERED_CHAT = 4;
 
     private static final String TAG = ChatThread.class.getSimpleName();
-    private final Handler mHandler;
+    private final Handler serviceHandler;
     Application application;
     Pattern p = Pattern.compile("[\\d]+_(.*?)@.*?");
     //list to maintain chat message to add in db
@@ -157,7 +157,7 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
 
     public ChatThread(Application context, Handler handler) {
         application = context;
-        mHandler = handler;
+        serviceHandler = handler;
         authManager = ModelManager.getInstance().getAuthorizationManager();
 
         QBSettings.getInstance().fastConfigInit(Constants.CLICKIN_APP_ID, Constants.CLICKIN_AUTH_KEY, Constants.CLICKIN_AUTH_SECRET);
@@ -242,6 +242,7 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
 
                                     message.setProperty("originalMessageID", data.getString("originalChatId"));
                                     message.setProperty("isMessageSender", data.getString("isMessageSender"));
+                                    message.setProperty("messageSenderID",data.getString("messageSenderID"));
                                     message.setProperty("shareStatus", data.getString("shareStatus"));
                                     message.setProperty("sharingMedia", data.getString("sharingMedia"));
                                     message.setProperty("isAccepted", data.getString("isAccepted"));
@@ -875,58 +876,17 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
         }
         long sentOntime = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis();
         String chatId = ModelManager.getInstance().getAuthorizationManager().getQBId() + senderQBID + sentOntime;
-        //sendMessageToServiceToUpdate()
- /*      ChatMessageBody tempChat=new ChatMessageBody();
-       tempChat.deliveredChatID=msgId;
-       tempChat.chatType=Constants.CHAT_TYPE_DELIVERED;
-       tempChat.chatId=chatId;
-       tempChat.sentOn=String.valueOf(sentOntime);*/
 
-    /*    HashMap<String, Object> fields = new HashMap<String, Object>();
-        fields.put("relationshipId", relationshipId);
-        fields.put("userId", ModelManager.getInstance().getAuthorizationManager().getUserId());
-        fields.put("senderUserToken", ModelManager.getInstance().getAuthorizationManager().getUsrToken());
-        fields.put("type", Constants.CHAT_TYPE_DELIVERED);
-        fields.put("sentOn", sentOntime);// "142455987");//UTC
-        fields.put("chatId", chatId);
+        //pass data to service to update deliver status in history-monika
+        android.os.Message msg = new android.os.Message();
+        Bundle data = new Bundle();
+        data.putString("deliveredChatID",msgId);
+    //    data.putInt("ChatType",Constants.CHAT_TYPE_DELIVERED);
+        data.putString("chatID",chatId);
+        msg.setData(data);
+        msg.what=MyQbChatService.MSG_DELIVERED;
+        serviceHandler.sendMessage(msg);
 
-        fields.put("deliveredChatID", msgId);
-        fields.put("clicks", null);
-        fields.put("content", null);
-        fields.put("imageRatio", null);
-        fields.put("relationshipId", null);
-        fields.put("userId", null);
-        fields.put("senderUserToken", null);
-        fields.put("sentOn", null);// "142455987");//UTC
-        fields.put("chatId", null);
-        fields.put("type", null);
-        fields.put("video_thumb", null);
-
-
-        ArrayList<String> cards = null;
-        fields.put("cards", cards);
-        fields.put("location_coordinates", null);
-
-        ArrayList<String> sharedMessage = null;
-        fields.put("sharedMessage", sharedMessage);
-
-        QBCustomObject qbCustomObject = new QBCustomObject();
-        qbCustomObject.setClassName("chats");  // your Class name
-        qbCustomObject.setFields(fields);
-
-        // Activity currentActivity = application.getApplicationContext().getCurrentActivity();
-        QBCustomObjects.createObject(qbCustomObject, new QBCallbackImpl() {
-            @Override
-            public void onComplete(Result result) {
-                if (result.isSuccess()) {
-                    QBCustomObjectResult qbCustomObjectResult = (QBCustomObjectResult) result;
-                    QBCustomObject qbCustomObject = qbCustomObjectResult.getCustomObject();
-
-                } else {
-
-                }
-            }
-        }); */
 
 
     }

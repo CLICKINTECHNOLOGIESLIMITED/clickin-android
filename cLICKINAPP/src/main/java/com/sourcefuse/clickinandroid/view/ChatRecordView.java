@@ -1062,7 +1062,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
             temp.sharingMedia = intent.getExtras().getString("sharingMedia");
             temp.originalMessageID = intent.getExtras().getString("originalChatId");
-
+            temp.messageSenderId=authManager.getQBId();
             temp.textMsg = intent.getExtras().getString("textMsg");
             temp.shareComment = intent.getExtras().getString("caption");
             temp.isMessageSender = intent.getExtras().getString("isMessageSender");

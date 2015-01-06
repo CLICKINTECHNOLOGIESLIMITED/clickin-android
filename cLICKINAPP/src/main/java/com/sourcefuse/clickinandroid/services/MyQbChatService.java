@@ -17,6 +17,11 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 
+import com.quickblox.core.QBCallbackImpl;
+import com.quickblox.core.result.Result;
+import com.quickblox.module.custom.QBCustomObjects;
+import com.quickblox.module.custom.model.QBCustomObject;
+import com.quickblox.module.custom.result.QBCustomObjectResult;
 import com.sourcefuse.clickinandroid.dbhelper.ClickinDbHelper;
 import com.sourcefuse.clickinandroid.model.bean.ChatMessageBody;
 import com.sourcefuse.clickinandroid.utils.Constants;
@@ -28,14 +33,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
+
 import de.greenrobot.event.EventBus;
 
 /**
- * Created by amit on 03/10/14.
+ * Created by monika on 03/10/14.
  */
 public class MyQbChatService extends Service {
 
@@ -44,6 +52,7 @@ public class MyQbChatService extends Service {
     private NotificationManager mNM;
     private int mId = 0;
     private ChatThread mChatThread;
+    public static final int MSG_DELIVERED=1;
 
     @Override
     public void onCreate() {
@@ -52,42 +61,35 @@ public class MyQbChatService extends Service {
         Handler handler = new Handler() {
             @Override
             public void handleMessage(android.os.Message msg) {
-                if (msg.what == 0) {
-                    final Message message = (Message) msg.obj;
-                    if (message.getBody().equals("delivered")) {
-                        return;
-                    }
-                    new AsyncTask<Void, Void, Void>() {
+              switch(msg.what){
+                  case MSG_DELIVERED:
+                      Bundle data=msg.getData();
+                      HashMap<String, Object> fields = new HashMap<String, Object>();
+                      fields.put("type", Constants.CHAT_TYPE_DELIVERED);
 
-                        @Override
-                        protected Void doInBackground(Void... voids) {
-                            if (message.getBody() != null && !isAppOnForeground(MyQbChatService.this)) {
-                                try {
-                                    JSONObject jsonObject = new JSONObject(message.getBody());
-                                    boolean onteam = message.getFrom().contains("team1") || message.getFrom().contains("team2");
-                                    if (jsonObject.has("venue")) {
-                                        showNotification(jsonObject.getString("user_name") + " has proposed a new venue", jsonObject.getString("venue_name"), jsonObject.getString("match_id"), onteam);
-                                    } else {
-                                        showNotification("New message from " + jsonObject.getString("user_name"), jsonObject.getString("msg"), jsonObject.getString("match_id"), onteam);
-                                    }
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                            SharedPreferences sp = getSharedPreferences("chats", MODE_PRIVATE);
-                            SharedPreferences.Editor e = sp.edit();
-                            Matcher m = p.matcher(message.getFrom());
-                            m.find();
-                            e.putInt(m.group(1).replaceAll("-", ""), sp.getInt(message.getFrom(), 0) + 1);
-                            e.putInt("chat_count", sp.getInt("chat_count", 0) + 1);
-                            e.apply();
-                            //  EventBus.getDefault().post(new FgEvent(FgEvent.CHAT_MESSAGE, true, message));
-                            return null;
-                        }
-                    }.execute();
-                } else if (msg.what == 1) {
-                    // Session.getInstance(getApplicationContext()).getMessageList();
-                }
+                      fields.put("chatId", data.getString("chatID"));
+
+                      fields.put("deliveredChatID", data.getString("deliveredChatID"));
+
+                      QBCustomObject qbCustomObject = new QBCustomObject();
+                      qbCustomObject.setClassName("chats");  // your Class name
+                      qbCustomObject.setFields(fields);
+
+                      // Activity currentActivity = application.getApplicationContext().getCurrentActivity();
+                      QBCustomObjects.createObject(qbCustomObject, new QBCallbackImpl() {
+                          @Override
+                          public void onComplete(Result result) {
+                              if (result.isSuccess()) {
+                                  QBCustomObjectResult qbCustomObjectResult = (QBCustomObjectResult) result;
+                                  QBCustomObject qbCustomObject = qbCustomObjectResult.getCustomObject();
+
+                              } else {
+
+                              }
+                          }
+                      });
+
+              }
             }
         };
         mChatThread = new ChatThread(getApplication(), handler);
@@ -192,6 +194,7 @@ public class MyQbChatService extends Service {
                 data.putString("caption", msgObject.shareComment);
                 data.putString("isMessageSender", msgObject.isMessageSender);
                 data.putString("shareStatus", msgObject.shareStatus);
+                data.putString("messageSenderID",msgObject.messageSenderId);
                 data.putString("facebookToken", msgObject.facebookToken);
                 if (Utils.isEmptyString(msgObject.isAccepted)) {
                     data.putString("isAccepted", "null");
