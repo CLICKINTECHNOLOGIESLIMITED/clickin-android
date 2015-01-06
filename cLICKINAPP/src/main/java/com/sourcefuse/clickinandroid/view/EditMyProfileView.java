@@ -181,9 +181,9 @@ public class EditMyProfileView extends ClickInBaseView implements View.OnClickLi
             else if (imagebitmap1 != null)
                 mySelfy.setImageBitmap(imagebitmap1);
             else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl") && !userpic)
-                Picasso.with(EditMyProfileView.this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.female_user).into(mySelfy);
+                Picasso.with(EditMyProfileView.this).load(authManager.getUserPic()).error(R.drawable.female_user).into(mySelfy);
             else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("guy") && !userpic)
-                Picasso.with(EditMyProfileView.this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.male_user).into(mySelfy);
+                Picasso.with(EditMyProfileView.this).load(authManager.getUserPic()).error(R.drawable.male_user).into(mySelfy);
             else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl"))
                 mySelfy.setImageResource(R.drawable.female_user);
             else
