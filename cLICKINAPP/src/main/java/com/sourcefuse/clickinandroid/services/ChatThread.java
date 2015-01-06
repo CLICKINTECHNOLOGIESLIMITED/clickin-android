@@ -161,8 +161,8 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
         authManager = ModelManager.getInstance().getAuthorizationManager();
 
         QBSettings.getInstance().fastConfigInit(Constants.CLICKIN_APP_ID, Constants.CLICKIN_AUTH_KEY, Constants.CLICKIN_AUTH_SECRET);
-        //   QBSettings.getInstance().setServerApiDomain("apiclickin.quickblox.com");
-        //QBSettings.getInstance().setContentBucketName("qb-clickin");
+         //  QBSettings.getInstance().setServerApiDomain("apiclickin.quickblox.com");
+       // QBSettings.getInstance().setContentBucketName("qb-clickin");
         //QBSettings.getInstance().setChatServerDomain("chatclickin.quickblox.com");
         QBChatService.setDebugEnabled(true);
         messageInDb = new ArrayList<ChatMessageBody>();
@@ -668,7 +668,7 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
             }
         }
 
-        if (!Utils.isEmptyString(obj.clicks) && !obj.clicks.equalsIgnoreCase("no"))
+        if (!Utils.isEmptyString(obj.clicks) && !obj.clicks.equalsIgnoreCase("no") && Utils.isEmptyString(obj.sharingMedia))
             Utils.updateClicksBackgroundMsgs(relationIndex, obj);
 
         //check whether our activity is on top or not
@@ -875,13 +875,14 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
         }
         long sentOntime = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis();
         String chatId = ModelManager.getInstance().getAuthorizationManager().getQBId() + senderQBID + sentOntime;
+        //sendMessageToServiceToUpdate()
  /*      ChatMessageBody tempChat=new ChatMessageBody();
        tempChat.deliveredChatID=msgId;
        tempChat.chatType=Constants.CHAT_TYPE_DELIVERED;
        tempChat.chatId=chatId;
        tempChat.sentOn=String.valueOf(sentOntime);*/
 
-        HashMap<String, Object> fields = new HashMap<String, Object>();
+    /*    HashMap<String, Object> fields = new HashMap<String, Object>();
         fields.put("relationshipId", relationshipId);
         fields.put("userId", ModelManager.getInstance().getAuthorizationManager().getUserId());
         fields.put("senderUserToken", ModelManager.getInstance().getAuthorizationManager().getUsrToken());
@@ -925,7 +926,7 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
 
                 }
             }
-        });
+        }); */
 
 
     }

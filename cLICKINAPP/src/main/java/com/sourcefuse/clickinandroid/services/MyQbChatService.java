@@ -170,7 +170,7 @@ public class MyQbChatService extends Service {
                 } else if (!Utils.isEmptyString(msgObject.video_thumb)) {
                     data.putString("videoThumbnail", msgObject.video_thumb);
                     data.putString("FileId", msgObject.content_url);
-                } else if (!Utils.isEmptyString(msgObject.imageRatio) && !Utils.isEmptyString(msgObject.video_thumb)) {
+                } else if (Utils.isEmptyString(msgObject.imageRatio) && Utils.isEmptyString(msgObject.video_thumb)) {
                     data.putString("FileId", msgObject.content_url);
                 } else if (!Utils.isEmptyString(msgObject.card_originator)) {
 

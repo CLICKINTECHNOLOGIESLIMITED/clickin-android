@@ -1199,7 +1199,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
             //clicks and text- receiver end
 
-            if (!(temp.clicks.equalsIgnoreCase("no")) && Utils.isEmptyString(temp.card_id) && Utils.isEmptyString(temp.sharingMedia)) {
+            if (!(temp.clicks.equalsIgnoreCase("no")) && Utils.isEmptyString(temp.card_id) ) {
 
 
                 chatClickTextLayout.setVisibility(View.VISIBLE);
@@ -1545,7 +1545,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 if (Utils.isConnectingToInternet((Activity) context))
                     new DownloadMusicfromInternet().execute(item.content_url);
             } else {  // play Audio
-                Utils.playAudio(context, uri.toString());
+                Utils.playvideo(context, uri.toString());
             }
         }
     }
@@ -1740,7 +1740,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     /* play video */
                     Uri uri = Utils.getAudioContentUri(context, new File(mPath));  //check file exist or not
 
-                    Utils.playAudio(context, uri.toString());
+                    Utils.playvideo(context, uri.toString());
 
                 } else if (path.contains(Utils.mVideoPath)) {  // code to mount Video
 
