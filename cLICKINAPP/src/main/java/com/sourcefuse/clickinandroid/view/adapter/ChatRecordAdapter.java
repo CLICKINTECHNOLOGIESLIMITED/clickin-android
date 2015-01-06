@@ -1369,7 +1369,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
         });
 
 
-        // Click Action On Share With REJECT//akshit latest
+        // Click Action On Share With REJECT
         ((TextView) row.findViewById(R.id.shared_message_reject)).setTag(position);
         ((TextView) row.findViewById(R.id.shared_message_reject)).setOnClickListener(new View.OnClickListener() {
             @Override
