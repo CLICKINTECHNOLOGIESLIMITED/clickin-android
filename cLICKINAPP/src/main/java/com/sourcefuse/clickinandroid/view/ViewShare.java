@@ -133,9 +133,10 @@ public class ViewShare extends Activity implements View.OnClickListener {
             isMessageSender = intent.getStringExtra("isMessageSender");
             originalChatId = intent.getStringExtra("originalChatId");
 
-            shr_caption.setHint("Write your caption \nhere...");
+
             //akshit Code Starts ,To Upload Image ,Vedio ,Audio.
             if (!Utils.isEmptyString(image_url)) {
+                shr_caption.setHint("Write your caption \nhere...");
                 ImageView shr_image = (ImageView) findViewById(R.id.shr_user_image);
                 shr_image.setVisibility(View.VISIBLE);
                 //check whether image is already downloaded or not
