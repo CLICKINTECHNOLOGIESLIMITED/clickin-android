@@ -563,7 +563,7 @@ public class AuthManager {
 
 
     public void signIn(String username, String password, String deviceToken, String deviceType) {
-        
+
         authManager = ModelManager.getInstance().getAuthorizationManager();
         JSONObject userInputDetails = new JSONObject();
         try {

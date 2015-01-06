@@ -801,8 +801,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
         //if its is not a shared message either accepted or rejected- monika
         if (Utils.isEmptyString(obj.isAccepted)) {
-            //calculate and updates clicks value only when card is not present-monika
-            if (Utils.isEmptyString(obj.card_id)) {
+            //calculate and updates clicks value only when card is not present ,also when sharing media is null-monika
+            if (Utils.isEmptyString(obj.card_id) && Utils.isEmptyString(obj.sharingMedia)) {
                 if (obj.clicks.startsWith("+")) {
                     Utils.updateClicksPartnerWithoutCard(relationManager.partnerClicks, obj.clicks, true);
                 } else if (obj.clicks.startsWith("-")) {
@@ -1060,7 +1060,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
             temp.sharingMedia = intent.getExtras().getString("sharingMedia");
             temp.originalMessageID = intent.getExtras().getString("originalChatId");
-
+            temp.messageSenderId=authManager.getQBId();
             temp.textMsg = intent.getExtras().getString("textMsg");
             temp.shareComment = intent.getExtras().getString("caption");
             temp.isMessageSender = intent.getExtras().getString("isMessageSender");

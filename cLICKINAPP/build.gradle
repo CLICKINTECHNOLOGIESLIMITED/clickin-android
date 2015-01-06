@@ -12,12 +12,6 @@ allprojects {
 
 apply plugin: 'android'
 
-
-
-
-
-
-
 android {
     compileSdkVersion 19
 
@@ -59,7 +53,7 @@ dependencies {
     compile 'de.greenrobot:eventbus:2.2.0'
     compile 'com.google.android.gms:play-services:3.1+'
     compile 'com.viewpagerindicator:library:2.4.1@aar'
-    compile "com.splunk.mint:mint:4.0.7"
+   compile "com.splunk.mint:mint:4.0.7"
    
 }
 

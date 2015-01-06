@@ -83,8 +83,11 @@
                     android:id="@+id/iv_chat_image"
                     android:layout_width="206dp"
                     android:layout_height="180dp"
-                    android:layout_marginTop="2dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
                     android:adjustViewBounds="true"
+                    android:layout_gravity="center"
                     android:visibility="gone" />
 
                 <com.sourcefuse.clickinandroid.utils.FeedImageView
@@ -485,7 +488,7 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/rl_acc_rej_card"
                 android:orientation="vertical"
-                android:paddingRight="8dp"
+                android:paddingRight="3dp"
                 android:paddingTop="5dp"
                 android:visibility="gone">
 
@@ -493,15 +496,16 @@
                     android:id="@+id/tv_acc_res_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginLeft="3dp"
+                    android:paddingRight="3dp"
                     android:text="Toby made a" />
 
                 <TextView
                     android:id="@+id/tv_acc_res_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:paddingRight="14dp"
+                    android:layout_marginLeft="3dp"
+                    android:paddingRight="2dp"
                     android:text="COUNTER OFFER"
                     android:textStyle="bold"
 
@@ -565,8 +569,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginRight="7dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/c_card_accept"
                     android:visibility="gone" />
@@ -731,7 +735,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/ll_for_share_icon"
-            android:layout_marginLeft="3dp"
+            android:layout_marginLeft="0dp"
             android:orientation="horizontal"
             android:visibility="visible">
 
@@ -739,7 +743,7 @@
                 android:id="@+id/tv_time_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="5dp"
+                android:layout_marginRight="2dp"
                 android:text="11:28 AM"
                 android:textColor="@color/singn_forg"
                 android:textSize="10sp"

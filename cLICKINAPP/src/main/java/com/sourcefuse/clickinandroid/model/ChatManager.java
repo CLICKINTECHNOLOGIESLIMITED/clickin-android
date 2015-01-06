@@ -156,14 +156,19 @@ public class ChatManager {
                                             if (Utils.isEmptyString(temp.clicks))
                                                 temp.clicks = "no";
                                         }
-                                        if (chatObj.has("isDelivered"))
+                                        if (chatObj.has("isDelivered")) {
                                             temp.isDelivered = chatObj.getString("isDelivered");
+                                            if(temp.isDelivered.equalsIgnoreCase("yes")){
+                                                temp.deliveredChatID = temp.chatId; //if deliveredChatId exists, it means delivered-monika
+                                                                                    //we have to do this to match live chat params
+                                            }
+                                        }
                                         if (chatObj.has("imageRatio"))
                                             temp.imageRatio = chatObj.getString("imageRatio");
                                         if (chatObj.has("chatId")) {
                                             temp.chatId = chatObj.getString("chatId");
-                                            //temp code- will handle properly later on-monika
-                                            temp.deliveredChatID = temp.chatId;
+
+
                                         }
 
                                         // temp.cardchatObj.getString("cards"));

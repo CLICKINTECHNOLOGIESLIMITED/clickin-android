@@ -440,7 +440,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     ((LinearLayout) row.findViewById(R.id.acc_rej_layout_second)).setVisibility(View.VISIBLE);
                     ((TextView) row.findViewById(R.id.tv_acc_res_name)).setText("You" + " made a");
                     ((LinearLayout) row.findViewById(R.id.ll_cc_action)).setVisibility(View.GONE);
-                    // ((TextView) row.findViewById(R.id.tv_acc_res_status)).setText("COUNTER OFFER");
+//                     ((TextView) row.findViewById(R.id.tv_acc_res_status)).setText("COUNTER OFFER");
 
                     // listeners for countered actions- not required at sender side
 
@@ -687,12 +687,12 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
                 if (!Utils.isEmptyString(temp.textMsg) && !temp.clicks.equalsIgnoreCase("no")) // case for image with click
                 {
-                    mImageParams.setMargins(3, 7, 7, 0);//akshit line of code
+//                    mImageParams.setMargins(3, 3, 3, 3);//akshit line of code
                     mImageLayout.setLayoutParams(mImageParams);
                     image_attached.setPadding(5, 0, 0, 0);
                 } else if (!temp.clicks.equalsIgnoreCase("no")) //text without click
                 {
-                    mImageParams.setMargins(9, 9, 9, 9);
+//                    mImageParams.setMargins(7, 7, 7, 7);
                     mImageLayout.setLayoutParams(mImageParams);
                 } else if (temp.clicks.equalsIgnoreCase("no") && Utils.isEmptyString(temp.textMsg)) {//akshit code to set margin if no clicks and text present
                     mImageParams.setMargins(11, 7, 27, 11);
@@ -810,7 +810,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
                 if (!(Utils.isEmptyString(temp.textMsg)) || (!(temp.clicks.equalsIgnoreCase("no")))) {
 
-                    layoutParams.setMargins(7, 11, 1, 7);//akshit line of code to set margin
+                    layoutParams.setMargins(7, 9, 3, 7);//akshit line of code to set margin
 
                     chatClickTextLayout.setVisibility(View.VISIBLE);
                     RelativeLayout.LayoutParams paramsrr2 = new RelativeLayout.LayoutParams(
@@ -832,9 +832,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 FeedImageView iv_chat_image_ = (FeedImageView) row.findViewById(R.id.iv_chat_image_);
 
                 if (Utils.isEmptyString(temp.textMsg))
-                    image_attached.setPadding(10, 8, 28, 10);
+                    image_attached.setPadding(2, 2, 2, 10);//akshit code
                 else
-                    image_attached.setPadding(10, 5, 5, 10);
+                    image_attached.setPadding(10, 5, 5, 10);//akshit code
 
                 if (!(Utils.isEmptyString(temp.textMsg)) || (!(temp.clicks.equalsIgnoreCase("no")))) {
                     chatClickTextLayout.setVisibility(View.VISIBLE);
@@ -1204,7 +1204,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
             //clicks and text- receiver end
 
-            if (!(temp.clicks.equalsIgnoreCase("no")) && Utils.isEmptyString(temp.card_id) && Utils.isEmptyString(temp.sharingMedia)) {
+            if (!(temp.clicks.equalsIgnoreCase("no")) && Utils.isEmptyString(temp.card_id) ) {
 
 
                 chatClickTextLayout.setVisibility(View.VISIBLE);
@@ -1374,7 +1374,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
         });
 
 
-        // Click Action On Share With REJECT//akshit latest
+        // Click Action On Share With REJECT
         ((TextView) row.findViewById(R.id.shared_message_reject)).setTag(position);
         ((TextView) row.findViewById(R.id.shared_message_reject)).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1550,7 +1550,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 if (Utils.isConnectingToInternet((Activity) context))
                     new DownloadMusicfromInternet().execute(item.content_url);
             } else {  // play Audio
-                Utils.playAudio(context, uri.toString());
+                Utils.playvideo(context, uri.toString());
             }
         }
     }
@@ -1745,7 +1745,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     /* play video */
                     Uri uri = Utils.getAudioContentUri(context, new File(mPath));  //check file exist or not
 
-                    Utils.playAudio(context, uri.toString());
+                    Utils.playvideo(context, uri.toString());
 
                 } else if (path.contains(Utils.mVideoPath)) {  // code to mount Video
 
