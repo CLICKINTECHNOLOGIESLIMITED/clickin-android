@@ -220,7 +220,6 @@ public class SimpleSectionedListAdapter2 extends BaseAdapter implements PinnedSe
                                     if (!mSections.get(position).senderImages.toString().equalsIgnoreCase("")) {
                                         Picasso.with(mContext)
                                                 .load(mSections.get(position).senderImages)
-                                                .skipMemoryCache()
                                                 .error(R.drawable.male_user).into(imageview);
 
                                     } else {
@@ -234,7 +233,6 @@ public class SimpleSectionedListAdapter2 extends BaseAdapter implements PinnedSe
                                     if (!mSections.get(position).senderImages.toString().equalsIgnoreCase("")) {
                                         Picasso.with(mContext)
                                                 .load(mSections.get(position).senderImages)
-                                                .skipMemoryCache()
                                                 .error(R.drawable.female_user).into(imageview);
                                     } else {
                                         imageview.setImageResource(R.drawable.female_user);
@@ -257,8 +255,6 @@ public class SimpleSectionedListAdapter2 extends BaseAdapter implements PinnedSe
                                         if (!mSections.get(position).senderImages.toString().equalsIgnoreCase("")) {
                                             Picasso.with(mContext)
                                                     .load(mSections.get(position).senderImages)
-                                                    .skipMemoryCache()
-
                                                     .error(R.drawable.male_user).into(imageview);
                                         } else {
                                             imageview.setImageResource(R.drawable.male_user);
@@ -279,8 +275,6 @@ public class SimpleSectionedListAdapter2 extends BaseAdapter implements PinnedSe
                                         if (!mSections.get(position).recieverImages.toString().equalsIgnoreCase("")) {
                                             Picasso.with(mContext)
                                                     .load(mSections.get(position).recieverImages)
-                                                    .skipMemoryCache()
-
                                                     .error(R.drawable.male_user).into(imageview);
                                         } else {
                                             imageview.setImageResource(R.drawable.male_user);
@@ -299,8 +293,6 @@ public class SimpleSectionedListAdapter2 extends BaseAdapter implements PinnedSe
                                 if (!mSections.get(position).senderImages.toString().equalsIgnoreCase("")) {
                                     Picasso.with(mContext)
                                             .load(mSections.get(position).senderImages)
-                                            .skipMemoryCache()
-
                                             .error(R.drawable.male_user).into(imageview);
                                 } else {
                                     imageview.setImageResource(R.drawable.male_user);

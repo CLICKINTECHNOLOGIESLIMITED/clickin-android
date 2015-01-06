@@ -394,9 +394,9 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
             else if (imagebitmap1 != null)
                 userPic.setImageBitmap(imagebitmap1);
             else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl") && !userpic)
-                Picasso.with(ClickInBaseView.this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.female_user).into(userPic);
+                Picasso.with(ClickInBaseView.this).load(authManager.getUserPic()).error(R.drawable.female_user).into(userPic);
             else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("guy") && !userpic)
-                Picasso.with(ClickInBaseView.this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.male_user).into(userPic);
+                Picasso.with(ClickInBaseView.this).load(authManager.getUserPic()).error(R.drawable.male_user).into(userPic);
             else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl"))
                 userPic.setImageResource(R.drawable.female_user);
             else
@@ -768,9 +768,9 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
             else if (imagebitmap1 != null)
                 userPic.setImageBitmap(imagebitmap1);
             else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl") && !userpic)
-                Picasso.with(ClickInBaseView.this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.female_user).into(userPic);
+                Picasso.with(ClickInBaseView.this).load(authManager.getUserPic()).error(R.drawable.female_user).into(userPic);
             else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("guy") && !userpic)
-                Picasso.with(ClickInBaseView.this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.male_user).into(userPic);
+                Picasso.with(ClickInBaseView.this).load(authManager.getUserPic()).error(R.drawable.male_user).into(userPic);
             else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl"))
                 userPic.setImageResource(R.drawable.female_user);
             else
@@ -940,9 +940,9 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
             else if (imagebitmap1 != null)
                 userPic.setImageBitmap(imagebitmap1);
             else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl") && !userpic)
-                Picasso.with(ClickInBaseView.this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.female_user).into(userPic);
+                Picasso.with(ClickInBaseView.this).load(authManager.getUserPic()).error(R.drawable.female_user).into(userPic);
             else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("guy") && !userpic)
-                Picasso.with(ClickInBaseView.this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.male_user).into(userPic);
+                Picasso.with(ClickInBaseView.this).load(authManager.getUserPic()).error(R.drawable.male_user).into(userPic);
             else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl"))
                 userPic.setImageResource(R.drawable.female_user);
             else
