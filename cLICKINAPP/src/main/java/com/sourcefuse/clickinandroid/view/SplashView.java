@@ -44,7 +44,7 @@ public class SplashView extends Activity implements View.OnClickListener {
 
         Mint.initAndStartSession(SplashView.this, Constants.mSplunk_Api);  // to start the session of Splunk Crashlytics
         Mint.enableDebug();
-
+        Utils.deviceId = Utils.getRegId(SplashView.this);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.view_splash);
         authManager = ModelManager.getInstance().getAuthorizationManager();
@@ -67,7 +67,7 @@ public class SplashView extends Activity implements View.OnClickListener {
 
             authManager.setLatLan(latlan);
 
-            authManager.signIn(myPhone, pwd, deviceId, Constants.DEVICETYPE);
+            authManager.signIn(myPhone, pwd, Utils.deviceId, Constants.DEVICETYPE);
 
         } else {//autologin not possible
 

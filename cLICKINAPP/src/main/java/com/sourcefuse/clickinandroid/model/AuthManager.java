@@ -2,6 +2,7 @@ package com.sourcefuse.clickinandroid.model;
 
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.util.Log;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -562,6 +563,7 @@ public class AuthManager {
 
 
     public void signIn(String username, String password, String deviceToken, String deviceType) {
+        
         authManager = ModelManager.getInstance().getAuthorizationManager();
         JSONObject userInputDetails = new JSONObject();
         try {

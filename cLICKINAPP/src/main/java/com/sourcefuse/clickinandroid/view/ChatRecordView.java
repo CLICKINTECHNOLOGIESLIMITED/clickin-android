@@ -236,20 +236,15 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         String thumbpath = Utils.mImagePath;
         File file = new File(thumbpath);
         String mPath = file.getAbsolutePath() + "/" + mChatId + ".jpg";  // save image by mChatIdname
-        File mFile = new File(mPath);
+
         try {
             if (!file.exists()) {
                 file.mkdirs();
-                file.setWritable(true);
-                file.setReadable(true);
             }
-           /* file.mkdirs();
-            file.setWritable(true);
-            file.setReadable(true);*/
+            File mFile = new File(mPath);
             FileOutputStream os = new FileOutputStream(mFile);
             BufferedOutputStream bos = new BufferedOutputStream(os);
-
-            data.compress(Bitmap.CompressFormat.JPEG, 50, bos);
+            data.compress(Bitmap.CompressFormat.JPEG, 100, bos);
             os.flush();
             os.close();
 
@@ -264,6 +259,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
         } catch (Exception e) {
             e.printStackTrace();
+
         }
         return mPath;
     }
@@ -358,31 +354,33 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             String mUserImagePath = null;
             Uri mUserImageUri = null;
             imageBitmap = authManager.getUserbitmap();
-            if(authManager.getUserImageUri() != null)
-                mUserImagePath = ""+authManager.getUserImageUri().toString();
+            if (authManager.getUserImageUri() != null)
+                mUserImagePath = "" + authManager.getUserImageUri().toString();
 
-            if(!Utils.isEmptyString(mUserImagePath))
-            mUserImageUri = Utils.getImageContentUri(ChatRecordView.this,new File(mUserImagePath));
+            if (!Utils.isEmptyString(mUserImagePath))
+                mUserImageUri = Utils.getImageContentUri(ChatRecordView.this, new File(mUserImagePath));
 
+            Log.e("image uri--->",""+mUserImageUri);
+            Log.e("gender--->",""+authManager.getGender());
+            Log.e("gender--->",""+authManager.getGender());
 
-
-            if(!Utils.isEmptyString(""+mUserImageUri))
+            if (!Utils.isEmptyString("" + mUserImageUri))
                 mypix.setImageURI(mUserImageUri);
-            else if (imageBitmap != null)
+            else if (imageBitmap != null) {
                 mypix.setImageBitmap(imageBitmap);
-            else if (Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("guy"))
-                Picasso.with(this).load(authManager.getUserPic()).error(R.drawable.male_user).into(mypix);
-            else if (Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl"))
+                Log.e("image bitmap--->","image bitmap--->");
+            }
+            else if (!Utils.isEmptyString(authManager.getUserPic()) && Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl"))
                 Picasso.with(this).load(authManager.getUserPic()).error(R.drawable.female_user).into(mypix);
-            else if (Utils.isEmptyString(authManager.getGender()))
+            else
                 Picasso.with(this).load(authManager.getUserPic()).error(R.drawable.male_user).into(mypix);
 
         } catch (Exception e) {
-            if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("guy"))
+            if (!Utils.isEmptyString(authManager.getUserPic()) && !Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("guy"))
                 mypix.setImageResource(R.drawable.male_user);
-            else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl"))
+            else if (!Utils.isEmptyString(authManager.getUserPic()) && !Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl"))
                 mypix.setImageResource(R.drawable.female_user);
-            else if (!Utils.isEmptyString(authManager.getGender()))
+            else
                 mypix.setImageResource(R.drawable.male_user);
         }
 
@@ -1364,7 +1362,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                         bitmap = decodeSampledBitmapFromUri(targetUri, width, height);
                         if (bitmap != null) {
                             try {
-                                authManager.setOrginalBitmap(bitmap.copy(Bitmap.Config.ARGB_8888,true));
+                                authManager.setOrginalBitmap(bitmap.copy(Bitmap.Config.ARGB_8888, true));
                                 Intent intent = new Intent(ChatRecordView.this, CropView.class);
                                 intent.putExtra("name", mChatId);  // save image name
                                 intent.putExtra("from", "fromchatCamare");
@@ -1442,25 +1440,39 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                         // mImageCaptureUri = data.getData();
                         path = Utils.getRealPathFromURI(data.getData(), ChatRecordView.this);
                         videofilePath = path;
-                        Bitmap bMap = ThumbnailUtils.createVideoThumbnail(VideoUtil.videofilePath, MediaStore.Video.Thumbnails.MICRO_KIND);
+                        Bitmap bMap = ThumbnailUtils.createVideoThumbnail(path, MediaStore.Video.Thumbnails.MICRO_KIND);
+
                         if (videofilePath.contains(".mp4")) {
                             Random mRandom = new Random();
                             int mName = mRandom.nextInt();
                             mName = Math.abs(mName);
 
                             thumurl = videofilePath.replace(".mp4", "" + mName);
+
                             thumurl = writePhotoJpg(bMap, thumurl);
+
+
+
+                            /* prafull code for image */
+                            attachBtn.setImageResource(R.drawable.ic_playvideoicon);
+                            //akshit code to check wether image buton contains image or not;
+
+                        }else {
+                            path = null;
+                            audioFilePath = null;
+                            thumurl = null;
+                            videofilePath = null;
+                            attachBtn.setImageResource(R.drawable.r_footer_icon);
+
                         }
-                        attachBtn.setImageBitmap(bMap);
-                        //akshit code to check wether image buton contains image or not;
                         if (attachBtn.getDrawable().getConstantState() == getResources().getDrawable(R.drawable.r_footer_icon).getConstantState()) {
                             setVisibilityForSendButton();
-
                         } else {
                             setVisibilityForSend();
                         }
-                        /* prafull code for image */
-                        attachBtn.setImageResource(R.drawable.ic_playvideoicon);
+
+
+
                         //ends
                         break;
 
@@ -1780,7 +1792,6 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     }
 
 
-
     private void createRecordForHistory(final ChatMessageBody obj) {
         HashMap<String, Object> fields = new HashMap<String, Object>();
         String clicks = obj.clicks;
@@ -1923,29 +1934,25 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 String mUserImagePath = null;
                 Uri mUserImageUri = null;
                 imageBitmap = authManager.getUserbitmap();
-                if(authManager.getUserImageUri() != null)
-                    mUserImagePath = ""+authManager.getUserImageUri().toString();
+                if (authManager.getUserImageUri() != null)
+                    mUserImagePath = "" + authManager.getUserImageUri().toString();
 
-                if(!Utils.isEmptyString(mUserImagePath))
-                    mUserImageUri = Utils.getImageContentUri(ChatRecordView.this,new File(mUserImagePath));
+                if (!Utils.isEmptyString(mUserImagePath))
+                    mUserImageUri = Utils.getImageContentUri(ChatRecordView.this, new File(mUserImagePath));
 
 
-                if(!Utils.isEmptyString(""+mUserImageUri))
+                if (!Utils.isEmptyString("" + mUserImageUri))
                     mypix.setImageURI(mUserImageUri);
                 else if (imageBitmap != null)
                     mypix.setImageBitmap(imageBitmap);
-                else if (Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("guy"))
-                    Picasso.with(this).load(authManager.getUserPic()).error(R.drawable.male_user).into(mypix);
-                else if (Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl"))
+                else if (!Utils.isEmptyString(authManager.getUserPic()) && Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl"))
                     Picasso.with(this).load(authManager.getUserPic()).error(R.drawable.female_user).into(mypix);
-                else if (Utils.isEmptyString(authManager.getGender()))
+                else
                     Picasso.with(this).load(authManager.getUserPic()).error(R.drawable.male_user).into(mypix);
             } catch (Exception e) {
-                if (Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("guy"))
-                    mypix.setImageResource(R.drawable.male_user);
-                else if (Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl"))
+                if (!Utils.isEmptyString(authManager.getUserPic()) && Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl"))
                     mypix.setImageResource(R.drawable.female_user);
-                else if (Utils.isEmptyString(authManager.getGender()))
+                else
                     mypix.setImageResource(R.drawable.male_user);
             }
             if (!Utils.isEmptyString(partnerPic))
