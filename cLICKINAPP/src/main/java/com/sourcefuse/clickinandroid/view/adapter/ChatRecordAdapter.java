@@ -333,18 +333,23 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 String mContentUri = Utils.mImagePath + tempChatid + ".jpg"; // fetch data from
 
 
+
                 Uri mUri = Utils.getImageContentUri(context, new File(mContentUri));
                 if (!Utils.isEmptyString("" + mUri)) {  // check video thumb exists or not
                     try {
                         image_attached.setImageURI(mUri);  // set thumb from uri
                         play_buttom.setVisibility(View.VISIBLE);
+
                     } catch (Exception e) {
                         e.printStackTrace();
+
                     }
                 } else {  // download image from server
+
                     final ProgressBar progressBar = (ProgressBar) row.findViewById(R.id.progress_bar);
                     progressBar.setVisibility(View.VISIBLE);
                     play_buttom.setVisibility(View.GONE);
+
                     iv_chat_image_.setImageUrl(temp.video_thumb, imageLoader);  // download image from server
                     //chat Id by which image got saved
                     final String chatIdForImage = tempChatid;

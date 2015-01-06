@@ -64,7 +64,7 @@ public class FeedsCommentsAdapter extends ArrayAdapter<FeedStarsBean> {
         holder.usr_name.setText(eachNewsFeed.get(position).getUserName());
         if (!eachNewsFeed.get(position).getUserPic().equalsIgnoreCase("")) {
             try {
-                Picasso.with(context).load(eachNewsFeed.get(position).getUserPic()).skipMemoryCache().error(R.drawable.male_user).into(holder.usrimg);
+                Picasso.with(context).load(eachNewsFeed.get(position).getUserPic()).error(R.drawable.male_user).into(holder.usrimg);
             } catch (Exception e) {
                 holder.usrimg.setImageResource(R.drawable.male_user);
             }

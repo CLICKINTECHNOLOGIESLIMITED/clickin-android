@@ -348,7 +348,7 @@
     <string name="chat_msg">has sent you a message</string>
     <string name="chat_image">has sent you a photo</string>
     <string name="media">media</string>
-
+    <string name="video_not_supported">video format not supported</string>
 
     <string name="getFollowers">GetFollower True</string>
 </resources>

@@ -50,6 +50,8 @@ public class PlayItSafeView extends Activity implements View.OnClickListener, Te
         typefaceBold = Typeface.createFromAsset(PlayItSafeView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_BOLD);
 
 
+        Utils.deviceId = Utils.getRegId(PlayItSafeView.this);
+
         done = (Button) findViewById(R.id.btn_done_play);
         password = (EditText) findViewById(R.id.edt_password);
         rePassword = (EditText) findViewById(R.id.edt_re_password);

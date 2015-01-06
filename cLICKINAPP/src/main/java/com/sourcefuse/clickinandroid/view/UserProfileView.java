@@ -229,9 +229,9 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
             else if (imagebitmap1 != null)
                 userimage.setImageBitmap(imagebitmap1);
             else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl") && !userpic)
-                Picasso.with(UserProfileView.this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.female_user).into(userimage);
+                Picasso.with(UserProfileView.this).load(authManager.getUserPic()).error(R.drawable.female_user).into(userimage);
             else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("guy") && !userpic)
-                Picasso.with(UserProfileView.this).load(authManager.getUserPic()).skipMemoryCache().error(R.drawable.male_user).into(userimage);
+                Picasso.with(UserProfileView.this).load(authManager.getUserPic()).error(R.drawable.male_user).into(userimage);
             else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl"))
                 userimage.setImageResource(R.drawable.female_user);
             else

@@ -104,7 +104,6 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
                 if (!Utils.isEmptyString(image_uri)) {
                     Picasso.with(AddViaContactView.this)
                             .load(image_uri)
-                            .skipMemoryCache()
                             .error(R.drawable.male_user)
                             .into(conIcon);
                 } else {
