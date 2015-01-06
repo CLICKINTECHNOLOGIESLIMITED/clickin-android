@@ -101,12 +101,12 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
         name.setTypeface(typeface, typeface.BOLD);
         othesProfileName.setTypeface(typeface, typeface.BOLD);
         profileHeader.setTypeface(typeface, typeface.BOLD);
-        tvclickintx.setTypeface(typeface, typeface.BOLD);
+//        tvclickintx.setTypeface(typeface, typeface.BOLD);
 
         following.setTypeface(typeface, typeface.BOLD);
         follower.setTypeface(typeface, typeface.BOLD);
         userimage.setScaleType(ScaleType.FIT_XY);
-        tvwith.setTypeface(typeface);
+//        tvwith.setTypeface(typeface);
         userdetails.setTypeface(typeface);
 
 

@@ -190,25 +190,28 @@
                     android:orientation="horizontal"
                     android:visibility="gone">
 
-                    <TextView
+                    <com.sourcefuse.clickinandroid.utils.ClickInTextView
                         android:id="@+id/tv_clickintx"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingBottom="2dp"
                         android:paddingTop="5dp"
-                        android:text="@string/txt_clickINtxt"
-                        android:textColor="@color/profile_details"
-                        android:textSize="20sp" />
+                        android:text="CLICKIN' "
+                        android:textColor="@color/dark_gray"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
 
-                    <TextView
+                    <com.sourcefuse.clickinandroid.utils.ClickInTextView
                         android:id="@+id/tv_with"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingBottom="2dp"
                         android:paddingTop="5dp"
                         android:text="@string/txt_with"
-                        android:textColor="@color/profile_details"
-                        android:textSize="20sp" />
+                        android:textColor="@color/owner_relation_header_with_m"
+                        android:textSize="18sp"
+                        geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
                 </LinearLayout>
 
                 <View
@@ -217,7 +220,7 @@
                     android:layout_height="1dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
-                    android:background="@color/sign_hint"
+                    android:background="@drawable/owner_profile_side_line"
                     android:visibility="gone" />
 
                 <ListView
@@ -225,7 +228,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:scrollbars="none" />
+                    android:scrollbars="none"
+                    android:divider="@color/transparent"/>
             </LinearLayout>
 
 

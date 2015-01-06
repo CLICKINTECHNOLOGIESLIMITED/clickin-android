@@ -47,6 +47,7 @@
     <string name="hint_re_enterpwd">Re-enter Password</string>
     <string name="txt_forget_pwd">FORGOT PASSWORD</string>
     <string name="txt_clickINtxt">CLICKIN\'</string>
+    <string name="txt_clickINtxtOther">CLICKIN\'</string>
     <string name="txt_clickwith">CLICKIN\'WITH</string>
     <string name="clickwith">CLICK WITH</string>
     <string name="txt_with"> WITH</string>
