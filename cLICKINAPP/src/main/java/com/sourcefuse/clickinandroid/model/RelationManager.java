@@ -223,7 +223,17 @@ public class RelationManager {
                                   JSONObject errorResponse) {
                 super.onFailure(statusCode, e, errorResponse);
 
+                if(errorResponse.has("message"))
+                {
+                    try {
+                        errorResponse.getString("message").equalsIgnoreCase("User details not found.");
+                        profileRelationShipData.clear();
+                    } catch (JSONException e1) {
+                        e1.printStackTrace();
+                    }
+                }
                 if (errorResponse != null) {
+
                     EventBus.getDefault().post("Fetchprofilerelationships False");
                 } else {
                     EventBus.getDefault().post("Fetchprofilerelationships Network Error");
@@ -239,6 +249,8 @@ public class RelationManager {
 
                     state = response.getBoolean("success");
                     if (state) {
+
+
                         profileRelationShipData.clear();
                         JSONArray list = response.getJSONArray("relationships");
 

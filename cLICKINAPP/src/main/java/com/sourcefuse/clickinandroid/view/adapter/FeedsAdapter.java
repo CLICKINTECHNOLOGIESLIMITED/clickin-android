@@ -200,7 +200,10 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
             } else if (eachNewsFeed.get(position).getNewsFeedArray_chatDetail_type().equalsIgnoreCase("6")) {
                 holder.feed_image.setVisibility(View.VISIBLE);
                 Picasso.with(context)
-                        .load(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content()).skipMemoryCache().into(holder.feed_image);
+                        .load(eachNewsFeed.get(position)
+                                .getNewsFeedArray_chatDetail_content())
+                                .skipMemoryCache()
+                                .into(holder.feed_image);
             } else {
                 holder.feed_image.setVisibility(View.GONE);
             }
