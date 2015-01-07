@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -158,6 +159,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         intent.putExtra("partnerName", partnerName);
         intent.putExtra("rId", rid);
         intent.putExtra("partnerId", partnerId);
+        Log.e("partner id--->",""+partnerId);
         intent.putExtra("myClicks", myClicks);
         intent.putExtra("userClicks", userClicks);
         intent.putExtra("partnerPh", partnerPh);

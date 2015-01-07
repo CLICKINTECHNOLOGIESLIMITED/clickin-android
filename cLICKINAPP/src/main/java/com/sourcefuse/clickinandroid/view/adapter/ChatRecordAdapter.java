@@ -90,11 +90,13 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
         String oursQbId = ModelManager.getInstance().getAuthorizationManager().getQBId();
         RelativeLayout parentChatLayout = (RelativeLayout) row.findViewById(R.id.chat_parent_layout);
         relationManager = ModelManager.getInstance().getRelationManager();
+
         if (imageLoader == null)
             imageLoader = AppController.getInstance().getImageLoader();
         //monika- in case of chat history, we get clicks value null, so convert it to standard "no" value
         if (Utils.isEmptyString(temp.clicks))
             temp.clicks = "no";
+        Log.e("Text Msg--->",""+temp.textMsg);
         if (temp.senderQbId.equalsIgnoreCase(oursQbId)) { //start of sender
 
 
@@ -376,7 +378,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 image_attached.setScaleType(ImageView.ScaleType.FIT_XY);
                 image_attached.setVisibility(View.VISIBLE);
             } else if (!Utils.isEmptyString(temp.card_id)) {// //end of video loop-sender And Card start
-                //  parentChatLayout.setBackgroundResource(R.drawable.newbg);
+
                 //share should not be present for first time case
                 ((LinearLayout) row.findViewById(R.id.ll_for_share_icon)).setVisibility(View.GONE);
                 //check for status of card played basis on accept reject value
@@ -567,7 +569,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
                 LinearLayout mParentShareLayout = (LinearLayout) row.findViewById(R.id.parent_clicks_area_share);
                 mParentShareLayout.setVisibility(View.VISIBLE);
-                parent_shared_layout.setBackgroundResource(R.drawable.newbg);
+                parent_shared_layout.setBackgroundResource(R.drawable.newbg_grey);
                 parent_shared_layout.setVisibility(View.VISIBLE);
 
                 LinearLayout mClickArea = (LinearLayout) row.findViewById(R.id.clicks_area_share);
@@ -588,6 +590,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                         mShareLong.setText(temp.textMsg.substring(13));//akshit changes
                         mShareLong.setTextColor(context.getResources().getColor(R.color.white));
                         mShareLong.setVisibility(View.VISIBLE);
+
 
                     } else {
                         mShareSort.setText(temp.textMsg);
@@ -1255,12 +1258,10 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 //clicks and text- sharing media-sender case
             } else if (!(temp.clicks.equalsIgnoreCase("no")) && Utils.isEmptyString(temp.card_id) && !Utils.isEmptyString(temp.sharingMedia)) { // for share case
 
-                Log.e("in case--->","in case--->");
-                Log.e("clicks--->",""+temp.clicks);
-                Log.e("clicks--->",""+temp.textMsg);
+
                 LinearLayout mParentShareLayout = (LinearLayout) row.findViewById(R.id.parent_clicks_area_share);
                 mParentShareLayout.setVisibility(View.VISIBLE);
-                parent_shared_layout.setBackgroundResource(R.drawable.newbg);
+                parent_shared_layout.setBackgroundResource(R.drawable.greyarrownew_right);
                 parent_shared_layout.setVisibility(View.VISIBLE);
 
 
@@ -1279,8 +1280,12 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     if (temp.textMsg.length() > Constants.CHAT_LENTH_LIMIT) {
                         mShareSort.setText(temp.textMsg.substring(0, 12));
                         mShareSort.setVisibility(View.VISIBLE);
+                        mShareLong.setText(temp.textMsg.substring(13));//akshit changes
                         mShareLong.setTextColor(context.getResources().getColor(R.color.white));
                         mShareLong.setVisibility(View.VISIBLE);
+                        Log.e("in this case----.","in this case----."+temp.textMsg.substring(13));
+                        Log.e("in this case----.","in this case----."+temp.textMsg);
+
 
                     } else {
                         mShareSort.setVisibility(View.VISIBLE);
@@ -1389,17 +1394,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 if (Utils.isEmptyString(item.isAccepted)) { //it means no action was taken on share request-monika
                     Intent i = new Intent(context, ChatRecordView.class);
                     //not required these params at all-monika
-             /*   if (!Utils.isEmptyString(item.imageRatio)) {
-                    i.putExtra("imageRatio", item.imageRatio);
-                    i.putExtra("fileId", item.content_url);
-                } else if (!Utils.isEmptyString(item.video_thumb)) {
-                    i.putExtra("videoThumbnail", item.video_thumb);
-                    i.putExtra("videoID", item.content_url);
-                } else if (!Utils.isEmptyString(item.content_url) && Utils.isEmptyString(item.imageRatio) && Utils.isEmptyString(item.video_thumb)) {
-                    i.putExtra("audioID", item.content_url);
-                }*/
                     i.putExtra("originalChatId", item.originalMessageID);
-
                     i.putExtra("textMsg", "SHARING DENIED");
                     i.putExtra("caption", item.shareComment);
                     i.putExtra("facebookToken", item.facebookToken);

@@ -1088,10 +1088,18 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
             }
 
+
             ShowValueinChat(temp);
 
+            ChatMessageBody tempObj = new ChatMessageBody(temp);
+            // code to change value when send copy constructor
+            if (!temp.clicks.equalsIgnoreCase("no")) {
+
+                tempObj.textMsg = temp.clicks + "        " + temp.textMsg;
+            }
+
             if (myQbChatService != null)
-                myQbChatService.sendMessage(temp);
+                myQbChatService.sendMessage(tempObj);
             createRecordForHistory(temp);
 
         }
