@@ -100,8 +100,8 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         addMenu(true);
         /*set picasso maneger value */
-        PicassoManager.setLruCache(UserProfileView.this);
-        PicassoManager.setPicasso(UserProfileView.this,PicassoManager.getLruCache());
+      //  PicassoManager.setLruCache(UserProfileView.this);
+        //PicassoManager.setPicasso(UserProfileView.this,PicassoManager.getLruCache());
 
         this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
         authManager = ModelManager.getInstance().getAuthorizationManager();

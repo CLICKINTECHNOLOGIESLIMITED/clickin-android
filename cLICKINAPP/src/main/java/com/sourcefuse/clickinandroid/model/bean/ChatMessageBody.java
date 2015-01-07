@@ -91,6 +91,7 @@ public class ChatMessageBody {
         senderUserToken = body.senderUserToken;
         senderQbId = body.senderQbId;
         isMessageSender = body.isMessageSender;
+        messageSenderId=body.messageSenderId;
 
         // Share message
         shareStatus = body.shareStatus;
