@@ -156,6 +156,12 @@ public class ChatManager {
                                             if (Utils.isEmptyString(temp.clicks))
                                                 temp.clicks = "no";
                                         }
+
+                                        if (chatObj.has("chatId")) {
+                                            temp.chatId = chatObj.getString("chatId");
+
+
+                                        }
                                         if (chatObj.has("isDelivered")) {
                                             temp.isDelivered = chatObj.getString("isDelivered");
                                             if(temp.isDelivered.equalsIgnoreCase("yes")){
@@ -165,11 +171,7 @@ public class ChatManager {
                                         }
                                         if (chatObj.has("imageRatio"))
                                             temp.imageRatio = chatObj.getString("imageRatio");
-                                        if (chatObj.has("chatId")) {
-                                            temp.chatId = chatObj.getString("chatId");
 
-
-                                        }
 
                                         // temp.cardchatObj.getString("cards"));
                                         if (chatObj.has("sentOn"))
