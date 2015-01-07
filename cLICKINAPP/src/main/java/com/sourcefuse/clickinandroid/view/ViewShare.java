@@ -64,6 +64,7 @@ public class ViewShare extends Activity implements View.OnClickListener {
     private String audioID = null;
     private String cardOwner = null;
     private String shareMedia;
+    private String mLocationCoordinates = null ;
 
 
     @Override
@@ -103,6 +104,10 @@ public class ViewShare extends Activity implements View.OnClickListener {
                 imageRatio = intent.getStringExtra("imageRatio");
                 fileId = intent.getStringExtra("fileId");
                 image_url = fileId;
+                if(intent.hasExtra("location_coordinates"))
+                {
+                   mLocationCoordinates =  intent.getStringExtra("location_coordinates");
+                }
             } else if (intent.hasExtra("videoThumbnail")) {
                 clicks = intent.getStringExtra("clicks");
                 videoThumbnail = intent.getStringExtra("videoThumbnail");
@@ -270,6 +275,9 @@ public class ViewShare extends Activity implements View.OnClickListener {
                 if (!Utils.isEmptyString(imageRatio)) {
                     i.putExtra("imageRatio", imageRatio);
                     i.putExtra("fileId", fileId);
+                    if (!Utils.isEmptyString(mLocationCoordinates)) {
+                        i.putExtra("location_coordinates",mLocationCoordinates);
+                    }
                 } else if (!Utils.isEmptyString(videoThumbnail)) {
                     i.putExtra("videoThumbnail", videoThumbnail);
                     i.putExtra("videoID", videoID);

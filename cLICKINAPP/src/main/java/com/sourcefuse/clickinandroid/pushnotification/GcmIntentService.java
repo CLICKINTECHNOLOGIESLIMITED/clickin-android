@@ -98,8 +98,8 @@ public class GcmIntentService extends IntentService {
                     } else if (extras.getString("Tp").equalsIgnoreCase("clk")) {
                         data.setClass(getApplicationContext(), ChatRecordView.class);
                         String mPartnerId = extras.getString("pid");
-                        String mRId = extras.getString("Rid");
-                        putChatData(data,mPartnerId,mRId);
+
+                        putChatData(data,mPartnerId);
                         sendNotification("Clickin'", extras.getString("chat_message"), data);
 
 
@@ -107,8 +107,8 @@ public class GcmIntentService extends IntentService {
                     } else if (extras.getString("Tp").equalsIgnoreCase("chat")) {
                         data.setClass(getApplicationContext(), ChatRecordView.class);
                         String mPartnerId = extras.getString("pid");
-                        String mRId = extras.getString("Rid");
-                        putChatData(data,mPartnerId,mRId);
+
+                        putChatData(data,mPartnerId);
                         /**/
                         if (extras.getString("message").contains(getResources().getString(R.string.chat_msg))) {
                             sendNotification("Clickin'", extras.getString("chat_message"), data);
@@ -122,15 +122,17 @@ public class GcmIntentService extends IntentService {
                         sendNotification("Clickin'", extras.getString("message"), null);
                     } else if (extras.getString("Tp").equalsIgnoreCase("media")) {
                         String mPartnerId = extras.getString("pid");
-                        String mRId = extras.getString("Rid");
-                        putChatData(data,mPartnerId,mRId);
+
+                        putChatData(data,mPartnerId);
                         data.setClass(getApplicationContext(), ChatRecordView.class);
-                        sendNotification("Clickin'", extras.getString("message"), null);
+                        sendNotification("Clickin'", extras.getString("message"), data);
                     }else if(extras.getString("Tp").equalsIgnoreCase("shr")) //case for share
                     {
 
-                        data.setClass(getApplicationContext(), ChatRecordView.class);
-
+                        /*data.setClass(getApplicationContext(), ChatRecordView.class);
+                        String mPartnerId = extras.getString("Nid");
+                        putChatData(data,mPartnerId);
+                        sendNotification("Clickin'", extras.getString("message"), data);*/
                         //chat_message
                         //Tp
                         //Nid
@@ -150,7 +152,7 @@ public class GcmIntentService extends IntentService {
     }
 
 
-    public void putChatData(Intent mIntent,String mPartnerId,String mRid)
+    public void putChatData(Intent mIntent,String mPartnerId)
     {
 
 
@@ -163,16 +165,16 @@ public class GcmIntentService extends IntentService {
                 mIntent.putExtra("quickId", mRelationManager.acceptedList.get(i).getPartnerQBId());
                 mIntent.putExtra("partnerPic", mRelationManager.acceptedList.get(i).getPartnerPic());
                 mIntent.putExtra("partnerName", mRelationManager.acceptedList.get(i).getPartnerName());
-                mIntent.putExtra("rId", mRid);
+                mIntent.putExtra("rId", mRelationManager.acceptedList.get(i).getRelationshipId());
                 mIntent.putExtra("partnerId", mRelationManager.acceptedList.get(i).getPartner_id());
-                Log.e("partner id--->", "" + mRelationManager.acceptedList.get(i).getPartner_id());
+                //Log.e("partner id--->", "" + mRelationManager.acceptedList.get(i).getPartner_id());
                 mIntent.putExtra("myClicks", mRelationManager.acceptedList.get(i).getUserClicks());
                 mIntent.putExtra("userClicks", mRelationManager.acceptedList.get(i).getClicks());
                 mIntent.putExtra("partnerPh", mRelationManager.acceptedList.get(i).getPhoneNo());
                 mIntent.putExtra("relationListIndex", i);
 
                 ChatManager chatManager = ModelManager.getInstance().getChatManager();
-                chatManager.setrelationshipId(mRid);
+                chatManager.setrelationshipId(mRelationManager.acceptedList.get(i).getRelationshipId());
             }
         }
 

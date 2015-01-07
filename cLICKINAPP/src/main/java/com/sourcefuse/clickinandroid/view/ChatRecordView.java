@@ -1038,6 +1038,10 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             if (intent.hasExtra("imageRatio")) {
                 temp.imageRatio = intent.getExtras().getString("imageRatio");
                 temp.content_url = intent.getExtras().getString("fileId");
+                if (intent.hasExtra("location_coordinates"))
+                {
+                    temp.location_coordinates = intent.getExtras().getString("location_coordinates");
+                }
             } else if (intent.hasExtra("videoThumbnail")) {
                 temp.video_thumb = intent.getExtras().getString("videoThumbnail");
                 temp.content_url = intent.getExtras().getString("videoID");
