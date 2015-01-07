@@ -12,6 +12,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -1204,7 +1205,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
             //clicks and text- receiver end
 
-            if (!(temp.clicks.equalsIgnoreCase("no")) && Utils.isEmptyString(temp.card_id) ) {
+            if (!(temp.clicks.equalsIgnoreCase("no")) && Utils.isEmptyString(temp.card_id) && Utils.isEmptyString(temp.sharingMedia)) { // for share case ) {
 
 
                 chatClickTextLayout.setVisibility(View.VISIBLE);
@@ -1254,6 +1255,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 //clicks and text- sharing media-sender case
             } else if (!(temp.clicks.equalsIgnoreCase("no")) && Utils.isEmptyString(temp.card_id) && !Utils.isEmptyString(temp.sharingMedia)) { // for share case
 
+                Log.e("in case--->","in case--->");
+                Log.e("clicks--->",""+temp.clicks);
+                Log.e("clicks--->",""+temp.textMsg);
                 LinearLayout mParentShareLayout = (LinearLayout) row.findViewById(R.id.parent_clicks_area_share);
                 mParentShareLayout.setVisibility(View.VISIBLE);
                 parent_shared_layout.setBackgroundResource(R.drawable.newbg);
@@ -1316,7 +1320,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     ((TextView) row.findViewById(R.id.shared_by_name)).setText(splitted[0]);
                     ((TextView) row.findViewById(R.id.shared_message)).setText(" wants to share");
 
-                    ((LinearLayout) row.findViewById(R.id.parent_clicks_area_share)).setVisibility(View.GONE);
+                    //((LinearLayout) row.findViewById(R.id.parent_clicks_area_share)).setVisibility(View.GONE);
                 }
 
                 // Mukesh share audio layout
