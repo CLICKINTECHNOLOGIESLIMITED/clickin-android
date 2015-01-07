@@ -251,9 +251,21 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
             Utils.dismissBarDialog();
         } else if (message.equalsIgnoreCase("ProfileInfoNetwork Error")) {
             Utils.fromSignalDialog(this, AlertMessage.connectionError);
-        } else if (message.equalsIgnoreCase("Fetchprofilerelationships True")) {
-            Utils.dismissBarDialog();
+        } else if (message.equalsIgnoreCase("Fetchprofilerelationships True")  || message.equalsIgnoreCase("GetRelationShips False") || message.equalsIgnoreCase("GetRelationShips Network Error")) {
+
+            //akshit code
+            if (Utils.isEmptyString(relationManager.getRelationStatus())) {
+                clickwithHead.setVisibility(View.GONE);
+                clickwithNameHead.setText("CLICK WITH\n" + authManager.getTmpUserName());
+            } else if (relationManager.getRelationStatus().equalsIgnoreCase("accepted")) {
+                clickwithHead.setText("You are already");
+                clickwithNameHead.setText("CLICKIN' WITH\n" + authManager.getTmpUserName());
+            } else if (relationManager.getRelationStatus().equalsIgnoreCase("requested")) {
+                clickwithHead.setText("Requested to");
+                clickwithNameHead.setText("CLICK WITH\n" + authManager.getTmpUserName());
+            }
             setlist();
+            Utils.dismissBarDialog();
         } else if (message.equalsIgnoreCase("Fetchprofilerelationships False")) {
             Utils.dismissBarDialog();
         } else if (message.equalsIgnoreCase("Fetchprofilerelationships Network Error")) {
@@ -285,6 +297,7 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
             searchList.setVisibility(View.VISIBLE);
             setSearchList();
         } else if (message.equalsIgnoreCase("RequestSend True")) {
+
             relationManager.setRelationStatus("requested");
             if (Utils.isEmptyString(relationManager.getRelationStatus())) {
                 clickwithHead.setVisibility(View.GONE);
@@ -331,18 +344,6 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
     private void setProfileData() {
         authManager = ModelManager.getInstance().getAuthorizationManager();
         relationManager = ModelManager.getInstance().getRelationManager();
-
-        if (Utils.isEmptyString(relationManager.getRelationStatus())) {
-            clickwithHead.setVisibility(View.GONE);
-            clickwithNameHead.setText("CLICK WITH\n" + authManager.getTmpUserName());
-        } else if (relationManager.getRelationStatus().equalsIgnoreCase("accepted")) {
-            clickwithHead.setText("You are already");
-            clickwithNameHead.setText("CLICKIN' WITH\n" + authManager.getTmpUserName());
-        } else if (relationManager.getRelationStatus().equalsIgnoreCase("requested")) {
-            clickwithHead.setText("Requested to");
-            clickwithNameHead.setText("CLICK WITH\n" + authManager.getTmpUserName());
-        }
-
 
         if (othersUser) {
             othesProfileName.setText(authManager.getTmpUserName());

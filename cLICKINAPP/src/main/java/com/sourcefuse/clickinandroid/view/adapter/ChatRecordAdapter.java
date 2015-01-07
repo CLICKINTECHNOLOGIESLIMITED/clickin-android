@@ -695,12 +695,12 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 //                    mImageParams.setMargins(7, 7, 7, 7);
                     mImageLayout.setLayoutParams(mImageParams);
                 } else if (temp.clicks.equalsIgnoreCase("no") && Utils.isEmptyString(temp.textMsg)) {//akshit code to set margin if no clicks and text present
-                    mImageParams.setMargins(11, 7, 27, 11);
-                    mImageLayout.setLayoutParams(mImageParams);
+//                    mImageParams.setMargins(11, 7, 27, 11);
+//                    mImageLayout.setLayoutParams(mImageParams);
 
                 } else {
-                    mImageParams.setMargins(9, 9, 11, 9);//akshit line of code
-                    mImageLayout.setLayoutParams(mImageParams);
+//                    mImageParams.setMargins(9, 9, 11, 9);//akshit line of code
+//                    mImageLayout.setLayoutParams(mImageParams);
                 }
 
 
@@ -796,7 +796,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 mLongTextView.setEms(11);
 
                 if (Utils.isEmptyString(temp.textMsg) && temp.clicks.equalsIgnoreCase("no")) {
-                    parent_shared_layout.setPadding(10, 5, 30, 5); // set padding
+                    parent_shared_layout.setPadding(5, 5, 34, 5); // set padding
                 } else {
                     parent_shared_layout.setPadding(50, 5, 30, 5); // set padding
                 }
@@ -810,7 +810,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
                 if (!(Utils.isEmptyString(temp.textMsg)) || (!(temp.clicks.equalsIgnoreCase("no")))) {
 
-                    layoutParams.setMargins(7, 9, 3, 7);//akshit line of code to set margin
+                    layoutParams.setMargins(7, 9, 4, 7);//akshit line of code to set margin
 
                     chatClickTextLayout.setVisibility(View.VISIBLE);
                     RelativeLayout.LayoutParams paramsrr2 = new RelativeLayout.LayoutParams(
@@ -830,11 +830,11 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 final ImageView play_buttom = (ImageView) row.findViewById(R.id.iv_play_btn);
                 play_buttom.setVisibility(View.VISIBLE);
                 FeedImageView iv_chat_image_ = (FeedImageView) row.findViewById(R.id.iv_chat_image_);
-
-                if (Utils.isEmptyString(temp.textMsg))
-                    image_attached.setPadding(2, 2, 2, 10);//akshit code
-                else
-                    image_attached.setPadding(10, 5, 5, 10);//akshit code
+//
+//                if (Utils.isEmptyString(temp.textMsg) && Utils.isEmptyString(temp.clicks)) {
+//                    image_attached.setPadding(2, 2, 4, 10);//akshit code latest
+//                } else
+//                    image_attached.setPadding(10, 5, 5, 10);//akshit code
 
                 if (!(Utils.isEmptyString(temp.textMsg)) || (!(temp.clicks.equalsIgnoreCase("no")))) {
                     chatClickTextLayout.setVisibility(View.VISIBLE);

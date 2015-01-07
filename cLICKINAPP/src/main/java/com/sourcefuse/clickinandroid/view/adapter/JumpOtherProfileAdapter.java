@@ -74,8 +74,16 @@ public class JumpOtherProfileAdapter extends ArrayAdapter<ProfileRelationShipBea
             }
         } catch (Exception e) {
         }
+        if(position == getCount()-1){//akshit code
+
+            ((ImageView)row.findViewById(R.id.btm_divider)).setVisibility(View.GONE);
+            ((View)row.findViewById(R.id.v_devider)).setVisibility(View.GONE);
+
+        }
 
         return row;
+
+
     }
 
     static class RecordHolder {

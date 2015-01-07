@@ -23,6 +23,7 @@ import android.widget.TextView;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ClickInNotificationManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
+import com.sourcefuse.clickinandroid.model.PicassoManager;
 import com.sourcefuse.clickinandroid.model.ProfileManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
 import com.sourcefuse.clickinandroid.services.MyQbChatService;
@@ -98,6 +99,10 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         setContentView(R.layout.view_userprofile);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         addMenu(true);
+        /*set picasso maneger value */
+        PicassoManager.setLruCache(UserProfileView.this);
+        PicassoManager.setPicasso(UserProfileView.this,PicassoManager.getLruCache());
+
         this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
         authManager = ModelManager.getInstance().getAuthorizationManager();
         typefaceMedium = Typeface.createFromAsset(UserProfileView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);

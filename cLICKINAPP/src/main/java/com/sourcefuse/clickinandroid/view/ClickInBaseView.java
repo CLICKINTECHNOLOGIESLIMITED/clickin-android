@@ -37,6 +37,7 @@ import com.sourcefuse.clickinandroid.model.ChatManager;
 import com.sourcefuse.clickinandroid.model.ClickInNotificationManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.NewsFeedManager;
+import com.sourcefuse.clickinandroid.model.PicassoManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.Constants;
@@ -46,6 +47,8 @@ import com.sourcefuse.clickinandroid.view.adapter.NotificationAdapter;
 import com.sourcefuse.clickinandroid.view.adapter.SearchAdapter;
 import com.sourcefuse.clickinandroid.view.adapter.SimpleSectionedListAdapter;
 import com.sourcefuse.clickinapp.R;
+import com.squareup.picasso.Cache;
+import com.squareup.picasso.LruCache;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -122,6 +125,10 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 
     @SuppressWarnings("static-access")
     public void setLeftMenuList() {
+        /*set picasso maneger value */
+        PicassoManager.setLruCache(ClickInBaseView.this);
+        PicassoManager.setPicasso(ClickInBaseView.this,PicassoManager.getLruCache());
+
         clickInadapter = new ClickInWithAdapter(ClickInBaseView.this, R.layout.row_clickin_with, relationManager.acceptedList);
         String[] mHeaderNames = {"CLICKIN'"};
         String[] mHeaderNames2 = {" WITH"};
@@ -140,6 +147,8 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
     }
 
     private void switchView(String rid, int relationListIndex) {
+
+
 
         Intent intent = new Intent(ClickInBaseView.this, ChatRecordView.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -177,6 +186,9 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
             this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
             // slidemenu.showContent(true);
         }
+
+
+
 
 
     }
@@ -741,6 +753,10 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         notificationMngr = ModelManager.getInstance().getNotificationManagerManager();
 
         notificationMngr.getNotification(getApplicationContext(), "", authManager.getPhoneNo(), authManager.getUsrToken());
+
+
+
+
     }
 
     public void setMenuListData() {
@@ -780,6 +796,9 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 
             userPic.setImageResource(R.drawable.male_user);
         }
+
+
+
 
         setLeftMenuList();
     }
@@ -893,6 +912,8 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
                 }
                 mNotificationText.setText("" + mValue);
                 mNotificationText.setTextColor(Color.parseColor("#39cad4"));
+                Utils.playSound(ClickInBaseView.this, R.raw.notification_inapp);
+
             } else {
                 mNotificationText.setText("0");
                 mNotificationText.setTextColor(Color.parseColor("#000000"));
