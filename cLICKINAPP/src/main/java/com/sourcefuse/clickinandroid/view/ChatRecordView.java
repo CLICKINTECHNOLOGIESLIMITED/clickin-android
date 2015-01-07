@@ -1088,10 +1088,12 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
             }
 
-            ShowValueinChat(temp);
 
+            ChatMessageBody objToSend=new ChatMessageBody(temp); //we truncate clicks from text in showvalue function,
+                                                                //so keep original object here
+            ShowValueinChat(temp);
             if (myQbChatService != null)
-                myQbChatService.sendMessage(temp);
+                myQbChatService.sendMessage(objToSend);
             createRecordForHistory(temp);
 
         }
@@ -1802,6 +1804,9 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             if (obj.clicks.equalsIgnoreCase("no"))  //monika-change value of clicks to null if no click is there
                 clicks = null;
         }
+
+        //in case of cards, for history, clicks will be in cards array , not here-monika
+        if(Utils.isEmptyString(obj.card_owner))
         fields.put("clicks", clicks);
         fields.put("content", obj.content_url);
         fields.put("imageRatio", obj.imageRatio);

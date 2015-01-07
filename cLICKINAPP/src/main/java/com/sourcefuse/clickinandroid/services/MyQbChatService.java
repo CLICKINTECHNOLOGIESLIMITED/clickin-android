@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
 import com.quickblox.core.QBCallbackImpl;
 import com.quickblox.core.result.Result;
@@ -166,16 +167,22 @@ public class MyQbChatService extends Service {
 
             case Constants.CHAT_TYPE_SHARING:
 
+                Log.e("card originator----.",""+msgObject.card_originator);
+                String mCardOriginator = msgObject.card_originator;
                 if (!Utils.isEmptyString(msgObject.imageRatio)) {
+                    Log.e("in 3--->","in 3--->");
                     data.putString("imageRatio", msgObject.imageRatio);
                     data.putString("FileId", msgObject.content_url);
                 } else if (!Utils.isEmptyString(msgObject.video_thumb)) {
+                    Log.e("in 3--->","in 3--->");
                     data.putString("videoThumbnail", msgObject.video_thumb);
                     data.putString("FileId", msgObject.content_url);
-                } else if (Utils.isEmptyString(msgObject.imageRatio) && Utils.isEmptyString(msgObject.video_thumb)) {
+                } else if (!Utils.isEmptyString(msgObject.content_url)) {
                     data.putString("FileId", msgObject.content_url);
-                } else if (!Utils.isEmptyString(msgObject.card_originator)) {
+                    Log.e("in 2--->","in 2--->");
+                } else if (!Utils.isEmptyString(mCardOriginator)) {
 
+                    Log.e("in 1--->","in 1--->");
                     if (!msgObject.is_CustomCard) {
                         data.putString("card_DB_ID", msgObject.card_DB_ID);
                         data.putString("card_content", msgObject.card_content);
@@ -187,7 +194,7 @@ public class MyQbChatService extends Service {
                     data.putString("card_heading", msgObject.card_heading);
                     data.putString("card_id", msgObject.card_id);
                     data.putString("card_Played_Countered", msgObject.card_Played_Countered);
-                    data.putString("card_originator", msgObject.card_originator);
+                    data.putString("card_originator", mCardOriginator);
                 }
                 data.putString("sharingMedia", msgObject.sharingMedia);
                 data.putString("originalChatId", msgObject.originalMessageID);
