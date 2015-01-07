@@ -385,7 +385,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         }
 
         if (!Utils.isEmptyString(partnerPic))
-            Picasso.with(ChatRecordView.this).load(partnerPic).error(R.drawable.male_user).into(partnerPix);
+            Picasso.with(ChatRecordView.this).load(partnerPic).skipMemoryCache().error(R.drawable.male_user).into(partnerPix);
         else
             partnerPix.setImageResource(R.drawable.male_user);
 
