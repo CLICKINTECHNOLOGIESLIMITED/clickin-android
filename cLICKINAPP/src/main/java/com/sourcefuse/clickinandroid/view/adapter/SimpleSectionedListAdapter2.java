@@ -19,6 +19,7 @@ import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.ProfileManager;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.JumpOtherProfileView;
+import com.sourcefuse.clickinandroid.view.UserProfileView;
 import com.sourcefuse.clickinapp.R;
 import com.squareup.picasso.Picasso;
 
@@ -331,7 +332,7 @@ public class SimpleSectionedListAdapter2 extends BaseAdapter implements PinnedSe
 //                    if(view.getText().toString().trim().equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getUserName()))
 //                        viewProfile = new Intent(mContext, UserProfileView.class);
 //                    else {
-                    viewProfile = new Intent(mContext, JumpOtherProfileView.class);
+                    viewProfile = new Intent(mContext, UserProfileView.class);
                     viewProfile.putExtra("FromOwnProfile", true);
                     viewProfile.putExtra("phNumber", phNo);
                     viewProfile.putExtra("name", view.getText().toString());
