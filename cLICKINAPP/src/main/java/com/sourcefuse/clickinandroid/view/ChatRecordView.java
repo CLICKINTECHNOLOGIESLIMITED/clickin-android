@@ -385,7 +385,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         }
 
         if (!Utils.isEmptyString(partnerPic))
-            Picasso.with(ChatRecordView.this).load(partnerPic).error(R.drawable.male_user).into(partnerPix);
+            Picasso.with(ChatRecordView.this).load(partnerPic).skipMemoryCache().error(R.drawable.male_user).into(partnerPix);
         else
             partnerPix.setImageResource(R.drawable.male_user);
 
@@ -1038,6 +1038,10 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             if (intent.hasExtra("imageRatio")) {
                 temp.imageRatio = intent.getExtras().getString("imageRatio");
                 temp.content_url = intent.getExtras().getString("fileId");
+                if (intent.hasExtra("location_coordinates"))
+                {
+                    temp.location_coordinates = intent.getExtras().getString("location_coordinates");
+                }
             } else if (intent.hasExtra("videoThumbnail")) {
                 temp.video_thumb = intent.getExtras().getString("videoThumbnail");
                 temp.content_url = intent.getExtras().getString("videoID");
@@ -1088,10 +1092,14 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
             }
 
-            ShowValueinChat(temp);
 
+
+            ChatMessageBody objToSend=new ChatMessageBody(temp); //we truncate clicks from text in showvalue function,
+                                                                //so keep original object here
+            ShowValueinChat(temp);
             if (myQbChatService != null)
-                myQbChatService.sendMessage(temp);
+                myQbChatService.sendMessage(objToSend);
+
             createRecordForHistory(temp);
 
         }
@@ -1802,6 +1810,9 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             if (obj.clicks.equalsIgnoreCase("no"))  //monika-change value of clicks to null if no click is there
                 clicks = null;
         }
+
+        //in case of cards, for history, clicks will be in cards array , not here-monika
+        if(Utils.isEmptyString(obj.card_owner))
         fields.put("clicks", clicks);
         fields.put("content", obj.content_url);
         fields.put("imageRatio", obj.imageRatio);

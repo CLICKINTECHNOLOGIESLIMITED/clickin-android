@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.sourcefuse.clickinandroid.model.PicassoManager;
 import com.sourcefuse.clickinandroid.model.bean.GetrelationshipsBean;
 import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.Utils;
@@ -75,8 +76,9 @@ public class ClickInWithAdapter extends ArrayAdapter<GetrelationshipsBean> {
 
             if (!item.getPartnerPic().equalsIgnoreCase("")) {
                 try {
-                    Picasso.with(context).load(item.getPartnerPic())
 
+                    PicassoManager.getPicasso()  // get picasso from picasso maneger
+                    .load(item.getPartnerPic())
                             .into(rholder.clickInUsrimg);
                 } catch (Exception e) {
                     // rholder.clickInUsrimg.setImageResource(R.drawable.male_user);

@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
+import com.sourcefuse.clickinandroid.model.PicassoManager;
 import com.sourcefuse.clickinandroid.model.ProfileManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
 import com.sourcefuse.clickinandroid.model.bean.GetrelationshipsBean;
@@ -154,26 +155,12 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
         if (!itemList.get(position).getPartnerPic().equalsIgnoreCase("")) {
             try {
 
-                // File file = new File(imagespath);
 
-              /*  File file = new File(Environment.getExternalStorageDirectory(),"ClickIn/Images/Mukesh/");
-                file.mkdir();
-                Picasso.with(context)
+
+                PicassoManager.getPicasso()// get picasso from picasso maneger
                         .load(itemList.get(position).getPartnerPic())
-                        .into((Target) file);*/
-/*
-                File file = new File(Environment.getExternalStorageDirectory(),
-                        "Android/data/com.usd.pop");
-                file.mkdirs();
-
-                Picasso.with(context)
-                        .load(itemList.get(position).getPartnerPic())
-                        .into((Target) file);*/
-
-
-                Picasso.with(context).load(itemList.get(position).getPartnerPic())
-
                         .into(usrimg);
+
             } catch (Exception e) {
                 e.printStackTrace();
                 // usrimg.setImageResource(R.drawable.male_user);
