@@ -62,7 +62,7 @@ public class ViewShare extends Activity implements View.OnClickListener {
     private String videoThumbnail = null;
     private String videoID = null;
     private String audioID = null;
-    private String cardOwner = null;
+
     private String shareMedia;
     private String mLocationCoordinates = null ;
 
