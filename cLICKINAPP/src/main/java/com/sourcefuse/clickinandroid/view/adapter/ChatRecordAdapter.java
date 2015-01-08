@@ -1204,7 +1204,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
             //clicks and text- receiver end
 
-            if (!(temp.clicks.equalsIgnoreCase("no")) && Utils.isEmptyString(temp.card_id) ) {
+            if (!(temp.clicks.equalsIgnoreCase("no")) && Utils.isEmptyString(temp.card_id)) {
 
 
                 chatClickTextLayout.setVisibility(View.VISIBLE);
@@ -1256,6 +1256,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
                 LinearLayout mParentShareLayout = (LinearLayout) row.findViewById(R.id.parent_clicks_area_share);
                 mParentShareLayout.setVisibility(View.VISIBLE);
+
                 parent_shared_layout.setBackgroundResource(R.drawable.newbg);
                 parent_shared_layout.setVisibility(View.VISIBLE);
 
