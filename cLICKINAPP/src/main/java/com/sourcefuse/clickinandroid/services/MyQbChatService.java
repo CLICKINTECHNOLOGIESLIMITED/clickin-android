@@ -173,6 +173,9 @@ public class MyQbChatService extends Service {
                     Log.e("in 3--->","in 3--->");
                     data.putString("imageRatio", msgObject.imageRatio);
                     data.putString("FileId", msgObject.content_url);
+                    if (!Utils.isEmptyString(msgObject.location_coordinates)) {
+                        data.putString("location_coordinates", msgObject.location_coordinates);
+                    }
                 } else if (!Utils.isEmptyString(msgObject.video_thumb)) {
                     Log.e("in 3--->","in 3--->");
                     data.putString("videoThumbnail", msgObject.video_thumb);

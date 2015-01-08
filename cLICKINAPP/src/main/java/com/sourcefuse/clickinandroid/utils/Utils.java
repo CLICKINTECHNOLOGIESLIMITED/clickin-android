@@ -1378,7 +1378,12 @@ public class
 
         }
     }
+    private int pxlToDp(int pixel,Context mContext) {
 
+        final float scale = mContext.getResources().getDisplayMetrics().density;
+        int dp = (int) (pixel * scale + 0.5f);
+        return dp;
+    }
 
 }
 

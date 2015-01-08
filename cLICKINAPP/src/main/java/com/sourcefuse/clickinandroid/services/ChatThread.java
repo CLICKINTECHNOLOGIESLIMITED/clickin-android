@@ -161,8 +161,8 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
         authManager = ModelManager.getInstance().getAuthorizationManager();
 
         QBSettings.getInstance().fastConfigInit(Constants.CLICKIN_APP_ID, Constants.CLICKIN_AUTH_KEY, Constants.CLICKIN_AUTH_SECRET);
-         //  QBSettings.getInstance().setServerApiDomain("apiclickin.quickblox.com");
-       // QBSettings.getInstance().setContentBucketName("qb-clickin");
+        //  QBSettings.getInstance().setServerApiDomain("apiclickin.quickblox.com");
+        // QBSettings.getInstance().setContentBucketName("qb-clickin");
         //QBSettings.getInstance().setChatServerDomain("chatclickin.quickblox.com");
         QBChatService.setDebugEnabled(true);
         messageInDb = new ArrayList<ChatMessageBody>();
@@ -242,7 +242,7 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
 
                                     message.setProperty("originalMessageID", data.getString("originalChatId"));
                                     message.setProperty("isMessageSender", data.getString("isMessageSender"));
-                                    message.setProperty("messageSenderID",data.getString("messageSenderID"));
+                                    message.setProperty("messageSenderID", data.getString("messageSenderID"));
                                     message.setProperty("shareStatus", data.getString("shareStatus"));
                                     message.setProperty("sharingMedia", data.getString("sharingMedia"));
                                     message.setProperty("isAccepted", data.getString("isAccepted"));
@@ -250,8 +250,13 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
                                     message.setProperty("comment", data.getString("caption"));
 
                                     if (data.containsKey("imageRatio")) {
-                                        message.setProperty("imageURL", data.getString("FileId"));
+
                                         message.setProperty("imageRatio", data.getString("imageRatio"));
+                                        if (data.containsKey("location_coordinates")) {
+                                            message.setProperty("location_coordinates", data.getString("location_coordinates"));
+                                            message.setProperty("locationID", data.getString("FileId"));
+                                        }else
+                                            message.setProperty("imageURL", data.getString("FileId"));
                                         //message.setProperty("isFileUploading", data.getString("imageRatio"));
 
                                     }
@@ -880,13 +885,12 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
         //pass data to service to update deliver status in history-monika
         android.os.Message msg = new android.os.Message();
         Bundle data = new Bundle();
-        data.putString("deliveredChatID",msgId);
-    //    data.putInt("ChatType",Constants.CHAT_TYPE_DELIVERED);
-        data.putString("chatID",chatId);
+        data.putString("deliveredChatID", msgId);
+        //    data.putInt("ChatType",Constants.CHAT_TYPE_DELIVERED);
+        data.putString("chatID", chatId);
         msg.setData(data);
-        msg.what=MyQbChatService.MSG_DELIVERED;
+        msg.what = MyQbChatService.MSG_DELIVERED;
         serviceHandler.sendMessage(msg);
-
 
 
     }

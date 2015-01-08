@@ -53,10 +53,7 @@ public class ClickInNotificationManager implements NotificationManagerI {
                     public void onFailure(int statusCode, Throwable e,
                                           JSONObject errorResponse) {
                         super.onFailure(statusCode, e, errorResponse);
-                        if (errorResponse != null) {
-
-                            EventBus.getDefault().postSticky("Notification false");
-                        } else if (errorResponse.has("message")) {
+                        if (errorResponse.has("message")) {
                             try {
                                 if (errorResponse.getString("message").equalsIgnoreCase("User don't have any notification.")) {
                                     notificationData.clear(); // to clear notification list as no notification is available
@@ -66,6 +63,11 @@ public class ClickInNotificationManager implements NotificationManagerI {
                                 e1.printStackTrace();
                             }
                         }
+                        if (errorResponse != null) {
+
+                            EventBus.getDefault().postSticky("Notification false");
+                        }
+
                     }
 
                     @Override
