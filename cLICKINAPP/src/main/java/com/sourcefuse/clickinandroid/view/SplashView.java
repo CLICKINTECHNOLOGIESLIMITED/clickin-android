@@ -17,6 +17,7 @@ import android.widget.Button;
 
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
+import com.sourcefuse.clickinandroid.model.PicassoManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
 import com.sourcefuse.clickinandroid.services.MyQbChatService;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
@@ -24,6 +25,7 @@ import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.GPSTracker;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
+import com.splunk.mint.Mint;
 
 import java.io.InputStream;
 
@@ -42,8 +44,12 @@ public class SplashView extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
 
 
-//        Mint.initAndStartSession(SplashView.this, Constants.mSplunk_Api);  // to start the session of Splunk Crashlytics
-//        Mint.enableDebug();
+       Mint.initAndStartSession(SplashView.this, Constants.mSplunk_Api);  // to start the session of Splunk Crashlytics
+        Mint.enableDebug();
+        /*set picasso maneger value */
+        PicassoManager.setLruCache(getApplicationContext());
+        PicassoManager.setPicasso(getApplicationContext(),PicassoManager.getLruCache());
+
         Utils.deviceId = Utils.getRegId(SplashView.this);
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
