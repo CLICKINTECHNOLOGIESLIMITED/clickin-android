@@ -87,6 +87,7 @@
                     android:layout_marginRight="4dp"
                     android:layout_marginBottom="4dp"
                     android:adjustViewBounds="true"
+                    android:layout_gravity="center"
                     android:visibility="gone" />
 
                 <com.sourcefuse.clickinandroid.utils.FeedImageView
@@ -120,9 +121,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/media_layout"
-                android:layout_marginLeft="4dp"
-                android:layout_marginRight="4dp"
-                android:layout_marginBottom="4dp"
                 android:orientation="vertical"
                 android:visibility="visible">
 
@@ -133,7 +131,7 @@
                     android:layout_alignParentLeft="true"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:visibility="visible">
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/clicks_text"
@@ -141,7 +139,6 @@
                         android:layout_height="wrap_content"
                         android:gravity="top"
                         android:paddingRight="5dp"
-                        android:layout_marginLeft="3dp"
                         android:text="+101"
                         android:textColor="@color/white"
                         android:textSize="20sp"
@@ -165,6 +162,7 @@
                         android:maxEms="8"
                         android:paddingRight="5dp"
                         android:singleLine="true"
+                        android:text="TEXT CODEagdahdgah dgah "
                         android:textColor="@color/white"
                         android:textSize="14sp"
                         android:visibility="gone" />
@@ -177,8 +175,9 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:maxEms="12"
-                    android:layout_marginTop="3dp"
+                    android:padding="2dp"
                     android:singleLine="false"
+
                     android:textColor="@color/black"
                     android:textSize="14sp"
                     android:visibility="gone" />
@@ -191,10 +190,11 @@
                 android:id="@+id/send_card_first_time"
                 android:layout_width="240dp"
                 android:layout_height="320dp"
+                android:layout_marginBottom="2dp"
+                android:layout_marginTop="2dp"
                 android:orientation="vertical"
                 android:paddingBottom="1dp"
                 android:paddingRight="2dp"
-                android:paddingLeft="2dp"
                 android:paddingTop="1dp"
                 android:visibility="gone">
 
@@ -210,8 +210,8 @@
                     android:id="@+id/trd_clicks_top"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="3dp"
                     android:paddingRight="5dp"
                     android:text="10"
                     android:textColor="@color/white"
@@ -241,8 +241,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentRight="true"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginRight="40dp"
+                    android:layout_marginBottom="7dp"
+                    android:layout_marginRight="43dp"
                     android:text="10"
                     android:textColor="@color/white"
                     android:textSize="35sp"
@@ -257,11 +257,12 @@
                 android:id="@+id/temp_layout"
                 android:layout_width="190dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="3dp"
-                android:layout_marginRight="3dp"
-                android:layout_marginTop="3dp"
-                android:layout_marginLeft="3dp"
+                android:layout_marginBottom="2dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginTop="2dp"
                 android:background="@color/background_grey"
+                android:gravity="center_vertical"
+                android:padding="5dp"
                 android:visibility="gone">
 
 
@@ -280,7 +281,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="17dp"
+                    android:layout_marginLeft="20dp"
                     android:adjustViewBounds="true"
                     android:src="@drawable/audio_play"
                     android:visibility="gone" />
@@ -389,6 +390,7 @@
                 android:id="@+id/rl_acc_rej_card"
                 android:layout_width="150dp"
                 android:layout_height="200dp"
+                android:layout_marginTop="3dp"
                 android:orientation="vertical"
                 android:visibility="gone"
 
@@ -398,7 +400,7 @@
                     android:id="@+id/iv_static_acc_rej_card"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="2dp"
+                    android:padding="3dp"
                     android:src="@drawable/tradecardbg" />
 
 
@@ -437,12 +439,12 @@
                     android:id="@+id/trd_clicks_top_ar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="8dp"
                     android:paddingRight="5dp"
                     android:text="10"
                     android:textColor="@color/white"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold"
                     android:visibility="gone" />
 
@@ -469,11 +471,11 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentRight="true"
-                    android:layout_marginBottom="8dp"
+                    android:layout_marginBottom="10dp"
                     android:layout_marginRight="30dp"
                     android:text="10 "
                     android:textColor="@color/white"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold"
                     android:visibility="gone" />
 
@@ -495,7 +497,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="3dp"
-                    android:paddingRight="2dp"
+                    android:paddingRight="3dp"
                     android:text="Toby made a" />
 
                 <TextView
