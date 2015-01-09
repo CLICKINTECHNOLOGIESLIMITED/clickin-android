@@ -755,8 +755,8 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     ((TextView) row.findViewById(R.id.trd_clicks_top)).setVisibility(View.VISIBLE);//akshit code
                     ((TextView) row.findViewById(R.id.trd_clicks_bottom)).setVisibility(View.VISIBLE);//akshit code
 
-                    ((TextView) row.findViewById(R.id.trd_clicks_bottom)).setPadding(0, 13, 7, 13);//akshit code
-                    ((TextView) row.findViewById(R.id.trd_clicks_top)).setPadding(0, 13, 0, 0);//akshit code
+//                    ((TextView) row.findViewById(R.id.trd_clicks_bottom)).setPadding(0, 13, 7, 13);//akshit code latest
+//                    ((TextView) row.findViewById(R.id.trd_clicks_top)).setPadding(0, 13, 0, 0);//akshit code
 
                     ((TextView) row.findViewById(R.id.trd_clicks_top)).setText(clicks);
                     ((TextView) row.findViewById(R.id.trd_clicks_bottom)).setText(clicks);
