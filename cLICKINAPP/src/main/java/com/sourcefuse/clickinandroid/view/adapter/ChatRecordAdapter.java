@@ -333,7 +333,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
                             Picasso.with(context).load(url_to_load)
                                     .into(trade_image);
-
+                            Log.e("trade url---------->",""+url_to_load);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -490,9 +490,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 mShareText.setVisibility(View.VISIBLE);
                 if (!(Utils.isEmptyString(temp.textMsg))) {
                     if (temp.textMsg.length() > Constants.CHAT_LENTH_LIMIT) {
-                        mShareSort.setText(temp.textMsg.substring(0, 12));
+                        mShareSort.setText(temp.textMsg.substring(0, 15));
                         mShareSort.setVisibility(View.VISIBLE);
-                        mShareLong.setText(temp.textMsg.substring(12));//akshit changes
+                        mShareLong.setText(temp.textMsg.substring(15));//akshit changes
                         mShareLong.setTextColor(context.getResources().getColor(R.color.white));
                         mShareLong.setVisibility(View.VISIBLE);
                     } else {
@@ -527,6 +527,11 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
                 } else if (temp.shareStatus.equalsIgnoreCase("shared")) {
                     ((RelativeLayout) row.findViewById(R.id.shared_header_view)).setVisibility(View.VISIBLE);
+                    if(!Utils.isEmptyString(temp.card_id))
+                    {
+                        row.findViewById(R.id.except_share).setVisibility(View.GONE);
+                        row.findViewById(R.id.incase_share).setVisibility(View.VISIBLE);
+                    }
                     ((TextView) row.findViewById(R.id.shared_by_name)).setText("You");
                     ((TextView) row.findViewById(R.id.shared_message)).setText(" want to share");
 
@@ -1120,6 +1125,11 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
                     ((ImageView) row.findViewById(R.id.iv_type_two_share_icon_r)).setVisibility(View.GONE);
                     ((RelativeLayout) row.findViewById(R.id.shared_header_view)).setVisibility(View.VISIBLE);
+                    if(!Utils.isEmptyString(temp.card_id))
+                    {
+                        row.findViewById(R.id.except_share).setVisibility(View.GONE);
+                        row.findViewById(R.id.incase_share).setVisibility(View.VISIBLE);
+                    }
                     ((LinearLayout) row.findViewById(R.id.shared_footer_view)).setVisibility(View.VISIBLE);
 
                     String[] splitted = relationManager.getPartnerName.split("\\s+");

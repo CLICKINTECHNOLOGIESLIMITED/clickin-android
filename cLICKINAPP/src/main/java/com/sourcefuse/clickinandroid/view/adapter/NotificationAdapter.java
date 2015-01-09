@@ -88,6 +88,7 @@ public class NotificationAdapter extends ArrayAdapter<NotificationBean> {
                     Utils.launchBarDialog((Activity) context);
                     Intent intent = new Intent(getContext(), UserProfileView.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     intent.putExtra("isChangeInList", true);
                     context.startActivity(intent);
                 } else if (item.getNotificationType().equalsIgnoreCase(context.getResources().getString(R.string.txt_follow))) {
