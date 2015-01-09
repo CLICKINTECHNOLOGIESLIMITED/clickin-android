@@ -360,15 +360,12 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             if (!Utils.isEmptyString(mUserImagePath))
                 mUserImageUri = Utils.getImageContentUri(ChatRecordView.this, new File(mUserImagePath));
 
-            Log.e("image uri--->",""+mUserImageUri);
-            Log.e("gender--->",""+authManager.getGender());
-            Log.e("gender--->",""+authManager.getGender());
+
 
             if (!Utils.isEmptyString("" + mUserImageUri))
                 mypix.setImageURI(mUserImageUri);
             else if (imageBitmap != null) {
                 mypix.setImageBitmap(imageBitmap);
-                Log.e("image bitmap--->","image bitmap--->");
             }
             else if (!Utils.isEmptyString(authManager.getUserPic()) && Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl"))
                 Picasso.with(this).load(authManager.getUserPic()).error(R.drawable.female_user).into(mypix);
@@ -1429,7 +1426,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                     case VideoUtil.REQUEST_VIDEO_CAPTURED:
                         if (!Utils.isEmptyString(VideoUtil.videofilePath)) {
                             videofilePath = VideoUtil.videofilePath;
-                            Bitmap bMap = ThumbnailUtils.createVideoThumbnail(VideoUtil.videofilePath, MediaStore.Video.Thumbnails.MICRO_KIND);
+                            Bitmap bMap = ThumbnailUtils.createVideoThumbnail(VideoUtil.videofilePath, MediaStore.Video.Thumbnails.MINI_KIND);
                             if (videofilePath.contains(".mp4")) {
                                 Random mRandom = new Random();
                                 int mName = mRandom.nextInt();
