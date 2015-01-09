@@ -71,7 +71,7 @@ public class ChatMessageBody {
         is_CustomCard = body.is_CustomCard;
         card_DB_ID = body.card_DB_ID;
         card_Accepted_Rejected = body.card_Accepted_Rejected;
-        card_heading = body.card_url;
+        card_heading = body.card_heading;
         card_url = body.card_url;
         card_id = body.card_id;
         card_Played_Countered = body.card_Played_Countered;

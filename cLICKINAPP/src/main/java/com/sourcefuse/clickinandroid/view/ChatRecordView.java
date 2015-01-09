@@ -1054,11 +1054,13 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 temp.card_content = intent.getExtras().getString("card_content");
                 temp.card_heading = intent.getExtras().getString("card_heading");
                 temp.card_originator = intent.getExtras().getString("card_originator");
-                temp.card_owner = intent.getExtras().getString("card_owner");
                 temp.card_url = intent.getExtras().getString("card_url");
                 temp.card_id = intent.getExtras().getString("card_id");
                 temp.card_originator = intent.getExtras().getString("card_originator");
                 temp.is_CustomCard = intent.getExtras().getBoolean("is_CustomCard");
+                temp.card_owner = intent.getExtras().getString("card_owner");
+                if(Utils.isEmptyString(temp.card_owner))
+                    temp.card_owner = authManager.getQBId();
 
             }
 

@@ -60,16 +60,6 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
     ArrayList<ChatMessageBody> currentChatList;
     ImageLoader imageLoader = AppController.getInstance().getImageLoader();
-    /*static class RecordHolder {
-
-        RelativeLayout rrMainLayout, rlTimeStatusSender,chatParentLayout,rl_acc_res_bg,rl_card;
-        LinearLayout llSrTime,clicksArea,cardView,cardAction,cardViewCc,cardViewCards,ll_cc_action;
-        ImageView chatImage, shareIcon, sendStatus,clicksHeart,audioView,playIcon ,tradeImage,iv_accept_card,iv_resect_card,iv_acc_rec,iv_card_counter,iv_again_counter_acc,iv_again_counter_rej,iv_type_two_share_icon_r;
-        TextView chatText, timeText,clicksText,trdClicksBottom,trdClicksTop,card_partner_name,tv_counter_card,tv_acc_res_name,tv_acc_res_status,trd_clicks_top_ar,trd_clicks_bottom_ar,tv_counter_card_action,trd_custom_heading,trd_custom_ar_heading;
-
-
-    }
-*/
     String path;
     private AuthManager authManager;
     private RelationManager relationManager;
@@ -101,11 +91,8 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
 
             LinearLayout parent_shared_layout = (LinearLayout) row.findViewById(R.id.parent_shared_layout);
-
             parent_shared_layout.setBackgroundResource(R.drawable.newbg_grey);
-
             RelativeLayout rlTimeStatusSender = (RelativeLayout) row.findViewById(R.id.rl_time_sender);
-
             LinearLayout chatClickTextLayout = (LinearLayout) row.findViewById(R.id.parent_clicks_area);
 
 
@@ -118,49 +105,22 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 //set layout properties for image view
                 /* layout params for image */
 
-                RelativeLayout.LayoutParams mImageParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
                 LinearLayout mImageLayout = (LinearLayout) row.findViewById(R.id.media_layout);
                 final ImageView image_attached = (ImageView) row.findViewById(R.id.iv_chat_image);
                 FeedImageView iv_chat_image_ = (FeedImageView) row.findViewById(R.id.iv_chat_image_);
-                if (!Utils.isEmptyString(temp.textMsg) && !temp.clicks.equalsIgnoreCase("no")) // case for image with click
-                {
-                    mImageParams.setMargins(5, 5, 9, 5);//akshit line of code
-                    mImageLayout.setLayoutParams(mImageParams);
-                    image_attached.setPadding(5, 0, 0, 0);
-                } else {
-                    // case without text and without click
-                    mImageParams.setMargins(5, 4, 5, 11);
-                    mImageLayout.setLayoutParams(mImageParams);
-                }
-
-
                 LinearLayout media_layout = (LinearLayout) row.findViewById(R.id.media_layout);
-
                 media_layout.setVisibility(View.VISIBLE);
-
-
                 image_attached.setVisibility(View.VISIBLE);
 
-                if (!(Utils.isEmptyString(temp.textMsg)) || (!(temp.clicks.equalsIgnoreCase("no")))) {
-                    chatClickTextLayout.setVisibility(View.VISIBLE);
-                    RelativeLayout.LayoutParams paramsrr = new RelativeLayout.LayoutParams(
-                            RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-                    paramsrr.addRule(RelativeLayout.BELOW, R.id.media_layout);
-                    chatClickTextLayout.setLayoutParams(paramsrr);
-                }
+
                 //code to set msg deilvery notification
-                //  ImageView sendStatusView = (ImageView) row.findViewById(R.id.iv_send_status);
                 if (!(Utils.isEmptyString(temp.isDelivered)) && temp.isDelivered.equalsIgnoreCase(Constants.MSG_SENDING)) {
                     ((ProgressBar) row.findViewById(R.id.pb_loding)).setVisibility(View.VISIBLE);
                     ((ImageView) row.findViewById(R.id.iv_type_two_share_icon_r)).setVisibility(View.GONE);
-                    //  sendStatusView.setImageResource(R.drawable.r_single_tick);
-                    //   Bitmap bitmap = null;
-
                 } else if (!(Utils.isEmptyString(temp.isDelivered)) && temp.isDelivered.equalsIgnoreCase(Constants.MSG_SENT)) {
                     ((ProgressBar) row.findViewById(R.id.pb_loding)).setVisibility(View.GONE);
                     ((ImageView) row.findViewById(R.id.iv_type_two_share_icon_r)).setVisibility(View.VISIBLE);
-                    // sendStatusView.setImageResource(R.drawable.double_check);
-                    // Picasso.with(context).load(temp.content_url).resize(300, 300).centerCrop().into(image_attached);
                 }
 
                 //if sharing media is there, then chatId will be fetched from originalChatIdMessage-monika
@@ -222,13 +182,12 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     row.findViewById(R.id.parent_clicks_area_share).setVisibility(View.VISIBLE);
                     if (!(Utils.isEmptyString(temp.sharingMedia))) {
                         ((LinearLayout) row.findViewById(R.id.parent_clicks_area_share)).setBackgroundColor(context.getResources().getColor(R.color.white));
-                        mLongTextView.setPadding(20, 20, 20, 30);
                     } else {
                         ((LinearLayout) row.findViewById(R.id.parent_clicks_area_share)).setBackgroundColor(context.getResources().getColor(android.R.color.transparent));
-                        mLongTextView.setPadding(10, 10, 10, 30);
                     }
 
                     mLongTextView.setVisibility(View.VISIBLE);
+                    mLongTextView.setPadding(pxlToDp(5),pxlToDp(10),0,pxlToDp(10));
                     mLongTextView.setTextColor(context.getResources().getColor(R.color.black));
                     mLongTextView.setText("Location Shared");
 
@@ -238,77 +197,44 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
             } else if (!Utils.isEmptyString(temp.content_url) && Utils.isEmptyString(temp.video_thumb)) {// //end of image loop-sender And Audio start
 
-                parentChatLayout.setBackgroundResource(R.color.transparent);
+
                 parent_shared_layout.setBackgroundResource(R.drawable.newbg_grey);
-
-
-                RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
-                        RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);//akshit code to set margin.
-
-
                 ImageView mAudioImage = (ImageView) row.findViewById(R.id.iv_play_btn);
-                mAudioImage.setVisibility(View.VISIBLE);
-
-                row.findViewById(R.id.temp_layout).setVisibility(View.VISIBLE);
-                row.findViewById(R.id.temp_layout).setLayoutParams(layoutParams);
-
                 ImageView mSpeakerImage = (ImageView) row.findViewById(R.id.iv_play_btn_);
-                mSpeakerImage.setVisibility(View.VISIBLE);
-
                 TextView mLongTextView = (TextView) row.findViewById(R.id.long_chat_text);
+                row.findViewById(R.id.temp_layout).setVisibility(View.VISIBLE);
+                mAudioImage.setVisibility(View.VISIBLE);
+                mSpeakerImage.setVisibility(View.VISIBLE);
                 mLongTextView.setEms(10);//akshit change
 
 
                 if (!(Utils.isEmptyString(temp.textMsg)) || (!(temp.clicks.equalsIgnoreCase("no")))) {
-                    layoutParams.setMargins(7, 7, 7, 7);//akshit line of code to set margin
                     chatClickTextLayout.setVisibility(View.VISIBLE);
+
                     RelativeLayout.LayoutParams paramsrr = new RelativeLayout.LayoutParams(
                             RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
                     paramsrr.addRule(RelativeLayout.BELOW, R.id.temp_layout);
                     chatClickTextLayout.setLayoutParams(paramsrr);
+
                     if ((temp.clicks.equalsIgnoreCase("no")))
                         row.findViewById(R.id.temp_).setVisibility(View.VISIBLE);
-
                 } else {
                     RelativeLayout mRelative = (RelativeLayout) row.findViewById(R.id.temp_layout);
                     mRelative.setBackgroundResource(R.color.transparent);
                 }
-
-
                 //code to set msg deilvery notificatio
-                //  ImageView sendStatusView = (ImageView) row.findViewById(R.id.iv_send_status);
                 if (!(Utils.isEmptyString(temp.isDelivered)) && temp.isDelivered.equalsIgnoreCase(Constants.MSG_SENDING)) {
                     ((ProgressBar) row.findViewById(R.id.pb_loding)).setVisibility(View.VISIBLE);
                     ((ImageView) row.findViewById(R.id.iv_type_two_share_icon_r)).setVisibility(View.GONE);
-
-                    //    sendStatusView.setImageResource(R.drawable.r_single_tick);
-
-
                 } else if (!(Utils.isEmptyString(temp.isDelivered)) && temp.isDelivered.equalsIgnoreCase(Constants.MSG_SENT)) {
                     ((ProgressBar) row.findViewById(R.id.pb_loding)).setVisibility(View.GONE);
                     ((ImageView) row.findViewById(R.id.iv_type_two_share_icon_r)).setVisibility(View.VISIBLE);
-                    //    sendStatusView.setImageResource(R.drawable.double_check);
-
                 }
             } else if (!Utils.isEmptyString(temp.video_thumb)) {//end of audio code sender START VIDEO VIEW FOR SENDER
-
-                //     ImageView sendStatusView = (ImageView) row.findViewById(R.id.iv_send_status);
                 final ImageView image_attached = (ImageView) row.findViewById(R.id.iv_chat_image);
                 FeedImageView iv_chat_image_ = (FeedImageView) row.findViewById(R.id.iv_chat_image_);
                 final ImageView play_buttom = (ImageView) row.findViewById(R.id.iv_play_btn);
                 play_buttom.setVisibility(View.VISIBLE);
-
-                image_attached.setPadding(5, 5, 5, 10);
-                if (!(Utils.isEmptyString(temp.textMsg)) || (!(temp.clicks.equalsIgnoreCase("no")))) {
-                    chatClickTextLayout.setVisibility(View.VISIBLE);
-                    RelativeLayout.LayoutParams paramsrr = new RelativeLayout.LayoutParams(
-                            RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-                    paramsrr.addRule(RelativeLayout.BELOW, R.id.media_layout);
-                    chatClickTextLayout.setLayoutParams(paramsrr);
-                }
-
-                /* log for video */
-
 
                 RelativeLayout mRelative = (RelativeLayout) row.findViewById(R.id.temp_layout);
                 mRelative.setVisibility(View.VISIBLE);
@@ -316,16 +242,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 RelativeLayout.LayoutParams mlayoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 mlayoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
                 mRelative.setLayoutParams(mlayoutParams);
-
-
                 RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                layoutParams.setMargins(0, 0, 0, 0);
                 play_buttom.setLayoutParams(layoutParams);
-                /* log for video */
-
-
                 if (!(Utils.isEmptyString(temp.isDelivered)) && temp.isDelivered.equalsIgnoreCase(Constants.MSG_SENDING)) {
-
                     row.findViewById(R.id.pb_loding).setVisibility(View.VISIBLE);
                     row.findViewById(R.id.iv_type_two_share_icon_r).setVisibility(View.GONE);
                 } else if (!(Utils.isEmptyString(temp.isDelivered)) && temp.isDelivered.equalsIgnoreCase(Constants.MSG_SENT)) {
@@ -445,16 +364,10 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     acc_rej_view.setImageResource(R.drawable.c_card_rejected);
 
                 } else if (temp.card_Accepted_Rejected.equalsIgnoreCase("countered")) {//end of reject card
-                    //share should not be present for countered case
                     ((LinearLayout) row.findViewById(R.id.ll_for_share_icon)).setVisibility(View.GONE);
                     ((LinearLayout) row.findViewById(R.id.acc_rej_layout_second)).setVisibility(View.VISIBLE);
                     ((TextView) row.findViewById(R.id.tv_acc_res_name)).setText("You" + " made a");
                     ((LinearLayout) row.findViewById(R.id.ll_cc_action)).setVisibility(View.GONE);
-//                     ((TextView) row.findViewById(R.id.tv_acc_res_status)).setText("COUNTER OFFER");
-
-                    // listeners for countered actions- not required at sender side
-
-
                 }//end of countered card
                 //common for accept. reject and countered card-display card from local and set values
                 if (!Utils.isEmptyString(temp.card_id) && !temp.card_Accepted_Rejected.equalsIgnoreCase("nil")) {//end of reject card
@@ -489,7 +402,6 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
             //only text-SENDER CASE
             //in case share accept/reject, ignore the text
             if (!Utils.isEmptyString(temp.textMsg) && temp.clicks.equalsIgnoreCase("no") && Utils.isEmptyString(temp.isAccepted)) {
-                //  RelativeLayout textViewLayout = (RelativeLayout) row.findViewById(R.id.chat_parent_layout);
                 //code to hide share icon for text messages-monika
                 if (Utils.isEmptyString(temp.content_url))
                     ((LinearLayout) row.findViewById(R.id.ll_for_share_icon)).setVisibility(View.GONE);
@@ -512,14 +424,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     parent_shared_layout.setBackgroundResource(R.drawable.newbg_grey);
                     chatText.setBackgroundResource(R.drawable.grey_square);
                     chatText.setText("" + temp.textMsg);
-                    LinearLayout.LayoutParams mTextParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                    mTextParams.setMargins(5, 5, 5, 5);
-                    chatText.setLayoutParams(mTextParams);
-
-
                 }
-
-
             }
 
 
@@ -534,10 +439,6 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 clicksText.setTextColor(context.getResources().getColor(R.color.white));
                 ImageView clicksHeart = (ImageView) row.findViewById(R.id.iv_clicks_heart);
                 clicksHeart.setVisibility(View.VISIBLE);
-
-                LinearLayout mParentClickArea = (LinearLayout) row.findViewById(R.id.parent_clicks_area);
-                mParentClickArea.setPadding(15, 0, 0, 0);
-
                 //check if only clicks is there
                 parent_shared_layout.setBackgroundResource(R.drawable.newbg_pinkleft);
                 if (!(Utils.isEmptyString(temp.textMsg))) {
@@ -560,7 +461,6 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                             clicksArea.setBackgroundResource(R.drawable.pink_squre);
                             LinearLayout image_attached = (LinearLayout) row.findViewById(R.id.media_layout);
                             RelativeLayout.LayoutParams mLinearParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                            mLinearParams.setMargins(0, 1, 5, 5);
                             image_attached.setLayoutParams(mLinearParams);
                         }
                         chatText.setText(temp.textMsg);
@@ -589,16 +489,12 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 mShareText.setText(temp.clicks);
                 mShareText.setVisibility(View.VISIBLE);
                 if (!(Utils.isEmptyString(temp.textMsg))) {
-
-
                     if (temp.textMsg.length() > Constants.CHAT_LENTH_LIMIT) {
                         mShareSort.setText(temp.textMsg.substring(0, 12));
                         mShareSort.setVisibility(View.VISIBLE);
                         mShareLong.setText(temp.textMsg.substring(12));//akshit changes
                         mShareLong.setTextColor(context.getResources().getColor(R.color.white));
                         mShareLong.setVisibility(View.VISIBLE);
-
-
                     } else {
                         mShareSort.setText(temp.textMsg);
                         mShareSort.setVisibility(View.VISIBLE);
@@ -652,79 +548,33 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
 
             //RECEIVER START
-
             LinearLayout parent_shared_layout = (LinearLayout) row.findViewById(R.id.parent_shared_layout);
-            parent_shared_layout.setBackgroundResource(R.drawable.whitechatbg);
-
-
+            parent_shared_layout.setBackgroundResource(R.drawable.new_whitearrownew);
             RelativeLayout rlTimeStatusSender = (RelativeLayout) row.findViewById(R.id.rl_time_sender);
             row.findViewById(R.id.iv_send_status).setVisibility(View.GONE);
             RelativeLayout chatParentLayout = (RelativeLayout) row.findViewById(R.id.chat_parent_layout);
-
-
             LinearLayout chatClickTextLayout = (LinearLayout) row.findViewById(R.id.parent_clicks_area);
-
-            RelativeLayout.LayoutParams paramsrr = new RelativeLayout.LayoutParams(
-                    RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+            RelativeLayout.LayoutParams paramsrr = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
             paramsrr.addRule(RelativeLayout.LEFT_OF, R.id.parent_shared_layout);
             paramsrr.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.parent_shared_layout);
             rlTimeStatusSender.setLayoutParams(paramsrr);
-
             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                     RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
             params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, 1);
-            params.setMargins(0, 0, 10, 0);
             parent_shared_layout.setLayoutParams(params);
-            parent_shared_layout.setPadding(0, 0, 10, 0);
-
-
-            // chatParentLayout.setGravity(Gravity.RIGHT);
-
             //code to set time
             TextView timeView = (TextView) row.findViewById(R.id.tv_time_text);
             timeView.setText(Utils.getLocalDatefromTimestamp(Long.parseLong(temp.sentOn)));
 
             //temp code -for image-receiver end
             if (!(Utils.isEmptyString(temp.imageRatio))) {   // image case for reciver end    image for reciver end
-                //set layout properties for image view
+
                 LinearLayout media_layout = (LinearLayout) row.findViewById(R.id.media_layout);
                 final ImageView image_attached = (ImageView) row.findViewById(R.id.iv_chat_image);
                 final FeedImageView iv_chat_image_ = (FeedImageView) row.findViewById(R.id.iv_chat_image_); // temp view to download image
                 media_layout.setVisibility(View.VISIBLE);
                 image_attached.setVisibility(View.VISIBLE);
-
-
-                RelativeLayout.LayoutParams mImageParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 LinearLayout mImageLayout = (LinearLayout) row.findViewById(R.id.media_layout);
-
-                if (!Utils.isEmptyString(temp.textMsg) && !temp.clicks.equalsIgnoreCase("no")) // case for image with click
-                {
-//                    mImageParams.setMargins(3, 3, 3, 3);//akshit line of code
-                    mImageLayout.setLayoutParams(mImageParams);
-                    image_attached.setPadding(5, 0, 0, 0);
-                } else if (!temp.clicks.equalsIgnoreCase("no")) //text without click
-                {
-//                    mImageParams.setMargins(7, 7, 7, 7);
-                    mImageLayout.setLayoutParams(mImageParams);
-                } else if (temp.clicks.equalsIgnoreCase("no") && Utils.isEmptyString(temp.textMsg)) {//akshit code to set margin if no clicks and text present
-//                    mImageParams.setMargins(11, 7, 27, 11);
-//                    mImageLayout.setLayoutParams(mImageParams);
-
-                } else {
-//                    mImageParams.setMargins(9, 9, 11, 9);//akshit line of code
-//                    mImageLayout.setLayoutParams(mImageParams);
-                }
-
-
-                if (!(Utils.isEmptyString(temp.textMsg)) || (!(temp.clicks.equalsIgnoreCase("no")))) {
-                    chatClickTextLayout.setVisibility(View.VISIBLE);
-                    RelativeLayout.LayoutParams paramsr2 = new RelativeLayout.LayoutParams(
-                            RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-                    paramsr2.addRule(RelativeLayout.BELOW, R.id.media_layout);
-                    chatClickTextLayout.setLayoutParams(paramsr2);
-                }
-
-                //if sharing media is there, then chatId will be fetched from originalChatIdMessage-monika
                 String tempChatid = null;
                 if (!Utils.isEmptyString(temp.sharingMedia)) {
                     tempChatid = temp.originalMessageID;
@@ -734,17 +584,12 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
                 /* path where clickin image are stored */
                 String mContentUri = Utils.mImagePath + tempChatid + ".jpg"; // fetch data from
-
-
                 Uri mUri = Utils.getImageContentUri(context, new File(mContentUri));
                 if (!Utils.isEmptyString("" + mUri)) {  // check if image exists on uri
-
-
                     try {
                         image_attached.setImageURI(mUri); // set image from uri
                     } catch (Exception e) {
                         e.printStackTrace();
-
                     }
                 } else {  // else part to download image from url
 
@@ -754,7 +599,6 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     RelativeLayout.LayoutParams mlayoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                     mlayoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
                     mTempLayout.setLayoutParams(mlayoutParams);
-
                     mTempLayout.setVisibility(View.VISIBLE);
                     mTempLayout.setBackgroundResource(R.color.transparent);
                     iv_chat_image_.setImageUrl(temp.content_url, imageLoader);
@@ -790,33 +634,25 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     }
                     TextView mLongTextView = (TextView) row.findViewById(R.id.long_chat_text_share);
                     mLongTextView.setVisibility(View.VISIBLE);
+                    mLongTextView.setPadding(pxlToDp(5),pxlToDp(10),0,pxlToDp(10));
                     mLongTextView.setTextColor(context.getResources().getColor(R.color.black));
                     mLongTextView.setText("Location Shared");
-                    mLongTextView.setPadding(10,
-                10, 10, 30);
+
             }
                /* for map to set text location shared */
 
             } else if (!Utils.isEmptyString(temp.content_url) && Utils.isEmptyString(temp.video_thumb)) {//start of audio-RECIVER case
 
 
-                RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
-                        RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);//akshit code to set margin.
+
                 ImageView mAudioImage = (ImageView) row.findViewById(R.id.iv_play_btn);
                 mAudioImage.setVisibility(View.VISIBLE);
 
                 row.findViewById(R.id.temp_).setVisibility(View.GONE);
                 TextView mLongTextView = (TextView) row.findViewById(R.id.long_chat_text);
-                mLongTextView.setEms(11);
-
-                if (Utils.isEmptyString(temp.textMsg) && temp.clicks.equalsIgnoreCase("no")) {
-                    parent_shared_layout.setPadding(5, 5, 34, 5); // set padding
-                } else {
-                    parent_shared_layout.setPadding(50, 5, 30, 5); // set padding
-                }
-
+                mLongTextView.setEms(10);
                 row.findViewById(R.id.temp_layout).setVisibility(View.VISIBLE);
-                row.findViewById(R.id.temp_layout).setLayoutParams(layoutParams);//akshit code to set margin.
+
 
                 ImageView mSpeakerImage = (ImageView) row.findViewById(R.id.iv_play_btn_);
                 mSpeakerImage.setVisibility(View.VISIBLE);
@@ -824,69 +660,30 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
                 if (!(Utils.isEmptyString(temp.textMsg)) || (!(temp.clicks.equalsIgnoreCase("no")))) {
 
-                    layoutParams.setMargins(7, 9, 4, 7);//akshit line of code to set margin
-
                     chatClickTextLayout.setVisibility(View.VISIBLE);
                     RelativeLayout.LayoutParams paramsrr2 = new RelativeLayout.LayoutParams(
                             RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
                     paramsrr2.addRule(RelativeLayout.BELOW, R.id.temp_layout);
                     chatClickTextLayout.setLayoutParams(paramsrr2);
-
-                    if (temp.clicks.equalsIgnoreCase("no")) {//akshit code to set margin in case of no clicks but only text and audio
-                        layoutParams.setMargins(9, 11, 8, 7);//akshit line of code to set margin
-                    }
                 }
 
             } else if (!Utils.isEmptyString(temp.video_thumb)) {//end of audio code sender START VIDEO VIEW FOR RECEIVER
-
-                //  ImageView sendStatusView = (ImageView) row.findViewById(R.id.iv_send_status);
                 final ImageView image_attached = (ImageView) row.findViewById(R.id.iv_chat_image);
                 final ImageView play_buttom = (ImageView) row.findViewById(R.id.iv_play_btn);
                 play_buttom.setVisibility(View.VISIBLE);
                 FeedImageView iv_chat_image_ = (FeedImageView) row.findViewById(R.id.iv_chat_image_);
-//
-//                if (Utils.isEmptyString(temp.textMsg) && Utils.isEmptyString(temp.clicks)) {
-//                    image_attached.setPadding(2, 2, 4, 10);//akshit code latest
-//                } else
-//                    image_attached.setPadding(10, 5, 5, 10);//akshit code
-
-                if (!(Utils.isEmptyString(temp.textMsg)) || (!(temp.clicks.equalsIgnoreCase("no")))) {
-                    chatClickTextLayout.setVisibility(View.VISIBLE);
-                    RelativeLayout.LayoutParams paramsr2 = new RelativeLayout.LayoutParams(
-                            RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-                    paramsr2.addRule(RelativeLayout.BELOW, R.id.media_layout);
-                    chatClickTextLayout.setLayoutParams(paramsr2);
-                }
-
-                /* prafull code */
-
-
                 RelativeLayout mRelative = (RelativeLayout) row.findViewById(R.id.temp_layout);
                 mRelative.setVisibility(View.VISIBLE);
                 mRelative.setBackgroundResource(R.color.transparent);
                 RelativeLayout.LayoutParams mlayoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 mlayoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
                 mRelative.setLayoutParams(mlayoutParams);
-
-
-                RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                layoutParams.setMargins(0, 0, 0, 0);
-                play_buttom.setLayoutParams(layoutParams);
-
-                /* end */
-
-
                 if (!(Utils.isEmptyString(temp.isDelivered)) && temp.isDelivered.equalsIgnoreCase(Constants.MSG_SENDING)) {
-
-
                     ((ProgressBar) row.findViewById(R.id.pb_loding)).setVisibility(View.VISIBLE);
                     ((ImageView) row.findViewById(R.id.iv_type_two_share_icon_r)).setVisibility(View.GONE);
-
-
                 } else if (!(Utils.isEmptyString(temp.isDelivered)) && temp.isDelivered.equalsIgnoreCase(Constants.MSG_SENT)) {
                     row.findViewById(R.id.pb_loding).setVisibility(View.GONE);
                     row.findViewById(R.id.iv_type_two_share_icon_r).setVisibility(View.VISIBLE);
-
                 }
 
                 //if sharing media is there, then chatId will be fetched from originalChatIdMessage-monika
@@ -925,7 +722,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                                 String path = Utils.storeImage(loader.getBitmap(), chatIdForImage, context);
                                 image_attached.setImageURI(Utils.getImageContentUri(context, new File(path)));
                                 progressBar.setVisibility(View.GONE);
-                                /*mTempLayout.setVisibility(View.GONE);*/
+
                                 play_buttom.setVisibility(View.VISIBLE);
                             }
                         }
@@ -949,7 +746,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 }//akshit code ends for making button inactive
                 ((LinearLayout) row.findViewById(R.id.ll_for_share_icon)).setVisibility(View.GONE);
                 if (temp.card_Accepted_Rejected.equalsIgnoreCase("nil")) { //first time played
-                    // parentChatLayout.setBackgroundResource(R.drawable.whitechatbg);
+
                     ((RelativeLayout) row.findViewById(R.id.send_card_first_time)).setVisibility(View.VISIBLE);
                     ((LinearLayout) row.findViewById(R.id.card_recieve_first_time)).setVisibility(View.VISIBLE);
                     String clicks = temp.clicks;
@@ -969,10 +766,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
                     ImageView trade_image = (ImageView) row.findViewById(R.id.trade_image);
                     trade_image.setVisibility(View.VISIBLE);
-                    //akshit code
-                    RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                    layoutParams.setMargins(14, 0, 6, 0);
-                    trade_image.setLayoutParams(layoutParams);
+
                     //End
                     if (temp.is_CustomCard) {
                         TextView custom_heading = (TextView) row.findViewById(R.id.trd_custom_heading);
@@ -1182,12 +976,11 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 //code to hide share icon for text messages-monika
                 if (Utils.isEmptyString(temp.content_url))
                     ((LinearLayout) row.findViewById(R.id.ll_for_share_icon)).setVisibility(View.GONE);
-                chatClickTextLayout.setVisibility(View.VISIBLE);
+
+
                 TextView chatText = (TextView) row.findViewById(R.id.long_chat_text); // prafull code
-                LinearLayout clicksArea = (LinearLayout) row.findViewById(R.id.clicks_area);
-                clicksArea.setVisibility(View.VISIBLE);
-                chatText.setVisibility(View.VISIBLE);
-                chatText.setTextColor(context.getResources().getColor(R.color.black));
+
+
                 if (!Utils.isEmptyString(temp.sharingMedia)) { // for share case
                     LinearLayout mShareLayout = (LinearLayout) row.findViewById(R.id.parent_clicks_area_share);
                     mShareLayout.setBackgroundResource(R.color.white);
@@ -1199,17 +992,15 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 } else {
 
                     /* for layout params at reciver end prafull code*/
-
+                    chatClickTextLayout.setVisibility(View.VISIBLE);
+                    chatText.setVisibility(View.VISIBLE);
+                    chatText.setTextColor(context.getResources().getColor(R.color.black));
                     parent_shared_layout.setBackgroundResource(R.drawable.new_whitearrownew);
                     chatText.setBackgroundResource(R.drawable.white_square);
-
+                    LinearLayout clicksArea = (LinearLayout) row.findViewById(R.id.clicks_area);
+                    clicksArea.setVisibility(View.VISIBLE);
                     if (Utils.isEmptyString(temp.content_url))
                         chatText.setGravity(Gravity.CENTER_VERTICAL | Gravity.RIGHT);
-                    if (Utils.isEmptyString(temp.content_url))
-                        chatText.setPadding(15, 10, 28, 10);
-                    else
-                        chatText.setPadding(15, 10, 0, 10);
-
                     chatText.setText(temp.textMsg);
                 }
 
@@ -1225,7 +1016,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 LinearLayout clicksArea = (LinearLayout) row.findViewById(R.id.clicks_area);
                 clicksArea.setVisibility(View.VISIBLE);
                 TextView clicksText = (TextView) row.findViewById(R.id.clicks_text);
-                clicksText.setPadding(10, 0, 10, 0); // set padding for clicks prafull code
+
                 clicksText.setVisibility(View.VISIBLE);
                 clicksText.setText(temp.clicks.toString().trim());//akshit,to remove unwanted space from clicks
                 clicksText.setTextColor(context.getResources().getColor(R.color.white));
@@ -1245,7 +1036,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                         chatTextLong.setText(temp.textMsg.substring(13));
                         chatTextLong.setTextColor(context.getResources().getColor(R.color.white));
                         parent_shared_layout.setBackgroundResource(R.drawable.newbg_pinkright);  //code for double line
-                        parent_shared_layout.setPadding(5, 0, 28, 10); // for padding from bottom prafull
+
                     } else {
                         if ((Utils.isEmptyString(temp.content_url))) {  // check prafull
                             clicksArea.setBackgroundResource(R.drawable.pink_squre);
@@ -1253,9 +1044,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                             parent_shared_layout.setBackgroundResource(R.drawable.newbg_pinkright);  // code for double line
                             clicksArea.setBackgroundResource(R.drawable.pink_squre);
                             LinearLayout image_attached = (LinearLayout) row.findViewById(R.id.media_layout);
-                            RelativeLayout.LayoutParams mLinearParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                            mLinearParams.setMargins(0, 1, 5, 5);
-                            image_attached.setLayoutParams(mLinearParams);
+
                         }
                         chatText.setText(temp.textMsg);
                         // prafull code
@@ -1786,5 +1575,10 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
         }
     }
 
+    private int pxlToDp(int pixel) {
 
+        final float scale = context.getResources().getDisplayMetrics().density;
+        int dp = (int) (pixel * scale + 0.5f);
+        return dp;
+    }
 }
