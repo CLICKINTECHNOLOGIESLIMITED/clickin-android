@@ -98,6 +98,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 
         authManager = ModelManager.getInstance().getAuthorizationManager();
 
+
     }
 
     @Override
@@ -126,9 +127,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 
     @SuppressWarnings("static-access")
     public void setLeftMenuList() {
-        /*set picasso maneger value */
-        PicassoManager.setLruCache(ClickInBaseView.this);
-        PicassoManager.setPicasso(ClickInBaseView.this,PicassoManager.getLruCache());
+
 
         clickInadapter = new ClickInWithAdapter(ClickInBaseView.this, R.layout.row_clickin_with, relationManager.acceptedList);
         String[] mHeaderNames = {"CLICKIN'"};

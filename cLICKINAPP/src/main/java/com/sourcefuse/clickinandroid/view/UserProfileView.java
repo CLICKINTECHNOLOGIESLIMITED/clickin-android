@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -264,6 +265,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
     @Override
     protected void onResume() {
         super.onResume();
+        Log.e("on resume--->","on resume--->");
         authManager = ModelManager.getInstance().getAuthorizationManager();
         if (authManager.isEditProfileFlag()) {
             //data is already updated in authmanager, so no need to make a webservice call
@@ -465,7 +467,9 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
 
+
         if (intent.getExtras() != null && intent.getExtras().containsKey("isChangeInList")) {
+            Log.e("on new Intent--->",""+intent.getExtras().getBoolean("isChangeInList"));
             if (intent.getExtras().getBoolean("isChangeInList")) {
                 if (slidemenu.isMenuShowing())
                     slidemenu.showContent();
