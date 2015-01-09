@@ -488,7 +488,8 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
             //only text-SENDER CASE
             //in case share accept/reject, ignore the text
-            if (!Utils.isEmptyString(temp.textMsg) && temp.clicks.equalsIgnoreCase("no") && Utils.isEmptyString(temp.isAccepted)) {
+            if (!Utils.isEmptyString(temp.textMsg) && temp.clicks.equalsIgnoreCase("no") && Utils.isEmptyString(temp.isAccepted)
+                    && Utils.isEmptyString(temp.location_coordinates)) { //don't process text msg in case of location-monika
                 //  RelativeLayout textViewLayout = (RelativeLayout) row.findViewById(R.id.chat_parent_layout);
                 //code to hide share icon for text messages-monika
                 if (Utils.isEmptyString(temp.content_url))
@@ -1183,7 +1184,8 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
             /* only text reciver case*/
             //in case share accept/reject, ignore the text
-            if (!Utils.isEmptyString(temp.textMsg) && temp.clicks.equalsIgnoreCase("no") && Utils.isEmptyString(temp.isAccepted)) {
+            if (!Utils.isEmptyString(temp.textMsg) && temp.clicks.equalsIgnoreCase("no") && Utils.isEmptyString(temp.isAccepted)
+                    && Utils.isEmptyString(temp.location_coordinates)) { //don't process text msg in case of location-monika) {
                 //code to hide share icon for text messages-monika
                 if (Utils.isEmptyString(temp.content_url))
                     ((LinearLayout) row.findViewById(R.id.ll_for_share_icon)).setVisibility(View.GONE);
