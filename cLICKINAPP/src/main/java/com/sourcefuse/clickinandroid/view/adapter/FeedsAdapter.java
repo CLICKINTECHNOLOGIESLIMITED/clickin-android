@@ -199,6 +199,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
                 Picasso.with(context).load(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content()).into(holder.feed_image);
             } else if (eachNewsFeed.get(position).getNewsFeedArray_chatDetail_type().equalsIgnoreCase("6")) {
                 holder.feed_image.setVisibility(View.VISIBLE);
+                android.util.Log.e("Feeds Adapter", "Url"+eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content());
                 Picasso.with(context)
                         .load(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content()).into(holder.feed_image);
             } else {
@@ -253,7 +254,9 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
         }
         if (eachNewsFeed.get(position).getNewsFeedArray_chatDetail_video_thumb() != null) {
             holder.video_thumb.setVisibility(View.VISIBLE);
-            Picasso.with(context).load(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_video_thumb()).into(holder.video_thumb);
+            Picasso.with(context)
+                    .load(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_video_thumb())
+                    .into(holder.video_thumb);
         }
         holder.feed_image.setOnClickListener(new View.OnClickListener() {
             @Override

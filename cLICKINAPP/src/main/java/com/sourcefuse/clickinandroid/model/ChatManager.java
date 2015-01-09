@@ -113,6 +113,7 @@ public class ChatManager {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         ChatMessageBody temp = null;
+                        JSONObject chatObj=null;
                         try {
                             state = response.getBoolean("success");
                             if (state) {
@@ -125,7 +126,7 @@ public class ChatManager {
                                     try {
                                         temp = new ChatMessageBody();
                                         JSONObject data = list.getJSONObject(i);
-                                        JSONObject chatObj = data.getJSONObject("Chat");
+                                         chatObj = data.getJSONObject("Chat");
 
                                         // if (chatObj.has("receiverQB_id"))
                                         //   temp.re(chatObj.getString("receiverQB_id"));
@@ -208,6 +209,24 @@ public class ChatManager {
                                         refreshivechatList.add(temp);
                                     } catch (JSONException e) { //specially for cards array
                                         e.printStackTrace();
+                                        try {
+                                            JSONArray sharedMessage = chatObj.getJSONArray("sharedMessage");
+                                            if (sharedMessage != null) {
+                                                temp.originalMessageID = (String) sharedMessage.get(0);
+                                                temp.shareStatus = (String) sharedMessage.get(1);
+                                                temp.senderQbId = (String) sharedMessage.get(2);
+                                                temp.isAccepted = (String) sharedMessage.get(3);
+                                                temp.isMessageSender = (String) sharedMessage.get(4);
+                                                temp.shareComment = (String) sharedMessage.get(5);
+                                                temp.sharingMedia = (String) sharedMessage.get(6);
+
+                                                temp.facebookToken = (String) sharedMessage.get(7);
+
+                                            }
+                                        }catch (Exception e1){
+                                         //   e1.printStackTrace();
+                    //                        refreshivechatList.add(temp);
+                                        }
                                         refreshivechatList.add(temp);
                                     }
                                 }

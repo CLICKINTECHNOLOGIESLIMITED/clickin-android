@@ -808,8 +808,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                             int position = (Integer) v.getTag();
                             //card is allowed to play once only- reject, accept or counter change state to played
                             if (temp.card_Played_Countered.equalsIgnoreCase("playing")) {
-                                sendUpdateCardValues(position, "rejected", "REJECTED!");
                                 temp.card_Played_Countered = "played";
+                                sendUpdateCardValues(position, "rejected", "REJECTED!");
+
                             }
                             //akshit code to disable button after making counter ,accept ,reject.
                             ((ImageView) row.findViewById(R.id.tv_counter_card)).setImageResource(R.drawable.counterbtnx_deactive);
@@ -829,8 +830,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                             int position = (Integer) v.getTag();
                             //card is allowed to play once only- reject, accept or counter change state to played
                             if (temp.card_Played_Countered.equalsIgnoreCase("playing")) {
-                                sendUpdateCardValues(position, "accepted", "ACCEPTED!");
                                 temp.card_Played_Countered = "played";
+                                sendUpdateCardValues(position, "accepted", "ACCEPTED!");
+
                             }
                             //akshit code to disable button after making counter ,accept ,reject.
                             ((ImageView) row.findViewById(R.id.tv_counter_card)).setImageResource(R.drawable.counterbtnx_deactive);
@@ -849,8 +851,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                             int position = (Integer) v.getTag();
                             //card is allowed to play once only- reject, accept or counter change state to played
                             if (temp.card_Played_Countered.equalsIgnoreCase("playing")) {
-                                sendUpdateCardValues(position, "countered", "COUNTERED CARD!");
                                 temp.card_Played_Countered = "played";
+                                sendUpdateCardValues(position, "countered", "COUNTERED CARD!");
+
                             }
                             //akshit code to disable button after making counter ,accept ,reject.
                             ((ImageView) row.findViewById(R.id.tv_counter_card)).setImageResource(R.drawable.counterbtnx_deactive);
@@ -905,8 +908,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                             int position = (Integer) v.getTag();
                             //card is allowed to play once only- reject, accept or counter change state to played
                             if (temp.card_Played_Countered.equalsIgnoreCase("playing")) {
-                                sendUpdateCardValues(position, "rejected", "REJECTED!");
                                 temp.card_Played_Countered = "played";
+                                sendUpdateCardValues(position, "rejected", "REJECTED!");
+
                             }
                         }
                     });
@@ -919,8 +923,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                             int position = (Integer) v.getTag();
                             //card is allowed to play once only- reject, accept or counter change state to played
                             if (temp.card_Played_Countered.equalsIgnoreCase("playing")) {
-                                sendUpdateCardValues(position, "accepted", "ACCEPTED!");
                                 temp.card_Played_Countered = "played";
+                                sendUpdateCardValues(position, "accepted", "ACCEPTED!");
+
                             }
                         }
                     });
@@ -932,9 +937,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                             int position = (Integer) v.getTag();
                             //card is allowed to play once only- reject, accept or counter change state to played
                             if (temp.card_Played_Countered.equalsIgnoreCase("playing")) {
-
-                                sendUpdateCardValues(position, "countered", "COUNTERED CARD!");
                                 temp.card_Played_Countered = "played";
+                                sendUpdateCardValues(position, "countered", "COUNTERED CARD!");
+
                             }
                         }
                     });
