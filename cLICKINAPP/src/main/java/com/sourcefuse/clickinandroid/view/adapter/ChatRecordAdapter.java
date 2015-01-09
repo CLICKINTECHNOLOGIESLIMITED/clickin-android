@@ -118,19 +118,19 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 //set layout properties for image view
                 /* layout params for image */
 
-                RelativeLayout.LayoutParams mImageParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                /*RelativeLayout.LayoutParams mImageParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);*/
                 LinearLayout mImageLayout = (LinearLayout) row.findViewById(R.id.media_layout);
                 final ImageView image_attached = (ImageView) row.findViewById(R.id.iv_chat_image);
                 FeedImageView iv_chat_image_ = (FeedImageView) row.findViewById(R.id.iv_chat_image_);
                 if (!Utils.isEmptyString(temp.textMsg) && !temp.clicks.equalsIgnoreCase("no")) // case for image with click
                 {
-                    mImageParams.setMargins(5, 5, 9, 5);//akshit line of code
-                    mImageLayout.setLayoutParams(mImageParams);
-                    image_attached.setPadding(5, 0, 0, 0);
+                   /* mImageParams.setMargins(5, 5, 9, 5);//akshit line of code*/
+                    /*mImageLayout.setLayoutParams(mImageParams);*/
+                    /*image_attached.setPadding(5, 0, 0, 0);*/
                 } else {
                     // case without text and without click
-                    mImageParams.setMargins(5, 4, 5, 11);
-                    mImageLayout.setLayoutParams(mImageParams);
+                    /*mImageParams.setMargins(5, 4, 5, 11);
+                    mImageLayout.setLayoutParams(mImageParams);*/
                 }
 
 
@@ -222,10 +222,10 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     row.findViewById(R.id.parent_clicks_area_share).setVisibility(View.VISIBLE);
                     if (!(Utils.isEmptyString(temp.sharingMedia))) {
                         ((LinearLayout) row.findViewById(R.id.parent_clicks_area_share)).setBackgroundColor(context.getResources().getColor(R.color.white));
-                        mLongTextView.setPadding(20, 20, 20, 30);
+                        /*mLongTextView.setPadding(20, 20, 20, 30);*/
                     } else {
                         ((LinearLayout) row.findViewById(R.id.parent_clicks_area_share)).setBackgroundColor(context.getResources().getColor(android.R.color.transparent));
-                        mLongTextView.setPadding(10, 10, 10, 30);
+                        /*mLongTextView.setPadding(10, 10, 10, 30);*/
                     }
 
                     mLongTextView.setVisibility(View.VISIBLE);
@@ -250,7 +250,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 mAudioImage.setVisibility(View.VISIBLE);
 
                 row.findViewById(R.id.temp_layout).setVisibility(View.VISIBLE);
-                row.findViewById(R.id.temp_layout).setLayoutParams(layoutParams);
+//                row.findViewById(R.id.temp_layout).setLayoutParams(layoutParams);
 
                 ImageView mSpeakerImage = (ImageView) row.findViewById(R.id.iv_play_btn_);
                 mSpeakerImage.setVisibility(View.VISIBLE);
@@ -260,9 +260,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
 
                 if (!(Utils.isEmptyString(temp.textMsg)) || (!(temp.clicks.equalsIgnoreCase("no")))) {
-                    layoutParams.setMargins(7, 7, 7, 7);//akshit line of code to set margin
+                    /*layoutParams.setMargins(7, 7, 7, 7);//akshit line of code to set margin*/
                     chatClickTextLayout.setVisibility(View.VISIBLE);
-                    RelativeLayout.LayoutParams paramsrr = new RelativeLayout.LayoutParams(
+                    RelativeLayout.LayoutParams paramsrr = new RelativeLayout.LayoutParams(//akshit
                             RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
                     paramsrr.addRule(RelativeLayout.BELOW, R.id.temp_layout);
                     chatClickTextLayout.setLayoutParams(paramsrr);
@@ -298,7 +298,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 final ImageView play_buttom = (ImageView) row.findViewById(R.id.iv_play_btn);
                 play_buttom.setVisibility(View.VISIBLE);
 
-                image_attached.setPadding(5, 5, 5, 10);
+               /* image_attached.setPadding(5, 5, 5, 10);*/
                 if (!(Utils.isEmptyString(temp.textMsg)) || (!(temp.clicks.equalsIgnoreCase("no")))) {
                     chatClickTextLayout.setVisibility(View.VISIBLE);
                     RelativeLayout.LayoutParams paramsrr = new RelativeLayout.LayoutParams(
@@ -319,7 +319,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
 
                 RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                layoutParams.setMargins(0, 0, 0, 0);
+                /*layoutParams.setMargins(0, 0, 0, 0);*/
                 play_buttom.setLayoutParams(layoutParams);
                 /* log for video */
 
@@ -512,9 +512,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     parent_shared_layout.setBackgroundResource(R.drawable.newbg_grey);
                     chatText.setBackgroundResource(R.drawable.grey_square);
                     chatText.setText("" + temp.textMsg);
-                    LinearLayout.LayoutParams mTextParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                    mTextParams.setMargins(5, 5, 5, 5);
-                    chatText.setLayoutParams(mTextParams);
+//                    LinearLayout.LayoutParams mTextParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//                    /*mTextParams.setMargins(5, 5, 5, 5);*/
+//                    chatText.setLayoutParams(mTextParams);
 
 
                 }
@@ -536,7 +536,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 clicksHeart.setVisibility(View.VISIBLE);
 
                 LinearLayout mParentClickArea = (LinearLayout) row.findViewById(R.id.parent_clicks_area);
-                mParentClickArea.setPadding(15, 0, 0, 0);
+                /*mParentClickArea.setPadding(15, 0, 0, 0);*/
 
                 //check if only clicks is there
                 parent_shared_layout.setBackgroundResource(R.drawable.newbg_pinkleft);
@@ -559,9 +559,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                             parent_shared_layout.setBackgroundResource(R.drawable.newbg_pinkleft);  // code for double line
                             clicksArea.setBackgroundResource(R.drawable.pink_squre);
                             LinearLayout image_attached = (LinearLayout) row.findViewById(R.id.media_layout);
-                            RelativeLayout.LayoutParams mLinearParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                            mLinearParams.setMargins(0, 1, 5, 5);
-                            image_attached.setLayoutParams(mLinearParams);
+//                            RelativeLayout.LayoutParams mLinearParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//                           /* mLinearParams.setMargins(0, 1, 5, 5);*/
+//                            image_attached.setLayoutParams(mLinearParams);
                         }
                         chatText.setText(temp.textMsg);
                         // prafull code
@@ -654,7 +654,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
             //RECEIVER START
 
             LinearLayout parent_shared_layout = (LinearLayout) row.findViewById(R.id.parent_shared_layout);
-            parent_shared_layout.setBackgroundResource(R.drawable.whitechatbg);
+            parent_shared_layout.setBackgroundResource(R.drawable.new_whitearrownew);
 
 
             RelativeLayout rlTimeStatusSender = (RelativeLayout) row.findViewById(R.id.rl_time_sender);
@@ -673,9 +673,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
                     RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
             params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, 1);
-            params.setMargins(0, 0, 10, 0);
+//            params.setMargins(0, 0, 10, 0);
             parent_shared_layout.setLayoutParams(params);
-            parent_shared_layout.setPadding(0, 0, 10, 0);
+//            parent_shared_layout.setPadding(0, 0, 10, 0);
 
 
             // chatParentLayout.setGravity(Gravity.RIGHT);
@@ -700,12 +700,12 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 if (!Utils.isEmptyString(temp.textMsg) && !temp.clicks.equalsIgnoreCase("no")) // case for image with click
                 {
 //                    mImageParams.setMargins(3, 3, 3, 3);//akshit line of code
-                    mImageLayout.setLayoutParams(mImageParams);
-                    image_attached.setPadding(5, 0, 0, 0);
+//                    mImageLayout.setLayoutParams(mImageParams);
+                   /* image_attached.setPadding(5, 0, 0, 0);*/
                 } else if (!temp.clicks.equalsIgnoreCase("no")) //text without click
                 {
 //                    mImageParams.setMargins(7, 7, 7, 7);
-                    mImageLayout.setLayoutParams(mImageParams);
+//                    mImageLayout.setLayoutParams(mImageParams);
                 } else if (temp.clicks.equalsIgnoreCase("no") && Utils.isEmptyString(temp.textMsg)) {//akshit code to set margin if no clicks and text present
 //                    mImageParams.setMargins(11, 7, 27, 11);
 //                    mImageLayout.setLayoutParams(mImageParams);
@@ -792,31 +792,30 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     mLongTextView.setVisibility(View.VISIBLE);
                     mLongTextView.setTextColor(context.getResources().getColor(R.color.black));
                     mLongTextView.setText("Location Shared");
-                    mLongTextView.setPadding(10,
-                10, 10, 30);
+                    /*mLongTextView.setPadding(10,10, 10, 30);*/
             }
                /* for map to set text location shared */
 
             } else if (!Utils.isEmptyString(temp.content_url) && Utils.isEmptyString(temp.video_thumb)) {//start of audio-RECIVER case
 
 
-                RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
-                        RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);//akshit code to set margin.
+//                RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
+//                        RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);//akshit code to set margin.
                 ImageView mAudioImage = (ImageView) row.findViewById(R.id.iv_play_btn);
                 mAudioImage.setVisibility(View.VISIBLE);
 
                 row.findViewById(R.id.temp_).setVisibility(View.GONE);
                 TextView mLongTextView = (TextView) row.findViewById(R.id.long_chat_text);
-                mLongTextView.setEms(11);
+                mLongTextView.setEms(10);
 
-                if (Utils.isEmptyString(temp.textMsg) && temp.clicks.equalsIgnoreCase("no")) {
+               /* if (Utils.isEmptyString(temp.textMsg) && temp.clicks.equalsIgnoreCase("no")) {
                     parent_shared_layout.setPadding(5, 5, 34, 5); // set padding
                 } else {
                     parent_shared_layout.setPadding(50, 5, 30, 5); // set padding
-                }
+                }*/
 
                 row.findViewById(R.id.temp_layout).setVisibility(View.VISIBLE);
-                row.findViewById(R.id.temp_layout).setLayoutParams(layoutParams);//akshit code to set margin.
+//                row.findViewById(R.id.temp_layout).setLayoutParams(layoutParams);//akshit code to set margin.
 
                 ImageView mSpeakerImage = (ImageView) row.findViewById(R.id.iv_play_btn_);
                 mSpeakerImage.setVisibility(View.VISIBLE);
@@ -824,7 +823,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
                 if (!(Utils.isEmptyString(temp.textMsg)) || (!(temp.clicks.equalsIgnoreCase("no")))) {
 
-                    layoutParams.setMargins(7, 9, 4, 7);//akshit line of code to set margin
+                    /*layoutParams.setMargins(7, 9, 4, 7);//akshit line of code to set margin*/
 
                     chatClickTextLayout.setVisibility(View.VISIBLE);
                     RelativeLayout.LayoutParams paramsrr2 = new RelativeLayout.LayoutParams(
@@ -833,7 +832,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     chatClickTextLayout.setLayoutParams(paramsrr2);
 
                     if (temp.clicks.equalsIgnoreCase("no")) {//akshit code to set margin in case of no clicks but only text and audio
-                        layoutParams.setMargins(9, 11, 8, 7);//akshit line of code to set margin
+                        /*layoutParams.setMargins(9, 11, 8, 7);//akshit line of code to set margin*/
                     }
                 }
 
@@ -870,7 +869,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
 
                 RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                layoutParams.setMargins(0, 0, 0, 0);
+                /*layoutParams.setMargins(0, 0, 0, 0);*/
                 play_buttom.setLayoutParams(layoutParams);
 
                 /* end */
@@ -971,7 +970,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     trade_image.setVisibility(View.VISIBLE);
                     //akshit code
                     RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                    layoutParams.setMargins(14, 0, 6, 0);
+                    /*layoutParams.setMargins(14, 0, 6, 0);*/
                     trade_image.setLayoutParams(layoutParams);
                     //End
                     if (temp.is_CustomCard) {
@@ -1205,10 +1204,10 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
                     if (Utils.isEmptyString(temp.content_url))
                         chatText.setGravity(Gravity.CENTER_VERTICAL | Gravity.RIGHT);
-                    if (Utils.isEmptyString(temp.content_url))
+                    /*if (Utils.isEmptyString(temp.content_url))
                         chatText.setPadding(15, 10, 28, 10);
                     else
-                        chatText.setPadding(15, 10, 0, 10);
+                        chatText.setPadding(15, 10, 0, 10);*/
 
                     chatText.setText(temp.textMsg);
                 }
@@ -1225,7 +1224,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 LinearLayout clicksArea = (LinearLayout) row.findViewById(R.id.clicks_area);
                 clicksArea.setVisibility(View.VISIBLE);
                 TextView clicksText = (TextView) row.findViewById(R.id.clicks_text);
-                clicksText.setPadding(10, 0, 10, 0); // set padding for clicks prafull code
+                /*clicksText.setPadding(10, 0, 10, 0); // set padding for clicks prafull code*/
                 clicksText.setVisibility(View.VISIBLE);
                 clicksText.setText(temp.clicks.toString().trim());//akshit,to remove unwanted space from clicks
                 clicksText.setTextColor(context.getResources().getColor(R.color.white));
@@ -1245,7 +1244,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                         chatTextLong.setText(temp.textMsg.substring(13));
                         chatTextLong.setTextColor(context.getResources().getColor(R.color.white));
                         parent_shared_layout.setBackgroundResource(R.drawable.newbg_pinkright);  //code for double line
-                        parent_shared_layout.setPadding(5, 0, 28, 10); // for padding from bottom prafull
+                       /* parent_shared_layout.setPadding(5, 0, 28, 10); // for padding from bottom prafull*/
                     } else {
                         if ((Utils.isEmptyString(temp.content_url))) {  // check prafull
                             clicksArea.setBackgroundResource(R.drawable.pink_squre);
@@ -1254,7 +1253,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                             clicksArea.setBackgroundResource(R.drawable.pink_squre);
                             LinearLayout image_attached = (LinearLayout) row.findViewById(R.id.media_layout);
                             RelativeLayout.LayoutParams mLinearParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                            mLinearParams.setMargins(0, 1, 5, 5);
+                            /*mLinearParams.setMargins(0, 1, 5, 5);*/
                             image_attached.setLayoutParams(mLinearParams);
                         }
                         chatText.setText(temp.textMsg);
