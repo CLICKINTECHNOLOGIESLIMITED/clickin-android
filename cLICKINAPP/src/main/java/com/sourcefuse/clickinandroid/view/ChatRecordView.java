@@ -976,6 +976,15 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 temp.card_url = intent.getExtras().getString("card_url");
                 temp.card_content = intent.getExtras().getString("Discription");
 
+            }else{
+                //values required by IOS-Monika
+
+                    temp.card_content="_";
+
+
+                    temp.card_DB_ID="_";
+
+                    temp.card_url="_";
             }
             temp.card_id = intent.getExtras().getString("card_id");
             if (Utils.isEmptyString(temp.card_id)) {
@@ -996,7 +1005,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
             long sentOntime = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis();
             temp.sentOn = "" + sentOntime;
-            temp.card_owner = authManager.getQBId();
+
             temp.chatType = Constants.CHAT_TYPE_CARD;
             temp.partnerQbId = authManager.partnerQbId;
             temp.textMsg = "   ";
@@ -1004,9 +1013,9 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             //code for updating clicks value if card is in accepted stage
             String card_action_status = intent.getExtras().getString("card_Accepted_Rejected");
 
-            temp.card_originator = intent.getExtras().getString("card_originator");
-            if (Utils.isEmptyString(temp.card_originator))
-                temp.card_originator = authManager.getUserId();
+            temp.card_owner = intent.getExtras().getString("card_owner");
+            if (Utils.isEmptyString(temp.card_owner))
+                temp.card_owner = authManager.getQBId();
             if (card_action_status.equalsIgnoreCase("accepted")) {
                 if (temp.card_originator.equalsIgnoreCase(authManager.getUserId())) {
                     Utils.updateClicksValue(authManager.ourClicks, relationManager.partnerClicks, temp.clicks, false);
@@ -1033,27 +1042,27 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
             if (intent.hasExtra("clicks"))
                 temp.clicks = intent.getExtras().getString("clicks");
-            temp.chatType = Constants.CHAT_TYPE_TEXT;
+           // temp.chatType = Constants.CHAT_TYPE_TEXT;
             if (intent.hasExtra("imageRatio")) {
                 temp.imageRatio = intent.getExtras().getString("imageRatio");
                 temp.content_url = intent.getExtras().getString("fileId");
                 if (intent.hasExtra("location_coordinates"))
                 {
                     temp.location_coordinates = intent.getExtras().getString("location_coordinates");
-                    temp.chatType = Constants.CHAT_TYPE_LOCATION;
-                }else{
+                  //  temp.chatType = Constants.CHAT_TYPE_LOCATION;
+                }/*else{
                     temp.chatType = Constants.CHAT_TYPE_IMAGE;
-                }
+                }*/
 
             } else if (intent.hasExtra("videoThumbnail")) {
                 temp.video_thumb = intent.getExtras().getString("videoThumbnail");
                 temp.content_url = intent.getExtras().getString("videoID");
-                temp.chatType = Constants.CHAT_TYPE_VIDEO;
+              //  temp.chatType = Constants.CHAT_TYPE_VIDEO;
             } else if (intent.hasExtra("audioID")) {
                 temp.content_url = intent.getExtras().getString("audioID");
-                temp.chatType = Constants.CHAT_TYPE_AUDIO;
+                //temp.chatType = Constants.CHAT_TYPE_AUDIO;
             } else if (intent.hasExtra("card_originator")) {
-                temp.chatType = Constants.CHAT_TYPE_CARD;
+              //  temp.chatType = Constants.CHAT_TYPE_CARD;
                 temp.card_Accepted_Rejected = intent.getExtras().getString("card_Accepted_Rejected");
                 temp.card_DB_ID = intent.getExtras().getString("card_DB_ID");
                 temp.card_Played_Countered = intent.getExtras().getString("card_Played_Countered");
@@ -1065,13 +1074,22 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
                 temp.card_url = intent.getExtras().getString("card_url");
                 temp.card_id = intent.getExtras().getString("card_id");
-                temp.card_originator = intent.getExtras().getString("card_originator");
+
                 temp.is_CustomCard = intent.getExtras().getBoolean("is_CustomCard");
                 temp.card_owner = intent.getExtras().getString("card_owner");
 
                 if(Utils.isEmptyString(temp.card_owner))
                     temp.card_owner = authManager.getQBId();
 
+                //values required by IOS-Monika
+                if(Utils.isEmptyString(temp.card_content))
+                    temp.card_content="_";
+
+                if(Utils.isEmptyString(temp.card_DB_ID))
+                    temp.card_DB_ID="_";
+
+                if(Utils.isEmptyString(temp.card_url))
+                    temp.card_url="_";
 
             }
 
@@ -1093,7 +1111,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             long sentOntime = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis();
             temp.sentOn = "" + sentOntime;
             temp.chatId = authManager.getQBId() + authManager.partnerQbId + sentOntime;  // chat id for sharing
-
+            temp.chatType=intent.getIntExtra("chatType",-1);
             temp.partnerQbId = authManager.partnerQbId;
             if (!Utils.isEmptyString(temp.clicks) && !temp.clicks.equalsIgnoreCase("no")) {
                 temp.textMsg = temp.clicks + "        " + temp.textMsg;
