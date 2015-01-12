@@ -128,7 +128,7 @@ public class ViewShare extends Activity implements View.OnClickListener {
                 card_heading = intent.getStringExtra("card_heading");
                 card_originator = intent.getStringExtra("card_originator");
                 card_owner = intent.getStringExtra("card_owner");
-//                image_url = intent.getStringExtra("card_url");akshit code
+                image_url = intent.getStringExtra("card_url");
                 is_CustomCard = intent.getBooleanExtra("is_CustomCard", false);
                 Log.e("Share Custom Card", ""+intent.getBooleanExtra("is_CustomCard", false));
             } else if (intent.hasExtra("audioID")) {
