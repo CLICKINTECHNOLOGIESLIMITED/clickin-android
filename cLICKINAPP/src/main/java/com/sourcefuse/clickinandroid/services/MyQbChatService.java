@@ -134,12 +134,13 @@ public class MyQbChatService extends Service {
 
         switch (msgObject.chatType) {
             case Constants.CHAT_TYPE_CARD:
-                if (!msgObject.is_CustomCard) {
+
                     data.putString("card_DB_ID", msgObject.card_DB_ID);
-                    data.putString("card_content", msgObject.card_content);
+
                     data.putString("card_url", msgObject.card_url);
-                }
+
                 // data.putString("card_clicks",msgObject.clicks);
+                data.putString("card_content", msgObject.card_content);
                 data.putString("card_owner", msgObject.card_owner);
                 data.putBoolean("is_CustomCard", msgObject.is_CustomCard);
                 data.putString("accepted_Rejected", msgObject.card_Accepted_Rejected);
@@ -186,11 +187,12 @@ public class MyQbChatService extends Service {
                 } else if (!Utils.isEmptyString(mCardOriginator)) {
 
                     Log.e("in 1--->","in 1--->");
-                    if (!msgObject.is_CustomCard) {
+
                         data.putString("card_DB_ID", msgObject.card_DB_ID);
-                        data.putString("card_content", msgObject.card_content);
+
                         data.putString("card_url", msgObject.card_url);
-                    }
+
+                    data.putString("card_content", msgObject.card_content);
                     data.putString("card_owner", msgObject.card_owner);
                     data.putBoolean("is_CustomCard", msgObject.is_CustomCard);
                     data.putString("accepted_Rejected", msgObject.card_Accepted_Rejected);

@@ -983,7 +983,10 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
             /* only text reciver case*/
             //in case share accept/reject, ignore the text
-            if (!Utils.isEmptyString(temp.textMsg) && temp.clicks.equalsIgnoreCase("no") && Utils.isEmptyString(temp.isAccepted) && Utils.isEmptyString(temp.location_coordinates)) {
+
+            if (!Utils.isEmptyString(temp.textMsg) && temp.clicks.equalsIgnoreCase("no") && Utils.isEmptyString(temp.isAccepted)
+                    && Utils.isEmptyString(temp.location_coordinates)) {
+
                 //code to hide share icon for text messages-monika
                 if (Utils.isEmptyString(temp.content_url))
                     ((LinearLayout) row.findViewById(R.id.ll_for_share_icon)).setVisibility(View.GONE);
@@ -1219,6 +1222,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     item.isAccepted = "no";
                     i.putExtra("shareStatus", "shareRejected");
                     i.putExtra("isAccepted", "no");
+                    i.putExtra("chatType",item.chatType);
                     i.putExtra("isMessageSender", item.isMessageSender);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -1287,6 +1291,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     item.isAccepted = "yes";
                     i.putExtra("shareStatus", "shareAccepted");
                     i.putExtra("isAccepted", "yes");
+                    i.putExtra("chatType",item.chatType);
                     i.putExtra("isMessageSender", item.isMessageSender);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -1383,7 +1388,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
         i.putExtra("card_Accepted_Rejected", action);
         i.putExtra("played_Countered", item.card_Played_Countered);
         i.putExtra("card_originator", item.card_originator);
-
+        i.putExtra("card_owner",item.card_owner);
         if (action.equalsIgnoreCase("countered")) {
             if (item.is_CustomCard) {
                 i.setClass(context, ViewTradeCart.class);
@@ -1440,6 +1445,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
             i.putExtra("audioID", item.content_url);
         }
 
+        i.putExtra("chatType",item.chatType);
         i.setClass(context, ViewShare.class);
         i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 

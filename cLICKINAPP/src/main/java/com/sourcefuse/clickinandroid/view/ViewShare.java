@@ -42,7 +42,7 @@ public class ViewShare extends Activity implements View.OnClickListener {
     private static final String TAG = ViewShare.class.getSimpleName();
     TextView mshr_point, mshr_comment;
     String fileId, clicks, textMsg, originalChatId, isMessageSender;
-    String card_Accepted_Rejected, card_DB_ID, card_Played_Countered, card_id, card_content, card_heading, card_originator, card_owner, card_clicks;
+    String card_Accepted_Rejected, card_DB_ID, card_Played_Countered, card_id, card_content=" ", card_heading, card_originator, card_owner, card_clicks;
     boolean is_CustomCard;
 
 
@@ -66,6 +66,7 @@ public class ViewShare extends Activity implements View.OnClickListener {
 
     private String shareMedia;
     private String mLocationCoordinates = null ;
+    private int chatType=-1;
 
 
     @Override
@@ -117,7 +118,7 @@ public class ViewShare extends Activity implements View.OnClickListener {
                 videoThumbnail = intent.getStringExtra("videoThumbnail");
                 videoID = intent.getStringExtra("videoID");
                 image_url = videoThumbnail;
-            } else if (intent.hasExtra("card_owner")) {
+            } else if (intent.hasExtra("card_id")) {
                 card_Accepted_Rejected = intent.getStringExtra("card_Accepted_Rejected");
                 card_DB_ID = intent.getStringExtra("card_DB_ID");
                 card_Played_Countered = intent.getStringExtra("card_Played_Countered");
@@ -141,7 +142,7 @@ public class ViewShare extends Activity implements View.OnClickListener {
                 clicks = intent.getStringExtra("clicks");
             }
 
-
+            chatType=intent.getIntExtra("chatType",-1);
             textMsg = intent.getStringExtra("textMsg");
 
             isMessageSender = intent.getStringExtra("isMessageSender");
@@ -357,7 +358,7 @@ public class ViewShare extends Activity implements View.OnClickListener {
                 i.putExtra("sharingMedia", shareMedia);
                 i.putExtra("shareStatus", "shared");
                 i.putExtra("isMessageSender", isMessageSender);
-
+                i.putExtra("chatType",chatType);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 i.setAction("SHARE");

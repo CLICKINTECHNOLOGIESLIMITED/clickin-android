@@ -17,7 +17,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -50,6 +49,7 @@ import com.sourcefuse.clickinandroid.model.RelationManager;
 import com.sourcefuse.clickinandroid.model.bean.ChatMessageBody;
 import com.sourcefuse.clickinandroid.model.bean.GetrelationshipsBean;
 import com.sourcefuse.clickinandroid.utils.Constants;
+import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.ChatRecordView;
 import com.sourcefuse.clickinandroid.view.SplashView;
@@ -199,14 +199,15 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
                                     break;
 
                                 case Constants.CHAT_TYPE_CARD:
-                                    if (!data.getBoolean("is_CustomCard")) {
+
                                         message.setProperty("card_DB_ID", data.getString("card_DB_ID"));
                                         message.setProperty("card_url", data.getString("card_url"));
                                         message.setProperty("card_content", data.getString("card_content"));
-                                    }
+
                                     message.setProperty("is_CustomCard", String.valueOf(data.getBoolean("is_CustomCard")));
                                     message.setProperty("card_clicks", data.getString("clicks"));
                                     message.setProperty("card_owner", data.getString("card_owner"));
+                                    android.util.Log.e("While Sending", data.getString("card_owner"));
                                     message.setProperty("card_Accepted_Rejected", data.getString("accepted_Rejected"));
                                     message.setProperty("card_heading", data.getString("card_heading"));
                                     message.setProperty("card_id", data.getString("card_id"));
@@ -256,8 +257,8 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
                                         if (data.containsKey("location_coordinates")) {
                                             message.setProperty("location_coordinates", data.getString("location_coordinates"));
                                             message.setProperty("locationID", data.getString("FileId"));
-                                        } else
-                                            message.setProperty("imageURL", data.getString("FileId"));
+                                        }else
+                                            message.setProperty("fileID", data.getString("FileId"));
                                         //message.setProperty("isFileUploading", data.getString("imageRatio"));
 
                                     }
@@ -271,14 +272,16 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
 
                                     }
                                     if (data.containsKey("card_originator")) {
-                                        if (!data.getBoolean("is_CustomCard")) {
+
                                             message.setProperty("card_DB_ID", data.getString("card_DB_ID"));
                                             message.setProperty("card_url", data.getString("card_url"));
-                                            message.setProperty("card_content", data.getString("card_content"));
-                                        }
+
+
+                                        message.setProperty("card_content", data.getString("card_content"));
                                         message.setProperty("is_CustomCard", String.valueOf(data.getBoolean("is_CustomCard")));
                                         message.setProperty("card_clicks", data.getString("clicks"));
                                         message.setProperty("card_owner", data.getString("card_owner"));
+                                        android.util.Log.e("While Sending",data.getString("card_owner"));
                                         message.setProperty("card_Accepted_Rejected", data.getString("accepted_Rejected"));
                                         message.setProperty("card_heading", data.getString("card_heading"));
                                         message.setProperty("card_id", data.getString("card_id"));
@@ -418,36 +421,21 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
 
     public void processMessage(QBChat qbChat, QBChatMessage qbChatMessage) {
 
-        Log.e("in process msg--->", "" + qbChatMessage);
         JSONObject jSONObj = null;
-        try {
-            Log.e("-----------1", "" + qbChatMessage.getSmackMessage());
-            Log.e("-----------2", "" + qbChatMessage.getSmackMessage().toString());
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e("catch---->",""+e.toString());
-        }
 
         Message message = qbChatMessage.getSmackMessage();
         try {
-
-            Log.e("value of message--->",""+message);
             jSONObj = XML.toJSONObject(message.toXML().toString());
 
 
             JSONObject messageObj = jSONObj.getJSONObject("message");
-
             JSONObject extraParamsObj = messageObj.getJSONObject("extraParams");
-
             String from = messageObj.getString("from");
-
             String[] words = from.split("-");
-
             String senderQBId = words[0];
 
             if (extraParamsObj.has("isComposing")) { //means user is composing msg now
                 //only if we currently in chat with partner
-
                 if (senderQBId.equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().partnerQbId)) {
                     if (extraParamsObj.getString("isComposing").equalsIgnoreCase("YES"))
                         EventBus.getDefault().post("Composing YES");
@@ -456,7 +444,6 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
                 }
 
             } else if (messageObj.has("body") && messageObj.getString("body").equalsIgnoreCase("Delivered.")) {//here we sent the msg , its delivr notification only
-
             /*    String from = messageObj.getString("from");
                 String[] words = from.split("-");
                 String senderQBId=words[0];*/
@@ -467,7 +454,6 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
             } else {//here we recieved proper chat msg and need to update list
 
 
-                Log.e("in third case--->", "in third case--->");
                 ChatMessageBody temp = new ChatMessageBody();
           /*      String from = messageObj.getString("from");
                 String[] words = from.split("-");*/
@@ -504,6 +490,7 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
 
                     temp.clicks = extraParamsObj.getString("card_clicks");
                     temp.card_owner = Integer.toString(extraParamsObj.getInt("card_owner"));
+                    android.util.Log.e("While Receiving", temp.card_owner = Integer.toString(extraParamsObj.getInt("card_owner")));
                     temp.is_CustomCard = extraParamsObj.getBoolean("is_CustomCard");
                     if (!temp.is_CustomCard) {
                         temp.card_content = extraParamsObj.getString("card_content");
@@ -578,7 +565,6 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e("catch--->", "catch--->" + e.toString());
         }
 
     }
