@@ -23,8 +23,8 @@
         android:layout_height="wrap_content"
         android:background="@drawable/newbg_pinkleft"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="3dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+         >
 
         <!-- layout for share header-->
         <RelativeLayout
@@ -32,7 +32,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:padding="5dp"
+            android:paddingLeft="5dp"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
             android:visibility="gone">
 
             <TextView
@@ -53,13 +55,25 @@
                 android:text="You Want to share"
                 android:textColor="@color/signin_color" />
 
-            <View
-                android:layout_width="195dp"
+            <ImageView
+                android:id="@+id/except_share"
+                android:layout_width="206dp"
                 android:layout_height="3dp"
                 android:layout_below="@+id/shared_message"
                 android:layout_marginRight="2dp"
                 android:layout_marginTop="4dp"
+
                 android:background="@drawable/chat_divider" />
+
+            <ImageView
+                android:id="@+id/incase_share"
+                android:layout_width="266dp"
+                android:layout_height="3dp"
+                android:layout_below="@+id/shared_message"
+                android:layout_marginTop="4dp"
+                android:visibility="gone"
+                android:background="@drawable/chat_divider" />
+
         </RelativeLayout>
 
         <!--parent layout for all types of chat  -->
@@ -87,6 +101,7 @@
                     android:layout_marginLeft="3dp"
                     android:layout_marginRight="3dp"
                     android:layout_marginBottom="1dp"
+
                     android:adjustViewBounds="true"
                     android:layout_gravity="center"
                     android:visibility="gone" />
