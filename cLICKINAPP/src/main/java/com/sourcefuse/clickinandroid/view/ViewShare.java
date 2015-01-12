@@ -331,7 +331,11 @@ public class ViewShare extends Activity implements View.OnClickListener {
 
                 i.putExtra("originalChatId", originalChatId);
 
-                i.putExtra("clicks", clicks);
+                if(!Utils.isEmptyString(card_originator)){//akshit code to send clicks in case of trade card
+                    i.putExtra("clicks", card_clicks);
+                }else {
+                    i.putExtra("clicks", clicks);
+                }
                 i.putExtra("textMsg", textMsg);
                 i.putExtra("caption", commentStr);
                 if (access_Token.length() > 5) {
