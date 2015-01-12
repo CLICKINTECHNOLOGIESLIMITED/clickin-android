@@ -18,10 +18,10 @@ public class Constants {
 
     public static final String mSplunk_Api = "dfda6001";
     // QB for prod
-  /*  public static final String CLICKIN_APP_ID = "5";
+   /* public static final String CLICKIN_APP_ID = "5";
     public static final String CLICKIN_AUTH_KEY = "6QQJq2FSKKzHK2-";
     public static final String CLICKIN_AUTH_SECRET = "k9cTQAeFWrkEAWv";
-    public static final String ACCOUNTKEY = "gBv3BjZnFzkVPUZEqEXm"; */
+    public static final String ACCOUNTKEY = "gBv3BjZnFzkVPUZEqEXm";*/
     public static final int SMS_SEND = 100;
     public static final String PREFS_VALUE_PHONE = "phone";
     public static final String PREFS_VALUE_USER_TOKEN = "user-token";
@@ -40,8 +40,8 @@ public class Constants {
     public final static int CHAT_TYPE_IMAGE = 2;
     public final static int CHAT_TYPE_AUDIO = 3;
     public final static int CHAT_TYPE_VIDEO = 4;
-    public final static int CHAT_TYPE_LOCATION = 5;
-    public final static int CHAT_TYPE_CARD = 6;
+    public final static int CHAT_TYPE_LOCATION = 6;
+    public final static int CHAT_TYPE_CARD = 5;
     public final static int CHAT_TYPE_DELIVERED = 7;
     public final static int CHAT_TYPE_VIDEO_INITATING = 8;
     public final static int CHAT_TYPE_SHARING = 9;

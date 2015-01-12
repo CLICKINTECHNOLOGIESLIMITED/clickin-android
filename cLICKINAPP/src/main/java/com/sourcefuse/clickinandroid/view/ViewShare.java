@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -118,13 +119,18 @@ public class ViewShare extends Activity implements View.OnClickListener {
                 card_DB_ID = intent.getStringExtra("card_DB_ID");
                 card_Played_Countered = intent.getStringExtra("card_Played_Countered");
                 card_id = intent.getStringExtra("card_id");
-                clicks = intent.getStringExtra("clicks");
+                card_clicks = intent.getStringExtra("clicks");
+                if(card_clicks.equalsIgnoreCase("5")){//akshit code
+                    card_clicks = "05";
+                }
+                clicks = "no";
                 card_content = intent.getStringExtra("card_content");
                 card_heading = intent.getStringExtra("card_heading");
                 card_originator = intent.getStringExtra("card_originator");
                 card_owner = intent.getStringExtra("card_owner");
                 image_url = intent.getStringExtra("card_url");
                 is_CustomCard = intent.getBooleanExtra("is_CustomCard", false);
+                Log.e("Share Custom Card", ""+intent.getBooleanExtra("is_CustomCard", false));
             } else if (intent.hasExtra("audioID")) {
                 clicks = intent.getStringExtra("clicks");
                 audioID = intent.getStringExtra("audioID");
@@ -140,8 +146,8 @@ public class ViewShare extends Activity implements View.OnClickListener {
 
 
             //akshit Code Starts ,To Upload Image ,Vedio ,Audio.
-            if (!Utils.isEmptyString(image_url)) {
-                shr_caption.setHint("Write your caption \nhere...");
+            if (!Utils.isEmptyString(image_url) && Utils.isEmptyString(card_id)) {
+//                shr_caption.setHint("Write your caption \nhere...");akshit code
                 ImageView shr_image = (ImageView) findViewById(R.id.shr_user_image);
                 shr_image.setVisibility(View.VISIBLE);
                 //check whether image is already downloaded or not
@@ -158,7 +164,7 @@ public class ViewShare extends Activity implements View.OnClickListener {
                 } else {
 
                     Picasso.with(ViewShare.this).load(image_url)
-                            .resize(200, 200).centerCrop()
+//                           .resize(200, 200).centerCrop()
                             .into(shr_image);
                 }
 
@@ -167,8 +173,33 @@ public class ViewShare extends Activity implements View.OnClickListener {
                 ImageView shr_image = (ImageView) findViewById(R.id.shr_user_image);
                 shr_image.setVisibility(View.VISIBLE);
                 shr_image.setBackgroundResource(R.drawable.soundicon_);
-                shr_caption.setHint("Write your caption \nhere...");
+//                shr_caption.setHint("Write your caption \nhere...");akshit code
             }
+
+            //akshit code for Trade Card
+            if(!Utils.isEmptyString(card_id) || is_CustomCard){
+
+                ImageView shr_image = (ImageView) findViewById(R.id.shr_user_image);
+                shr_image.setVisibility(View.VISIBLE);
+//               shr_caption.setHint("Write your caption \nhere...");akshit code
+                ((TextView) findViewById(R.id.trd_clicks_top_share)).setVisibility(View.VISIBLE);
+                ((TextView) findViewById(R.id.trd_clicks_bottom_share)).setVisibility(View.VISIBLE);
+                ((TextView) findViewById(R.id.trd_clicks_top_share)).setText(card_clicks);
+                ((TextView) findViewById(R.id.trd_clicks_bottom_share)).setText(card_clicks);
+                if(is_CustomCard){
+                    shr_image.setBackgroundResource(R.drawable.tradecardpink_big);
+                    ((TextView) findViewById(R.id.custom_card_msg)).setVisibility(View.VISIBLE);
+                    ((TextView) findViewById(R.id.custom_card_msg)).setText(card_heading);
+                }else {
+                    shr_image.setBackgroundResource(R.drawable.tradecardbg_blank);
+                    ((TextView) findViewById(R.id.heading_top)).setVisibility(View.VISIBLE);
+                    ((TextView) findViewById(R.id.heading_bottom)).setVisibility(View.VISIBLE);
+                    ((TextView) findViewById(R.id.heading_top)).setText(card_heading);
+                    ((TextView) findViewById(R.id.heading_bottom)).setText(card_content);
+
+                }
+            }//ends
+
 
             if (!clicks.equalsIgnoreCase("no")) {
                 ((LinearLayout) findViewById(R.id.share_clicks_area)).setVisibility(View.VISIBLE);

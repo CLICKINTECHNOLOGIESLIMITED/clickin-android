@@ -904,6 +904,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 temp.location_coordinates = mLocation_Coordinates;
                 temp.isDelivered = Constants.MSG_SENDING;
                 temp.chatType = Constants.CHAT_TYPE_LOCATION;
+
                 break;
 
             default:
@@ -918,7 +919,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             }
         } else {
             temp.clicks = "no";
-            temp.textMsg = "";
+            temp.textMsg="Location Shared "; //needed by IOS
         }
         temp.partnerQbId = authManager.partnerQbId;
         temp.senderQbId = authManager.getQBId();
@@ -1028,23 +1029,31 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         } else if (actionReq.equalsIgnoreCase("SHARE")) {
             ChatMessageBody temp = new ChatMessageBody();
 
-            temp.chatType = Constants.CHAT_TYPE_SHARING;
+
 
             if (intent.hasExtra("clicks"))
                 temp.clicks = intent.getExtras().getString("clicks");
+            temp.chatType = Constants.CHAT_TYPE_TEXT;
             if (intent.hasExtra("imageRatio")) {
                 temp.imageRatio = intent.getExtras().getString("imageRatio");
                 temp.content_url = intent.getExtras().getString("fileId");
                 if (intent.hasExtra("location_coordinates"))
                 {
                     temp.location_coordinates = intent.getExtras().getString("location_coordinates");
+                    temp.chatType = Constants.CHAT_TYPE_LOCATION;
+                }else{
+                    temp.chatType = Constants.CHAT_TYPE_IMAGE;
                 }
+
             } else if (intent.hasExtra("videoThumbnail")) {
                 temp.video_thumb = intent.getExtras().getString("videoThumbnail");
                 temp.content_url = intent.getExtras().getString("videoID");
+                temp.chatType = Constants.CHAT_TYPE_VIDEO;
             } else if (intent.hasExtra("audioID")) {
                 temp.content_url = intent.getExtras().getString("audioID");
+                temp.chatType = Constants.CHAT_TYPE_AUDIO;
             } else if (intent.hasExtra("card_originator")) {
+                temp.chatType = Constants.CHAT_TYPE_CARD;
                 temp.card_Accepted_Rejected = intent.getExtras().getString("card_Accepted_Rejected");
                 temp.card_DB_ID = intent.getExtras().getString("card_DB_ID");
                 temp.card_Played_Countered = intent.getExtras().getString("card_Played_Countered");
@@ -1101,6 +1110,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             ChatMessageBody objToSend=new ChatMessageBody(temp); //we truncate clicks from text in showvalue function,
                                                                 //so keep original object here
             ShowValueinChat(temp);
+            objToSend.chatType=Constants.CHAT_TYPE_SHARING;
             if (myQbChatService != null)
                 myQbChatService.sendMessage(objToSend);
 
@@ -1828,6 +1838,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         fields.put("type", obj.chatType);
         fields.put("video_thumb", obj.video_thumb);
         fields.put("deliveredChatID", obj.deliveredChatID);
+        fields.put("location_coordinates",obj.location_coordinates);
 
         ArrayList<String> cards = null;
         if (obj.card_id != null) {

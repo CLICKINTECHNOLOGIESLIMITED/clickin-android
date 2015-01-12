@@ -326,6 +326,7 @@ public class ChatManager {
                                 cardBean.setCardActive(cardObject.getString("active"));
                                 cardBean.setCardDescription(cardObject.getString("description"));
                                 cardBean.setCardTitle(cardObject.getString("title"));
+                                if(ls != null)
                                 ls.add(cardBean);
 
                             }
