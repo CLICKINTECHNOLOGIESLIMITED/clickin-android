@@ -119,7 +119,7 @@ public class GcmIntentService extends IntentService {
                     } else if (extras.getString("Tp").equalsIgnoreCase("RD")) {
                         data.setClass(getApplicationContext(), UserProfileView.class);
                         UpdateCounter();
-                        sendNotification("Clickin'", extras.getString("message"), null);
+                        sendNotification("Clickin'", extras.getString("message"), data);
                     } else if (extras.getString("Tp").equalsIgnoreCase("media")) {
                         String mPartnerId = extras.getString("pid");
 
