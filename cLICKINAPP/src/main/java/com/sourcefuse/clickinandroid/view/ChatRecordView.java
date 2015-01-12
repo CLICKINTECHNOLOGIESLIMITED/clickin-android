@@ -510,6 +510,10 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         }, 3000);
 
 
+
+        /* to show Dialog*/
+        Utils.showDialog(this);
+
     }
 
 
