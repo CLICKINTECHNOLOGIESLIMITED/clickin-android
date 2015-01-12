@@ -351,4 +351,7 @@
     <string name="video_not_supported">video format not supported</string>
 
     <string name="getFollowers">GetFollower True</string>
+
+    <string name="popup_text">We\'ve given you both \n 25 Clicks to get started!</string>
+    <string name="popup_button">Lets Start Clicking</string>
 </resources>

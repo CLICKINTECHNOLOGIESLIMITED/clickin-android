@@ -1389,20 +1389,17 @@ public class
     }
 
     public static void showDialog(Context context) {
-        final Dialog alertDialog = new Dialog(context);
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View layout = inflater.inflate(R.layout.popup, null);
+        final AlertDialog alertDialog = new AlertDialog.Builder(context).setCancelable(true).setView(layout).show();
 
-        LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-        final View row = inflater.inflate(R.layout.popup, null, false);
-        alertDialog.setContentView(row);
-
-        LinearLayout mLinearLayout = (LinearLayout) row.findViewById(R.id.popup_view);
-        mLinearLayout.setOnClickListener(new View.OnClickListener() {
+        LinearLayout popup_confirm_button = (LinearLayout) layout.findViewById(R.id.popup_view);
+        popup_confirm_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 alertDialog.dismiss();
             }
         });
-        alertDialog.show();
     }
 
 }
