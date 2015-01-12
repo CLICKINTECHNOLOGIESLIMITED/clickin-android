@@ -21,7 +21,7 @@
         android:id="@+id/parent_shared_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/newbg_pinkleft"
+        android:background="@drawable/newbg_grey"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="3dp"
         android:orientation="vertical">
@@ -32,7 +32,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:padding="5dp"
+            android:paddingLeft="3dp"
+            android:paddingTop="5dp"
             android:visibility="gone">
 
             <TextView
@@ -53,12 +54,23 @@
                 android:text="You Want to share"
                 android:textColor="@color/signin_color" />
 
-            <View
-                android:layout_width="195dp"
+            <ImageView
+                android:id="@+id/except_share"
+                android:layout_width="206dp"
                 android:layout_height="3dp"
                 android:layout_below="@+id/shared_message"
                 android:layout_marginRight="2dp"
                 android:layout_marginTop="4dp"
+
+                android:background="@drawable/chat_divider" />
+
+            <ImageView
+                android:id="@+id/incase_share"
+                android:layout_width="266dp"
+                android:layout_height="3dp"
+                android:layout_below="@+id/shared_message"
+                android:layout_marginTop="4dp"
+                android:visibility="gone"
                 android:background="@drawable/chat_divider" />
         </RelativeLayout>
 
@@ -83,11 +95,9 @@
                     android:id="@+id/iv_chat_image"
                     android:layout_width="206dp"
                     android:layout_height="180dp"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
-                    android:background="@color/black"
-                    android:layout_marginBottom="4dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginRight="3dp"
                     android:adjustViewBounds="true"
                     android:layout_gravity="center"
                     android:visibility="gone" />
@@ -145,6 +155,7 @@
                         android:gravity="top"
                         android:paddingRight="5dp"
                         android:text="+101"
+                        android:layout_marginLeft="2dp"
                         android:textColor="@color/white"
                         android:textSize="20sp"
                         android:textStyle="bold"
@@ -165,6 +176,7 @@
                         android:layout_height="wrap_content"
                         android:ellipsize="none"
                         android:maxEms="8"
+                        android:layout_marginLeft="3dp"
                         android:paddingRight="5dp"
                         android:singleLine="true"
                         android:textColor="@color/white"
@@ -179,6 +191,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:maxEms="12"
+                    android:layout_marginTop="2dp"
                     android:singleLine="false"
                     android:textColor="@color/black"
                     android:textSize="14sp"
@@ -192,12 +205,11 @@
                 android:id="@+id/send_card_first_time"
                 android:layout_width="240dp"
                 android:layout_height="320dp"
-                android:layout_marginBottom="2dp"
                 android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
                 android:orientation="vertical"
-                android:paddingBottom="1dp"
-                android:paddingRight="2dp"
-                android:paddingTop="1dp"
                 android:visibility="gone">
 
                 <ImageView
@@ -262,8 +274,10 @@
                 android:layout_marginBottom="3dp"
                 android:layout_marginRight="3dp"
                 android:layout_marginTop="3dp"
-                android:layout_marginLeft="3dp"
+                android:layout_marginLeft="2dp"
                 android:background="@color/background_grey"
+                android:gravity="center_vertical"
+                android:padding="5dp"
                 android:visibility="gone">
 
 
@@ -282,7 +296,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="17dp"
+                    android:layout_marginLeft="20dp"
                     android:adjustViewBounds="true"
                     android:src="@drawable/audio_play"
                     android:visibility="gone" />
@@ -391,7 +405,6 @@
                 android:id="@+id/rl_acc_rej_card"
                 android:layout_width="150dp"
                 android:layout_height="200dp"
-                android:layout_marginTop="3dp"
                 android:orientation="vertical"
                 android:visibility="gone"
 
@@ -472,7 +485,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentRight="true"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginBottom="8dp"
                     android:layout_marginRight="30dp"
                     android:text="10 "
                     android:textColor="@color/white"
@@ -588,9 +601,9 @@
 
         <LinearLayout
             android:id="@+id/parent_clicks_area_share"
-            android:layout_width="206dp"
+            android:layout_width="204dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="3dp"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/media_layout"
             android:layout_marginBottom="3dp"
@@ -616,6 +629,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="top"
                     android:paddingLeft="5dp"
+                    android:layout_marginLeft="2dp"
                     android:text="+101"
                     android:textColor="@color/white"
                     android:textSize="20sp"
