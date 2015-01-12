@@ -27,9 +27,11 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.telephony.TelephonyManager;
 import android.util.Base64;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -1218,7 +1220,7 @@ public class
             filePath = sdIconStorageDir.getAbsolutePath() + "/" + filename + ".jpg";
 
             File file = new File(filePath);
-            if(file.exists())
+            if (file.exists())
                 file.delete();
 
             FileOutputStream fileOutputStream = new FileOutputStream(filePath);
@@ -1378,11 +1380,26 @@ public class
 
         }
     }
-    private int pxlToDp(int pixel,Context mContext) {
+
+    private int pxlToDp(int pixel, Context mContext) {
 
         final float scale = mContext.getResources().getDisplayMetrics().density;
         int dp = (int) (pixel * scale + 0.5f);
         return dp;
+    }
+
+    public static void showDialog(Context context) {
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View layout = inflater.inflate(R.layout.popup, null);
+        final AlertDialog alertDialog = new AlertDialog.Builder(context).setCancelable(true).setView(layout).show();
+
+        LinearLayout popup_confirm_button = (LinearLayout) layout.findViewById(R.id.popup_view);
+        popup_confirm_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
     }
 
 }

@@ -46,7 +46,7 @@ public class ViewShare extends Activity implements View.OnClickListener {
     boolean is_CustomCard;
 
 
-    EditText shr_caption;
+    EditText shr_caption ,shr_caption_trade;
     String image_url;//akshit to make common variable for image ,vedio Url .
     private ChatManager chatManager;
     private AuthManager authManager;
@@ -80,7 +80,9 @@ public class ViewShare extends Activity implements View.OnClickListener {
         findViewById(R.id.linear_layout_share).setOnClickListener(this);
         mshr_point = (TextView) findViewById(R.id.shr_point);
         mshr_comment = (TextView) findViewById(R.id.shr_comment);
-        shr_caption = (EditText) findViewById(R.id.shr_caption);
+        shr_caption = (EditText) findViewById(R.id.shr_caption);//akshit code
+        shr_caption_trade = (EditText) findViewById(R.id.shr_caption_trade);//akshit code
+        shr_caption_trade.setOnClickListener(this);
         shr_caption.setOnClickListener(this);
 
         // akshit code for closing keypad if touched anywhere outside
@@ -92,6 +94,7 @@ public class ViewShare extends Activity implements View.OnClickListener {
                 InputMethodManager imm = (InputMethodManager) getSystemService(
                         INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(shr_caption.getWindowToken(), 0);
+                imm.hideSoftInputFromWindow(shr_caption_trade.getWindowToken(), 0);
 
             }
 
@@ -179,8 +182,9 @@ public class ViewShare extends Activity implements View.OnClickListener {
 
             //akshit code for Trade Card
             if(!Utils.isEmptyString(card_id) || is_CustomCard){
-
-                ImageView shr_image = (ImageView) findViewById(R.id.shr_user_image);
+                findViewById(R.id.layout_image).setVisibility(View.GONE);
+                findViewById(R.id.layout_card).setVisibility(View.VISIBLE);
+                ImageView shr_image = (ImageView) findViewById(R.id.shr_user_trade_image);
                 shr_image.setVisibility(View.VISIBLE);
 //               shr_caption.setHint("Write your caption \nhere...");akshit code
                 ((TextView) findViewById(R.id.trd_clicks_top_share)).setVisibility(View.VISIBLE);
@@ -293,8 +297,14 @@ public class ViewShare extends Activity implements View.OnClickListener {
                 break;
             case R.id.shr_btn_share:
                 Intent i = new Intent(this, ChatRecordView.class);
+                String commentStr = null;//akshit code
 
-                String commentStr = shr_caption.getText().toString().trim();
+                if(!Utils.isEmptyString(card_originator)){//akshit code
+                     commentStr = shr_caption_trade.getText().toString().trim();
+
+                }else {
+                     commentStr = shr_caption.getText().toString().trim();//akshit code
+                }
                 if (Utils.isEmptyString(commentStr))
                     commentStr = "Write your caption here...";
 
@@ -361,10 +371,17 @@ public class ViewShare extends Activity implements View.OnClickListener {
                 shr_caption.setHint("");
                 break;
 
+            case R.id.shr_caption_trade://akshit code
+                shr_caption_trade.setCursorVisible(true);
+                shr_caption_trade.setHint("");
+                break;
+
             case R.id.linear_layout_share:
 
                 InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(shr_caption.getWindowToken(), 0);
+                imm.hideSoftInputFromWindow(shr_caption_trade.getWindowToken(), 0);
+
 
                 break;
 

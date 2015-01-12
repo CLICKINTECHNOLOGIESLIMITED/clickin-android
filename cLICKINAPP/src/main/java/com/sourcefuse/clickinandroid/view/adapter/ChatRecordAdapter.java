@@ -761,8 +761,8 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     ((TextView) row.findViewById(R.id.trd_clicks_top)).setVisibility(View.VISIBLE);//akshit code
                     ((TextView) row.findViewById(R.id.trd_clicks_bottom)).setVisibility(View.VISIBLE);//akshit code
 
-                    ((TextView) row.findViewById(R.id.trd_clicks_bottom)).setPadding(0, 13, 7, 13);//akshit code
-                    ((TextView) row.findViewById(R.id.trd_clicks_top)).setPadding(0, 13, 0, 0);//akshit code
+//                    ((TextView) row.findViewById(R.id.trd_clicks_bottom)).setPadding(0, 13, 7, 13);//akshit code
+//                    ((TextView) row.findViewById(R.id.trd_clicks_top)).setPadding(0, 13, 0, 0);//akshit code
 
                     ((TextView) row.findViewById(R.id.trd_clicks_top)).setText(clicks);
                     ((TextView) row.findViewById(R.id.trd_clicks_bottom)).setText(clicks);
@@ -983,8 +983,10 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
             /* only text reciver case*/
             //in case share accept/reject, ignore the text
+
             if (!Utils.isEmptyString(temp.textMsg) && temp.clicks.equalsIgnoreCase("no") && Utils.isEmptyString(temp.isAccepted)
                     && Utils.isEmptyString(temp.location_coordinates)) {
+
                 //code to hide share icon for text messages-monika
                 if (Utils.isEmptyString(temp.content_url))
                     ((LinearLayout) row.findViewById(R.id.ll_for_share_icon)).setVisibility(View.GONE);
