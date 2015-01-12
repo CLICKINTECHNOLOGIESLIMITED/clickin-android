@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -255,7 +256,7 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
                                         if (data.containsKey("location_coordinates")) {
                                             message.setProperty("location_coordinates", data.getString("location_coordinates"));
                                             message.setProperty("locationID", data.getString("FileId"));
-                                        }else
+                                        } else
                                             message.setProperty("imageURL", data.getString("FileId"));
                                         //message.setProperty("isFileUploading", data.getString("imageRatio"));
 
@@ -417,21 +418,36 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
 
     public void processMessage(QBChat qbChat, QBChatMessage qbChatMessage) {
 
+        Log.e("in process msg--->", "" + qbChatMessage);
         JSONObject jSONObj = null;
+        try {
+            Log.e("-----------1", "" + qbChatMessage.getSmackMessage());
+            Log.e("-----------2", "" + qbChatMessage.getSmackMessage().toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e("catch---->",""+e.toString());
+        }
 
         Message message = qbChatMessage.getSmackMessage();
         try {
+
+            Log.e("value of message--->",""+message);
             jSONObj = XML.toJSONObject(message.toXML().toString());
 
 
             JSONObject messageObj = jSONObj.getJSONObject("message");
+
             JSONObject extraParamsObj = messageObj.getJSONObject("extraParams");
+
             String from = messageObj.getString("from");
+
             String[] words = from.split("-");
+
             String senderQBId = words[0];
 
             if (extraParamsObj.has("isComposing")) { //means user is composing msg now
                 //only if we currently in chat with partner
+
                 if (senderQBId.equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().partnerQbId)) {
                     if (extraParamsObj.getString("isComposing").equalsIgnoreCase("YES"))
                         EventBus.getDefault().post("Composing YES");
@@ -440,6 +456,7 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
                 }
 
             } else if (messageObj.has("body") && messageObj.getString("body").equalsIgnoreCase("Delivered.")) {//here we sent the msg , its delivr notification only
+
             /*    String from = messageObj.getString("from");
                 String[] words = from.split("-");
                 String senderQBId=words[0];*/
@@ -450,6 +467,7 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
             } else {//here we recieved proper chat msg and need to update list
 
 
+                Log.e("in third case--->", "in third case--->");
                 ChatMessageBody temp = new ChatMessageBody();
           /*      String from = messageObj.getString("from");
                 String[] words = from.split("-");*/
@@ -560,6 +578,7 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
             }
         } catch (Exception e) {
             e.printStackTrace();
+            Log.e("catch--->", "catch--->" + e.toString());
         }
 
     }

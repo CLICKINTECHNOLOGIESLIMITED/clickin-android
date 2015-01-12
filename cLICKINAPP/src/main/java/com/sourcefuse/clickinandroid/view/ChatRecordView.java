@@ -510,6 +510,10 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         }, 3000);
 
 
+
+        /* to show Dialog*/
+        Utils.showDialog(this);
+
     }
 
 
@@ -1462,7 +1466,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                         // mImageCaptureUri = data.getData();
                         path = Utils.getRealPathFromURI(data.getData(), ChatRecordView.this);
                         videofilePath = path;
-                        Bitmap bMap = ThumbnailUtils.createVideoThumbnail(path, MediaStore.Video.Thumbnails.MICRO_KIND);
+                        Bitmap bMap = ThumbnailUtils.createVideoThumbnail(path, MediaStore.Video.Thumbnails.MINI_KIND);
 
                         if (videofilePath.contains(".mp4")) {
                             Random mRandom = new Random();
