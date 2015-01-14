@@ -200,15 +200,16 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
 
        /* Condition for Image - Type 2 & 6
          */
-            if (eachNewsFeed.get(position).getNewsFeedArray_chatDetail_type().equalsIgnoreCase("2")) {
+            if (eachNewsFeed.get(position).getNewsFeedArray_chatDetail_type().equalsIgnoreCase("2") || eachNewsFeed.get(position).getNewsFeedArray_chatDetail_type().equalsIgnoreCase("6")) {
                 holder.feed_image.setVisibility(View.VISIBLE);
+                Log.e("in case 2---->",""+eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content());
                 Picasso.with(context).load(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content()).into(holder.feed_image);
-            } else if (eachNewsFeed.get(position).getNewsFeedArray_chatDetail_type().equalsIgnoreCase("6")) {
+            } /*else if () {
                 holder.feed_image.setVisibility(View.VISIBLE);
-                Log.e("Feeds Adapter", "Url"+eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content());
+                Log.e("in case 6---->",""+eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content());
                 Picasso.with(context)
                         .load(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content()).into(holder.feed_image);
-            } else {
+            }*/ else {
                 holder.feed_image.setVisibility(View.GONE);
             }
 
@@ -240,6 +241,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
 //                String clicks ;
                 holder.card_layout.setVisibility(View.VISIBLE);
                 JSONArray cards = eachNewsFeed.get(position).getNewsFeedArray_chatDetail_cards();
+                Log.e("value of card--->",""+cards);
                 if (cards.length() >= 10) {
 
                     try {
@@ -251,10 +253,15 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
                             holder.card_title.setVisibility(View.GONE);
                             holder.card_msg.setVisibility(View.GONE);
                             holder.custom_message.setVisibility(View.VISIBLE);
+                            Log.e("value of custom card text--->",""+cards.get(1).toString());
                             holder.custom_message.setText(cards.get(1).toString());
 //                            holder.clicks_heart_top.setVisibility(View.GONE);
 //                            holder.clicks_heart_bottom.setVisibility(View.GONE);
                         } else {
+                            holder.cards_relative.setBackgroundResource(R.drawable.tradecardbg_blank);
+                            holder.custom_message.setVisibility(View.GONE);
+                            holder.card_title.setVisibility(View.VISIBLE);
+                            holder.card_msg.setVisibility(View.VISIBLE);
 //                            clicks = Utils.convertClicks(cards.get(4).toString());
                             Log.e("Original VAlue ", "Clicks" + cards.get(4).toString());
                             Log.e("Card Type ::","::Normal");
