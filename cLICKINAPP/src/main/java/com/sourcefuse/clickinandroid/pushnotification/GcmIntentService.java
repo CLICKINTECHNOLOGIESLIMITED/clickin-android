@@ -165,6 +165,7 @@ public class GcmIntentService extends IntentService {
                     {
 
                         data.setClass(getApplicationContext(), FeedView.class);
+                        UpdateCounter();
                         sendNotification("Clickin'", extras.getString("chat_message"), data);
 
 
