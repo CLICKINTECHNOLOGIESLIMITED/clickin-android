@@ -156,7 +156,6 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
             try {
 
 
-
                 PicassoManager.getPicasso()// get picasso from picasso maneger
                         .load(itemList.get(position).getPartnerPic())
                         .into(usrimg);
@@ -230,7 +229,12 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
                 relationManager = ModelManager.getInstance().getRelationManager();
                 Constants.itemPosition = position;
                 Utils.launchBarDialog((Activity) context);
-                relationManager.deleteRelationship(itemList.get(position).getRelationshipId(), authManager.getPhoneNo(), authManager.getUsrToken());
+                if (Utils.isEmptyString(itemList.get(position).getStatusAccepted()) && itemList.get(position).getRequestInitiator().equalsIgnoreCase("true")) {
+                    relationManager.deleteRelationship(itemList.get(position).getRelationshipId(), authManager.getPhoneNo(), authManager.getUsrToken());
+                } else {
+                    relationManager.updateStatus(itemList.get(position).getRelationshipId(), authManager.getPhoneNo(), authManager.getUsrToken(), "false");
+                }
+
 
             }
         });

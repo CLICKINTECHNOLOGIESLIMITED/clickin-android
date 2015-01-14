@@ -90,18 +90,17 @@ public class NotificationAdapter extends ArrayAdapter<NotificationBean> {
                         || item.getNotificationType().equalsIgnoreCase(context.getResources().getString(R.string.txt_relationrequest))) {
                     Utils.launchBarDialog((Activity) context);
                     Intent intent = new Intent(getContext(), UserProfileView.class);
-                //    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
                     ActivityManager am = (ActivityManager) context.getSystemService(android.content.Context.ACTIVITY_SERVICE);
                     List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
                     ComponentName componentInfo = taskInfo.get(0).topActivity;
                     String className = componentInfo.getClassName();
-                    Log.e("value of class--->",""+className);
-                    if (!className.equalsIgnoreCase("com.sourcefuse.clickinandroid.view.UserProfileView")) {
-                        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
-                        Log.e("set Flag---","set Flag---");
+                    if (!className.equalsIgnoreCase("com.sourcefuse.clickinandroid.view.UserProfileView")) {
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
                     }
                     intent.putExtra("isChangeInList", true);
                     context.startActivity(intent);
@@ -119,6 +118,12 @@ public class NotificationAdapter extends ArrayAdapter<NotificationBean> {
                     Intent intent = new Intent(getContext(), FeedView.class);
                     context.startActivity(intent);
                     ((Activity) context).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+                } else if (item.getNotificationType().equalsIgnoreCase(context.getResources().getString(R.string.type_update))) {
+                    Utils.launchBarDialog((Activity) context);
+                    Intent intent = new Intent(getContext(), UserProfileView.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    intent.putExtra("updatephoto", true);
+                    context.startActivity(intent);
                 }
             }
         });

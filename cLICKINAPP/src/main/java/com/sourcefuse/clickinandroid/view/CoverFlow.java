@@ -1,13 +1,17 @@
 package com.sourcefuse.clickinandroid.view;
 
+import android.app.Application;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ApplicationInfo;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Window;
 
+import com.sourcefuse.clickinandroid.model.PicassoManager;
 import com.sourcefuse.clickinandroid.utils.CustomCirclePageIndicator;
 import com.sourcefuse.clickinapp.R;
 import com.viewpagerindicator.PageIndicator;
@@ -28,6 +32,8 @@ public class CoverFlow extends FragmentActivity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.cover_flow);
+
+
 
         try {
             SharedPreferences sharedPreferences = PreferenceManager

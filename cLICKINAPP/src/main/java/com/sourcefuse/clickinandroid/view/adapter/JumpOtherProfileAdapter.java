@@ -3,12 +3,14 @@ package com.sourcefuse.clickinandroid.view.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.sourcefuse.clickinandroid.model.AuthManager;
@@ -28,12 +30,17 @@ public class JumpOtherProfileAdapter extends ArrayAdapter<ProfileRelationShipBea
     private ProfileManager profileManager;
     private RelationManager relationManager;
     private Typeface typeface;
+    private int size;
+    List<ProfileRelationShipBean> item1;
 
     public JumpOtherProfileAdapter(Context context, int layoutResourceId,
                                    List<ProfileRelationShipBean> item) {
         super(context, layoutResourceId, item);
         this.layoutResourceId = layoutResourceId;
         this.context = context;
+        this.item1 = item;
+        this.size = item.size();
+
 
     }
 
@@ -74,12 +81,17 @@ public class JumpOtherProfileAdapter extends ArrayAdapter<ProfileRelationShipBea
             }
         } catch (Exception e) {
         }
-        if(position == getCount()-1){//akshit code
 
-            ((ImageView)row.findViewById(R.id.btm_divider)).setVisibility(View.GONE);
-            ((View)row.findViewById(R.id.v_devider)).setVisibility(View.GONE);
 
+        if (position == size-1) {//akshit code
+            ((ImageView) row.findViewById(R.id.btm_divider)).setVisibility(View.GONE);
+            ((View) row.findViewById(R.id.v_devider)).setVisibility(View.GONE);
+        }else
+        {
+            ((ImageView) row.findViewById(R.id.btm_divider)).setVisibility(View.VISIBLE);
+            ((View) row.findViewById(R.id.v_devider)).setVisibility(View.VISIBLE);
         }
+
 
         return row;
 

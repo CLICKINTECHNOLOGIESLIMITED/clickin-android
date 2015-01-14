@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.DataSetObserver;
 import android.graphics.Typeface;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -183,11 +184,13 @@ public class SimpleSectionedListAdapter extends BaseAdapter implements PinnedSec
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
         if (isSectionHeaderPosition(position)) {
             TextView view, view1;
-            ;
+
             LinearLayout btn_someone_layout;
             convertView = mLayoutInflater.inflate(mSectionResourceId, parent, false);
+
 
             typeface = Typeface.createFromAsset(mContext.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_BOLD);
             view = (TextView) convertView.findViewById(mHeaderTextViewResId);
@@ -197,6 +200,7 @@ public class SimpleSectionedListAdapter extends BaseAdapter implements PinnedSec
             view.setTypeface(typeface);
 
             if (hidevalue) {
+
                 btn_someone_layout.setVisibility(View.GONE);
 
             } else {
