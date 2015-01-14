@@ -96,11 +96,11 @@ public class NotificationAdapter extends ArrayAdapter<NotificationBean> {
                     List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
                     ComponentName componentInfo = taskInfo.get(0).topActivity;
                     String className = componentInfo.getClassName();
-                    Log.e("value of class--->", "" + className);
+
                     if (!className.equalsIgnoreCase("com.sourcefuse.clickinandroid.view.UserProfileView")) {
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                        Log.e("set Flag---", "set Flag---");
+
                     }
                     intent.putExtra("isChangeInList", true);
                     context.startActivity(intent);

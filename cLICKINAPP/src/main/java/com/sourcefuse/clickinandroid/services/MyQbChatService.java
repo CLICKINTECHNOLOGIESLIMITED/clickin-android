@@ -168,25 +168,25 @@ public class MyQbChatService extends Service {
 
             case Constants.CHAT_TYPE_SHARING:
 
-                Log.e("card originator----.",""+msgObject.card_originator);
+
                 String mCardOriginator = msgObject.card_originator;
                 if (!Utils.isEmptyString(msgObject.imageRatio)) {
-                    Log.e("in 3--->","in 3--->");
+
                     data.putString("imageRatio", msgObject.imageRatio);
                     data.putString("FileId", msgObject.content_url);
                     if (!Utils.isEmptyString(msgObject.location_coordinates)) {
                         data.putString("location_coordinates", msgObject.location_coordinates);
                     }
                 } else if (!Utils.isEmptyString(msgObject.video_thumb)) {
-                    Log.e("in 3--->","in 3--->");
+
                     data.putString("videoThumbnail", msgObject.video_thumb);
                     data.putString("FileId", msgObject.content_url);
                 } else if (!Utils.isEmptyString(msgObject.content_url)) {
                     data.putString("FileId", msgObject.content_url);
-                    Log.e("in 2--->","in 2--->");
+
                 } else if (!Utils.isEmptyString(mCardOriginator)) {
 
-                    Log.e("in 1--->","in 1--->");
+
 
                         data.putString("card_DB_ID", msgObject.card_DB_ID);
 

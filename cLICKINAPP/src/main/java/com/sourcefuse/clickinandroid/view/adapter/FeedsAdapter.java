@@ -199,7 +199,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
                 Picasso.with(context).load(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content()).into(holder.feed_image);
             } else if (eachNewsFeed.get(position).getNewsFeedArray_chatDetail_type().equalsIgnoreCase("6")) {
                 holder.feed_image.setVisibility(View.VISIBLE);
-                android.util.Log.e("Feeds Adapter", "Url"+eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content());
+
                 Picasso.with(context)
                         .load(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content()).into(holder.feed_image);
             } else {

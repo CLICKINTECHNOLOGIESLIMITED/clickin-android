@@ -184,14 +184,14 @@ public class SimpleSectionedListAdapter extends BaseAdapter implements PinnedSec
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Log.e("in outside getview---.","in outside getview---.");
+
         if (isSectionHeaderPosition(position)) {
             TextView view, view1;
-            Log.e("in getview---.","in getview---.");
+
             LinearLayout btn_someone_layout;
             convertView = mLayoutInflater.inflate(mSectionResourceId, parent, false);
 
-            Log.e("in Simple section adapter","in Simple section adapter");
+
             typeface = Typeface.createFromAsset(mContext.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_BOLD);
             view = (TextView) convertView.findViewById(mHeaderTextViewResId);
             view1 = (TextView) convertView.findViewById(mHeaderTextViewResId1);
@@ -200,11 +200,11 @@ public class SimpleSectionedListAdapter extends BaseAdapter implements PinnedSec
             view.setTypeface(typeface);
 
             if (hidevalue) {
-                Log.e("in one","in one");
+
                 btn_someone_layout.setVisibility(View.GONE);
 
             } else {
-                Log.e("in two","in two");
+
                 btn_someone_layout.setVisibility(View.VISIBLE);
             }
             btn_someone_layout.setOnClickListener(new View.OnClickListener() {

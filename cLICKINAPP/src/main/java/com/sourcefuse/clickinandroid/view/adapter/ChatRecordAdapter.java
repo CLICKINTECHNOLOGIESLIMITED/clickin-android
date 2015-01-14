@@ -333,7 +333,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
                             Picasso.with(context).load(url_to_load)
                                     .into(trade_image);
-                            Log.e("trade url---------->",""+url_to_load);
+
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -536,7 +536,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     ((TextView) row.findViewById(R.id.shared_by_name)).setText("You");
                     ((TextView) row.findViewById(R.id.shared_message)).setText(" want to share");
 
-                    Log.e("in case 1--->", "in case 1---> " + temp.location_coordinates);
+
 
                     /* for share prafull code   */
                 }
@@ -1141,7 +1141,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     ((TextView) row.findViewById(R.id.shared_by_name)).setText(splitted[0]);
                     ((TextView) row.findViewById(R.id.shared_message)).setText(" wants to share");
 
-                    Log.e("in case 2--->", "in case 2---> " + temp.location_coordinates);
+
 
                 }
 
