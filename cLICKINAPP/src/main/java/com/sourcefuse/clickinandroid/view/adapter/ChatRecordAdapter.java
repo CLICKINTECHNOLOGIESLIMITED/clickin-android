@@ -1149,6 +1149,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 if (!Utils.isEmptyString(temp.content_url) && Utils.isEmptyString(temp.video_thumb) && Utils.isEmptyString(temp.imageRatio)) {
                     RelativeLayout mRelative = (RelativeLayout) row.findViewById(R.id.temp_layout);
                     mRelative.setVisibility(View.VISIBLE);
+                    mRelative.setBackgroundColor(Color.WHITE);//akshit code
 
                     ImageView mAudioImage = (ImageView) row.findViewById(R.id.iv_play_btn);
                     mAudioImage.setVisibility(View.VISIBLE);
