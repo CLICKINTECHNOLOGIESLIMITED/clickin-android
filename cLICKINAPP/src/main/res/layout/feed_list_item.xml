@@ -83,14 +83,13 @@
                     android:layout_width="150dp"
                     android:layout_height="200dp"
                     android:layout_margin="10dp"
-                    android:background="@drawable/card"
                     android:gravity="center"
+                    android:background="@drawable/tradecardbg_blank"
                     android:visibility="visible">
 
                     <LinearLayout
                         android:id="@+id/upper_relative"
                         android:layout_width="wrap_content"
-
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
                         android:gravity="center_vertical">
@@ -100,31 +99,54 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="0"
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginTop="-1dp"
                             android:textColor="@color/white"
                             android:textSize="18sp"
                             android:textStyle="bold" />
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="2dp"
-                            android:src="@drawable/c_clicks_heart" />
+                        <!--<ImageView-->
+                            <!--android:id="@+id/clicks_heart_top"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:layout_marginLeft="2dp"-->
+                            <!--android:src="@drawable/c_clicks_heart"-->
+                            <!--android:visibility="visible"/>-->
                     </LinearLayout>
 
                     <TextView
                         android:id="@+id/card_title"
-                        android:layout_width="wrap_content"
+                        android:layout_width="150dp"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/upper_relative"
                         android:layout_centerHorizontal="true"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:layout_marginTop="25dp"
-                        android:gravity="center_horizontal"
+                        android:layout_marginTop="32dp"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:visibility="visible"
                         android:textAllCaps="true"
                         android:textColor="@color/feed_senderuser"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        />
+
+                    <TextView
+                        android:id="@+id/custom_message"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/upper_relative"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="35dp"
+                        android:lines="5"
                         android:textSize="15sp"
-                        android:textStyle="bold" />
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:visibility="gone"/>
 
                     <TextView
                         android:id="@+id/card_msg"
@@ -135,6 +157,7 @@
                         android:layout_marginBottom="10dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
+                        android:visibility="visible"
                         android:gravity="center_horizontal"
                         android:textColor="@color/white"
                         android:textSize="14sp"
@@ -156,13 +179,17 @@
                             android:text="0"
                             android:textColor="@color/white"
                             android:textSize="18sp"
+                            android:layout_marginRight="23dp"
+
                             android:textStyle="bold" />
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="2dp"
-                            android:src="@drawable/c_clicks_heart" />
+                        <!--<ImageView-->
+                            <!--android:id="@+id/clicks_heart_bottom"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:layout_marginLeft="2dp"-->
+                            <!--android:src="@drawable/c_clicks_heart"-->
+                            <!--android:visibility="visible"/>-->
                     </LinearLayout>
 
                 </RelativeLayout>
