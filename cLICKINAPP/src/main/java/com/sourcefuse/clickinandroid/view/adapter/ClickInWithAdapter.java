@@ -83,7 +83,7 @@ public class ClickInWithAdapter extends ArrayAdapter<GetrelationshipsBean> {
                             .into(rholder.clickInUsrimg);
                 } catch (Exception e) {
                     // rholder.clickInUsrimg.setImageResource(R.drawable.male_user);
-                    Log.e("in else part--->","in else part--->");
+
                 }
 
             } else {

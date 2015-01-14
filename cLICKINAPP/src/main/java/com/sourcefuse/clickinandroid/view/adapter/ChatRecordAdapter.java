@@ -333,7 +333,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
                             Picasso.with(context).load(url_to_load)
                                     .into(trade_image);
-                            Log.e("trade url---------->",""+url_to_load);
+
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -536,7 +536,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     ((TextView) row.findViewById(R.id.shared_by_name)).setText("You");
                     ((TextView) row.findViewById(R.id.shared_message)).setText(" want to share");
 
-                    Log.e("in case 1--->", "in case 1---> " + temp.location_coordinates);
+
 
                     /* for share prafull code   */
                 }
@@ -857,7 +857,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                             int position = (Integer) v.getTag();
                             //card is allowed to play once only- reject, accept or counter change state to played
                             if (temp.card_Played_Countered.equalsIgnoreCase("playing")) {
-                                temp.card_Played_Countered = "played";
+                             //   temp.card_Played_Countered = "played";
                                 sendUpdateCardValues(position, "countered", "COUNTERED CARD!");
 
                             }
@@ -943,7 +943,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                             int position = (Integer) v.getTag();
                             //card is allowed to play once only- reject, accept or counter change state to played
                             if (temp.card_Played_Countered.equalsIgnoreCase("playing")) {
-                                temp.card_Played_Countered = "played";
+                             //   temp.card_Played_Countered = "played";
                                 sendUpdateCardValues(position, "countered", "COUNTERED CARD!");
 
                             }
@@ -1141,7 +1141,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     ((TextView) row.findViewById(R.id.shared_by_name)).setText(splitted[0]);
                     ((TextView) row.findViewById(R.id.shared_message)).setText(" wants to share");
 
-                    Log.e("in case 2--->", "in case 2---> " + temp.location_coordinates);
+
 
                 }
 
@@ -1390,6 +1390,8 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
         i.putExtra("played_Countered", item.card_Played_Countered);
         i.putExtra("card_originator", item.card_originator);
         i.putExtra("card_owner",item.card_owner);
+        i.putExtra("chat_id",item.chatId); //update the value to "played" only when user actually counter the card
+                                            //from card- its in case of counter case only-monika
         if (action.equalsIgnoreCase("countered")) {
             if (item.is_CustomCard) {
                 i.setClass(context, ViewTradeCart.class);

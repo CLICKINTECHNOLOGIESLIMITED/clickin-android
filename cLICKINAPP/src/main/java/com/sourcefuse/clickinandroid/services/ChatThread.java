@@ -207,7 +207,7 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
                                     message.setProperty("is_CustomCard", String.valueOf(data.getBoolean("is_CustomCard")));
                                     message.setProperty("card_clicks", data.getString("clicks"));
                                     message.setProperty("card_owner", data.getString("card_owner"));
-                                    android.util.Log.e("While Sending", data.getString("card_owner"));
+
                                     message.setProperty("card_Accepted_Rejected", data.getString("accepted_Rejected"));
                                     message.setProperty("card_heading", data.getString("card_heading"));
                                     message.setProperty("card_id", data.getString("card_id"));
@@ -281,7 +281,7 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
                                         message.setProperty("is_CustomCard", String.valueOf(data.getBoolean("is_CustomCard")));
                                         message.setProperty("card_clicks", data.getString("clicks"));
                                         message.setProperty("card_owner", data.getString("card_owner"));
-                                        android.util.Log.e("While Sending",data.getString("card_owner"));
+
                                         message.setProperty("card_Accepted_Rejected", data.getString("accepted_Rejected"));
                                         message.setProperty("card_heading", data.getString("card_heading"));
                                         message.setProperty("card_id", data.getString("card_id"));
@@ -426,7 +426,7 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
         Message message = qbChatMessage.getSmackMessage();
         try {
             jSONObj = XML.toJSONObject(message.toXML().toString());
-
+            android.util.Log.e("xml --->",""+message.toXML());
 
             JSONObject messageObj = jSONObj.getJSONObject("message");
             JSONObject extraParamsObj = messageObj.getJSONObject("extraParams");

@@ -52,7 +52,8 @@ public class RelationManager {
     private String statusMsg;
     private String successstatus;
 
-    public void getRelationShips(String phone, String usertoken) {
+    public void
+    getRelationShips(String phone, String usertoken) {
         // TODO Auto-generated method stub
         relationManager = ModelManager.getInstance().getRelationManager();
         JSONObject userInputDetails = new JSONObject();

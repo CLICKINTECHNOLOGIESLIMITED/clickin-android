@@ -15,11 +15,14 @@ import android.widget.TextView;
 
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
+import com.sourcefuse.clickinandroid.model.bean.ChatMessageBody;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 /**
  * Created by akshit on 2/10/14.
@@ -37,6 +40,7 @@ public class Card extends Activity implements View.OnClickListener, TextWatcher 
     TextView trd_clicks_top, trd_clicks_bottom, trone, trtwo, trthree, trfour, trfive;
     private TextView tv_about_message;
     private AuthManager authManager;
+    private String chatId=null;
     // String xyz_url = "https://s3.amazonaws.com/clickin-dev/cards/a/1080/39.jpg";
 
     @Override
@@ -86,8 +90,13 @@ public class Card extends Activity implements View.OnClickListener, TextWatcher 
         AuthManager authManager = ModelManager.getInstance().getAuthorizationManager();
         Intent intent = getIntent();
         if (null != intent) {
+            if(intent.hasExtra("card_owner"))
+                card_owner = intent.getExtras().getString("card_owner");
+            else
+                card_owner=ModelManager.getInstance().getAuthorizationManager().getQBId();
             forCounter = intent.getExtras().getBoolean("ForCounter");
             if (forCounter) {
+                chatId=intent.getStringExtra("chat_id");
                 clicks = intent.getStringExtra("card_clicks");
 
                 if (clicks.equalsIgnoreCase("5"))//akshit code if th clicks ar 5
@@ -102,11 +111,11 @@ public class Card extends Activity implements View.OnClickListener, TextWatcher 
 
                 card_id = intent.getStringExtra("card_id");
                 //monika-set the message as per sender and receiver
-                card_originator = intent.getExtras().getString("card_originator");
-                if(intent.hasExtra("card_owner"))
-                card_owner=intent.getExtras().getString("card_owner");
+
+
+                card_originator=intent.getExtras().getString("card_originator");
                 String msg;
-                if (card_originator.equalsIgnoreCase(authManager.getUserId())) {
+                if (card_owner.equalsIgnoreCase(authManager.getQBId())) {
                     msg = "HOW MANY CLICKS ARE YOU WILLING TO OFFER?";
                 } else {
                     msg = "HOW MANY CLICKS DO YOU WANT FOR IT?";
@@ -215,38 +224,58 @@ public class Card extends Activity implements View.OnClickListener, TextWatcher 
 
                     Utils.fromSignalDialog(this, AlertMessage.selectClicks);
 
-                } else {
-
-                    AuthManager authManager = ModelManager.getInstance().getAuthorizationManager();
-                    if (authManager.ourClicks.startsWith("-")) {
-                        Utils.fromSignalDialog(Card.this, "You don't have enough clicks to play this card");
-                        // isClickIsEnough(Card.this,"You don't have enough clicks to play this card");
-                    } else if (authManager.ourClicks.startsWith("+0")) {
-                        int tempOurClicks = Integer.parseInt(authManager.ourClicks.substring(2));
-                        int tempclicks = 0;
-                        if (clicks.equalsIgnoreCase("05")) {
-                            tempclicks = 5;
-                        }
+                } else if(card_owner.equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getQBId())) {
+                    //Loop- if user is card owner
+                    int tempOurClicks = 0;
+                    tempOurClicks = Integer.parseInt(authManager.ourClicks);
+                    int tempclicks = 0;
+                    if (clicks.equalsIgnoreCase("05")) {
+                        tempclicks = 5;
+                    } else
                         tempclicks = Integer.parseInt(clicks);
-                        if (tempclicks > tempOurClicks)
-                            Utils.fromSignalDialog(Card.this, "You don't have enough clicks to play this card");
-                        // isClickIsEnough(Card.this,"You don't have enough clicks to play this card");
 
-                    } else {
+                    //now check whether it has enough clicks or not
+
+                    if (authManager.ourClicks.startsWith("-")) {
+
+                        Utils.fromSignalDialog(Card.this, "You don't have enough clicks to play this card");
+
+                    } else if (tempclicks > tempOurClicks) {
+                        Utils.fromSignalDialog(Card.this, "You don't have enough clicks to play this card");
+
+
+                    }else {
+
+
                         Intent i = new Intent();
                         i.setAction("CARD");
                         i.putExtra("FromCard", true);
                         if (forCounter) {
+
                             i.putExtra("isCounter", true);
 
                             i.putExtra("card_Accepted_Rejected", "countered");
+                            //for counter case, update the last message in list for card played countered value
+                            if (!Utils.isEmptyString(chatId)) {
+                                new Thread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        ArrayList<ChatMessageBody> chatList = ModelManager.getInstance().getChatManager().chatMessageList;
+                                        for (ChatMessageBody temp : chatList) {
+                                            if (temp.chatId.equalsIgnoreCase(chatId)) {
+                                                temp.card_Played_Countered = "played";
+                                            }
+                                        }
+                                    }
+                                }).start();
+                            }
 
                         } else {
                             i.putExtra("isCounter", false);
                             i.putExtra("card_Accepted_Rejected", "nil");
                         }
                         i.putExtra("card_originator", card_originator);
-                        i.putExtra("card_owner",card_owner);
+                        i.putExtra("card_owner", card_owner);
                         i.putExtra("card_id", card_id);
                         i.putExtra("played_Countered", "playing");
                         i.putExtra("is_CustomCard", false);
@@ -262,11 +291,59 @@ public class Card extends Activity implements View.OnClickListener, TextWatcher 
                         startActivity(i);
                         overridePendingTransition(0, R.anim.slide_out_finish_up);
                     }
+                    //loop- ends here if user is card owner
+                }else {//
+                //loop starts if user is not card owner
+
+                            Intent i = new Intent();
+                            i.setAction("CARD");
+                            i.putExtra("FromCard", true);
+                            if (forCounter) {
+
+                                i.putExtra("isCounter", true);
+
+                                i.putExtra("card_Accepted_Rejected", "countered");
+                                //for counter case, update the last message in list for card played countered value
+                                if (!Utils.isEmptyString(chatId)) {
+                                    new Thread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            ArrayList<ChatMessageBody> chatList = ModelManager.getInstance().getChatManager().chatMessageList;
+                                            for (ChatMessageBody temp : chatList) {
+                                                if (temp.chatId.equalsIgnoreCase(chatId)) {
+                                                    temp.card_Played_Countered = "played";
+                                                }
+                                            }
+                                        }
+                                    }).start();
+                                }
+
+                            } else {
+                                i.putExtra("isCounter", false);
+                                i.putExtra("card_Accepted_Rejected", "nil");
+                            }
+                            i.putExtra("card_originator", card_originator);
+                            i.putExtra("card_owner", card_owner);
+                            i.putExtra("card_id", card_id);
+                            i.putExtra("played_Countered", "playing");
+                            i.putExtra("is_CustomCard", false);
+                            i.putExtra("card_url", url);
+                            i.putExtra("card_clicks", clicks);
+                            i.putExtra("Title", cardTitle);
+                            i.putExtra("Discription", cardDiscription);
+                            i.putExtra("card_DB_ID", card_Db_id);
+
+                            i.setClass(this, ChatRecordView.class);
+                            i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(i);
+                            overridePendingTransition(0, R.anim.slide_out_finish_up);
+                        }//loop ends here if user is not card owner
                     //  finish();
                     break;
                 }
         }
-    }
+
 
     //akshit code starts
     public void isClickIsEnough(Activity activity, String msgStrI) {
@@ -314,5 +391,7 @@ public class Card extends Activity implements View.OnClickListener, TextWatcher 
         finish();
         overridePendingTransition(0, R.anim.slide_out_finish_up);
     }
+
+
 }
 

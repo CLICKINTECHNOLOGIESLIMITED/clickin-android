@@ -1021,7 +1021,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             if (Utils.isEmptyString(temp.card_owner))
                 temp.card_owner = authManager.getQBId();
             if (card_action_status.equalsIgnoreCase("accepted")) {
-                if (temp.card_originator.equalsIgnoreCase(authManager.getUserId())) {
+                if (temp.card_owner.equalsIgnoreCase(authManager.getQBId())) {
                     Utils.updateClicksValue(authManager.ourClicks, relationManager.partnerClicks, temp.clicks, false);
                 } else {
                     Utils.updateClicksValue(authManager.ourClicks, relationManager.partnerClicks, temp.clicks, true);
@@ -1879,6 +1879,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             } else {
                 cards.add("played");
             }
+            cards.add(obj.card_owner);
 
         }
         fields.put("cards", cards);
