@@ -8,6 +8,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,10 +70,15 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
             holder = new RecordHolder();
 
             holder.feed_image = (ImageView) row.findViewById(R.id.feed_image);
+//            holder.clicks_heart_top = (ImageView) row.findViewById(R.id.clicks_heart_top);
+//            holder.clicks_heart_bottom = (ImageView) row.findViewById(R.id.clicks_heart_bottom);
+
             holder.layout = (RelativeLayout) row.findViewById(R.id.feed_menu_layout);
             holder.feed_menu = (ImageView) row.findViewById(R.id.feed_menu_image_button);
             holder.clickedIn = (TextView) row.findViewById(R.id.clickedIn);
+            holder.custom_message = (TextView) row.findViewById(R.id.custom_message);
             holder.layout_clickin = (RelativeLayout) row.findViewById(R.id.layout_clickin);
+            holder.cards_relative = (RelativeLayout) row.findViewById(R.id.cards_relative);
             holder.feed_audio_button = (Button) row.findViewById(R.id.feed_audio_button);
             holder.feed_video_button = (Button) row.findViewById(R.id.feed_video_button);
             holder.feed_report_post = (ImageView) row.findViewById(R.id.feed_report_post);
@@ -199,7 +205,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
                 Picasso.with(context).load(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content()).into(holder.feed_image);
             } else if (eachNewsFeed.get(position).getNewsFeedArray_chatDetail_type().equalsIgnoreCase("6")) {
                 holder.feed_image.setVisibility(View.VISIBLE);
-
+                Log.e("Feeds Adapter", "Url"+eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content());
                 Picasso.with(context)
                         .load(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content()).into(holder.feed_image);
             } else {
@@ -223,20 +229,48 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
             } else {
                 holder.video_layout.setVisibility(View.VISIBLE);
             }
+
+
             /*Condition for Trade Cards Type 5
                     */
+            //akshit code for trade cards
             if (!(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_type().equalsIgnoreCase("5"))) {
                 holder.card_layout.setVisibility(View.GONE);
             } else {
+//                String clicks ;
                 holder.card_layout.setVisibility(View.VISIBLE);
                 JSONArray cards = eachNewsFeed.get(position).getNewsFeedArray_chatDetail_cards();
                 if (cards.length() >= 10) {
+
                     try {
-                        holder.card_count1.setText(cards.get(4).toString());
-                        holder.card_count2.setText(cards.get(4).toString());
+                        if (Utils.isEmptyString(cards.get(2).toString()) || cards.get(2).toString().length() <=3) {
+                            holder.cards_relative.setBackgroundResource(R.drawable.tradecardpink_big);
+//                            clicks = Utils.convertClicks(cards.get(4).toString());
+                            Log.e("Card Type ::","::Custom");
+                            Log.e("Original VAlue ", "Clicks" + cards.get(4).toString());
+                            holder.card_title.setVisibility(View.GONE);
+                            holder.card_msg.setVisibility(View.GONE);
+                            holder.custom_message.setVisibility(View.VISIBLE);
+                            holder.custom_message.setText(cards.get(1).toString());
+//                            holder.clicks_heart_top.setVisibility(View.GONE);
+//                            holder.clicks_heart_bottom.setVisibility(View.GONE);
+                        } else {
+//                            clicks = Utils.convertClicks(cards.get(4).toString());
+                            Log.e("Original VAlue ", "Clicks" + cards.get(4).toString());
+                            Log.e("Card Type ::","::Normal");
+//                            holder.cards_relative.setBackgroundResource(R.drawable.tradecardbg_blank);
+                            holder.card_title.setText(cards.get(1).toString());
+                            holder.card_msg.setText(cards.get(2).toString());
+                        }
+                        if (cards.get(4).toString().equalsIgnoreCase("5")){
+                            holder.card_count1.setText("05");
+                            holder.card_count2.setText("05");
+                         }else{
+                            holder.card_count1.setText(cards.get(4).toString());
+                            holder.card_count2.setText(cards.get(4).toString());
+                        }
+
                         holder.card_status.setText(cards.get(5).toString() + "!");
-                        holder.card_title.setText(cards.get(1).toString());
-                        holder.card_msg.setText(cards.get(2).toString());
                         if (cards.get(5).toString().equalsIgnoreCase("accepted"))
                             holder.card_status_img.setImageResource(R.drawable.accepted_btn);
                         else
@@ -244,8 +278,9 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+
                 }
-            }
+            }//ends
 
         } else {
             holder.feed_image.setVisibility(View.GONE);
@@ -646,9 +681,10 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
     static class RecordHolder {
         ImageView feed_image, feed_remove_post, feed_report_post;
         ImageView feed_menu;
-        RelativeLayout layout, layout_clickin;
+//        ImageView  clicks_heart_top,clicks_heart_bottom;
+        RelativeLayout layout, layout_clickin,cards_relative;
         LinearLayout card_layout;
-        TextView clickedIn, feed_star_user, clickedInMessage, card_count1, card_count2, card_status, card_title, card_msg, clickedInMessage_plain;
+        TextView clickedIn, custom_message,feed_star_user, clickedInMessage, card_count1, card_count2, card_status, card_title, card_msg, clickedInMessage_plain;
         Button feed_audio_button, feed_video_button;
         LinearLayout feed_comments_layout1, feed_comments_layout;
         LinearLayout feed_comments_layout2, feed_comments_layout3, feed_comments_layout4;
