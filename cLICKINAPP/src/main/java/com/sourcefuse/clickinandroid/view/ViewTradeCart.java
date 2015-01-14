@@ -25,9 +25,12 @@ import android.widget.TextView;
 
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
+import com.sourcefuse.clickinandroid.model.bean.ChatMessageBody;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
+
+import java.util.ArrayList;
 
 /**
  * Created by prafull on 29/9/14.
@@ -47,6 +50,7 @@ public class ViewTradeCart extends Activity implements View.OnClickListener {
     boolean forCounter = false;
     private Dialog dialog;
     private AuthManager authManager;
+    private String chatId=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,9 +117,13 @@ public class ViewTradeCart extends Activity implements View.OnClickListener {
         AuthManager authManager = ModelManager.getInstance().getAuthorizationManager();
         Intent intent = getIntent();
         if (null != intent) {
+            if(intent.hasExtra("card_owner"))
+                card_owner = intent.getExtras().getString("card_owner");
+            else
+                card_owner=ModelManager.getInstance().getAuthorizationManager().getQBId();
             forCounter = intent.getExtras().getBoolean("ForCounter");
             if (forCounter) {
-
+                chatId=intent.getStringExtra("chat_id");
                 ((ImageView) findViewById(R.id.trade_image)).setImageResource(R.drawable.c_pink_counter);//akshit code
 
                 clicks = intent.getStringExtra("card_clicks");
@@ -143,10 +151,9 @@ public class ViewTradeCart extends Activity implements View.OnClickListener {
                 card_text.setText(cardTitle);
 
                 card_originator = intent.getExtras().getString("card_originator");
-                if(intent.hasExtra("card_owner"))
-                    card_owner=intent.getExtras().getString("card_owner");
+
                 String msg;
-                if (card_originator.equalsIgnoreCase(authManager.getUserId())) {
+                if (card_owner.equalsIgnoreCase(authManager.getQBId())) {
                     msg = "HOW MANY CLICKS ARE YOU WILLING TO OFFER?";
                 } else {
                     msg = "HOW MANY CLICKS DO YOU WANT FOR IT?";
@@ -257,56 +264,127 @@ public class ViewTradeCart extends Activity implements View.OnClickListener {
             case R.id.btn_play:
                 AuthManager authManager = ModelManager.getInstance().getAuthorizationManager();
                 String text = card_text.getText().toString();
-                if (trd_clicks_top.getText().equals(" 0") && trd_clicks_bottom.getText().equals("0 ")) {
-                    Utils.fromSignalDialog(this, AlertMessage.selectClicks);
-                } else if ((text == null || text.equalsIgnoreCase("null")
-                        || text.equalsIgnoreCase("") || text.length() < 1)) {
-                    Utils.fromSignalDialog(this, AlertMessage.enterCustomCardtext);
+                    if (trd_clicks_top.getText().equals(" 0") && trd_clicks_bottom.getText().equals("0 ")) {
+                        Utils.fromSignalDialog(this, AlertMessage.selectClicks);
+                    } else if ((text == null || text.equalsIgnoreCase("null")
+                            || text.equalsIgnoreCase("") || text.length() < 1)) {
+                        Utils.fromSignalDialog(this, AlertMessage.enterCustomCardtext);
 
-                } else if (authManager.ourClicks.startsWith("-")) {
-                    Utils.fromSignalDialog(ViewTradeCart.this, "You don't have enough clicks to play this card");
-                    //isClickIsEnough(ViewTradeCart.this, "You don't have enough clicks to play this card");
-                } else if (authManager.ourClicks.startsWith("+0")) {
-                    int tempOurClicks = Integer.parseInt(authManager.ourClicks.substring(2));
-                    int tempclicks = 0;
-                    if (clicks.equalsIgnoreCase("05")) {
-                        tempclicks = 5;
-                    }
-                    tempclicks = Integer.parseInt(clicks);
-                    if (tempclicks > tempOurClicks)
-                        Utils.fromSignalDialog(ViewTradeCart.this, "You don't have enough clicks to play this card");
-                    // isClickIsEnough(ViewTradeCart.this, "You don't have enough clicks to play this card");
+                    } else if(card_owner.equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getQBId())) {
+                        //Loop- if user is card owner
+                        int tempOurClicks = 0;
+                        tempOurClicks = Integer.parseInt(authManager.ourClicks);
+                        int tempclicks = 0;
+                        if (clicks.equalsIgnoreCase("05")) {
+                            tempclicks = 5;
+                        } else
+                            tempclicks = Integer.parseInt(clicks);
 
-                } else {
-                    cardTitle = card_text.getText().toString();
+                        //now check whether it has enough clicks or not
 
-                    Intent i = new Intent();
-                    i.setAction("CARD");
-                    i.putExtra("FromCard", true);
-                    if (forCounter) {
-                        i.putExtra("isCounter", true);
+                        if (authManager.ourClicks.startsWith("-")) {
+
+                            Utils.fromSignalDialog(ViewTradeCart.this, "You don't have enough clicks to play this card");
+
+                        } else if (tempclicks > tempOurClicks) {
+                            Utils.fromSignalDialog(ViewTradeCart.this, "You don't have enough clicks to play this card");
+
+
+                        }else {
+
+                            cardTitle = card_text.getText().toString();
+                            Intent i = new Intent();
+                            i.setAction("CARD");
+                            i.putExtra("FromCard", true);
+                            if (forCounter) {
+
+                                i.putExtra("isCounter", true);
+
+                                i.putExtra("card_Accepted_Rejected", "countered");
+                                //for counter case, update the last message in list for card played countered value
+                                if (!Utils.isEmptyString(chatId)) {
+                                    new Thread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            ArrayList<ChatMessageBody> chatList = ModelManager.getInstance().getChatManager().chatMessageList;
+                                            for (ChatMessageBody temp : chatList) {
+                                                if (temp.chatId.equalsIgnoreCase(chatId)) {
+                                                    temp.card_Played_Countered = "played";
+                                                }
+                                            }
+                                        }
+                                    }).start();
+                                }
+
+                            } else {
+                                i.putExtra("isCounter", false);
+                                i.putExtra("card_Accepted_Rejected", "nil");
+                            }
+                            i.putExtra("card_originator", card_originator);
+                            i.putExtra("card_owner", card_owner);
+                            i.putExtra("card_id", card_id);
+                            i.putExtra("played_Countered", "playing");
+                            i.putExtra("is_CustomCard", true);
+                            i.putExtra("card_url", url);
+                            i.putExtra("card_clicks", clicks);
+                            i.putExtra("Title", cardTitle);
+
+
+                            i.setClass(this, ChatRecordView.class);
+                            i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(i);
+                            overridePendingTransition(0, R.anim.slide_out_finish_up);
+                        }
+                        //loop- ends here if user is card owner
+                    }else {//
+                        //loop starts if user is not card owner
+                        cardTitle = card_text.getText().toString();
+                        Intent i = new Intent();
+                        i.setAction("CARD");
+                        i.putExtra("FromCard", true);
+                        if (forCounter) {
+
+                            i.putExtra("isCounter", true);
+
+                            i.putExtra("card_Accepted_Rejected", "countered");
+                            //for counter case, update the last message in list for card played countered value
+                            if (!Utils.isEmptyString(chatId)) {
+                                new Thread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        ArrayList<ChatMessageBody> chatList = ModelManager.getInstance().getChatManager().chatMessageList;
+                                        for (ChatMessageBody temp : chatList) {
+                                            if (temp.chatId.equalsIgnoreCase(chatId)) {
+                                                temp.card_Played_Countered = "played";
+                                            }
+                                        }
+                                    }
+                                }).start();
+                            }
+
+                        } else {
+                            i.putExtra("isCounter", false);
+                            i.putExtra("card_Accepted_Rejected", "nil");
+                        }
+                        i.putExtra("card_originator", card_originator);
+                        i.putExtra("card_owner", card_owner);
                         i.putExtra("card_id", card_id);
-                        i.putExtra("card_Accepted_Rejected", "countered");
+                        i.putExtra("played_Countered", "playing");
+                        i.putExtra("is_CustomCard", true);
+                        i.putExtra("card_url", url);
+                        i.putExtra("card_clicks", clicks);
+                        i.putExtra("Title", cardTitle);
 
-                    } else {
-                        i.putExtra("isCounter", false);
-                        i.putExtra("card_Accepted_Rejected", "nil");
-                    }
-                    i.putExtra("card_originator", card_originator);
-                    i.putExtra("card_owner",card_owner);
-                    i.putExtra("played_Countered", "playing");
-                    i.putExtra("is_CustomCard", true);
-                    i.putExtra("card_url", "");
-                    i.putExtra("card_clicks", clicks);
-                    i.putExtra("Title", cardTitle);
-                    i.setClass(this, ChatRecordView.class);
-                    i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(i);
-                    overridePendingTransition(0, R.anim.slide_out_finish_up);//akshit code
 
-                }
-
+                        i.setClass(this, ChatRecordView.class);
+                        i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(i);
+                        overridePendingTransition(0, R.anim.slide_out_finish_up);
+                    }//loop ends here if user is not card owner
+                //  finish();
+                break;
             case R.id.card_text12:
                 card_text.setCursorVisible(true);
                 card_text.requestFocus();

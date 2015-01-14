@@ -857,7 +857,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                             int position = (Integer) v.getTag();
                             //card is allowed to play once only- reject, accept or counter change state to played
                             if (temp.card_Played_Countered.equalsIgnoreCase("playing")) {
-                                temp.card_Played_Countered = "played";
+                             //   temp.card_Played_Countered = "played";
                                 sendUpdateCardValues(position, "countered", "COUNTERED CARD!");
 
                             }
@@ -943,7 +943,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                             int position = (Integer) v.getTag();
                             //card is allowed to play once only- reject, accept or counter change state to played
                             if (temp.card_Played_Countered.equalsIgnoreCase("playing")) {
-                                temp.card_Played_Countered = "played";
+                             //   temp.card_Played_Countered = "played";
                                 sendUpdateCardValues(position, "countered", "COUNTERED CARD!");
 
                             }
@@ -1149,6 +1149,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 if (!Utils.isEmptyString(temp.content_url) && Utils.isEmptyString(temp.video_thumb) && Utils.isEmptyString(temp.imageRatio)) {
                     RelativeLayout mRelative = (RelativeLayout) row.findViewById(R.id.temp_layout);
                     mRelative.setVisibility(View.VISIBLE);
+                    mRelative.setBackgroundColor(Color.WHITE);//akshit code
 
                     ImageView mAudioImage = (ImageView) row.findViewById(R.id.iv_play_btn);
                     mAudioImage.setVisibility(View.VISIBLE);
@@ -1389,6 +1390,8 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
         i.putExtra("played_Countered", item.card_Played_Countered);
         i.putExtra("card_originator", item.card_originator);
         i.putExtra("card_owner",item.card_owner);
+        i.putExtra("chat_id",item.chatId); //update the value to "played" only when user actually counter the card
+                                            //from card- its in case of counter case only-monika
         if (action.equalsIgnoreCase("countered")) {
             if (item.is_CustomCard) {
                 i.setClass(context, ViewTradeCart.class);

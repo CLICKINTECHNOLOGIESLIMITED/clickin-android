@@ -78,13 +78,13 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="5dp"
-
                     android:layout_weight="1"
                     android:background="@drawable/e_v_number_field_empty"
                     android:cursorVisible="false"
                     android:gravity="center"
                     android:inputType="number|textNoSuggestions"
                     android:maxLength="1"
+
                     android:padding="10dp"
                     android:textColor="@color/white"
                     android:textSize="45sp"
