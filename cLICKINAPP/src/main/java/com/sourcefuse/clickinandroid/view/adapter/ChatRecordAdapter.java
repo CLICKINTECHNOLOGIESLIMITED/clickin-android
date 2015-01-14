@@ -857,7 +857,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                             int position = (Integer) v.getTag();
                             //card is allowed to play once only- reject, accept or counter change state to played
                             if (temp.card_Played_Countered.equalsIgnoreCase("playing")) {
-                                temp.card_Played_Countered = "played";
+                             //   temp.card_Played_Countered = "played";
                                 sendUpdateCardValues(position, "countered", "COUNTERED CARD!");
 
                             }
@@ -943,7 +943,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                             int position = (Integer) v.getTag();
                             //card is allowed to play once only- reject, accept or counter change state to played
                             if (temp.card_Played_Countered.equalsIgnoreCase("playing")) {
-                                temp.card_Played_Countered = "played";
+                             //   temp.card_Played_Countered = "played";
                                 sendUpdateCardValues(position, "countered", "COUNTERED CARD!");
 
                             }
@@ -1389,6 +1389,8 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
         i.putExtra("played_Countered", item.card_Played_Countered);
         i.putExtra("card_originator", item.card_originator);
         i.putExtra("card_owner",item.card_owner);
+        i.putExtra("chat_id",item.chatId); //update the value to "played" only when user actually counter the card
+                                            //from card- its in case of counter case only-monika
         if (action.equalsIgnoreCase("countered")) {
             if (item.is_CustomCard) {
                 i.setClass(context, ViewTradeCart.class);

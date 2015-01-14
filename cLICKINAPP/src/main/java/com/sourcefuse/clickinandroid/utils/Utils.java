@@ -1118,7 +1118,7 @@ public class
                         tempClicks = Integer.parseInt(obj.clicks);
                     }
                     //if we send the card, then clicks will get subtracted from our clicks
-                    if (obj.card_originator.equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getUserId())) {
+                    if (obj.card_owner.equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getQBId())) {
                         tempOurClicks = tempOurClicks - tempClicks;
                         tempPartnerClicks = tempPartnerClicks + tempClicks;
                     } else {
