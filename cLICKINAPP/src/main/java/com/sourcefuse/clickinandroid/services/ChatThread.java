@@ -418,20 +418,14 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
 
     public void processMessage(QBChat qbChat, QBChatMessage qbChatMessage) {
 
-        Log.e("in process msg--->", "" + qbChatMessage);
+
         JSONObject jSONObj = null;
-        try {
-            Log.e("-----------1", "" + qbChatMessage.getSmackMessage());
-            Log.e("-----------2", "" + qbChatMessage.getSmackMessage().toString());
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e("catch---->",""+e.toString());
-        }
+
 
         Message message = qbChatMessage.getSmackMessage();
         try {
 
-            Log.e("value of message--->",""+message);
+
             jSONObj = XML.toJSONObject(message.toXML().toString());
 
 
@@ -467,7 +461,7 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
             } else {//here we recieved proper chat msg and need to update list
 
 
-                Log.e("in third case--->", "in third case--->");
+
                 ChatMessageBody temp = new ChatMessageBody();
           /*      String from = messageObj.getString("from");
                 String[] words = from.split("-");*/
@@ -578,7 +572,7 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e("catch--->", "catch--->" + e.toString());
+
         }
 
     }

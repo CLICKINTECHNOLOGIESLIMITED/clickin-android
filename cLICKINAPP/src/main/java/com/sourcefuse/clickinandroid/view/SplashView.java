@@ -45,9 +45,7 @@ public class SplashView extends Activity implements View.OnClickListener {
 
 //       Mint.initAndStartSession(SplashView.this, Constants.mSplunk_Api);  // to start the session of Splunk Crashlytics
 //        Mint.enableDebug();
-        /*set picasso maneger value */
-        PicassoManager.setLruCache(getApplicationContext());
-        PicassoManager.setPicasso(getApplicationContext(),PicassoManager.getLruCache());
+
 
         Utils.deviceId = Utils.getRegId(SplashView.this);
 
@@ -143,8 +141,9 @@ public class SplashView extends Activity implements View.OnClickListener {
             //Utils.showAlert(SignInView.this, authManager.getMessage());
         } else if (getMsg.equalsIgnoreCase("SignIn Network Error")) {
             Utils.dismissBarDialog();
-            Utils.fromSignalDialog(this, AlertMessage.connectionError);
-            //Utils.showAlert(act, AlertMessage.connectionError);
+            Utils.fromSignalDialogSplsh(this, AlertMessage.connectionError);
+
+
         } else if (getMsg.equalsIgnoreCase("ProfileInfo True")) {
             //save values of user in shared prefrence for later use
             Intent i = new Intent(this, MyQbChatService.class);
@@ -160,8 +159,9 @@ public class SplashView extends Activity implements View.OnClickListener {
             // Utils.showAlert(SignInView.this, authManager.getMessage());
         } else if (getMsg.equalsIgnoreCase("ProfileInfo Network Error")) {
             Utils.dismissBarDialog();
-            Utils.fromSignalDialog(this, AlertMessage.connectionError);
-            //Utils.showAlert(act, AlertMessage.connectionError);
+            Utils.fromSignalDialogSplsh(this, AlertMessage.connectionError);
+
+
         } else if (getMsg.equalsIgnoreCase("GetRelationShips False")) {
             if (authManager == null)
                 authManager = ModelManager.getInstance().getAuthorizationManager();
@@ -174,7 +174,8 @@ public class SplashView extends Activity implements View.OnClickListener {
 
         } else if (getMsg.equalsIgnoreCase("GetRelationShips Network Error")) {
             Utils.dismissBarDialog();
-            Utils.fromSignalDialog(this, AlertMessage.connectionError);
+            Utils.fromSignalDialogSplsh(this, AlertMessage.connectionError);
+
         } else if (getMsg.equalsIgnoreCase("GetrelationShips True")) {
 
 
@@ -253,12 +254,12 @@ public class SplashView extends Activity implements View.OnClickListener {
 
         @Override
         protected void onPostExecute(Bitmap result) {
-            String mPath = Utils.storeImage(result, ""+ModelManager.getInstance().getAuthorizationManager().getUserId(), SplashView.this);
+            String mPath = Utils.storeImage(result, "" + ModelManager.getInstance().getAuthorizationManager().getUserId(), SplashView.this);
             if (authManager == null)
                 authManager = ModelManager.getInstance().getAuthorizationManager();
-            if (!Utils.isEmptyString(""+mPath))
+            if (!Utils.isEmptyString("" + mPath))
                 authManager.setUserImageUri(Uri.parse(mPath));
-            if(result != null)
+            if (result != null)
                 authManager.setUserbitmap(result);
             Utils.dismissBarDialog();
             switchView();

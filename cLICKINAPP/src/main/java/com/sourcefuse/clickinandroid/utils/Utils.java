@@ -214,6 +214,32 @@ public class
         dialog.show();
     }
 
+    public static void fromSignalDialogSplsh(Activity activity, String str) {
+
+        dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.setContentView(R.layout.alert_check_dialogs);
+        dialog.setCancelable(false);
+        TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
+        msgI.setText(str);
+
+
+        Button dismiss = (Button) dialog.findViewById(R.id.coolio);
+        dismiss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                dialog.dismiss();
+                try {
+                    System.exit(1);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+        dialog.show();
+    }
     public static String getCardURLForAndroid(String url) {
 
         String url_to_load = url.replaceFirst("cards\\/(\\d+)\\.jpg", "cards\\/a\\/1080\\/$1\\.jpg");

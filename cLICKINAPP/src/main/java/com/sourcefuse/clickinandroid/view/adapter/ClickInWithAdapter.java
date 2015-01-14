@@ -3,6 +3,7 @@ package com.sourcefuse.clickinandroid.view.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -82,6 +83,7 @@ public class ClickInWithAdapter extends ArrayAdapter<GetrelationshipsBean> {
                             .into(rholder.clickInUsrimg);
                 } catch (Exception e) {
                     // rholder.clickInUsrimg.setImageResource(R.drawable.male_user);
+                    Log.e("in else part--->","in else part--->");
                 }
 
             } else {

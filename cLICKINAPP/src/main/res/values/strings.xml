@@ -124,6 +124,7 @@
     <string name="txt_relation_visibility">relationvisibility</string>
     <string name="follow_status">followstatus</string>
     <string name="type_share">share</string>
+    <string name="type_update">updateprofilepic</string>
 
     <string name="trade_hint">HOW MANY CLICKS ARE YOU WILLING TO OFFER?</string>
     <string name="title_activity_card">Card</string>
