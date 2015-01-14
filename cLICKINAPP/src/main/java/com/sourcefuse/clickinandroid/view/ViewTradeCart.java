@@ -43,7 +43,7 @@ public class ViewTradeCart extends Activity implements View.OnClickListener {
     String clicks, cardTitle, card_id = null;
     String url;
     Context context;
-    String card_originator;
+    String card_originator=null,card_owner=null;
     boolean forCounter = false;
     private Dialog dialog;
     private AuthManager authManager;
@@ -143,6 +143,8 @@ public class ViewTradeCart extends Activity implements View.OnClickListener {
                 card_text.setText(cardTitle);
 
                 card_originator = intent.getExtras().getString("card_originator");
+                if(intent.hasExtra("card_owner"))
+                    card_owner=intent.getExtras().getString("card_owner");
                 String msg;
                 if (card_originator.equalsIgnoreCase(authManager.getUserId())) {
                     msg = "HOW MANY CLICKS ARE YOU WILLING TO OFFER?";
@@ -285,11 +287,13 @@ public class ViewTradeCart extends Activity implements View.OnClickListener {
                         i.putExtra("isCounter", true);
                         i.putExtra("card_id", card_id);
                         i.putExtra("card_Accepted_Rejected", "countered");
-                        i.putExtra("card_originator", card_originator);
+
                     } else {
                         i.putExtra("isCounter", false);
                         i.putExtra("card_Accepted_Rejected", "nil");
                     }
+                    i.putExtra("card_originator", card_originator);
+                    i.putExtra("card_owner",card_owner);
                     i.putExtra("played_Countered", "playing");
                     i.putExtra("is_CustomCard", true);
                     i.putExtra("card_url", "");

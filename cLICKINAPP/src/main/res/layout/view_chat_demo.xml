@@ -21,7 +21,7 @@
         android:id="@+id/parent_shared_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/newbg_pinkleft"
+        android:background="@drawable/newbg_grey"
         android:layout_alignParentLeft="true"
         android:orientation="vertical"
         >
@@ -57,7 +57,7 @@
 
             <ImageView
                 android:id="@+id/except_share"
-                android:layout_width="206dp"
+                android:layout_width="205dp"
                 android:layout_height="3dp"
                 android:layout_below="@+id/shared_message"
                 android:layout_marginRight="2dp"
@@ -210,9 +210,9 @@
                 android:id="@+id/send_card_first_time"
                 android:layout_width="240dp"
                 android:layout_height="320dp"
-                android:layout_marginBottom="1dp"
                 android:layout_marginTop="1dp"
-                android:layout_marginLeft="1dp"
+                android:layout_marginBottom="1dp"
+                android:layout_marginLeft="4dp"
                 android:orientation="vertical"
                 android:visibility="gone">
 
@@ -221,7 +221,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:visibility="gone"
-                    android:layout_margin="2dp"
+
                     />
 
                 <TextView
@@ -229,7 +229,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="3dp"
                     android:paddingRight="5dp"
                     android:text="10"
                     android:textColor="@color/white"
@@ -259,7 +259,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentRight="true"
-                    android:layout_marginBottom="9dp"
+                    android:layout_marginBottom="6dp"
                     android:layout_marginRight="43dp"
                     android:text="10"
                     android:textColor="@color/white"
@@ -273,12 +273,12 @@
 
             <RelativeLayout
                 android:id="@+id/temp_layout"
-                android:layout_width="190dp"
+                android:layout_width="206dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="3dp"
                 android:layout_marginRight="2dp"
                 android:layout_marginTop="3dp"
-                android:layout_marginLeft="2dp"
+                android:layout_marginLeft="3dp"
                 android:background="@color/background_grey"
                 android:gravity="center_vertical"
                 android:padding="5dp"
@@ -456,7 +456,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="9dp"
-                    android:layout_marginTop="5dp"
+
                     android:paddingRight="5dp"
                     android:text="10"
                     android:textColor="@color/white"
@@ -487,7 +487,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentRight="true"
-                    android:layout_marginBottom="9.5dp"
+                    android:layout_marginBottom="2dp"
                     android:layout_marginRight="30dp"
                     android:text="10 "
                     android:textColor="@color/white"

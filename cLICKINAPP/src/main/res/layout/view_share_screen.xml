@@ -72,22 +72,67 @@
                 android:layout_height="wrap_content"
                 android:background="@color/devider"
                 android:orientation="vertical"
-                android:paddingBottom="10dp">
+                android:paddingBottom="10dp"
+                android:visibility="visible">
 
                 <RelativeLayout
+                    android:id="@+id/layout_image"
                     android:layout_width="fill_parent"
-                    android:layout_height="213dp"
+                    android:layout_height="160dp"
                     android:orientation="horizontal"
                     android:background="@color/white"
-                    android:paddingLeft="15dp"
-                    android:paddingRight="15dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="15dp"
                     android:paddingTop="5dp"
-                    android:paddingBottom="4dp">
+                    android:paddingLeft="5dp"
+                    android:paddingBottom="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:visibility="visible">
+
+                <ImageView
+                    android:id="@+id/shr_user_image"
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
+                    android:scaleType="fitXY"
+                    android:adjustViewBounds="true"
+                    android:visibility="gone"
+
+                    />
+
+                    <EditText
+                        android:id="@+id/shr_caption"
+                        android:layout_width="fill_parent"
+                        android:layout_height="200dp"
+                        android:clickable="true"
+                        android:layout_toRightOf="@+id/shr_user_image"
+                        android:cursorVisible="false"
+                        android:gravity="top"
+                        android:background="@color/white"
+                        android:hint="@string/share_hint"
+                        android:inputType="textCapWords|textMultiLine"
+                        android:lines="5"
+                        android:textSize="16sp"
+                        android:maxLength="140"
+                        android:padding="6dp"
+                        android:singleLine="false" />
+            </RelativeLayout>
+
+
+
+                <RelativeLayout
+                    android:id="@+id/layout_card"
+                    android:layout_width="fill_parent"
+                    android:layout_height="208dp"
+                    android:orientation="horizontal"
+                    android:background="@color/white"
+                    android:paddingLeft="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:visibility="gone">
 
                     <ImageView
-                        android:id="@+id/shr_user_image"
+                        android:id="@+id/shr_user_trade_image"
                         android:layout_width="160dp"
                         android:layout_height="200dp"
                         android:adjustViewBounds="true"
@@ -109,7 +154,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginBottom="6dp"
                         android:textSize="18sp"
                         android:textColor="@color/white"
                         android:layout_marginLeft="110dp"
@@ -118,12 +163,12 @@
 
                     <TextView
                         android:id="@+id/heading_top"
-                        android:layout_width="wrap_content"
+                        android:layout_width="120dp"
                         android:layout_height="wrap_content"
                         android:lines="2"
                         android:gravity="center"
                         android:layout_marginTop="60dp"
-                        android:layout_marginLeft="33dp"
+                        android:layout_marginLeft="23dp"
                         android:textStyle="bold"
                         android:textColor="@color/profile_usr_name"
                         android:textSize="12sp"
@@ -141,9 +186,10 @@
                         android:textSize="15sp"
                         android:lines="5"
                         android:paddingRight="2dp"
-                        android:layout_marginTop="60dp"
-                        android:layout_marginLeft="17dp"
+                        android:layout_marginTop="50dp"
+                        android:layout_marginLeft="20dp"
                         android:visibility="gone"/>
+
                     <TextView
                         android:id="@+id/heading_bottom"
                         android:layout_width="120dp"
@@ -158,11 +204,11 @@
                         android:visibility="gone"/>
 
                     <EditText
-                        android:id="@+id/shr_caption"
+                        android:id="@+id/shr_caption_trade"
                         android:layout_width="fill_parent"
                         android:layout_height="200dp"
                         android:clickable="true"
-                        android:layout_toRightOf="@+id/shr_user_image"
+                        android:layout_toRightOf="@+id/shr_user_trade_image"
                         android:cursorVisible="false"
                         android:gravity="top"
                         android:background="@color/white"
@@ -173,7 +219,7 @@
                         android:maxLength="140"
                         android:paddingLeft="10dp"
                         android:paddingRight="4dp"
-                        android:paddingTop="15dp"
+                        android:paddingTop="8dp"
                         android:singleLine="false" />
 
                 </RelativeLayout>
@@ -185,7 +231,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginRight="14dp"
+                    android:layout_marginRight="9.5dp"
                     android:layout_marginTop="1dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
@@ -198,6 +244,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:textColor="@color/white"
+                        android:text="vnaskvn;salvna;slvns;lvnsl"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         android:visibility="gone" />

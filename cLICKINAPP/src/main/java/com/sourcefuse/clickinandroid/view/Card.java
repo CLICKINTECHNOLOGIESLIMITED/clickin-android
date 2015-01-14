@@ -30,7 +30,7 @@ public class Card extends Activity implements View.OnClickListener, TextWatcher 
     private static Dialog dialog;
     ImageView mBackButton;
     String url, clicks, cardTitle, cardDiscription, card_Db_id, card_id = "", card_Accepted_Rejected;
-    String card_originator;
+    String card_originator=null,card_owner=null;
     Context context;
     ImageView imageView, btnPlay;
     boolean forCounter = false;
@@ -103,6 +103,8 @@ public class Card extends Activity implements View.OnClickListener, TextWatcher 
                 card_id = intent.getStringExtra("card_id");
                 //monika-set the message as per sender and receiver
                 card_originator = intent.getExtras().getString("card_originator");
+                if(intent.hasExtra("card_owner"))
+                card_owner=intent.getExtras().getString("card_owner");
                 String msg;
                 if (card_originator.equalsIgnoreCase(authManager.getUserId())) {
                     msg = "HOW MANY CLICKS ARE YOU WILLING TO OFFER?";
@@ -236,12 +238,15 @@ public class Card extends Activity implements View.OnClickListener, TextWatcher 
                         i.putExtra("FromCard", true);
                         if (forCounter) {
                             i.putExtra("isCounter", true);
-                            i.putExtra("card_originator", card_originator);
+
                             i.putExtra("card_Accepted_Rejected", "countered");
+
                         } else {
                             i.putExtra("isCounter", false);
                             i.putExtra("card_Accepted_Rejected", "nil");
                         }
+                        i.putExtra("card_originator", card_originator);
+                        i.putExtra("card_owner",card_owner);
                         i.putExtra("card_id", card_id);
                         i.putExtra("played_Countered", "playing");
                         i.putExtra("is_CustomCard", false);

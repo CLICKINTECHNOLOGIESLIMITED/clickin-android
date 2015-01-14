@@ -269,7 +269,7 @@
 
             <RelativeLayout
                 android:id="@+id/temp_layout"
-                android:layout_width="190dp"
+                android:layout_width="206dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="3dp"
                 android:layout_marginRight="3dp"
@@ -414,7 +414,8 @@
                     android:id="@+id/iv_static_acc_rej_card"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="3dp"
+                    android:paddingRight="2dp"
+                    android:paddingLeft="3dp"
                     android:src="@drawable/tradecardbg" />
 
 
@@ -422,7 +423,7 @@
                     android:id="@+id/tv_custom_card_heading_acc_rej"
                     android:layout_width="100dp"
                     android:layout_height="110dp"
-                    android:layout_marginLeft="23dp"
+                    android:layout_marginLeft="25dp"
                     android:layout_marginTop="40dp"
                     android:gravity="center_horizontal|center_vertical"
                     android:paddingRight="5dp"
@@ -485,7 +486,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentRight="true"
-                    android:layout_marginBottom="8dp"
+                    android:layout_marginBottom="10dp"
                     android:layout_marginRight="30dp"
                     android:text="10 "
                     android:textColor="@color/white"

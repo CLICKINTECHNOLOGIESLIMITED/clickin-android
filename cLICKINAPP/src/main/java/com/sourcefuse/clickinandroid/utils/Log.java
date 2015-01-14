@@ -2,7 +2,7 @@ package com.sourcefuse.clickinandroid.utils;
 
 public class Log {
 
-    private static final boolean enableLogging = true;
+    private static final boolean enableLogging = false;
 
     public static void i(String tag, String msg) {
         if (enableLogging) {
