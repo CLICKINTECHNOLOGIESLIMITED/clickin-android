@@ -158,13 +158,18 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         //make next webservice request after current is finished
         Bundle b = getIntent().getExtras();
         boolean FromSignup = false;
+        boolean isChangeInList = false;
+
         if (b != null) {
             if (b.containsKey("FromSignup")) {
                 FromSignup = getIntent().getExtras().getBoolean("FromSignup");
             }
+            if (b.containsKey("isChangeInList")) {
+                isChangeInList = getIntent().getExtras().getBoolean("isChangeInList");
+            }
         }
 
-        if (FromSignup) {
+        if (FromSignup || isChangeInList) {
             Utils.launchBarDialog(UserProfileView.this);
             authManager.getProfileInfo("", authManager.getPhoneNo(), authManager.getUsrToken());
         } else {
