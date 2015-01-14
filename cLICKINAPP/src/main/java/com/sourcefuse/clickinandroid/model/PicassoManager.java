@@ -9,7 +9,7 @@ import com.squareup.picasso.Picasso;
  * Created by prafull on 6/1/15.
  */
 public class PicassoManager {
-    private static Picasso picasso;
+    private static Picasso picasso = null;
     private static LruCache lruCache = null;
 
     public static LruCache getLruCache() {

@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,53 +45,30 @@ public final class TestFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        RelativeLayout mainlayout = new RelativeLayout(getActivity());
-        mainlayout.setLayoutParams(new LayoutParams
-                (LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+
+        View view = inflater.inflate(R.layout.fragment,container, false);
 
 
-        ImageView img = new ImageView(getActivity());
-        img.setImageDrawable(getActivity().getResources().getDrawable(imageS));
-        img.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        mainlayout.addView(img);
+        ImageView mImageView = (ImageView) view.findViewById(R.id.main_image);
+        ImageView loginButton = (ImageView) view.findViewById(R.id.login);
+        mImageView.setBackground(getActivity().getResources().getDrawable(imageS));
+
         if (imageS == R.drawable.sixth_page) {
 
-            ImageView clickHereToSignup = new ImageView(getActivity());
-            clickHereToSignup.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.signup_btn));
-            clickHereToSignup.setId(2);
-            LayoutParams params = new LayoutParams(
-                    LayoutParams.WRAP_CONTENT,
-                    LayoutParams.WRAP_CONTENT
-            );
-            params.setMargins(pxlToDp(113), pxlToDp(258), 0, 0);
-            clickHereToSignup.setLayoutParams(params);
-            mainlayout.addView(clickHereToSignup);
 
-            clickHereToSignup.setOnClickListener(new View.OnClickListener() {
+            ImageView mClickHereToSignup = (ImageView) view.findViewById(R.id.clicktosignup);
+            mClickHereToSignup.setVisibility(View.VISIBLE);
+            loginButton.setVisibility(View.VISIBLE);
+            mClickHereToSignup.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
                     Intent signup = new Intent(getActivity(), SignUpView.class);
                     getActivity().startActivity(signup);
                     getActivity().finish();
-
                     coverFlowChecked();
-
                 }
-
-
             });
-
-            ImageView loginButton = new ImageView(getActivity());
-            loginButton.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.coverflow_login));
-            loginButton.setId(3);
-            LayoutParams params1 = new LayoutParams(
-                    LayoutParams.WRAP_CONTENT,
-                    LayoutParams.WRAP_CONTENT
-            );
-            params1.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-            params1.setMargins(pxlToDp(120), 0, 0, pxlToDp(9));
-            loginButton.setLayoutParams(params1);
 
             loginButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -102,14 +80,10 @@ public final class TestFragment extends Fragment {
                 }
             });
 
-
-            mainlayout.addView(loginButton);
-
-
         }
 
 
-        return mainlayout;
+        return view;
     }
 
     private void coverFlowChecked() {

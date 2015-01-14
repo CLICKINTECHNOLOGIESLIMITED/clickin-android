@@ -28,6 +28,7 @@ import android.widget.TextView;
 
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
+import com.sourcefuse.clickinandroid.model.PicassoManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
 import com.sourcefuse.clickinandroid.model.SettingManager;
 import com.sourcefuse.clickinandroid.services.MyQbChatService;
@@ -88,6 +89,10 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.view_signin);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
+        /*set picasso maneger value */
+        PicassoManager.setLruCache(getApplicationContext());
+        PicassoManager.setPicasso(getApplicationContext(), PicassoManager.getLruCache());
 
         authManager = ModelManager.getInstance().getAuthorizationManager();
         try {

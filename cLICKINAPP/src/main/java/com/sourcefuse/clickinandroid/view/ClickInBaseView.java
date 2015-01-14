@@ -137,7 +137,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         ArrayList<SimpleSectionedListAdapter.Section> sections = new ArrayList<SimpleSectionedListAdapter.Section>();
 
 
-        boolean hidevalue = (relationManager.acceptedList.size() > 0) ? true : false;
+        boolean hidevalue = relationManager.acceptedList.size() > 0 ? true : false;
 
 
         sections.add(new SimpleSectionedListAdapter.Section(mHeaderPositions[0], mHeaderNames[0], mHeaderNames2[0]));
@@ -149,7 +149,6 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
     private void switchView(String rid, int relationListIndex) {
 
 
-
         Intent intent = new Intent(ClickInBaseView.this, ChatRecordView.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         intent.setAction("UPDATE");
@@ -158,7 +157,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         intent.putExtra("partnerName", partnerName);
         intent.putExtra("rId", rid);
         intent.putExtra("partnerId", partnerId);
-        Log.e("partner id--->",""+partnerId);
+
         intent.putExtra("myClicks", myClicks);
         intent.putExtra("userClicks", userClicks);
         intent.putExtra("partnerPh", partnerPh);
@@ -187,9 +186,6 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
             this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
             // slidemenu.showContent(true);
         }
-
-
-
 
 
     }
@@ -395,14 +391,13 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
             Bitmap imagebitmap1 = authManager.getUserbitmap();
 
             boolean userpic = Utils.isEmptyString(authManager.getUserPic());
-            if(authManager.getUserImageUri() != null)
-                mUserImagePath = ""+authManager.getUserImageUri().toString();
-            if(!Utils.isEmptyString(mUserImagePath))
-            mUserImageUri = Utils.getImageContentUri(ClickInBaseView.this,new File(mUserImagePath));
+            if (authManager.getUserImageUri() != null)
+                mUserImagePath = "" + authManager.getUserImageUri().toString();
+            if (!Utils.isEmptyString(mUserImagePath))
+                mUserImageUri = Utils.getImageContentUri(ClickInBaseView.this, new File(mUserImagePath));
 
 
-
-            if(!Utils.isEmptyString(""+mUserImageUri))
+            if (!Utils.isEmptyString("" + mUserImageUri))
                 userPic.setImageURI(mUserImageUri);
             else if (imagebitmap1 != null)
                 userPic.setImageBitmap(imagebitmap1);
@@ -756,8 +751,6 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         notificationMngr.getNotification(getApplicationContext(), "", authManager.getPhoneNo(), authManager.getUsrToken());
 
 
-
-
     }
 
     public void setMenuListData() {
@@ -774,13 +767,13 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
             Bitmap imagebitmap1 = authManager.getUserbitmap();
 
             boolean userpic = Utils.isEmptyString(authManager.getUserPic());
-            if(authManager.getUserImageUri() != null)
-                mUserImagePath = ""+authManager.getUserImageUri().toString();
-            if(!Utils.isEmptyString(mUserImagePath))
-                mUserImageUri = Utils.getImageContentUri(ClickInBaseView.this,new File(mUserImagePath));
+            if (authManager.getUserImageUri() != null)
+                mUserImagePath = "" + authManager.getUserImageUri().toString();
+            if (!Utils.isEmptyString(mUserImagePath))
+                mUserImageUri = Utils.getImageContentUri(ClickInBaseView.this, new File(mUserImagePath));
 
 
-            if(!Utils.isEmptyString(""+mUserImageUri))
+            if (!Utils.isEmptyString("" + mUserImageUri))
                 userPic.setImageURI(mUserImageUri);
             else if (imagebitmap1 != null)
                 userPic.setImageBitmap(imagebitmap1);
@@ -799,8 +792,6 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         }
 
 
-
-
         setLeftMenuList();
     }
 
@@ -808,6 +799,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         super.onResume();
         if (clickInadapter != null)
             clickInadapter.notifyDataSetChanged();
+        EventBus.getDefault().post("update Counter");
     }
 
     public void onEventMainThread(String message) {
@@ -911,9 +903,13 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
                 } else {
                     mValue = String.valueOf(mNotificationValue);
                 }
+
+                if (!mNotificationText.getText().toString().equalsIgnoreCase("" + mNotificationValue))
+                    Utils.playSound(ClickInBaseView.this, R.raw.notification_inapp);
+
                 mNotificationText.setText("" + mValue);
                 mNotificationText.setTextColor(Color.parseColor("#39cad4"));
-                Utils.playSound(ClickInBaseView.this, R.raw.notification_inapp);
+
 
             } else {
                 mNotificationText.setText("0");
@@ -925,6 +921,8 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 
             notificationMngr.getNotification(getApplicationContext(), "", authManager.getPhoneNo(), authManager.getUsrToken());
 
+        } else if (message.equalsIgnoreCase("updatePhoto")) {
+            PicassoManager.clearCache();
         }
 
     }
@@ -950,14 +948,13 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
             Bitmap imagebitmap1 = authManager.getUserbitmap();
 
             boolean userpic = Utils.isEmptyString(authManager.getUserPic());
-            if(authManager.getUserImageUri() != null)
-                mUserImagePath = ""+authManager.getUserImageUri().toString();
-            if(!Utils.isEmptyString(mUserImagePath))
-                mUserImageUri = Utils.getImageContentUri(ClickInBaseView.this,new File(mUserImagePath));
+            if (authManager.getUserImageUri() != null)
+                mUserImagePath = "" + authManager.getUserImageUri().toString();
+            if (!Utils.isEmptyString(mUserImagePath))
+                mUserImageUri = Utils.getImageContentUri(ClickInBaseView.this, new File(mUserImagePath));
 
 
-
-            if(!Utils.isEmptyString(""+mUserImageUri))
+            if (!Utils.isEmptyString("" + mUserImageUri))
                 userPic.setImageURI(mUserImageUri);
             else if (imagebitmap1 != null)
                 userPic.setImageBitmap(imagebitmap1);
