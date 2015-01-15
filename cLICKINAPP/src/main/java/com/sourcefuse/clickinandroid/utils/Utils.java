@@ -1,9 +1,11 @@
 package com.sourcefuse.clickinandroid.utils;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
+import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
@@ -59,6 +61,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 import java.util.TimeZone;
 
@@ -67,6 +70,7 @@ public class
 
     public static boolean DEBUG = true;
 
+    public static boolean mPlayChatSound = false;   // code to check sound in case of recive chat
     public static String deviceId, PROJECT_NUMBER = "1058681021160";
     public static String mVideoPath = "/storage/emulated/0/ClickIn/ClickinVideo/";
     public static String mImagePath = "/storage/emulated/0/ClickIn/ClickinImages/";
@@ -240,6 +244,7 @@ public class
         });
         dialog.show();
     }
+
     public static String getCardURLForAndroid(String url) {
 
         String url_to_load = url.replaceFirst("cards\\/(\\d+)\\.jpg", "cards\\/a\\/1080\\/$1\\.jpg");
@@ -1428,5 +1433,13 @@ public class
         });
     }
 
+
+    public static String getTopActivity(Context context) {
+        ActivityManager am = (ActivityManager) context.getSystemService(android.content.Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
+        ComponentName componentInfo = taskInfo.get(0).topActivity;
+        String className = componentInfo.getClassName();
+        return className;
+    }
 }
 

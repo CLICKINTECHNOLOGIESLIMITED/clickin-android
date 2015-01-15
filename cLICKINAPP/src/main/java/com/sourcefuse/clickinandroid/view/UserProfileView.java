@@ -169,7 +169,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
             }
         }
 
-        if (FromSignup || isChangeInList) {
+        if (FromSignup | isChangeInList) {
             Utils.launchBarDialog(UserProfileView.this);
             authManager.getProfileInfo("", authManager.getPhoneNo(), authManager.getUsrToken());
         } else {
@@ -177,8 +177,6 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
             setLeftMenuList();
             setProfileDataView();
             setlist();
-            //   relationManager = ModelManager.getInstance().getRelationManager();
-            // relationManager.getReladismissBarDialogtionShips(authManager.getPhoneNo(), authManager.getUsrToken());
         }
 
 

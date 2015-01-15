@@ -6,6 +6,7 @@ import com.sourcefuse.clickinandroid.model.bean.FetchUsersByNameBean;
 import com.sourcefuse.clickinandroid.model.bean.GetrelationshipsBean;
 import com.sourcefuse.clickinandroid.model.bean.ProfileRelationShipBean;
 import com.sourcefuse.clickinandroid.utils.APIs;
+import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinandroid.utils.Utils;
 
 import org.apache.http.entity.StringEntity;
@@ -61,6 +62,7 @@ public class RelationManager {
             userInputDetails.put("phone_no", phone);
             userInputDetails.put("user_token", usertoken);
 
+            android.util.Log.e("user token-->",""+usertoken);
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));

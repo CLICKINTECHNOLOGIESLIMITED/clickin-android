@@ -33,14 +33,14 @@ public class Card extends Activity implements View.OnClickListener, TextWatcher 
     private static Dialog dialog;
     ImageView mBackButton;
     String url, clicks, cardTitle, cardDiscription, card_Db_id, card_id = "", card_Accepted_Rejected;
-    String card_originator=null,card_owner=null;
+    String card_originator = null, card_owner = null;
     Context context;
     ImageView imageView, btnPlay;
     boolean forCounter = false;
     TextView trd_clicks_top, trd_clicks_bottom, trone, trtwo, trthree, trfour, trfive;
     private TextView tv_about_message;
     private AuthManager authManager;
-    private String chatId=null;
+    private String chatId = null;
     // String xyz_url = "https://s3.amazonaws.com/clickin-dev/cards/a/1080/39.jpg";
 
     @Override
@@ -90,13 +90,13 @@ public class Card extends Activity implements View.OnClickListener, TextWatcher 
         AuthManager authManager = ModelManager.getInstance().getAuthorizationManager();
         Intent intent = getIntent();
         if (null != intent) {
-            if(intent.hasExtra("card_owner"))
+            if (intent.hasExtra("card_owner"))
                 card_owner = intent.getExtras().getString("card_owner");
             else
-                card_owner=ModelManager.getInstance().getAuthorizationManager().getQBId();
+                card_owner = ModelManager.getInstance().getAuthorizationManager().getQBId();
             forCounter = intent.getExtras().getBoolean("ForCounter");
             if (forCounter) {
-                chatId=intent.getStringExtra("chat_id");
+                chatId = intent.getStringExtra("chat_id");
                 clicks = intent.getStringExtra("card_clicks");
 
                 if (clicks.equalsIgnoreCase("5"))//akshit code if th clicks ar 5
@@ -113,7 +113,7 @@ public class Card extends Activity implements View.OnClickListener, TextWatcher 
                 //monika-set the message as per sender and receiver
 
 
-                card_originator=intent.getExtras().getString("card_originator");
+                card_originator = intent.getExtras().getString("card_originator");
                 String msg;
                 if (card_owner.equalsIgnoreCase(authManager.getQBId())) {
                     msg = "HOW MANY CLICKS ARE YOU WILLING TO OFFER?";
@@ -224,7 +224,7 @@ public class Card extends Activity implements View.OnClickListener, TextWatcher 
 
                     Utils.fromSignalDialog(this, AlertMessage.selectClicks);
 
-                } else if(card_owner.equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getQBId())) {
+                } else if (card_owner.equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getQBId())) {
                     //Loop- if user is card owner
                     int tempOurClicks = 0;
                     tempOurClicks = Integer.parseInt(authManager.ourClicks);
@@ -244,7 +244,7 @@ public class Card extends Activity implements View.OnClickListener, TextWatcher 
                         Utils.fromSignalDialog(Card.this, "You don't have enough clicks to play this card");
 
 
-                    }else {
+                    } else {
 
 
                         Intent i = new Intent();
@@ -290,59 +290,65 @@ public class Card extends Activity implements View.OnClickListener, TextWatcher 
                         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i);
                         overridePendingTransition(0, R.anim.slide_out_finish_up);
+                        /*code to play sound in case of trade cart */
+                        Utils.playSound(Card.this, R.raw.message_sent);
                     }
                     //loop- ends here if user is card owner
-                }else {//
-                //loop starts if user is not card owner
+                } else {//
+                    //loop starts if user is not card owner
 
-                            Intent i = new Intent();
-                            i.setAction("CARD");
-                            i.putExtra("FromCard", true);
-                            if (forCounter) {
+                    Intent i = new Intent();
+                    i.setAction("CARD");
+                    i.putExtra("FromCard", true);
+                    if (forCounter) {
 
-                                i.putExtra("isCounter", true);
+                        i.putExtra("isCounter", true);
 
-                                i.putExtra("card_Accepted_Rejected", "countered");
-                                //for counter case, update the last message in list for card played countered value
-                                if (!Utils.isEmptyString(chatId)) {
-                                    new Thread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            ArrayList<ChatMessageBody> chatList = ModelManager.getInstance().getChatManager().chatMessageList;
-                                            for (ChatMessageBody temp : chatList) {
-                                                if (temp.chatId.equalsIgnoreCase(chatId)) {
-                                                    temp.card_Played_Countered = "played";
-                                                }
-                                            }
+                        i.putExtra("card_Accepted_Rejected", "countered");
+                        //for counter case, update the last message in list for card played countered value
+                        if (!Utils.isEmptyString(chatId)) {
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    ArrayList<ChatMessageBody> chatList = ModelManager.getInstance().getChatManager().chatMessageList;
+                                    for (ChatMessageBody temp : chatList) {
+                                        if (temp.chatId.equalsIgnoreCase(chatId)) {
+                                            temp.card_Played_Countered = "played";
                                         }
-                                    }).start();
+                                    }
                                 }
+                            }).start();
+                        }
 
-                            } else {
-                                i.putExtra("isCounter", false);
-                                i.putExtra("card_Accepted_Rejected", "nil");
-                            }
-                            i.putExtra("card_originator", card_originator);
-                            i.putExtra("card_owner", card_owner);
-                            i.putExtra("card_id", card_id);
-                            i.putExtra("played_Countered", "playing");
-                            i.putExtra("is_CustomCard", false);
-                            i.putExtra("card_url", url);
-                            i.putExtra("card_clicks", clicks);
-                            i.putExtra("Title", cardTitle);
-                            i.putExtra("Discription", cardDiscription);
-                            i.putExtra("card_DB_ID", card_Db_id);
+                    } else {
+                        i.putExtra("isCounter", false);
+                        i.putExtra("card_Accepted_Rejected", "nil");
+                    }
+                    i.putExtra("card_originator", card_originator);
+                    i.putExtra("card_owner", card_owner);
+                    i.putExtra("card_id", card_id);
+                    i.putExtra("played_Countered", "playing");
+                    i.putExtra("is_CustomCard", false);
+                    i.putExtra("card_url", url);
+                    i.putExtra("card_clicks", clicks);
+                    i.putExtra("Title", cardTitle);
+                    i.putExtra("Discription", cardDiscription);
+                    i.putExtra("card_DB_ID", card_Db_id);
 
-                            i.setClass(this, ChatRecordView.class);
-                            i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(i);
-                            overridePendingTransition(0, R.anim.slide_out_finish_up);
-                        }//loop ends here if user is not card owner
-                    //  finish();
-                    break;
-                }
+                    i.setClass(this, ChatRecordView.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(i);
+                    overridePendingTransition(0, R.anim.slide_out_finish_up);
+
+                            /*code to play sound in case of trade cart */
+                    Utils.playSound(Card.this, R.raw.message_sent);
+
+                }//loop ends here if user is not card owner
+                //  finish();
+                break;
         }
+    }
 
 
     //akshit code starts
