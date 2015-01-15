@@ -167,6 +167,9 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
             if (b.containsKey("isChangeInList")) {
                 isChangeInList = getIntent().getExtras().getBoolean("isChangeInList");
             }
+            if (b.containsKey("updatephoto")) {
+                isChangeInList = true;
+            }
         }
 
         if (FromSignup | isChangeInList) {
@@ -497,9 +500,8 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
             PicassoManager.clearCache();
             if (slidemenu.isMenuShowing())
                 slidemenu.showContent();
+            authManager.getProfileInfo("", authManager.getPhoneNo(), authManager.getUsrToken());
 
-            relationManager = ModelManager.getInstance().getRelationManager();
-            relationManager.getRelationShips(authManager.getPhoneNo(), authManager.getUsrToken());
 
 
         }
