@@ -265,8 +265,6 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     }
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -672,9 +670,11 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.btn_send:
+                break;
             case R.id.textview_send://akshit code for event on send
                 //   break;
-            case R.id.btn_send:
+
                 //code to check online status or not
 
                 String chatString = chatText.getText().toString();
@@ -2209,7 +2209,6 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             Utils.dismissBarDialog();
         }
     }
-
 
 
 }
