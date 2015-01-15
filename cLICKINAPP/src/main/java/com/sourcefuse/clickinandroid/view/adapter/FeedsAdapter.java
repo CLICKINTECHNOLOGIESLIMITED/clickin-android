@@ -431,6 +431,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
             if (eachNewsFeed.get(position).getNewsfeedArray_comments_count() > 3) {
                 holder.feed_comments_layout1.setVisibility(View.VISIBLE);
                 holder.no_comments.setText("View all " + eachNewsFeed.get(position).getNewsfeedArray_comments_count() + " comments");
+                Log.e("No of Comments " ,"In Case comments 1 "+eachNewsFeed.get(position).getNewsfeedArray_comments_count());
                 for (int k = 0; k < eachNewsFeed.get(position).getCommentArrayList().size(); k++) {
                     if (k == 0) {
 //                    holder.name2.setVisibility(View.VISIBLE);
@@ -528,9 +529,21 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
             holder.feed_comments_layout.setVisibility(View.GONE);
         }
 
+        holder.feed_comments_layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.e("Tag","Clicks Check1");
+                Intent intent = new Intent(context, FeedCommentsView.class);
+                intent.putExtra("news_feed_id", eachNewsFeed.get(position).getNewsfeedArray_id());
+                intent.putExtra("comment_count", eachNewsFeed.get(position).getNewsfeedArray_comments_count());
+                context.startActivity(intent);
+
+            }
+        });
         holder.feed_comments_layout1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.e("Tag","Clicks Check");
                 Intent intent = new Intent(context, FeedCommentsView.class);
                 intent.putExtra("news_feed_id", eachNewsFeed.get(position).getNewsfeedArray_id());
                 intent.putExtra("comment_count", eachNewsFeed.get(position).getNewsfeedArray_comments_count());

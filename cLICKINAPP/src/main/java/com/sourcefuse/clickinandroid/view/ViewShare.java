@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -20,6 +19,7 @@ import com.facebook.SessionState;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ChatManager;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
+import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
 import com.squareup.picasso.Picasso;
@@ -297,17 +297,18 @@ public class ViewShare extends Activity implements View.OnClickListener {
                 break;
             case R.id.shr_btn_share:
                 Intent i = new Intent(this, ChatRecordView.class);
-                String commentStr = null;//akshit code
+                String commentStr = "";//akshit code
 
                 if(!Utils.isEmptyString(card_originator)){//akshit code
                      commentStr = shr_caption_trade.getText().toString().trim();
+                    Log.e("Tag","Strings In Caption"+commentStr);
 
                 }else {
                      commentStr = shr_caption.getText().toString().trim();//akshit code
+                    Log.e("Tag","Strings In Caption"+commentStr);
                 }
-                if (Utils.isEmptyString(commentStr))
-                    commentStr = "Write your caption here...";
-
+                Log.e("Tag","Strings In Caption"+commentStr);
+               
                 if (access_Token.length() < 3)
                     access_Token = "-";
 
