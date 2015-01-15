@@ -509,8 +509,24 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
 
 
-        /* to show Dialog*/
-        Utils.showDialog(this);
+        /* code to show dialog*/
+        if (getIntent().getExtras().containsKey("mValue")) {
+
+            String mRelationShipId = relationManager.acceptedList.get(relationListIndex).getRelationshipId();
+
+
+            Log.e("mValue oncreate---->",""+getIntent().getStringExtra("mValue"));
+            if (getIntent().getStringExtra("mValue").equalsIgnoreCase("one")) {
+
+                Utils.showOverlay(ChatRecordView.this);
+                authManager.reSetFlag(authManager.getPhoneNo(),authManager.getUsrToken(),mRelationShipId,"no","no",relationListIndex);
+            } else if (getIntent().getStringExtra("mValue").equalsIgnoreCase("two")) {
+                authManager.reSetFlag(authManager.getPhoneNo(),authManager.getUsrToken(),mRelationShipId,"no","null",relationListIndex);
+                Utils.showDialog(ChatRecordView.this);
+            }
+
+        }
+
 
     }
 
@@ -971,6 +987,25 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         typingtext.setVisibility(View.GONE);
         chatText.setText("");//akshit code to Refresh Chat box text
 
+
+/* code to show dialog*/
+        /* code to show dialog*/
+        if (intent.getExtras().containsKey("mValue")) {
+
+            String mRelationShipId = relationManager.acceptedList.get(relationListIndex).getRelationshipId();
+
+
+            Log.e("mValue oncreate---->",""+getIntent().getStringExtra("mValue"));
+            if (intent.getStringExtra("mValue").equalsIgnoreCase("one")) {
+
+                Utils.showOverlay(ChatRecordView.this);
+                authManager.reSetFlag(authManager.getPhoneNo(),authManager.getUsrToken(),mRelationShipId,"no","no",relationListIndex);
+            } else if (intent.getStringExtra("mValue").equalsIgnoreCase("two")) {
+                authManager.reSetFlag(authManager.getPhoneNo(),authManager.getUsrToken(),mRelationShipId,"no","null",relationListIndex);
+                Utils.showDialog(ChatRecordView.this);
+            }
+
+        }
 
         if (actionReq.equalsIgnoreCase("UPDATE")) {
             //  Utils.launchBarDialog(this);

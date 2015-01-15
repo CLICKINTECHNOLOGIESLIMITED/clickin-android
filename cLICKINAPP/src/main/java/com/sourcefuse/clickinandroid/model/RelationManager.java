@@ -62,7 +62,7 @@ public class RelationManager {
             userInputDetails.put("phone_no", phone);
             userInputDetails.put("user_token", usertoken);
 
-            android.util.Log.e("user token-->",""+usertoken);
+            android.util.Log.e("user token-->", "" + usertoken);
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
@@ -185,6 +185,14 @@ public class RelationManager {
                     e.printStackTrace();
                 }
             }
+
+            if (jsondata.has("is_new_partner"))
+                getRelationShipList.mIs_new_partner = jsondata.getString("is_new_partner");
+            else
+                getRelationShipList.mIs_new_partner = null;
+
+
+
             listdata.add(getRelationShipList);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -226,8 +234,7 @@ public class RelationManager {
                                   JSONObject errorResponse) {
                 super.onFailure(statusCode, e, errorResponse);
 
-                if(errorResponse.has("message"))
-                {
+                if (errorResponse.has("message")) {
                     try {
                         errorResponse.getString("message").equalsIgnoreCase("User details not found.");
                         profileRelationShipData.clear();

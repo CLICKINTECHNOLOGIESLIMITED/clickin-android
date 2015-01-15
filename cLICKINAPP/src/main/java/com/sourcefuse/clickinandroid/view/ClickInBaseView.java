@@ -148,7 +148,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 
     private void switchView(String rid, int relationListIndex) {
 
-
+        relationManager = ModelManager.getInstance().getRelationManager();
         Intent intent = new Intent(ClickInBaseView.this, ChatRecordView.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         intent.setAction("UPDATE");
@@ -162,6 +162,26 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         intent.putExtra("userClicks", userClicks);
         intent.putExtra("partnerPh", partnerPh);
         intent.putExtra("relationListIndex", relationListIndex);
+
+        String mNewPrtner = relationManager.acceptedList.get(relationListIndex).mIs_new_partner;
+        String mRelationShipId = relationManager.acceptedList.get(relationListIndex).getRelationshipId();
+        String mNewUser = authManager.mIs_new_clickin_user;
+
+        Log.e("mNewPrtner value ---->",""+mNewPrtner);
+        Log.e("mNewUser value ---->",""+mNewUser);
+        String mValue;
+        if (mNewUser != null && mNewUser.equalsIgnoreCase("yes") && mNewPrtner != null && mNewPrtner.equalsIgnoreCase("yes")) {
+            mValue = "one";
+
+        } else if (mNewPrtner != null && mNewPrtner.equalsIgnoreCase("yes")) {
+            mValue = "two";
+
+        } else {
+            mValue = "none";
+        }
+
+
+        intent.putExtra("mValue",mValue);
 
         chatManager = ModelManager.getInstance().getChatManager();
         chatManager.setrelationshipId(rid);
@@ -444,6 +464,8 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 
                     } catch (Exception e) {
                         e.printStackTrace();
+
+                        Log.e("value of exception--->",""+e.toString());
                     }
                 }
             }

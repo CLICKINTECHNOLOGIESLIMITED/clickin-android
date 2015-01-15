@@ -42,11 +42,11 @@ public class ViewShare extends Activity implements View.OnClickListener {
     private static final String TAG = ViewShare.class.getSimpleName();
     TextView mshr_point, mshr_comment;
     String fileId, clicks, textMsg, originalChatId, isMessageSender;
-    String card_Accepted_Rejected, card_DB_ID, card_Played_Countered, card_id, card_content=" ", card_heading, card_originator, card_owner, card_clicks;
+    String card_Accepted_Rejected, card_DB_ID, card_Played_Countered, card_id, card_content = " ", card_heading, card_originator, card_owner, card_clicks;
     boolean is_CustomCard;
 
 
-    EditText shr_caption ,shr_caption_trade;
+    EditText shr_caption, shr_caption_trade;
     String image_url;//akshit to make common variable for image ,vedio Url .
     private ChatManager chatManager;
     private AuthManager authManager;
@@ -65,8 +65,8 @@ public class ViewShare extends Activity implements View.OnClickListener {
     private String audioID = null;
 
     private String shareMedia;
-    private String mLocationCoordinates = null ;
-    private int chatType=-1;
+    private String mLocationCoordinates = null;
+    private int chatType = -1;
 
 
     @Override
@@ -109,9 +109,8 @@ public class ViewShare extends Activity implements View.OnClickListener {
                 imageRatio = intent.getStringExtra("imageRatio");
                 fileId = intent.getStringExtra("fileId");
                 image_url = fileId;
-                if(intent.hasExtra("location_coordinates"))
-                {
-                   mLocationCoordinates =  intent.getStringExtra("location_coordinates");
+                if (intent.hasExtra("location_coordinates")) {
+                    mLocationCoordinates = intent.getStringExtra("location_coordinates");
                 }
             } else if (intent.hasExtra("videoThumbnail")) {
                 clicks = intent.getStringExtra("clicks");
@@ -124,7 +123,7 @@ public class ViewShare extends Activity implements View.OnClickListener {
                 card_Played_Countered = intent.getStringExtra("card_Played_Countered");
                 card_id = intent.getStringExtra("card_id");
                 card_clicks = intent.getStringExtra("clicks");
-                if(card_clicks.equalsIgnoreCase("5")){//akshit code
+                if (card_clicks.equalsIgnoreCase("5")) {//akshit code
                     card_clicks = "05";
                 }
                 clicks = "no";
@@ -142,7 +141,7 @@ public class ViewShare extends Activity implements View.OnClickListener {
                 clicks = intent.getStringExtra("clicks");
             }
 
-            chatType=intent.getIntExtra("chatType",-1);
+            chatType = intent.getIntExtra("chatType", -1);
             textMsg = intent.getStringExtra("textMsg");
 
             isMessageSender = intent.getStringExtra("isMessageSender");
@@ -181,7 +180,7 @@ public class ViewShare extends Activity implements View.OnClickListener {
             }
 
             //akshit code for Trade Card
-            if(!Utils.isEmptyString(card_id) || is_CustomCard){
+            if (!Utils.isEmptyString(card_id) || is_CustomCard) {
                 findViewById(R.id.layout_image).setVisibility(View.GONE);
                 findViewById(R.id.layout_card).setVisibility(View.VISIBLE);
                 ImageView shr_image = (ImageView) findViewById(R.id.shr_user_trade_image);
@@ -191,11 +190,11 @@ public class ViewShare extends Activity implements View.OnClickListener {
                 ((TextView) findViewById(R.id.trd_clicks_bottom_share)).setVisibility(View.VISIBLE);
                 ((TextView) findViewById(R.id.trd_clicks_top_share)).setText(card_clicks);
                 ((TextView) findViewById(R.id.trd_clicks_bottom_share)).setText(card_clicks);
-                if(is_CustomCard){
+                if (is_CustomCard) {
                     shr_image.setBackgroundResource(R.drawable.tradecardpink_big);
                     ((TextView) findViewById(R.id.custom_card_msg)).setVisibility(View.VISIBLE);
                     ((TextView) findViewById(R.id.custom_card_msg)).setText(card_heading);
-                }else {
+                } else {
                     shr_image.setBackgroundResource(R.drawable.tradecardbg_blank);
                     ((TextView) findViewById(R.id.heading_top)).setVisibility(View.VISIBLE);
                     ((TextView) findViewById(R.id.heading_bottom)).setVisibility(View.VISIBLE);
@@ -299,16 +298,20 @@ public class ViewShare extends Activity implements View.OnClickListener {
                 Intent i = new Intent(this, ChatRecordView.class);
                 String commentStr = "";//akshit code
 
-                if(!Utils.isEmptyString(card_originator)){//akshit code
-                     commentStr = shr_caption_trade.getText().toString().trim();
-                    Log.e("Tag","Strings In Caption"+commentStr);
+                if (!Utils.isEmptyString(card_originator)) {//akshit code
+                    commentStr = shr_caption_trade.getText().toString().trim();
+                    Log.e("Tag", "Strings In Caption" + commentStr);
 
-                }else {
-                     commentStr = shr_caption.getText().toString().trim();//akshit code
-                    Log.e("Tag","Strings In Caption"+commentStr);
+                } else {
+                    commentStr = shr_caption.getText().toString().trim();//akshit code
+                    Log.e("Tag", "Strings In Caption" + commentStr);
                 }
-                Log.e("Tag","Strings In Caption"+commentStr);
-               
+                Log.e("Tag", "Strings In Caption" + commentStr);
+
+                if (Utils.isEmptyString(commentStr))
+                    commentStr = "Write your caption here...";
+                
+
                 if (access_Token.length() < 3)
                     access_Token = "-";
 
@@ -319,7 +322,7 @@ public class ViewShare extends Activity implements View.OnClickListener {
                     i.putExtra("imageRatio", imageRatio);
                     i.putExtra("fileId", fileId);
                     if (!Utils.isEmptyString(mLocationCoordinates)) {
-                        i.putExtra("location_coordinates",mLocationCoordinates);
+                        i.putExtra("location_coordinates", mLocationCoordinates);
                     }
                 } else if (!Utils.isEmptyString(videoThumbnail)) {
                     i.putExtra("videoThumbnail", videoThumbnail);
@@ -343,9 +346,9 @@ public class ViewShare extends Activity implements View.OnClickListener {
 
                 i.putExtra("originalChatId", originalChatId);
 
-                if(!Utils.isEmptyString(card_originator)){//akshit code to send clicks in case of trade card
+                if (!Utils.isEmptyString(card_originator)) {//akshit code to send clicks in case of trade card
                     i.putExtra("clicks", card_clicks);
-                }else {
+                } else {
                     i.putExtra("clicks", clicks);
                 }
                 i.putExtra("textMsg", textMsg);
@@ -359,7 +362,7 @@ public class ViewShare extends Activity implements View.OnClickListener {
                 i.putExtra("sharingMedia", shareMedia);
                 i.putExtra("shareStatus", "shared");
                 i.putExtra("isMessageSender", isMessageSender);
-                i.putExtra("chatType",chatType);
+                i.putExtra("chatType", chatType);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 i.setAction("SHARE");

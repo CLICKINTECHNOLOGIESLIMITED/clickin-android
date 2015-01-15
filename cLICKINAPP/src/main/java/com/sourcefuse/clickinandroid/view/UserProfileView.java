@@ -501,9 +501,6 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
             if (slidemenu.isMenuShowing())
                 slidemenu.showContent();
             authManager.getProfileInfo("", authManager.getPhoneNo(), authManager.getUsrToken());
-
-
-
         }
 
         // addMenu(false);

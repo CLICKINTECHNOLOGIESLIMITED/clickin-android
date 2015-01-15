@@ -33,6 +33,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -1440,6 +1441,24 @@ public class
         ComponentName componentInfo = taskInfo.get(0).topActivity;
         String className = componentInfo.getClassName();
         return className;
+    }
+
+    public static void showOverlay(final Context context) {
+        final Dialog dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//         dialog.getWindow().setLayout(WindowManager.LayoutParams.FILL_PARENT, WindowManager.LayoutParams.FILL_PARENT);
+        dialog.setContentView(R.layout.overlay);
+        dialog.setCancelable(false);
+        dialog.show();
+        ImageView cancel = (ImageView)dialog.findViewById(R.id.dialog_cancel);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+                showDialog(context);
+
+            }
+        });
     }
 }
 

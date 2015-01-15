@@ -74,6 +74,10 @@ public class AuthManager {
     /* for notification counter */
     private int mNotificationCounter;
 
+
+    public String mIs_new_clickin_user = null;
+
+
     public String getLatLan() {
         return mLatLan;
     }
@@ -1090,11 +1094,74 @@ public class AuthManager {
                                 authManager.setEmailId(jobj.getString("email"));
                             if (jobj.has("is_enable_push_notification"))
                                 SettingManager.mNotification_Enable = Boolean.parseBoolean(jobj.getString("is_enable_push_notification"));
+                            if (jobj.has("is_new_clickin_user"))
+                                authManager.mIs_new_clickin_user = jobj.getString("is_new_clickin_user");
+                            else
+                                authManager.mIs_new_clickin_user = null;
                         }
 
                         EventBus.getDefault().postSticky("ProfileInfo True");
                     }
 
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+        });
+
+    }
+
+
+    public void reSetFlag(String phone, String user_token,String relationship_id, final String is_new_partner, final String is_new_clickin_user, final int mPosition) {
+        // TODO Auto-generated method stub
+
+        authManager = ModelManager.getInstance().getAuthorizationManager();
+        JSONObject inputDetails = new JSONObject();
+        try {
+            inputDetails.put("phone_no", phone);
+            inputDetails.put("user_token", user_token);
+            inputDetails.put("relationship_id", relationship_id);
+            inputDetails.put("is_new_partner", is_new_partner);
+            inputDetails.put("is_new_clickin_user", is_new_clickin_user);
+
+            client = new AsyncHttpClient();
+            se = new StringEntity(inputDetails.toString());
+            se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        client.post(null, APIs.RESETFLAGS, se, "application/json", new JsonHttpResponseHandler() {
+            @Override
+            public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
+                super.onFailure(statusCode, e, errorResponse);
+
+                if (errorResponse != null) {
+                    EventBus.getDefault().post("ReSetFlag False");
+                } else {
+                    EventBus.getDefault().post("ReSetFlag Network Error");
+                }
+
+            }
+
+            @Override
+            public void onSuccess(int statusCode,
+                                  org.apache.http.Header[] headers,
+                                  JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                boolean state = false;
+                try {
+
+                    state = response.getBoolean("success");
+                    if (state) {
+                        EventBus.getDefault().post("ReSetFlag True");
+                    }
+
+                    authManager.mIs_new_clickin_user = is_new_clickin_user;
+                    ModelManager.getInstance().getRelationManager().acceptedList.get(mPosition).mIs_new_partner = is_new_partner;
 
                 } catch (JSONException e) {
                     e.printStackTrace();
