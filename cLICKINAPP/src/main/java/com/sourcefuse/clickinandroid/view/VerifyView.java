@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -71,9 +72,10 @@ public class VerifyView extends Activity implements OnClickListener,
         d_two.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
+                Log.e("in case 1","in case 1");
                 int action = event.getAction();
                 if (keyCode == KeyEvent.KEYCODE_DEL && action == KeyEvent.ACTION_DOWN) {
-
+                    Log.e("in case 2","in case 2");
                     d_one.requestFocus();
                     d_one.setText("");
                     return true;
