@@ -55,7 +55,7 @@ public class ClickInNotificationManager implements NotificationManagerI {
                         super.onFailure(statusCode, e, errorResponse);
 
                         try {
-                            if (errorResponse.has("message")) {
+                            if (errorResponse != null && errorResponse.has("message")) {
                                 if (errorResponse.getString("message").equalsIgnoreCase("User don't have any notification.")) {
                                     notificationData.clear(); // to clear notification list as no notification is available
                                     EventBus.getDefault().postSticky("Notification error");

@@ -411,7 +411,7 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
                         if (!authManager.getTmpUserPic().equalsIgnoreCase("")) {
                             Picasso.with(JumpOtherProfileView.this)
                                     .load(authManager.getTmpUserPic())
-
+                                    .skipMemoryCache()
                                     .error(R.drawable.male_user).into(userimage);
                         } else {
                             userimage.setImageResource(R.drawable.male_user);
@@ -424,6 +424,7 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
                         if (!authManager.getTmpUserPic().equalsIgnoreCase("")) {
                             Picasso.with(JumpOtherProfileView.this)
                                     .load(authManager.getTmpUserPic())
+                                    .skipMemoryCache()
                                     .error(R.drawable.female_user).into(userimage);
                         } else {
                             userimage.setImageResource(R.drawable.female_user);
@@ -441,6 +442,7 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
                 if (!authManager.getTmpUserPic().equalsIgnoreCase("")) {
                     Picasso.with(JumpOtherProfileView.this)
                             .load(authManager.getTmpUserPic())
+                            .skipMemoryCache()
                             .error(R.drawable.male_user).into(userimage);
                 } else {
                     userimage.setImageResource(R.drawable.male_user);

@@ -155,7 +155,7 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
         authManager = ModelManager.getInstance().getAuthorizationManager();
 
         QBSettings.getInstance().fastConfigInit(Constants.CLICKIN_APP_ID, Constants.CLICKIN_AUTH_KEY, Constants.CLICKIN_AUTH_SECRET);
-       /*   QBSettings.getInstance().setServerApiDomain("apiclickin.quickblox.com");
+      /*    QBSettings.getInstance().setServerApiDomain("apiclickin.quickblox.com");
          QBSettings.getInstance().setContentBucketName("qb-clickin");
         QBSettings.getInstance().setChatServerDomain("chatclickin.quickblox.com");*/
         QBChatService.setDebugEnabled(true);
@@ -583,7 +583,7 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
     //monika-function to set message listeners for all accepted members
     private void registerListeners() {
         if (QBChatService.getInstance().isLoggedIn()) {
-            ArrayList<GetrelationshipsBean> clickInPartnerList = ModelManager.getInstance().getRelationManager().acceptedList;
+            ArrayList<GetrelationshipsBean> clickInPartnerList = new ArrayList<GetrelationshipsBean>(ModelManager.getInstance().getRelationManager().acceptedList);
 
             if (clickInPartnerList.size() != 0) {
                 for (GetrelationshipsBean temp : clickInPartnerList) {
