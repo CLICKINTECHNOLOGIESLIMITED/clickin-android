@@ -1117,11 +1117,11 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             temp.chatId = authManager.getQBId() + authManager.partnerQbId + sentOntime;  // chat id for sharing
             temp.chatType=intent.getIntExtra("chatType",-1);
             temp.partnerQbId = authManager.partnerQbId;
-            if (!Utils.isEmptyString(temp.clicks) && !temp.clicks.equalsIgnoreCase("no")) {
+            if (!Utils.isEmptyString(temp.clicks) && !temp.clicks.equalsIgnoreCase("no") && Utils.isEmptyString(temp.card_owner)) {
                 temp.textMsg = temp.clicks + "        " + temp.textMsg;
             } else {
                 //check chat for shared accept and reject case
-                if (Utils.isEmptyString(temp.isAccepted))
+                if (!Utils.isEmptyString(temp.isAccepted))
                     temp.clicks = "no";
 
 
@@ -1893,7 +1893,14 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             sharedMessage.add(obj.senderQbId);
             sharedMessage.add(obj.isAccepted);
             sharedMessage.add(obj.isMessageSender);
-            sharedMessage.add(obj.shareComment);
+            if(obj.shareComment.equalsIgnoreCase("Write your caption here...")){
+                Log.e("shareComment","Comment case 1"+obj.shareComment);
+                sharedMessage.add("");
+            }else {
+                Log.e("shareComment","Comment case 2"+obj.shareComment);
+                sharedMessage.add(obj.shareComment);
+            }
+
             sharedMessage.add(obj.sharingMedia);
             sharedMessage.add(obj.facebookToken);
         }

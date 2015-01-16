@@ -426,7 +426,7 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
         Message message = qbChatMessage.getSmackMessage();
         try {
             jSONObj = XML.toJSONObject(message.toXML().toString());
-            android.util.Log.e("xml --->",""+message.toXML());
+
 
             JSONObject messageObj = jSONObj.getJSONObject("message");
             JSONObject extraParamsObj = messageObj.getJSONObject("extraParams");
@@ -490,7 +490,7 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
 
                     temp.clicks = extraParamsObj.getString("card_clicks");
                     temp.card_owner = Integer.toString(extraParamsObj.getInt("card_owner"));
-                    android.util.Log.e("While Receiving", temp.card_owner = Integer.toString(extraParamsObj.getInt("card_owner")));
+
                     temp.is_CustomCard = extraParamsObj.getBoolean("is_CustomCard");
                     if (!temp.is_CustomCard) {
                         temp.card_content = extraParamsObj.getString("card_content");

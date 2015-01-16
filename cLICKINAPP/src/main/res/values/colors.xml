@@ -84,6 +84,7 @@
     <color name="owner_profile_header_b">#fefefe</color>
     <color name="owner_profile_name_b">#f29691</color>
     <color name="owner_profile_address_m">#727271</color>
+    <color name="Pop_upcolor">#fd9697</color>
     <!--List-->
     <color name="owner_relation_header_clickin_b">#b3b3b3</color>
     <color name="owner_relation_header_with_m">#b3b3b3</color>

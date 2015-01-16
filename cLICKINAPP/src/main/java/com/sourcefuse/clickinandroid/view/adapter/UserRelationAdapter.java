@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -229,10 +230,13 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
                 relationManager = ModelManager.getInstance().getRelationManager();
                 Constants.itemPosition = position;
                 Utils.launchBarDialog((Activity) context);
-                if (Utils.isEmptyString(itemList.get(position).getStatusAccepted()) && itemList.get(position).getRequestInitiator().equalsIgnoreCase("true")) {
-                    relationManager.deleteRelationship(itemList.get(position).getRelationshipId(), authManager.getPhoneNo(), authManager.getUsrToken());
-                } else {
+                if (Utils.isEmptyString(itemList.get(position).getStatusAccepted()) || Utils.isEmptyString(itemList.get(position).getStatusAccepted()) && itemList.get(position).getRequestInitiator().equalsIgnoreCase("true")) {
+
                     relationManager.updateStatus(itemList.get(position).getRelationshipId(), authManager.getPhoneNo(), authManager.getUsrToken(), "false");
+
+                } else {
+
+                    relationManager.deleteRelationship(itemList.get(position).getRelationshipId(), authManager.getPhoneNo(), authManager.getUsrToken());
                 }
 
 
