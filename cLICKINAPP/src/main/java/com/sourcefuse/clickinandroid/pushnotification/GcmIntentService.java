@@ -147,6 +147,7 @@ public class GcmIntentService extends IntentService {
 
                         data.setClass(getApplicationContext(), UserProfileView.class);
                         data.putExtra("updatephoto", true);
+                        PicassoManager.clearCache();
                         UpdateCounter();
                         sendNotification("Clickin'", extras.getString("message"), data);
                         EventBus.getDefault().post("updatePhoto");

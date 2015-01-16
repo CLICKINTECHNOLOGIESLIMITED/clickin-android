@@ -438,7 +438,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 LinearLayout clicksArea = (LinearLayout) row.findViewById(R.id.clicks_area);
                 clicksArea.setVisibility(View.VISIBLE);
 
-                if (!Utils.isEmptyString(temp.sharingMedia)) { // for share case-praful
+                if (!Utils.isEmptyString(temp.sharingMedia) && temp.shareStatus.equalsIgnoreCase("shared")) { // for share case
                     LinearLayout mShareLayout = (LinearLayout) row.findViewById(R.id.parent_clicks_area_share);
                     mShareLayout.setBackgroundResource(R.color.white);
                     mShareLayout.setVisibility(View.VISIBLE);
@@ -604,11 +604,11 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
             if (Utils.mPlayChatSound && temp.clicks.equalsIgnoreCase("no") || Utils.mPlayChatSound && !Utils.isEmptyString(temp.card_id)) { // code to play sound in normal case exxcept clicks
                 Utils.playSound((Activity) getContext(), R.raw.message_rcvd);
                 Utils.mPlayChatSound = false;
-                Log.e("in case 1--->", "in case 1--->");
+              //  Log.e("in case 1--->", "in case 1--->");
             } else if (Utils.mPlayChatSound && !temp.clicks.equalsIgnoreCase("no") && Utils.isEmptyString(temp.card_id)) {// code to play sound in case of clicks
                 Utils.playSound((Activity) getContext(), R.raw.clickreceived);
                 Utils.mPlayChatSound = false;
-                Log.e("in case 2--->", "in case 2--->");
+              //  Log.e("in case 2--->", "in case 2--->");
             }
 
 
