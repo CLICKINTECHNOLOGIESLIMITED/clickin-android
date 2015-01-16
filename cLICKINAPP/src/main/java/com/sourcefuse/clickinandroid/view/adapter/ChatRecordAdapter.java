@@ -12,7 +12,6 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -401,8 +400,10 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
             //only text-SENDER CASE
             //in case share accept/reject, ignore the text
-            if (!Utils.isEmptyString(temp.textMsg) && temp.clicks.equalsIgnoreCase("no") && Utils.isEmptyString(temp.isAccepted)
-                    && Utils.isEmptyString(temp.location_coordinates)) {
+            if (!Utils.isEmptyString(temp.textMsg) && temp.clicks.equalsIgnoreCase("no")
+                    && Utils.isEmptyString(temp.location_coordinates) ) {
+
+
                 //code to hide share icon for text messages-monika
                 if (Utils.isEmptyString(temp.content_url))
                     ((LinearLayout) row.findViewById(R.id.ll_for_share_icon)).setVisibility(View.GONE);
@@ -410,9 +411,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 chatClickTextLayout.setVisibility(View.VISIBLE);
                 LinearLayout clicksArea = (LinearLayout) row.findViewById(R.id.clicks_area);
                 clicksArea.setVisibility(View.VISIBLE);
-                TextView chatText = (TextView) row.findViewById(R.id.long_chat_text); // prafull code
-                chatText.setVisibility(View.VISIBLE);
-                chatText.setTextColor(context.getResources().getColor(R.color.black));
+
                 if (!Utils.isEmptyString(temp.sharingMedia)) { // for share case-praful
                     LinearLayout mShareLayout = (LinearLayout) row.findViewById(R.id.parent_clicks_area_share);
                     mShareLayout.setBackgroundResource(R.color.white);
@@ -422,6 +421,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     mShareText.setText("" + temp.textMsg);
                     mShareText.setTextColor(context.getResources().getColor(R.color.black));
                 } else {
+                    TextView chatText = (TextView) row.findViewById(R.id.long_chat_text); // prafull code
+                    chatText.setVisibility(View.VISIBLE);
+                    chatText.setTextColor(context.getResources().getColor(R.color.black));
                     parent_shared_layout.setBackgroundResource(R.drawable.newbg_grey);
                     chatText.setBackgroundResource(R.drawable.grey_square);
                     chatText.setText("" + temp.textMsg);
@@ -436,7 +438,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 clicksArea.setVisibility(View.VISIBLE);
                 TextView clicksText = (TextView) row.findViewById(R.id.clicks_text);
                 clicksText.setVisibility(View.VISIBLE);
-                clicksText.setText(temp.clicks);
+                clicksText.setText(temp.clicks.toString().trim());//akshit code
                 clicksText.setTextColor(context.getResources().getColor(R.color.white));
                 ImageView clicksHeart = (ImageView) row.findViewById(R.id.iv_clicks_heart);
                 clicksHeart.setVisibility(View.VISIBLE);
@@ -487,7 +489,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 TextView mShareLong = (TextView) row.findViewById(R.id.long_chat_text_share);
                 ImageView mHertImage = (ImageView) row.findViewById(R.id.iv_clicks_heart_share);
                 mHertImage.setVisibility(View.VISIBLE);
-                mShareText.setText(temp.clicks);
+                mShareText.setText(temp.clicks.toString().trim());//akshit code
                 mShareText.setVisibility(View.VISIBLE);
                 if (!(Utils.isEmptyString(temp.textMsg))) {
                     if (temp.textMsg.length() > Constants.CHAT_LENTH_LIMIT) {
@@ -984,8 +986,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
             /* only text reciver case*/
             //in case share accept/reject, ignore the text
 
-            if (!Utils.isEmptyString(temp.textMsg) && temp.clicks.equalsIgnoreCase("no") && Utils.isEmptyString(temp.isAccepted)
-                    && Utils.isEmptyString(temp.location_coordinates)) {
+            if (!Utils.isEmptyString(temp.textMsg) && temp.clicks.equalsIgnoreCase("no")  && Utils.isEmptyString(temp.location_coordinates)
+
+                   ) {
 
                 //code to hide share icon for text messages-monika
                 if (Utils.isEmptyString(temp.content_url))
@@ -995,7 +998,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 TextView chatText = (TextView) row.findViewById(R.id.long_chat_text); // prafull code
 
 
-                if (!Utils.isEmptyString(temp.sharingMedia)) { // for share case
+                if (!Utils.isEmptyString(temp.sharingMedia) && temp.shareStatus.equalsIgnoreCase("shared")) { // for share case
                     LinearLayout mShareLayout = (LinearLayout) row.findViewById(R.id.parent_clicks_area_share);
                     mShareLayout.setBackgroundResource(R.color.white);
                     mShareLayout.setVisibility(View.VISIBLE);
@@ -1086,7 +1089,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 ImageView mHertImage = (ImageView) row.findViewById(R.id.iv_clicks_heart_share);
                 mHertImage.setVisibility(View.VISIBLE);
                 mShareText.setVisibility(View.VISIBLE);
-                mShareText.setText(temp.clicks);
+                mShareText.setText(temp.clicks.toString().trim());//akshit code
                 mShareText.setVisibility(View.VISIBLE);
                 if (!(Utils.isEmptyString(temp.textMsg))) {
 

@@ -48,6 +48,8 @@ public class ChatMessageBody {
     public String originalMessageID = null;
     public String sharingMedia = null;
     public String isAccepted = null;
+    public String isShared = null;
+
     public String facebookToken = null;
     public String messageSenderId=null;
     //monika- to show image from uri

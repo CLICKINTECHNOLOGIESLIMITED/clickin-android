@@ -23,7 +23,6 @@ import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
@@ -510,9 +509,10 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         }, 3000);
 
 
-
-        /* to show Dialog*/
-        Utils.showDialog(this);
+//        if(authManager.getIs_new_clickin_user().equalsIgnoreCase("yes")){
+//             /* to show Dialog*/
+//            Utils.showOverlay(this);//akshit
+        Utils.showDialog(this);//praful
 
     }
 
@@ -2205,6 +2205,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             Utils.dismissBarDialog();
         }
     }
+
+
 }
 
 

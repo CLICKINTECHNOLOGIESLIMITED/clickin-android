@@ -421,12 +421,16 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
             }
         });
         if (eachNewsFeed.get(position).getCommentArrayList() != null) {
+            Log.e("Feeds Adapter","Feed"+eachNewsFeed.get(position).getCommentArrayList());
+
             holder.feed_comments_layout.setVisibility(View.VISIBLE);
             if (eachNewsFeed.get(position).getNewsfeedArray_comments_count() > 3) {
                 holder.feed_comments_layout1.setVisibility(View.VISIBLE);
+
                 holder.no_comments.setText("View all " + eachNewsFeed.get(position).getNewsfeedArray_comments_count() + " comments");
-                Log.e("No of Comments " ,"In Case comments 1 "+eachNewsFeed.get(position).getNewsfeedArray_comments_count());
+                Log.e("No of Comments 1" ,"In Case comments 1 "+eachNewsFeed.get(position).getNewsfeedArray_comments_count());
                 for (int k = 0; k < eachNewsFeed.get(position).getCommentArrayList().size(); k++) {
+                    Log.e("value of coment--->",""+eachNewsFeed.get(position).getCommentArrayList().get(k).getNewsFeedArray_commentArray_comment());
                     if (k == 0) {
 //                    holder.name2.setVisibility(View.VISIBLE);
                         holder.comment2.setVisibility(View.VISIBLE);
@@ -467,6 +471,8 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
                     holder.comment4.setVisibility(View.GONE);
                     String text = "<font color=#01DFD7><b>" + eachNewsFeed.get(position).getCommentArrayList().get(0).getNewsFeedArray_commentArray_user_name() + "</b></font> <font color=#000000>" + eachNewsFeed.get(position).getCommentArrayList().get(0).getNewsFeedArray_commentArray_comment() + "</font>";
                     holder.comment2.setText(Html.fromHtml(text));
+
+                    Log.e("No of Comments " ,"In Case comments 2 "+eachNewsFeed.get(0).getNewsfeedArray_comments_count());
                 } else if (eachNewsFeed.get(position).getCommentArrayList().size() == 2) {
 //                    holder.name2.setVisibility(View.VISIBLE);
                     holder.comment2.setVisibility(View.VISIBLE);
@@ -485,7 +491,8 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
                     holder.comment2.setText(Html.fromHtml(text));
                     String text2 = "<font color=#01DFD7><b>" + eachNewsFeed.get(position).getCommentArrayList().get(1).getNewsFeedArray_commentArray_user_name() + "</b></font> <font color=#000000>" + eachNewsFeed.get(position).getCommentArrayList().get(1).getNewsFeedArray_commentArray_comment() + "</font>";
                     holder.comment3.setText(Html.fromHtml(text2));
-
+                    Log.e("No of Comments " ,"In Case comments 3 "+eachNewsFeed.get(0).getNewsfeedArray_comments_count());
+                    Log.e("No of Comments " ,"In Case comments 3 "+eachNewsFeed.get(1).getNewsfeedArray_comments_count());
                 } else if (eachNewsFeed.get(position).getCommentArrayList().size() == 3) {
 //                    holder.name2.setVisibility(View.VISIBLE);
                     holder.comment2.setVisibility(View.VISIBLE);
@@ -507,6 +514,9 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
                     holder.comment3.setText(Html.fromHtml(text2));
                     String text3 = "<font color=#01DFD7><b>" + eachNewsFeed.get(position).getCommentArrayList().get(2).getNewsFeedArray_commentArray_user_name() + "</b></font> <font color=#000000>" + eachNewsFeed.get(position).getCommentArrayList().get(2).getNewsFeedArray_commentArray_comment() + "</font>";
                     holder.comment4.setText(Html.fromHtml(text3));
+                    Log.e("No of Comments " ,"In Case comments 4 "+eachNewsFeed.get(0).getNewsfeedArray_comments_count());
+                    Log.e("No of Comments " ,"In Case comments 4 "+eachNewsFeed.get(1).getNewsfeedArray_comments_count());
+                    Log.e("No of Comments " ,"In Case comments 4 "+eachNewsFeed.get(2).getNewsfeedArray_comments_count());
                 } else {
 //                    holder.name2.setVisibility(View.GONE);
                     holder.comment2.setVisibility(View.GONE);

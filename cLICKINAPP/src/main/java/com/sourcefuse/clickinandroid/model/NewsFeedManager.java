@@ -207,12 +207,16 @@ public class NewsFeedManager {
 
                                     for (int l = 0; l < commentArray.length(); l++) {
                                         NewsFeedBean commentUserData = new NewsFeedBean();
+                                        String comment="" ;
 
                                         commentUserData.setNewsFeedArray_commentArray_id(commentArray.getJSONObject(l).getString("_id"));
                                         commentUserData.setNewsFeedArray_commentArray_chat_id(commentArray.getJSONObject(l).getString("chat_id"));
                                         commentUserData.setNewsFeedArray_commentArray_newsfeed_id(commentArray.getJSONObject(l).getString("newsfeed_id"));
                                         commentUserData.setNewsFeedArray_commentArray_type(commentArray.getJSONObject(l).getString("type"));
-                                        commentUserData.setNewsFeedArray_commentArray_comment(commentArray.getJSONObject(l).getString("comment"));
+//                                        comment = commentArray.getJSONObject(l).getString("comment");
+//                                        if(!Utils.isEmptyString(comment))
+                                            commentUserData.setNewsFeedArray_commentArray_comment(commentArray.getJSONObject(l).getString("comment"));
+
                                         commentUserData.setNewsFeedArray_commentArray_user_id(commentArray.getJSONObject(l).getString("user_id"));
                                         commentUserData.setNewsFeedArray_commentArray_user_name(commentArray.getJSONObject(l).getString("user_name"));
                                         commentUserData.setNewsFeedArray_commentArray_user_pic(commentArray.getJSONObject(l).getString("user_pic"));

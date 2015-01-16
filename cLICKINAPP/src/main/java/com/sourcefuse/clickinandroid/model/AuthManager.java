@@ -2,7 +2,6 @@ package com.sourcefuse.clickinandroid.model;
 
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.util.Log;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -35,6 +34,7 @@ public class AuthManager {
     private String message;
     private String phoneNo;
     private String QBId;
+//    private String is_new_clickin_user = "";
     private String usrToken;
     private String userId;
     private String userName;
@@ -98,6 +98,15 @@ public class AuthManager {
     public void setDeviceRegistereId(String deviceRegistereId1) {
         this.deviceRegistereId = deviceRegistereId1;
     }
+
+//
+//    public String getIs_new_clickin_user() {
+//        return is_new_clickin_user;
+//    }
+//
+//    public void setIs_new_clickin_user(String is_new_clickin_user) {
+//        this.is_new_clickin_user = is_new_clickin_user;
+//    }
 
     public String getUserCity() {
         return userCity;
@@ -1065,6 +1074,11 @@ public class AuthManager {
                             else
                                 authManager.setTmpCountry(jobj.getString(""));
                             //ends
+                            //Code to check if user has logged in first time
+//                            if(jobj.has("is_new_clickin_user"))
+//                                authManager.setIs_new_clickin_user(jobj.getString("is_new_clickin_user"));
+//                            else
+//                                authManager.setIs_new_clickin_user("yes");
 
                         } else {
                             JSONObject jobj = new JSONObject(response.getString("user"));

@@ -19,7 +19,6 @@ import com.facebook.SessionState;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ChatManager;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
-import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
 import com.squareup.picasso.Picasso;
@@ -301,14 +300,14 @@ public class ViewShare extends Activity implements View.OnClickListener {
 
                 if(!Utils.isEmptyString(card_originator)){//akshit code
                      commentStr = shr_caption_trade.getText().toString().trim();
-                    Log.e("Tag","Strings In Caption"+commentStr);
 
                 }else {
                      commentStr = shr_caption.getText().toString().trim();//akshit code
-                    Log.e("Tag","Strings In Caption"+commentStr);
+
                 }
-                Log.e("Tag","Strings In Caption"+commentStr);
-               
+                 if(Utils.isEmptyString(commentStr))
+                     commentStr = "Write your caption here...";
+
                 if (access_Token.length() < 3)
                     access_Token = "-";
 
