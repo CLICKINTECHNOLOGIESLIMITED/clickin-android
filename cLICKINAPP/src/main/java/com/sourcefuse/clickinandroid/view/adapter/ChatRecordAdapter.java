@@ -186,7 +186,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     }
 
                     mLongTextView.setVisibility(View.VISIBLE);
-                    mLongTextView.setPadding(pxlToDp(5),pxlToDp(10),0,pxlToDp(10));
+                    mLongTextView.setPadding(pxlToDp(5), pxlToDp(10), 0, pxlToDp(10));
                     mLongTextView.setTextColor(context.getResources().getColor(R.color.black));
                     mLongTextView.setText("Location Shared");
 
@@ -343,7 +343,19 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     ((LinearLayout) row.findViewById(R.id.ll_for_share_icon)).setVisibility(View.VISIBLE);
                     ((LinearLayout) row.findViewById(R.id.acc_rej_layout_second)).setVisibility(View.VISIBLE);
 
-                    ((TextView) row.findViewById(R.id.tv_acc_res_name)).setText("You");
+                    //code to decide who is accepted the card- basis on card owner- importance while sharing card
+                    String name=" ";
+                    if(temp.card_owner.equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getQBId())){
+
+                        //parnter accepted the card
+                        String[] splitted = relationManager.getPartnerName.split("\\s+");
+                        name=splitted[0];
+                    }else{
+                        //it means you accepted the card
+                        name="You";
+
+                    }
+                    ((TextView) row.findViewById(R.id.tv_acc_res_name)).setText(name);
                     ((TextView) row.findViewById(R.id.tv_acc_res_status)).setText("ACCEPTED!");
 
                     ImageView acc_rej_view = ((ImageView) row.findViewById(R.id.iv_acc_rec));
@@ -355,7 +367,20 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     ((LinearLayout) row.findViewById(R.id.ll_for_share_icon)).setVisibility(View.VISIBLE);
                     ((LinearLayout) row.findViewById(R.id.acc_rej_layout_second)).setVisibility(View.VISIBLE);
 
-                    ((TextView) row.findViewById(R.id.tv_acc_res_name)).setText("You");
+                    //code to decide who is accepted the card- basis on card owner- importance while sharing card
+                    String name=" ";
+                    if(temp.card_owner.equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getQBId())){
+
+                        //parnter accepted the card
+                        String[] splitted = relationManager.getPartnerName.split("\\s+");
+                        name=splitted[0];
+                    }else{
+                        //it means you accepted the card
+                        name="You";
+
+                    }
+
+                    ((TextView) row.findViewById(R.id.tv_acc_res_name)).setText(name);
                     ((TextView) row.findViewById(R.id.tv_acc_res_status)).setText("REJECTED!");
 
                     ImageView acc_rej_view = ((ImageView) row.findViewById(R.id.iv_acc_rec));
@@ -530,8 +555,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
                 } else if (temp.shareStatus.equalsIgnoreCase("shared")) {
                     ((RelativeLayout) row.findViewById(R.id.shared_header_view)).setVisibility(View.VISIBLE);
-                    if(!Utils.isEmptyString(temp.card_id))
-                    {
+                    if (!Utils.isEmptyString(temp.card_id)) {
                         row.findViewById(R.id.except_share).setVisibility(View.GONE);
                         row.findViewById(R.id.incase_share).setVisibility(View.VISIBLE);
                     }
@@ -573,6 +597,19 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
             //code to set time
             TextView timeView = (TextView) row.findViewById(R.id.tv_time_text);
             timeView.setText(Utils.getLocalDatefromTimestamp(Long.parseLong(temp.sentOn)));
+
+
+            /* code to play sound */
+            if (Utils.mPlayChatSound && temp.clicks.equalsIgnoreCase("no") || Utils.mPlayChatSound && !Utils.isEmptyString(temp.card_id)) { // code to play sound in normal case exxcept clicks
+                Utils.playSound((Activity) getContext(), R.raw.message_rcvd);
+                Utils.mPlayChatSound = false;
+                Log.e("in case 1--->", "in case 1--->");
+            } else if (Utils.mPlayChatSound && !temp.clicks.equalsIgnoreCase("no") && Utils.isEmptyString(temp.card_id)) {// code to play sound in case of clicks
+                Utils.playSound((Activity) getContext(), R.raw.clickreceived);
+                Utils.mPlayChatSound = false;
+                Log.e("in case 2--->", "in case 2--->");
+            }
+
 
             //temp code -for image-receiver end
             if (!(Utils.isEmptyString(temp.imageRatio))) {   // image case for reciver end    image for reciver end
@@ -642,15 +679,14 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     }
                     TextView mLongTextView = (TextView) row.findViewById(R.id.long_chat_text_share);
                     mLongTextView.setVisibility(View.VISIBLE);
-                    mLongTextView.setPadding(pxlToDp(5),pxlToDp(10),0,pxlToDp(10));
+                    mLongTextView.setPadding(pxlToDp(5), pxlToDp(10), 0, pxlToDp(10));
                     mLongTextView.setTextColor(context.getResources().getColor(R.color.black));
                     mLongTextView.setText("Location Shared");
 
-            }
+                }
                /* for map to set text location shared */
 
             } else if (!Utils.isEmptyString(temp.content_url) && Utils.isEmptyString(temp.video_thumb)) {//start of audio-RECIVER case
-
 
 
                 ImageView mAudioImage = (ImageView) row.findViewById(R.id.iv_play_btn);
@@ -859,7 +895,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                             int position = (Integer) v.getTag();
                             //card is allowed to play once only- reject, accept or counter change state to played
                             if (temp.card_Played_Countered.equalsIgnoreCase("playing")) {
-                             //   temp.card_Played_Countered = "played";
+                                //   temp.card_Played_Countered = "played";
                                 sendUpdateCardValues(position, "countered", "COUNTERED CARD!");
 
                             }
@@ -869,6 +905,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                             ((ImageView) row.findViewById(R.id.iv_reject_card)).setBackgroundResource(R.drawable.c_card_reject_deactive);
                             //akshit code ends for making button inactive
 
+
                         }
                     });
                 } else if (temp.card_Accepted_Rejected.equalsIgnoreCase("accepted")) {//enf of first time played card-receiver
@@ -876,8 +913,21 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     ((LinearLayout) row.findViewById(R.id.ll_for_share_icon)).setVisibility(View.VISIBLE);
                     ((ImageView) row.findViewById(R.id.iv_type_two_share_icon_r)).setVisibility(View.VISIBLE);
                     ((LinearLayout) row.findViewById(R.id.acc_rej_layout_second)).setVisibility(View.VISIBLE);
-                    String[] splitted = relationManager.getPartnerName.split("\\s+");
-                    ((TextView) row.findViewById(R.id.tv_acc_res_name)).setText(splitted[0]);
+
+                    //code to decide who is accepted the card- basis on card owner- importance while sharing card
+                    String name=" ";
+                    if(temp.card_owner.equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getQBId())){
+
+                        //parnter accepted the card
+                        String[] splitted = relationManager.getPartnerName.split("\\s+");
+                        name=splitted[0];
+                    }else{
+                        //it means you accepted the card
+                        name="You";
+
+                    }
+
+                    ((TextView) row.findViewById(R.id.tv_acc_res_name)).setText(name);
                     ((TextView) row.findViewById(R.id.tv_acc_res_status)).setText("ACCEPTED!");
 
                     ImageView acc_rej_view = ((ImageView) row.findViewById(R.id.iv_acc_rec));
@@ -888,8 +938,20 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     ((RelativeLayout) row.findViewById(R.id.rl_acc_rej_card)).setVisibility(View.VISIBLE);
                     ((LinearLayout) row.findViewById(R.id.ll_for_share_icon)).setVisibility(View.VISIBLE);
                     ((LinearLayout) row.findViewById(R.id.acc_rej_layout_second)).setVisibility(View.VISIBLE);
-                    String[] splitted = relationManager.getPartnerName.split("\\s+");
-                    ((TextView) row.findViewById(R.id.tv_acc_res_name)).setText(splitted[0]);
+                    //code to decide who is accepted the card- basis on card owner- importance while sharing card
+                    String name=" ";
+                    if(temp.card_owner.equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getQBId())){
+
+                        //parnter accepted the card
+                        String[] splitted = relationManager.getPartnerName.split("\\s+");
+                        name=splitted[0];
+                    }else{
+                        //it means you accepted the card
+                        name="You";
+
+                    }
+
+                    ((TextView) row.findViewById(R.id.tv_acc_res_name)).setText(name);
                     ((TextView) row.findViewById(R.id.tv_acc_res_status)).setText("REJECTED!");
 
                     ImageView acc_rej_view = ((ImageView) row.findViewById(R.id.iv_acc_rec));
@@ -919,6 +981,8 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                                 temp.card_Played_Countered = "played";
                                 sendUpdateCardValues(position, "rejected", "REJECTED!");
 
+                                /* code to play sound */
+                                Utils.playSound((Activity) getContext(), R.raw.tradecard_rejected);
                             }
                         }
                     });
@@ -934,7 +998,12 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                                 temp.card_Played_Countered = "played";
                                 sendUpdateCardValues(position, "accepted", "ACCEPTED!");
 
+
+                                /* code to play sound */
+                                Utils.playSound((Activity) getContext(), R.raw.tradecard_accepted);
                             }
+
+
                         }
                     });
                     ((ImageView) row.findViewById(R.id.tv_counter_card_action)).setTag(position);
@@ -945,9 +1014,11 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                             int position = (Integer) v.getTag();
                             //card is allowed to play once only- reject, accept or counter change state to played
                             if (temp.card_Played_Countered.equalsIgnoreCase("playing")) {
-                             //   temp.card_Played_Countered = "played";
+                                //   temp.card_Played_Countered = "played";
                                 sendUpdateCardValues(position, "countered", "COUNTERED CARD!");
 
+                                /* code to play sound */
+                                Utils.playSound((Activity) getContext(), R.raw.message_sent);
                             }
                         }
                     });
@@ -1132,8 +1203,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
                     ((ImageView) row.findViewById(R.id.iv_type_two_share_icon_r)).setVisibility(View.GONE);
                     ((RelativeLayout) row.findViewById(R.id.shared_header_view)).setVisibility(View.VISIBLE);
-                    if(!Utils.isEmptyString(temp.card_id))
-                    {
+                    if (!Utils.isEmptyString(temp.card_id)) {
                         row.findViewById(R.id.except_share).setVisibility(View.GONE);
                         row.findViewById(R.id.incase_share).setVisibility(View.VISIBLE);
                     }
@@ -1143,7 +1213,6 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     ((TextView) row.findViewById(R.id.shared_by_name)).setTextColor(Color.BLACK);//akshit Code
                     ((TextView) row.findViewById(R.id.shared_by_name)).setText(splitted[0]);
                     ((TextView) row.findViewById(R.id.shared_message)).setText(" wants to share");
-
 
 
                 }
@@ -1226,7 +1295,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     item.isAccepted = "no";
                     i.putExtra("shareStatus", "shareRejected");
                     i.putExtra("isAccepted", "no");
-                    i.putExtra("chatType",item.chatType);
+                    i.putExtra("chatType", item.chatType);
                     i.putExtra("isMessageSender", item.isMessageSender);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -1240,6 +1309,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     ((TextView) row.findViewById(R.id.shared_message_reject)).setBackgroundResource(R.drawable.c_card_reject_deactive);
                     ((TextView) row.findViewById(R.id.shared_message_accept)).setBackgroundResource(R.drawable.c_card_accepted_deactive);
                     //ends
+
+                    /* code to play sound */
+                    Utils.playSound((Activity) getContext(), R.raw.message_sent);
 
 
                 }
@@ -1262,28 +1334,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 ChatMessageBody item = ModelManager.getInstance().getChatManager().chatMessageList.get(position);
                 if (Utils.isEmptyString(item.isAccepted)) { //it means no action was taken on share request-monika
                     Intent i = new Intent(context, ChatRecordView.class);
-                    //not required these parameters at all-monika
-              /*  if (!Utils.isEmptyString(item.imageRatio)) {
-                    i.putExtra("imageRatio", item.imageRatio);
-                    i.putExtra("fileId", item.content_url);
-                } else if (!Utils.isEmptyString(item.video_thumb)) {
-                    i.putExtra("videoThumbnail", item.video_thumb);
-                    i.putExtra("videoID", item.content_url);
-                }   else if (!Utils.isEmptyString(item.card_originator)) {
-                    i.putExtra("card_Accepted_Rejected", item.card_Accepted_Rejected);
-                    i.putExtra("card_DB_ID", item.card_DB_ID);
-                    i.putExtra("card_Played_Countered", item.card_Played_Countered);
-                    i.putExtra("card_clicks", item.clicks);
-                    i.putExtra("card_content", item.card_content);
-                    i.putExtra("card_heading", item.card_heading);
-                    i.putExtra("card_originator", item.card_originator);
-                    i.putExtra("card_owner", item.card_owner);
-                    i.putExtra("card_url", item.card_url);
-                    i.putExtra("is_CustomCard", item.is_CustomCard);
 
-                }else if (!Utils.isEmptyString(item.content_url) && Utils.isEmptyString(item.imageRatio) && Utils.isEmptyString(item.video_thumb)) {
-                    i.putExtra("audioID", item.content_url);
-                }*/
                     i.putExtra("originalChatId", item.originalMessageID);
 
                     i.putExtra("textMsg", "SHARED");
@@ -1295,7 +1346,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     item.isAccepted = "yes";
                     i.putExtra("shareStatus", "shareAccepted");
                     i.putExtra("isAccepted", "yes");
-                    i.putExtra("chatType",item.chatType);
+                    i.putExtra("chatType", item.chatType);
                     i.putExtra("isMessageSender", item.isMessageSender);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -1309,6 +1360,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     ((TextView) row.findViewById(R.id.shared_message_reject)).setBackgroundResource(R.drawable.c_card_reject_deactive);
                     ((TextView) row.findViewById(R.id.shared_message_accept)).setBackgroundResource(R.drawable.c_card_accepted_deactive);
                     //ends
+
+                    /* code to play sound */
+                    Utils.playSound((Activity) getContext(), R.raw.message_sent);
                 }
             }
         });
@@ -1392,9 +1446,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
         i.putExtra("card_Accepted_Rejected", action);
         i.putExtra("played_Countered", item.card_Played_Countered);
         i.putExtra("card_originator", item.card_originator);
-        i.putExtra("card_owner",item.card_owner);
-        i.putExtra("chat_id",item.chatId); //update the value to "played" only when user actually counter the card
-                                            //from card- its in case of counter case only-monika
+        i.putExtra("card_owner", item.card_owner);
+        i.putExtra("chat_id", item.chatId); //update the value to "played" only when user actually counter the card
+        //from card- its in case of counter case only-monika
         if (action.equalsIgnoreCase("countered")) {
             if (item.is_CustomCard) {
                 i.setClass(context, ViewTradeCart.class);
@@ -1451,7 +1505,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
             i.putExtra("audioID", item.content_url);
         }
 
-        i.putExtra("chatType",item.chatType);
+        i.putExtra("chatType", item.chatType);
         i.setClass(context, ViewShare.class);
         i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 

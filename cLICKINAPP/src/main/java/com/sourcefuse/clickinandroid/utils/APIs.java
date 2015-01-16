@@ -69,4 +69,10 @@ public class APIs {
     public static final String SETTINGREPORTPROBLEM = baseurl + "/settings/reportaproblem/";
     public static final String SETTINGFORGOTPASSWORD = baseurl + "/settings/forgotpassword/";
     public static final String SETTINGCHANGE = baseurl + "/settings/change/";
+
+
+
+    public static final String RESETFLAGS = baseurl + "/relationships/resetnewuserandpartnerflag";
+
+
 }

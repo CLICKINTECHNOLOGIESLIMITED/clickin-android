@@ -53,20 +53,22 @@ public class ClickInNotificationManager implements NotificationManagerI {
                     public void onFailure(int statusCode, Throwable e,
                                           JSONObject errorResponse) {
                         super.onFailure(statusCode, e, errorResponse);
-                        if (errorResponse.has("message")) {
-                            try {
+
+                        try {
+                            if (errorResponse.has("message")) {
                                 if (errorResponse.getString("message").equalsIgnoreCase("User don't have any notification.")) {
                                     notificationData.clear(); // to clear notification list as no notification is available
                                     EventBus.getDefault().postSticky("Notification error");
                                 }
-                            } catch (JSONException e1) {
-                                e1.printStackTrace();
                             }
-                        }
-                        if (errorResponse != null) {
+                            if (errorResponse != null) {
 
-                            EventBus.getDefault().postSticky("Notification false");
+                                EventBus.getDefault().postSticky("Notification false");
+                            }
+                        } catch (JSONException e1) {
+                            e1.printStackTrace();
                         }
+
 
                     }
 

@@ -23,6 +23,7 @@ import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
@@ -360,13 +361,11 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 mUserImageUri = Utils.getImageContentUri(ChatRecordView.this, new File(mUserImagePath));
 
 
-
             if (!Utils.isEmptyString("" + mUserImageUri))
                 mypix.setImageURI(mUserImageUri);
             else if (imageBitmap != null) {
                 mypix.setImageBitmap(imageBitmap);
-            }
-            else if (!Utils.isEmptyString(authManager.getUserPic()) && Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl"))
+            } else if (!Utils.isEmptyString(authManager.getUserPic()) && Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl"))
                 Picasso.with(this).load(authManager.getUserPic()).error(R.drawable.female_user).into(mypix);
             else
                 Picasso.with(this).load(authManager.getUserPic()).error(R.drawable.male_user).into(mypix);
@@ -509,7 +508,25 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         }, 3000);
 
 
-        Utils.showDialog(this);//praful
+
+        /* code to show dialog*/
+        if (getIntent().getExtras().containsKey("mValue")) {
+
+            String mRelationShipId = relationManager.acceptedList.get(relationListIndex).getRelationshipId();
+
+
+            Log.e("mValue oncreate---->",""+getIntent().getStringExtra("mValue"));
+            if (getIntent().getStringExtra("mValue").equalsIgnoreCase("one")) {
+
+                Utils.showOverlay(ChatRecordView.this);
+                authManager.reSetFlag(authManager.getPhoneNo(),authManager.getUsrToken(),mRelationShipId,"no","no",relationListIndex);
+            } else if (getIntent().getStringExtra("mValue").equalsIgnoreCase("two")) {
+                authManager.reSetFlag(authManager.getPhoneNo(),authManager.getUsrToken(),mRelationShipId,"no","null",relationListIndex);
+                Utils.showDialog(ChatRecordView.this);
+            }
+
+        }
+
 
     }
 
@@ -669,9 +686,11 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.btn_send:
+                break;
             case R.id.textview_send://akshit code for event on send
                 //   break;
-            case R.id.btn_send:
+
                 //code to check online status or not
 
                 String chatString = chatText.getText().toString();
@@ -683,9 +702,15 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                         if (isClicks() == true) {
                             temp.clicks = Utils.convertClicks(String.valueOf(seekValue)).trim();
                             temp.textMsg = temp.clicks + "        " + chatString;
+
+
+                            /* code to play sound in case of clicks prafull*/
                         } else {
                             temp.clicks = "no";
                             temp.textMsg = chatString;
+                            /* code to play sound in case of Text prafull*/
+                            /*Utils.playSound(ChatRecordView.this, R.raw.message_sent);*/
+
                         }
                         temp.partnerQbId = authManager.partnerQbId;
                         temp.senderQbId = authManager.getQBId();
@@ -710,16 +735,21 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                     } else if (mImageCaptureUri != null) {//image is attachedd
                         CHAT_TYPE = Constants.CHAT_TYPE_IMAGE;
                         sendMsgToQB(path);
+                        /* code to play sound in case of image prafull*/
+                       /* Utils.playSound(ChatRecordView.this, R.raw.message_sent);*/
 
                     } else if (!Utils.isEmptyString(audioFilePath)) { //Audio is attached
 
                         CHAT_TYPE = Constants.CHAT_TYPE_AUDIO;
                         sendMsgToQB(audioFilePath);
-
+                        /* code to play sound in case of audio prafull*/
+                        /*Utils.playSound(ChatRecordView.this, R.raw.message_sent);*/
                     } else if (!Utils.isEmptyString(videofilePath)) { //Video is attached
 
                         CHAT_TYPE = Constants.CHAT_TYPE_VIDEO;
                         sendMsgToQB(videofilePath);
+                        /* code to play sound in case of video prafull*/
+                        /*Utils.playSound(ChatRecordView.this, R.raw.message_sent);*/
                     }
 
                 }
@@ -728,16 +758,13 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 mImageCaptureUri = null;
                 path = null;
                 attachBtn.setImageDrawable(getResources().getDrawable(R.drawable.attachedfileiconx));
-                // chatText.setText("");
+
+
+                /* to play sound*/
+                Utils.playSound(ChatRecordView.this, R.raw.message_sent);
+
                 break;
-           /* case R.id.iv_menu_button:
-                hideAttachView();
-                slidemenu.showMenu(true);
-                break;
-            case R.id.iv_notification_button:
-                hideAttachView();
-                slidemenu.showSecondaryMenu(true);
-                break;*/
+
             case R.id.btn_to_card:
 
                 long sentOntime1 = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis();
@@ -905,7 +932,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 temp.location_coordinates = mLocation_Coordinates;
                 temp.isDelivered = Constants.MSG_SENDING;
                 temp.chatType = Constants.CHAT_TYPE_LOCATION;
-
+                /* sound in case of location */
+                Utils.playSound(ChatRecordView.this, R.raw.message_sent);
                 break;
 
             default:
@@ -920,7 +948,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             }
         } else {
             temp.clicks = "no";
-            temp.textMsg="Location Shared "; //needed by IOS
+            temp.textMsg = "Location Shared "; //needed by IOS
         }
         temp.partnerQbId = authManager.partnerQbId;
         temp.senderQbId = authManager.getQBId();
@@ -960,6 +988,25 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         chatText.setText("");//akshit code to Refresh Chat box text
 
 
+/* code to show dialog*/
+        /* code to show dialog*/
+        if (intent.getExtras().containsKey("mValue")) {
+
+            String mRelationShipId = relationManager.acceptedList.get(relationListIndex).getRelationshipId();
+
+
+            Log.e("mValue oncreate---->",""+getIntent().getStringExtra("mValue"));
+            if (intent.getStringExtra("mValue").equalsIgnoreCase("one")) {
+
+                Utils.showOverlay(ChatRecordView.this);
+                authManager.reSetFlag(authManager.getPhoneNo(),authManager.getUsrToken(),mRelationShipId,"no","no",relationListIndex);
+            } else if (intent.getStringExtra("mValue").equalsIgnoreCase("two")) {
+                authManager.reSetFlag(authManager.getPhoneNo(),authManager.getUsrToken(),mRelationShipId,"no","null",relationListIndex);
+                Utils.showDialog(ChatRecordView.this);
+            }
+
+        }
+
         if (actionReq.equalsIgnoreCase("UPDATE")) {
             //  Utils.launchBarDialog(this);
             Intent i = new Intent(this, MyQbChatService.class);
@@ -977,15 +1024,15 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 temp.card_url = intent.getExtras().getString("card_url");
                 temp.card_content = intent.getExtras().getString("Discription");
 
-            }else{
+            } else {
                 //values required by IOS-Monika
 
-                    temp.card_content="_";
+                temp.card_content = "_";
 
 
-                    temp.card_DB_ID="_";
+                temp.card_DB_ID = "_";
 
-                    temp.card_url="_";
+                temp.card_url = "_";
             }
             temp.card_id = intent.getExtras().getString("card_id");
             if (Utils.isEmptyString(temp.card_id)) {
@@ -1040,17 +1087,15 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             ChatMessageBody temp = new ChatMessageBody();
 
 
-
             if (intent.hasExtra("clicks"))
                 temp.clicks = intent.getExtras().getString("clicks");
-           // temp.chatType = Constants.CHAT_TYPE_TEXT;
+            // temp.chatType = Constants.CHAT_TYPE_TEXT;
             if (intent.hasExtra("imageRatio")) {
                 temp.imageRatio = intent.getExtras().getString("imageRatio");
                 temp.content_url = intent.getExtras().getString("fileId");
-                if (intent.hasExtra("location_coordinates"))
-                {
+                if (intent.hasExtra("location_coordinates")) {
                     temp.location_coordinates = intent.getExtras().getString("location_coordinates");
-                  //  temp.chatType = Constants.CHAT_TYPE_LOCATION;
+                    //  temp.chatType = Constants.CHAT_TYPE_LOCATION;
                 }/*else{
                     temp.chatType = Constants.CHAT_TYPE_IMAGE;
                 }*/
@@ -1058,12 +1103,12 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             } else if (intent.hasExtra("videoThumbnail")) {
                 temp.video_thumb = intent.getExtras().getString("videoThumbnail");
                 temp.content_url = intent.getExtras().getString("videoID");
-              //  temp.chatType = Constants.CHAT_TYPE_VIDEO;
+                //  temp.chatType = Constants.CHAT_TYPE_VIDEO;
             } else if (intent.hasExtra("audioID")) {
                 temp.content_url = intent.getExtras().getString("audioID");
                 //temp.chatType = Constants.CHAT_TYPE_AUDIO;
             } else if (intent.hasExtra("card_originator")) {
-              //  temp.chatType = Constants.CHAT_TYPE_CARD;
+                //  temp.chatType = Constants.CHAT_TYPE_CARD;
                 temp.card_Accepted_Rejected = intent.getExtras().getString("card_Accepted_Rejected");
                 temp.card_DB_ID = intent.getExtras().getString("card_DB_ID");
                 temp.card_Played_Countered = intent.getExtras().getString("card_Played_Countered");
@@ -1072,31 +1117,30 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 temp.card_originator = intent.getExtras().getString("card_originator");
 
 
-
                 temp.card_url = intent.getExtras().getString("card_url");
                 temp.card_id = intent.getExtras().getString("card_id");
 
                 temp.is_CustomCard = intent.getExtras().getBoolean("is_CustomCard");
                 temp.card_owner = intent.getExtras().getString("card_owner");
 
-                if(Utils.isEmptyString(temp.card_owner))
+                if (Utils.isEmptyString(temp.card_owner))
                     temp.card_owner = authManager.getQBId();
 
                 //values required by IOS-Monika
-                if(Utils.isEmptyString(temp.card_content))
-                    temp.card_content="_";
+                if (Utils.isEmptyString(temp.card_content))
+                    temp.card_content = "_";
 
-                if(Utils.isEmptyString(temp.card_DB_ID))
-                    temp.card_DB_ID="_";
+                if (Utils.isEmptyString(temp.card_DB_ID))
+                    temp.card_DB_ID = "_";
 
-                if(Utils.isEmptyString(temp.card_url))
-                    temp.card_url="_";
+                if (Utils.isEmptyString(temp.card_url))
+                    temp.card_url = "_";
 
             }
 
             temp.sharingMedia = intent.getExtras().getString("sharingMedia");
             temp.originalMessageID = intent.getExtras().getString("originalChatId");
-            temp.messageSenderId=authManager.getQBId();
+            temp.messageSenderId = authManager.getQBId();
             temp.textMsg = intent.getExtras().getString("textMsg");
             temp.shareComment = intent.getExtras().getString("caption");
             temp.isMessageSender = intent.getExtras().getString("isMessageSender");
@@ -1112,24 +1156,23 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             long sentOntime = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis();
             temp.sentOn = "" + sentOntime;
             temp.chatId = authManager.getQBId() + authManager.partnerQbId + sentOntime;  // chat id for sharing
-            temp.chatType=intent.getIntExtra("chatType",-1);
+            temp.chatType = intent.getIntExtra("chatType", -1);
             temp.partnerQbId = authManager.partnerQbId;
-            if (!Utils.isEmptyString(temp.clicks) && !temp.clicks.equalsIgnoreCase("no")) {
+            if (!Utils.isEmptyString(temp.clicks) && !temp.clicks.equalsIgnoreCase("no") && Utils.isEmptyString(temp.card_owner)) {
                 temp.textMsg = temp.clicks + "        " + temp.textMsg;
             } else {
                 //check chat for shared accept and reject case
-                if (Utils.isEmptyString(temp.isAccepted))
+                if (!Utils.isEmptyString(temp.isAccepted))
                     temp.clicks = "no";
 
 
             }
 
 
-
-            ChatMessageBody objToSend=new ChatMessageBody(temp); //we truncate clicks from text in showvalue function,
-                                                                //so keep original object here
+            ChatMessageBody objToSend = new ChatMessageBody(temp); //we truncate clicks from text in showvalue function,
+            //so keep original object here
             ShowValueinChat(temp);
-            objToSend.chatType=Constants.CHAT_TYPE_SHARING;
+            objToSend.chatType = Constants.CHAT_TYPE_SHARING;
             if (myQbChatService != null)
                 myQbChatService.sendMessage(objToSend);
 
@@ -1498,7 +1541,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                             attachBtn.setImageResource(R.drawable.ic_playvideoicon);
                             //akshit code to check wether image buton contains image or not;
 
-                        }else {
+                        } else {
                             path = null;
                             audioFilePath = null;
                             thumurl = null;
@@ -1511,7 +1554,6 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                         } else {
                             setVisibilityForSend();
                         }
-
 
 
                         //ends
@@ -1845,8 +1887,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         }
 
         //in case of cards, for history, clicks will be in cards array , not here-monika
-        if(Utils.isEmptyString(obj.card_id))
-        fields.put("clicks", clicks);
+        if (Utils.isEmptyString(obj.card_id))
+            fields.put("clicks", clicks);
         fields.put("content", obj.content_url);
         fields.put("imageRatio", obj.imageRatio);
         fields.put("relationshipId", obj.relationshipId);
@@ -1857,7 +1899,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         fields.put("type", obj.chatType);
         fields.put("video_thumb", obj.video_thumb);
         fields.put("deliveredChatID", obj.deliveredChatID);
-        fields.put("location_coordinates",obj.location_coordinates);
+        fields.put("location_coordinates", obj.location_coordinates);
 
         ArrayList<String> cards = null;
         if (obj.card_id != null) {
@@ -1890,7 +1932,14 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             sharedMessage.add(obj.senderQbId);
             sharedMessage.add(obj.isAccepted);
             sharedMessage.add(obj.isMessageSender);
-            sharedMessage.add(obj.shareComment);
+            if(obj.shareComment.equalsIgnoreCase("Write your caption here...")){
+                Log.e("shareComment","Comment case 1"+obj.shareComment);
+                sharedMessage.add("");
+            }else {
+                Log.e("shareComment","Comment case 2"+obj.shareComment);
+                sharedMessage.add(obj.shareComment);
+            }
+
             sharedMessage.add(obj.sharingMedia);
             sharedMessage.add(obj.facebookToken);
         }

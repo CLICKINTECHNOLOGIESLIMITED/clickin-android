@@ -167,9 +167,12 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
             if (b.containsKey("isChangeInList")) {
                 isChangeInList = getIntent().getExtras().getBoolean("isChangeInList");
             }
+            if (b.containsKey("updatephoto")) {
+                isChangeInList = true;
+            }
         }
 
-        if (FromSignup || isChangeInList) {
+        if (FromSignup | isChangeInList) {
             Utils.launchBarDialog(UserProfileView.this);
             authManager.getProfileInfo("", authManager.getPhoneNo(), authManager.getUsrToken());
         } else {
@@ -177,8 +180,6 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
             setLeftMenuList();
             setProfileDataView();
             setlist();
-            //   relationManager = ModelManager.getInstance().getRelationManager();
-            // relationManager.getReladismissBarDialogtionShips(authManager.getPhoneNo(), authManager.getUsrToken());
         }
 
 
@@ -499,11 +500,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
             PicassoManager.clearCache();
             if (slidemenu.isMenuShowing())
                 slidemenu.showContent();
-
-            relationManager = ModelManager.getInstance().getRelationManager();
-            relationManager.getRelationShips(authManager.getPhoneNo(), authManager.getUsrToken());
-
-
+            authManager.getProfileInfo("", authManager.getPhoneNo(), authManager.getUsrToken());
         }
 
         // addMenu(false);

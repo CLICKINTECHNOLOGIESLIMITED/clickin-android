@@ -18,6 +18,7 @@ public class GetrelationshipsBean {
     private String partnerName;
     private int mUnreadMsg;
 
+    public String mIs_new_partner = null;
     public int getUnreadMsg() {
         return mUnreadMsg;
     }

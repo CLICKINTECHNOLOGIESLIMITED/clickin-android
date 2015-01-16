@@ -193,9 +193,9 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
 
                                 case Constants.CHAT_TYPE_CARD:
 
-                                        message.setProperty("card_DB_ID", data.getString("card_DB_ID"));
-                                        message.setProperty("card_url", data.getString("card_url"));
-                                        message.setProperty("card_content", data.getString("card_content"));
+                                    message.setProperty("card_DB_ID", data.getString("card_DB_ID"));
+                                    message.setProperty("card_url", data.getString("card_url"));
+                                    message.setProperty("card_content", data.getString("card_content"));
 
                                     message.setProperty("is_CustomCard", String.valueOf(data.getBoolean("is_CustomCard")));
                                     message.setProperty("card_clicks", data.getString("clicks"));
@@ -250,7 +250,7 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
                                         if (data.containsKey("location_coordinates")) {
                                             message.setProperty("location_coordinates", data.getString("location_coordinates"));
                                             message.setProperty("locationID", data.getString("FileId"));
-                                        }else
+                                        } else
                                             message.setProperty("fileID", data.getString("FileId"));
                                         //message.setProperty("isFileUploading", data.getString("imageRatio"));
 
@@ -266,8 +266,8 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
                                     }
                                     if (data.containsKey("card_originator")) {
 
-                                            message.setProperty("card_DB_ID", data.getString("card_DB_ID"));
-                                            message.setProperty("card_url", data.getString("card_url"));
+                                        message.setProperty("card_DB_ID", data.getString("card_DB_ID"));
+                                        message.setProperty("card_url", data.getString("card_url"));
 
 
                                         message.setProperty("card_content", data.getString("card_content"));
@@ -460,6 +460,7 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
 
                 if (extraParamsObj.has("clicks")) {
                     temp.clicks = extraParamsObj.getString("clicks");
+
                 }
                 if (extraParamsObj.has("imageRatio")) {
                     temp.imageRatio = extraParamsObj.getString("imageRatio");
@@ -685,6 +686,7 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
             if (className.equalsIgnoreCase("com.sourcefuse.clickinandroid.view.ChatRecordView")) {
                 ModelManager.getInstance().getChatManager().chatMessageList.add(obj);
                 EventBus.getDefault().post("Chat Message Recieve");
+                Utils.mPlayChatSound = true;
                 //  saveMessageInDB(temp);
             } else {
 

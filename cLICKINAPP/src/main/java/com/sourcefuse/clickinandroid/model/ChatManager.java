@@ -189,6 +189,9 @@ public class ChatManager {
                                             temp.is_CustomCard = Boolean.valueOf((String) cards.get(7));
                                             temp.card_DB_ID = (String) cards.get(8);
                                             temp.card_Played_Countered = (String) cards.get(9);
+                                            if(temp.card_Accepted_Rejected.equalsIgnoreCase("countered"))
+                                                temp.card_Played_Countered="played";
+
                                             temp.card_owner=(String) cards.get(10);
                                         }
 
