@@ -193,6 +193,8 @@ public class ChatManager {
                                                 temp.card_Played_Countered="played";
 
                                             temp.card_owner=(String) cards.get(10);
+                                            if(Utils.isEmptyString(temp.card_owner))
+                                                temp.card_owner="";
                                         }
 
                                         //code to fetch share array, if exists-monika

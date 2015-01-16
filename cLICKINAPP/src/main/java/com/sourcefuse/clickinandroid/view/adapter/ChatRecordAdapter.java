@@ -343,18 +343,22 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     ((RelativeLayout) row.findViewById(R.id.rl_acc_rej_card)).setVisibility(View.VISIBLE);
                     ((LinearLayout) row.findViewById(R.id.ll_for_share_icon)).setVisibility(View.VISIBLE);
                     ((LinearLayout) row.findViewById(R.id.acc_rej_layout_second)).setVisibility(View.VISIBLE);
-
+                    String name = " ";
                     //code to decide who is accepted the card- basis on card owner- importance while sharing card
-                    String name=" ";
-                    if(temp.card_owner.equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getQBId())){
+                    if(!Utils.isEmptyString(temp.sharingMedia)) {
 
-                        //parnter accepted the card
-                        String[] splitted = relationManager.getPartnerName.split("\\s+");
-                        name=splitted[0];
+                        if (!Utils.isEmptyString(temp.card_owner) && temp.card_owner.equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getQBId())) {
+
+                            //parnter accepted the card
+                            String[] splitted = relationManager.getPartnerName.split("\\s+");
+                            name = splitted[0];
+                        } else {
+                            //it means you accepted the card
+                            name = "You";
+
+                        }
                     }else{
-                        //it means you accepted the card
-                        name="You";
-
+                        name="You"; //without sharing case, at sender side, it always you accept/reject
                     }
                     ((TextView) row.findViewById(R.id.tv_acc_res_name)).setText(name);
                     ((TextView) row.findViewById(R.id.tv_acc_res_status)).setText("ACCEPTED!");
@@ -367,18 +371,22 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     ((RelativeLayout) row.findViewById(R.id.rl_acc_rej_card)).setVisibility(View.VISIBLE);
                     ((LinearLayout) row.findViewById(R.id.ll_for_share_icon)).setVisibility(View.VISIBLE);
                     ((LinearLayout) row.findViewById(R.id.acc_rej_layout_second)).setVisibility(View.VISIBLE);
-
+                    String name = " ";
                     //code to decide who is accepted the card- basis on card owner- importance while sharing card
-                    String name=" ";
-                    if(temp.card_owner.equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getQBId())){
+                    if (!Utils.isEmptyString(temp.sharingMedia)){
+
+                    if (!Utils.isEmptyString(temp.card_owner) && temp.card_owner.equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getQBId())) {
 
                         //parnter accepted the card
                         String[] splitted = relationManager.getPartnerName.split("\\s+");
-                        name=splitted[0];
-                    }else{
+                        name = splitted[0];
+                    } else {
                         //it means you accepted the card
-                        name="You";
+                        name = "You";
 
+                    }
+                }else{
+                        name="You"; //without sharing case, at sender side, it always you accept/reject
                     }
 
                     ((TextView) row.findViewById(R.id.tv_acc_res_name)).setText(name);
@@ -917,15 +925,20 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
                     //code to decide who is accepted the card- basis on card owner- importance while sharing card
                     String name=" ";
-                    if(temp.card_owner.equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getQBId())){
+                    if(!Utils.isEmptyString(temp.sharingMedia)) {
+                        if (!Utils.isEmptyString(temp.card_owner) && temp.card_owner.equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getQBId())) {
 
-                        //parnter accepted the card
-                        String[] splitted = relationManager.getPartnerName.split("\\s+");
-                        name=splitted[0];
+                            //parnter accepted the card
+                            String[] splitted = relationManager.getPartnerName.split("\\s+");
+                            name = splitted[0];
+                        } else {
+                            //it means you accepted the card
+                            name = "You";
+
+                        }
                     }else{
-                        //it means you accepted the card
-                        name="You";
-
+                        String[] splitted = relationManager.getPartnerName.split("\\s+");
+                        name = splitted[0];
                     }
 
                     ((TextView) row.findViewById(R.id.tv_acc_res_name)).setText(name);
@@ -941,16 +954,23 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     ((LinearLayout) row.findViewById(R.id.acc_rej_layout_second)).setVisibility(View.VISIBLE);
                     //code to decide who is accepted the card- basis on card owner- importance while sharing card
                     String name=" ";
-                    if(temp.card_owner.equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getQBId())){
+                    if(!Utils.isEmptyString(temp.sharingMedia)) {
+                        if (!Utils.isEmptyString(temp.card_owner) && temp.card_owner.equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getQBId())) {
 
-                        //parnter accepted the card
-                        String[] splitted = relationManager.getPartnerName.split("\\s+");
-                        name=splitted[0];
-                    }else{
-                        //it means you accepted the card
-                        name="You";
+                            //parnter accepted the card
+                            String[] splitted = relationManager.getPartnerName.split("\\s+");
+                            name = splitted[0];
+                        } else {
+                            //it means you accepted the card
+                            name = "You";
 
+                        }
                     }
+                        else{
+                            String[] splitted = relationManager.getPartnerName.split("\\s+");
+                            name = splitted[0];
+                        }
+
 
                     ((TextView) row.findViewById(R.id.tv_acc_res_name)).setText(name);
                     ((TextView) row.findViewById(R.id.tv_acc_res_status)).setText("REJECTED!");
@@ -1407,10 +1427,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
             String mPath = Utils.mVideoPath + Utils.mName + ".mp4";
             Uri uri = Utils.getVideoContentUri(context, new File(mPath));  //check file exist or not
             if (Utils.isEmptyString("" + uri)) {  // dowonload video
-
-                if (Utils.isConnectingToInternet((Activity) context))
-                    path = Utils.mVideoPath;
-                new DownloadMusicfromInternet().execute(item.content_url);
+                path = Utils.mVideoPath;
+                if (Utils.isConnectingToInternet((Activity) context) && !Utils.isEmptyString(item.content_url))
+                    new DownloadMusicfromInternet().execute(item.content_url);
             } else {  // play video
                 Utils.playvideo(context, uri.toString());
             }
@@ -1424,7 +1443,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
             Uri uri = Utils.getAudioContentUri(context, new File(mPath));  //check file exist or not
             if (Utils.isEmptyString("" + uri)) {  // dowonload Audio
                 path = Utils.mAudioPath;
-                if (Utils.isConnectingToInternet((Activity) context))
+                if (Utils.isConnectingToInternet((Activity) context) && !Utils.isEmptyString(item.content_url))
                     new DownloadMusicfromInternet().execute(item.content_url);
             } else {  // play Audio
                 Utils.playvideo(context, uri.toString());
