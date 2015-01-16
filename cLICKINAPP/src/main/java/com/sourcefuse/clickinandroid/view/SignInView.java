@@ -37,6 +37,7 @@ import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.GPSTracker;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
+import com.splunk.mint.Mint;
 
 import java.io.File;
 import java.io.InputStream;
@@ -93,6 +94,12 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
         /*set picasso maneger value */
         PicassoManager.setLruCache(getApplicationContext());
         PicassoManager.setPicasso(getApplicationContext(), PicassoManager.getLruCache());
+
+
+        Mint.initAndStartSession(SignInView.this, Constants.mSplunk_Api);  // to start the session of Splunk Crashlytics
+        Mint.enableDebug();
+
+
 
         authManager = ModelManager.getInstance().getAuthorizationManager();
         try {

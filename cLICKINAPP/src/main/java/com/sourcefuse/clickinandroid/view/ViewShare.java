@@ -310,7 +310,7 @@ public class ViewShare extends Activity implements View.OnClickListener {
 
                 if (Utils.isEmptyString(commentStr))
                     commentStr = "Write your caption here...";
-                
+
 
                 if (access_Token.length() < 3)
                     access_Token = "-";

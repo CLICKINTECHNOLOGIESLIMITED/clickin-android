@@ -43,8 +43,7 @@ public class SplashView extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
 
 
-//       Mint.initAndStartSession(SplashView.this, Constants.mSplunk_Api);  // to start the session of Splunk Crashlytics
-//        Mint.enableDebug();
+
 
 
         Utils.deviceId = Utils.getRegId(SplashView.this);

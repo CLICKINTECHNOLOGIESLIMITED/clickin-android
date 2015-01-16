@@ -297,6 +297,7 @@ public class RelationManager {
                                     ProfileRelationShipList.setmStatuspublic(data.getString("public"));
                                 if (data.has("partner_name"))
                                     ProfileRelationShipList.setPartnerName(data.getString("partner_name"));
+
                                 ProfileRelationShipArray.add(ProfileRelationShipList);
                             }
                         }
