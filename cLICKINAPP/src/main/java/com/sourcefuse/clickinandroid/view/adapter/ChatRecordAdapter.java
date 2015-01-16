@@ -344,7 +344,19 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     ((LinearLayout) row.findViewById(R.id.ll_for_share_icon)).setVisibility(View.VISIBLE);
                     ((LinearLayout) row.findViewById(R.id.acc_rej_layout_second)).setVisibility(View.VISIBLE);
 
-                    ((TextView) row.findViewById(R.id.tv_acc_res_name)).setText("You");
+                    //code to decide who is accepted the card- basis on card owner- importance while sharing card
+                    String name=" ";
+                    if(temp.card_owner.equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getQBId())){
+
+                        //parnter accepted the card
+                        String[] splitted = relationManager.getPartnerName.split("\\s+");
+                        name=splitted[0];
+                    }else{
+                        //it means you accepted the card
+                        name="You";
+
+                    }
+                    ((TextView) row.findViewById(R.id.tv_acc_res_name)).setText(name);
                     ((TextView) row.findViewById(R.id.tv_acc_res_status)).setText("ACCEPTED!");
 
                     ImageView acc_rej_view = ((ImageView) row.findViewById(R.id.iv_acc_rec));
@@ -356,7 +368,20 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     ((LinearLayout) row.findViewById(R.id.ll_for_share_icon)).setVisibility(View.VISIBLE);
                     ((LinearLayout) row.findViewById(R.id.acc_rej_layout_second)).setVisibility(View.VISIBLE);
 
-                    ((TextView) row.findViewById(R.id.tv_acc_res_name)).setText("You");
+                    //code to decide who is accepted the card- basis on card owner- importance while sharing card
+                    String name=" ";
+                    if(temp.card_owner.equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getQBId())){
+
+                        //parnter accepted the card
+                        String[] splitted = relationManager.getPartnerName.split("\\s+");
+                        name=splitted[0];
+                    }else{
+                        //it means you accepted the card
+                        name="You";
+
+                    }
+
+                    ((TextView) row.findViewById(R.id.tv_acc_res_name)).setText(name);
                     ((TextView) row.findViewById(R.id.tv_acc_res_status)).setText("REJECTED!");
 
                     ImageView acc_rej_view = ((ImageView) row.findViewById(R.id.iv_acc_rec));
@@ -886,8 +911,21 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     ((LinearLayout) row.findViewById(R.id.ll_for_share_icon)).setVisibility(View.VISIBLE);
                     ((ImageView) row.findViewById(R.id.iv_type_two_share_icon_r)).setVisibility(View.VISIBLE);
                     ((LinearLayout) row.findViewById(R.id.acc_rej_layout_second)).setVisibility(View.VISIBLE);
-                    String[] splitted = relationManager.getPartnerName.split("\\s+");
-                    ((TextView) row.findViewById(R.id.tv_acc_res_name)).setText(splitted[0]);
+
+                    //code to decide who is accepted the card- basis on card owner- importance while sharing card
+                    String name=" ";
+                    if(temp.card_owner.equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getQBId())){
+
+                        //parnter accepted the card
+                        String[] splitted = relationManager.getPartnerName.split("\\s+");
+                        name=splitted[0];
+                    }else{
+                        //it means you accepted the card
+                        name="You";
+
+                    }
+
+                    ((TextView) row.findViewById(R.id.tv_acc_res_name)).setText(name);
                     ((TextView) row.findViewById(R.id.tv_acc_res_status)).setText("ACCEPTED!");
 
                     ImageView acc_rej_view = ((ImageView) row.findViewById(R.id.iv_acc_rec));
@@ -898,8 +936,20 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     ((RelativeLayout) row.findViewById(R.id.rl_acc_rej_card)).setVisibility(View.VISIBLE);
                     ((LinearLayout) row.findViewById(R.id.ll_for_share_icon)).setVisibility(View.VISIBLE);
                     ((LinearLayout) row.findViewById(R.id.acc_rej_layout_second)).setVisibility(View.VISIBLE);
-                    String[] splitted = relationManager.getPartnerName.split("\\s+");
-                    ((TextView) row.findViewById(R.id.tv_acc_res_name)).setText(splitted[0]);
+                    //code to decide who is accepted the card- basis on card owner- importance while sharing card
+                    String name=" ";
+                    if(temp.card_owner.equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getQBId())){
+
+                        //parnter accepted the card
+                        String[] splitted = relationManager.getPartnerName.split("\\s+");
+                        name=splitted[0];
+                    }else{
+                        //it means you accepted the card
+                        name="You";
+
+                    }
+
+                    ((TextView) row.findViewById(R.id.tv_acc_res_name)).setText(name);
                     ((TextView) row.findViewById(R.id.tv_acc_res_status)).setText("REJECTED!");
 
                     ImageView acc_rej_view = ((ImageView) row.findViewById(R.id.iv_acc_rec));
