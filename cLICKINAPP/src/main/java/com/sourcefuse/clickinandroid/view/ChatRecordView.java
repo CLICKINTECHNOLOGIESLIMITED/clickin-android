@@ -509,9 +509,6 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         }, 3000);
 
 
-//        if(authManager.getIs_new_clickin_user().equalsIgnoreCase("yes")){
-//             /* to show Dialog*/
-//            Utils.showOverlay(this);//akshit
         Utils.showDialog(this);//praful
 
     }
