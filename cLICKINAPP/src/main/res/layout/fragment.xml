@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:geekui="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,9 +13,10 @@
         android:background="@drawable/sixth_page" />
 
     <LinearLayout
+        android:id="@+id/signup_layout"
         android:layout_width="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
 
         <ImageView
             android:id="@+id/clicktosignup"
@@ -23,6 +25,58 @@
             android:layout_marginTop="5dp"
             android:background="@drawable/signup_btn"
             android:visibility="gone" />
+    </LinearLayout>
+
+    <com.sourcefuse.clickinandroid.utils.ClickInTextView
+        android:id="@+id/term_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/signup_layout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="@string/terms_use"
+        android:textColor="@color/white"
+        android:visibility="gone"
+        geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
+
+    <LinearLayout
+        android:id="@+id/privacy_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/term_text"
+        android:visibility="gone"
+        android:layout_centerHorizontal="true">
+
+        <com.sourcefuse.clickinandroid.utils.ClickInTextView
+            android:id="@+id/term_"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/terms_"
+            android:textColor="@color/fill_edt"
+            android:textStyle="bold"
+            geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
+
+        <com.sourcefuse.clickinandroid.utils.ClickInTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:text="@string/privacy_"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
+
+        <com.sourcefuse.clickinandroid.utils.ClickInTextView
+            android:id="@+id/privacy_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:text="@string/privacy"
+            android:textColor="@color/fill_edt"
+            android:textStyle="bold"
+            geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
+
     </LinearLayout>
 
     <ImageView
@@ -34,5 +88,6 @@
         android:layout_marginLeft="113dp"
         android:background="@drawable/coverflow_login"
         android:visibility="gone" />
+
 
 </RelativeLayout>

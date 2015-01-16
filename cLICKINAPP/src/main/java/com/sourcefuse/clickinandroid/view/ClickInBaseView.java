@@ -66,8 +66,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
     public Boolean stopSearch = true;
     public EditText edt_search;
     //Right Menu.....
-    public ListView notificationList;
-    public NotificationAdapter notificationAdapter;
+
     public NewsFeedManager newsFeedManager;
     public SlidingMenu slidemenu;
     SimpleSectionedListAdapter simpleSectionedGridAdapter;
@@ -681,7 +680,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         authManager = ModelManager.getInstance().getAuthorizationManager();
         notificationMngr = ModelManager.getInstance().getNotificationManagerManager();
         typeface = Typeface.createFromAsset(ClickInBaseView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
-        notificationList = (ListView) slidemenu.findViewById(R.id.list_click_notification);
+
         backArrowRightSide = (ImageView) slidemenu.findViewById(R.id.iv_back_right);
 
         //akshit Code starts for closing secondary menu
@@ -699,8 +698,8 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
     public void setNotificationList() {
 
         notificationMngr = ModelManager.getInstance().getNotificationManagerManager();
-
-        notificationAdapter = new NotificationAdapter(ClickInBaseView.this, R.layout.row_notification, notificationMngr.notificationData);
+        NotificationAdapter notificationAdapter = new NotificationAdapter(ClickInBaseView.this, R.layout.row_notification, notificationMngr.notificationData);
+        ListView notificationList = (ListView) slidemenu.findViewById(R.id.list_click_notification);
         notificationList.setAdapter(notificationAdapter);
 
     }
@@ -910,7 +909,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
             //temp code
             Toast.makeText(this, "Message received for other partner", Toast.LENGTH_SHORT).show();
         } else if (message.equalsIgnoreCase("update Counter")) { // prafull code for notification update andrid
-            TextView mNotificationText = (TextView) header.findViewById(R.id.iv_open_right_menu);
+            TextView mNotificationText = (TextView) findViewById(R.id.iv_open_right_menu);
 
             if (authManager == null)
                 authManager = ModelManager.getInstance().getAuthorizationManager();

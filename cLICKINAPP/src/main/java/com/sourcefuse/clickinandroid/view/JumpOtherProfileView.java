@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -403,6 +404,8 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
             follower.setText(Html.fromHtml(text));
             String textfollowing = "<font color=#f29691>" + getResources().getString(R.string.txt_following) + "</font> <font color=#cccccc>" + authManager.getTmpFollowing() + "</font>";
             following.setText(Html.fromHtml(textfollowing));
+
+            Log.e("url------------>",""+authManager.getTmpUserPic());
 
             if (!Utils.isEmptyString(authManager.getTmpGender())) {
                 if (authManager.getTmpGender().equalsIgnoreCase("guy")) {
