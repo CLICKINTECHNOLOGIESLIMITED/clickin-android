@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
+import android.widget.TextView;
 
 import com.sourcefuse.clickinapp.R;
 
@@ -25,6 +26,7 @@ public final class TestFragment extends Fragment {
     static int imageS = 0;
     Activity _activity;
 
+    TextView mPrivacyText,mTermText;
     public static TestFragment newInstance(int imageS) {
         TestFragment fragment = new TestFragment();
 
@@ -53,8 +55,29 @@ public final class TestFragment extends Fragment {
         ImageView loginButton = (ImageView) view.findViewById(R.id.login);
         mImageView.setBackground(getActivity().getResources().getDrawable(imageS));
 
+        mTermText = (TextView) view.findViewById(R.id.term_);
+        mPrivacyText = (TextView) view.findViewById(R.id.privacy_text);
+        mTermText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),TermUseView.class);
+                intent.putExtra("fromsplash",true);
+                startActivity(intent);
+            }
+        });
+        mPrivacyText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(),PrivacyView.class);
+                intent.putExtra("fromsplash",true);
+                startActivity(intent);
+            }
+        });
+
         if (imageS == R.drawable.sixth_page) {
 
+            view.findViewById(R.id.term_text).setVisibility(View.VISIBLE);
+            view.findViewById(R.id.privacy_layout).setVisibility(View.VISIBLE);
 
             ImageView mClickHereToSignup = (ImageView) view.findViewById(R.id.clicktosignup);
             mClickHereToSignup.setVisibility(View.VISIBLE);
@@ -80,6 +103,10 @@ public final class TestFragment extends Fragment {
                 }
             });
 
+        }else {
+            view.findViewById(R.id.term_text).setVisibility(View.GONE);
+            view.findViewById(R.id.privacy_layout).setVisibility(View.GONE);
+            view.findViewById(R.id.clicktosignup).setVisibility(View.GONE);
         }
 
 

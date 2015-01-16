@@ -355,4 +355,9 @@
 
     <string name="popup_text">We\'ve given you both \n 25 Clicks to get started!</string>
     <string name="popup_button">Lets Start Clicking</string>
+
+    <string name="terms_use">BY CLICKING ON SIGN-UP YOU AGREE TO OUR</string>
+    <string name="terms_">TERMS OF USE</string>
+    <string name="privacy">PRIVACY POLICY</string>
+    <string name="privacy_">&amp;</string>
 </resources>

@@ -20,6 +20,7 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ChatManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
+import com.sourcefuse.clickinandroid.model.PicassoManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
 import com.sourcefuse.clickinandroid.model.bean.GetrelationshipsBean;
 import com.sourcefuse.clickinandroid.utils.Utils;
@@ -149,6 +150,7 @@ public class GcmIntentService extends IntentService {
                         UpdateCounter();
                         sendNotification("Clickin'", extras.getString("message"), data);
                         EventBus.getDefault().post("updatePhoto");
+                        PicassoManager.clearCache();
                     } else if (extras.getString("Tp").equalsIgnoreCase("card")) //case for card
                     // case when card accepted
                     // case when card rejected
