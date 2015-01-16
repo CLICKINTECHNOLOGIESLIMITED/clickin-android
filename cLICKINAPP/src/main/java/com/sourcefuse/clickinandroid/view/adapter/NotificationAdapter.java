@@ -87,7 +87,7 @@ public class NotificationAdapter extends ArrayAdapter<NotificationBean> {
                 //   ClickInBaseView.slidemenu.showContent();
                 if (item.getNotificationType().matches(context.getResources().getString(R.string.txt_relationstatus)) ||
                         item.getNotificationType().matches(context.getResources().getString(R.string.txt_relation_visibility))
-                        || item.getNotificationType().equalsIgnoreCase(context.getResources().getString(R.string.txt_relationrequest))) {
+                        || item.getNotificationType().equalsIgnoreCase(context.getResources().getString(R.string.txt_relationrequest)) || item.getNotificationType().equalsIgnoreCase(context.getResources().getString(R.string.txt_relationdelete))) {
                     Utils.launchBarDialog((Activity) context);
                     Intent intent = new Intent(getContext(), UserProfileView.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
