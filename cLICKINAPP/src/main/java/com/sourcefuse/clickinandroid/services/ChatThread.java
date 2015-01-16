@@ -22,10 +22,8 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.quickblox.core.QBCallbackImpl;
 import com.quickblox.core.QBEntityCallbackImpl;
 import com.quickblox.core.QBSettings;
-import com.quickblox.core.result.Result;
 import com.quickblox.module.auth.QBAuth;
 import com.quickblox.module.auth.model.QBSession;
 import com.quickblox.module.chat.QBChat;
@@ -38,9 +36,6 @@ import com.quickblox.module.chat.listeners.QBRosterListener;
 import com.quickblox.module.chat.listeners.QBSubscriptionListener;
 import com.quickblox.module.chat.model.QBChatMessage;
 import com.quickblox.module.chat.model.QBPresence;
-import com.quickblox.module.custom.QBCustomObjects;
-import com.quickblox.module.custom.model.QBCustomObject;
-import com.quickblox.module.custom.result.QBCustomObjectResult;
 import com.quickblox.module.users.model.QBUser;
 import com.sourcefuse.clickinandroid.dbhelper.ClickinDbHelper;
 import com.sourcefuse.clickinandroid.model.AuthManager;
@@ -49,7 +44,6 @@ import com.sourcefuse.clickinandroid.model.RelationManager;
 import com.sourcefuse.clickinandroid.model.bean.ChatMessageBody;
 import com.sourcefuse.clickinandroid.model.bean.GetrelationshipsBean;
 import com.sourcefuse.clickinandroid.utils.Constants;
-import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.ChatRecordView;
 import com.sourcefuse.clickinandroid.view.SplashView;
@@ -68,7 +62,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.TimeZone;
 import java.util.regex.Pattern;
@@ -525,6 +518,7 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
                         temp.content_url = extraParamsObj.getString("imageURL");
                     temp.shareStatus = extraParamsObj.getString("shareStatus");
                     temp.isAccepted = extraParamsObj.getString("isAccepted");
+
 
 
                 }

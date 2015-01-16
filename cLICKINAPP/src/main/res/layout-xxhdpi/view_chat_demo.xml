@@ -117,8 +117,9 @@
             <!-- layout for clicks and text -Type 1-->
             <ImageView
                 android:id="@+id/temp_"
-                android:layout_width="195dp"
+                android:layout_width="210dp"
                 android:layout_height="1dp"
+                android:layout_marginBottom="3dp"
                 android:layout_below="@+id/temp_layout"
                 android:background="@color/color_"
                 android:visibility="gone" />

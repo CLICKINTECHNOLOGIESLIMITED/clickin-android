@@ -111,6 +111,7 @@ public class
         }
     }
 
+
     public static void clickInpdOpen(Activity activity, String dialogMessage) {
         dialog = null;
         dialog = new Dialog(activity);
@@ -1419,6 +1420,7 @@ public class
         int dp = (int) (pixel * scale + 0.5f);
         return dp;
     }
+
 
     public static void showDialog(Context context) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
