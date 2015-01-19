@@ -60,6 +60,7 @@
     <color name="phone_no_clr">#999999</color>
     <color name="chat_notification">#f29691</color>
     <color name="menu_footer">#64718f</color>
+    <color name="sahred_text_background">#cdcccc</color>
 
     <color name="lightest_gray">#F6F6F6</color>
 

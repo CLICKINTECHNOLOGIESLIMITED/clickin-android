@@ -437,7 +437,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 LinearLayout clicksArea = (LinearLayout) row.findViewById(R.id.clicks_area);
                 clicksArea.setVisibility(View.VISIBLE);
 
-                if (!Utils.isEmptyString(temp.sharingMedia)) { // for share case-praful
+                if (!Utils.isEmptyString(temp.sharingMedia) && temp.shareStatus.equalsIgnoreCase("shared") ) { // for share case-praful
                     LinearLayout mShareLayout = (LinearLayout) row.findViewById(R.id.parent_clicks_area_share);
                     mShareLayout.setBackgroundResource(R.color.white);
                     mShareLayout.setVisibility(View.VISIBLE);
@@ -603,11 +603,11 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
             if (Utils.mPlayChatSound && temp.clicks.equalsIgnoreCase("no") || Utils.mPlayChatSound && !Utils.isEmptyString(temp.card_id)) { // code to play sound in normal case exxcept clicks
                 Utils.playSound((Activity) getContext(), R.raw.message_rcvd);
                 Utils.mPlayChatSound = false;
-                Log.e("in case 1--->", "in case 1--->");
+
             } else if (Utils.mPlayChatSound && !temp.clicks.equalsIgnoreCase("no") && Utils.isEmptyString(temp.card_id)) {// code to play sound in case of clicks
                 Utils.playSound((Activity) getContext(), R.raw.clickreceived);
                 Utils.mPlayChatSound = false;
-                Log.e("in case 2--->", "in case 2--->");
+
             }
 
 
@@ -1075,11 +1075,13 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     mShareLayout.setVisibility(View.VISIBLE);
                     TextView mShareText = (TextView) row.findViewById(R.id.long_chat_text_share);
                     mShareText.setVisibility(View.VISIBLE);
+                    mShareText.setBackgroundResource(R.color.sahred_text_background);
                     mShareText.setText("" + temp.textMsg);
                     mShareText.setTextColor(context.getResources().getColor(R.color.black));
                 } else {
 
                     /* for layout params at reciver end prafull code*/
+
                     chatClickTextLayout.setVisibility(View.VISIBLE);
                     chatText.setVisibility(View.VISIBLE);
                     chatText.setTextColor(context.getResources().getColor(R.color.black));
