@@ -120,6 +120,8 @@
     <string name="txt_relationrequest">relationrequest</string>
     <string name="txt_relationstatus">relationstatus</string>
     <string name="txt_relationdelete">relationdelete</string>
+    <string name="starrred">star</string>
+    <string name="commented">comment</string>
     <string name="txt_follow">followrequest</string>
     <string name="txt_relation_visibility">relationvisibility</string>
     <string name="follow_status">followstatus</string>

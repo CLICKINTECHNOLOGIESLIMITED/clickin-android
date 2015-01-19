@@ -282,6 +282,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
         send = (Button) findViewById(R.id.btn_send);
         chatListView = (PullToRefreshListView) findViewById(R.id.chat_list);
+
         chatText = (EditText) findViewById(R.id.edit_chatBox);
         mybar = (SeekBar) findViewById(R.id.seekBar1);
 
@@ -2191,6 +2192,16 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             relationListIndex = relationIndex;
         }
 
+
+    }
+
+    @Override
+    public void onClose() {
+
+    }
+
+    @Override
+    public void onOpen() {
 
     }
 
