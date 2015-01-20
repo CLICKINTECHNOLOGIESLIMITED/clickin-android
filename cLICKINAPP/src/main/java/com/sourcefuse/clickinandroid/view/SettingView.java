@@ -24,6 +24,7 @@ import com.facebook.UiLifecycleHelper;
 import com.facebook.widget.FacebookDialog;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
+import com.sourcefuse.clickinandroid.model.NotificationManagerI;
 import com.sourcefuse.clickinandroid.model.SettingManager;
 import com.sourcefuse.clickinandroid.services.MyQbChatService;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
@@ -431,6 +432,12 @@ public class SettingView extends Activity implements View.OnClickListener, Compo
                 finish();
                 overridePendingTransition(R.anim.slide_in_left, R.anim.top_out);
                 //  this.finishAndRemoveTask();
+                 //ModelManager.getInstance().getNotificationManagerManager().;
+                try {
+                    NotificationManagerI.notificationData.clear();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
                 break;
             case R.id.btn_logout_no:
                 MyCustomAnimation a = new MyCustomAnimation(logout_layout, 300, MyCustomAnimation.COLLAPSE);

@@ -12,7 +12,6 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -1120,6 +1119,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     mShareLayout.setVisibility(View.VISIBLE);
                     TextView mShareText = (TextView) row.findViewById(R.id.long_chat_text_share);
                     mShareText.setVisibility(View.VISIBLE);
+                    mShareText.setBackgroundResource(R.color.sahred_text_background);
                     mShareText.setText("" + temp.textMsg);
                     mShareText.setTextColor(context.getResources().getColor(R.color.black));
                 } else {

@@ -32,6 +32,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ChatManager;
@@ -48,8 +50,6 @@ import com.sourcefuse.clickinandroid.view.adapter.NotificationAdapter;
 import com.sourcefuse.clickinandroid.view.adapter.SearchAdapter;
 import com.sourcefuse.clickinandroid.view.adapter.SimpleSectionedListAdapter;
 import com.sourcefuse.clickinapp.R;
-import com.squareup.picasso.Cache;
-import com.squareup.picasso.LruCache;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -89,6 +89,9 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
     private ImageView backArrowRightSide;
     private Bitmap imageBitmap = null;
     private ChatManager chatManager;
+    private PullToRefreshListView notificationList;
+    private NotificationAdapter notificationAdapter;
+    private int notificationlistsize = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -264,7 +267,14 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
                     if (authManager != null) {
                         authManager.setNotificationCounter(0);
                         EventBus.getDefault().postSticky("update Counter");
+                        notificationMngr = ModelManager.getInstance().getNotificationManagerManager();
+                        if(notificationMngr.notificationData.size() == 0) {
+                            Utils.launchBarDialog(ClickInBaseView.this);
+                            notificationMngr.getNotification(getApplicationContext(), "", authManager.getPhoneNo(), authManager.getUsrToken());
+                        }
+
                     }
+
                 }
 
             }
@@ -687,15 +697,38 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
     }
 
 
-    public void setNotificationList() {
+    public void setNotificationList() { //akshit code ,Implementation of Pull to refresh library.
 
         notificationMngr = ModelManager.getInstance().getNotificationManagerManager();
-        NotificationAdapter notificationAdapter = new NotificationAdapter(ClickInBaseView.this, R.layout.row_notification, notificationMngr.notificationData);
-        ListView notificationList = (ListView) slidemenu.findViewById(R.id.list_click_notification);
+        notificationAdapter = new NotificationAdapter(ClickInBaseView.this, R.layout.row_notification, notificationMngr.notificationData);
+        notificationList = (PullToRefreshListView) slidemenu.findViewById(R.id.list_click_notification);
+        notificationList.setMode(PullToRefreshBase.Mode.BOTH);
         notificationList.setAdapter(notificationAdapter);
 
-    }
 
+        notificationList.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
+            @Override
+            public void onPullDownToRefresh(PullToRefreshBase<ListView> listViewPullToRefreshBase) {
+                Log.e("Notification list Sie","Size" +notificationMngr.notificationData.get(notificationMngr.notificationData.size()-1).toString());
+                notificationlistsize = notificationMngr.notificationData.size();
+                notificationMngr = ModelManager.getInstance().getNotificationManagerManager();
+                notificationMngr.getNotification(getApplicationContext(), "", authManager.getPhoneNo(), authManager.getUsrToken());
+
+                notificationList.getRefreshableView().setSelection(0);
+            }
+
+            @Override
+            public void onPullUpToRefresh(PullToRefreshBase<ListView> listViewPullToRefreshBase) {
+                String mLastId = notificationMngr.notificationData.get(notificationMngr.notificationData.size() - 1)._id;
+                Log.e("Notification Last Id", "ID_" + mLastId);
+                notificationMngr = ModelManager.getInstance().getNotificationManagerManager();
+                notificationMngr.getNotification(getApplicationContext(), mLastId, authManager.getPhoneNo(), authManager.getUsrToken());
+
+            }
+
+        });
+
+    }
 
     @Override
     protected void onStart() {
@@ -760,8 +793,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         relationManager = ModelManager.getInstance().getRelationManager();
         setLeftMenuList();
         notificationMngr = ModelManager.getInstance().getNotificationManagerManager();
-
-        notificationMngr.getNotification(getApplicationContext(), "", authManager.getPhoneNo(), authManager.getUsrToken());
+//        notificationMngr.getNotification(getApplicationContext(), "", authManager.getPhoneNo(), authManager.getUsrToken());
 
 
     }
@@ -896,7 +928,11 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
             Utils.fromSignalDialog(ClickInBaseView.this, AlertMessage.connectionError);
 
         } else if (message.equalsIgnoreCase("Notification true") || message.equalsIgnoreCase("Notification error")) {
+            Log.e("Notification list Sie2","Size2" +notificationMngr.notificationData.get(notificationMngr.notificationData.size()-1).toString());
             setNotificationList();
+            Utils.dismissBarDialog();
+            notificationList.onRefreshComplete();
+
         } else if (message.equalsIgnoreCase("Update DB Message")) {
             //temp code
             Toast.makeText(this, "Message received for other partner", Toast.LENGTH_SHORT).show();
@@ -932,7 +968,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
             if (notificationMngr == null)
                 notificationMngr = ModelManager.getInstance().getNotificationManagerManager();
 
-            notificationMngr.getNotification(getApplicationContext(), "", authManager.getPhoneNo(), authManager.getUsrToken());
+//            notificationMngr.getNotification(getApplicationContext(), "", authManager.getPhoneNo(), authManager.getUsrToken());
 
         } else if (message.equalsIgnoreCase("updatephoto")) {
             PicassoManager.clearCache();
