@@ -516,7 +516,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             String mRelationShipId = relationManager.acceptedList.get(relationListIndex).getRelationshipId();
 
 
-            Log.e("mValue oncreate---->",""+getIntent().getStringExtra("mValue"));
+
             if (getIntent().getStringExtra("mValue").equalsIgnoreCase("one")) {
 
                 Utils.showOverlay(ChatRecordView.this);
@@ -996,7 +996,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             String mRelationShipId = relationManager.acceptedList.get(relationListIndex).getRelationshipId();
 
 
-            Log.e("mValue oncreate---->",""+getIntent().getStringExtra("mValue"));
+
             if (intent.getStringExtra("mValue").equalsIgnoreCase("one")) {
 
                 Utils.showOverlay(ChatRecordView.this);
@@ -1934,10 +1934,10 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             sharedMessage.add(obj.isAccepted);
             sharedMessage.add(obj.isMessageSender);
             if(obj.shareComment.equalsIgnoreCase("Write your caption here...")){
-                Log.e("shareComment","Comment case 1"+obj.shareComment);
+
                 sharedMessage.add("");
             }else {
-                Log.e("shareComment","Comment case 2"+obj.shareComment);
+
                 sharedMessage.add(obj.shareComment);
             }
 

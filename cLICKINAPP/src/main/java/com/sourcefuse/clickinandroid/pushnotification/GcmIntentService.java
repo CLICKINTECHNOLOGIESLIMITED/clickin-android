@@ -23,6 +23,7 @@ import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.PicassoManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
 import com.sourcefuse.clickinandroid.model.bean.GetrelationshipsBean;
+import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.ChatRecordView;
 import com.sourcefuse.clickinandroid.view.FeedView;
@@ -64,7 +65,7 @@ public class GcmIntentService extends IntentService {
         if (!extras.isEmpty()) {
             if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)) {
 
-                /*try {
+                try {
                     JSONObject jsonObject = new JSONObject();
                     for (String key : extras.keySet()) {
                         jsonObject.put(key, extras.get(key));
@@ -74,7 +75,7 @@ public class GcmIntentService extends IntentService {
 
                 } catch (JSONException e) {
                     e.printStackTrace();
-                }*/
+                }
                 Intent data = new Intent();
                 data.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 data.putExtra("isChangeInList", true);
@@ -147,11 +148,11 @@ public class GcmIntentService extends IntentService {
 
                         data.setClass(getApplicationContext(), UserProfileView.class);
                         data.putExtra("updatephoto", true);
-                        PicassoManager.clearCache();
                         UpdateCounter();
                         sendNotification("Clickin'", extras.getString("message"), data);
                         EventBus.getDefault().post("updatePhoto");
                         PicassoManager.clearCache();
+
                     } else if (extras.getString("Tp").equalsIgnoreCase("card")) //case for card
                     // case when card accepted
                     // case when card rejected
@@ -217,7 +218,7 @@ public class GcmIntentService extends IntentService {
         authManager.setNotificationCounter(counter + 1);
         EventBus.getDefault().postSticky("update Counter");
         Intent intent = new Intent();
-
+        Constants.mInAppNotification = true;
 
     }
 

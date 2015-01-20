@@ -405,7 +405,7 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
             String textfollowing = "<font color=#f29691>" + getResources().getString(R.string.txt_following) + "</font> <font color=#cccccc>" + authManager.getTmpFollowing() + "</font>";
             following.setText(Html.fromHtml(textfollowing));
 
-            Log.e("url------------>",""+authManager.getTmpUserPic());
+
 
             if (!Utils.isEmptyString(authManager.getTmpGender())) {
                 if (authManager.getTmpGender().equalsIgnoreCase("guy")) {
