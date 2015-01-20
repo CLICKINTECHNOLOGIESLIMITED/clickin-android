@@ -92,8 +92,8 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         /*set picasso maneger value */
-        PicassoManager.setLruCache(getApplicationContext());
-        PicassoManager.setPicasso(getApplicationContext(), PicassoManager.getLruCache());
+        PicassoManager.setLruCache(SignInView.this);
+        PicassoManager.setPicasso(SignInView.this, PicassoManager.getLruCache());
 
 
         Mint.initAndStartSession(SignInView.this, Constants.mSplunk_Api);  // to start the session of Splunk Crashlytics

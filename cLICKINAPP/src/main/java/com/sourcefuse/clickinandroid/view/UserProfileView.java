@@ -103,11 +103,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
 
-        if (PicassoManager.getPicasso() == null) {
-            /*set picasso maneger value */
-            PicassoManager.setLruCache(getApplicationContext());
-            PicassoManager.setPicasso(getApplicationContext(), PicassoManager.getLruCache());
-        }
+
 
 
         authManager = ModelManager.getInstance().getAuthorizationManager();
@@ -159,7 +155,10 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         Bundle b = getIntent().getExtras();
         boolean FromSignup = false;
         boolean isChangeInList = false;
+        boolean updatephoto = false;
 
+
+        Log.e("on create--->", "on create--->");
         if (b != null) {
             if (b.containsKey("FromSignup")) {
                 FromSignup = getIntent().getExtras().getBoolean("FromSignup");
@@ -168,11 +167,16 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
                 isChangeInList = getIntent().getExtras().getBoolean("isChangeInList");
             }
             if (b.containsKey("updatephoto")) {
-                isChangeInList = true;
+                updatephoto = getIntent().getExtras().getBoolean("updatephoto");
+                ;
             }
+
         }
 
-        if (FromSignup | isChangeInList) {
+        Log.e("FromSignup---->",""+FromSignup);
+        Log.e("isChangeInList---->",""+isChangeInList);
+        Log.e("updatephoto---->",""+updatephoto);
+        if (FromSignup) {
             Utils.launchBarDialog(UserProfileView.this);
             authManager.getProfileInfo("", authManager.getPhoneNo(), authManager.getUsrToken());
         } else {
@@ -181,7 +185,10 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
             setProfileDataView();
             setlist();
         }
-
+        if (updatephoto || isChangeInList) {
+            Utils.launchBarDialog(this);
+            ModelManager.getInstance().getRelationManager().getRelationShips(authManager.getPhoneNo(), authManager.getUsrToken());
+        }
 
         findViewById(R.id.iv_usr_icon).setOnClickListener(new View.OnClickListener() {
             @Override

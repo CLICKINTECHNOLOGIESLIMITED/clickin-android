@@ -347,6 +347,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     //code to decide who is accepted the card- basis on card owner- importance while sharing card
                     if(!Utils.isEmptyString(temp.sharingMedia)) {
 
+
                         if (!Utils.isEmptyString(temp.card_owner) && temp.card_owner.equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getQBId())) {
 
                             //parnter accepted the card
@@ -612,11 +613,11 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
             if (Utils.mPlayChatSound && temp.clicks.equalsIgnoreCase("no") || Utils.mPlayChatSound && !Utils.isEmptyString(temp.card_id)) { // code to play sound in normal case exxcept clicks
                 Utils.playSound((Activity) getContext(), R.raw.message_rcvd);
                 Utils.mPlayChatSound = false;
-              //  Log.e("in case 1--->", "in case 1--->");
+
             } else if (Utils.mPlayChatSound && !temp.clicks.equalsIgnoreCase("no") && Utils.isEmptyString(temp.card_id)) {// code to play sound in case of clicks
                 Utils.playSound((Activity) getContext(), R.raw.clickreceived);
                 Utils.mPlayChatSound = false;
-              //  Log.e("in case 2--->", "in case 2--->");
+
             }
 
 
@@ -861,6 +862,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                             int position = (Integer) v.getTag();
                             //card is allowed to play once only- reject, accept or counter change state to played
                             if (temp.card_Played_Countered.equalsIgnoreCase("playing")) {
+
+
+
                                 temp.card_Played_Countered = "played";
                                 sendUpdateCardValues(position, "rejected", "REJECTED!");
 
@@ -884,6 +888,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                             //card is allowed to play once only- reject, accept or counter change state to played
                             if (temp.card_Played_Countered.equalsIgnoreCase("playing")) {
                                 temp.card_Played_Countered = "played";
+
+
+
                                 sendUpdateCardValues(position, "accepted", "ACCEPTED!");
 
                             }
@@ -905,6 +912,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                             //card is allowed to play once only- reject, accept or counter change state to played
                             if (temp.card_Played_Countered.equalsIgnoreCase("playing")) {
                                 //   temp.card_Played_Countered = "played";
+
+
+
                                 sendUpdateCardValues(position, "countered", "COUNTERED CARD!");
 
                             }
@@ -926,6 +936,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     //code to decide who is accepted the card- basis on card owner- importance while sharing card
                     String name=" ";
                     if(!Utils.isEmptyString(temp.sharingMedia)) {
+
                         if (!Utils.isEmptyString(temp.card_owner) && temp.card_owner.equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getQBId())) {
 
                             //parnter accepted the card
@@ -955,6 +966,8 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     //code to decide who is accepted the card- basis on card owner- importance while sharing card
                     String name=" ";
                     if(!Utils.isEmptyString(temp.sharingMedia)) {
+
+
                         if (!Utils.isEmptyString(temp.card_owner) && temp.card_owner.equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getQBId())) {
 
                             //parnter accepted the card
@@ -1000,6 +1013,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                             //card is allowed to play once only- reject, accept or counter change state to played
                             if (temp.card_Played_Countered.equalsIgnoreCase("playing")) {
                                 temp.card_Played_Countered = "played";
+
+
+
                                 sendUpdateCardValues(position, "rejected", "REJECTED!");
 
                                 /* code to play sound */
@@ -1014,6 +1030,11 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                         public void onClick(View v) {
                             //Card ACCEPT Action
                             int position = (Integer) v.getTag();
+
+
+
+
+
                             //card is allowed to play once only- reject, accept or counter change state to played
                             if (temp.card_Played_Countered.equalsIgnoreCase("playing")) {
                                 temp.card_Played_Countered = "played";
@@ -1036,6 +1057,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                             //card is allowed to play once only- reject, accept or counter change state to played
                             if (temp.card_Played_Countered.equalsIgnoreCase("playing")) {
                                 //   temp.card_Played_Countered = "played";
+
+
+
                                 sendUpdateCardValues(position, "countered", "COUNTERED CARD!");
 
                                 /* code to play sound */
@@ -1466,6 +1490,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
         i.putExtra("card_Accepted_Rejected", action);
         i.putExtra("played_Countered", item.card_Played_Countered);
         i.putExtra("card_originator", item.card_originator);
+
+
+
         i.putExtra("card_owner", item.card_owner);
         i.putExtra("chat_id", item.chatId); //update the value to "played" only when user actually counter the card
         //from card- its in case of counter case only-monika
@@ -1519,6 +1546,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
             i.putExtra("card_owner", item.card_owner);
             i.putExtra("card_url", item.card_url);
             i.putExtra("is_CustomCard", item.is_CustomCard);
+
 
 
         } else if (!Utils.isEmptyString(item.content_url) && Utils.isEmptyString(item.imageRatio) && Utils.isEmptyString(item.video_thumb)) {
