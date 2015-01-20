@@ -96,6 +96,7 @@ public class ClickInNotificationManager implements NotificationManagerI {
                                 }
 
                                 if(Utils.isEmptyString(lastNotificationId)) {//akshit code to item at Top and Bottom after refresh
+                                    notificationData.clear();
                                     notificationData.addAll(0,notificationArray);
                                 }else
                                     notificationData.addAll(notificationArray);
