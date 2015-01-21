@@ -102,6 +102,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         addMenu(true);
         this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
+        Log.e("on crate --->","on crate --->");
 
         if (PicassoManager.getPicasso() == null) {
             /*set picasso maneger value */
@@ -159,6 +160,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         Bundle b = getIntent().getExtras();
         boolean FromSignup = false;
         boolean isChangeInList = false;
+        boolean updatephoto = false;
 
         if (b != null) {
             if (b.containsKey("FromSignup")) {
@@ -168,11 +170,14 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
                 isChangeInList = getIntent().getExtras().getBoolean("isChangeInList");
             }
             if (b.containsKey("updatephoto")) {
-                isChangeInList = true;
+                updatephoto = getIntent().getExtras().getBoolean("updatephoto");;
             }
+         //   Log.e("FromSignup---------->",""+FromSignup);
+           // Log.e("isChangeInList---------->",""+isChangeInList);
+            //Log.e("updatephoto---------->",""+updatephoto);
         }
 
-        if (FromSignup | isChangeInList) {
+        if (FromSignup | updatephoto) {
             Utils.launchBarDialog(UserProfileView.this);
             authManager.getProfileInfo("", authManager.getPhoneNo(), authManager.getUsrToken());
         } else {
@@ -484,7 +489,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-
+        Log.e("on onNewIntent --->","on onNewIntent --->");
 
         if (intent.getExtras() != null && intent.getExtras().containsKey("isChangeInList")) {
 

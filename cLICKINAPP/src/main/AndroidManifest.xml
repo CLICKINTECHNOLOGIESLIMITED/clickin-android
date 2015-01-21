@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.sourcefuse.clickinapp"
     android:largeHeap="true"
-    android:versionCode="4"
+    android:versionCode="5"
     android:versionName="1.0">
 
     <uses-feature
@@ -277,11 +277,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing|stateHidden"></activity>
 
-        <receiver android:name="com.sourcefuse.clickinandroid.pushnotification.AppInstallReceiver" android:exported="true">
-            <intent-filter>
-                <action android:name="com.android.vending.INSTALL_REFERRER" />
-            </intent-filter>
-        </receiver>
+
         <meta-data
             android:name="com.crashlytics.ApiKey"
             android:value="d9e80395ff1cf43b754406126aac3d0734cbaa5e" />

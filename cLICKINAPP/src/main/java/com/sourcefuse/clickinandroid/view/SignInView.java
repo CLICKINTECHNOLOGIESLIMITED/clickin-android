@@ -96,8 +96,13 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
         PicassoManager.setPicasso(getApplicationContext(), PicassoManager.getLruCache());
 
 
+        try{
         Mint.initAndStartSession(SignInView.this, Constants.mSplunk_Api);  // to start the session of Splunk Crashlytics
         Mint.enableDebug();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
 
 
 

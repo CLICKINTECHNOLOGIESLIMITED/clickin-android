@@ -16,7 +16,7 @@ public class Constants {
     public static final String ACCOUNTKEY = "gBv3BjZnFzkVPUZEqEXm";*/
     public static final int sliderWidth = 60;
 
-    public static final String mSplunk_Api = "dfda6001";
+    public static final String mSplunk_Api = "119346bb";
     // QB for prod
     public static final String CLICKIN_APP_ID = "5";
     public static final String CLICKIN_AUTH_KEY = "6QQJq2FSKKzHK2-";

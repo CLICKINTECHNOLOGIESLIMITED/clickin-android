@@ -1263,7 +1263,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
                 }
             }
-        }, 5000);
+        }, 10000);
 
 
     }
