@@ -86,7 +86,7 @@
         android:visibility="gone" />
 
 
-    <com.sourcefuse.clickinandroid.view.adapter.PinnedSectionListViewNew
+    <se.emilsjolander.stickylistheaders.StickyListHeadersListView
         android:id="@+id/click_with_list_menu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -98,6 +98,15 @@
         android:overScrollMode="never"
         android:scrollbars="none"
         android:transcriptMode="normal" />
+
+    <TextView
+        android:id="@+id/empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="Empty"
+        android:textSize="30sp"
+        android:visibility="gone"/>
 
 
 </LinearLayout>

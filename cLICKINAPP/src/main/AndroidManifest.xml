@@ -7,7 +7,7 @@
 
     <uses-feature
         android:glEsVersion="0x00020000"
-        android:required="true" />
+        android:required="false" />
     <uses-sdk
         android:minSdkVersion="11"
         android:targetSdkVersion="19" />
@@ -278,9 +278,15 @@
             android:windowSoftInputMode="adjustNothing|stateHidden"></activity>
 
 
-        <meta-data
-            android:name="com.crashlytics.ApiKey"
-            android:value="d9e80395ff1cf43b754406126aac3d0734cbaa5e" />
+<!--
+        <receiver android:name="com.sourcefuse.clickinandroid.pushnotification.AppInstallReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.android.vending.INSTALL_REFERRER" />
+            </intent-filter>
+        </receiver>
+-->
+
     </application>
 
 </manifest>

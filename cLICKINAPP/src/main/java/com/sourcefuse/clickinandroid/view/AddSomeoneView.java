@@ -59,7 +59,6 @@ public class AddSomeoneView extends Activity implements TextWatcher {
         search_phbook.addTextChangedListener(this);
         authManager = ModelManager.getInstance().getAuthorizationManager();
 
-
         listView.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
@@ -81,6 +80,7 @@ public class AddSomeoneView extends Activity implements TextWatcher {
                         phNum = authManager.getCountrycode() + phNum;
                     }
                 }*/
+
 
                 intent.putExtra("ConNumber", phNum);
                 if (!Utils.isEmptyString(Utils.itData.get(position).getConUri())) {

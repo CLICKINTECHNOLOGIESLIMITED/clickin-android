@@ -32,6 +32,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ChatManager;
@@ -48,8 +50,6 @@ import com.sourcefuse.clickinandroid.view.adapter.NotificationAdapter;
 import com.sourcefuse.clickinandroid.view.adapter.SearchAdapter;
 import com.sourcefuse.clickinandroid.view.adapter.SimpleSectionedListAdapter;
 import com.sourcefuse.clickinapp.R;
-import com.squareup.picasso.Cache;
-import com.squareup.picasso.LruCache;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -57,11 +57,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.greenrobot.event.EventBus;
+import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
 public class ClickInBaseView extends Activity implements TextWatcher, SlidingMenu.OnOpenListener, SlidingMenu.OnCloseListener {
 
 
-    public ListView clickWithlistView, searchList;
+    public StickyListHeadersListView clickWithlistView;
+    public ListView searchList;
     public ClickInWithAdapter clickInadapter;
     public Boolean stopSearch = true;
     public EditText edt_search;
@@ -87,6 +89,9 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
     private ImageView backArrowRightSide;
     private Bitmap imageBitmap = null;
     private ChatManager chatManager;
+    private PullToRefreshListView notificationList;
+    private NotificationAdapter notificationAdapter;
+    private int notificationlistsize = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,20 +134,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 
 
         clickInadapter = new ClickInWithAdapter(ClickInBaseView.this, R.layout.row_clickin_with, relationManager.acceptedList);
-        String[] mHeaderNames = {"CLICKIN'"};
-        String[] mHeaderNames2 = {" WITH"};
-        Integer[] mHeaderPositions = {0};
-
-        ArrayList<SimpleSectionedListAdapter.Section> sections = new ArrayList<SimpleSectionedListAdapter.Section>();
-
-
-        boolean hidevalue = relationManager.acceptedList.size() > 0 ? true : false;
-
-
-        sections.add(new SimpleSectionedListAdapter.Section(mHeaderPositions[0], mHeaderNames[0], mHeaderNames2[0]));
-        simpleSectionedGridAdapter = new SimpleSectionedListAdapter(ClickInBaseView.this, clickInadapter, R.layout.header_clickwith, R.id.tv_clickintx, R.id.tv_with, hidevalue);
-        simpleSectionedGridAdapter.setSections(sections.toArray(new SimpleSectionedListAdapter.Section[0]));
-        clickWithlistView.setAdapter(simpleSectionedGridAdapter);
+        clickWithlistView.setAdapter(clickInadapter);
     }
 
     private void switchView(String rid, int relationListIndex) {
@@ -166,8 +158,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         String mRelationShipId = relationManager.acceptedList.get(relationListIndex).getRelationshipId();
         String mNewUser = authManager.mIs_new_clickin_user;
 
-        Log.e("mNewPrtner value ---->",""+mNewPrtner);
-        Log.e("mNewUser value ---->",""+mNewUser);
+
         String mValue;
         if (mNewUser != null && mNewUser.equalsIgnoreCase("yes") && mNewPrtner != null && mNewPrtner.equalsIgnoreCase("yes")) {
             mValue = "one";
@@ -276,7 +267,14 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
                     if (authManager != null) {
                         authManager.setNotificationCounter(0);
                         EventBus.getDefault().postSticky("update Counter");
+                        notificationMngr = ModelManager.getInstance().getNotificationManagerManager();
+                        if(notificationMngr.notificationData.size() == 0) {
+                            Utils.launchBarDialog(ClickInBaseView.this);
+                            notificationMngr.getNotification(getApplicationContext(), "", authManager.getPhoneNo(), authManager.getUsrToken());
+                        }
+
                     }
+
                 }
 
             }
@@ -376,8 +374,8 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 
         hideSearchlist = (ImageView) slidemenu.findViewById(R.id.iv_hide_searchlist);
 
-        clickWithlistView = (ListView) slidemenu.findViewById(R.id.click_with_list_menu);
-
+        clickWithlistView = (StickyListHeadersListView) slidemenu.findViewById(R.id.click_with_list_menu);
+        clickWithlistView.setDivider(null);
         // Adding  header And footer
         View headerView = ((LayoutInflater) ClickInBaseView.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.menu_header, null, false);
         View footerView = ((LayoutInflater) ClickInBaseView.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.menu_footer, null, false);
@@ -397,6 +395,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         findFriend = (LinearLayout) footerView.findViewById(R.id.ll_friend);
         setting = (LinearLayout) footerView.findViewById(R.id.ll_setting);
         searchInviteView = (TextView) searchfooter.findViewById(R.id.btn_invite_view);
+
 
 
         userName.setText(authManager.getUserName());
@@ -439,22 +438,23 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         clickWithlistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-                if (relationManager.acceptedList.size() > 0 && position >= 2) {
-                    try {
-                        partnerName = relationManager.acceptedList.get(position - 2).getPartnerName();
-                        String rId = relationManager.acceptedList.get(position - 2).getRelationshipId();
-                        partnerPic = relationManager.acceptedList.get(position - 2).getPartnerPic();
-                        quickBlockId = relationManager.acceptedList.get(position - 2).getPartnerQBId();
-                        partnerId = relationManager.acceptedList.get(position - 2).getPartner_id();
-                        userClicks = relationManager.acceptedList.get(position - 2).getClicks();
-                        myClicks = relationManager.acceptedList.get(position - 2).getUserClicks();
-                        partnerPh = relationManager.acceptedList.get(position - 2).getPhoneNo();
 
-                        relationListIndex = (position - 2);
+                if (relationManager.acceptedList.size() > 0 && position >= 1) {
+                    try {
+                        partnerName = relationManager.acceptedList.get(position - 1).getPartnerName();
+                        String rId = relationManager.acceptedList.get(position - 1).getRelationshipId();
+                        partnerPic = relationManager.acceptedList.get(position - 1).getPartnerPic();
+                        quickBlockId = relationManager.acceptedList.get(position - 1).getPartnerQBId();
+                        partnerId = relationManager.acceptedList.get(position - 1).getPartner_id();
+                        userClicks = relationManager.acceptedList.get(position - 1).getClicks();
+                        myClicks = relationManager.acceptedList.get(position - 1).getUserClicks();
+                        partnerPh = relationManager.acceptedList.get(position - 1).getPhoneNo();
+
+                        relationListIndex = (position - 1);
 
 /* prafulll code to set counter to zero */
-                        if (relationManager.acceptedList.get(position - 2).getUnreadMsg() != 0) {
-                            relationManager.acceptedList.get(position - 2).setUnreadMsg(0);
+                        if (relationManager.acceptedList.get(position - 1).getUnreadMsg() != 0) {
+                            relationManager.acceptedList.get(position - 1).setUnreadMsg(0);
                             clickInadapter.notifyDataSetChanged();
                         }
 /* prafulll code to set counter to zero */
@@ -464,7 +464,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
                     } catch (Exception e) {
                         e.printStackTrace();
 
-                        Log.e("value of exception--->",""+e.toString());
+
                     }
                 }
             }
@@ -570,6 +570,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 
                 Intent intent = new Intent(ClickInBaseView.this, UserProfileView.class);
                 intent.putExtra("isChangeInList", true);
+                intent.putExtra("updatephoto",Constants.mInAppNotification);
                 intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
                 List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
@@ -591,6 +592,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
                     //slidemenu.showContent(true);
                 }
+                Constants.mInAppNotification = false;
 
             }
         });
@@ -695,15 +697,37 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
     }
 
 
-    public void setNotificationList() {
+    public void setNotificationList() { //akshit code ,Implementation of Pull to refresh library.
 
         notificationMngr = ModelManager.getInstance().getNotificationManagerManager();
-        NotificationAdapter notificationAdapter = new NotificationAdapter(ClickInBaseView.this, R.layout.row_notification, notificationMngr.notificationData);
-        ListView notificationList = (ListView) slidemenu.findViewById(R.id.list_click_notification);
+        notificationAdapter = new NotificationAdapter(ClickInBaseView.this, R.layout.row_notification, notificationMngr.notificationData);
+        notificationList = (PullToRefreshListView) slidemenu.findViewById(R.id.list_click_notification);
+        notificationList.setMode(PullToRefreshBase.Mode.BOTH);
         notificationList.setAdapter(notificationAdapter);
 
-    }
 
+        notificationList.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
+            @Override
+            public void onPullDownToRefresh(PullToRefreshBase<ListView> listViewPullToRefreshBase) {
+                Log.e("Notification list Sie","Size" +notificationMngr.notificationData.get(notificationMngr.notificationData.size()-1).toString());
+                notificationlistsize = notificationMngr.notificationData.size();
+                notificationMngr = ModelManager.getInstance().getNotificationManagerManager();
+                notificationMngr.getNotification(getApplicationContext(), "", authManager.getPhoneNo(), authManager.getUsrToken());
+
+            }
+
+            @Override
+            public void onPullUpToRefresh(PullToRefreshBase<ListView> listViewPullToRefreshBase) {
+                String mLastId = notificationMngr.notificationData.get(notificationMngr.notificationData.size() - 1)._id;
+                Log.e("Notification Last Id", "ID_" + mLastId);
+                notificationMngr = ModelManager.getInstance().getNotificationManagerManager();
+                notificationMngr.getNotification(getApplicationContext(), mLastId, authManager.getPhoneNo(), authManager.getUsrToken());
+
+            }
+
+        });
+
+    }
 
     @Override
     protected void onStart() {
@@ -768,8 +792,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         relationManager = ModelManager.getInstance().getRelationManager();
         setLeftMenuList();
         notificationMngr = ModelManager.getInstance().getNotificationManagerManager();
-
-        notificationMngr.getNotification(getApplicationContext(), "", authManager.getPhoneNo(), authManager.getUsrToken());
+//        notificationMngr.getNotification(getApplicationContext(), "", authManager.getPhoneNo(), authManager.getUsrToken());
 
 
     }
@@ -904,7 +927,11 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
             Utils.fromSignalDialog(ClickInBaseView.this, AlertMessage.connectionError);
 
         } else if (message.equalsIgnoreCase("Notification true") || message.equalsIgnoreCase("Notification error")) {
+            Log.e("Notification list Sie2","Size2" +notificationMngr.notificationData.get(notificationMngr.notificationData.size()-1).toString());
             setNotificationList();
+            Utils.dismissBarDialog();
+            notificationList.onRefreshComplete();
+
         } else if (message.equalsIgnoreCase("Update DB Message")) {
             //temp code
             Toast.makeText(this, "Message received for other partner", Toast.LENGTH_SHORT).show();
@@ -940,7 +967,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
             if (notificationMngr == null)
                 notificationMngr = ModelManager.getInstance().getNotificationManagerManager();
 
-            notificationMngr.getNotification(getApplicationContext(), "", authManager.getPhoneNo(), authManager.getUsrToken());
+//            notificationMngr.getNotification(getApplicationContext(), "", authManager.getPhoneNo(), authManager.getUsrToken());
 
         } else if (message.equalsIgnoreCase("updatephoto")) {
             PicassoManager.clearCache();

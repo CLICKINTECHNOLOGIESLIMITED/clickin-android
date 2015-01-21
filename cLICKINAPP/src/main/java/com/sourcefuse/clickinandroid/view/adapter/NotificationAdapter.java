@@ -5,7 +5,6 @@ import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.sourcefuse.clickinandroid.model.PicassoManager;
 import com.sourcefuse.clickinandroid.model.bean.NotificationBean;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.FeedView;
@@ -61,6 +61,9 @@ public class NotificationAdapter extends ArrayAdapter<NotificationBean> {
 
         RecordHolder rholder = (RecordHolder) row.getTag();
 
+        if(item.getIs_read().equalsIgnoreCase("true")){//akshit code to set color for unread notification
+            holder.notificationMsg.setBackgroundResource(R.color.noti_read);
+        }
 
         if (item.getNotificationType().matches(context.getResources().getString(R.string.txt_relation_visibility))) {
             rholder.notificationType.setBackgroundResource(R.drawable.ic_change_relationship);
@@ -74,8 +77,13 @@ public class NotificationAdapter extends ArrayAdapter<NotificationBean> {
             rholder.notificationType.setBackgroundResource(R.drawable.c_noti_share);
         } else if (item.getNotificationType().equalsIgnoreCase(context.getResources().getString(R.string.txt_relationdelete))) {
             rholder.notificationType.setBackgroundResource(R.drawable.p_delete_relation);
-        } else {
-            rholder.notificationType.setBackgroundResource(R.drawable.ic_request_clickin);//akshit code added toset image other than ic_launcher
+        } else if(item.getNotificationType().equalsIgnoreCase(context.getResources().getString(R.string.starrred))){
+            rholder.notificationType.setBackgroundResource(R.drawable.c_noti_star);//akshit code
+        } else if(item.getNotificationType().equalsIgnoreCase(context.getResources().getString(R.string.commented))) {
+            rholder.notificationType.setBackgroundResource(R.drawable.c_noti_comment);//akshit code
+        }
+        else {
+            rholder.notificationType.setBackgroundResource(R.drawable.ic_request_clickin);//akshit code added to set image other than ic_launcher
         }
 
 
@@ -100,8 +108,7 @@ public class NotificationAdapter extends ArrayAdapter<NotificationBean> {
                     if (!className.equalsIgnoreCase("com.sourcefuse.clickinandroid.view.UserProfileView")) {
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-
-                    }
+                         }
                     intent.putExtra("isChangeInList", true);
                     context.startActivity(intent);
                 } else if (item.getNotificationType().equalsIgnoreCase(context.getResources().getString(R.string.txt_follow))) {
@@ -124,6 +131,7 @@ public class NotificationAdapter extends ArrayAdapter<NotificationBean> {
                     intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     intent.putExtra("updatephoto", true);
                     context.startActivity(intent);
+                    PicassoManager.clearCache();
                 }
             }
         });

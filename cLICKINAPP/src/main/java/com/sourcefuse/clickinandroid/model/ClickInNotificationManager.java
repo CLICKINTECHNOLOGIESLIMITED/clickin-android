@@ -6,6 +6,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.sourcefuse.clickinandroid.model.bean.NotificationBean;
 import com.sourcefuse.clickinandroid.utils.APIs;
+import com.sourcefuse.clickinandroid.utils.Utils;
 
 import org.apache.http.entity.StringEntity;
 import org.apache.http.message.BasicHeader;
@@ -30,7 +31,7 @@ public class ClickInNotificationManager implements NotificationManagerI {
     private NotificationBean ntificationBeanList = null;
 
     @Override
-    public void getNotification(Context context, String lastNotificationId, String phone, String usertoken) {
+    public void getNotification(Context context, final String lastNotificationId, String phone, String usertoken) {
 
 
         JSONObject userInputDetails = new JSONObject();
@@ -57,7 +58,7 @@ public class ClickInNotificationManager implements NotificationManagerI {
                         try {
                             if (errorResponse != null && errorResponse.has("message")) {
                                 if (errorResponse.getString("message").equalsIgnoreCase("User don't have any notification.")) {
-                                    notificationData.clear(); // to clear notification list as no notification is available
+//                                    notificationData.clear(); // to clear notification list as no notification is available
                                     EventBus.getDefault().postSticky("Notification error");
                                 }
                             }
@@ -79,7 +80,7 @@ public class ClickInNotificationManager implements NotificationManagerI {
                         try {
 
                             state = response.getBoolean("success");
-                            notificationData.clear(); // to clear notification list as we featch all data
+//                            notificationData.clear(); // to clear notification list as we featch all data
                             if (state) {
 
                                 JSONArray list = response.getJSONArray("notificationArray");
@@ -89,11 +90,18 @@ public class ClickInNotificationManager implements NotificationManagerI {
                                     JSONObject data = list.getJSONObject(i);
                                     ntificationBeanList.setNotificationMsg(data.getString("notification_msg"));
                                     ntificationBeanList.setNotificationType(data.getString("type"));
-
+                                    ntificationBeanList._id  = data.getString("_id");
+                                    ntificationBeanList.setIs_read(data.getString("read"));
                                     notificationArray.add(ntificationBeanList);
                                 }
 
-                                notificationData.addAll(notificationArray);
+                                if(Utils.isEmptyString(lastNotificationId)) {//akshit code to item at Top and Bottom after refresh
+                                    notificationData.clear();
+                                    notificationData.addAll(0,notificationArray);
+                                }else
+                                    notificationData.addAll(notificationArray);
+
+
 
 
                                 EventBus.getDefault().postSticky("Notification true");

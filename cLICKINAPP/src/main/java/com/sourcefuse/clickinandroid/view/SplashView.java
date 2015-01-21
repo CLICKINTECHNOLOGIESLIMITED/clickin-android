@@ -44,7 +44,9 @@ public class SplashView extends Activity implements View.OnClickListener {
 
 
 
-
+        /*set picasso maneger value */
+        PicassoManager.setLruCache(SplashView.this);
+        PicassoManager.setPicasso(SplashView.this, PicassoManager.getLruCache());
 
         Utils.deviceId = Utils.getRegId(SplashView.this);
 

@@ -25,13 +25,13 @@ public class PicassoManager {
         return picasso;
     }
 
-    public static  void setPicasso(Context context, LruCache cache) {
+    public static void setPicasso(Context context, LruCache cache) {
         picasso = new Picasso.Builder(context).memoryCache(cache).build();
     }
 
     public static void clearCache() {
-        if (lruCache != null)
-            lruCache.clear();
+        if (PicassoManager.getLruCache() != null)
+            PicassoManager.getLruCache().clear();
     }
 
 }

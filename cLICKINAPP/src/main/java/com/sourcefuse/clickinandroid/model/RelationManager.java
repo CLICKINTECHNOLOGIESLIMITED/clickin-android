@@ -62,7 +62,7 @@ public class RelationManager {
             userInputDetails.put("phone_no", phone);
             userInputDetails.put("user_token", usertoken);
 
-            android.util.Log.e("user token-->", "" + usertoken);
+
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));

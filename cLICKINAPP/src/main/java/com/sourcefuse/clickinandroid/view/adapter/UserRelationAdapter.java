@@ -161,6 +161,7 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
                         .load(itemList.get(position).getPartnerPic())
                         .into(usrimg);
 
+                Log.e("image---->",""+itemList.get(position).getPartnerPic());
             } catch (Exception e) {
                 e.printStackTrace();
                 // usrimg.setImageResource(R.drawable.male_user);
