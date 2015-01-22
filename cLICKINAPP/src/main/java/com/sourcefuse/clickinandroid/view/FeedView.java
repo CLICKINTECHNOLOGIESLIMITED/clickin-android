@@ -135,7 +135,7 @@ public class FeedView extends ClickInBaseView implements View.OnClickListener {
         if (Constants.comments) {
             simpleSectionedGridAdapter2.notifyDataSetChanged();
             list.invalidateViews();
-            ;
+
             Constants.comments = false;
         } else
             list.setAdapter(simpleSectionedGridAdapter2);

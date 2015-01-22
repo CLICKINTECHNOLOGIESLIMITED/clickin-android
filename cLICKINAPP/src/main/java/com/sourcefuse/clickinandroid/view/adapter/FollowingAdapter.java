@@ -77,7 +77,7 @@ public class FollowingAdapter extends ArrayAdapter<FollowerFollowingBean> {
 
         rholder = (RecordHolder) row.getTag();
 
-        if (FollowingListView.fromOwnProfile == true) {
+        if (FollowingListView.fromOwnProfile) {
             holder.reqbtn.setVisibility(View.VISIBLE);
         } else {
             holder.reqbtn.setVisibility(View.GONE);

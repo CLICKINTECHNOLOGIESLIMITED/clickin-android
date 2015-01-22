@@ -40,11 +40,7 @@ public class ModelManager {
 
 
     public static boolean getInstanceModelManager() {
-        if (modelMgr != null) {
-            return true;
-        } else {
-            return false;
-        }
+        return modelMgr != null;
     }
 
     public AuthManager getAuthorizationManager() {

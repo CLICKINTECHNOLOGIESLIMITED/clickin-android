@@ -352,11 +352,8 @@ public class
     }
 
     public static boolean isEmptyString(String str) {
-        if (str == null || str.equalsIgnoreCase("null")
-                || str.equalsIgnoreCase("") || str.length() < 1) {
-            return true;
-        }
-        return false;
+        return str == null || str.equalsIgnoreCase("null")
+                || str.equalsIgnoreCase("") || str.length() < 1;
     }
 
 
@@ -375,13 +372,9 @@ public class
 
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
 
-        if (networkInfo != null && networkInfo.isConnected()) {
-            // fetch data
-            return true;
-        } else {
-            // display error
-            return false;
-        }
+        // fetch data
+// display error
+        return networkInfo != null && networkInfo.isConnected();
     }
 
     // public static Boolean DeleteImage(Uri uri,Activity act) {

@@ -241,7 +241,7 @@ public class SettingView extends Activity implements View.OnClickListener, Compo
                     sharing_layout.startAnimation(a);
                 } else {
                     MyCustomAnimation a = new MyCustomAnimation(sharing_layout, 300, MyCustomAnimation.EXPAND);
-                    if (checkboolean == false) {
+                    if (!checkboolean) {
                         final LinearLayout sharing_layout = (LinearLayout) findViewById(R.id.facebook_layout);
                         ViewGroup.LayoutParams lp = sharing_layout.getLayoutParams();
                         height = lp.height;
@@ -262,7 +262,7 @@ public class SettingView extends Activity implements View.OnClickListener, Compo
                 } else {
 
                     MyCustomAnimation a = new MyCustomAnimation(main_password_layout, 300, MyCustomAnimation.EXPAND);
-                    if (checkboolean1 == false) {
+                    if (!checkboolean1) {
 
                         final TextView old_password = (TextView) findViewById(R.id.edit_profile);
                         final TextView new_password = (TextView) findViewById(R.id.change_password);
@@ -298,7 +298,7 @@ public class SettingView extends Activity implements View.OnClickListener, Compo
                     password_layout.startAnimation(a);
                 } else {
                     MyCustomAnimation a = new MyCustomAnimation(password_layout, 300, MyCustomAnimation.EXPAND);
-                    if (checkboolean2 == false) {
+                    if (!checkboolean2) {
                         final TextView old_password = (TextView) findViewById(R.id.old_password);
                         final TextView new_password = (TextView) findViewById(R.id.new_password);
                         final TextView confirm_password = (TextView) findViewById(R.id.confirm_password);
@@ -321,7 +321,7 @@ public class SettingView extends Activity implements View.OnClickListener, Compo
                     report_layout.startAnimation(a);
                 } else {
                     MyCustomAnimation a = new MyCustomAnimation(report_layout, 300, MyCustomAnimation.EXPAND);
-                    if (checkboolean3 == false) {
+                    if (!checkboolean3) {
                         height = 300;
                     }
                     checkboolean3 = true;
@@ -338,7 +338,7 @@ public class SettingView extends Activity implements View.OnClickListener, Compo
                     not_working_layout.startAnimation(a);
                 } else {
                     MyCustomAnimation a = new MyCustomAnimation(not_working_layout, 300, MyCustomAnimation.EXPAND);
-                    if (checkboolean4 == false) {
+                    if (!checkboolean4) {
                         height = 300;
                     }
                     checkboolean4 = true;
@@ -356,7 +356,7 @@ public class SettingView extends Activity implements View.OnClickListener, Compo
                     general_feed_layout.startAnimation(a);
                 } else {
                     MyCustomAnimation a = new MyCustomAnimation(general_feed_layout, 300, MyCustomAnimation.EXPAND);
-                    if (checkboolean5 == false) {
+                    if (!checkboolean5) {
                         height = 300;
                     }
                     checkboolean5 = true;
@@ -374,7 +374,7 @@ public class SettingView extends Activity implements View.OnClickListener, Compo
                     logout_layout.startAnimation(a);
                 } else {
                     MyCustomAnimation a = new MyCustomAnimation(logout_layout, 300, MyCustomAnimation.EXPAND);
-                    if (checkboolean6 == false) {
+                    if (!checkboolean6) {
                         height = 300;
                     }
                     checkboolean6 = true;

@@ -44,11 +44,7 @@ public class MyPreference {
 
 
     public boolean isLogin() {
-        if (!Utils.isEmptyString(getToken()) && ModelManager.getInstanceModelManager()) {
-            return true;
-        } else {
-            return false;
-        }
+        return !Utils.isEmptyString(getToken()) && ModelManager.getInstanceModelManager();
 
     }
 

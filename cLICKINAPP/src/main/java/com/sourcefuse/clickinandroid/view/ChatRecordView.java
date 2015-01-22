@@ -338,7 +338,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
 
         authManager.ourClicks = getIntent().getExtras().getString("myClicks");
-        ;
+
         relationManager.partnerClicks = getIntent().getExtras().getString("userClicks");
 
         myclicksView.setText("" + authManager.ourClicks);
@@ -696,11 +696,11 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
                 String chatString = chatText.getText().toString();
 
-                if ((chatString.length() > 0 || isClicks() == true || mImageCaptureUri != null) || audioFilePath != null || videofilePath != null) {
+                if ((chatString.length() > 0 || isClicks() || mImageCaptureUri != null) || audioFilePath != null || videofilePath != null) {
                     if (mImageCaptureUri == null && audioFilePath == null && videofilePath == null) {// if all media files are null
                         ChatMessageBody temp = new ChatMessageBody();
 
-                        if (isClicks() == true) {
+                        if (isClicks()) {
                             temp.clicks = Utils.convertClicks(String.valueOf(seekValue)).trim();
                             temp.textMsg = temp.clicks + "        " + chatString;
 
@@ -940,7 +940,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             default:
         }
         if (Utils.isEmptyString(temp.location_coordinates)) {
-            if (isClicks() == true) {
+            if (isClicks()) {
                 temp.clicks = Utils.convertClicks(String.valueOf(seekValue)).trim();
                 temp.textMsg = temp.clicks + "        " + chatString;
             } else {

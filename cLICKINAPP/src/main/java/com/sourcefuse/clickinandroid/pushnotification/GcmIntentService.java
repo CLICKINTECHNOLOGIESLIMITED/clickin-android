@@ -65,7 +65,7 @@ public class GcmIntentService extends IntentService {
         if (!extras.isEmpty()) {
             if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)) {
 
-                try {
+                /*try {
                     JSONObject jsonObject = new JSONObject();
                     for (String key : extras.keySet()) {
                         jsonObject.put(key, extras.get(key));
@@ -75,7 +75,7 @@ public class GcmIntentService extends IntentService {
 
                 } catch (JSONException e) {
                     e.printStackTrace();
-                }
+                }*/
                 Intent data = new Intent();
                 data.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 data.putExtra("isChangeInList", true);

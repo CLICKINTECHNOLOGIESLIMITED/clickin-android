@@ -158,7 +158,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         boolean updatephoto = false;
 
 
-        Log.e("on create--->", "on create--->");
+
         if (b != null) {
             if (b.containsKey("FromSignup")) {
                 FromSignup = getIntent().getExtras().getBoolean("FromSignup");
@@ -168,14 +168,12 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
             }
             if (b.containsKey("updatephoto")) {
                 updatephoto = getIntent().getExtras().getBoolean("updatephoto");
-                ;
+
             }
 
         }
 
-        Log.e("FromSignup---->",""+FromSignup);
-        Log.e("isChangeInList---->",""+isChangeInList);
-        Log.e("updatephoto---->",""+updatephoto);
+
         if (FromSignup) {
             Utils.launchBarDialog(UserProfileView.this);
             authManager.getProfileInfo("", authManager.getPhoneNo(), authManager.getUsrToken());
