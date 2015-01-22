@@ -68,6 +68,7 @@ public class SimpleSectionedListAdapter2 extends BaseAdapter implements PinnedSe
         });
     }
 
+
     public void setSections(Section[] sections) {
         mSections.clear();
 
@@ -116,6 +117,8 @@ public class SimpleSectionedListAdapter2 extends BaseAdapter implements PinnedSe
         }
         return sectionedPosition + offset;
     }
+
+
 
     public boolean isSectionHeaderPosition(int position) {
         return mSections.get(position) != null;

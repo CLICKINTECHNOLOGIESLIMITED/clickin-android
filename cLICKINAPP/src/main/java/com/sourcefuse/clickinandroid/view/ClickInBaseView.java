@@ -714,7 +714,6 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
                 notificationMngr = ModelManager.getInstance().getNotificationManagerManager();
                 notificationMngr.getNotification(getApplicationContext(), "", authManager.getPhoneNo(), authManager.getUsrToken());
 
-                notificationList.getRefreshableView().setSelection(0);
             }
 
             @Override
