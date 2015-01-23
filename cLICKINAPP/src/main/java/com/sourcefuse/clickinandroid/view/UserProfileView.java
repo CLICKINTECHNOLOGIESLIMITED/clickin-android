@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -149,7 +148,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         //    Utils.launchBarDialog(this);
         authManager = ModelManager.getInstance().getAuthorizationManager();
         notificationMngr = ModelManager.getInstance().getNotificationManagerManager();
-        //  notificationMngr.getNotification("", authManager.getPhoneNo(), authManager.getUsrToken());
+
 
         //make next webservice request after current is finished
         Bundle b = getIntent().getExtras();
@@ -158,7 +157,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         boolean updatephoto = false;
 
 
-        Log.e("on create--->", "on create--->");
+
         if (b != null) {
             if (b.containsKey("FromSignup")) {
                 FromSignup = getIntent().getExtras().getBoolean("FromSignup");
@@ -173,9 +172,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
 
         }
 
-        Log.e("FromSignup---->",""+FromSignup);
-        Log.e("isChangeInList---->",""+isChangeInList);
-        Log.e("updatephoto---->",""+updatephoto);
+
         if (FromSignup) {
             Utils.launchBarDialog(UserProfileView.this);
             authManager.getProfileInfo("", authManager.getPhoneNo(), authManager.getUsrToken());

@@ -36,23 +36,27 @@
             android:paddingTop="5dp"
             android:visibility="gone">
 
-            <TextView
+            <com.sourcefuse.clickinandroid.utils.ClickInTextView
                 android:id="@+id/shared_by_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="2dp"
                 android:layout_marginTop="2dp"
-                android:textColor="@color/signin_color" />
+                android:textStyle="bold"
+                geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"
+                android:textColor="@color/text_color_share" />
 
-            <TextView
+            <com.sourcefuse.clickinandroid.utils.ClickInTextView
                 android:id="@+id/shared_message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="2dp"
                 android:layout_marginTop="2dp"
                 android:layout_toRightOf="@+id/shared_by_name"
                 android:text="You Want to share"
-                android:textColor="@color/signin_color" />
+                android:textStyle="bold"
+                geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"
+                android:textColor="@color/text_color_share" />
 
             <ImageView
                 android:id="@+id/except_share"
@@ -61,7 +65,6 @@
                 android:layout_below="@+id/shared_message"
                 android:layout_marginRight="2dp"
                 android:layout_marginTop="4dp"
-
                 android:background="@drawable/chat_divider" />
 
             <ImageView
@@ -509,22 +512,25 @@
                 android:paddingTop="5dp"
                 android:visibility="gone">
 
-                <TextView
+                <com.sourcefuse.clickinandroid.utils.ClickInTextView
                     android:id="@+id/tv_acc_res_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="3dp"
                     android:paddingRight="3dp"
-                    android:text="Toby made a" />
+                    android:text="Toby made a"
+                    geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"
+                    android:textColor="@color/black"/>
 
-                <TextView
+                <com.sourcefuse.clickinandroid.utils.ClickInTextView
                     android:id="@+id/tv_acc_res_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="3dp"
                     android:paddingRight="2dp"
                     android:text="COUNTER OFFER"
-                    android:textStyle="bold"
+                    geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
+                    android:textColor="@color/black"
 
                     />
 

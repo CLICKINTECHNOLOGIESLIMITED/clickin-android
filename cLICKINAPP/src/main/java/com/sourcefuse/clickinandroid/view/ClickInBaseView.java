@@ -13,7 +13,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,7 +52,6 @@ import com.sourcefuse.clickinapp.R;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 import de.greenrobot.event.EventBus;
@@ -69,6 +67,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
     public EditText edt_search;
     //Right Menu.....
 
+    String mLastchatID = "";
     public NewsFeedManager newsFeedManager;
     public SlidingMenu slidemenu;
     SimpleSectionedListAdapter simpleSectionedGridAdapter;
@@ -171,7 +170,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         }
 
 
-        intent.putExtra("mValue",mValue);
+        intent.putExtra("mValue", mValue);
 
         chatManager = ModelManager.getInstance().getChatManager();
         chatManager.setrelationshipId(rid);
@@ -268,8 +267,9 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
                         authManager.setNotificationCounter(0);
                         EventBus.getDefault().postSticky("update Counter");
                         notificationMngr = ModelManager.getInstance().getNotificationManagerManager();
-                        if(notificationMngr.notificationData.size() == 0) {
+                        if (notificationMngr.notificationData.size() == 0) {
                             Utils.launchBarDialog(ClickInBaseView.this);
+                            mLastchatID = "";
                             notificationMngr.getNotification(getApplicationContext(), "", authManager.getPhoneNo(), authManager.getUsrToken());
                         }
 
@@ -395,7 +395,6 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         findFriend = (LinearLayout) footerView.findViewById(R.id.ll_friend);
         setting = (LinearLayout) footerView.findViewById(R.id.ll_setting);
         searchInviteView = (TextView) searchfooter.findViewById(R.id.btn_invite_view);
-
 
 
         userName.setText(authManager.getUserName());
@@ -570,7 +569,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 
                 Intent intent = new Intent(ClickInBaseView.this, UserProfileView.class);
                 intent.putExtra("isChangeInList", true);
-                intent.putExtra("updatephoto",Constants.mInAppNotification);
+                intent.putExtra("updatephoto", Constants.mInAppNotification);
                 intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
                 List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
@@ -705,11 +704,14 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         notificationList.setMode(PullToRefreshBase.Mode.BOTH);
         notificationList.setAdapter(notificationAdapter);
 
+        if (!Utils.isEmptyString(mLastchatID)) {
+            notificationList.getRefreshableView().setSelection(notificationMngr.notificationData.size());
+        }
 
         notificationList.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> listViewPullToRefreshBase) {
-                Log.e("Notification list Sie","Size" +notificationMngr.notificationData.get(notificationMngr.notificationData.size()-1).toString());
+                mLastchatID = "";
                 notificationlistsize = notificationMngr.notificationData.size();
                 notificationMngr = ModelManager.getInstance().getNotificationManagerManager();
                 notificationMngr.getNotification(getApplicationContext(), "", authManager.getPhoneNo(), authManager.getUsrToken());
@@ -719,9 +721,10 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> listViewPullToRefreshBase) {
                 String mLastId = notificationMngr.notificationData.get(notificationMngr.notificationData.size() - 1)._id;
-                Log.e("Notification Last Id", "ID_" + mLastId);
+                mLastchatID = mLastId;
                 notificationMngr = ModelManager.getInstance().getNotificationManagerManager();
                 notificationMngr.getNotification(getApplicationContext(), mLastId, authManager.getPhoneNo(), authManager.getUsrToken());
+
 
             }
 
@@ -792,7 +795,6 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         relationManager = ModelManager.getInstance().getRelationManager();
         setLeftMenuList();
         notificationMngr = ModelManager.getInstance().getNotificationManagerManager();
-//        notificationMngr.getNotification(getApplicationContext(), "", authManager.getPhoneNo(), authManager.getUsrToken());
 
 
     }
@@ -927,7 +929,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
             Utils.fromSignalDialog(ClickInBaseView.this, AlertMessage.connectionError);
 
         } else if (message.equalsIgnoreCase("Notification true") || message.equalsIgnoreCase("Notification error")) {
-            Log.e("Notification list Sie2","Size2" +notificationMngr.notificationData.get(notificationMngr.notificationData.size()-1).toString());
+
             setNotificationList();
             Utils.dismissBarDialog();
             notificationList.onRefreshComplete();
@@ -955,19 +957,24 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
                 if (!mNotificationText.getText().toString().equalsIgnoreCase("" + mNotificationValue))
                     Utils.playSound(ClickInBaseView.this, R.raw.notification_inapp);
 
-                mNotificationText.setText("" + mValue);
-                mNotificationText.setTextColor(Color.parseColor("#39cad4"));
+                if (!slidemenu.isSecondaryMenuShowing()) {//akshit code to hit notification ,on opening secondary menu
+                    mNotificationText.setText("" + mValue);
+                    mNotificationText.setTextColor(Color.parseColor("#39cad4"));
+                    notificationMngr.getNotification(getApplicationContext(), "", authManager.getPhoneNo(), authManager.getUsrToken());
+                }
 
 
             } else {
+
                 mNotificationText.setText("0");
                 mNotificationText.setTextColor(Color.parseColor("#000000"));
+                //notificationMngr.getNotification(getApplicationContext(), "", authManager.getPhoneNo(), authManager.getUsrToken());
+
             }
 
             if (notificationMngr == null)
                 notificationMngr = ModelManager.getInstance().getNotificationManagerManager();
 
-//            notificationMngr.getNotification(getApplicationContext(), "", authManager.getPhoneNo(), authManager.getUsrToken());
 
         } else if (message.equalsIgnoreCase("updatephoto")) {
             PicassoManager.clearCache();
