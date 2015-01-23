@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -148,7 +149,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         //    Utils.launchBarDialog(this);
         authManager = ModelManager.getInstance().getAuthorizationManager();
         notificationMngr = ModelManager.getInstance().getNotificationManagerManager();
-
+        //  notificationMngr.getNotification("", authManager.getPhoneNo(), authManager.getUsrToken());
 
         //make next webservice request after current is finished
         Bundle b = getIntent().getExtras();
@@ -167,7 +168,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
             }
             if (b.containsKey("updatephoto")) {
                 updatephoto = getIntent().getExtras().getBoolean("updatephoto");
-                ;
+
             }
 
         }

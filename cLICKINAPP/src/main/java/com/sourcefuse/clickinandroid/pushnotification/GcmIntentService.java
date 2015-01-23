@@ -57,7 +57,10 @@ public class GcmIntentService extends IntentService {
         if (!extras.isEmpty()) {
             if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)) {
 
+
+
                /* try {
+>>>>>>> 7d029bf7b72936efd08f15d351c92dcdb54afad4
                     JSONObject jsonObject = new JSONObject();
                     for (String key : extras.keySet()) {
                         jsonObject.put(key, extras.get(key));
@@ -100,6 +103,7 @@ public class GcmIntentService extends IntentService {
                         String mPartnerId = extras.getString("pid");
 
                         putChatData(data, mPartnerId);
+
                         sendNotification("Clickin'", extras.getString("chat_message"), data);
 
 

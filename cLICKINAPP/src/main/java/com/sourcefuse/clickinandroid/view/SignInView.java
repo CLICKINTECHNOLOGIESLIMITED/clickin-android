@@ -16,6 +16,7 @@ import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -36,7 +37,9 @@ import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.GPSTracker;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
+import com.splunk.mint.Mint;
 
+import java.io.File;
 import java.io.InputStream;
 
 import de.greenrobot.event.EventBus;
@@ -89,8 +92,16 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         /*set picasso maneger value */
-        PicassoManager.setLruCache(SignInView.this);
-        PicassoManager.setPicasso(SignInView.this, PicassoManager.getLruCache());
+        PicassoManager.setLruCache(getApplicationContext());
+        PicassoManager.setPicasso(getApplicationContext(), PicassoManager.getLruCache());
+
+
+        try{
+        Mint.initAndStartSession(SignInView.this, Constants.mSplunk_Api);  // to start the session of Splunk Crashlytics
+        Mint.enableDebug();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
 
 
 

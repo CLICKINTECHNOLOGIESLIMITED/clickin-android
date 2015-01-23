@@ -118,7 +118,6 @@
             android:layout_marginRight="2dp"
             android:divider="#00000000"
             android:listSelector="@android:color/transparent"
-            android:stackFromBottom="true"
             android:transcriptMode="alwaysScroll" />
 
         <!--

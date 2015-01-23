@@ -1,6 +1,7 @@
 package com.sourcefuse.clickinandroid.view;
 
 import android.os.Bundle;
+import android.text.SpannableStringBuilder;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -125,6 +126,7 @@ public class FeedView extends ClickInBaseView implements View.OnClickListener {
 
         sections.clear();
 
+
         adapter = new FeedsAdapter(FeedView.this, R.layout.feed_list_item, newsFeedManager.userFeed);
         for (int i = 0; i < senderName.size(); i++) {
             sections.add(new Section(mHeaderPositions.get(i), senderName.get(i), receiverName.get(i), senderImages.get(i), recieverImages.get(i), timeOfFeed.get(i), senderId.get(i), receiverId.get(i), senderPhNo.get(i), recieverPhNo.get(i)));
@@ -135,7 +137,7 @@ public class FeedView extends ClickInBaseView implements View.OnClickListener {
         if (Constants.comments) {
             simpleSectionedGridAdapter2.notifyDataSetChanged();
             list.invalidateViews();
-            ;
+
             Constants.comments = false;
         } else
             list.setAdapter(simpleSectionedGridAdapter2);

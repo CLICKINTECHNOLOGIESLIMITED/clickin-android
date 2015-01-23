@@ -33,12 +33,10 @@ public class AddSomeoneView extends Activity implements TextWatcher {
 
     AuthManager authManager;
     boolean FromOwnProfile;
-    private Button do_latter, do_invited;
     private EditText search_phbook;
     private ListView listView;
-    private TextView bottom_text, back, title_top, title_bottom;//akshit code to hide textview
     private ContactAdapter adapter;
-    private RelativeLayout showContactlist, layout_back;
+    private RelativeLayout showContactlist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,13 +44,6 @@ public class AddSomeoneView extends Activity implements TextWatcher {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.view_addsomeone);
         this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
-        bottom_text = (TextView) findViewById(R.id.edt_text);//akshit code
-        title_bottom = (TextView) findViewById(R.id.title_text_bottom);
-        title_top = (TextView) findViewById(R.id.title_text_top);
-        do_latter = (Button) findViewById(R.id.btn_do_itlatter);
-        do_invited = (Button) findViewById(R.id.btn_been_invited);
-        back = (TextView) findViewById(R.id.btn_back);
-        layout_back = (RelativeLayout) findViewById(R.id.rl_back);
         search_phbook = (EditText) findViewById(R.id.edt_search_ph);
         listView = (ListView) findViewById(R.id.list_contact);
         showContactlist = (RelativeLayout) findViewById(R.id.rr_con_list);
@@ -113,22 +104,22 @@ public class AddSomeoneView extends Activity implements TextWatcher {
             if (data.containsKey("FromOwnProfile")) {
                 boolean mFrom = data.getBoolean("FromOwnProfile");
                 if (mFrom) {
-                    do_latter.setVisibility(View.GONE);
-                    do_invited.setVisibility(View.GONE);
-                    bottom_text.setVisibility(View.GONE);
-                    layout_back.setVisibility(View.GONE);
-                    back.setVisibility(View.GONE);
-                    title_bottom.setVisibility(View.GONE);
-                    title_top.setVisibility(View.GONE);
+                    ((Button) findViewById(R.id.btn_do_itlatter)).setVisibility(View.GONE);
+                    ((Button) findViewById(R.id.btn_been_invited)).setVisibility(View.GONE);
+                    ((TextView) findViewById(R.id.edt_text)).setVisibility(View.GONE);
+                    ((RelativeLayout) findViewById(R.id.rl_back)).setVisibility(View.GONE);
+                    ((TextView) findViewById(R.id.btn_back)).setVisibility(View.GONE);
+                    ((TextView) findViewById(R.id.title_text_bottom)).setVisibility(View.GONE);
+                    ((TextView) findViewById(R.id.title_text_top)).setVisibility(View.GONE);
                     findViewById(R.id.iv_topicon).setVisibility(View.GONE);
                     findViewById(R.id.iv_image_top).setVisibility(View.VISIBLE);
 
                 } else {
-                    do_latter.setVisibility(View.VISIBLE);
-                    do_invited.setVisibility(View.VISIBLE);
-                    bottom_text.setVisibility(View.VISIBLE);
-                    layout_back.setVisibility(View.GONE);
-                    back.setVisibility(View.GONE);
+                    ((Button) findViewById(R.id.btn_do_itlatter)).setVisibility(View.VISIBLE);
+                    ((Button) findViewById(R.id.btn_been_invited)).setVisibility(View.VISIBLE);
+                    ((TextView) findViewById(R.id.edt_text)).setVisibility(View.VISIBLE);
+                    ((RelativeLayout) findViewById(R.id.rl_back)).setVisibility(View.GONE);
+                    ((TextView) findViewById(R.id.btn_back)).setVisibility(View.GONE);
                 }
             }
         }
@@ -136,7 +127,7 @@ public class AddSomeoneView extends Activity implements TextWatcher {
         //akshit code ends
 
 
-        back.setOnClickListener(new View.OnClickListener() {
+        ((TextView) findViewById(R.id.btn_back)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
@@ -153,7 +144,8 @@ public class AddSomeoneView extends Activity implements TextWatcher {
         });
 
 
-        do_latter.setOnClickListener(new View.OnClickListener() {
+
+        ((Button) findViewById(R.id.btn_do_itlatter)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                Intent clickersView = new Intent(AddSomeoneView.this, CurrentClickersView.class);
@@ -170,7 +162,7 @@ public class AddSomeoneView extends Activity implements TextWatcher {
         });
 
         //akshit code for invited button
-        do_invited.setOnClickListener(new View.OnClickListener() {
+        ((Button) findViewById(R.id.btn_been_invited)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 //

@@ -46,7 +46,7 @@ public class PinnedSecListViewForFeed extends AutoScrollListView {
             recreatePinnedShadow();
         }
 
-        ;
+
 
         @Override
         public void onInvalidated() {
@@ -107,7 +107,6 @@ public class PinnedSecListViewForFeed extends AutoScrollListView {
             }
         }
 
-        ;
 
     };
     /**
