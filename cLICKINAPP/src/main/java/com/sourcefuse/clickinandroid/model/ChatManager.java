@@ -192,9 +192,14 @@ public class ChatManager {
                                             if(temp.card_Accepted_Rejected.equalsIgnoreCase("countered"))
                                                 temp.card_Played_Countered="played";
 
-                                            temp.card_owner=(String) cards.get(10);
-                                            if(Utils.isEmptyString(temp.card_owner))
-                                                temp.card_owner="";
+                                            //this param is added new, in history might be it not come
+                                            if(cards.length()>10) {
+                                                temp.card_owner = (String) cards.get(10);
+                                                if (Utils.isEmptyString(temp.card_owner))
+                                                    temp.card_owner = "";
+                                            }else{
+                                                temp.card_owner = " ";
+                                            }
                                         }
 
                                         //code to fetch share array, if exists-monika

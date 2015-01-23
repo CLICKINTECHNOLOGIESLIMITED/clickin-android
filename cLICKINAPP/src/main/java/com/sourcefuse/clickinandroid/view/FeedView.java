@@ -1,6 +1,7 @@
 package com.sourcefuse.clickinandroid.view;
 
 import android.os.Bundle;
+import android.text.SpannableStringBuilder;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -124,6 +125,7 @@ public class FeedView extends ClickInBaseView implements View.OnClickListener {
         list.setVerticalFadingEdgeEnabled(false);
 
         sections.clear();
+
 
         adapter = new FeedsAdapter(FeedView.this, R.layout.feed_list_item, newsFeedManager.userFeed);
         for (int i = 0; i < senderName.size(); i++) {

@@ -108,6 +108,7 @@ public class GcmIntentService extends IntentService {
                         String mPartnerId = extras.getString("pid");
 
                         putChatData(data, mPartnerId);
+
                         sendNotification("Clickin'", extras.getString("chat_message"), data);
 
 

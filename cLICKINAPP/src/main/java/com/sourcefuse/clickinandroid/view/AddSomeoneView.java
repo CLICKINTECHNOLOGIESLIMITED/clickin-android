@@ -144,6 +144,7 @@ public class AddSomeoneView extends Activity implements TextWatcher {
         });
 
 
+
         ((Button) findViewById(R.id.btn_do_itlatter)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
