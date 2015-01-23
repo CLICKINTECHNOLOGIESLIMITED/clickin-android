@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +26,6 @@ import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.JumpOtherProfileView;
 import com.sourcefuse.clickinapp.R;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -161,7 +159,7 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
                         .load(itemList.get(position).getPartnerPic())
                         .into(usrimg);
 
-                Log.e("image---->",""+itemList.get(position).getPartnerPic());
+
             } catch (Exception e) {
                 e.printStackTrace();
                 // usrimg.setImageResource(R.drawable.male_user);

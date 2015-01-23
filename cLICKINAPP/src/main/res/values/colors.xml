@@ -43,6 +43,8 @@
     <color name="sign_hint">#cccccc</color>
     <color name="singn_forg">#808080</color>
     <color name="signin_color">#808080</color>
+    <color name="text_color_share">#687d9b</color>
+
     <color name="signin_hint">#cccccc</color>
     <color name="signup_contry_code">#364566</color>
     <color name="signup_contry_code_txt">#808080</color>

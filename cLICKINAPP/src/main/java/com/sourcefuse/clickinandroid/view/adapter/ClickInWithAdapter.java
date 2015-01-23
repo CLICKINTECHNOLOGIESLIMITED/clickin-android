@@ -4,14 +4,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 
@@ -21,7 +18,6 @@ import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.AddSomeoneView;
 import com.sourcefuse.clickinapp.R;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -176,8 +172,6 @@ public class ClickInWithAdapter extends BaseAdapter implements
     public View getHeaderView(int position, View convertView, ViewGroup parent) {
         mInflater = LayoutInflater.from(context);
         convertView = mInflater.inflate(R.layout.header_clickwith, parent, false);
-
-
         return convertView;
     }
 
