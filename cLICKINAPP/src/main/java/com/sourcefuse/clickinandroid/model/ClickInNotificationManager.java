@@ -1,6 +1,7 @@
 package com.sourcefuse.clickinandroid.model;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -95,13 +96,16 @@ public class ClickInNotificationManager implements NotificationManagerI {
                                     notificationArray.add(ntificationBeanList);
                                 }
 
+                                Log.e("last notificaion id--->",""+lastNotificationId);
                                 if(Utils.isEmptyString(lastNotificationId)) {//akshit code to item at Top and Bottom after refresh
+                                    Log.e("Check Case","CASE !");
                                     notificationData.clear();
                                     notificationData.addAll(0,notificationArray);
-                                }else
+                                }else {
+                                    Log.e("Check Case", "CASE 2");
                                     notificationData.addAll(notificationArray);
 
-
+                                }
 
 
                                 EventBus.getDefault().postSticky("Notification true");
