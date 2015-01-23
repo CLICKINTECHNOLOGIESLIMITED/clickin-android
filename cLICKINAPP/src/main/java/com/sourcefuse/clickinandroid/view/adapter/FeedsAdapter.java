@@ -23,7 +23,6 @@ import android.widget.TextView;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.bean.NewsFeedBean;
-import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.FeedCommentsView;
 import com.sourcefuse.clickinandroid.view.FeedStarsView;
@@ -121,9 +120,13 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
         /*
         Condition for Clickin are there or not
          */
+        /*
+        Condition for Clickin are there or not
+         */
         if (eachNewsFeed.get(position).getNewsFeedArray_chatDetail_clicks() != null) {
             if (!(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_clicks().equalsIgnoreCase("null"))) {
                 if (!(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_clicks().equalsIgnoreCase("0"))) {
+//                    Log.e("CASE 1", "111111111");
                     holder.clickedIn.setText(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_clicks().trim());
                     holder.clickedIn.setTextColor(Color.WHITE);
                     holder.clickedIn.setTypeface(null, Typeface.BOLD);
@@ -135,25 +138,21 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
                     holder.layout_clickin.setVisibility(View.VISIBLE);
                     if (!(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().equalsIgnoreCase("null"))) {
                         if (!eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().equalsIgnoreCase("")) {
-                            if (eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().length() < 25) {
-                                holder.clickedInMessage.setText(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message());
-                                holder.clickedInMessageLong.setVisibility(View.GONE);
-                            } else {
-                                holder.clickedInMessage.setText(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().substring(25));
-                                holder.clickedInMessageLong.setVisibility(View.VISIBLE);
-                                holder.clickedInMessageLong.setText(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().substring(25, eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().length()));
-                            }
+//                            Log.e("CASE 2","111111111"+eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().trim());
+                            holder.clickedInMessage.setText(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().trim());
                         }
                     }
                 } else {
                     if (!(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().equalsIgnoreCase("null"))) {
                         if (!eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().equalsIgnoreCase("")) {
+                            holder.clickedInMessage.setVisibility(View.GONE);
                             holder.clickedIn.setVisibility(View.VISIBLE);
                             holder.clickedIn.setTextColor(Color.BLACK);
                             holder.clickedIn.setTypeface(null, Typeface.NORMAL);
-                            holder.clickedIn.setText(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message());
+                            holder.clickedIn.setText(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().trim());
                             holder.layout_clickin.setBackgroundResource(R.color.lightest_gray);
                             holder.layout_clickin.setVisibility(View.VISIBLE);
+//                            holder.clickedInMessage.setVisibility(View.GONE);
                             holder.clickInWhiteImage.setVisibility(View.GONE);
                         } else {
                             holder.layout_clickin.setVisibility(View.GONE);
@@ -165,13 +164,14 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
             } else {
                 if (!(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().equalsIgnoreCase("null"))) {
                     if (!eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().trim().equalsIgnoreCase("")) {
-                        typeface = Typeface.createFromAsset(getContext().getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
+                        holder.clickedInMessage.setVisibility(View.GONE);
                         holder.clickedIn.setVisibility(View.VISIBLE);
                         holder.layout_clickin.setVisibility(View.VISIBLE);
                         holder.clickedIn.setTextColor(Color.BLACK);
                         holder.clickedIn.setTypeface(null, Typeface.NORMAL);
-                        holder.clickedIn.setText(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message());
+                        holder.clickedIn.setText(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().trim());
                         holder.layout_clickin.setBackgroundResource(R.color.lightest_gray);
+//                        holder.clickedInMessage.setVisibility(View.GONE);
                         holder.clickInWhiteImage.setVisibility(View.GONE);
                     } else {
                         holder.layout_clickin.setVisibility(View.GONE);
@@ -179,11 +179,26 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
                 } else {
                     holder.layout_clickin.setVisibility(View.GONE);
                 }
-
+//                holder.clickedIn.setTextColor(Color.BLACK);
+//                holder.clickedIn.setTypeface(null,Typeface.NORMAL);
+//                holder.clickedIn.setText(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message());
+//                holder.layout_clickin.setBackgroundResource(R.color.light_gray);
             }
         } else {
             holder.layout_clickin.setVisibility(View.GONE);
         }
+//        if(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message()!=null) {
+//            if (!(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().equalsIgnoreCase("null"))) {
+//
+//                holder.clickedInMessage.setText(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().trim());
+//              }
+//            else
+//            {
+//                holder.clickInWhiteImage.setVisibility(View.GONE);
+//                holder.clickedIn.setVisibility(View.GONE);
+//                holder.clickedInMessage.setVisibility(View.GONE);
+//            }
+//        }
 
         if (eachNewsFeed.get(position).getNewsFeedArray_chatDetail_type() != null) {
 
