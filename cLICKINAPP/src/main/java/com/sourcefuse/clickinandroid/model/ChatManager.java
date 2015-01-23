@@ -198,7 +198,7 @@ public class ChatManager {
                                                 if (Utils.isEmptyString(temp.card_owner))
                                                     temp.card_owner = "";
                                             }else{
-                                                temp.card_owner = " ";
+                                                temp.card_owner = "";
                                             }
                                         }
 

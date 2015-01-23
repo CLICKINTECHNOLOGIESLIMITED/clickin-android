@@ -407,11 +407,12 @@
                     <!--android:textSize="16sp"-->
                     <!--android:id="@+id/name2"-->
                     <!--android:textStyle="bold"/>-->
-                    <TextView
+                    <com.sourcefuse.clickinandroid.utils.ClickInTextView
                         android:id="@+id/comment2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
+                        geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"
                         android:textSize="16sp" />
                 </LinearLayout>
 
@@ -430,12 +431,13 @@
                     <!--android:textSize="16sp"-->
                     <!--android:id="@+id/name3"-->
                     <!--android:textStyle="bold"/>-->
-                    <TextView
+                    <com.sourcefuse.clickinandroid.utils.ClickInTextView
                         android:id="@+id/comment3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -453,14 +455,14 @@
                     <!--android:textSize="16sp"-->
                     <!--android:id="@+id/name4"-->
                     <!--android:textStyle="bold"/>-->
-                    <TextView
+                    <com.sourcefuse.clickinandroid.utils.ClickInTextView
                         android:id="@+id/comment4"
                         android:layout_width="wrap_content"
-
-
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
-                        android:textSize="16sp" />
+                        geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"
+                        android:textSize="16sp"
+                        />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

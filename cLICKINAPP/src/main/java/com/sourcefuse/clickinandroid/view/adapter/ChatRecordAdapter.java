@@ -467,6 +467,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
             //CLICKS AND TEXT- SENDER CASE
             if (!(temp.clicks.equalsIgnoreCase("no")) && Utils.isEmptyString(temp.card_id) && Utils.isEmptyString(temp.sharingMedia)) {
+//                Log.e("1111111111111","1111111111111");
                 chatClickTextLayout.setVisibility(View.VISIBLE);
                 LinearLayout clicksArea = (LinearLayout) row.findViewById(R.id.clicks_area);
                 clicksArea.setVisibility(View.VISIBLE);
@@ -479,11 +480,13 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 //check if only clicks is there
                 parent_shared_layout.setBackgroundResource(R.drawable.newbg_pinkleft);
                 if (!(Utils.isEmptyString(temp.textMsg))) {
+//                    Log.e("11111111111112222222","111111111111122222");
                     TextView chatText = (TextView) row.findViewById(R.id.chat_text);
                     chatText.setSingleLine(true);
                     chatText.setVisibility(View.VISIBLE);
                     chatText.setTextColor(context.getResources().getColor(R.color.white));
                     if (temp.textMsg.length() > Constants.CHAT_LENTH_LIMIT) {
+//                        Log.e("11111111111112222222333","1111111111111222223333");
                         chatText.setText(temp.textMsg.substring(0, 13));
                         TextView chatTextLong = (TextView) row.findViewById(R.id.long_chat_text);
                         chatTextLong.setVisibility(View.VISIBLE);
@@ -491,6 +494,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                         chatTextLong.setTextColor(context.getResources().getColor(R.color.white));
                         parent_shared_layout.setBackgroundResource(R.drawable.newbg_pinkleft);  // code for double line
                     } else {
+//                        Log.e("111111111111122222223334444","1111111111111222223333444");
                         if ((Utils.isEmptyString(temp.content_url))) {  // check prafull
                             clicksArea.setBackgroundResource(R.drawable.pink_squre);
                         } else {
@@ -569,7 +573,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                         row.findViewById(R.id.incase_share).setVisibility(View.VISIBLE);
                     }
                     ((TextView) row.findViewById(R.id.shared_by_name)).setText("You");
-                    ((TextView) row.findViewById(R.id.shared_message)).setText(" want to share");
+                    ((TextView) row.findViewById(R.id.shared_message)).setText("want to share");
 
 
 
@@ -1255,7 +1259,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     ((LinearLayout) row.findViewById(R.id.shared_footer_view)).setVisibility(View.VISIBLE);
 
                     String[] splitted = relationManager.getPartnerName.split("\\s+");
-                    ((TextView) row.findViewById(R.id.shared_by_name)).setTextColor(Color.BLACK);//akshit Code
+//                    ((TextView) row.findViewById(R.id.shared_by_name)).setTextColor(Color.parseColor("#687d9b"));//akshit Code
                     ((TextView) row.findViewById(R.id.shared_by_name)).setText(splitted[0]);
                     ((TextView) row.findViewById(R.id.shared_message)).setText(" wants to share");
 

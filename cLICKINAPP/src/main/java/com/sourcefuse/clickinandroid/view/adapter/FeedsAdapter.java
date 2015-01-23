@@ -8,7 +8,6 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -378,7 +377,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
             holder.feed_comments_layout.setVisibility(View.VISIBLE);
             if (eachNewsFeed.get(position).getNewsfeedArray_comments_count() > 3) {
                 holder.feed_comments_layout1.setVisibility(View.VISIBLE);
-
+//                holder.no_comments.setTypeface(null,Typeface.NORMAL);
                 holder.no_comments.setText("View all " + eachNewsFeed.get(position).getNewsfeedArray_comments_count() + " comments");
 
                 for (int k = 0; k < eachNewsFeed.get(position).getCommentArrayList().size(); k++) {
@@ -386,17 +385,20 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
                     if (k == 0) {
                         holder.comment2.setVisibility(View.VISIBLE);
                         String text = "<font color=#01DFD7><b>" + eachNewsFeed.get(position).getCommentArrayList().get(k).getNewsFeedArray_commentArray_user_name() + "</b></font> <font color=#000000>" + eachNewsFeed.get(position).getCommentArrayList().get(k).getNewsFeedArray_commentArray_comment() + "</font>";
+//                        holder.comment2.setTypeface(null,Typeface.NORMAL);
                         holder.comment2.setText(Html.fromHtml(text));
                     }
                     if (k == 1) {
                         holder.comment3.setVisibility(View.VISIBLE);
                         String text = "<font color=#01DFD7><b>" + eachNewsFeed.get(position).getCommentArrayList().get(k).getNewsFeedArray_commentArray_user_name() + "</b></font> <font color=#000000>" + eachNewsFeed.get(position).getCommentArrayList().get(k).getNewsFeedArray_commentArray_comment() + "</font>";
+//                        holder.comment3.setTypeface(null,Typeface.NORMAL);
                         holder.comment3.setText(Html.fromHtml(text));
                     }
 
                     if (k == 2) {
                         holder.comment4.setVisibility(View.VISIBLE);
                         String text = "<font color=#01DFD7><b>" + eachNewsFeed.get(position).getCommentArrayList().get(k).getNewsFeedArray_commentArray_user_name() + "</b></font> <font color=#000000>" + eachNewsFeed.get(position).getCommentArrayList().get(k).getNewsFeedArray_commentArray_comment() + "</font>";
+//                        holder.comment4.setTypeface(null,Typeface.NORMAL);
                         holder.comment4.setText(Html.fromHtml(text));
                         break;
                     }
@@ -409,6 +411,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
                     holder.comment3.setVisibility(View.GONE);
                     holder.comment4.setVisibility(View.GONE);
                     String text = "<font color=#01DFD7><b>" + eachNewsFeed.get(position).getCommentArrayList().get(0).getNewsFeedArray_commentArray_user_name() + "</b></font> <font color=#000000>" + eachNewsFeed.get(position).getCommentArrayList().get(0).getNewsFeedArray_commentArray_comment() + "</font>";
+//                    holder.comment2.setTypeface(null,Typeface.NORMAL);
                     holder.comment2.setText(Html.fromHtml(text));
 
 
@@ -417,8 +420,10 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
                     holder.comment3.setVisibility(View.VISIBLE);
 
                     String text = "<font color=#01DFD7><b>" + eachNewsFeed.get(position).getCommentArrayList().get(0).getNewsFeedArray_commentArray_user_name() + "</b></font> <font color=#000000>" + eachNewsFeed.get(position).getCommentArrayList().get(0).getNewsFeedArray_commentArray_comment() + "</font>";
+//                    holder.comment2.setTypeface(null,Typeface.NORMAL);
                     holder.comment2.setText(Html.fromHtml(text));
                     String text2 = "<font color=#01DFD7><b>" + eachNewsFeed.get(position).getCommentArrayList().get(1).getNewsFeedArray_commentArray_user_name() + "</b></font> <font color=#000000>" + eachNewsFeed.get(position).getCommentArrayList().get(1).getNewsFeedArray_commentArray_comment() + "</font>";
+//                    holder.comment3.setTypeface(null,Typeface.NORMAL);
                     holder.comment3.setText(Html.fromHtml(text2));
 
 
@@ -429,10 +434,13 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
 
 
                     String text = "<font color=#01DFD7><b>" + eachNewsFeed.get(position).getCommentArrayList().get(0).getNewsFeedArray_commentArray_user_name() + "</b></font> <font color=#000000>" + eachNewsFeed.get(position).getCommentArrayList().get(0).getNewsFeedArray_commentArray_comment() + "</font>";
+//                    holder.comment2.setTypeface(null,Typeface.NORMAL);
                     holder.comment2.setText(Html.fromHtml(text));
                     String text2 = "<font color=#01DFD7><b>" + eachNewsFeed.get(position).getCommentArrayList().get(1).getNewsFeedArray_commentArray_user_name() + "</b></font> <font color=#000000>" + eachNewsFeed.get(position).getCommentArrayList().get(1).getNewsFeedArray_commentArray_comment() + "</font>";
+//                    holder.comment3.setTypeface(null,Typeface.NORMAL);
                     holder.comment3.setText(Html.fromHtml(text2));
                     String text3 = "<font color=#01DFD7><b>" + eachNewsFeed.get(position).getCommentArrayList().get(2).getNewsFeedArray_commentArray_user_name() + "</b></font> <font color=#000000>" + eachNewsFeed.get(position).getCommentArrayList().get(2).getNewsFeedArray_commentArray_comment() + "</font>";
+//                    holder.comment4.setTypeface(null,Typeface.NORMAL);
                     holder.comment4.setText(Html.fromHtml(text3));
 
                 } else {
