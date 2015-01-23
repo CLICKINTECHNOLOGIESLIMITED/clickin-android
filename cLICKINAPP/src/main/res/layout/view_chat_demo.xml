@@ -688,6 +688,16 @@
             <!--This textView for extra chat text to display in second line -->
         </LinearLayout>
         <!--   for text view in share case -->
+        <ImageView
+            android:id="@+id/incase_share_footer"
+            android:layout_width="266dp"
+            android:layout_height="3dp"
+            android:layout_below="@+id/trade_image"
+            android:layout_marginTop="3dp"
+            android:layout_marginLeft="3dp"
+            android:visibility="gone"
+            android:background="@drawable/chat_divider" />
+
         <LinearLayout
             android:id="@+id/shared_footer_view"
             android:layout_width="wrap_content"

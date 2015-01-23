@@ -1256,6 +1256,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                         row.findViewById(R.id.except_share).setVisibility(View.GONE);
                         row.findViewById(R.id.incase_share).setVisibility(View.VISIBLE);
                     }
+                    ((ImageView)row.findViewById(R.id.incase_share_footer)).setVisibility(View.VISIBLE);//akshit code to shaow divider
                     ((LinearLayout) row.findViewById(R.id.shared_footer_view)).setVisibility(View.VISIBLE);
 
                     String[] splitted = relationManager.getPartnerName.split("\\s+");

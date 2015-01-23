@@ -251,7 +251,8 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/white"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+               />
 
             <ImageView
                 android:id="@+id/clickInWhiteImage"
@@ -274,8 +275,10 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="7dp"
                 android:layout_toRightOf="@+id/clickInWhiteImage"
+                android:maxEms="10"
                 android:maxLines="4"
                 android:padding="5dp"
+                android:maxLength="145"
                 android:singleLine="false"
                 android:text=""
                 android:textAppearance="?android:attr/textAppearanceMedium"
@@ -320,7 +323,8 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/dark_gray"
                 android:textSize="16sp"
-                geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
+                android:textStyle="bold"
+                />
         </LinearLayout>
 
         <LinearLayout
@@ -367,7 +371,8 @@
                         android:text="View all 4 comments"
                         android:textColor="@color/dark_gray"
                         android:textSize="16sp"
-                        geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
+                        android:textStyle="bold"
+                     />
 
                 </LinearLayout>
 
@@ -391,6 +396,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
+                        android:textStyle="bold"
                         geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -416,6 +422,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
                         android:textSize="16sp"
+                        android:textStyle="bold"
                         geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"/>
                 </LinearLayout>
 
@@ -439,6 +446,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
+                        android:textStyle="bold"
                         geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"
                         android:textSize="16sp"
                         />
