@@ -846,6 +846,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 
         if (clickInadapter != null)
             clickInadapter.notifyDataSetChanged();
+
         EventBus.getDefault().post("update Counter");
     }
 

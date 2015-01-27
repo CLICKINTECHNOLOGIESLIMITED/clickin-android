@@ -18,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -30,6 +31,7 @@ import com.sourcefuse.clickinandroid.view.FeedStarsView;
 import com.sourcefuse.clickinandroid.view.Feed_large_img;
 import com.sourcefuse.clickinandroid.view.MapView;
 import com.sourcefuse.clickinapp.R;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -70,6 +72,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
             holder = new RecordHolder();
 
             holder.feed_image = (ImageView) row.findViewById(R.id.feed_image);
+            holder.mLoadImage = (ProgressBar) row.findViewById(R.id.LoadImage);
 //            holder.clicks_heart_top = (ImageView) row.findViewById(R.id.clicks_heart_top);
 //            holder.clicks_heart_bottom = (ImageView) row.findViewById(R.id.clicks_heart_bottom);
 
@@ -128,6 +131,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
         holder.layout.setVisibility(GONE);
         holder.feed_menu.setVisibility(VISIBLE);
         holder.feed_menu.setImageResource(report_icon);
+        holder.mLoadImage.setVisibility(GONE);
 
         if (eachNewsFeed.get(position).getNewsFeedArray_chatDetail_clicks() != null) {
             if (!(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_clicks().equalsIgnoreCase("null"))) {
@@ -207,7 +211,18 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
             if (eachNewsFeed.get(position).getNewsFeedArray_chatDetail_type().equalsIgnoreCase("2") || eachNewsFeed.get(position).getNewsFeedArray_chatDetail_type().equalsIgnoreCase("6")) {
                 holder.feed_image.setVisibility(VISIBLE);
 
-                Picasso.with(context).load(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content()).into(holder.feed_image);
+                holder.mLoadImage.setVisibility(VISIBLE);
+                Picasso.with(context).load(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content()).into(holder.feed_image, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        holder.mLoadImage.setVisibility(GONE);
+                    }
+
+                    @Override
+                    public void onError() {
+                        holder.mLoadImage.setVisibility(GONE);
+                    }
+                });
             } else {
                 holder.feed_image.setVisibility(GONE);
             }
@@ -647,8 +662,8 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
         ImageView feed_image, feed_remove_post, feed_report_post;
         ImageView feed_menu;
         //        ImageView  clicks_heart_top,clicks_heart_bottom;
-        RelativeLayout layout , cards_relative;
-        LinearLayout card_layout,layout_clickin;
+        RelativeLayout layout, cards_relative;
+        LinearLayout card_layout, layout_clickin;
         TextView clickedIn, custom_message, feed_star_user, clickedInMessage, card_count1, card_count2, card_status, card_title, card_msg, clickedInMessage_plain, clickedInMessageLong;
         Button feed_audio_button, feed_video_button;
         LinearLayout feed_comments_layout1, feed_comments_layout;
@@ -659,6 +674,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
         LinearLayout audio_layout;
         RelativeLayout video_layout;
         ImageView video_thumb, card_status_img;
+        ProgressBar mLoadImage; // progress Bar To load Image
     }
 
 
