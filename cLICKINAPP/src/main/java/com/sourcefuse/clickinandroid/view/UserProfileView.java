@@ -103,7 +103,12 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
 
-
+        if (PicassoManager.getPicasso() == null) {
+            /*set picasso maneger value */
+            PicassoManager.setLruCache(UserProfileView.this);
+            PicassoManager.setPicasso(UserProfileView.this, PicassoManager.getLruCache());
+            PicassoManager.clearCache();
+        }
 
 
         authManager = ModelManager.getInstance().getAuthorizationManager();
@@ -156,7 +161,6 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         boolean FromSignup = false;
         boolean isChangeInList = false;
         boolean updatephoto = false;
-
 
 
         if (b != null) {

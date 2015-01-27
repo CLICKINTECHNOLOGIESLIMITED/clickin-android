@@ -2046,9 +2046,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 else
                     Picasso.with(this).load(authManager.getUserPic()).error(R.drawable.male_user).into(mypix);
             } catch (Exception e) {
-                if (!Utils.isEmptyString(authManager.getUserPic()) && Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl"))
-                    mypix.setImageResource(R.drawable.female_user);
-                else
+
                     mypix.setImageResource(R.drawable.male_user);
             }
             if (!Utils.isEmptyString(partnerPic))
