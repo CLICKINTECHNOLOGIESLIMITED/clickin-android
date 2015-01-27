@@ -26,6 +26,9 @@ import com.sourcefuse.clickinandroid.view.FollowerList;
 import com.sourcefuse.clickinandroid.view.UserProfileView;
 import com.sourcefuse.clickinapp.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
 
 import de.greenrobot.event.EventBus;
@@ -58,9 +61,8 @@ public class GcmIntentService extends IntentService {
             if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)) {
 
 
+                try {
 
-               /* try {
->>>>>>> 7d029bf7b72936efd08f15d351c92dcdb54afad4
                     JSONObject jsonObject = new JSONObject();
                     for (String key : extras.keySet()) {
                         jsonObject.put(key, extras.get(key));
@@ -70,7 +72,7 @@ public class GcmIntentService extends IntentService {
 
                 } catch (JSONException e) {
                     e.printStackTrace();
-                }*/
+                }
                 Intent data = new Intent();
                 data.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 data.putExtra("isChangeInList", true);
@@ -161,7 +163,7 @@ public class GcmIntentService extends IntentService {
                         data.setClass(getApplicationContext(), ChatRecordView.class);
                         sendNotification("Clickin'", extras.getString("chat_message"), data);
                     } else if (extras.getString("Tp").equalsIgnoreCase("str") || extras.getString("Tp").equalsIgnoreCase("cmt")
-                            || extras.getString("Tp").equalsIgnoreCase("Rpt") ) //case for feed star
+                            || extras.getString("Tp").equalsIgnoreCase("Rpt")) //case for feed star
                     {
 
                         data.setClass(getApplicationContext(), FeedView.class);

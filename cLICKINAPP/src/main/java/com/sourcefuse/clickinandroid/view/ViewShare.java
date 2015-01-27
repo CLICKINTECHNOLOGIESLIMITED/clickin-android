@@ -217,8 +217,17 @@ public class ViewShare extends Activity implements View.OnClickListener {
 
                 if (!Utils.isEmptyString(textMsg)) {
                     TextView textMsgchat = (TextView) findViewById(R.id.share_chat_text);
+                    TextView mShareTextLong = (TextView) findViewById(R.id.share_chat_textLong);
                     textMsgchat.setVisibility(View.VISIBLE);
-                    textMsgchat.setText(textMsg);
+                    if (textMsg.length() > 30) {
+                        textMsgchat.setText(textMsg.substring(0, 30));
+                        mShareTextLong.setText(textMsg.substring(30, textMsg.length()));
+                        mShareTextLong.setVisibility(View.VISIBLE);
+                    } else {
+                        textMsgchat.setText(textMsg);
+                    }
+
+
                 }
 
 
@@ -228,6 +237,7 @@ public class ViewShare extends Activity implements View.OnClickListener {
                     ((LinearLayout) findViewById(R.id.share_clicks_area)).setVisibility(View.VISIBLE);
                     ((LinearLayout) findViewById(R.id.share_clicks_area)).setBackgroundColor(getResources().getColor(R.color.white));
                     TextView textMsgchat = (TextView) findViewById(R.id.share_chat_text);
+                    TextView mShareTextLong = (TextView) findViewById(R.id.share_chat_textLong);
                     textMsgchat.setVisibility(View.VISIBLE);
                     textMsgchat.setTextColor(Color.BLACK);
                     textMsgchat.setText(textMsg);

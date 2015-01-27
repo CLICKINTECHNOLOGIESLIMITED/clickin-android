@@ -59,6 +59,7 @@ public class FeedView extends ClickInBaseView implements View.OnClickListener {
 
 
         Utils.launchBarDialog(FeedView.this);
+
         newsFeedManager.fetchNewsFeed("", authManager.getPhoneNo(), authManager.getUsrToken());
 
     }
@@ -142,6 +143,8 @@ public class FeedView extends ClickInBaseView implements View.OnClickListener {
         } else
             list.setAdapter(simpleSectionedGridAdapter2);
 
+        Utils.dismissBarDialog();//
+
     }
 
     @Override
@@ -161,7 +164,7 @@ public class FeedView extends ClickInBaseView implements View.OnClickListener {
             newsFeedBeanArrayList = newsFeedManager.userFeed;
             initData();
             initControls();
-            Utils.dismissBarDialog();
+            //Utils.dismissBarDialog();
         } else if (message.equalsIgnoreCase("NewsFeed False")) {
             stopSearch = true;
             Utils.dismissBarDialog();

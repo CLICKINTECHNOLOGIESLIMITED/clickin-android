@@ -103,7 +103,8 @@ public class
     public static void dismissBarDialog() {
         if (barProgressDialog != null) {
             try {
-                barProgressDialog.dismiss();
+                if (barProgressDialog.isShowing())
+                    barProgressDialog.dismiss();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -1445,7 +1446,7 @@ public class
         dialog.setContentView(R.layout.overlay);
         dialog.setCancelable(false);
         dialog.show();
-        ImageView cancel = (ImageView)dialog.findViewById(R.id.dialog_cancel);
+        ImageView cancel = (ImageView) dialog.findViewById(R.id.dialog_cancel);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
