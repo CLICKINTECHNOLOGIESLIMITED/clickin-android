@@ -48,11 +48,11 @@
 
                 <Button
                     android:id="@+id/feed_audio_button"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="10dp"
-                    android:background="@drawable/play" />
+                    android:layout_marginLeft="15dp"
+                    android:background="@drawable/play_vedio" />
             </LinearLayout>
 
             <RelativeLayout
@@ -71,10 +71,10 @@
 
                 <Button
                     android:id="@+id/feed_video_button"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:layout_centerInParent="true"
-                    android:background="@drawable/play" />
+                    android:background="@drawable/play_vedio" />
             </RelativeLayout>
 
             <LinearLayout
