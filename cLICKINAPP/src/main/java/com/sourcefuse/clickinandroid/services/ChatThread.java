@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -682,6 +683,8 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
         List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
         ComponentName componentInfo = taskInfo.get(0).topActivity;
         String className = componentInfo.getClassName();
+
+        Log.e("class name--->",""+className);
         if (obj.senderQbId.equalsIgnoreCase(authManager.partnerQbId)) {
             if (className.equalsIgnoreCase("com.sourcefuse.clickinandroid.view.ChatRecordView")) {
                 ModelManager.getInstance().getChatManager().chatMessageList.add(obj);

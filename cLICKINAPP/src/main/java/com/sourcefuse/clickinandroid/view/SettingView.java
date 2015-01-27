@@ -432,10 +432,10 @@ public class SettingView extends Activity implements View.OnClickListener, Compo
                 finish();
                 overridePendingTransition(R.anim.slide_in_left, R.anim.top_out);
                 //  this.finishAndRemoveTask();
-                 //ModelManager.getInstance().getNotificationManagerManager().;
+                //ModelManager.getInstance().getNotificationManagerManager().;
                 try {
-                    NotificationManagerI.notificationData.clear();
-                }catch (Exception e){
+                    ModelManager.getInstance().getNotificationManagerManager().notificationData.clear();
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 break;
