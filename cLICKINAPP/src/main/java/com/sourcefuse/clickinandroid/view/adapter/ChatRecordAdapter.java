@@ -457,7 +457,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 } else {
                     TextView chatText = (TextView) row.findViewById(R.id.long_chat_text); // prafull code
                     chatText.setVisibility(View.VISIBLE);
-                    chatText.setTextColor(context.getResources().getColor(R.color.black));
+                     chatText.setTextColor(context.getResources().getColor(R.color.black));
                     parent_shared_layout.setBackgroundResource(R.drawable.newbg_grey);
                     chatText.setBackgroundResource(R.drawable.grey_square);
                     chatText.setText("" + temp.textMsg);

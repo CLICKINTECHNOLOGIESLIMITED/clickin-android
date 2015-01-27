@@ -8,7 +8,6 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +37,9 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static android.view.View.*;
+import static android.view.View.GONE;
+import static android.view.View.OnClickListener;
+import static android.view.View.VISIBLE;
 import static com.sourcefuse.clickinapp.R.drawable.report_icon;
 
 public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
@@ -147,6 +148,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
 
 
                             if (eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().length() > 30) {
+
                                 holder.clickedInMessage.setText(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().trim().substring(0, 30));
                                 holder.clickedInMessageLong.setText(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().trim().substring(30, eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().length()));
                                 holder.clickedInMessageLong.setVisibility(VISIBLE);
