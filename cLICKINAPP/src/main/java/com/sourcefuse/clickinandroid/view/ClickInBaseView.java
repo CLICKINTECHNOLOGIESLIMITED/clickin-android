@@ -843,6 +843,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 
     protected void onResume() {
         super.onResume();
+
         if (clickInadapter != null)
             clickInadapter.notifyDataSetChanged();
         EventBus.getDefault().post("update Counter");
@@ -1037,6 +1038,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
             InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         } catch (Exception e) {
+            e.printStackTrace();
         }
 
 
@@ -1058,8 +1060,12 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
     public void onBackPressed() {
 
         super.onBackPressed();
-        InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        try {
+            InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

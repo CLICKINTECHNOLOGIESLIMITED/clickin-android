@@ -126,7 +126,7 @@ public class NotificationAdapter extends ArrayAdapter<NotificationBean> {
                     context.startActivity(intent);
                     ((Activity) context).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
                 } else if (item.getNotificationType().equalsIgnoreCase(context.getResources().getString(R.string.type_update))) {
-                    Utils.launchBarDialog((Activity) context);
+                    //Utils.launchBarDialog((Activity) context);
                     Intent intent = new Intent(getContext(), UserProfileView.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     intent.putExtra("updatephoto", true);

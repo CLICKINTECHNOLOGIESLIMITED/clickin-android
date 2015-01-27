@@ -1312,6 +1312,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         if (adapter != null)
             adapter.notifyDataSetChanged();
 
+
     }
 
     public void onEventMainThread(String message) {

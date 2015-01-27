@@ -121,6 +121,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
 
         mUserRelationlistView = (ListView) findViewById(R.id.list_click_with_profile);
 
+        Log.e("on Create----->","on Create----->");
 
         ((TextView) findViewById(R.id.tv_profile_txt)).setText("PROFILE");
 
@@ -494,7 +495,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
 
-
+        Log.e("on onNewIntent----->","on onNewIntent----->");
         if (intent.getExtras() != null && intent.getExtras().containsKey("isChangeInList")) {
 
             if (intent.getExtras().getBoolean("isChangeInList")) {
