@@ -145,16 +145,16 @@
                 android:layout_below="@+id/media_layout"
                 android:layout_marginLeft="4dp"
                 android:layout_marginRight="4dp"
+                android:layout_marginBottom="3dp"
                 android:orientation="vertical"
                 android:visibility="gone">
 
-                <LinearLayout
+                <RelativeLayout
                     android:id="@+id/clicks_area"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:gravity="center_vertical"
-
                     android:orientation="horizontal"
                     android:visibility="gone">
 
@@ -162,7 +162,6 @@
                         android:id="@+id/clicks_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="top"
                         android:paddingRight="5dp"
                         android:layout_marginLeft="3dp"
                         android:text="+101"
@@ -174,9 +173,10 @@
                     <ImageView
                         android:id="@+id/iv_clicks_heart"
                         android:layout_width="wrap_content"
+                        android:layout_marginTop="3dp"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="5dp"
-                        android:layout_marginTop="1dp"
+                        android:layout_toRightOf="@+id/clicks_text"
                         android:background="@drawable/c_clicks_heart"
                         android:gravity="center_vertical|center"
                         android:visibility="gone" />
@@ -186,27 +186,32 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:ellipsize="none"
+                        android:layout_marginTop="2dp"
+                        android:layout_toRightOf="@+id/iv_clicks_heart"
                         android:maxEms="8"
                         android:layout_marginLeft="3dp"
-                        android:paddingRight="5dp"
                         android:singleLine="true"
                         android:textColor="@color/white"
                         android:textSize="14sp"
                         android:visibility="gone" />
 
-                </LinearLayout>
 
-                <TextView
-                    android:id="@+id/long_chat_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:maxEms="12"
-                    android:paddingLeft="3dp"
-                    android:singleLine="false"
-                    android:textColor="@color/black"
-                    android:textSize="14sp"
-                    android:visibility="gone" />
+                    <TextView
+                        android:id="@+id/long_chat_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxEms="12"
+                        android:layout_below="@+id/chat_text"
+                        android:layout_marginTop="-2dp"
+                        android:paddingLeft="3dp"
+                        android:singleLine="false"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        android:visibility="gone" />
+
+                </RelativeLayout>
+
+
                 <!--This textView for extra chat text to display in second line -->
             </LinearLayout>
 

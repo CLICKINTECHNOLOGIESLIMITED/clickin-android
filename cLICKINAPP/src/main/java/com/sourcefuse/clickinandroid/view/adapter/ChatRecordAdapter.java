@@ -204,7 +204,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 row.findViewById(R.id.temp_layout).setVisibility(View.VISIBLE);
                 mAudioImage.setVisibility(View.VISIBLE);
                 mSpeakerImage.setVisibility(View.VISIBLE);
-                mLongTextView.setEms(10);//akshit change
+                mLongTextView.setEms(12);//akshit change
 
 
                 if (!(Utils.isEmptyString(temp.textMsg)) || (!(temp.clicks.equalsIgnoreCase("no")))) {
@@ -443,7 +443,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     ((LinearLayout) row.findViewById(R.id.ll_for_share_icon)).setVisibility(View.GONE);
 
                 chatClickTextLayout.setVisibility(View.VISIBLE);
-                LinearLayout clicksArea = (LinearLayout) row.findViewById(R.id.clicks_area);
+                RelativeLayout clicksArea = (RelativeLayout) row.findViewById(R.id.clicks_area);
                 clicksArea.setVisibility(View.VISIBLE);
 
                 if (!Utils.isEmptyString(temp.sharingMedia) && temp.shareStatus.equalsIgnoreCase("shared")) { // for share case
@@ -469,7 +469,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
             if (!(temp.clicks.equalsIgnoreCase("no")) && Utils.isEmptyString(temp.card_id) && Utils.isEmptyString(temp.sharingMedia)) {
 //                Log.e("1111111111111","1111111111111");
                 chatClickTextLayout.setVisibility(View.VISIBLE);
-                LinearLayout clicksArea = (LinearLayout) row.findViewById(R.id.clicks_area);
+                RelativeLayout clicksArea = (RelativeLayout) row.findViewById(R.id.clicks_area);
                 clicksArea.setVisibility(View.VISIBLE);
                 TextView clicksText = (TextView) row.findViewById(R.id.clicks_text);
                 clicksText.setVisibility(View.VISIBLE);
@@ -487,10 +487,10 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     chatText.setTextColor(context.getResources().getColor(R.color.white));
                     if (temp.textMsg.length() > Constants.CHAT_LENTH_LIMIT) {
 //                        Log.e("11111111111112222222333","1111111111111222223333");
-                        chatText.setText(temp.textMsg.substring(0, 13));
+                        chatText.setText(temp.textMsg.substring(0, 17));
                         TextView chatTextLong = (TextView) row.findViewById(R.id.long_chat_text);
                         chatTextLong.setVisibility(View.VISIBLE);
-                        chatTextLong.setText(temp.textMsg.substring(13));
+                        chatTextLong.setText(temp.textMsg.substring(17));
                         chatTextLong.setTextColor(context.getResources().getColor(R.color.white));
                         parent_shared_layout.setBackgroundResource(R.drawable.newbg_pinkleft);  // code for double line
                     } else {
@@ -707,7 +707,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
                 row.findViewById(R.id.temp_).setVisibility(View.GONE);
                 TextView mLongTextView = (TextView) row.findViewById(R.id.long_chat_text);
-                mLongTextView.setEms(10);
+                mLongTextView.setEms(12);
                 row.findViewById(R.id.temp_layout).setVisibility(View.VISIBLE);
 
 
@@ -1134,7 +1134,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     chatText.setTextColor(context.getResources().getColor(R.color.black));
                     parent_shared_layout.setBackgroundResource(R.drawable.new_whitearrownew);
                     chatText.setBackgroundResource(R.drawable.white_square);
-                    LinearLayout clicksArea = (LinearLayout) row.findViewById(R.id.clicks_area);
+                    RelativeLayout clicksArea = (RelativeLayout) row.findViewById(R.id.clicks_area);
                     clicksArea.setVisibility(View.VISIBLE);
                     if (Utils.isEmptyString(temp.content_url))
                         chatText.setGravity(Gravity.CENTER_VERTICAL | Gravity.RIGHT);
@@ -1150,7 +1150,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
 
                 chatClickTextLayout.setVisibility(View.VISIBLE);
-                LinearLayout clicksArea = (LinearLayout) row.findViewById(R.id.clicks_area);
+                RelativeLayout clicksArea = (RelativeLayout) row.findViewById(R.id.clicks_area);
                 clicksArea.setVisibility(View.VISIBLE);
                 TextView clicksText = (TextView) row.findViewById(R.id.clicks_text);
 
