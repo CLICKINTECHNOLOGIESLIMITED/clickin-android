@@ -233,8 +233,6 @@
                     android:layout_marginRight="9.5dp"
                     android:layout_marginTop="1dp"
                     android:orientation="vertical"
-                    android:background="@color/profile_usr_name"
-
                     android:visibility="gone">
 
                     <RelativeLayout
@@ -242,8 +240,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="5dp"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp">
+                        android:layout_marginLeft="2dp"
+                       >
 
                         <TextView
                             android:id="@+id/share_clicks_text"
@@ -265,7 +263,6 @@
                             android:layout_marginLeft="5dp"
                             android:layout_marginTop="6dp"
                             android:layout_toRightOf="@+id/share_clicks_text"
-
                             android:src="@drawable/c_clicks_heart"
                             android:visibility="gone" />
 
@@ -279,7 +276,6 @@
                             android:layout_marginTop="4dp"
                             android:layout_toRightOf="@+id/share_clicks_heart"
                             android:ellipsize="none"
-                            android:text="afgaagagagagagagagagadajd jadfahfdjfdhafga"
                             android:textColor="@color/white"
                             android:textSize="16sp"
                             android:textStyle="bold"
@@ -287,15 +283,13 @@
 
                         <TextView
                             android:id="@+id/share_chat_textLong"
-                            android:layout_width="wrap_content"
+                            android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="5dp"
+                            android:layout_marginLeft="3dp"
                             android:layout_below="@+id/share_chat_text"
-
                             android:singleLine="false"
                             android:maxEms="14"
                             android:layout_marginTop="-3dp"
-                            android:text="afgaagagagagagagagagadajd jadfahfdjfdhafga"
                             android:textColor="@color/white"
                             android:textSize="16sp"
                             android:textStyle="bold"
@@ -338,7 +332,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="10dp"
-
                         android:textColor="@color/white"
                         android:textSize="20sp"
                         geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />

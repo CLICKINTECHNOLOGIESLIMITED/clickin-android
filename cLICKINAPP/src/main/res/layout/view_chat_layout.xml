@@ -107,13 +107,25 @@
              android:transcriptMode="alwaysScroll"
              />-->
 
-        <com.handmark.pulltorefresh.library.PullToRefreshListView
+        <!--<TextView-->
+            <!--android:id="@+id/load_earlier"-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="40dp"-->
+            <!--android:text="LOAD EARLIER"-->
+            <!--android:layout_below="@+id/rr_chatprofile_info"-->
+            <!--android:visibility="visible"-->
+            <!--android:gravity="center"-->
+            <!--/>-->
+
+
+        <ListView
             android:id="@+id/chat_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@+id/rl_chat"
             android:layout_below="@+id/rr_chatprofile_info"
             android:layout_marginBottom="-24dp"
+
             android:layout_marginLeft="2dp"
             android:layout_marginRight="2dp"
             android:divider="#00000000"
