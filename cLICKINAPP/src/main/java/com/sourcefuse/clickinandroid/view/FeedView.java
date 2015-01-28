@@ -61,7 +61,7 @@ public class FeedView extends ClickInBaseView implements View.OnClickListener {
 
 
         Utils.launchBarDialog(FeedView.this);
-
+        ModelManager.getInstance().getProfileManager().getFollwer("", authManager.getPhoneNo(), authManager.getUsrToken());
         newsFeedManager.fetchNewsFeed("", authManager.getPhoneNo(), authManager.getUsrToken());
 
     }
@@ -153,10 +153,10 @@ public class FeedView extends ClickInBaseView implements View.OnClickListener {
         } else*/
 
 
-            adapter = new FeedsAdapter(FeedView.this, R.layout.feed_list_item, newsFeedManager.userFeed,mHeaderPositions,
-                    senderName,receiverName,senderImages,recieverImages,timeOfFeed,senderId,receiverId,senderPhNo,recieverPhNo);
+        adapter = new FeedsAdapter(FeedView.this, R.layout.feed_list_item, newsFeedManager.userFeed, mHeaderPositions,
+                senderName, receiverName, senderImages, recieverImages, timeOfFeed, senderId, receiverId, senderPhNo, recieverPhNo);
 
-            list.setAdapter(adapter);
+        list.setAdapter(adapter);
 
         Utils.dismissBarDialog();//
 
@@ -175,7 +175,10 @@ public class FeedView extends ClickInBaseView implements View.OnClickListener {
 
         authManager = ModelManager.getInstance().getAuthorizationManager();
 
-        if (message.equalsIgnoreCase("NewsFeed True")) {
+        if (message.equalsIgnoreCase("GetFollower True")) {
+            if (adapter != null)
+                adapter.notifyDataSetChanged();
+        } else if (message.equalsIgnoreCase("NewsFeed True")) {
             newsFeedBeanArrayList = newsFeedManager.userFeed;
             initData();
             initControls();

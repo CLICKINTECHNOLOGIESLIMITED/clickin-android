@@ -152,7 +152,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         mUserRelationlistView.addFooterView(footerView);
 
 
-        //    Utils.launchBarDialog(this);
+
         authManager = ModelManager.getInstance().getAuthorizationManager();
         notificationMngr = ModelManager.getInstance().getNotificationManagerManager();
         //  notificationMngr.getNotification("", authManager.getPhoneNo(), authManager.getUsrToken());

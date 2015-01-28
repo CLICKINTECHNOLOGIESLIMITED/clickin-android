@@ -91,14 +91,12 @@ public class NotificationAdapter extends ArrayAdapter<NotificationBean> {
         holder.mNotificationLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //   ClickInBaseView.slidemenu.showContent();
+
                 if (item.getNotificationType().matches(context.getResources().getString(R.string.txt_relationstatus)) ||
                         item.getNotificationType().matches(context.getResources().getString(R.string.txt_relation_visibility))
                         || item.getNotificationType().equalsIgnoreCase(context.getResources().getString(R.string.txt_relationrequest)) || item.getNotificationType().equalsIgnoreCase(context.getResources().getString(R.string.txt_relationdelete))) {
 
-                    //Utils.launchBarDialog((Activity) context);
 
-                   // Utils.launchBarDialog((Activity) context);
 
                     Intent intent = new Intent(getContext(), UserProfileView.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -129,10 +127,11 @@ public class NotificationAdapter extends ArrayAdapter<NotificationBean> {
                     context.startActivity(intent);
                     ((Activity) context).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
                 } else if (item.getNotificationType().equalsIgnoreCase(context.getResources().getString(R.string.type_update))) {
-                    //Utils.launchBarDialog((Activity) context);
+
                     Intent intent = new Intent(getContext(), UserProfileView.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     intent.putExtra("updatephoto", true);
+
                     context.startActivity(intent);
                     PicassoManager.clearCache();
                 }

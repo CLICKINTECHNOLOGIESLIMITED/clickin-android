@@ -139,6 +139,7 @@ public class GcmIntentService extends IntentService {
                     {
 
                         data.setClass(getApplicationContext(), FeedView.class);
+                        UpdateCounter();
                         sendNotification("Clickin'", extras.getString("chat_message"), data);
 
 
@@ -146,7 +147,8 @@ public class GcmIntentService extends IntentService {
                     {
 
                         data.setClass(getApplicationContext(), JumpOtherProfileView.class);
-                        data.putExtra("updatephoto", true);
+                        data.putExtra("FromOwnProfile", true);
+                        data.putExtra("phNumber", extras.getString("phone_no"));
                         UpdateCounter();
                         sendNotification("Clickin'", extras.getString("message"), data);
                         EventBus.getDefault().post("updatePhoto");

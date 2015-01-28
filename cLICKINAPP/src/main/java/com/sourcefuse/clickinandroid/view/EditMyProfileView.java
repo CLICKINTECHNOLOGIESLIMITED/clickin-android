@@ -49,6 +49,8 @@ public class EditMyProfileView extends ClickInBaseView implements View.OnClickLi
     private AuthManager authManager;
     private ProfileManager profileManager;
     private Uri mImageCaptureUri;
+    String mChangePhoto = "no"; // value to check user change photo or not
+
     //variables use to maintain current values of user so we can set values later on in auth manager
     private String userName, userLastName, userEmail, userCity, userCountry;
 
@@ -239,13 +241,13 @@ public class EditMyProfileView extends ClickInBaseView implements View.OnClickLi
                             if (bitmap != null) {
 
                                 profileManager.setProfile(userName, userLastName, authManager.getPhoneNo(),
-                                        authManager.getUsrToken(), "", "", userCity, userCountry, userEmail, "", Utils.encodeTobase64(bitmap), "yes");
+                                        authManager.getUsrToken(), "", "", userCity, userCountry, userEmail, "", Utils.encodeTobase64(bitmap), mChangePhoto);
                             } else {
                                 try {
                                     // imageBitmap = Picasso.with(EditMyProfileView.this).load(authManager.getUserPic()).get();
                                     //Utils.encodeTobase64(imageBitmap)
                                     profileManager.setProfile(userName, userLastName, authManager.getPhoneNo(),
-                                            authManager.getUsrToken(), "", "", userCity, userCountry, userEmail, "", "", "yes");
+                                            authManager.getUsrToken(), "", "", userCity, userCountry, userEmail, "", "", mChangePhoto);
                                 } catch (Exception e) {
                                 }
                             }
@@ -416,6 +418,7 @@ public class EditMyProfileView extends ClickInBaseView implements View.OnClickLi
                 startActivityForResult(pickPhoto, Constants.SELECT_PICTURE);
             } else if (authManager.getmResizeBitmap() != null) {
                 mySelfy.setImageBitmap(authManager.getmResizeBitmap());
+                mChangePhoto = "yes";
                 setMenuListData();
             }
         }
