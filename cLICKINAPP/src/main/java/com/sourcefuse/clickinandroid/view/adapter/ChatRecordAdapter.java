@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.MediaStore;
@@ -1263,6 +1264,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     String[] splitted = relationManager.getPartnerName.split("\\s+");
 //                    ((TextView) row.findViewById(R.id.shared_by_name)).setTextColor(Color.parseColor("#687d9b"));//akshit Code
                     ((TextView) row.findViewById(R.id.shared_by_name)).setText(splitted[0]);
+                    ((TextView) row.findViewById(R.id.shared_by_name)).setTypeface(null, Typeface.BOLD);//prafull code
                     ((TextView) row.findViewById(R.id.shared_message)).setText(" wants to share");
 
 

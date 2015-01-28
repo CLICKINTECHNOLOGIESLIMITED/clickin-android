@@ -23,8 +23,8 @@ import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.Display;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -41,8 +41,6 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.quickblox.core.QBCallbackImpl;
 import com.quickblox.core.QBEntityCallbackImpl;
 import com.quickblox.core.result.Result;
@@ -132,7 +130,9 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     private RelationManager relationManager;
     private EditText chatText;
     private ImageView mypix, partnerPix, attachBtn;
-    private PullToRefreshListView chatListView;
+    //    private PullToRefreshListView chatListView;
+    private ListView chatListView ;
+    private TextView load_earlier ;
     private ChatRecordAdapter adapter = null;
     private boolean showAttachmentView = true;
     private LinearLayout llAttachment;
@@ -281,7 +281,19 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         slidemenu.setTouchModeAbove(2);
 
         send = (Button) findViewById(R.id.btn_send);
-        chatListView = (PullToRefreshListView) findViewById(R.id.chat_list);
+//        load_earlier = (TextView)findViewById(R.id.load_earlier);
+
+        chatListView = (ListView) findViewById(R.id.chat_list);
+
+        //akshit code to implement Load Earlier ,Remove Pull to refresh
+        LayoutInflater inflater = this.getLayoutInflater();
+        View header=inflater.inflate(R.layout.list_header_chat, null);
+
+        load_earlier = (TextView)header.findViewById(R.id.load_earlier);
+        load_earlier.setOnClickListener(this);
+        chatListView.addHeaderView(header);
+
+//       Code ends
 
         chatText = (EditText) findViewById(R.id.edit_chatBox);
         mybar = (SeekBar) findViewById(R.id.seekBar1);
@@ -472,27 +484,28 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         });
 
 
-        chatListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
-            @Override
-            public void onRefresh(PullToRefreshBase<ListView> refreshView) {
-                // Do work to refresh the list here.
-                try {
-                    // int lastIndex = chatManager.chatMessageList.size() - 1;
-                    chatListSize = chatManager.chatMessageList.size();
-                    String lastChatId = chatManager.chatMessageList.get(0).chatId;
-                    chatManager.fetchChatRecord(rId, authManager.getPhoneNo(), authManager.getUsrToken(), lastChatId);
-                } catch (Exception e) {
-
-
-                }
-            }
-        });
-
+//        chatListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
+//            @Override
+//            public void onRefresh(PullToRefreshBase<ListView> refreshView) {
+//                // Do work to refresh the list here.
+//                try {
+//                    // int lastIndex = chatManager.chatMessageList.size() - 1;
+//                    chatListSize = chatManager.chatMessageList.size();
+//                    String lastChatId = chatManager.chatMessageList.get(0).chatId;
+//                    chatManager.fetchChatRecord(rId, authManager.getPhoneNo(), authManager.getUsrToken(), lastChatId);
+//                } catch (Exception e) {
+//
+//
+//                }
+//            }
+//        });
 
         //  setlist();
         adapter = new ChatRecordAdapter(this, R.layout.view_chat_demo, chatManager.chatMessageList);
         // adapter = new ChatRecordAdapter(this, R.layout.view_chat_demo,chatData);
+
         chatListView.setAdapter(adapter);
+        chatListView.setSelection(chatManager.chatMessageList.size());//akshit code
 
 
         //code to check online of offline status
@@ -673,7 +686,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 chatManager.fetchChatRecord(rId, authManager.getPhoneNo(), authManager.getUsrToken(), "");
             } else {
                 int listsize = chatManager.chatMessageList.size();
-                chatListView.getRefreshableView().setSelection(0);
+//                chatListView.getRefreshableView().setSelection(0);
+                chatListView.setSelection(0);//akshit code
             }
 
 
@@ -687,6 +701,18 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.load_earlier://akshit code to fetch history of chat ,after load earlier is clicked
+                try {
+                    // int lastIndex = chatManager.chatMessageList.size() - 1;
+                    chatListSize = chatManager.chatMessageList.size();
+                    String lastChatId = chatManager.chatMessageList.get(0).chatId;
+                    chatManager.fetchChatRecord(rId, authManager.getPhoneNo(), authManager.getUsrToken(), lastChatId);
+                } catch (Exception e) {
+                    e.printStackTrace();
+
+                }
+
+                break;
             case R.id.btn_send:
                 break;
             case R.id.textview_send://akshit code for event on send
@@ -867,6 +893,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         if (adapter == null) {
             adapter = new ChatRecordAdapter(this, R.layout.view_chat_demo, tempChatList);
             chatListView.setAdapter(adapter);
+            chatListView.setSelection(tempChatList.size());//akshit code
         } else {
             adapter.notifyDataSetChanged();
         }
@@ -1329,7 +1356,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         authManager = ModelManager.getInstance().getAuthorizationManager();
         if (message.equalsIgnoreCase("FecthChat True")) {
             Utils.dismissBarDialog();
-            chatListView.onRefreshComplete();
+//            load_earlier.setVisibility(View.VISIBLE);
+//            chatListView.onRefreshComplete();
             if (chatManager.chatMessageList.size() != 0) {
                 if (adapter == null) {
                     adapter = new ChatRecordAdapter(this, R.layout.view_chat_demo, chatManager.chatMessageList);
@@ -1344,7 +1372,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                             if (chatListSize > 0) {
                                 // show last chat when use pull to refresh --"Mukesh"
                                 int listsize = chatManager.chatMessageList.size();
-                                chatListView.getRefreshableView().setSelection((listsize - chatListSize));
+                                chatListView.setSelection(listsize - chatListSize);//akshit code
+//                                chatListView.getRefreshableView().setSelection((listsize - chatListSize));
                             }
                         }
                     });
@@ -1353,7 +1382,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
 
         } else if (message.equalsIgnoreCase("FecthChat False")) {
-            chatListView.onRefreshComplete();
+//            chatListView.onRefreshComplete();
 
 
 
@@ -2057,7 +2086,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                     Picasso.with(this).load(authManager.getUserPic()).error(R.drawable.male_user).into(mypix);
             } catch (Exception e) {
 
-                    mypix.setImageResource(R.drawable.male_user);
+                mypix.setImageResource(R.drawable.male_user);
             }
             if (!Utils.isEmptyString(partnerPic))
                 Picasso.with(ChatRecordView.this).load(partnerPic).error(R.drawable.male_user).into(partnerPix);
