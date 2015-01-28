@@ -65,6 +65,7 @@
                 android:layout_below="@+id/shared_message"
                 android:layout_marginRight="2dp"
                 android:layout_marginTop="4dp"
+
                 android:background="@drawable/chat_divider" />
 
             <ImageView
@@ -512,25 +513,22 @@
                 android:paddingTop="5dp"
                 android:visibility="gone">
 
-                <com.sourcefuse.clickinandroid.utils.ClickInTextView
+                <TextView
                     android:id="@+id/tv_acc_res_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="3dp"
                     android:paddingRight="3dp"
-                    android:text="Toby made a"
-                    geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"
-                    android:textColor="@color/black"/>
+                    android:text="Toby made a" />
 
-                <com.sourcefuse.clickinandroid.utils.ClickInTextView
+                <TextView
                     android:id="@+id/tv_acc_res_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="3dp"
                     android:paddingRight="2dp"
                     android:text="COUNTER OFFER"
-                    geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
-                    android:textColor="@color/black"
+                    android:textStyle="bold"
 
                     />
 
@@ -796,6 +794,5 @@
 
     </RelativeLayout>
 </RelativeLayout>
-
 
 
