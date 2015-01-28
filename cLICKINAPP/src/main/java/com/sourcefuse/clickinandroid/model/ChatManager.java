@@ -1,5 +1,7 @@
 package com.sourcefuse.clickinandroid.model;
 
+import android.util.Log;
+
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.sourcefuse.clickinandroid.model.bean.CardBean;
@@ -368,13 +370,11 @@ public class ChatManager {
             userInputDetails.put("chat_id", chatId);
             userInputDetails.put("media", media);
             userInputDetails.put("fb_access_token", fbAccessToken);
-           /* userInputDetails.put("twitter_access_token", twitterAccessToken);
-            userInputDetails.put("twitter_access_token_secret", twitterAccessTokenSecret);
-            userInputDetails.put("googleplus_access_token", googlePlusAccessToken);*/
             userInputDetails.put("comment", comment);
             userInputDetails.put("accepted", accepted);
 
 
+            Log.e("user details---->",""+userInputDetails);
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));

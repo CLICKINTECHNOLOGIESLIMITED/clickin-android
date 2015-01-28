@@ -375,7 +375,7 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
                                 countryStr = country.getText().toString();
                             }
                             profileManager.setProfile(fname.getText().toString(), lname.getText().toString(), authManager.getPhoneNo(),
-                                    authManager.getUsrToken(), gender_var, "" + day + month + year, cityStr, countryStr, email.getText().toString(), "", Utils.encodeTobase64(bitmapImage));
+                                    authManager.getUsrToken(), gender_var, "" + day + month + year, cityStr, countryStr, email.getText().toString(), "", Utils.encodeTobase64(bitmapImage), "no");
                         } else {
                             Utils.fromSignalDialog(this, AlertMessage.vEmailid);
                             //alertDialog(AlertMessage.vEmailid);
@@ -403,7 +403,7 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
                                 countryStr = country.getText().toString();
                             }
                             profileManager.setProfile(fname.getText().toString(), lname.getText().toString(), authManager.getPhoneNo(),
-                                    authManager.getUsrToken(), gender_var, "" + day + month + year, cityStr, countryStr, email.getText().toString(), "", Utils.encodeTobase64(bitmap));
+                                    authManager.getUsrToken(), gender_var, "" + day + month + year, cityStr, countryStr, email.getText().toString(), "", Utils.encodeTobase64(bitmap), "no");
                         } else {
 
                             Utils.fromSignalDialog(this, AlertMessage.vEmailid);

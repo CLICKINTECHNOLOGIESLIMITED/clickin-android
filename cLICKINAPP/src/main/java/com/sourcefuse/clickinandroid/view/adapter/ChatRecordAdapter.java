@@ -1406,8 +1406,13 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     i.setAction("SHARE");
                     context.startActivity(i);
 
+
                     ChatManager chatManager = ModelManager.getInstance().getChatManager();
-                    chatManager.chatShare(authM.getPhoneNo(), authM.getUsrToken(), item.relationshipId, item.originalMessageID, item.sharingMedia, item.facebookToken, item.shareComment, "yes");
+                    String mFb_access_token = item.facebookToken;
+                    if(mFb_access_token.equalsIgnoreCase("-"))
+                        mFb_access_token = "";
+
+                    chatManager.chatShare(authM.getPhoneNo(), authM.getUsrToken(), item.relationshipId, item.originalMessageID, item.sharingMedia, mFb_access_token, item.shareComment, "yes");
 
                     //akshit code to set image to deactivate state .
                     ((TextView) row.findViewById(R.id.shared_message_reject)).setBackgroundResource(R.drawable.c_card_reject_deactive);

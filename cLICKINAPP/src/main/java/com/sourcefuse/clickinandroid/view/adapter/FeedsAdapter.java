@@ -180,7 +180,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
         if (eachNewsFeed.get(position).getNewsFeedArray_chatDetail_clicks() != null) {
             if (!(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_clicks().equalsIgnoreCase("null"))) {
                 if (!(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_clicks().equalsIgnoreCase("0"))) {
-//                    Log.e("CASE 1", "111111111");
+
                     holder.clickedIn.setText(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_clicks().trim());
                     holder.clickedIn.setTextColor(Color.WHITE);
                     holder.clickedIn.setTypeface(null, Typeface.BOLD);
@@ -714,7 +714,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
 
     @Override
     public int getSectionForPosition(int position) {
-        return eachNewsFeed.get(position).getNewsfeedArray_comments_count();
+        return eachNewsFeed.get(position).getNewsfeedArray_comments_count();  // get length of section index
     }
 
     private LayoutInflater mInflater;
@@ -753,14 +753,13 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
 
         AuthManager authManager = ModelManager.getInstance().getAuthorizationManager();
         if (senderId.get(position).equalsIgnoreCase(authManager.getUserId())) {
-            Log.e("sender 1--->", "" + senderName.get(position));
-            Log.e("reciver 1--->", "" + receiverName.get(position));
-            Log.e("in case 1--->", "in case 1--->");
+
             view.setText(senderName.get(position));
             view1.setText(receiverName.get(position));
 
-            doubleArrow.setImageResource(R.drawable.arrow);
+            //doubleArrow.setImageResource(R.drawable.arrow);
             if (authManager.getGender() != null) {
+                doubleArrow.setImageResource(R.drawable.arrow);
                 if (authManager.getGender().matches("guy")) {
 
                     try {
@@ -774,6 +773,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
                         }
                     } catch (Exception e) {
                         imageview.setImageResource(R.drawable.male_user);
+
                     }
                 } else {
                     try {
@@ -786,6 +786,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
                         }
                     } catch (Exception e) {
                         imageview.setImageResource(R.drawable.female_user);
+
                     }
                 }
             } else {
@@ -793,16 +794,14 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
             }
 
         } else {
-            Log.e("in case 2--->", "in case 2--->");
-            if (prMgr.following != null && prMgr.following.size() > 0) {
-                Log.e("inside case 10--->", "inside case 10--->" + prMgr.following.size());
+
+
+            if (prMgr.following != null) {
+
                 for (int i = 0; i < prMgr.following.size(); i++) {
-                    Log.e("inside case 11--->", "inside case 11--->");
+
                     if (senderId.get(position).equalsIgnoreCase(prMgr.following.get(i).getFolloweeId())) {
 
-                        Log.e("in case 3--->", "in case 3--->");
-                        Log.e("sender 2 --->", "" + senderName.get(position));
-                        Log.e("reciver 2--->", "" + receiverName.get(position));
 
                         view.setText(senderName.get(position));
                         view1.setText(receiverName.get(position));
@@ -816,16 +815,13 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
                             }
                         } catch (Exception e) {
                             imageview.setImageResource(R.drawable.male_user);
+
                         }
                         doubleArrow.setImageResource(R.drawable.arrow);
                         break;
                     } else {
-//                                if((mSections.get(position).receiverId)!=null) {
-//                                    if ((mSections.get(position).receiverId).toString().equalsIgnoreCase(prMgr.following.get(i).getFolloweeId())) {
-                        doubleArrow.setImageResource(R.drawable.flip_arow);
-                        Log.e("in case 4--->", "in case 4--->");
-                        Log.e("sender 3--->", "" + senderName.get(position));
-                        Log.e("reciver 3--->", "" + receiverName.get(position));
+
+
                         view.setText(receiverName.get(position));
                         view1.setText(senderName.get(position));
                         Picasso.with(context).load(recieverImages.get(position)).placeholder(R.drawable.dcontact).into(imageview);
@@ -839,15 +835,16 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
                             }
                         } catch (Exception e) {
                             imageview.setImageResource(R.drawable.male_user);
+
                         }
-//                                        break;
+                        doubleArrow.setImageResource(R.drawable.flip_arow);
+                        break;
 //                                    }
                     }
                 }
             } else {
-                Log.e("in case 5--->", "in case 5--->");
-                Log.e("sender 4--->", "" + senderName.get(position));
-                Log.e("reciver 4--->", "" + receiverName.get(position));
+
+
                 view.setText(senderName.get(position));
                 view1.setText(receiverName.get(position));
                 try {
@@ -860,6 +857,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
                     }
                 } catch (Exception e) {
                     imageview.setImageResource(R.drawable.male_user);
+
                 }
                 doubleArrow.setImageResource(R.drawable.arrow);
             }

@@ -94,9 +94,10 @@ public class
     public static void launchBarDialog(Activity activity) {
 
         barProgressDialog = new CustomProgressDialog(activity);
-//		barProgressDialog.setTitle("Loading ...");
-//		barProgressDialog.setMessage("In progress ...");
         barProgressDialog.setCancelable(false);
+        if (barProgressDialog.isShowing())
+            barProgressDialog.dismiss();
+
         barProgressDialog.show();
     }
 

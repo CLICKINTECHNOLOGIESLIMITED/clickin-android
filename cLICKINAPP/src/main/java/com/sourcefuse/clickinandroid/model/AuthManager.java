@@ -1033,6 +1033,7 @@ public class AuthManager {
                             JSONObject jobj = new JSONObject(response.getString("user"));
                             if (jobj.has("gender"))
                                 authManager.setTmpGender(jobj.getString("gender"));
+
                             else
                                 authManager.setTmpGender("");
 

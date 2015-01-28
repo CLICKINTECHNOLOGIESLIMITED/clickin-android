@@ -1,6 +1,8 @@
 package com.sourcefuse.clickinandroid.model;
 
 
+import android.util.Log;
+
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.sourcefuse.clickinandroid.model.bean.ContactBean;
@@ -51,7 +53,7 @@ public class ProfileManager {
 
     public void setProfile(String fname, String lname, String phone,
                            String usertoken, String gender, String dob, String city,
-                           String country, String email, String fbaccesstoken, String userpic) {
+                           String country, String email, String fbaccesstoken, String userpic,String profile_image_change) {
         authManager = ModelManager.getInstance().getAuthorizationManager();
         JSONObject userInputDetails = new JSONObject();
         try {
@@ -77,6 +79,7 @@ public class ProfileManager {
             userInputDetails.put("email", email);
             userInputDetails.put("first_name", fname);
             userInputDetails.put("last_name", lname);
+            userInputDetails.put("profile_image_change", profile_image_change);
             // userInputDetails.put("fb_access_token", "jh");
 
             client = new AsyncHttpClient();
@@ -374,6 +377,7 @@ public class ProfileManager {
                         followers.addAll(followRequesed);
                         followers.addAll(pfollowerList);
                         following.addAll(followingArray);
+                        Log.e("following array size------",""+following.size());
                         EventBus.getDefault().postSticky("GetFollower True");
 
                     }
