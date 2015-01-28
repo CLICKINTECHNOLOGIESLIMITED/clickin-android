@@ -61,7 +61,7 @@ public class FeedView extends ClickInBaseView implements View.OnClickListener {
 
 
         Utils.launchBarDialog(FeedView.this);
-        ModelManager.getInstance().getProfileManager().getFollwer("", authManager.getPhoneNo(), authManager.getUsrToken());
+        ModelManager.getInstance().getProfileManager().getFollwer("", authManager.getPhoneNo(), authManager.getUsrToken()); // get following list as we need it.
         newsFeedManager.fetchNewsFeed("", authManager.getPhoneNo(), authManager.getUsrToken());
 
     }
