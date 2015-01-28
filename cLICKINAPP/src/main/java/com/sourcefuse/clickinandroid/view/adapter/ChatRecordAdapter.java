@@ -177,6 +177,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 image_attached.setScaleType(ImageView.ScaleType.FIT_XY);
 
   /* for map to set text location shared */
+
+
+
                 TextView mLongTextView = (TextView) row.findViewById(R.id.long_chat_text_share);
                 if (!(Utils.isEmptyString(temp.location_coordinates))) {
                     row.findViewById(R.id.parent_clicks_area_share).setVisibility(View.VISIBLE);
@@ -487,12 +490,20 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     chatText.setVisibility(View.VISIBLE);
                     chatText.setTextColor(context.getResources().getColor(R.color.white));
                     if (temp.textMsg.length() > Constants.CHAT_LENTH_LIMIT) {
+
+                        LinearLayout.LayoutParams mChatLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        mChatLayoutParams.setMargins(0,0,0,pxlToDp(-5));
+
 //                        Log.e("11111111111112222222333","1111111111111222223333");
                         chatText.setText(temp.textMsg.substring(0, 17));
                         TextView chatTextLong = (TextView) row.findViewById(R.id.long_chat_text);
                         chatTextLong.setVisibility(View.VISIBLE);
                         chatTextLong.setText(temp.textMsg.substring(17));
                         chatTextLong.setTextColor(context.getResources().getColor(R.color.white));
+
+
+                        clicksArea.setLayoutParams(mChatLayoutParams); // code to set margin from bottom in chat Record view
+
                         parent_shared_layout.setBackgroundResource(R.drawable.newbg_pinkleft);  // code for double line
                     } else {
 //                        Log.e("111111111111122222223334444","1111111111111222223333444");
@@ -537,6 +548,10 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                         mShareLong.setText(temp.textMsg.substring(15));//akshit changes
                         mShareLong.setTextColor(context.getResources().getColor(R.color.white));
                         mShareLong.setVisibility(View.VISIBLE);
+
+                        LinearLayout.LayoutParams mChatLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        mChatLayoutParams.setMargins(0,0,0,pxlToDp(-5));
+                        mClickArea.setLayoutParams(mChatLayoutParams);// code to set margin from bottom in chat Record view
                     } else {
                         mShareSort.setText(temp.textMsg);
                         mShareSort.setVisibility(View.VISIBLE);
@@ -1175,6 +1190,13 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                         chatTextLong.setTextColor(context.getResources().getColor(R.color.white));
                         parent_shared_layout.setBackgroundResource(R.drawable.newbg_pinkright);  //code for double line
 
+
+
+                        LinearLayout.LayoutParams mChatLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        mChatLayoutParams.setMargins(0,0,0,pxlToDp(-5));
+                        clicksArea.setLayoutParams(mChatLayoutParams);// code to set margin from bottom in chat Record view
+
+
                     } else {
                         if ((Utils.isEmptyString(temp.content_url))) {  // check prafull
                             clicksArea.setBackgroundResource(R.drawable.pink_squre);
@@ -1221,6 +1243,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                         mShareLong.setTextColor(context.getResources().getColor(R.color.white));
                         mShareLong.setVisibility(View.VISIBLE);
 
+                        LinearLayout.LayoutParams mChatLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        mChatLayoutParams.setMargins(0,0,0,pxlToDp(-5));
+                        mClickArea.setLayoutParams(mChatLayoutParams);// code to set margin from bottom in chat Record view
 
                     } else {
                         mShareSort.setVisibility(View.VISIBLE);
