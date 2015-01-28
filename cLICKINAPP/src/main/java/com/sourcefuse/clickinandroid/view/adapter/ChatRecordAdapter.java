@@ -504,6 +504,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
                         clicksArea.setLayoutParams(mChatLayoutParams); // code to set margin from bottom in chat Record view
 
+
                         parent_shared_layout.setBackgroundResource(R.drawable.newbg_pinkleft);  // code for double line
                     } else {
 //                        Log.e("111111111111122222223334444","1111111111111222223333444");

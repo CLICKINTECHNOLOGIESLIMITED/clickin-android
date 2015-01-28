@@ -209,6 +209,7 @@
                     android:maxEms="12"
                     android:layout_marginTop="2dp"
                     android:paddingLeft="3dp"
+                    android:paddingBottom="5dp"
                     android:singleLine="false"
                     android:textColor="@color/black"
                     android:textSize="14sp"
