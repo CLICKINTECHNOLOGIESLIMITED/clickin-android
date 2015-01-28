@@ -170,13 +170,13 @@ public class EditMyProfileView extends ClickInBaseView implements View.OnClickLi
             String mUserImagePath = null;
             boolean userpic = Utils.isEmptyString(authManager.getUserPic());
             Uri mUserImageUri = null;
-            if(authManager.getUserImageUri() != null)
+            if (authManager.getUserImageUri() != null)
                 mUserImagePath = "" + authManager.getUserImageUri().toString();
             if (!Utils.isEmptyString(mUserImagePath))
                 mUserImageUri = Utils.getImageContentUri(EditMyProfileView.this, new File(mUserImagePath));
 
 
-            if ( !Utils.isEmptyString("" + mUserImageUri))
+            if (!Utils.isEmptyString("" + mUserImageUri))
                 mySelfy.setImageURI(mUserImageUri);
             else if (imagebitmap1 != null)
                 mySelfy.setImageBitmap(imagebitmap1);
@@ -239,13 +239,13 @@ public class EditMyProfileView extends ClickInBaseView implements View.OnClickLi
                             if (bitmap != null) {
 
                                 profileManager.setProfile(userName, userLastName, authManager.getPhoneNo(),
-                                        authManager.getUsrToken(), "", "", userCity, userCountry, userEmail, "", Utils.encodeTobase64(bitmap));
+                                        authManager.getUsrToken(), "", "", userCity, userCountry, userEmail, "", Utils.encodeTobase64(bitmap), "yes");
                             } else {
                                 try {
                                     // imageBitmap = Picasso.with(EditMyProfileView.this).load(authManager.getUserPic()).get();
                                     //Utils.encodeTobase64(imageBitmap)
                                     profileManager.setProfile(userName, userLastName, authManager.getPhoneNo(),
-                                            authManager.getUsrToken(), "", "", userCity, userCountry, userEmail, "", "");
+                                            authManager.getUsrToken(), "", "", userCity, userCountry, userEmail, "", "", "yes");
                                 } catch (Exception e) {
                                 }
                             }

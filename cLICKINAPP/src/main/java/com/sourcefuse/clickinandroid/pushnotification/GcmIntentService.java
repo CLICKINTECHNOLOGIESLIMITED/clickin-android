@@ -23,6 +23,7 @@ import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.view.ChatRecordView;
 import com.sourcefuse.clickinandroid.view.FeedView;
 import com.sourcefuse.clickinandroid.view.FollowerList;
+import com.sourcefuse.clickinandroid.view.JumpOtherProfileView;
 import com.sourcefuse.clickinandroid.view.UserProfileView;
 import com.sourcefuse.clickinapp.R;
 
@@ -144,7 +145,7 @@ public class GcmIntentService extends IntentService {
                     } else if (extras.getString("Tp").equalsIgnoreCase("Upp")) //case for Profile Update
                     {
 
-                        data.setClass(getApplicationContext(), UserProfileView.class);
+                        data.setClass(getApplicationContext(), JumpOtherProfileView.class);
                         data.putExtra("updatephoto", true);
                         UpdateCounter();
                         sendNotification("Clickin'", extras.getString("message"), data);

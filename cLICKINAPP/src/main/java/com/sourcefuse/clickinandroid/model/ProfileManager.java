@@ -51,7 +51,7 @@ public class ProfileManager {
 
     public void setProfile(String fname, String lname, String phone,
                            String usertoken, String gender, String dob, String city,
-                           String country, String email, String fbaccesstoken, String userpic) {
+                           String country, String email, String fbaccesstoken, String userpic,String profile_image_change) {
         authManager = ModelManager.getInstance().getAuthorizationManager();
         JSONObject userInputDetails = new JSONObject();
         try {
@@ -77,6 +77,7 @@ public class ProfileManager {
             userInputDetails.put("email", email);
             userInputDetails.put("first_name", fname);
             userInputDetails.put("last_name", lname);
+            userInputDetails.put("profile_image_change", profile_image_change);
             // userInputDetails.put("fb_access_token", "jh");
 
             client = new AsyncHttpClient();

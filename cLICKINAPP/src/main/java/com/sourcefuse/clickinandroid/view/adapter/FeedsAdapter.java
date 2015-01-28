@@ -714,7 +714,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
 
     @Override
     public int getSectionForPosition(int position) {
-        return eachNewsFeed.get(position).getNewsfeedArray_comments_count();
+        return eachNewsFeed.get(position).getNewsfeedArray_comments_count();  // get length of section index
     }
 
     private LayoutInflater mInflater;
