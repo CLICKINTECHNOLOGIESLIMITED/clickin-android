@@ -796,7 +796,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
         } else {
 
 
-            if (prMgr.following != null) {
+            if (prMgr.following != null && prMgr.following.size()>0) {
 
                 for (int i = 0; i < prMgr.following.size(); i++) {
 
