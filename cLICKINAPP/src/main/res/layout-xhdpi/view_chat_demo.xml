@@ -197,7 +197,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:maxEms="12"
-
+                    android:paddingBottom="5dp"
                     android:paddingLeft="3dp"
                     android:singleLine="false"
                     android:textColor="@color/black"
