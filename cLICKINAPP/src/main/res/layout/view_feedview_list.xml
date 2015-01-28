@@ -42,7 +42,7 @@
             android:src="@drawable/no_feeds_image" />
     </RelativeLayout>
 
-    <com.sourcefuse.clickinandroid.view.adapter.PinnedSecListViewForFeed
+    <se.emilsjolander.stickylistheaders.StickyListHeadersListView
         android:id="@+id/list1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

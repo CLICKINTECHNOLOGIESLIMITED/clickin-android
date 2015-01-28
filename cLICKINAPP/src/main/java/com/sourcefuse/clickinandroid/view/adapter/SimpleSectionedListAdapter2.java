@@ -307,19 +307,7 @@ public class SimpleSectionedListAdapter2 extends BaseAdapter implements PinnedSe
                             doubleArrow.setImageResource(R.drawable.arrow);
                         }
                     }
-//                    if ((mSections.get(position).senderId).toString().equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getUserId())) {
-//
-//                        view.setText(mSections.get(position).senderName);
-//                        view1.setText(mSections.get(position).recieverName);
-//                        Picasso.with(mContext).load(mSections.get(position).senderImages).placeholder(R.drawable.ic_launcher).into(imageview);
-//                        doubleArrow.setImageResource(R.drawable.arrow);
-//                    } else {
-//                        doubleArrow.setImageResource(R.drawable.flip_arow);
-//                        view.setText(mSections.get(position).recieverName);
-//                        view1.setText(mSections.get(position).senderName);
-//                        Picasso.with(mContext).load(mSections.get(position).recieverImages).placeholder(R.drawable.ic_launcher).into(imageview);
-//                    }
-//                    }
+
                 }
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -331,17 +319,12 @@ public class SimpleSectionedListAdapter2 extends BaseAdapter implements PinnedSe
                         phNo = mSections.get(position).rcvrPhNo;
                     }
                     Intent viewProfile = null;
-//                    if(ModelManager.getInstance().getAuthorizationManager().getUserId().toString().equalsIgnoreCase(mSections.get(position).senderId.toString()))
-//                    if(view.getText().toString().trim().equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getUserName()))
-//                        viewProfile = new Intent(mContext, UserProfileView.class);
-//                    else {
+
                     viewProfile = new Intent(mContext, UserProfileView.class);
                     viewProfile.putExtra("FromOwnProfile", true);
                     viewProfile.putExtra("phNumber", phNo);
                     viewProfile.putExtra("name", view.getText().toString());
-//                    }
 
-                    //      viewProfile.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     mContext.startActivity(viewProfile);
                 }
             });
@@ -355,10 +338,7 @@ public class SimpleSectionedListAdapter2 extends BaseAdapter implements PinnedSe
                         phNo = mSections.get(position).rcvrPhNo;
                     }
                     Intent viewProfile = null;
-//                    if(ModelManager.getInstance().getAuthorizationManager().getUserId().toString().equalsIgnoreCase(mSections.get(position).senderId.toString()))
-//                    if(view1.getText().toString().trim().equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getUserName()))
-//                        viewProfile = new Intent(mContext, UserProfileView.class);
-//                    else {
+
                     viewProfile = new Intent(mContext, JumpOtherProfileView.class);
                     viewProfile.putExtra("FromOwnProfile", true);
                     viewProfile.putExtra("phNumber", phNo);

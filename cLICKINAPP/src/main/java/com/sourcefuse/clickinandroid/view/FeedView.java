@@ -2,6 +2,7 @@ package com.sourcefuse.clickinandroid.view;
 
 import android.os.Bundle;
 import android.text.SpannableStringBuilder;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -21,6 +22,7 @@ import com.sourcefuse.clickinapp.R;
 import java.util.ArrayList;
 
 import de.greenrobot.event.EventBus;
+import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
 /**
  * Created by gagansethi on 3/7/14.
@@ -40,7 +42,7 @@ public class FeedView extends ClickInBaseView implements View.OnClickListener {
     ArrayList<String> timeOfFeed = new ArrayList<String>();
     int headerPosition = 0;
     SimpleSectionedListAdapter2 simpleSectionedGridAdapter2;
-    private ListView list;
+    private StickyListHeadersListView list;
     private ArrayList<Section> sections = new ArrayList<Section>();
     private NewsFeedManager newsFeedManager;
     private AuthManager authManager;
@@ -101,6 +103,11 @@ public class FeedView extends ClickInBaseView implements View.OnClickListener {
         headerPosition = 0;
 
         for (NewsFeedBean eachNewsFeed : newsFeedBeanArrayList) {
+            /*Log.e("senderName---->",""+eachNewsFeed.getNewsFeedArray_senderDetail_name());
+
+            Log.e("receiverName---->",""+eachNewsFeed.getNewsFeedArray_receiverDetail_name());*/
+
+
             senderName.add(eachNewsFeed.getNewsFeedArray_senderDetail_name());
             senderId.add(eachNewsFeed.getNewsFeedArray_senderDetail_id());
             receiverName.add(eachNewsFeed.getNewsFeedArray_receiverDetail_name());
@@ -120,7 +127,7 @@ public class FeedView extends ClickInBaseView implements View.OnClickListener {
 
     private void initControls() {
         list = null;
-        list = (ListView) findViewById(R.id.list1);
+        list = (StickyListHeadersListView) findViewById(R.id.list1);
         list.setHorizontalScrollBarEnabled(false);
         list.setVerticalScrollBarEnabled(false);
         list.setVerticalFadingEdgeEnabled(false);
@@ -128,11 +135,14 @@ public class FeedView extends ClickInBaseView implements View.OnClickListener {
         sections.clear();
 
 
-        adapter = new FeedsAdapter(FeedView.this, R.layout.feed_list_item, newsFeedManager.userFeed);
-        for (int i = 0; i < senderName.size(); i++) {
-            sections.add(new Section(mHeaderPositions.get(i), senderName.get(i), receiverName.get(i), senderImages.get(i), recieverImages.get(i), timeOfFeed.get(i), senderId.get(i), receiverId.get(i), senderPhNo.get(i), recieverPhNo.get(i)));
-        }
-        simpleSectionedGridAdapter2 = new SimpleSectionedListAdapter2(this, adapter,
+
+        /*for (int i = 0; i < senderName.size(); i++) {
+            sections.add(new Section(mHeaderPositions.get(i), senderName.get(i), receiverName.get(i),
+                    senderImages.get(i), recieverImages.get(i),
+                    timeOfFeed.get(i), senderId.get(i),
+                    receiverId.get(i), senderPhNo.get(i), recieverPhNo.get(i)));
+        }*/
+        /*simpleSectionedGridAdapter2 = new SimpleSectionedListAdapter2(this, adapter,
                 R.layout.list_item_header_feed, R.id.senderUser, R.id.imageView1, R.id.recieverUser, R.id.feed_time);
         simpleSectionedGridAdapter2.setSections(sections.toArray(new Section[0]));
         if (Constants.comments) {
@@ -140,8 +150,13 @@ public class FeedView extends ClickInBaseView implements View.OnClickListener {
             list.invalidateViews();
 
             Constants.comments = false;
-        } else
-            list.setAdapter(simpleSectionedGridAdapter2);
+        } else*/
+
+
+            adapter = new FeedsAdapter(FeedView.this, R.layout.feed_list_item, newsFeedManager.userFeed,mHeaderPositions,
+                    senderName,receiverName,senderImages,recieverImages,timeOfFeed,senderId,receiverId,senderPhNo,recieverPhNo);
+
+            list.setAdapter(adapter);
 
         Utils.dismissBarDialog();//
 

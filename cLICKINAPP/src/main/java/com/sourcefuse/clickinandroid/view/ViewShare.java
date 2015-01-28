@@ -19,7 +19,6 @@ import com.facebook.SessionState;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ChatManager;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
-import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
 import com.squareup.picasso.Picasso;
@@ -226,7 +225,6 @@ public class ViewShare extends Activity implements View.OnClickListener {
                     } else {
                         textMsgchat.setText(textMsg);
                     }
-
 
                 }
 

@@ -70,7 +70,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
     String mLastchatID = "";
     public NewsFeedManager newsFeedManager;
     public SlidingMenu slidemenu;
-    SimpleSectionedListAdapter simpleSectionedGridAdapter;
+
     View header;
     /// Left Menu
     private TextView userName;
@@ -846,6 +846,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 
         if (clickInadapter != null)
             clickInadapter.notifyDataSetChanged();
+
         EventBus.getDefault().post("update Counter");
     }
 

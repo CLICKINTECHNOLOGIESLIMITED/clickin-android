@@ -18,18 +18,24 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.SectionIndexer;
 import android.widget.TextView;
 
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
+import com.sourcefuse.clickinandroid.model.ProfileManager;
 import com.sourcefuse.clickinandroid.model.bean.NewsFeedBean;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.FeedCommentsView;
 import com.sourcefuse.clickinandroid.view.FeedStarsView;
 import com.sourcefuse.clickinandroid.view.Feed_large_img;
+import com.sourcefuse.clickinandroid.view.JumpOtherProfileView;
 import com.sourcefuse.clickinandroid.view.MapView;
+import com.sourcefuse.clickinandroid.view.UserProfileView;
 import com.sourcefuse.clickinapp.R;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -38,24 +44,64 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.util.ArrayList;
 
+
+import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
+
 import static android.view.View.*;
+
+import static android.view.View.GONE;
+import static android.view.View.OnClickListener;
+import static android.view.View.VISIBLE;
+
 import static com.sourcefuse.clickinapp.R.drawable.report_icon;
 
-public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
+public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
+        StickyListHeadersAdapter, SectionIndexer {
     Activity context;
     int layoutResourceId;
     ArrayList<NewsFeedBean> eachNewsFeed;
     MediaPlayer player;
     AuthManager authMgr;
     Typeface typeface;
-//    boolean starFlag=false;
+    ArrayList<String> senderName;
+    ArrayList<String> senderId;
+    ArrayList<String> receiverName;
+    ArrayList<String> receiverId;
+    ArrayList<Integer> mHeaderPositions;
+    ArrayList<String> recieverImages;
+    ArrayList<String> senderImages;
+    ArrayList<String> senderPhNo;
+    ArrayList<String> recieverPhNo;
+    ArrayList<String> timeOfFeed;
 
     public FeedsAdapter(Activity context, int layoutResourceId,
-                        ArrayList<NewsFeedBean> item) {
+                        ArrayList<NewsFeedBean> item,
+                        ArrayList<Integer> mHeaderPositions,
+                        ArrayList<String> mSenderName,
+
+                        ArrayList<String> mReciverName,
+                        ArrayList<String> mSenderImages,
+                        ArrayList<String> mReciverImages,
+                        ArrayList<String> mTimeOfFeed,
+                        ArrayList<String> mSenderId,
+                        ArrayList<String> mReciverId,
+                        ArrayList<String> mSenderPhNo,
+                        ArrayList<String> mReciverPhNo) {
         super(context, layoutResourceId, item);
         this.layoutResourceId = layoutResourceId;
         this.context = context;
         this.eachNewsFeed = item;
+
+        this.senderName = mSenderName;
+        this.senderId = mSenderId;
+        this.receiverName = mReciverName;
+        this.receiverId = mReciverId;
+        this.mHeaderPositions = mHeaderPositions;
+        this.recieverImages = mReciverImages;
+        this.senderImages = mSenderImages;
+        this.recieverPhNo = mReciverPhNo;
+        this.timeOfFeed = mTimeOfFeed;
+        this.senderPhNo = mSenderPhNo;
 
     }
 
@@ -70,6 +116,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
             holder = new RecordHolder();
 
             holder.feed_image = (ImageView) row.findViewById(R.id.feed_image);
+            holder.mLoadImage = (ProgressBar) row.findViewById(R.id.LoadImage);
 //            holder.clicks_heart_top = (ImageView) row.findViewById(R.id.clicks_heart_top);
 //            holder.clicks_heart_bottom = (ImageView) row.findViewById(R.id.clicks_heart_bottom);
 
@@ -128,6 +175,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
         holder.layout.setVisibility(GONE);
         holder.feed_menu.setVisibility(VISIBLE);
         holder.feed_menu.setImageResource(report_icon);
+        holder.mLoadImage.setVisibility(GONE);
 
         if (eachNewsFeed.get(position).getNewsFeedArray_chatDetail_clicks() != null) {
             if (!(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_clicks().equalsIgnoreCase("null"))) {
@@ -147,6 +195,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
 
 
                             if (eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().length() > 30) {
+
                                 holder.clickedInMessage.setText(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().trim().substring(0, 30));
                                 holder.clickedInMessageLong.setText(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().trim().substring(30, eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().length()));
                                 holder.clickedInMessageLong.setVisibility(VISIBLE);
@@ -207,7 +256,18 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
             if (eachNewsFeed.get(position).getNewsFeedArray_chatDetail_type().equalsIgnoreCase("2") || eachNewsFeed.get(position).getNewsFeedArray_chatDetail_type().equalsIgnoreCase("6")) {
                 holder.feed_image.setVisibility(VISIBLE);
 
-                Picasso.with(context).load(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content()).into(holder.feed_image);
+                holder.mLoadImage.setVisibility(VISIBLE);
+                Picasso.with(context).load(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content()).into(holder.feed_image, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        holder.mLoadImage.setVisibility(GONE);
+                    }
+
+                    @Override
+                    public void onError() {
+                        holder.mLoadImage.setVisibility(GONE);
+                    }
+                });
             } else {
                 holder.feed_image.setVisibility(GONE);
             }
@@ -642,13 +702,229 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
         }
     }
 
+    @Override
+    public Object[] getSections() {
+        return new Object[0];
+    }
+
+    @Override
+    public int getPositionForSection(int sectionIndex) {
+        return sectionIndex;
+    }
+
+    @Override
+    public int getSectionForPosition(int position) {
+        return eachNewsFeed.get(position).getNewsfeedArray_comments_count();  // get length of section index
+    }
+
+    private LayoutInflater mInflater;
+
+    @Override
+    public View getHeaderView(final int position, View convertView, ViewGroup parent) {
+        mInflater = LayoutInflater.from(context);
+        convertView = mInflater.inflate(R.layout.list_item_header_feed, parent, false);
+        //return convertView;
+
+
+        final TextView view;
+        final TextView view1;
+        TextView feed_time;
+        ImageView doubleArrow;
+        ImageView imageview;
+        view = (TextView) convertView.findViewById(R.id.senderUser);
+        view1 = (TextView) convertView.findViewById(R.id.recieverUser);
+        feed_time = (TextView) convertView.findViewById(R.id.feed_time);
+        imageview = (ImageView) convertView.findViewById(R.id.imageView1);
+        doubleArrow = (ImageView) convertView.findViewById(R.id.doubleArrow);
+        imageview.setScaleType(ImageView.ScaleType.FIT_XY);
+
+        ProfileManager prMgr = ModelManager.getInstance().getProfileManager();
+
+
+//                    if((mSections.get(position).receiverId)!=null){
+            /*if (senderName.get(position).equalsIgnoreCase("null")) {
+                senderName.set(position, "");
+            }
+
+            if ((receiverName.get(position)) != null) {
+                if (receiverName.get(position).equalsIgnoreCase("null"))
+                    receiverName.set(position, "");
+            }*/
+
+        AuthManager authManager = ModelManager.getInstance().getAuthorizationManager();
+        if (senderId.get(position).equalsIgnoreCase(authManager.getUserId())) {
+            Log.e("sender 1--->", "" + senderName.get(position));
+            Log.e("reciver 1--->", "" + receiverName.get(position));
+            Log.e("in case 1--->", "in case 1--->");
+            view.setText(senderName.get(position));
+            view1.setText(receiverName.get(position));
+
+            doubleArrow.setImageResource(R.drawable.arrow);
+            if (authManager.getGender() != null) {
+                if (authManager.getGender().matches("guy")) {
+
+                    try {
+                        if (!senderImages.get(position).equalsIgnoreCase("")) {
+                            Picasso.with(context)
+                                    .load(senderImages.get(position))
+                                    .error(R.drawable.male_user).into(imageview);
+
+                        } else {
+                            imageview.setImageResource(R.drawable.male_user);
+                        }
+                    } catch (Exception e) {
+                        imageview.setImageResource(R.drawable.male_user);
+                    }
+                } else {
+                    try {
+                        if (!senderImages.get(position).equalsIgnoreCase("")) {
+                            Picasso.with(context)
+                                    .load(senderImages.get(position))
+                                    .error(R.drawable.female_user).into(imageview);
+                        } else {
+                            imageview.setImageResource(R.drawable.female_user);
+                        }
+                    } catch (Exception e) {
+                        imageview.setImageResource(R.drawable.female_user);
+                    }
+                }
+            } else {
+                imageview.setImageResource(R.drawable.male_user);
+            }
+
+        } else {
+            Log.e("in case 2--->", "in case 2--->");
+            if (prMgr.following != null && prMgr.following.size() > 0) {
+                Log.e("inside case 10--->", "inside case 10--->" + prMgr.following.size());
+                for (int i = 0; i < prMgr.following.size(); i++) {
+                    Log.e("inside case 11--->", "inside case 11--->");
+                    if (senderId.get(position).equalsIgnoreCase(prMgr.following.get(i).getFolloweeId())) {
+
+                        Log.e("in case 3--->", "in case 3--->");
+                        Log.e("sender 2 --->", "" + senderName.get(position));
+                        Log.e("reciver 2--->", "" + receiverName.get(position));
+
+                        view.setText(senderName.get(position));
+                        view1.setText(receiverName.get(position));
+                        try {
+                            if (!senderImages.get(position).equalsIgnoreCase("")) {
+                                Picasso.with(context)
+                                        .load(senderImages.get(position))
+                                        .error(R.drawable.male_user).into(imageview);
+                            } else {
+                                imageview.setImageResource(R.drawable.male_user);
+                            }
+                        } catch (Exception e) {
+                            imageview.setImageResource(R.drawable.male_user);
+                        }
+                        doubleArrow.setImageResource(R.drawable.arrow);
+                        break;
+                    } else {
+//                                if((mSections.get(position).receiverId)!=null) {
+//                                    if ((mSections.get(position).receiverId).toString().equalsIgnoreCase(prMgr.following.get(i).getFolloweeId())) {
+                        doubleArrow.setImageResource(R.drawable.flip_arow);
+                        Log.e("in case 4--->", "in case 4--->");
+                        Log.e("sender 3--->", "" + senderName.get(position));
+                        Log.e("reciver 3--->", "" + receiverName.get(position));
+                        view.setText(receiverName.get(position));
+                        view1.setText(senderName.get(position));
+                        Picasso.with(context).load(recieverImages.get(position)).placeholder(R.drawable.dcontact).into(imageview);
+                        try {
+                            if (!recieverImages.get(position).equalsIgnoreCase("")) {
+                                Picasso.with(context)
+                                        .load(recieverImages.get(position))
+                                        .error(R.drawable.male_user).into(imageview);
+                            } else {
+                                imageview.setImageResource(R.drawable.male_user);
+                            }
+                        } catch (Exception e) {
+                            imageview.setImageResource(R.drawable.male_user);
+                        }
+//                                        break;
+//                                    }
+                    }
+                }
+            } else {
+                Log.e("in case 5--->", "in case 5--->");
+                Log.e("sender 4--->", "" + senderName.get(position));
+                Log.e("reciver 4--->", "" + receiverName.get(position));
+                view.setText(senderName.get(position));
+                view1.setText(receiverName.get(position));
+                try {
+                    if (!senderImages.get(position).equalsIgnoreCase("")) {
+                        Picasso.with(context)
+                                .load(senderImages.get(position))
+                                .error(R.drawable.male_user).into(imageview);
+                    } else {
+                        imageview.setImageResource(R.drawable.male_user);
+                    }
+                } catch (Exception e) {
+                    imageview.setImageResource(R.drawable.male_user);
+                }
+                doubleArrow.setImageResource(R.drawable.arrow);
+            }
+        }
+
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String phNo, name;
+                if (view.getText().toString().trim().equalsIgnoreCase(senderName.get(position).toString())) {
+                    phNo = senderPhNo.get(position);
+                } else {
+                    phNo = recieverPhNo.get(position);
+                }
+                Intent viewProfile = null;
+
+                viewProfile = new Intent(context, UserProfileView.class);
+                viewProfile.putExtra("FromOwnProfile", true);
+                viewProfile.putExtra("phNumber", phNo);
+                viewProfile.putExtra("name", view.getText().toString());
+
+                context.startActivity(viewProfile);
+            }
+        });
+        view1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String phNo;
+                if (view1.getText().toString().trim().equalsIgnoreCase(senderName.get(position))) {
+                    phNo = senderPhNo.get(position);
+                } else {
+                    phNo = recieverPhNo.get(position);
+                }
+                Intent viewProfile = null;
+
+                viewProfile = new Intent(context, JumpOtherProfileView.class);
+                viewProfile.putExtra("FromOwnProfile", true);
+                viewProfile.putExtra("phNumber", phNo);
+                viewProfile.putExtra("name", view1.getText().toString());
+//                    }
+
+                viewProfile.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(viewProfile);
+            }
+        });
+        if (timeOfFeed.get(position) != null) {
+            feed_time.setText(Utils.getLocalDate(timeOfFeed.get(position)));
+        }
+
+        return convertView;
+    }
+
+    @Override
+    public long getHeaderId(int position) {
+        return position;
+    }
+
 
     static class RecordHolder {
         ImageView feed_image, feed_remove_post, feed_report_post;
         ImageView feed_menu;
         //        ImageView  clicks_heart_top,clicks_heart_bottom;
-        RelativeLayout layout , cards_relative;
-        LinearLayout card_layout,layout_clickin;
+        RelativeLayout layout, cards_relative;
+        LinearLayout card_layout, layout_clickin;
         TextView clickedIn, custom_message, feed_star_user, clickedInMessage, card_count1, card_count2, card_status, card_title, card_msg, clickedInMessage_plain, clickedInMessageLong;
         Button feed_audio_button, feed_video_button;
         LinearLayout feed_comments_layout1, feed_comments_layout;
@@ -659,6 +935,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> {
         LinearLayout audio_layout;
         RelativeLayout video_layout;
         ImageView video_thumb, card_status_img;
+        ProgressBar mLoadImage; // progress Bar To load Image
     }
 
 

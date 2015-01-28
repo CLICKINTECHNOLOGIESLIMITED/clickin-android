@@ -1305,7 +1305,16 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             ModelManager.getInstance().getRelationManager().partnerClicks = tempObj.getClicks();
             myclicksView.setText("" + ModelManager.getInstance().getAuthorizationManager().ourClicks);
             partnerClicksView.setText("" + ModelManager.getInstance().getRelationManager().partnerClicks);
+
+
+
+            ModelManager.getInstance().getRelationManager().acceptedList.get(relationListIndex).setUnreadMsg(0); // prafull code to set unreaed msg counter to 0 when open from recent app
         }
+
+        if(clickInadapter != null)        // notify dataset changed of clickin with list
+            clickInadapter.notifyDataSetChanged();
+
+
         //set the flag value to true again -monika
         CHECK_ONLINE_STATUS_FLAG = true;
 
