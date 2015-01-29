@@ -3,6 +3,7 @@ package com.sourcefuse.clickinandroid.view.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.media.MediaPlayer;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.ProfileManager;
 import com.sourcefuse.clickinandroid.model.bean.FeedStarsBean;
+import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
 import com.squareup.picasso.Picasso;
 
@@ -73,25 +75,32 @@ public class FeedsStarsAdapter extends ArrayAdapter<FeedStarsBean> {
 
             if (eachNewsFeed.get(position).getUserId().equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getUserId())) {
                 holder.reqbtn.setVisibility(View.GONE);
-            } else if (eachNewsFeed.get(position).getIs_user_in_relation() == 1) {
-                holder.reqbtn.setVisibility(View.VISIBLE);
+            } else {
 
-                if (eachNewsFeed.get(position).getIs_user_following() == 1) {
-                    if (eachNewsFeed.get(position).getIs_user_following_acceptance() != null) {
-                        holder.reqbtn.setBackgroundResource(R.drawable.following_btn);
-                    } else {
-                        holder.reqbtn.setBackgroundResource(R.drawable.requested_btn);
-                    }
-                } /*else {
-                    holder.reqbtn.setBackgroundResource(R.drawable.c_owner_grey_corss);
-                }*/
+                if (eachNewsFeed.get(position).getIs_user_following() == 0 && eachNewsFeed.get(position).getIs_user_follower() == 0
+                        && eachNewsFeed.get(position).getIs_user_in_relation() == 0 && eachNewsFeed.get(position).getIs_user_in_relation_acceptance() == null
+                        && eachNewsFeed.get(position).getIs_user_follower_acceptance() == null
+                        && eachNewsFeed.get(position).getIs_user_following_acceptance() == null) {
+                    holder.reqbtn.setVisibility(View.GONE);
+                    holder.reqbtn.setBackgroundResource(0);
+                } else if (eachNewsFeed.get(position).getIs_user_following() == 1 && eachNewsFeed.get(position).getIs_user_follower() == 1
+                        && eachNewsFeed.get(position).getIs_user_following_acceptance() != null &&
+                        eachNewsFeed.get(position).getIs_user_in_relation_acceptance() != null) {
+                    holder.reqbtn.setVisibility(View.VISIBLE);
+                    holder.reqbtn.setBackgroundResource(R.drawable.following_btn);
+                } else if (eachNewsFeed.get(position).getIs_user_following() == 0 && eachNewsFeed.get(position).getIs_user_follower() == 1
+                        ) {
+                    holder.reqbtn.setVisibility(View.VISIBLE);
+                    holder.reqbtn.setBackgroundResource(R.drawable.c_owner_follow_btn);
+                } else if (eachNewsFeed.get(position).getIs_user_in_relation_acceptance() == null) {
+                    holder.reqbtn.setVisibility(View.VISIBLE);
+                    holder.reqbtn.setBackgroundResource(R.drawable.requested_btn);
+                }
 
 
             }
 
         }
-
-
 
 
         return row;

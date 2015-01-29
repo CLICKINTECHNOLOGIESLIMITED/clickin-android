@@ -189,7 +189,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
             setlist();
         }
         if (updatephoto || isChangeInList) {
-            Utils.launchBarDialog(this);
+           // Utils.launchBarDialog(this);
             ModelManager.getInstance().getRelationManager().getRelationShips(authManager.getPhoneNo(), authManager.getUsrToken());
         }
 

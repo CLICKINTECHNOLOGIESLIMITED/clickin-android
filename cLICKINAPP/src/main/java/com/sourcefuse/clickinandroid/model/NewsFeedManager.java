@@ -507,6 +507,7 @@ public class NewsFeedManager {
                                 if (!recordsArray.getJSONObject(i).isNull("is_user_following"))
                                     feedStars.setIs_user_following(recordsArray.getJSONObject(i).getInt("is_user_following"));
                                 if (!recordsArray.getJSONObject(i).isNull("is_user_in_relation_acceptance"))
+
                                     feedStars.setIs_user_in_relation_acceptance(recordsArray.getJSONObject(i).getString("is_user_in_relation_acceptance"));
                                 if (!recordsArray.getJSONObject(i).isNull("comment"))
                                     feedStars.setComment(recordsArray.getJSONObject(i).getString("comment"));
