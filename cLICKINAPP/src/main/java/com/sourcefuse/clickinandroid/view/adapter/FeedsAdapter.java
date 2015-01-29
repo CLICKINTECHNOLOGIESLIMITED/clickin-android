@@ -458,7 +458,12 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
             if (eachNewsFeed.get(position).getNewsfeedArray_comments_count() > 3) {
                 holder.feed_comments_layout1.setVisibility(VISIBLE);
 
-                holder.no_comments.setText("View all " + eachNewsFeed.get(position).getNewsfeedArray_comments_count() + " comments");
+                holder.no_comments.setTypeface(null,Typeface.NORMAL);
+                String html = "<font><b>" + "View all " + eachNewsFeed.get(position).getNewsfeedArray_comments_count() + " comments" + "</b></font>" ;
+                holder.no_comments.setText(Html.fromHtml(html));
+
+//                holder.no_comments.setText("View all " + eachNewsFeed.get(position).getNewsfeedArray_comments_count() + " comments");
+
 
                 for (int k = 0; k < eachNewsFeed.get(position).getCommentArrayList().size(); k++) {
 
@@ -531,7 +536,8 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
 
                     holder.comment4.setVisibility(GONE);
                     holder.feed_comments_layout1.setVisibility(VISIBLE);
-                    holder.no_comments.setText("No Comments");
+                    String no_comment = "<font ><b>" + "No Comments" + "</b></font>";
+                    holder.no_comments.setText(Html.fromHtml(no_comment));
                 }
             }
 
@@ -590,7 +596,8 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
                         holder.feed_star_user.setTextColor(context.getResources().getColor(R.color.dark_gray));
                         holder.feed_star_user.setClickable(false);
                     }
-                    holder.feed_star_user.setText(stars);
+                    String star = "<font><b>" + stars + "</b></font>";
+                    holder.feed_star_user.setText(Html.fromHtml(star));
                     ModelManager.getInstance().getNewsFeedManager().unStarredNewsFeed(authMgr.getPhoneNo(), authMgr.getUsrToken(), eachNewsFeed.get(position).getNewsfeedArray_id());
                 } else {
                     if (eachNewsFeed.get(position).getNewsfeedArray_user_starred().equalsIgnoreCase("1")) {
@@ -606,16 +613,19 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
 
                         holder.feed_star_user.setTextColor(context.getResources().getColor(R.color.feed_senderuser));
                         holder.feed_star_user.setClickable(true);
-                        if (stars.equalsIgnoreCase(""))
-                            holder.feed_star_user.setText(ModelManager.getInstance().getAuthorizationManager().getUserName());
-                        else if (stars.endsWith("Stars")) {
+                        if (stars.equalsIgnoreCase("")) {
+                            String name_user = "<font><b>" + ModelManager.getInstance().getAuthorizationManager().getUserName() + "</b></font>";
+                            holder.feed_star_user.setText(Html.fromHtml(name_user));
+                        }  else if (stars.endsWith("Stars")) {
                             stars = stars.substring(0, stars.indexOf(" "));
                             int star = Integer.parseInt(stars) - 1;
-                            holder.feed_star_user.setText(star + " Stars");
+                            String number_stars =  "<font><b>" + star + "Stars" +"</b></font>";
+                            holder.feed_star_user.setText(Html.fromHtml(number_stars));
                             holder.feed_star_user.setTextColor(context.getResources().getColor(R.color.dark_gray));//akshit code Black is not needed
-                        } else
-                            holder.feed_star_user.setText(stars + ", " + ModelManager.getInstance().getAuthorizationManager().getUserName());
-
+                        } else {
+                            String st_star = "<font><b>" + stars + ", " + ModelManager.getInstance().getAuthorizationManager().getUserName() + "</b></font>";
+                            holder.feed_star_user.setText(Html.fromHtml(st_star));
+                        }
                         ModelManager.getInstance().getNewsFeedManager().unStarredNewsFeed(authMgr.getPhoneNo(), authMgr.getUsrToken(), eachNewsFeed.get(position).getNewsfeedArray_id());
                     } else {
 
@@ -631,16 +641,19 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
 
                         holder.feed_star_user.setTextColor(context.getResources().getColor(R.color.feed_senderuser));
                         holder.feed_star_user.setClickable(true);
-                        if (stars.equalsIgnoreCase(""))
-                            holder.feed_star_user.setText(ModelManager.getInstance().getAuthorizationManager().getUserName());
-                        else if (stars.endsWith("Stars")) {
+                        if (stars.equalsIgnoreCase("")) {
+                            String html_text = "<font><b>" + ModelManager.getInstance().getAuthorizationManager().getUserName() + "</b></font>";
+                            holder.feed_star_user.setText(Html.fromHtml(html_text));
+                        }else if (stars.endsWith("Stars")) {
                             stars = stars.substring(0, stars.indexOf(" "));
                             int star = Integer.parseInt(stars) + 1;
-                            holder.feed_star_user.setText(star + " Stars");
+                            String star_number = "<font><b>" + star + "Stars" + "</b></font>";
+                            holder.feed_star_user.setText(Html.fromHtml(star_number));
                             holder.feed_star_user.setTextColor(context.getResources().getColor(R.color.dark_gray));//akshit code Black is not needed
-                        } else
-                            holder.feed_star_user.setText(stars + ", " + ModelManager.getInstance().getAuthorizationManager().getUserName());
-
+                        } else {
+                            String star_number = "<font><b>" + stars + ", " + ModelManager.getInstance().getAuthorizationManager().getUserName() + "</b></font>";
+                            holder.feed_star_user.setText(Html.fromHtml(star_number));
+                        }
                         ModelManager.getInstance().getNewsFeedManager().saveStarComment(authMgr.getPhoneNo(), authMgr.getUsrToken(), eachNewsFeed.get(position).getNewsfeedArray_id(), "", "star");
                     }
 
@@ -665,12 +678,14 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
             }
         });
         if (eachNewsFeed.get(position).getNewsfeedArray_stars_count() == 0) {
-            holder.feed_star_user.setText("No Stars");
+            String no_stars = "<font><b>" + "No Stars" + "</b></font>";
+            holder.feed_star_user.setText(Html.fromHtml(no_stars));
             holder.feed_star_user.setTextColor(context.getResources().getColor(R.color.dark_gray));//akshit code Black is not needed
             holder.feed_star_user.setClickable(false);
         } else {
             if (eachNewsFeed.get(position).getNewsfeedArray_stars_count() > 5) {
-                holder.feed_star_user.setText(eachNewsFeed.get(position).getNewsfeedArray_stars_count() + " Stars");
+                String stars_grater = "<font><b>" + eachNewsFeed.get(position).getNewsfeedArray_stars_count() + " Stars" + "</b></font>";
+                holder.feed_star_user.setText(Html.fromHtml(stars_grater));
                 holder.feed_star_user.setTextColor(context.getResources().getColor(R.color.dark_gray));//akshit code Black is not needed
                 holder.feed_star_user.setClickable(true);
             } else {
@@ -683,7 +698,8 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
                     }
                 }
                 holder.feed_star_user.setTextColor(context.getResources().getColor(R.color.feed_senderuser));
-                holder.feed_star_user.setText(stars_text);
+                String html_string = "<font><b>" + stars_text + "</b></font>";
+                holder.feed_star_user.setText(Html.fromHtml(html_string));
                 holder.feed_star_user.setClickable(true);
             }
         }

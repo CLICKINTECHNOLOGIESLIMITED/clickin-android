@@ -340,7 +340,8 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/dark_gray"
                 android:textSize="16sp"
-                geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
+
+                geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
         </LinearLayout>
 
         <LinearLayout
@@ -387,7 +388,8 @@
                         android:text="View all 4 comments"
                         android:textColor="@color/dark_gray"
                         android:textSize="16sp"
-                        geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
+
+                        geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
 
                 </LinearLayout>
 
