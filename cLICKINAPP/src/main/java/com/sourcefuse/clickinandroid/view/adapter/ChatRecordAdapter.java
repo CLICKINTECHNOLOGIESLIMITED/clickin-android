@@ -81,6 +81,12 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
         RelativeLayout parentChatLayout = (RelativeLayout) row.findViewById(R.id.chat_parent_layout);
         relationManager = ModelManager.getInstance().getRelationManager();
 
+        if(currentChatList.size()<20){
+            ChatRecordView.load_earlier.setVisibility(View.GONE);
+        }else {
+            ChatRecordView.load_earlier.setVisibility(View.VISIBLE);
+        }
+
         if (imageLoader == null)
             imageLoader = AppController.getInstance().getImageLoader();
         //monika- in case of chat history, we get clicks value null, so convert it to standard "no" value

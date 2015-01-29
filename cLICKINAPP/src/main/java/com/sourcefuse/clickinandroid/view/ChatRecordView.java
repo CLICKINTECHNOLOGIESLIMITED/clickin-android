@@ -132,7 +132,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     private ImageView mypix, partnerPix, attachBtn;
     //    private PullToRefreshListView chatListView;
     private ListView chatListView ;
-    private TextView load_earlier ;
+    public static TextView load_earlier ;
     private ChatRecordAdapter adapter = null;
     private boolean showAttachmentView = true;
     private LinearLayout llAttachment;
@@ -503,7 +503,9 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         //  setlist();
         adapter = new ChatRecordAdapter(this, R.layout.view_chat_demo, chatManager.chatMessageList);
         // adapter = new ChatRecordAdapter(this, R.layout.view_chat_demo,chatData);
-
+//        if(chatManager.chatMessageList.size()<20){
+//            load_earlier.setVisibility(View.GONE);
+//        }
         chatListView.setAdapter(adapter);
         chatListView.setSelection(chatManager.chatMessageList.size());//akshit code
 
@@ -562,12 +564,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
     }
 
-     /* private void setHistoryChat() {
 
-            adapter = new ChatRecordAdapter(this, R.layout.view_chat_demo, chatManager.chatListFromServer);
-            chatListView.setAdapter(adapter);
-
-      }*/
 
     @Override
     public void onBackPressed() {
@@ -892,6 +889,9 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
         if (adapter == null) {
             adapter = new ChatRecordAdapter(this, R.layout.view_chat_demo, tempChatList);
+//            if(tempChatList.size()<20){
+//                load_earlier.setVisibility(View.GONE);
+//            }
             chatListView.setAdapter(adapter);
             chatListView.setSelection(tempChatList.size());//akshit code
         } else {
@@ -1034,6 +1034,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             }
 
         }
+
 
         if (actionReq.equalsIgnoreCase("UPDATE")) {
             //  Utils.launchBarDialog(this);
@@ -1360,9 +1361,16 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 //            chatListView.onRefreshComplete();
             if (chatManager.chatMessageList.size() != 0) {
                 if (adapter == null) {
-                    adapter = new ChatRecordAdapter(this, R.layout.view_chat_demo, chatManager.chatMessageList);
+                    adapter = new ChatRecordAdapter(this,R.layout.view_chat_demo, chatManager.chatMessageList);
+//
+//                    if(chatManager.chatMessageList.size()<20)
+//                        load_earlier.setVisibility(View.GONE);
                     chatListView.setAdapter(adapter);
-                } else {
+                    chatListView.setSelection(chatManager.chatMessageList.size());
+
+                }
+
+                else {
                     adapter.notifyDataSetChanged();
                     chatListView.post(new Runnable() {
 
@@ -1375,6 +1383,9 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                                 chatListView.setSelection(listsize - chatListSize);//akshit code
 //                                chatListView.getRefreshableView().setSelection((listsize - chatListSize));
                             }
+//                            if(chatListSize < 20){
+//                                load_earlier.setVisibility(View.GONE);
+//                            }
                         }
                     });
                 }
@@ -2113,6 +2124,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         adapter = null;
         adapter = new ChatRecordAdapter(this, R.layout.view_chat_demo, chatManager.chatMessageList);
         chatListView.setAdapter(adapter);
+        chatListView.setSelection(chatManager.chatMessageList.size());
         new Handler().postDelayed(new Runnable() {
 
             @Override
@@ -2140,7 +2152,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         if (adapter != null)
             adapter.notifyDataSetChanged();
         else {
-            adapter = new ChatRecordAdapter(this, R.layout.view_chat_demo, chatManager.chatMessageList);
+            adapter = new ChatRecordAdapter(this,R.layout.view_chat_demo, chatManager.chatMessageList);
             chatListView.setAdapter(adapter);
         }
     }
