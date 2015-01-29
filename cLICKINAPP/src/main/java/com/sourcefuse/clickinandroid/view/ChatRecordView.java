@@ -1413,7 +1413,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         } else if (message.equalsIgnoreCase("Composing NO")) {
 
             typingtext.setVisibility(View.VISIBLE);
-            typingtext.setText("Online");
+            typingtext.setText("online");
 
         } else if (message.equalsIgnoreCase("Delivered")) {
             adapter.notifyDataSetChanged();
@@ -1434,7 +1434,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                     ModelManager.getInstance().getAuthorizationManager().getUsrToken());
         } else if (message.equalsIgnoreCase("online")) {
             typingtext.setVisibility(View.VISIBLE);
-            typingtext.setText("Online");
+            typingtext.setText("online");
             /* to update value of last seen time prafull code */
             long timestamp = Utils.ConvertIntoTimeStamp() / 1000;
             relationManager.acceptedList.get(relationListIndex).mLastSeenTime = String.valueOf(timestamp);

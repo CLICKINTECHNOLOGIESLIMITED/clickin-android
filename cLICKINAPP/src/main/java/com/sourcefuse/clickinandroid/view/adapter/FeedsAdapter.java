@@ -8,7 +8,6 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,15 +43,11 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.util.ArrayList;
 
-
 import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
-
-import static android.view.View.*;
 
 import static android.view.View.GONE;
 import static android.view.View.OnClickListener;
 import static android.view.View.VISIBLE;
-
 import static com.sourcefuse.clickinapp.R.drawable.report_icon;
 
 public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
@@ -195,7 +190,6 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
 
 
                             if (eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().length() > 30) {
-
                                 holder.clickedInMessage.setText(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().trim().substring(0, 30));
                                 holder.clickedInMessageLong.setText(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().trim().substring(30, eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().length()));
                                 holder.clickedInMessageLong.setVisibility(VISIBLE);
@@ -208,6 +202,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
                 } else {
                     if (!(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().equalsIgnoreCase("null"))) {
                         if (!eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().equalsIgnoreCase("")) {
+                            holder.clickedInMessageLong.setVisibility(GONE);
                             holder.clickedInMessage.setVisibility(GONE);
                             holder.clickedIn.setVisibility(VISIBLE);
                             holder.clickedIn.setTextColor(Color.BLACK);
@@ -227,6 +222,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
             } else {
                 if (!(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().equalsIgnoreCase("null"))) {
                     if (!eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().trim().equalsIgnoreCase("")) {
+                        holder.clickedInMessageLong.setVisibility(GONE);
                         holder.clickedInMessage.setVisibility(GONE);
                         holder.clickedIn.setVisibility(VISIBLE);
                         holder.layout_clickin.setVisibility(VISIBLE);
@@ -838,7 +834,9 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
 
                         }
                         doubleArrow.setImageResource(R.drawable.flip_arow);
+
                       //  break;
+
 //                                    }
                     }
                 }
