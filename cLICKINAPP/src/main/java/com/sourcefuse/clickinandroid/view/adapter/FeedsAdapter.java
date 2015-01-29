@@ -834,7 +834,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
 
                         }
                         doubleArrow.setImageResource(R.drawable.flip_arow);
-                        break;
+                       // break;
 //                                    }
                     }
                 }
