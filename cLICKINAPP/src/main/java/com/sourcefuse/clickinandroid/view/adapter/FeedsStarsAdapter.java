@@ -82,9 +82,9 @@ public class FeedsStarsAdapter extends ArrayAdapter<FeedStarsBean> {
                     } else {
                         holder.reqbtn.setBackgroundResource(R.drawable.requested_btn);
                     }
-                } else {
+                } /*else {
                     holder.reqbtn.setBackgroundResource(R.drawable.c_owner_grey_corss);
-                }
+                }*/
 
 
             }

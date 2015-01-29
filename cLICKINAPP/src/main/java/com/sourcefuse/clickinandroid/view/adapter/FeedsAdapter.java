@@ -8,6 +8,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,6 +56,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
     Activity context;
     int layoutResourceId;
     ArrayList<NewsFeedBean> eachNewsFeed;
+    ArrayList<String> mId;
     MediaPlayer player;
     AuthManager authMgr;
     Typeface typeface;
@@ -97,6 +99,13 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
         this.recieverPhNo = mReciverPhNo;
         this.timeOfFeed = mTimeOfFeed;
         this.senderPhNo = mSenderPhNo;
+
+        /*for (int i = 0; i < ModelManager.getInstance().getProfileManager().following.size(); i++) {
+            mId.add("" + ModelManager.getInstance().getProfileManager().following.get(i).getFolloweeId());
+        }
+        for (int i = 0; i < ModelManager.getInstance().getRelationManager().acceptedList.size(); i++) {
+            mId.add("" + ModelManager.getInstance().getRelationManager().acceptedList.get(i).getPartner_id());
+        }*/
 
     }
 
@@ -448,29 +457,33 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
             holder.feed_comments_layout.setVisibility(VISIBLE);
             if (eachNewsFeed.get(position).getNewsfeedArray_comments_count() > 3) {
                 holder.feed_comments_layout1.setVisibility(VISIBLE);
-//                holder.no_comments.setTypeface(null,Typeface.NORMAL);
+
+                holder.no_comments.setTypeface(null,Typeface.NORMAL);
                 String html = "<font><b>" + "View all " + eachNewsFeed.get(position).getNewsfeedArray_comments_count() + " comments" + "</b></font>" ;
                 holder.no_comments.setText(Html.fromHtml(html));
+
+//                holder.no_comments.setText("View all " + eachNewsFeed.get(position).getNewsfeedArray_comments_count() + " comments");
+
 
                 for (int k = 0; k < eachNewsFeed.get(position).getCommentArrayList().size(); k++) {
 
                     if (k == 0) {
                         holder.comment2.setVisibility(VISIBLE);
                         String text = "<font color=#01DFD7><b>" + eachNewsFeed.get(position).getCommentArrayList().get(k).getNewsFeedArray_commentArray_user_name() + "</b></font> <font color=#000000>" + eachNewsFeed.get(position).getCommentArrayList().get(k).getNewsFeedArray_commentArray_comment() + "</font>";
-//                        holder.comment2.setTypeface(null,Typeface.NORMAL);
+
                         holder.comment2.setText(Html.fromHtml(text));
                     }
                     if (k == 1) {
                         holder.comment3.setVisibility(VISIBLE);
                         String text = "<font color=#01DFD7><b>" + eachNewsFeed.get(position).getCommentArrayList().get(k).getNewsFeedArray_commentArray_user_name() + "</b></font> <font color=#000000>" + eachNewsFeed.get(position).getCommentArrayList().get(k).getNewsFeedArray_commentArray_comment() + "</font>";
-//                        holder.comment3.setTypeface(null,Typeface.NORMAL);
+
                         holder.comment3.setText(Html.fromHtml(text));
                     }
 
                     if (k == 2) {
                         holder.comment4.setVisibility(VISIBLE);
                         String text = "<font color=#01DFD7><b>" + eachNewsFeed.get(position).getCommentArrayList().get(k).getNewsFeedArray_commentArray_user_name() + "</b></font> <font color=#000000>" + eachNewsFeed.get(position).getCommentArrayList().get(k).getNewsFeedArray_commentArray_comment() + "</font>";
-//                        holder.comment4.setTypeface(null,Typeface.NORMAL);
+
                         holder.comment4.setText(Html.fromHtml(text));
                         break;
                     }
@@ -492,10 +505,10 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
                     holder.comment3.setVisibility(VISIBLE);
 
                     String text = "<font color=#01DFD7><b>" + eachNewsFeed.get(position).getCommentArrayList().get(0).getNewsFeedArray_commentArray_user_name() + "</b></font> <font color=#000000>" + eachNewsFeed.get(position).getCommentArrayList().get(0).getNewsFeedArray_commentArray_comment() + "</font>";
-//                    holder.comment2.setTypeface(null,Typeface.NORMAL);
+
                     holder.comment2.setText(Html.fromHtml(text));
                     String text2 = "<font color=#01DFD7><b>" + eachNewsFeed.get(position).getCommentArrayList().get(1).getNewsFeedArray_commentArray_user_name() + "</b></font> <font color=#000000>" + eachNewsFeed.get(position).getCommentArrayList().get(1).getNewsFeedArray_commentArray_comment() + "</font>";
-//                    holder.comment3.setTypeface(null,Typeface.NORMAL);
+
                     holder.comment3.setText(Html.fromHtml(text2));
 
 
@@ -506,13 +519,13 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
 
 
                     String text = "<font color=#01DFD7><b>" + eachNewsFeed.get(position).getCommentArrayList().get(0).getNewsFeedArray_commentArray_user_name() + "</b></font> <font color=#000000>" + eachNewsFeed.get(position).getCommentArrayList().get(0).getNewsFeedArray_commentArray_comment() + "</font>";
-//                    holder.comment2.setTypeface(null,Typeface.NORMAL);
+
                     holder.comment2.setText(Html.fromHtml(text));
                     String text2 = "<font color=#01DFD7><b>" + eachNewsFeed.get(position).getCommentArrayList().get(1).getNewsFeedArray_commentArray_user_name() + "</b></font> <font color=#000000>" + eachNewsFeed.get(position).getCommentArrayList().get(1).getNewsFeedArray_commentArray_comment() + "</font>";
-//                    holder.comment3.setTypeface(null,Typeface.NORMAL);
+
                     holder.comment3.setText(Html.fromHtml(text2));
                     String text3 = "<font color=#01DFD7><b>" + eachNewsFeed.get(position).getCommentArrayList().get(2).getNewsFeedArray_commentArray_user_name() + "</b></font> <font color=#000000>" + eachNewsFeed.get(position).getCommentArrayList().get(2).getNewsFeedArray_commentArray_comment() + "</font>";
-//                    holder.comment4.setTypeface(null,Typeface.NORMAL);
+
                     holder.comment4.setText(Html.fromHtml(text3));
 
                 } else {
@@ -749,23 +762,13 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
         ProfileManager prMgr = ModelManager.getInstance().getProfileManager();
 
 
-//                    if((mSections.get(position).receiverId)!=null){
-            /*if (senderName.get(position).equalsIgnoreCase("null")) {
-                senderName.set(position, "");
-            }
-
-            if ((receiverName.get(position)) != null) {
-                if (receiverName.get(position).equalsIgnoreCase("null"))
-                    receiverName.set(position, "");
-            }*/
-
         AuthManager authManager = ModelManager.getInstance().getAuthorizationManager();
         if (senderId.get(position).equalsIgnoreCase(authManager.getUserId())) {
 
             view.setText(senderName.get(position));
             view1.setText(receiverName.get(position));
 
-            //doubleArrow.setImageResource(R.drawable.arrow);
+
             if (authManager.getGender() != null) {
                 doubleArrow.setImageResource(R.drawable.arrow);
                 if (authManager.getGender().matches("guy")) {
@@ -804,55 +807,9 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
         } else {
 
 
-            if (prMgr.following != null && prMgr.following.size()>0) {
+            if (senderId.get(position).equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getUserId())) {  // check sender id same as user id or not
 
-                for (int i = 0; i < prMgr.following.size(); i++) {
-
-                    if (senderId.get(position).equalsIgnoreCase(prMgr.following.get(i).getFolloweeId())) {
-
-
-                        view.setText(senderName.get(position));
-                        view1.setText(receiverName.get(position));
-                        try {
-                            if (!senderImages.get(position).equalsIgnoreCase("")) {
-                                Picasso.with(context)
-                                        .load(senderImages.get(position))
-                                        .error(R.drawable.male_user).into(imageview);
-                            } else {
-                                imageview.setImageResource(R.drawable.male_user);
-                            }
-                        } catch (Exception e) {
-                            imageview.setImageResource(R.drawable.male_user);
-
-                        }
-                        doubleArrow.setImageResource(R.drawable.arrow);
-                        break;
-                    } else {
-
-
-                        view.setText(receiverName.get(position));
-                        view1.setText(senderName.get(position));
-                        Picasso.with(context).load(recieverImages.get(position)).placeholder(R.drawable.dcontact).into(imageview);
-                        try {
-                            if (!recieverImages.get(position).equalsIgnoreCase("")) {
-                                Picasso.with(context)
-                                        .load(recieverImages.get(position))
-                                        .error(R.drawable.male_user).into(imageview);
-                            } else {
-                                imageview.setImageResource(R.drawable.male_user);
-                            }
-                        } catch (Exception e) {
-                            imageview.setImageResource(R.drawable.male_user);
-
-                        }
-                        doubleArrow.setImageResource(R.drawable.flip_arow);
-                       // break;
-//                                    }
-                    }
-                }
-            } else {
-
-
+                Log.e("in case 1---->", "in case 1---->");
                 view.setText(senderName.get(position));
                 view1.setText(receiverName.get(position));
                 try {
@@ -868,7 +825,30 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
 
                 }
                 doubleArrow.setImageResource(R.drawable.arrow);
+
+            } else {   // else change the direction of arrow as it is reciver
+
+                Log.e("in case 2---->", "in case 2---->");
+                view.setText(receiverName.get(position));
+                view1.setText(senderName.get(position));
+                Picasso.with(context).load(recieverImages.get(position)).placeholder(R.drawable.dcontact).into(imageview);
+                try {
+                    if (!recieverImages.get(position).equalsIgnoreCase("")) {
+                        Picasso.with(context)
+                                .load(recieverImages.get(position))
+                                .error(R.drawable.male_user).into(imageview);
+                    } else {
+                        imageview.setImageResource(R.drawable.male_user);
+                    }
+                } catch (Exception e) {
+                    imageview.setImageResource(R.drawable.male_user);
+
+                }
+                doubleArrow.setImageResource(R.drawable.flip_arow);
+
+
             }
+
         }
 
 
