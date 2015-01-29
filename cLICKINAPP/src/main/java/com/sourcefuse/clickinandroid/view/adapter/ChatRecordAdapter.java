@@ -81,9 +81,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
         RelativeLayout parentChatLayout = (RelativeLayout) row.findViewById(R.id.chat_parent_layout);
         relationManager = ModelManager.getInstance().getRelationManager();
 
-        if(currentChatList.size()<20){
-            ChatRecordView.load_earlier.setVisibility(View.GONE);
-        }else {
+        if(currentChatList.size()>19) {//akshit code set visibility of load earlier ,only is chat records are greater then 20
             ChatRecordView.load_earlier.setVisibility(View.VISIBLE);
         }
 

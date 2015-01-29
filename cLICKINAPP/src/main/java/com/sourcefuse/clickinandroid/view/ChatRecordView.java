@@ -1008,6 +1008,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        load_earlier.setVisibility(View.GONE);
         relationManager = ModelManager.getInstance().getRelationManager();
         authManager = ModelManager.getInstance().getAuthorizationManager();
         String actionReq = intent.getAction();

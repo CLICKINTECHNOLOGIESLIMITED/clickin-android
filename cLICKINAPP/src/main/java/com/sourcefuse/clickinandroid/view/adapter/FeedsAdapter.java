@@ -199,14 +199,20 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
 
 
                             if (eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().length() > 30) {
+                                Log.e("clickedInMessage","Case 1a" +eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().trim().substring(0, 30));
+                                Log.e("clickedInMessageLong","Case 1a" +eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().trim().substring(30, eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().length()));
                                 holder.clickedInMessage.setText(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().trim().substring(0, 30));
                                 holder.clickedInMessageLong.setText(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().trim().substring(30, eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().length()));
                                 holder.clickedInMessageLong.setVisibility(VISIBLE);
                             } else {
                                 holder.clickedInMessageLong.setVisibility(GONE);
+                                Log.e("clickedInMessage","Case 1b" +eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().trim());
                                 holder.clickedInMessage.setText(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().trim());
                             }
                         }
+                    }else {
+                        holder.clickedInMessage.setVisibility(GONE);
+                        holder.clickedInMessageLong.setVisibility(GONE);
                     }
                 } else {
                     if (!(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().equalsIgnoreCase("null"))) {
@@ -217,6 +223,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
                             holder.clickedIn.setTextColor(Color.BLACK);
                             holder.clickedIn.setTypeface(null, Typeface.NORMAL);
                             holder.clickedIn.setText(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().trim());
+                            Log.e("ClickedIn","Case 2a" +eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().trim());
                             holder.layout_clickin.setBackgroundResource(R.color.lightest_gray);
                             holder.layout_clickin.setVisibility(VISIBLE);
 //                            holder.clickedInMessage.setVisibility(View.GONE);
@@ -238,6 +245,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
                         holder.clickedIn.setTextColor(Color.BLACK);
                         holder.clickedIn.setTypeface(null, Typeface.NORMAL);
                         holder.clickedIn.setText(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().trim());
+                        Log.e("Clicked In","CASE 3" +eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().trim());
                         holder.layout_clickin.setBackgroundResource(R.color.lightest_gray);
 //                        holder.clickedInMessage.setVisibility(View.GONE);
                         holder.clickInWhiteImage.setVisibility(GONE);
@@ -461,7 +469,8 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
                 holder.no_comments.setTypeface(null,Typeface.NORMAL);
                 String html = "<font><b>" + "View all " + eachNewsFeed.get(position).getNewsfeedArray_comments_count() + " comments" + "</b></font>" ;
                 holder.no_comments.setText(Html.fromHtml(html));
-
+//=======
+//
 //                holder.no_comments.setText("View all " + eachNewsFeed.get(position).getNewsfeedArray_comments_count() + " comments");
 
 
