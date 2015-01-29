@@ -110,6 +110,11 @@ public class ClickInWithAdapter extends BaseAdapter implements
                 if (!item1.get(position).getPartnerPic().equalsIgnoreCase("")) {
                     try {
 
+                        if(PicassoManager.getPicasso() == null)
+                        {
+                            PicassoManager.setLruCache(context);
+                            PicassoManager.setPicasso(context, PicassoManager.getLruCache());
+                        }
                         PicassoManager.getPicasso()  // get picasso from picasso maneger
                                 .load(item1.get(position).getPartnerPic())
                                 .into(rholder.clickInUsrimg);

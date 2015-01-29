@@ -1,0 +1,62 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/r_owner_profile_bg">
+
+    <RelativeLayout
+        android:id="@+id/rr_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/owner_profile_hedder">
+
+
+        <TextView
+            android:id="@+id/tv_profile_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="THE POST"
+            android:textColor="@color/owner_profile_header_b"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/no_feed_image"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/rr_header"
+        android:background="@drawable/r_owner_profile_bg"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/image_no_feed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:paddingTop="30dp"
+            android:src="@drawable/no_feeds_image" />
+    </RelativeLayout>
+
+    <se.emilsjolander.stickylistheaders.StickyListHeadersListView
+        android:id="@+id/list1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rr_header"
+        android:background="@color/white"
+        android:cacheColorHint="@color/transparent"
+        android:choiceMode="singleChoice"
+        android:clickable="false"
+        android:drawSelectorOnTop="true"
+        android:fadingEdgeLength="0dp"
+        android:focusable="false"
+        android:gravity="center"
+        android:listSelector="@color/transparent"
+        android:visibility="visible" />
+
+
+</RelativeLayout>

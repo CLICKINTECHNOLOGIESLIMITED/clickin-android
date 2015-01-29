@@ -5,6 +5,7 @@ import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +14,13 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.PicassoManager;
 import com.sourcefuse.clickinandroid.model.bean.NotificationBean;
 import com.sourcefuse.clickinandroid.view.FeedView;
 import com.sourcefuse.clickinandroid.view.FollowerList;
 import com.sourcefuse.clickinandroid.view.FollowingListView;
+import com.sourcefuse.clickinandroid.view.PostView;
 import com.sourcefuse.clickinandroid.view.UserProfileView;
 import com.sourcefuse.clickinapp.R;
 
@@ -40,7 +43,7 @@ public class NotificationAdapter extends ArrayAdapter<NotificationBean> {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         final NotificationBean item = getItem(position);
         View row = convertView;
         RecordHolder holder = null;
@@ -60,7 +63,7 @@ public class NotificationAdapter extends ArrayAdapter<NotificationBean> {
 
         RecordHolder rholder = (RecordHolder) row.getTag();
 
-        if(item.getIs_read().equalsIgnoreCase("true")){//akshit code to set color for unread notification
+        if (item.getIs_read().equalsIgnoreCase("true")) {//akshit code to set color for unread notification
             holder.notificationMsg.setBackgroundResource(R.color.noti_read);
         }
 
@@ -76,14 +79,17 @@ public class NotificationAdapter extends ArrayAdapter<NotificationBean> {
             rholder.notificationType.setBackgroundResource(R.drawable.c_noti_share);
         } else if (item.getNotificationType().equalsIgnoreCase(context.getResources().getString(R.string.txt_relationdelete))) {
             rholder.notificationType.setBackgroundResource(R.drawable.p_delete_relation);
-        } else if(item.getNotificationType().equalsIgnoreCase(context.getResources().getString(R.string.starrred))){
+        } else if (item.getNotificationType().equalsIgnoreCase(context.getResources().getString(R.string.starrred))) {
             rholder.notificationType.setBackgroundResource(R.drawable.c_noti_star);//akshit code
-        } else if(item.getNotificationType().equalsIgnoreCase(context.getResources().getString(R.string.commented))) {
+        } else if (item.getNotificationType().equalsIgnoreCase(context.getResources().getString(R.string.commented))) {
             rholder.notificationType.setBackgroundResource(R.drawable.c_noti_comment);//akshit code
-        }
-        else {
+        } else {
             rholder.notificationType.setBackgroundResource(R.drawable.ic_request_clickin);//akshit code added to set image other than ic_launcher
         }
+
+       /* if (item.getNotificationType().equalsIgnoreCase(context.getResources().getString(R.string.type_update))) {
+            PicassoManager.clearCache();
+        }*/
 
 
 /* no image for has ended relation ship */
@@ -94,8 +100,8 @@ public class NotificationAdapter extends ArrayAdapter<NotificationBean> {
 
                 if (item.getNotificationType().matches(context.getResources().getString(R.string.txt_relationstatus)) ||
                         item.getNotificationType().matches(context.getResources().getString(R.string.txt_relation_visibility))
-                        || item.getNotificationType().equalsIgnoreCase(context.getResources().getString(R.string.txt_relationrequest)) || item.getNotificationType().equalsIgnoreCase(context.getResources().getString(R.string.txt_relationdelete))) {
-
+                        || item.getNotificationType().equalsIgnoreCase(context.getResources().getString(R.string.txt_relationrequest)) ||
+                        item.getNotificationType().equalsIgnoreCase(context.getResources().getString(R.string.txt_relationdelete))) {
 
 
                     Intent intent = new Intent(getContext(), UserProfileView.class);
@@ -109,7 +115,7 @@ public class NotificationAdapter extends ArrayAdapter<NotificationBean> {
                     if (!className.equalsIgnoreCase("com.sourcefuse.clickinandroid.view.UserProfileView")) {
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                         }
+                    }
                     intent.putExtra("isChangeInList", true);
                     context.startActivity(intent);
                 } else if (item.getNotificationType().equalsIgnoreCase(context.getResources().getString(R.string.txt_follow))) {
@@ -128,12 +134,23 @@ public class NotificationAdapter extends ArrayAdapter<NotificationBean> {
                     ((Activity) context).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
                 } else if (item.getNotificationType().equalsIgnoreCase(context.getResources().getString(R.string.type_update))) {
 
+
                     Intent intent = new Intent(getContext(), UserProfileView.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     intent.putExtra("updatephoto", true);
-
                     context.startActivity(intent);
                     PicassoManager.clearCache();
+
+
+                } else if (item.getNotificationType().equalsIgnoreCase(context.getResources().getString(R.string.star)) ||
+                        item.getNotificationType().equalsIgnoreCase(context.getResources().getString(R.string.commented)) ||
+                        item.getNotificationType().equalsIgnoreCase(context.getResources().getString(R.string.report))) {
+                    Intent intent = new Intent(getContext(), PostView.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    intent.putExtra("updatephoto", true);
+                    intent.putExtra("feedId", item.newsfeed_id);
+                    context.startActivity(intent);
+                    ((Activity) context).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
                 }
             }
         });

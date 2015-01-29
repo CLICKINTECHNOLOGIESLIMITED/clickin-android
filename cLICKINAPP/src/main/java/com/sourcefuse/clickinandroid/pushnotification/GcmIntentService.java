@@ -24,6 +24,7 @@ import com.sourcefuse.clickinandroid.view.ChatRecordView;
 import com.sourcefuse.clickinandroid.view.FeedView;
 import com.sourcefuse.clickinandroid.view.FollowerList;
 import com.sourcefuse.clickinandroid.view.JumpOtherProfileView;
+import com.sourcefuse.clickinandroid.view.PostView;
 import com.sourcefuse.clickinandroid.view.UserProfileView;
 import com.sourcefuse.clickinapp.R;
 
@@ -169,7 +170,8 @@ public class GcmIntentService extends IntentService {
                             || extras.getString("Tp").equalsIgnoreCase("Rpt")) //case for feed star
                     {
 
-                        data.setClass(getApplicationContext(), FeedView.class);
+                        data.setClass(getApplicationContext(), PostView.class);
+                        data.putExtra("feedId",extras.getString("Nid"));
                         UpdateCounter();
                         sendNotification("Clickin'", extras.getString("chat_message"), data);
 
