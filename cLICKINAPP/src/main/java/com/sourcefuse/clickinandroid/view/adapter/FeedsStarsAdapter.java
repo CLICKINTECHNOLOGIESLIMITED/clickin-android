@@ -80,19 +80,19 @@ public class FeedsStarsAdapter extends ArrayAdapter<FeedStarsBean> {
                 if (eachNewsFeed.get(position).getIs_user_following() == 0 && eachNewsFeed.get(position).getIs_user_follower() == 0
                         && eachNewsFeed.get(position).getIs_user_in_relation() == 0 && eachNewsFeed.get(position).getIs_user_in_relation_acceptance() == null
                         && eachNewsFeed.get(position).getIs_user_follower_acceptance() == null
-                        && eachNewsFeed.get(position).getIs_user_following_acceptance() == null) {
+                        && eachNewsFeed.get(position).getIs_user_following_acceptance() == null) { // in this case no followers and following and  no relation with start user
                     holder.reqbtn.setVisibility(View.GONE);
                     holder.reqbtn.setBackgroundResource(0);
                 } else if (eachNewsFeed.get(position).getIs_user_following() == 1 && eachNewsFeed.get(position).getIs_user_follower() == 1
                         && eachNewsFeed.get(position).getIs_user_following_acceptance() != null &&
-                        eachNewsFeed.get(position).getIs_user_in_relation_acceptance() != null) {
+                        eachNewsFeed.get(position).getIs_user_in_relation_acceptance() != null) { // user in relation and may be not in relation but following user
                     holder.reqbtn.setVisibility(View.VISIBLE);
                     holder.reqbtn.setBackgroundResource(R.drawable.following_btn);
                 } else if (eachNewsFeed.get(position).getIs_user_following() == 0 && eachNewsFeed.get(position).getIs_user_follower() == 1
-                        ) {
+                        ) {   // user is in relation and follow button
                     holder.reqbtn.setVisibility(View.VISIBLE);
                     holder.reqbtn.setBackgroundResource(R.drawable.c_owner_follow_btn);
-                } else if (eachNewsFeed.get(position).getIs_user_in_relation_acceptance() == null) {
+                } else if (eachNewsFeed.get(position).getIs_user_in_relation_acceptance() == null) { // requested user to follow
                     holder.reqbtn.setVisibility(View.VISIBLE);
                     holder.reqbtn.setBackgroundResource(R.drawable.requested_btn);
                 }
