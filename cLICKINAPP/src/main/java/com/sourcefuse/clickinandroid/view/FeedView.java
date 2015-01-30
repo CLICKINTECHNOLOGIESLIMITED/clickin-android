@@ -103,9 +103,6 @@ public class FeedView extends ClickInBaseView implements View.OnClickListener {
         headerPosition = 0;
 
         for (NewsFeedBean eachNewsFeed : newsFeedBeanArrayList) {
-            /*Log.e("senderName---->",""+eachNewsFeed.getNewsFeedArray_senderDetail_name());
-
-            Log.e("receiverName---->",""+eachNewsFeed.getNewsFeedArray_receiverDetail_name());*/
 
 
             senderName.add(eachNewsFeed.getNewsFeedArray_senderDetail_name());

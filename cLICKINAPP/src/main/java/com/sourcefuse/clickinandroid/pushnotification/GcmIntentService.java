@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.sourcefuse.clickinandroid.model.AuthManager;
@@ -62,6 +63,7 @@ public class GcmIntentService extends IntentService {
         if (!extras.isEmpty()) {
             if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)) {
 
+                Log.e("in this case-------->","in this case-------->");
 
                 try {
 
@@ -102,6 +104,8 @@ public class GcmIntentService extends IntentService {
                         UpdateCounter();
                         sendNotification("Clickin'", extras.getString("chat_message"), data);
                     } else if (extras.getString("Tp").equalsIgnoreCase("clk")) {
+
+
 
                         data.setClass(getApplicationContext(), ChatRecordView.class);
                         String mPartnerId = extras.getString("pid");

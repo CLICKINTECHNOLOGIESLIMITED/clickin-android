@@ -377,7 +377,7 @@ public class ProfileManager {
                         followers.addAll(followRequesed);
                         followers.addAll(pfollowerList);
                         following.addAll(followingArray);
-                        Log.e("following array size------",""+following.size());
+
                         EventBus.getDefault().postSticky("GetFollower True");
 
                     }

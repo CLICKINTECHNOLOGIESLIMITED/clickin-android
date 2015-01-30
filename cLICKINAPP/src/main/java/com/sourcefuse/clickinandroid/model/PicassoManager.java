@@ -37,7 +37,7 @@ public class PicassoManager {
             PicassoManager.getLruCache().clear();
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e("exception on clear picasso cache---------->", "" + e.toString());
+
         }
     }
 

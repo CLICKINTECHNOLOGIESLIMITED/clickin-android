@@ -475,7 +475,6 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
             //CLICKS AND TEXT- SENDER CASE
             if (!(temp.clicks.equalsIgnoreCase("no")) && Utils.isEmptyString(temp.card_id) && Utils.isEmptyString(temp.sharingMedia)) {
-//                Log.e("1111111111111","1111111111111");
                 chatClickTextLayout.setVisibility(View.VISIBLE);
                 LinearLayout clicksArea = (LinearLayout) row.findViewById(R.id.clicks_area);
                 clicksArea.setVisibility(View.VISIBLE);
@@ -488,7 +487,6 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 //check if only clicks is there
                 parent_shared_layout.setBackgroundResource(R.drawable.newbg_pinkleft);
                 if (!(Utils.isEmptyString(temp.textMsg))) {
-//                    Log.e("11111111111112222222","111111111111122222");
                     TextView chatText = (TextView) row.findViewById(R.id.chat_text);
                     chatText.setSingleLine(true);
                     chatText.setVisibility(View.VISIBLE);
@@ -498,7 +496,6 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                         LinearLayout.LayoutParams mChatLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                         mChatLayoutParams.setMargins(0,0,0,pxlToDp(-5));
 
-//                        Log.e("11111111111112222222333","1111111111111222223333");
                         chatText.setText(temp.textMsg.substring(0, 17));
                         TextView chatTextLong = (TextView) row.findViewById(R.id.long_chat_text);
                         chatTextLong.setVisibility(View.VISIBLE);
@@ -511,7 +508,6 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
                         parent_shared_layout.setBackgroundResource(R.drawable.newbg_pinkleft);  // code for double line
                     } else {
-//                        Log.e("111111111111122222223334444","1111111111111222223333444");
                         if ((Utils.isEmptyString(temp.content_url))) {  // check prafull
                             clicksArea.setBackgroundResource(R.drawable.pink_squre);
                         } else {

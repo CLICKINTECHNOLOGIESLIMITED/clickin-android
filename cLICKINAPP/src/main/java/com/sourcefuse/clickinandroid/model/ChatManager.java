@@ -374,7 +374,7 @@ public class ChatManager {
             userInputDetails.put("accepted", accepted);
 
 
-            Log.e("user details---->",""+userInputDetails);
+
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
