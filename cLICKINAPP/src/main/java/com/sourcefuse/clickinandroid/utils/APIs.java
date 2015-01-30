@@ -3,11 +3,11 @@ package com.sourcefuse.clickinandroid.utils;
 public class APIs {
 
 
-//   public static final String baseurl ="https://api.clickinapp.com";//prod
+   public static final String baseurl ="https://api.clickinapp.com";//prod
     //public static final String baseurl = "http://54.84.227.0/"; //staging
     //public static final String baseurl = "http://staging.clickinapp.com"; //staging
 
-    public static final String baseurl = "https://dev.clickinapp.com/"; //dev
+   // public static final String baseurl = "https://dev.clickinapp.com/"; //dev
 
 
 
@@ -57,6 +57,9 @@ public class APIs {
     public static final String FETCHFBFRIENDS = baseurl + "/newsfeed/fetchfbfriends/";
     public static final String DELETENEWSFEED = baseurl + "/newsfeed/delete/";
     public static final String SAVESTARCOMMENT = baseurl + "/newsfeed/savecommentstar/";
+
+
+    public static final String VIEWFEED = baseurl + "/newsfeed/view/";
 
 
     //fetchprofile

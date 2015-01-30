@@ -1,12 +1,13 @@
 package com.sourcefuse.clickinandroid.model;
 
+import android.util.Log;
+
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.sourcefuse.clickinandroid.model.bean.FetchUsersByNameBean;
 import com.sourcefuse.clickinandroid.model.bean.GetrelationshipsBean;
 import com.sourcefuse.clickinandroid.model.bean.ProfileRelationShipBean;
 import com.sourcefuse.clickinandroid.utils.APIs;
-import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinandroid.utils.Utils;
 
 import org.apache.http.entity.StringEntity;
@@ -190,7 +191,6 @@ public class RelationManager {
                 getRelationShipList.mIs_new_partner = jsondata.getString("is_new_partner");
             else
                 getRelationShipList.mIs_new_partner = null;
-
 
 
             listdata.add(getRelationShipList);
@@ -687,6 +687,7 @@ public class RelationManager {
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
 
+            Log.e("user Imput Details----------->", "" + userInputDetails);
         } catch (Exception e1) {
         }
         client.post(null, APIs.FOLLOWUPDATESTATUS, se, "application/json",

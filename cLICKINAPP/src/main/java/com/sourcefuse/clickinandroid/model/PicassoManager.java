@@ -1,7 +1,10 @@
 package com.sourcefuse.clickinandroid.model;
 
 import android.content.Context;
+import android.util.Log;
 
+
+import com.squareup.picasso.Cache;
 import com.squareup.picasso.LruCache;
 import com.squareup.picasso.Picasso;
 
@@ -10,9 +13,9 @@ import com.squareup.picasso.Picasso;
  */
 public class PicassoManager {
     private static Picasso picasso = null;
-    private static LruCache lruCache = null;
+    private static Cache lruCache = null;
 
-    public static LruCache getLruCache() {
+    public static Cache getLruCache() {
         return lruCache;
     }
 
@@ -25,13 +28,17 @@ public class PicassoManager {
         return picasso;
     }
 
-    public static void setPicasso(Context context, LruCache cache) {
+    public static void setPicasso(Context context, Cache cache) {
         picasso = new Picasso.Builder(context).memoryCache(cache).build();
     }
 
     public static void clearCache() {
-        if (PicassoManager.getLruCache() != null)
+        try {
             PicassoManager.getLruCache().clear();
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
     }
 
 }

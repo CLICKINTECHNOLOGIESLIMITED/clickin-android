@@ -11,7 +11,6 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.Window;
 
-import com.sourcefuse.clickinandroid.model.PicassoManager;
 import com.sourcefuse.clickinandroid.utils.CustomCirclePageIndicator;
 import com.sourcefuse.clickinapp.R;
 import com.viewpagerindicator.PageIndicator;
