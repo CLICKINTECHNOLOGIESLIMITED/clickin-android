@@ -12,6 +12,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
+import android.graphics.Typeface;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -24,6 +25,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.ScrollingMovementMethod;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -39,7 +41,9 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
+import android.widget.TextSwitcher;
 import android.widget.TextView;
+import android.widget.ViewSwitcher;
 
 import com.quickblox.core.QBCallbackImpl;
 import com.quickblox.core.QBEntityCallbackImpl;
@@ -134,6 +138,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     private ListView chatListView ;
     public static TextView load_earlier ;
     private ChatRecordAdapter adapter = null;
+    private TextSwitcher mSwitcher;
     private boolean showAttachmentView = true;
     private LinearLayout llAttachment;
     private ImageView atchPhoto, attachAudio, attachVideo, attachLocation;
@@ -315,6 +320,29 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         myclicksView = (TextView) findViewById(R.id.tv_myclick);
         partnerClicksView = (TextView) findViewById(R.id.tv_partner_click);
 
+        mSwitcher = (TextSwitcher) findViewById(R.id.textswitcher);
+
+
+        mSwitcher.setFactory(new ViewSwitcher.ViewFactory() {
+
+            public View makeView() {
+                TextView myText = new TextView(ChatRecordView.this);
+                myText.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL);
+                myText.setTextSize(87);
+                myText.setTextColor(getResources().getColor(R.color.feed_clickin));
+                myText.setTypeface(null, Typeface.BOLD);
+                return myText;
+            }
+        });
+
+        Animation in = AnimationUtils.loadAnimation(this, R.anim.number_out);
+        Animation out = AnimationUtils.loadAnimation(this,R.anim.number_in);
+
+
+        mSwitcher.setInAnimation(in);
+        mSwitcher.setOutAnimation(out);
+
+
         atchPhoto = (ImageView) findViewById(R.id.iv_photo);
         attachAudio = (ImageView) findViewById(R.id.iv_adiuo);
         attachVideo = (ImageView) findViewById(R.id.iv_video);
@@ -416,26 +444,33 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
                 if (myvalue > 0) {
                     // pos.setText("" + myvalue);
+                    ((TextView)findViewById(R.id.sign)).setText("+");
                     setVisibilityForSend();//akshit code
                     Utils.playSound(ChatRecordView.this, R.raw.clicker_slider);//akshit code to play app sound
                     mybar.setProgressDrawable(getResources().getDrawable(R.drawable.styled_progress));//akshit code
                     mybar.setThumb(getResources().getDrawable(R.drawable.clickinpinkthumb));//akshit code
-
                     findViewById(R.id.rl_flipper).setVisibility(View.VISIBLE);
                     findViewById(R.id.rl_flipper).setBackgroundResource(R.color.white_with_transparent);
-                    ((TextView) findViewById(R.id.tv_flipper_value)).setText("" + clickForFlipper(myvalue));
+//                   ((TextView) findViewById(R.id.tv_flipper_value)).setText("" + clickForFlipper(myvalue));
+                    mSwitcher.setText("" + clickForFlipper(myvalue));
                     seekValue = myvalue;
                 }
+
                 if (myvalue < 0) {
                     seekValue = myvalue;
+                    ((TextView)findViewById(R.id.sign)).setText("-");
+                    ((TextView)findViewById(R.id.sign)).setPadding(5,0,0,0);
                     setVisibilityForSend();//akshit
                     Utils.playSound(ChatRecordView.this, R.raw.clicker_slider);//akshit code to play app sound
                     mybar.setProgressDrawable(getResources().getDrawable(R.drawable.styled_progress));//akshit code
                     mybar.setThumb(getResources().getDrawable(R.drawable.clickinpinkthumb));//akshit code
                     findViewById(R.id.rl_flipper).setVisibility(View.VISIBLE);
                     findViewById(R.id.rl_flipper).setBackgroundResource(R.color.black_opacity);
-                    ((TextView) findViewById(R.id.tv_flipper_value)).setText("" + myvalue);
+//                    ((TextView) findViewById(R.id.tv_flipper_value)).setText("" + myvalue);
+                    mSwitcher.setText(""+clickForFlipper(myvalue));
+
                 }
+
                 if (myvalue == 0) {
                     seekValue = 0;
                     setVisibilityForSendButton();//akshit code
@@ -443,6 +478,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                     mybar.setThumb(getResources().getDrawable(R.drawable.thumb_seek));
                     ((RelativeLayout) findViewById(R.id.rl_flipper)).setVisibility(View.GONE);
                 }
+
             }
         });
 
@@ -1897,30 +1933,31 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     }
 
 
+
     private String clickForFlipper(int clicks) {
 
         String changeClicks = "";
 
-        if (clicks == 1) {
-            changeClicks = "+1";
-        } else if (clicks == 2) {
-            changeClicks = "+2";
-        } else if (clicks == 3) {
-            changeClicks = "+3";
-        } else if (clicks == 4) {
-            changeClicks = "+4";
-        } else if (clicks == 5) {
-            changeClicks = "+5";
-        } else if (clicks == 6) {
-            changeClicks = "+6";
-        } else if (clicks == 7) {
-            changeClicks = "+7";
-        } else if (clicks == 8) {
-            changeClicks = "+8";
-        } else if (clicks == 9) {
-            changeClicks = "+9";
-        } else if (clicks == 10) {
-            changeClicks = "+10";
+        if (clicks == 1 || clicks == -1) {
+            changeClicks = "1";
+        } else if (clicks == 2 || clicks == -2) {
+            changeClicks = "2";
+        } else if (clicks == 3 || clicks == -3) {
+            changeClicks = "3";
+        } else if (clicks == 4 || clicks == -4) {
+            changeClicks = "4";
+        } else if (clicks == 5 || clicks == -5) {
+            changeClicks = "5";
+        } else if (clicks == 6 || clicks == -6) {
+            changeClicks = "6";
+        } else if (clicks == 7 || clicks == -7) {
+            changeClicks = "7";
+        } else if (clicks == 8 || clicks == -8) {
+            changeClicks = "8";
+        } else if (clicks == 9 || clicks == -9) {
+            changeClicks = "9";
+        } else if (clicks == 10 || clicks == -10) {
+            changeClicks = "10";
         }
         return changeClicks;
 

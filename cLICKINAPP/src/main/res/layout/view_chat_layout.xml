@@ -383,22 +383,30 @@
         android:visibility="gone">
 
         <com.sourcefuse.clickinandroid.utils.ClickInTextView
-            android:id="@+id/tv_flipper_value"
+            android:id="@+id/sign"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="-10"
-            android:textColor="@color/feed_clickin"
+            android:text="-"
             android:textSize="87sp"
+            android:textColor="@color/feed_clickin"
             android:textStyle="bold"
-            geekui:customFont="AAvenirNextLTPro-BoldCn_0.otf" />
+            geekui:customFont="AAvenirNextLTPro-BoldCn_0.otf"
+            android:layout_marginTop="1dp"/>
+
+        <TextSwitcher
+            android:id="@+id/textswitcher"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="45dp"
+            />
 
         <ImageView
             android:id="@+id/iv_fliper_heart"
             android:layout_width="67dp"
             android:layout_height="67dp"
-            android:layout_marginLeft="7dp"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="27dp"
-            android:layout_toRightOf="@+id/tv_flipper_value"
+            android:layout_toRightOf="@+id/textswitcher"
             android:background="@drawable/heart_flipper" />
 
     </RelativeLayout>
