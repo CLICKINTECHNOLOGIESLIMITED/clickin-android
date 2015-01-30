@@ -25,7 +25,6 @@ import android.widget.TextView;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ClickInNotificationManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
-import com.sourcefuse.clickinandroid.model.PicassoManager;
 import com.sourcefuse.clickinandroid.model.ProfileManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
 import com.sourcefuse.clickinandroid.services.MyQbChatService;
@@ -103,12 +102,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
 
-        if (PicassoManager.getPicasso() == null) {
-            /*set picasso maneger value */
-            PicassoManager.setLruCache(UserProfileView.this);
-            PicassoManager.setPicasso(UserProfileView.this, PicassoManager.getLruCache());
-            PicassoManager.clearCache();
-        }
+
 
 
         authManager = ModelManager.getInstance().getAuthorizationManager();
@@ -507,7 +501,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
             }
         } else if (intent.getExtras() != null && intent.getExtras().containsKey("updatephoto")) {
 
-            PicassoManager.clearCache();
+
             if (slidemenu.isMenuShowing())
                 slidemenu.showContent();
             authManager.getProfileInfo("", authManager.getPhoneNo(), authManager.getUsrToken());

@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
+import com.sourcefuse.clickinandroid.model.PicassoManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.Constants;
@@ -61,6 +62,7 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
         if (othersUser) {
             authManager = ModelManager.getInstance().getAuthorizationManager();
             relationManager = ModelManager.getInstance().getRelationManager();
+
             phForOtherUser = getIntent().getExtras().getString("phNumber");
             partner_ID = getIntent().getExtras().getString("PartnerId");
             Utils.launchBarDialog(this);
@@ -412,7 +414,9 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
 
                     try {
                         if (!authManager.getTmpUserPic().equalsIgnoreCase("")) {
-                            Picasso.with(JumpOtherProfileView.this)
+                            /*Picasso.with(this)*/
+
+                            PicassoManager.getPicasso()
                                     .load(authManager.getTmpUserPic())
                                     .skipMemoryCache()
                                     .error(R.drawable.male_user).into(userimage);
@@ -425,7 +429,9 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
                 } else {
                     try {
                         if (!authManager.getTmpUserPic().equalsIgnoreCase("")) {
-                            Picasso.with(JumpOtherProfileView.this)
+                            //Picasso.with(this)
+                            PicassoManager.clearCache(authManager.getTmpUserPic());
+                            PicassoManager.getPicasso()
                                     .load(authManager.getTmpUserPic())
                                     .skipMemoryCache()
                                     .error(R.drawable.female_user).into(userimage);

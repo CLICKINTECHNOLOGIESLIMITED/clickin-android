@@ -27,6 +27,7 @@ import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.FollowingListView;
 import com.sourcefuse.clickinandroid.view.JumpOtherProfileView;
 import com.sourcefuse.clickinapp.R;
+import com.squareup.picasso.LruCache;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -42,13 +43,16 @@ public class FollowingAdapter extends ArrayAdapter<FollowerFollowingBean> {
     private AuthManager authManager;
     private RelationManager relationManager;
 
-
+    LruCache mLruCahe;
+    Picasso picasso;
     public FollowingAdapter(Context context, int layoutResourceId,
                             List<FollowerFollowingBean> item1) {
         super(context, layoutResourceId, item1);
         this.layoutResourceId = layoutResourceId;
         this.context = context;
         this.item = item1;
+        mLruCahe = new LruCache(context);
+        picasso = new Picasso.Builder(context).memoryCache(mLruCahe).build();
     }
 
     @Override
@@ -100,12 +104,8 @@ public class FollowingAdapter extends ArrayAdapter<FollowerFollowingBean> {
         rholder.usr_name.setText(item.get(position).getFolloweeName());
         if (!item.get(position).getFolloweePic().equalsIgnoreCase("")) {
             try {
-                if(PicassoManager.getPicasso() == null)
-                {
-                    PicassoManager.setLruCache(context);
-                    PicassoManager.setPicasso(context, PicassoManager.getLruCache());
-                }
-                PicassoManager.getPicasso().load(item.get(position).getFolloweePic())
+
+                picasso.load(item.get(position).getFolloweePic())
                         .into(rholder.usrimg);
             } catch (Exception e) {
                 //holder.usrimg.setImageResource(R.drawable.male_user);

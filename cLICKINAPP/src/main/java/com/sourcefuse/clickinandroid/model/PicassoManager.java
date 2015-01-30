@@ -13,14 +13,14 @@ import com.squareup.picasso.Picasso;
  */
 public class PicassoManager {
     private static Picasso picasso = null;
-    private static Cache lruCache = null;
+    private static CustomLruCache lruCache = null;
 
     public static Cache getLruCache() {
         return lruCache;
     }
 
     public static void setLruCache(Context context) {
-        lruCache = new LruCache(context);
+        lruCache = new CustomLruCache(context);
     }
 
 
@@ -32,12 +32,23 @@ public class PicassoManager {
         picasso = new Picasso.Builder(context).memoryCache(cache).build();
     }
 
-    public static void clearCache() {
+    public static void clearCache(String imageUrl) {
         try {
             PicassoManager.getLruCache().clear();
+            PicassoManager.getLruCache().set(imageUrl, null);
         } catch (Exception e) {
             e.printStackTrace();
 
+        }
+    }
+
+    public static class CustomLruCache extends LruCache{
+        public CustomLruCache(Context context){
+            super(context);
+        }
+
+        public CustomLruCache(int value){
+            super(value);
         }
     }
 
