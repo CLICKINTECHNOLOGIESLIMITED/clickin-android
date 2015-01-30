@@ -17,7 +17,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -155,9 +154,9 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
         serviceHandler = handler;
         authManager = ModelManager.getInstance().getAuthorizationManager();
 
-        QBSettings.getInstance().fastConfigInit(Constants.CLICKIN_APP_ID, Constants.CLICKIN_AUTH_KEY, Constants.CLICKIN_AUTH_SECRET);
-        QBSettings.getInstance().setServerApiDomain("apiclickin.quickblox.com");
-        QBSettings.getInstance().setContentBucketName("qb-clickin");
+//        QBSettings.getInstance().fastConfigInit(Constants.CLICKIN_APP_ID, Constants.CLICKIN_AUTH_KEY, Constants.CLICKIN_AUTH_SECRET);
+//        QBSettings.getInstance().setServerApiDomain("apiclickin.quickblox.com");
+//        QBSettings.getInstance().setContentBucketName("qb-clickin");
         QBSettings.getInstance().setChatServerDomain("chatclickin.quickblox.com");
         QBChatService.setDebugEnabled(true);
         messageInDb = new ArrayList<ChatMessageBody>();
