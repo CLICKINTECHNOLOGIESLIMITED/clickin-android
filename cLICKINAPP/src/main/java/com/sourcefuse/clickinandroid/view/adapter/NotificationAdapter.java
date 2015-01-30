@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.PicassoManager;
 import com.sourcefuse.clickinandroid.model.bean.NotificationBean;
 import com.sourcefuse.clickinandroid.view.FeedView;
@@ -87,9 +86,7 @@ public class NotificationAdapter extends ArrayAdapter<NotificationBean> {
             rholder.notificationType.setBackgroundResource(R.drawable.ic_request_clickin);//akshit code added to set image other than ic_launcher
         }
 
-       /* if (item.getNotificationType().equalsIgnoreCase(context.getResources().getString(R.string.type_update))) {
-            PicassoManager.clearCache();
-        }*/
+
 
 
 /* no image for has ended relation ship */
@@ -139,8 +136,10 @@ public class NotificationAdapter extends ArrayAdapter<NotificationBean> {
                     intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     intent.putExtra("updatephoto", true);
                     context.startActivity(intent);
-                    PicassoManager.clearCache();
 
+
+                    PicassoManager.setLruCache(context);
+                    PicassoManager.setPicasso(context,PicassoManager.getLruCache());
 
                 } else if (item.getNotificationType().equalsIgnoreCase(context.getResources().getString(R.string.star)) ||
                         item.getNotificationType().equalsIgnoreCase(context.getResources().getString(R.string.commented)) ||

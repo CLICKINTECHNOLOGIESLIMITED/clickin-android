@@ -26,6 +26,8 @@ import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.JumpOtherProfileView;
 import com.sourcefuse.clickinapp.R;
+import com.squareup.picasso.LruCache;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -41,12 +43,18 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
     private RelationManager relationManager;
     private boolean showpending = false;
 
+
+    LruCache mLruCahe;
+    Picasso picasso;
     public UserRelationAdapter(Context context, int layoutResourceId,
                                List<GetrelationshipsBean> item) {
         super(context, layoutResourceId, item);
         itemList = item;
         this.layoutResourceId = layoutResourceId;
         this.context = context;
+
+        mLruCahe = new LruCache(context);
+        picasso = new Picasso.Builder(context).memoryCache(mLruCahe).build();
 
     }
 //    ((ImageView)row.findViewById(R.id.iv_accept_card)).setTag(position);
@@ -154,13 +162,8 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
         if (!itemList.get(position).getPartnerPic().equalsIgnoreCase("")) {
             try {
 
-                if(PicassoManager.getPicasso() == null)
-                {
-                    PicassoManager.setLruCache(context);
-                    PicassoManager.setPicasso(context, PicassoManager.getLruCache());
-                }
-                PicassoManager.getPicasso()// get picasso from picasso maneger
-                        .load(itemList.get(position).getPartnerPic())
+               // Picasso.with(context)
+                 picasso.load(itemList.get(position).getPartnerPic())
                         .into(usrimg);
 
 

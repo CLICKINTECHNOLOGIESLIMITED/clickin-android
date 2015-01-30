@@ -979,7 +979,6 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 
 
         } else if (message.equalsIgnoreCase("updatephoto")) {
-            PicassoManager.clearCache();
             if (authManager == null)
                 authManager = ModelManager.getInstance().getAuthorizationManager();
             authManager.getProfileInfo("", authManager.getPhoneNo(), authManager.getUsrToken());

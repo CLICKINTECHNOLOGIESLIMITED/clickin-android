@@ -157,7 +157,9 @@ public class GcmIntentService extends IntentService {
                         UpdateCounter();
                         sendNotification("Clickin'", extras.getString("message"), data);
                         EventBus.getDefault().post("updatePhoto");
-                        PicassoManager.clearCache();
+
+                        PicassoManager.setLruCache(getApplicationContext());
+                        PicassoManager.setPicasso(getApplicationContext(),PicassoManager.getLruCache());
 
                     } else if (extras.getString("Tp").equalsIgnoreCase("card")) //case for card
                     // case when card accepted
