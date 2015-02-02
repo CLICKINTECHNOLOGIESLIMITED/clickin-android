@@ -43,7 +43,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="2dp"
                 android:layout_marginTop="2dp"
-                android:textStyle="bold"
                 geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"
                 android:textColor="@color/text_color_share" />
 
@@ -66,6 +65,7 @@
                 android:layout_below="@+id/shared_message"
                 android:layout_marginRight="2dp"
                 android:layout_marginTop="4dp"
+
 
                 android:background="@drawable/chat_divider" />
 
@@ -144,9 +144,8 @@
                 android:layout_below="@+id/media_layout"
                 android:layout_marginLeft="4dp"
                 android:layout_marginRight="4dp"
-                android:layout_marginBottom="4dp"
                 android:orientation="vertical"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <LinearLayout
                     android:id="@+id/clicks_area"
@@ -154,6 +153,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:gravity="center_vertical"
+
                     android:orientation="horizontal"
                     android:visibility="gone">
 
@@ -201,7 +201,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:maxEms="12"
-                    android:layout_marginTop="2dp"
+                    android:paddingBottom="5dp"
                     android:paddingLeft="3dp"
                     android:singleLine="false"
                     android:textColor="@color/black"
@@ -514,15 +514,17 @@
                 android:paddingTop="5dp"
                 android:visibility="gone">
 
-                <TextView
+                <com.sourcefuse.clickinandroid.utils.ClickInTextView
                     android:id="@+id/tv_acc_res_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="3dp"
                     android:paddingRight="3dp"
-                    android:text="Toby made a" />
+                    android:text="Toby made a"
+                    geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"
+                    android:textColor="@color/black"/>
 
-                <TextView
+                <com.sourcefuse.clickinandroid.utils.ClickInTextView
                     android:id="@+id/tv_acc_res_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -530,7 +532,8 @@
                     android:paddingRight="2dp"
                     android:text="COUNTER OFFER"
                     android:textStyle="bold"
-
+                    geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
+                    android:textColor="@color/black"
                     />
 
                 <!--akshit Code-->
@@ -674,7 +677,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:maxEms="13"
+                android:ems="13"
                 android:paddingBottom="5dp"
                 android:paddingLeft="5dp"
                 android:paddingRight="10dp"
@@ -685,7 +688,6 @@
             <!--This textView for extra chat text to display in second line -->
         </LinearLayout>
         <!--   for text view in share case -->
-
         <ImageView
             android:id="@+id/incase_share_footer"
             android:layout_width="266dp"

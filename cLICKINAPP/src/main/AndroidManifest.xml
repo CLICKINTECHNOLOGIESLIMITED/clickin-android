@@ -11,7 +11,9 @@
 
 
     <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" android:required="false"/>
+    <uses-permission
+        android:name="android.permission.READ_PHONE_STATE"
+        android:required="false" />
 
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -34,17 +36,14 @@
     <uses-permission android:name="android.permission.GET_TASKS"></uses-permission>
 
 
-
-
-
     <uses-feature android:name="android.hardware.camera" />
     <supports-screens
-        android:smallScreens="true"
-        android:normalScreens="true"
-        android:largeScreens="true"
-        android:xlargeScreens="true"
         android:anyDensity="true"
-        android:resizeable="true" />
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:resizeable="true"
+        android:smallScreens="true"
+        android:xlargeScreens="true" />
 
 
     <application
@@ -120,8 +119,7 @@
             android:screenOrientation="portrait"></activity>
         <activity
             android:name="com.sourcefuse.clickinandroid.view.AddSomeoneView"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"></activity>
 
         <activity
             android:name="com.sourcefuse.clickinandroid.view.OthersFollowingFollowView"
@@ -269,20 +267,26 @@
             android:screenOrientation="portrait"></activity>
 
         <activity
+            android:name="com.sourcefuse.clickinandroid.view.PostView"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"></activity>
+
+
+        <activity
             android:name="com.sourcefuse.clickinandroid.view.MapActivity"
             android:launchMode="standard"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing|stateHidden"></activity>
 
 
-<!--
-        <receiver android:name="com.sourcefuse.clickinandroid.pushnotification.AppInstallReceiver"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="com.android.vending.INSTALL_REFERRER" />
-            </intent-filter>
-        </receiver>
--->
+        <!--
+                <receiver android:name="com.sourcefuse.clickinandroid.pushnotification.AppInstallReceiver"
+                    android:exported="true">
+                    <intent-filter>
+                        <action android:name="com.android.vending.INSTALL_REFERRER" />
+                    </intent-filter>
+                </receiver>
+        -->
 
     </application>
 

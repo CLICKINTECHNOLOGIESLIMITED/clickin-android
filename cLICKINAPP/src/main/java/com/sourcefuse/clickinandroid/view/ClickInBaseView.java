@@ -47,7 +47,6 @@ import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.adapter.ClickInWithAdapter;
 import com.sourcefuse.clickinandroid.view.adapter.NotificationAdapter;
 import com.sourcefuse.clickinandroid.view.adapter.SearchAdapter;
-import com.sourcefuse.clickinandroid.view.adapter.SimpleSectionedListAdapter;
 import com.sourcefuse.clickinapp.R;
 import com.squareup.picasso.Picasso;
 
@@ -91,6 +90,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
     private PullToRefreshListView notificationList;
     private NotificationAdapter notificationAdapter;
     private int notificationlistsize = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -711,6 +711,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         notificationList.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> listViewPullToRefreshBase) {
+//                mFirstid = notificationMngr.notificationData.get(0)._id;
                 mLastchatID = "";
                 notificationlistsize = notificationMngr.notificationData.size();
                 notificationMngr = ModelManager.getInstance().getNotificationManagerManager();
@@ -718,15 +719,15 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 
             }
 
+
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> listViewPullToRefreshBase) {
                 String mLastId = notificationMngr.notificationData.get(notificationMngr.notificationData.size() - 1)._id;
                 mLastchatID = mLastId;
                 notificationMngr = ModelManager.getInstance().getNotificationManagerManager();
                 notificationMngr.getNotification(getApplicationContext(), mLastId, authManager.getPhoneNo(), authManager.getUsrToken());
+        }
 
-
-            }
 
         });
 
@@ -979,7 +980,6 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 
 
         } else if (message.equalsIgnoreCase("updatephoto")) {
-            PicassoManager.clearCache();
             if (authManager == null)
                 authManager = ModelManager.getInstance().getAuthorizationManager();
             authManager.getProfileInfo("", authManager.getPhoneNo(), authManager.getUsrToken());

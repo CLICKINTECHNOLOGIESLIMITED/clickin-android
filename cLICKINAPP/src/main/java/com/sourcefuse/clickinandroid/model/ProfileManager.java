@@ -1,6 +1,8 @@
 package com.sourcefuse.clickinandroid.model;
 
 
+import android.util.Log;
+
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.sourcefuse.clickinandroid.model.bean.ContactBean;
@@ -375,6 +377,7 @@ public class ProfileManager {
                         followers.addAll(followRequesed);
                         followers.addAll(pfollowerList);
                         following.addAll(followingArray);
+
                         EventBus.getDefault().postSticky("GetFollower True");
 
                     }

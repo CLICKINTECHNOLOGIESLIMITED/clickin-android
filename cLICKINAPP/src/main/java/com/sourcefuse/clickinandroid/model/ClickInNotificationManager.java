@@ -92,17 +92,22 @@ public class ClickInNotificationManager implements NotificationManagerI {
                                     ntificationBeanList.setNotificationMsg(data.getString("notification_msg"));
                                     ntificationBeanList.setNotificationType(data.getString("type"));
                                     ntificationBeanList._id  = data.getString("_id");
+                                    ntificationBeanList.mUser_id  = data.getString("user_id");
                                     ntificationBeanList.setIs_read(data.getString("read"));
+                                    if(data.has("newsfeed_id"))
+                                        ntificationBeanList.newsfeed_id = data.getString("newsfeed_id");
+
+
                                     notificationArray.add(ntificationBeanList);
                                 }
 
-                                Log.e("last notificaion id--->",""+lastNotificationId);
+
                                 if(Utils.isEmptyString(lastNotificationId)) {//akshit code to item at Top and Bottom after refresh
-                                    Log.e("Check Case","CASE !");
+
                                     notificationData.clear();
                                     notificationData.addAll(0,notificationArray);
                                 }else {
-                                    Log.e("Check Case", "CASE 2");
+
                                     notificationData.addAll(notificationArray);
 
                                 }

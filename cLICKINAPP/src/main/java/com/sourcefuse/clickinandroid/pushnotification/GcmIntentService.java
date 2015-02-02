@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.sourcefuse.clickinandroid.model.AuthManager;
@@ -24,6 +25,7 @@ import com.sourcefuse.clickinandroid.view.ChatRecordView;
 import com.sourcefuse.clickinandroid.view.FeedView;
 import com.sourcefuse.clickinandroid.view.FollowerList;
 import com.sourcefuse.clickinandroid.view.JumpOtherProfileView;
+import com.sourcefuse.clickinandroid.view.PostView;
 import com.sourcefuse.clickinandroid.view.UserProfileView;
 import com.sourcefuse.clickinapp.R;
 
@@ -61,6 +63,7 @@ public class GcmIntentService extends IntentService {
         if (!extras.isEmpty()) {
             if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)) {
 
+                Log.e("in this case-------->","in this case-------->");
 
                 try {
 
@@ -102,6 +105,8 @@ public class GcmIntentService extends IntentService {
                         sendNotification("Clickin'", extras.getString("chat_message"), data);
                     } else if (extras.getString("Tp").equalsIgnoreCase("clk")) {
 
+
+
                         data.setClass(getApplicationContext(), ChatRecordView.class);
                         String mPartnerId = extras.getString("pid");
 
@@ -139,6 +144,7 @@ public class GcmIntentService extends IntentService {
                     {
 
                         data.setClass(getApplicationContext(), FeedView.class);
+                        UpdateCounter();
                         sendNotification("Clickin'", extras.getString("chat_message"), data);
 
 
@@ -146,11 +152,14 @@ public class GcmIntentService extends IntentService {
                     {
 
                         data.setClass(getApplicationContext(), JumpOtherProfileView.class);
-                        data.putExtra("updatephoto", true);
+                        data.putExtra("FromOwnProfile", true);
+                        data.putExtra("phNumber", extras.getString("phone_no"));
                         UpdateCounter();
                         sendNotification("Clickin'", extras.getString("message"), data);
                         EventBus.getDefault().post("updatePhoto");
-                        PicassoManager.clearCache();
+
+                        PicassoManager.setLruCache(getApplicationContext());
+                        PicassoManager.setPicasso(getApplicationContext(),PicassoManager.getLruCache());
 
                     } else if (extras.getString("Tp").equalsIgnoreCase("card")) //case for card
                     // case when card accepted
@@ -167,7 +176,8 @@ public class GcmIntentService extends IntentService {
                             || extras.getString("Tp").equalsIgnoreCase("Rpt")) //case for feed star
                     {
 
-                        data.setClass(getApplicationContext(), FeedView.class);
+                        data.setClass(getApplicationContext(), PostView.class);
+                        data.putExtra("feedId",extras.getString("Nid"));
                         UpdateCounter();
                         sendNotification("Clickin'", extras.getString("chat_message"), data);
 

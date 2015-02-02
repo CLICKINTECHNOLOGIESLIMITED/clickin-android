@@ -44,15 +44,11 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.util.ArrayList;
 
-
 import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
-
-import static android.view.View.*;
 
 import static android.view.View.GONE;
 import static android.view.View.OnClickListener;
 import static android.view.View.VISIBLE;
-
 import static com.sourcefuse.clickinapp.R.drawable.report_icon;
 
 public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
@@ -60,6 +56,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
     Activity context;
     int layoutResourceId;
     ArrayList<NewsFeedBean> eachNewsFeed;
+    ArrayList<String> mId;
     MediaPlayer player;
     AuthManager authMgr;
     Typeface typeface;
@@ -102,6 +99,13 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
         this.recieverPhNo = mReciverPhNo;
         this.timeOfFeed = mTimeOfFeed;
         this.senderPhNo = mSenderPhNo;
+
+        /*for (int i = 0; i < ModelManager.getInstance().getProfileManager().following.size(); i++) {
+            mId.add("" + ModelManager.getInstance().getProfileManager().following.get(i).getFolloweeId());
+        }
+        for (int i = 0; i < ModelManager.getInstance().getRelationManager().acceptedList.size(); i++) {
+            mId.add("" + ModelManager.getInstance().getRelationManager().acceptedList.get(i).getPartner_id());
+        }*/
 
     }
 
@@ -180,7 +184,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
         if (eachNewsFeed.get(position).getNewsFeedArray_chatDetail_clicks() != null) {
             if (!(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_clicks().equalsIgnoreCase("null"))) {
                 if (!(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_clicks().equalsIgnoreCase("0"))) {
-//                    Log.e("CASE 1", "111111111");
+
                     holder.clickedIn.setText(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_clicks().trim());
                     holder.clickedIn.setTextColor(Color.WHITE);
                     holder.clickedIn.setTypeface(null, Typeface.BOLD);
@@ -201,18 +205,24 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
                                 holder.clickedInMessageLong.setVisibility(VISIBLE);
                             } else {
                                 holder.clickedInMessageLong.setVisibility(GONE);
+
                                 holder.clickedInMessage.setText(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().trim());
                             }
                         }
+                    }else {
+                        holder.clickedInMessage.setVisibility(GONE);
+                        holder.clickedInMessageLong.setVisibility(GONE);
                     }
                 } else {
                     if (!(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().equalsIgnoreCase("null"))) {
                         if (!eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().equalsIgnoreCase("")) {
+                            holder.clickedInMessageLong.setVisibility(GONE);
                             holder.clickedInMessage.setVisibility(GONE);
                             holder.clickedIn.setVisibility(VISIBLE);
                             holder.clickedIn.setTextColor(Color.BLACK);
                             holder.clickedIn.setTypeface(null, Typeface.NORMAL);
                             holder.clickedIn.setText(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().trim());
+
                             holder.layout_clickin.setBackgroundResource(R.color.lightest_gray);
                             holder.layout_clickin.setVisibility(VISIBLE);
 //                            holder.clickedInMessage.setVisibility(View.GONE);
@@ -227,12 +237,14 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
             } else {
                 if (!(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().equalsIgnoreCase("null"))) {
                     if (!eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().trim().equalsIgnoreCase("")) {
+                        holder.clickedInMessageLong.setVisibility(GONE);
                         holder.clickedInMessage.setVisibility(GONE);
                         holder.clickedIn.setVisibility(VISIBLE);
                         holder.layout_clickin.setVisibility(VISIBLE);
                         holder.clickedIn.setTextColor(Color.BLACK);
                         holder.clickedIn.setTypeface(null, Typeface.NORMAL);
                         holder.clickedIn.setText(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().trim());
+
                         holder.layout_clickin.setBackgroundResource(R.color.lightest_gray);
 //                        holder.clickedInMessage.setVisibility(View.GONE);
                         holder.clickInWhiteImage.setVisibility(GONE);
@@ -452,28 +464,34 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
             holder.feed_comments_layout.setVisibility(VISIBLE);
             if (eachNewsFeed.get(position).getNewsfeedArray_comments_count() > 3) {
                 holder.feed_comments_layout1.setVisibility(VISIBLE);
-//                holder.no_comments.setTypeface(null,Typeface.NORMAL);
-                holder.no_comments.setText("View all " + eachNewsFeed.get(position).getNewsfeedArray_comments_count() + " comments");
+
+                holder.no_comments.setTypeface(null,Typeface.NORMAL);
+                String html = "<font><b>" + "View all " + eachNewsFeed.get(position).getNewsfeedArray_comments_count() + " comments" + "</b></font>" ;
+                holder.no_comments.setText(Html.fromHtml(html));
+//=======
+//
+//                holder.no_comments.setText("View all " + eachNewsFeed.get(position).getNewsfeedArray_comments_count() + " comments");
+
 
                 for (int k = 0; k < eachNewsFeed.get(position).getCommentArrayList().size(); k++) {
 
                     if (k == 0) {
                         holder.comment2.setVisibility(VISIBLE);
                         String text = "<font color=#01DFD7><b>" + eachNewsFeed.get(position).getCommentArrayList().get(k).getNewsFeedArray_commentArray_user_name() + "</b></font> <font color=#000000>" + eachNewsFeed.get(position).getCommentArrayList().get(k).getNewsFeedArray_commentArray_comment() + "</font>";
-//                        holder.comment2.setTypeface(null,Typeface.NORMAL);
+
                         holder.comment2.setText(Html.fromHtml(text));
                     }
                     if (k == 1) {
                         holder.comment3.setVisibility(VISIBLE);
                         String text = "<font color=#01DFD7><b>" + eachNewsFeed.get(position).getCommentArrayList().get(k).getNewsFeedArray_commentArray_user_name() + "</b></font> <font color=#000000>" + eachNewsFeed.get(position).getCommentArrayList().get(k).getNewsFeedArray_commentArray_comment() + "</font>";
-//                        holder.comment3.setTypeface(null,Typeface.NORMAL);
+
                         holder.comment3.setText(Html.fromHtml(text));
                     }
 
                     if (k == 2) {
                         holder.comment4.setVisibility(VISIBLE);
                         String text = "<font color=#01DFD7><b>" + eachNewsFeed.get(position).getCommentArrayList().get(k).getNewsFeedArray_commentArray_user_name() + "</b></font> <font color=#000000>" + eachNewsFeed.get(position).getCommentArrayList().get(k).getNewsFeedArray_commentArray_comment() + "</font>";
-//                        holder.comment4.setTypeface(null,Typeface.NORMAL);
+
                         holder.comment4.setText(Html.fromHtml(text));
                         break;
                     }
@@ -495,10 +513,10 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
                     holder.comment3.setVisibility(VISIBLE);
 
                     String text = "<font color=#01DFD7><b>" + eachNewsFeed.get(position).getCommentArrayList().get(0).getNewsFeedArray_commentArray_user_name() + "</b></font> <font color=#000000>" + eachNewsFeed.get(position).getCommentArrayList().get(0).getNewsFeedArray_commentArray_comment() + "</font>";
-//                    holder.comment2.setTypeface(null,Typeface.NORMAL);
+
                     holder.comment2.setText(Html.fromHtml(text));
                     String text2 = "<font color=#01DFD7><b>" + eachNewsFeed.get(position).getCommentArrayList().get(1).getNewsFeedArray_commentArray_user_name() + "</b></font> <font color=#000000>" + eachNewsFeed.get(position).getCommentArrayList().get(1).getNewsFeedArray_commentArray_comment() + "</font>";
-//                    holder.comment3.setTypeface(null,Typeface.NORMAL);
+
                     holder.comment3.setText(Html.fromHtml(text2));
 
 
@@ -509,13 +527,13 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
 
 
                     String text = "<font color=#01DFD7><b>" + eachNewsFeed.get(position).getCommentArrayList().get(0).getNewsFeedArray_commentArray_user_name() + "</b></font> <font color=#000000>" + eachNewsFeed.get(position).getCommentArrayList().get(0).getNewsFeedArray_commentArray_comment() + "</font>";
-//                    holder.comment2.setTypeface(null,Typeface.NORMAL);
+
                     holder.comment2.setText(Html.fromHtml(text));
                     String text2 = "<font color=#01DFD7><b>" + eachNewsFeed.get(position).getCommentArrayList().get(1).getNewsFeedArray_commentArray_user_name() + "</b></font> <font color=#000000>" + eachNewsFeed.get(position).getCommentArrayList().get(1).getNewsFeedArray_commentArray_comment() + "</font>";
-//                    holder.comment3.setTypeface(null,Typeface.NORMAL);
+
                     holder.comment3.setText(Html.fromHtml(text2));
                     String text3 = "<font color=#01DFD7><b>" + eachNewsFeed.get(position).getCommentArrayList().get(2).getNewsFeedArray_commentArray_user_name() + "</b></font> <font color=#000000>" + eachNewsFeed.get(position).getCommentArrayList().get(2).getNewsFeedArray_commentArray_comment() + "</font>";
-//                    holder.comment4.setTypeface(null,Typeface.NORMAL);
+
                     holder.comment4.setText(Html.fromHtml(text3));
 
                 } else {
@@ -526,7 +544,8 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
 
                     holder.comment4.setVisibility(GONE);
                     holder.feed_comments_layout1.setVisibility(VISIBLE);
-                    holder.no_comments.setText("No Comments");
+                    String no_comment = "<font ><b>" + "No Comments" + "</b></font>";
+                    holder.no_comments.setText(Html.fromHtml(no_comment));
                 }
             }
 
@@ -585,7 +604,8 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
                         holder.feed_star_user.setTextColor(context.getResources().getColor(R.color.dark_gray));
                         holder.feed_star_user.setClickable(false);
                     }
-                    holder.feed_star_user.setText(stars);
+                    String star = "<font><b>" + stars + "</b></font>";
+                    holder.feed_star_user.setText(Html.fromHtml(star));
                     ModelManager.getInstance().getNewsFeedManager().unStarredNewsFeed(authMgr.getPhoneNo(), authMgr.getUsrToken(), eachNewsFeed.get(position).getNewsfeedArray_id());
                 } else {
                     if (eachNewsFeed.get(position).getNewsfeedArray_user_starred().equalsIgnoreCase("1")) {
@@ -601,16 +621,19 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
 
                         holder.feed_star_user.setTextColor(context.getResources().getColor(R.color.feed_senderuser));
                         holder.feed_star_user.setClickable(true);
-                        if (stars.equalsIgnoreCase(""))
-                            holder.feed_star_user.setText(ModelManager.getInstance().getAuthorizationManager().getUserName());
-                        else if (stars.endsWith("Stars")) {
+                        if (stars.equalsIgnoreCase("")) {
+                            String name_user = "<font><b>" + ModelManager.getInstance().getAuthorizationManager().getUserName() + "</b></font>";
+                            holder.feed_star_user.setText(Html.fromHtml(name_user));
+                        }  else if (stars.endsWith("Stars")) {
                             stars = stars.substring(0, stars.indexOf(" "));
                             int star = Integer.parseInt(stars) - 1;
-                            holder.feed_star_user.setText(star + " Stars");
+                            String number_stars =  "<font><b>" + star + "Stars" +"</b></font>";
+                            holder.feed_star_user.setText(Html.fromHtml(number_stars));
                             holder.feed_star_user.setTextColor(context.getResources().getColor(R.color.dark_gray));//akshit code Black is not needed
-                        } else
-                            holder.feed_star_user.setText(stars + ", " + ModelManager.getInstance().getAuthorizationManager().getUserName());
-
+                        } else {
+                            String st_star = "<font><b>" + stars + ", " + ModelManager.getInstance().getAuthorizationManager().getUserName() + "</b></font>";
+                            holder.feed_star_user.setText(Html.fromHtml(st_star));
+                        }
                         ModelManager.getInstance().getNewsFeedManager().unStarredNewsFeed(authMgr.getPhoneNo(), authMgr.getUsrToken(), eachNewsFeed.get(position).getNewsfeedArray_id());
                     } else {
 
@@ -626,16 +649,19 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
 
                         holder.feed_star_user.setTextColor(context.getResources().getColor(R.color.feed_senderuser));
                         holder.feed_star_user.setClickable(true);
-                        if (stars.equalsIgnoreCase(""))
-                            holder.feed_star_user.setText(ModelManager.getInstance().getAuthorizationManager().getUserName());
-                        else if (stars.endsWith("Stars")) {
+                        if (stars.equalsIgnoreCase("")) {
+                            String html_text = "<font><b>" + ModelManager.getInstance().getAuthorizationManager().getUserName() + "</b></font>";
+                            holder.feed_star_user.setText(Html.fromHtml(html_text));
+                        }else if (stars.endsWith("Stars")) {
                             stars = stars.substring(0, stars.indexOf(" "));
                             int star = Integer.parseInt(stars) + 1;
-                            holder.feed_star_user.setText(star + " Stars");
+                            String star_number = "<font><b>" + star + "Stars" + "</b></font>";
+                            holder.feed_star_user.setText(Html.fromHtml(star_number));
                             holder.feed_star_user.setTextColor(context.getResources().getColor(R.color.dark_gray));//akshit code Black is not needed
-                        } else
-                            holder.feed_star_user.setText(stars + ", " + ModelManager.getInstance().getAuthorizationManager().getUserName());
-
+                        } else {
+                            String star_number = "<font><b>" + stars + ", " + ModelManager.getInstance().getAuthorizationManager().getUserName() + "</b></font>";
+                            holder.feed_star_user.setText(Html.fromHtml(star_number));
+                        }
                         ModelManager.getInstance().getNewsFeedManager().saveStarComment(authMgr.getPhoneNo(), authMgr.getUsrToken(), eachNewsFeed.get(position).getNewsfeedArray_id(), "", "star");
                     }
 
@@ -660,12 +686,14 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
             }
         });
         if (eachNewsFeed.get(position).getNewsfeedArray_stars_count() == 0) {
-            holder.feed_star_user.setText("No Stars");
+            String no_stars = "<font><b>" + "No Stars" + "</b></font>";
+            holder.feed_star_user.setText(Html.fromHtml(no_stars));
             holder.feed_star_user.setTextColor(context.getResources().getColor(R.color.dark_gray));//akshit code Black is not needed
             holder.feed_star_user.setClickable(false);
         } else {
             if (eachNewsFeed.get(position).getNewsfeedArray_stars_count() > 5) {
-                holder.feed_star_user.setText(eachNewsFeed.get(position).getNewsfeedArray_stars_count() + " Stars");
+                String stars_grater = "<font><b>" + eachNewsFeed.get(position).getNewsfeedArray_stars_count() + " Stars" + "</b></font>";
+                holder.feed_star_user.setText(Html.fromHtml(stars_grater));
                 holder.feed_star_user.setTextColor(context.getResources().getColor(R.color.dark_gray));//akshit code Black is not needed
                 holder.feed_star_user.setClickable(true);
             } else {
@@ -678,7 +706,8 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
                     }
                 }
                 holder.feed_star_user.setTextColor(context.getResources().getColor(R.color.feed_senderuser));
-                holder.feed_star_user.setText(stars_text);
+                String html_string = "<font><b>" + stars_text + "</b></font>";
+                holder.feed_star_user.setText(Html.fromHtml(html_string));
                 holder.feed_star_user.setClickable(true);
             }
         }
@@ -741,26 +770,15 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
         ProfileManager prMgr = ModelManager.getInstance().getProfileManager();
 
 
-//                    if((mSections.get(position).receiverId)!=null){
-            /*if (senderName.get(position).equalsIgnoreCase("null")) {
-                senderName.set(position, "");
-            }
-
-            if ((receiverName.get(position)) != null) {
-                if (receiverName.get(position).equalsIgnoreCase("null"))
-                    receiverName.set(position, "");
-            }*/
-
         AuthManager authManager = ModelManager.getInstance().getAuthorizationManager();
         if (senderId.get(position).equalsIgnoreCase(authManager.getUserId())) {
-            Log.e("sender 1--->", "" + senderName.get(position));
-            Log.e("reciver 1--->", "" + receiverName.get(position));
-            Log.e("in case 1--->", "in case 1--->");
+
             view.setText(senderName.get(position));
             view1.setText(receiverName.get(position));
 
-            doubleArrow.setImageResource(R.drawable.arrow);
+
             if (authManager.getGender() != null) {
+                doubleArrow.setImageResource(R.drawable.arrow);
                 if (authManager.getGender().matches("guy")) {
 
                     try {
@@ -774,6 +792,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
                         }
                     } catch (Exception e) {
                         imageview.setImageResource(R.drawable.male_user);
+
                     }
                 } else {
                     try {
@@ -786,6 +805,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
                         }
                     } catch (Exception e) {
                         imageview.setImageResource(R.drawable.female_user);
+
                     }
                 }
             } else {
@@ -793,61 +813,11 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
             }
 
         } else {
-            Log.e("in case 2--->", "in case 2--->");
-            if (prMgr.following != null && prMgr.following.size() > 0) {
-                Log.e("inside case 10--->", "inside case 10--->" + prMgr.following.size());
-                for (int i = 0; i < prMgr.following.size(); i++) {
-                    Log.e("inside case 11--->", "inside case 11--->");
-                    if (senderId.get(position).equalsIgnoreCase(prMgr.following.get(i).getFolloweeId())) {
 
-                        Log.e("in case 3--->", "in case 3--->");
-                        Log.e("sender 2 --->", "" + senderName.get(position));
-                        Log.e("reciver 2--->", "" + receiverName.get(position));
 
-                        view.setText(senderName.get(position));
-                        view1.setText(receiverName.get(position));
-                        try {
-                            if (!senderImages.get(position).equalsIgnoreCase("")) {
-                                Picasso.with(context)
-                                        .load(senderImages.get(position))
-                                        .error(R.drawable.male_user).into(imageview);
-                            } else {
-                                imageview.setImageResource(R.drawable.male_user);
-                            }
-                        } catch (Exception e) {
-                            imageview.setImageResource(R.drawable.male_user);
-                        }
-                        doubleArrow.setImageResource(R.drawable.arrow);
-                        break;
-                    } else {
-//                                if((mSections.get(position).receiverId)!=null) {
-//                                    if ((mSections.get(position).receiverId).toString().equalsIgnoreCase(prMgr.following.get(i).getFolloweeId())) {
-                        doubleArrow.setImageResource(R.drawable.flip_arow);
-                        Log.e("in case 4--->", "in case 4--->");
-                        Log.e("sender 3--->", "" + senderName.get(position));
-                        Log.e("reciver 3--->", "" + receiverName.get(position));
-                        view.setText(receiverName.get(position));
-                        view1.setText(senderName.get(position));
-                        Picasso.with(context).load(recieverImages.get(position)).placeholder(R.drawable.dcontact).into(imageview);
-                        try {
-                            if (!recieverImages.get(position).equalsIgnoreCase("")) {
-                                Picasso.with(context)
-                                        .load(recieverImages.get(position))
-                                        .error(R.drawable.male_user).into(imageview);
-                            } else {
-                                imageview.setImageResource(R.drawable.male_user);
-                            }
-                        } catch (Exception e) {
-                            imageview.setImageResource(R.drawable.male_user);
-                        }
-//                                        break;
-//                                    }
-                    }
-                }
-            } else {
-                Log.e("in case 5--->", "in case 5--->");
-                Log.e("sender 4--->", "" + senderName.get(position));
-                Log.e("reciver 4--->", "" + receiverName.get(position));
+            if (senderId.get(position).equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getUserId())) {  // check sender id same as user id or not
+
+
                 view.setText(senderName.get(position));
                 view1.setText(receiverName.get(position));
                 try {
@@ -860,9 +830,33 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
                     }
                 } catch (Exception e) {
                     imageview.setImageResource(R.drawable.male_user);
+
                 }
                 doubleArrow.setImageResource(R.drawable.arrow);
+
+            } else {   // else change the direction of arrow as it is reciver
+
+
+                view.setText(receiverName.get(position));
+                view1.setText(senderName.get(position));
+                Picasso.with(context).load(recieverImages.get(position)).placeholder(R.drawable.dcontact).into(imageview);
+                try {
+                    if (!recieverImages.get(position).equalsIgnoreCase("")) {
+                        Picasso.with(context)
+                                .load(recieverImages.get(position))
+                                .error(R.drawable.male_user).into(imageview);
+                    } else {
+                        imageview.setImageResource(R.drawable.male_user);
+                    }
+                } catch (Exception e) {
+                    imageview.setImageResource(R.drawable.male_user);
+
+                }
+                doubleArrow.setImageResource(R.drawable.flip_arow);
+
+
             }
+
         }
 
 

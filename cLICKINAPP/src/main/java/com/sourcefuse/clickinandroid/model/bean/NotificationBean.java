@@ -7,7 +7,9 @@ package com.sourcefuse.clickinandroid.model.bean;
 public class NotificationBean {
     private String notificationMsg;
     private String notificationType;
-    public String _id;
+    public String _id;  // last chat Id prafull
+    public String mUser_id;  // last partner Id
+    public String newsfeed_id;  // last partner Id
 
     public String getIs_read() {
         return is_read;
@@ -17,7 +19,8 @@ public class NotificationBean {
         this.is_read = is_read;
     }
 
-    public String is_read  ;
+    public String is_read;
+
     public String getNotificationType() {
         return notificationType;
     }
@@ -34,7 +37,6 @@ public class NotificationBean {
     public void setNotificationMsg(String notificationMsg) {
         this.notificationMsg = notificationMsg;
     }
-
 
 
 }

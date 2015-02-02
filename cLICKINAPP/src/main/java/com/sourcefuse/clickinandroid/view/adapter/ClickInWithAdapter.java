@@ -12,12 +12,13 @@ import android.widget.ImageView;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 
-import com.sourcefuse.clickinandroid.model.PicassoManager;
 import com.sourcefuse.clickinandroid.model.bean.GetrelationshipsBean;
 import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.AddSomeoneView;
 import com.sourcefuse.clickinapp.R;
+import com.squareup.picasso.LruCache;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -33,12 +34,15 @@ public class ClickInWithAdapter extends BaseAdapter implements
     int layoutResourceId;
     List<GetrelationshipsBean> item1;
     private Typeface typeface;
-
+    LruCache mLruCahe;
+    Picasso picasso;
     public ClickInWithAdapter(Context context, int layoutResourceId, List<GetrelationshipsBean> item) {
 
         this.layoutResourceId = layoutResourceId;
         this.context = context;
         this.item1 = item;
+        mLruCahe = new LruCache(context);
+        picasso = new Picasso.Builder(context).memoryCache(mLruCahe).build();
 
     }
 
@@ -110,8 +114,8 @@ public class ClickInWithAdapter extends BaseAdapter implements
                 if (!item1.get(position).getPartnerPic().equalsIgnoreCase("")) {
                     try {
 
-                        PicassoManager.getPicasso()  // get picasso from picasso maneger
-                                .load(item1.get(position).getPartnerPic())
+
+                              picasso.load(item1.get(position).getPartnerPic())
                                 .into(rholder.clickInUsrimg);
                     } catch (Exception e) {
                         // rholder.clickInUsrimg.setImageResource(R.drawable.male_user);

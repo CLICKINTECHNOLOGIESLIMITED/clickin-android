@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.MediaStore;
@@ -79,6 +80,10 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
         String oursQbId = ModelManager.getInstance().getAuthorizationManager().getQBId();
         RelativeLayout parentChatLayout = (RelativeLayout) row.findViewById(R.id.chat_parent_layout);
         relationManager = ModelManager.getInstance().getRelationManager();
+
+        if(currentChatList.size()>19) {//akshit code set visibility of load earlier ,only is chat records are greater then 20
+            ChatRecordView.load_earlier.setVisibility(View.VISIBLE);
+        }
 
         if (imageLoader == null)
             imageLoader = AppController.getInstance().getImageLoader();
@@ -176,6 +181,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 image_attached.setScaleType(ImageView.ScaleType.FIT_XY);
 
   /* for map to set text location shared */
+
+
+
                 TextView mLongTextView = (TextView) row.findViewById(R.id.long_chat_text_share);
                 if (!(Utils.isEmptyString(temp.location_coordinates))) {
                     row.findViewById(R.id.parent_clicks_area_share).setVisibility(View.VISIBLE);
@@ -467,7 +475,6 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
             //CLICKS AND TEXT- SENDER CASE
             if (!(temp.clicks.equalsIgnoreCase("no")) && Utils.isEmptyString(temp.card_id) && Utils.isEmptyString(temp.sharingMedia)) {
-//                Log.e("1111111111111","1111111111111");
                 chatClickTextLayout.setVisibility(View.VISIBLE);
                 LinearLayout clicksArea = (LinearLayout) row.findViewById(R.id.clicks_area);
                 clicksArea.setVisibility(View.VISIBLE);
@@ -480,21 +487,27 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 //check if only clicks is there
                 parent_shared_layout.setBackgroundResource(R.drawable.newbg_pinkleft);
                 if (!(Utils.isEmptyString(temp.textMsg))) {
-//                    Log.e("11111111111112222222","111111111111122222");
                     TextView chatText = (TextView) row.findViewById(R.id.chat_text);
                     chatText.setSingleLine(true);
                     chatText.setVisibility(View.VISIBLE);
                     chatText.setTextColor(context.getResources().getColor(R.color.white));
                     if (temp.textMsg.length() > Constants.CHAT_LENTH_LIMIT) {
-//                        Log.e("11111111111112222222333","1111111111111222223333");
+
+                        LinearLayout.LayoutParams mChatLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        mChatLayoutParams.setMargins(0,0,0,pxlToDp(-5));
+
                         chatText.setText(temp.textMsg.substring(0, 17));
                         TextView chatTextLong = (TextView) row.findViewById(R.id.long_chat_text);
                         chatTextLong.setVisibility(View.VISIBLE);
                         chatTextLong.setText(temp.textMsg.substring(17));
                         chatTextLong.setTextColor(context.getResources().getColor(R.color.white));
+
+
+                        clicksArea.setLayoutParams(mChatLayoutParams); // code to set margin from bottom in chat Record view
+
+
                         parent_shared_layout.setBackgroundResource(R.drawable.newbg_pinkleft);  // code for double line
                     } else {
-//                        Log.e("111111111111122222223334444","1111111111111222223333444");
                         if ((Utils.isEmptyString(temp.content_url))) {  // check prafull
                             clicksArea.setBackgroundResource(R.drawable.pink_squre);
                         } else {
@@ -536,6 +549,10 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                         mShareLong.setText(temp.textMsg.substring(15));//akshit changes
                         mShareLong.setTextColor(context.getResources().getColor(R.color.white));
                         mShareLong.setVisibility(View.VISIBLE);
+
+                        LinearLayout.LayoutParams mChatLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        mChatLayoutParams.setMargins(0,0,0,pxlToDp(-5));
+                        mClickArea.setLayoutParams(mChatLayoutParams);// code to set margin from bottom in chat Record view
                     } else {
                         mShareSort.setText(temp.textMsg);
                         mShareSort.setVisibility(View.VISIBLE);
@@ -1174,6 +1191,13 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                         chatTextLong.setTextColor(context.getResources().getColor(R.color.white));
                         parent_shared_layout.setBackgroundResource(R.drawable.newbg_pinkright);  //code for double line
 
+
+
+                        LinearLayout.LayoutParams mChatLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        mChatLayoutParams.setMargins(0,0,0,pxlToDp(-5));
+                        clicksArea.setLayoutParams(mChatLayoutParams);// code to set margin from bottom in chat Record view
+
+
                     } else {
                         if ((Utils.isEmptyString(temp.content_url))) {  // check prafull
                             clicksArea.setBackgroundResource(R.drawable.pink_squre);
@@ -1220,6 +1244,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                         mShareLong.setTextColor(context.getResources().getColor(R.color.white));
                         mShareLong.setVisibility(View.VISIBLE);
 
+                        LinearLayout.LayoutParams mChatLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        mChatLayoutParams.setMargins(0,0,0,pxlToDp(-5));
+                        mClickArea.setLayoutParams(mChatLayoutParams);// code to set margin from bottom in chat Record view
 
                     } else {
                         mShareSort.setVisibility(View.VISIBLE);
@@ -1263,6 +1290,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     String[] splitted = relationManager.getPartnerName.split("\\s+");
 //                    ((TextView) row.findViewById(R.id.shared_by_name)).setTextColor(Color.parseColor("#687d9b"));//akshit Code
                     ((TextView) row.findViewById(R.id.shared_by_name)).setText(splitted[0]);
+                    ((TextView) row.findViewById(R.id.shared_by_name)).setTypeface(null, Typeface.BOLD);//prafull code
                     ((TextView) row.findViewById(R.id.shared_message)).setText(" wants to share");
 
 
@@ -1404,8 +1432,13 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     i.setAction("SHARE");
                     context.startActivity(i);
 
+
                     ChatManager chatManager = ModelManager.getInstance().getChatManager();
-                    chatManager.chatShare(authM.getPhoneNo(), authM.getUsrToken(), item.relationshipId, item.originalMessageID, item.sharingMedia, item.facebookToken, item.shareComment, "yes");
+                    String mFb_access_token = item.facebookToken;
+                    if(mFb_access_token.equalsIgnoreCase("-"))
+                        mFb_access_token = "";
+
+                    chatManager.chatShare(authM.getPhoneNo(), authM.getUsrToken(), item.relationshipId, item.originalMessageID, item.sharingMedia, mFb_access_token, item.shareComment, "yes");
 
                     //akshit code to set image to deactivate state .
                     ((TextView) row.findViewById(R.id.shared_message_reject)).setBackgroundResource(R.drawable.c_card_reject_deactive);

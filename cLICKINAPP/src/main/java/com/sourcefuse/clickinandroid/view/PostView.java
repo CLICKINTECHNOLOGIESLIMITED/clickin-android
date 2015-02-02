@@ -1,5 +1,10 @@
 package com.sourcefuse.clickinandroid.view;
 
+/**
+ * Created by prafull on 29/1/15.
+ */
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.SpannableStringBuilder;
 import android.util.Log;
@@ -27,7 +32,7 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 /**
  * Created by gagansethi on 3/7/14.
  */
-public class FeedView extends ClickInBaseView implements View.OnClickListener {
+public class PostView extends ClickInBaseView implements View.OnClickListener {
     public static FeedsAdapter adapter;
     ArrayList<NewsFeedBean> newsFeedBeanArrayList;
     ArrayList<String> senderName = new ArrayList<String>();
@@ -52,17 +57,18 @@ public class FeedView extends ClickInBaseView implements View.OnClickListener {
         super.onCreate(savedInstanceState);
 
 
-        setContentView(R.layout.view_feedview_list);
+        setContentView(R.layout.postview);
         addMenu(true);
 
 
         newsFeedManager = ModelManager.getInstance().getNewsFeedManager();
         authManager = ModelManager.getInstance().getAuthorizationManager();
 
+        String FeedID = getIntent().getStringExtra("feedId");
 
-        Utils.launchBarDialog(FeedView.this);
+        Utils.launchBarDialog(PostView.this);
         ModelManager.getInstance().getProfileManager().getFollwer("", authManager.getPhoneNo(), authManager.getUsrToken()); // get following list as we need it.
-        newsFeedManager.fetchNewsFeed("", authManager.getPhoneNo(), authManager.getUsrToken());
+        newsFeedManager.ViewNewsFeed(FeedID, authManager.getPhoneNo(), authManager.getUsrToken());
 
     }
 
@@ -150,7 +156,7 @@ public class FeedView extends ClickInBaseView implements View.OnClickListener {
         } else*/
 
 
-        adapter = new FeedsAdapter(FeedView.this, R.layout.feed_list_item, newsFeedManager.userFeed, mHeaderPositions,
+        adapter = new FeedsAdapter(PostView.this, R.layout.feed_list_item, newsFeedManager.userFeed, mHeaderPositions,
                 senderName, receiverName, senderImages, recieverImages, timeOfFeed, senderId, receiverId, senderPhNo, recieverPhNo);
 
         list.setAdapter(adapter);
@@ -163,6 +169,18 @@ public class FeedView extends ClickInBaseView implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
 
+        }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if (intent.hasExtra("feedId")) {
+            slidemenu.showContent();
+            String FeedID = intent.getStringExtra("feedId");
+            Utils.launchBarDialog(PostView.this);
+            ModelManager.getInstance().getProfileManager().getFollwer("", authManager.getPhoneNo(), authManager.getUsrToken()); // get following list as we need it.
+            newsFeedManager.ViewNewsFeed(FeedID, authManager.getPhoneNo(), authManager.getUsrToken());
         }
     }
 
@@ -190,14 +208,15 @@ public class FeedView extends ClickInBaseView implements View.OnClickListener {
         } else if (message.equalsIgnoreCase("NewsFeed Network Error")) {
             stopSearch = true;
             Utils.dismissBarDialog();
-            Utils.fromSignalDialog(FeedView.this, AlertMessage.connectionError);
+            Utils.fromSignalDialog(PostView.this, AlertMessage.connectionError);
         } else if (message.equalsIgnoreCase("NewsFeedDelete False")) {
         } else if (message.equalsIgnoreCase("NewsFeedDelete True")) {
             newsFeedManager.fetchNewsFeed("", ModelManager.getInstance().getAuthorizationManager().getPhoneNo(), ModelManager.getInstance().getAuthorizationManager().getUsrToken());
         } else if (message.equalsIgnoreCase("NewsFeedDelete Network Error")) {
             Utils.dismissBarDialog();
-            Utils.fromSignalDialog(FeedView.this, AlertMessage.connectionError);
+            Utils.fromSignalDialog(PostView.this, AlertMessage.connectionError);
         }
 
     }
 }
+

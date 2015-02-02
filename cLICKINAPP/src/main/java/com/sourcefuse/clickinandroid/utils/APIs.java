@@ -59,6 +59,9 @@ public class APIs {
     public static final String SAVESTARCOMMENT = baseurl + "/newsfeed/savecommentstar/";
 
 
+    public static final String VIEWFEED = baseurl + "/newsfeed/view/";
+
+
     //fetchprofile
     public static final String FETCHOTHERPROFILEINFO = baseurl + "/users/fetchprofileinfo/profile_phone_no";
     public static final String GETUSERFOLLOWER = baseurl + "/users/fetchprofilefollow/profile_phone_no";

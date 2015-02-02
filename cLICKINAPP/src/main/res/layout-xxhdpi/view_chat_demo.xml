@@ -17,6 +17,16 @@
         OTHER WISE NO NEED TO SET android:layout_toRightOf="@+id/rl_time_status_sender"
     -->
 
+    <!--<Button-->
+        <!--android:id="@+id/load_earlier"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="40dp"-->
+        <!--android:text="LOAD EARLIER"-->
+
+        <!--android:visibility="visible"-->
+
+        <!--/>-->
+
     <LinearLayout
         android:id="@+id/parent_shared_layout"
         android:layout_width="wrap_content"
@@ -42,7 +52,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="2dp"
                 android:layout_marginTop="2dp"
-                android:textStyle="bold"
                 geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"
                 android:textColor="@color/text_color_share" />
 
@@ -65,7 +74,6 @@
                 android:layout_below="@+id/shared_message"
                 android:layout_marginRight="2dp"
                 android:layout_marginTop="4dp"
-
                 android:background="@drawable/chat_divider" />
 
             <ImageView
@@ -76,6 +84,7 @@
                 android:layout_marginTop="4dp"
                 android:visibility="gone"
                 android:background="@drawable/chat_divider" />
+
         </RelativeLayout>
 
         <!--parent layout for all types of chat  -->
@@ -102,9 +111,12 @@
                     android:layout_marginTop="3dp"
                     android:layout_marginLeft="3dp"
                     android:layout_marginRight="3dp"
+                    android:layout_marginBottom="3dp"
                     android:adjustViewBounds="true"
                     android:layout_gravity="center"
-                    android:visibility="gone" />
+                    android:background="@color/black"
+                    android:visibility="gone"
+                    />
 
                 <com.sourcefuse.clickinandroid.utils.FeedImageView
                     android:id="@+id/iv_chat_image_"
@@ -138,6 +150,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/media_layout"
+                android:layout_marginTop="4dp"
                 android:layout_marginLeft="4dp"
                 android:layout_marginRight="4dp"
                 android:layout_marginBottom="4dp"
@@ -198,6 +211,7 @@
                     android:maxEms="12"
                     android:layout_marginTop="2dp"
                     android:paddingLeft="3dp"
+                    android:paddingBottom="5dp"
                     android:singleLine="false"
                     android:textColor="@color/black"
                     android:textSize="14sp"
@@ -613,6 +627,7 @@
             android:layout_marginLeft="3dp"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/media_layout"
+
             android:layout_marginBottom="3dp"
             android:background="@color/profile_name_b"
             android:gravity="center_vertical"
@@ -675,7 +690,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:maxEms="13"
+                android:ems="13"
                 android:paddingBottom="5dp"
                 android:paddingLeft="5dp"
                 android:paddingRight="10dp"

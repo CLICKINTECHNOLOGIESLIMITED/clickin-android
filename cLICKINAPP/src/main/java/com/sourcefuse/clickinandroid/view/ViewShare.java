@@ -236,9 +236,9 @@ public class ViewShare extends Activity implements View.OnClickListener {
                     ((LinearLayout) findViewById(R.id.share_clicks_area)).setBackgroundColor(getResources().getColor(R.color.white));
                     TextView textMsgchat = (TextView) findViewById(R.id.share_chat_text);
                     TextView mShareTextLong = (TextView) findViewById(R.id.share_chat_textLong);
-                    textMsgchat.setVisibility(View.VISIBLE);
-                    textMsgchat.setTextColor(Color.BLACK);
-                    textMsgchat.setText(textMsg);
+                    mShareTextLong.setVisibility(View.VISIBLE);
+                    mShareTextLong.setTextColor(Color.BLACK);
+                    mShareTextLong.setText(textMsg);
                 }
 
 
