@@ -24,6 +24,7 @@ import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -1045,11 +1046,11 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         load_earlier.setVisibility(View.GONE);
+        typingtext.setText("");
+        typingtext.setVisibility(View.GONE);
         relationManager = ModelManager.getInstance().getRelationManager();
         authManager = ModelManager.getInstance().getAuthorizationManager();
         String actionReq = intent.getAction();
-        typingtext.setText("");
-        typingtext.setVisibility(View.GONE);
         chatText.setText("");//akshit code to Refresh Chat box text
 
 
@@ -1458,10 +1459,13 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         } else if (message.equalsIgnoreCase("Composing YES")) {
             typingtext.setVisibility(View.VISIBLE);
             typingtext.setText("Typing..");
+
+
         } else if (message.equalsIgnoreCase("Composing NO")) {
 
             typingtext.setVisibility(View.VISIBLE);
             typingtext.setText("online");
+
 
         } else if (message.equalsIgnoreCase("Delivered")) {
             adapter.notifyDataSetChanged();
@@ -1483,6 +1487,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         } else if (message.equalsIgnoreCase("online")) {
             typingtext.setVisibility(View.VISIBLE);
             typingtext.setText("online");
+
             /* to update value of last seen time prafull code */
             long timestamp = Utils.ConvertIntoTimeStamp() / 1000;
             relationManager.acceptedList.get(relationListIndex).mLastSeenTime = String.valueOf(timestamp);

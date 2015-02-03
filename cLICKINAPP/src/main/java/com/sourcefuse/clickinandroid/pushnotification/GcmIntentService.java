@@ -63,7 +63,7 @@ public class GcmIntentService extends IntentService {
         if (!extras.isEmpty()) {
             if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)) {
 
-                Log.e("in this case-------->","in this case-------->");
+                /*Log.e("in this case-------->","in this case-------->");
 
                 try {
 
@@ -76,7 +76,7 @@ public class GcmIntentService extends IntentService {
 
                 } catch (JSONException e) {
                     e.printStackTrace();
-                }
+                }*/
                 Intent data = new Intent();
                 data.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 data.putExtra("isChangeInList", true);

@@ -1495,6 +1495,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 if (Utils.isConnectingToInternet((Activity) context) && !Utils.isEmptyString(item.content_url))
                     new DownloadMusicfromInternet().execute(item.content_url);
             } else {  // play video
+                Log.e("play video-------->","play video-------->");
                 Utils.playvideo(context, uri.toString());
             }
 
@@ -1510,6 +1511,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 if (Utils.isConnectingToInternet((Activity) context) && !Utils.isEmptyString(item.content_url))
                     new DownloadMusicfromInternet().execute(item.content_url);
             } else {  // play Audio
+                Log.e("play audio-------->","play audio-------->");
                 Utils.playvideo(context, uri.toString());
             }
         }
@@ -1644,6 +1646,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                                 if (precentage != 100) {   // delate file if video/Audio download intrupted
                                     File file = new File(mPath);
                                     if (file.exists()) {
+                                        Log.e("delete file-------->","delete file-------->");
                                         file.delete();
                                     }
                                 }
@@ -1688,15 +1691,16 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
         protected void onProgressUpdate(String... progress) {
             prgDialog.setProgress(Integer.parseInt(progress[0]));
             precentage = Integer.parseInt(progress[0]);
-            Log.e("precentage------->",""+precentage);
+
         }
 
         // Once Music File is downloaded
         @Override
         protected void onPostExecute(String file_url) {
-
+    Log.e("in post execute--------------->","in post execute--------------->");
 
             if (precentage == 100) {
+                Log.e("100%-------->","100%-------->");
                 /* to mount media in gallery */
                 if (path.contains(Utils.mAudioPath)) {  // code to mount Audio
 
@@ -1736,9 +1740,11 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
                 prgDialog.dismiss();
             } else {
+                Log.e("less than 100%-------->","less than 100%-------->");
                 String mPath = path + Utils.mName + ".mp4";
                 File file = new File(mPath);
                 if (file.exists()) {
+                    Log.e("delete file-------->","delete file-------->");
                     file.delete();
                 }
 

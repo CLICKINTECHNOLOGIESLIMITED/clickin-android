@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -445,6 +446,12 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
                         String rId = relationManager.acceptedList.get(position - 1).getRelationshipId();
                         partnerPic = relationManager.acceptedList.get(position - 1).getPartnerPic();
                         quickBlockId = relationManager.acceptedList.get(position - 1).getPartnerQBId();
+
+
+                        ModelManager.getInstance().getAuthorizationManager().partnerQbId = quickBlockId;
+
+
+
                         partnerId = relationManager.acceptedList.get(position - 1).getPartner_id();
                         userClicks = relationManager.acceptedList.get(position - 1).getClicks();
                         myClicks = relationManager.acceptedList.get(position - 1).getUserClicks();

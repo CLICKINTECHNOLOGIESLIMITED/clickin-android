@@ -154,10 +154,10 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
         serviceHandler = handler;
         authManager = ModelManager.getInstance().getAuthorizationManager();
 
-//        QBSettings.getInstance().fastConfigInit(Constants.CLICKIN_APP_ID, Constants.CLICKIN_AUTH_KEY, Constants.CLICKIN_AUTH_SECRET);
+        QBSettings.getInstance().fastConfigInit(Constants.CLICKIN_APP_ID, Constants.CLICKIN_AUTH_KEY, Constants.CLICKIN_AUTH_SECRET);
 //        QBSettings.getInstance().setServerApiDomain("apiclickin.quickblox.com");
-//        QBSettings.getInstance().setContentBucketName("qb-clickin");
-        QBSettings.getInstance().setChatServerDomain("chatclickin.quickblox.com");
+        //      QBSettings.getInstance().setContentBucketName("qb-clickin");
+        //    QBSettings.getInstance().setChatServerDomain("chatclickin.quickblox.com");
         QBChatService.setDebugEnabled(true);
         messageInDb = new ArrayList<ChatMessageBody>();
     }
@@ -520,7 +520,6 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
                     temp.isAccepted = extraParamsObj.getString("isAccepted");
 
 
-
                 }
 
                 if (!Utils.isEmptyString(temp.clicks)) {// in case of shared accept reject- no clicks are there-monika
@@ -833,7 +832,10 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
         }
 
         if (presence.getType() == QBPresence.Type.online) {
-            EventBus.getDefault().post("Online");
+
+            if (ModelManager.getInstance().getAuthorizationManager().partnerQbId.equalsIgnoreCase(String.valueOf(userId))) {
+                EventBus.getDefault().post("Online");
+            }
             // User is online
         } else {
             EventBus.getDefault().post("Offline");
