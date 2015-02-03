@@ -91,7 +91,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
     private PullToRefreshListView notificationList;
     private NotificationAdapter notificationAdapter;
     private int notificationlistsize = 0;
-    private  String mFirstid="" ;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
