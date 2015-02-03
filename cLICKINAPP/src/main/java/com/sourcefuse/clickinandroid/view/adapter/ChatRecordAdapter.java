@@ -13,6 +13,7 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -1638,6 +1639,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                         if (output != null && input != null) {
                             try {
                                 cancel(true);
+                                Log.e("async rask status----->",""+isCancelled());
                                 String mPath = path + Utils.mName + ".mp4";
                                 if (precentage != 100) {   // delate file if video/Audio download intrupted
                                     File file = new File(mPath);
@@ -1686,6 +1688,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
         protected void onProgressUpdate(String... progress) {
             prgDialog.setProgress(Integer.parseInt(progress[0]));
             precentage = Integer.parseInt(progress[0]);
+            Log.e("precentage------->",""+precentage);
         }
 
         // Once Music File is downloaded
