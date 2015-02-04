@@ -18,7 +18,6 @@ import android.widget.TextView;
 
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
-import com.sourcefuse.clickinandroid.model.PicassoManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
 import com.sourcefuse.clickinandroid.model.bean.FollowerFollowingBean;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
@@ -27,7 +26,6 @@ import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.FollowingListView;
 import com.sourcefuse.clickinandroid.view.JumpOtherProfileView;
 import com.sourcefuse.clickinapp.R;
-import com.squareup.picasso.LruCache;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -124,8 +122,6 @@ public class FollowingAdapter extends ArrayAdapter<FollowerFollowingBean> {
                 relationManager = ModelManager.getInstance().getRelationManager();
 
                 if (item.get(position).getAccepted().equalsIgnoreCase("true") && item.get(position).getIsFollowing().equalsIgnoreCase("false")) {
-                    item.get(position).setIsFollowing("true");
-                    rholder.reqbtn.setBackgroundResource(R.drawable.c_owner_follow_btn);
                     unfallowingDialog(position, rholder.reqbtn, layout);
 /* condition to unfollow dialog*/
 
@@ -208,7 +204,9 @@ public class FollowingAdapter extends ArrayAdapter<FollowerFollowingBean> {
         dismiss.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
+
                 dialog.dismiss();
+
 
             }
         });

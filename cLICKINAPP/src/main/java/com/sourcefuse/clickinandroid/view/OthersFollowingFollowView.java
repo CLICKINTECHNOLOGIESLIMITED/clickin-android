@@ -69,7 +69,9 @@ public class OthersFollowingFollowView extends ClickInBaseView implements View.O
                     try {
                         if (profManager.following_other.size() >= 0) {
                             String phNo = profManager.following_other.get(position).getPhoneNo();
-                            switchView(phNo);
+                            if (!ModelManager.getInstance().getAuthorizationManager().getPhoneNo().equalsIgnoreCase(phNo)) {
+                                switchView(phNo);//akshit code No Action To be Taken on User Own Name
+                            }
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -78,7 +80,10 @@ public class OthersFollowingFollowView extends ClickInBaseView implements View.O
                     try {
                         if (profManager.pfollowerList_other.size() >= 0) {
                             String phNo = profManager.pfollowerList_other.get(position).getPhoneNo();
-                            switchView(phNo);
+                            if (!ModelManager.getInstance().getAuthorizationManager().getPhoneNo().equalsIgnoreCase(phNo)) {
+                                switchView(phNo);
+                            }
+
                         }
                     } catch (Exception e) {
                         e.printStackTrace();

@@ -64,8 +64,9 @@ public class NotificationAdapter extends ArrayAdapter<NotificationBean> {
 
         RecordHolder rholder = (RecordHolder) row.getTag();
 
-        if (item.getIs_read().equalsIgnoreCase("true")) {//akshit code to set color for unread notification
-            holder.notificationMsg.setBackgroundResource(R.color.noti_read);
+        if (item.getIs_read().equalsIgnoreCase("false")) {//akshit code to set color for unread notification
+            holder.mNotificationLayout.setBackgroundResource(R.color.noti_unread);
+//            holder.notificationMsg.setBackgroundResource(R.color.noti_read);
         }
 
         if (item.getNotificationType().matches(context.getResources().getString(R.string.txt_relation_visibility))) {

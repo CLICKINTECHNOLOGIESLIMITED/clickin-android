@@ -11,10 +11,8 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,7 +39,6 @@ import com.sourcefuse.clickinandroid.model.ChatManager;
 import com.sourcefuse.clickinandroid.model.ClickInNotificationManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.NewsFeedManager;
-import com.sourcefuse.clickinandroid.model.PicassoManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.Constants;
@@ -971,7 +968,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
                 if (!slidemenu.isSecondaryMenuShowing()) {//akshit code to hit notification ,on opening secondary menu
                     mNotificationText.setText("" + mValue);
                     mNotificationText.setTextColor(Color.parseColor("#39cad4"));
-                    notificationMngr.getNotification(getApplicationContext(), "", authManager.getPhoneNo(), authManager.getUsrToken());
+                    //notificationMngr.getNotification(getApplicationContext(), "", authManager.getPhoneNo(), authManager.getUsrToken());
                 }
 
 
