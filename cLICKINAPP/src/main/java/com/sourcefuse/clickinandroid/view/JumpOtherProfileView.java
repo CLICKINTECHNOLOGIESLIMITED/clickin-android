@@ -443,7 +443,6 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
                     try {
                         if (!authManager.getTmpUserPic().equalsIgnoreCase("")) {
                             //Picasso.with(this)
-                            PicassoManager.clearCache(authManager.getTmpUserPic());
                             PicassoManager.getPicasso()
                                     .load(authManager.getTmpUserPic())
                                     .skipMemoryCache()

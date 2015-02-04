@@ -136,8 +136,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     private EditText chatText;
     private ImageView mypix, partnerPix, attachBtn;
     //    private PullToRefreshListView chatListView;
-    private ListView chatListView ;
-    public static TextView load_earlier ;
+    private ListView chatListView;
+    public static TextView load_earlier;
     private ChatRecordAdapter adapter = null;
     private TextSwitcher mSwitcher;
     private boolean showAttachmentView = true;
@@ -293,9 +293,9 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
         //akshit code to implement Load Earlier ,Remove Pull to refresh
         LayoutInflater inflater = this.getLayoutInflater();
-        View header=inflater.inflate(R.layout.list_header_chat, null);
+        View header = inflater.inflate(R.layout.list_header_chat, null);
 
-        load_earlier = (TextView)header.findViewById(R.id.load_earlier);
+        load_earlier = (TextView) header.findViewById(R.id.load_earlier);
         load_earlier.setOnClickListener(this);
         chatListView.addHeaderView(header);
 
@@ -337,7 +337,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         });
 
         Animation in = AnimationUtils.loadAnimation(this, R.anim.number_out);
-        Animation out = AnimationUtils.loadAnimation(this,R.anim.number_in);
+        Animation out = AnimationUtils.loadAnimation(this, R.anim.number_in);
 
 
         mSwitcher.setInAnimation(in);
@@ -445,7 +445,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
                 if (myvalue > 0) {
                     // pos.setText("" + myvalue);
-                    ((TextView)findViewById(R.id.sign)).setText("+");
+                    ((TextView) findViewById(R.id.sign)).setText("+");
                     setVisibilityForSend();//akshit code
                     Utils.playSound(ChatRecordView.this, R.raw.clicker_slider);//akshit code to play app sound
                     mybar.setProgressDrawable(getResources().getDrawable(R.drawable.styled_progress));//akshit code
@@ -459,8 +459,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
                 if (myvalue < 0) {
                     seekValue = myvalue;
-                    ((TextView)findViewById(R.id.sign)).setText("-");
-                    ((TextView)findViewById(R.id.sign)).setPadding(5,0,0,0);
+                    ((TextView) findViewById(R.id.sign)).setText("-");
+                    ((TextView) findViewById(R.id.sign)).setPadding(5, 0, 0, 0);
                     setVisibilityForSend();//akshit
                     Utils.playSound(ChatRecordView.this, R.raw.clicker_slider);//akshit code to play app sound
                     mybar.setProgressDrawable(getResources().getDrawable(R.drawable.styled_progress));//akshit code
@@ -468,7 +468,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                     findViewById(R.id.rl_flipper).setVisibility(View.VISIBLE);
                     findViewById(R.id.rl_flipper).setBackgroundResource(R.color.black_opacity);
 //                    ((TextView) findViewById(R.id.tv_flipper_value)).setText("" + myvalue);
-                    mSwitcher.setText(""+clickForFlipper(myvalue));
+                    mSwitcher.setText("" + clickForFlipper(myvalue));
 
                 }
 
@@ -568,13 +568,12 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             String mRelationShipId = relationManager.acceptedList.get(relationListIndex).getRelationshipId();
 
 
-
             if (getIntent().getStringExtra("mValue").equalsIgnoreCase("one")) {
 
                 Utils.showOverlay(ChatRecordView.this);
-                authManager.reSetFlag(authManager.getPhoneNo(),authManager.getUsrToken(),mRelationShipId,"no","no",relationListIndex);
+                authManager.reSetFlag(authManager.getPhoneNo(), authManager.getUsrToken(), mRelationShipId, "no", "no", relationListIndex);
             } else if (getIntent().getStringExtra("mValue").equalsIgnoreCase("two")) {
-                authManager.reSetFlag(authManager.getPhoneNo(),authManager.getUsrToken(),mRelationShipId,"no","null",relationListIndex);
+                authManager.reSetFlag(authManager.getPhoneNo(), authManager.getUsrToken(), mRelationShipId, "no", "null", relationListIndex);
                 Utils.showDialog(ChatRecordView.this);
             }
 
@@ -600,7 +599,6 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         relationManager.acceptedList.get(relationListIndex).setUserClicks(authManager.ourClicks);
 
     }
-
 
 
     @Override
@@ -1054,20 +1052,19 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         chatText.setText("");//akshit code to Refresh Chat box text
 
 
-/* code to show dialog*/
-        /* code to show dialog*/
+/* code to show dialog */
+        /* code to show dialog */
         if (intent.getExtras().containsKey("mValue")) {
 
             String mRelationShipId = relationManager.acceptedList.get(relationListIndex).getRelationshipId();
 
 
-
             if (intent.getStringExtra("mValue").equalsIgnoreCase("one")) {
 
                 Utils.showOverlay(ChatRecordView.this);
-                authManager.reSetFlag(authManager.getPhoneNo(),authManager.getUsrToken(),mRelationShipId,"no","no",relationListIndex);
+                authManager.reSetFlag(authManager.getPhoneNo(), authManager.getUsrToken(), mRelationShipId, "no", "no", relationListIndex);
             } else if (intent.getStringExtra("mValue").equalsIgnoreCase("two")) {
-                authManager.reSetFlag(authManager.getPhoneNo(),authManager.getUsrToken(),mRelationShipId,"no","null",relationListIndex);
+                authManager.reSetFlag(authManager.getPhoneNo(), authManager.getUsrToken(), mRelationShipId, "no", "null", relationListIndex);
                 Utils.showDialog(ChatRecordView.this);
             }
 
@@ -1325,9 +1322,10 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 //code to check online status or not
                 if (!Utils.isEmptyString(ModelManager.getInstance().getAuthorizationManager().partnerQbId)) {
 
-                    if (myQbChatService != null)
-                        myQbChatService.CheckOnlineStatus(Integer.parseInt(ModelManager.getInstance().getAuthorizationManager().partnerQbId));
-
+                    if (myQbChatService != null) {
+                        if (ModelManager.getInstance().getAuthorizationManager().partnerQbId != null)
+                            myQbChatService.CheckOnlineStatus(Integer.parseInt(ModelManager.getInstance().getAuthorizationManager().partnerQbId));
+                    }
                 }
             }
         }, 10000);
@@ -1373,11 +1371,10 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             partnerClicksView.setText("" + ModelManager.getInstance().getRelationManager().partnerClicks);
 
 
-
             ModelManager.getInstance().getRelationManager().acceptedList.get(relationListIndex).setUnreadMsg(0); // prafull code to set unreaed msg counter to 0 when open from recent app
         }
 
-        if(clickInadapter != null)        // notify dataset changed of clickin with list
+        if (clickInadapter != null)        // notify dataset changed of clickin with list
             clickInadapter.notifyDataSetChanged();
 
 
@@ -1399,16 +1396,14 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 //            chatListView.onRefreshComplete();
             if (chatManager.chatMessageList.size() != 0) {
                 if (adapter == null) {
-                    adapter = new ChatRecordAdapter(this,R.layout.view_chat_demo, chatManager.chatMessageList);
+                    adapter = new ChatRecordAdapter(this, R.layout.view_chat_demo, chatManager.chatMessageList);
 //
 //                    if(chatManager.chatMessageList.size()<20)
 //                        load_earlier.setVisibility(View.GONE);
                     chatListView.setAdapter(adapter);
                     chatListView.setSelection(chatManager.chatMessageList.size());
 
-                }
-
-                else {
+                } else {
                     adapter.notifyDataSetChanged();
                     chatListView.post(new Runnable() {
 
@@ -1938,7 +1933,6 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     }
 
 
-
     private String clickForFlipper(int clicks) {
 
         String changeClicks = "";
@@ -2026,10 +2020,10 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             sharedMessage.add(obj.senderQbId);
             sharedMessage.add(obj.isAccepted);
             sharedMessage.add(obj.isMessageSender);
-            if(obj.shareComment.equalsIgnoreCase("Write your caption here...")){
+            if (obj.shareComment.equalsIgnoreCase("Write your caption here...")) {
 
                 sharedMessage.add("");
-            }else {
+            } else {
 
                 sharedMessage.add(obj.shareComment);
             }
@@ -2195,7 +2189,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         if (adapter != null)
             adapter.notifyDataSetChanged();
         else {
-            adapter = new ChatRecordAdapter(this,R.layout.view_chat_demo, chatManager.chatMessageList);
+            adapter = new ChatRecordAdapter(this, R.layout.view_chat_demo, chatManager.chatMessageList);
             chatListView.setAdapter(adapter);
         }
     }

@@ -26,6 +26,7 @@ import com.sourcefuse.clickinandroid.view.FeedView;
 import com.sourcefuse.clickinandroid.view.FollowerList;
 import com.sourcefuse.clickinandroid.view.JumpOtherProfileView;
 import com.sourcefuse.clickinandroid.view.PostView;
+import com.sourcefuse.clickinandroid.view.ReloadApp;
 import com.sourcefuse.clickinandroid.view.UserProfileView;
 import com.sourcefuse.clickinapp.R;
 
@@ -63,7 +64,7 @@ public class GcmIntentService extends IntentService {
         if (!extras.isEmpty()) {
             if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)) {
 
-                /*Log.e("in this case-------->","in this case-------->");
+                Log.e("in this case-------->", "in this case-------->");
 
                 try {
 
@@ -76,116 +77,44 @@ public class GcmIntentService extends IntentService {
 
                 } catch (JSONException e) {
                     e.printStackTrace();
-                }*/
-                Intent data = new Intent();
-                data.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                data.putExtra("isChangeInList", true);
-/* CR for clickin with from other userpage and also form add someone from contact */
-/* CRA when user accept clickinwith request from tick button */
-/* RD when user remove other user from clickin with list */
-/*  FR when user request to follow using fllow button  */
-/* clk when user send click request */
-/* chat when send chat */
+                }
+
+ /*CR for clickin with from other userpage and also form add someone from contact
+ CRA when user accept clickinwith request from tick button
+ RD when user remove other user from clickin with list
+  FR when user request to follow using fllow button
+ clk when user send click request
+ chat when send chat */
 
                 if (extras.containsKey("Tp")) {
 
                     if (extras.getString("Tp").equalsIgnoreCase("CR") ||
                             extras.getString("Tp").equalsIgnoreCase("CRA") || extras.getString("Tp").equalsIgnoreCase("RV") ||
-                            extras.getString("Tp").equalsIgnoreCase("CRR")
+                            extras.getString("Tp").equalsIgnoreCase("CRR") || extras.getString("Tp").equalsIgnoreCase("clk")
+                            || extras.getString("Tp").equalsIgnoreCase("RD")
                             ) {
 
-                        data.setClass(getApplicationContext(), UserProfileView.class);
-                        UpdateCounter();
-                        sendNotification("Clickin'", extras.getString("chat_message"), data);
-                    } else if (extras.getString("Tp").equalsIgnoreCase("FR")) {  // case follow request
+                        //data.setClass(getApplicationContext(), UserProfileView.class);
 
-                        data.setClass(getApplicationContext(), FollowerList.class);
-                        data.putExtra("FromOwnProfile", true);
-                        UpdateCounter();
-                        sendNotification("Clickin'", extras.getString("chat_message"), data);
-                    } else if (extras.getString("Tp").equalsIgnoreCase("clk")) {
-
-
-
-                        data.setClass(getApplicationContext(), ChatRecordView.class);
-                        String mPartnerId = extras.getString("pid");
-
-                        putChatData(data, mPartnerId);
-
-                        sendNotification("Clickin'", extras.getString("chat_message"), data);
-
-
-                        /*  pending */
-                    } else if (extras.getString("Tp").equalsIgnoreCase("chat")) {
-
-                        data.setClass(getApplicationContext(), ChatRecordView.class);
-                        String mPartnerId = extras.getString("pid");
-
-                        putChatData(data, mPartnerId);
-                        /**/
-                        if (extras.getString("message").contains(getResources().getString(R.string.chat_msg))) {
-                            sendNotification("Clickin'", extras.getString("chat_message"), data);
+                        Log.e("in case 1","in case 1");
+                        if (ModelManager.getInstance().getAuthorizationManager().getUserId() == null) {
+                            ModelManager.getInstance().getAuthorizationManager().
+                                    getProfileInfo("", ModelManager.getInstance().getAuthorizationManager().getPhoneNo(),
+                                            ModelManager.getInstance().getAuthorizationManager().getUsrToken());
                         }
-                        if (extras.getString("message").contains(getResources().getString(R.string.chat_image))) {
-                            sendNotification("Clickin'", extras.getString("chat_message"), data);
-                        }
-                    } else if (extras.getString("Tp").equalsIgnoreCase("RD")) {
-
-                        data.setClass(getApplicationContext(), UserProfileView.class);
-                        UpdateCounter();
-                        sendNotification("Clickin'", extras.getString("message"), data);
-                    } else if (extras.getString("Tp").equalsIgnoreCase("media")) {  // case when share media and send media
-
-                        String mPartnerId = extras.getString("pid");
-                        putChatData(data, mPartnerId);
-                        data.setClass(getApplicationContext(), ChatRecordView.class);
-                        sendNotification("Clickin'", extras.getString("message"), data);
-                    } else if (extras.getString("Tp").equalsIgnoreCase("shr")) //case for share
-                    {
-
-                        data.setClass(getApplicationContext(), FeedView.class);
-                        UpdateCounter();
-                        sendNotification("Clickin'", extras.getString("chat_message"), data);
-
-
-                    } else if (extras.getString("Tp").equalsIgnoreCase("Upp")) //case for Profile Update
-                    {
-
-                        data.setClass(getApplicationContext(), JumpOtherProfileView.class);
-                        data.putExtra("FromOwnProfile", true);
-                        data.putExtra("phNumber", extras.getString("phone_no"));
-                        UpdateCounter();
-                        sendNotification("Clickin'", extras.getString("message"), data);
-                        EventBus.getDefault().post("updatePhoto");
-
-                        PicassoManager.setLruCache(getApplicationContext());
-                        PicassoManager.setPicasso(getApplicationContext(),PicassoManager.getLruCache());
-
-                    } else if (extras.getString("Tp").equalsIgnoreCase("card")) //case for card
-                    // case when card accepted
-                    // case when card rejected
-                    // case when counter card
-                    // case when want to share card
-                    {
-
-                        String mPartnerId = extras.getString("pid");
-                        putChatData(data, mPartnerId);
-                        data.setClass(getApplicationContext(), ChatRecordView.class);
-                        sendNotification("Clickin'", extras.getString("chat_message"), data);
-                    } else if (extras.getString("Tp").equalsIgnoreCase("str") || extras.getString("Tp").equalsIgnoreCase("cmt")
-                            || extras.getString("Tp").equalsIgnoreCase("Rpt")) //case for feed star
-                    {
-
-                        data.setClass(getApplicationContext(), PostView.class);
-                        data.putExtra("feedId",extras.getString("Nid"));
-                        UpdateCounter();
-                        sendNotification("Clickin'", extras.getString("chat_message"), data);
-
-
                     }
 
                 }
 
+                Intent intent1 = new Intent();
+                Bundle bundle = new Bundle();
+                bundle.putAll(extras);
+                intent1.setClass(getApplicationContext(), ReloadApp.class);
+                intent1.putExtras(bundle);
+
+                /*intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                intent.setClass(getApplicationContext(), ReloadApp.class);*/
+                sendNotification("Clickin'", extras.getString("chat_message"), intent1);
 
             }
         }
@@ -194,51 +123,7 @@ public class GcmIntentService extends IntentService {
     }
 
 
-    public void putChatData(Intent mIntent, String mPartnerId) {
-
-
-        for (int i = 0; i < mRelationManager.acceptedList.size(); i++) {
-            if (mRelationManager.acceptedList.get(i).getPartner_id().equalsIgnoreCase(mPartnerId)) {
-                mIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                mIntent.setAction("UPDATE");
-                mIntent.putExtra("quickId", mRelationManager.acceptedList.get(i).getPartnerQBId());
-                mIntent.putExtra("partnerPic", mRelationManager.acceptedList.get(i).getPartnerPic());
-                mIntent.putExtra("partnerName", mRelationManager.acceptedList.get(i).getPartnerName());
-                mIntent.putExtra("rId", mRelationManager.acceptedList.get(i).getRelationshipId());
-                mIntent.putExtra("partnerId", mRelationManager.acceptedList.get(i).getPartner_id());
-
-                mIntent.putExtra("myClicks", mRelationManager.acceptedList.get(i).getUserClicks());
-                mIntent.putExtra("userClicks", mRelationManager.acceptedList.get(i).getClicks());
-                mIntent.putExtra("partnerPh", mRelationManager.acceptedList.get(i).getPhoneNo());
-                mIntent.putExtra("relationListIndex", i);
-
-                ChatManager chatManager = ModelManager.getInstance().getChatManager();
-                chatManager.setrelationshipId(mRelationManager.acceptedList.get(i).getRelationshipId());
-            }
-        }
-
-
-    }
-
-    private void UpdateCounter() // to update counter
-    {
-        AuthManager authManager = ModelManager.getInstance().getAuthorizationManager();
-        int counter = authManager.getNotificationCounter();
-        authManager.setNotificationCounter(counter + 1);
-        EventBus.getDefault().postSticky("update Counter");
-        Intent intent = new Intent();
-        Constants.mInAppNotification = true;
-
-    }
-
     private void sendNotification(String title, String msg, Intent intent) {
-
-
-        /* code to fetch notifiacation */
-
-
-
-        /* code to fetch notifiacation */
 
         mNotificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -246,7 +131,6 @@ public class GcmIntentService extends IntentService {
 
         PendingIntent contentIntent = null;
         if (intent != null) {
-            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             contentIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, PendingIntent.FLAG_ONE_SHOT);
         }
 
