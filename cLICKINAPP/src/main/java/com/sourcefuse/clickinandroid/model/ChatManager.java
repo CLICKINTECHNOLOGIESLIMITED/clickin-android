@@ -100,7 +100,20 @@ public class ChatManager {
                     public void onFailure(int statusCode, Throwable e,
                                           JSONObject errorResponse) {
                         super.onFailure(statusCode, e, errorResponse);
+
                         if (errorResponse != null) {
+                            if(errorResponse.has("message")){
+                                try {
+                                    if(errorResponse.getString("message").equalsIgnoreCase("No chat history found")){
+                                        Log.e("Error Response", "No Chat history");
+                                        EventBus.getDefault().post("No chat history found");
+                                    }
+                                } catch (JSONException e1) {
+                                    e1.printStackTrace();
+                                }{
+
+                                }
+                            }
 
                             EventBus.getDefault().post("FecthChat False");
                         } else {
@@ -249,6 +262,22 @@ public class ChatManager {
                                 EventBus.getDefault().post("FecthChat True");
                             } else {
                                 EventBus.getDefault().post("FecthChat False");
+                                if (response != null) {
+                                    if(response.has("message")){//akshit Code to Fetch message if NO more History
+                                        try {
+                                            if(response.getString("message").equalsIgnoreCase("No chat history found")){
+                                                Log.e("Error Response", "No Chat history");
+                                                EventBus.getDefault().post("No chat history found");
+                                            }
+                                        } catch (JSONException e1) {
+                                            e1.printStackTrace();
+                                        }{
+
+                                        }
+                                    }
+
+                                    EventBus.getDefault().post("FecthChat False");
+                                }
                             }
 
                         } catch (JSONException e) {
@@ -373,6 +402,7 @@ public class ChatManager {
             userInputDetails.put("comment", comment);
             userInputDetails.put("accepted", accepted);
 
+            Log.e("Chat Share","Message With Comment" +comment);
 
 
             client = new AsyncHttpClient();

@@ -8,7 +8,6 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -458,7 +457,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
                 ModelManager.getInstance().getNewsFeedManager().reportInAppropriate(authMgr.getPhoneNo(), authMgr.getUsrToken(), eachNewsFeed.get(position).getNewsfeedArray_id());
             }
         });
-        if (eachNewsFeed.get(position).getCommentArrayList() != null) {
+        if (eachNewsFeed.get(position).getCommentArrayList() != null ) {
 
 
             holder.feed_comments_layout.setVisibility(VISIBLE);
@@ -468,10 +467,6 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
                 holder.no_comments.setTypeface(null,Typeface.NORMAL);
                 String html = "<font><b>" + "View all " + eachNewsFeed.get(position).getNewsfeedArray_comments_count() + " comments" + "</b></font>" ;
                 holder.no_comments.setText(Html.fromHtml(html));
-//=======
-//
-//                holder.no_comments.setText("View all " + eachNewsFeed.get(position).getNewsfeedArray_comments_count() + " comments");
-
 
                 for (int k = 0; k < eachNewsFeed.get(position).getCommentArrayList().size(); k++) {
 
