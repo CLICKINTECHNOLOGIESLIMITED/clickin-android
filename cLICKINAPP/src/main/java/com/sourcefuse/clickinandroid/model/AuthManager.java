@@ -2,6 +2,7 @@ package com.sourcefuse.clickinandroid.model;
 
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.util.Log;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -599,6 +600,7 @@ public class AuthManager {
 
         }
 
+        Log.e("userdetails-------->",""+userInputDetails);
 
         client.post(null, APIs.SIGNIN, se, "application/json",
                 new JsonHttpResponseHandler() {
