@@ -154,10 +154,10 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
         serviceHandler = handler;
         authManager = ModelManager.getInstance().getAuthorizationManager();
 
-//        QBSettings.getInstance().fastConfigInit(Constants.CLICKIN_APP_ID, Constants.CLICKIN_AUTH_KEY, Constants.CLICKIN_AUTH_SECRET);
+        QBSettings.getInstance().fastConfigInit(Constants.CLICKIN_APP_ID, Constants.CLICKIN_AUTH_KEY, Constants.CLICKIN_AUTH_SECRET);
 //        QBSettings.getInstance().setServerApiDomain("apiclickin.quickblox.com");
 //        QBSettings.getInstance().setContentBucketName("qb-clickin");
-        QBSettings.getInstance().setChatServerDomain("chatclickin.quickblox.com");
+//        QBSettings.getInstance().setChatServerDomain("chatclickin.quickblox.com");
         QBChatService.setDebugEnabled(true);
         messageInDb = new ArrayList<ChatMessageBody>();
     }
@@ -519,8 +519,15 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
                     temp.shareStatus = extraParamsObj.getString("shareStatus");
                     temp.isAccepted = extraParamsObj.getString("isAccepted");
 
+                    if(extraParamsObj.has("comment")) {//akshit Code to filter the value of comments //Akshit
+                        if (extraParamsObj.getString("comment").equalsIgnoreCase("Write your caption here...")) {//if comments are there
+                            temp.shareComment = "";
+                        }else{//if comments are there
+                            temp.shareComment = extraParamsObj.getString("comment");
+                        }
 
 
+                    }
                 }
 
                 if (!Utils.isEmptyString(temp.clicks)) {// in case of shared accept reject- no clicks are there-monika

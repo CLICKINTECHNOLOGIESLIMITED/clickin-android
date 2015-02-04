@@ -24,6 +24,7 @@ import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -125,6 +126,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         }
     };
     private SeekBar mybar;
+
     private TextView pos, neg, profileName, typingtext, myclicksView, partnerClicksView;
     private Button send, btnToCard;
     private int relationListIndex = -1;
@@ -150,6 +152,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     private String audioFilePath = null;
     private int CHAT_TYPE;
     private boolean mIsBound;
+
     private ServiceConnection mConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
             // This is called when the connection with the service has been
@@ -737,8 +740,10 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             case R.id.load_earlier://akshit code to fetch history of chat ,after load earlier is clicked
                 try {
                     // int lastIndex = chatManager.chatMessageList.size() - 1;
+
                     chatListSize = chatManager.chatMessageList.size();
                     String lastChatId = chatManager.chatMessageList.get(0).chatId;
+                    Utils.launchBarDialog(this);
                     chatManager.fetchChatRecord(rId, authManager.getPhoneNo(), authManager.getUsrToken(), lastChatId);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -1045,11 +1050,11 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         load_earlier.setVisibility(View.GONE);
+        typingtext.setText("");
+        typingtext.setVisibility(View.GONE);
         relationManager = ModelManager.getInstance().getRelationManager();
         authManager = ModelManager.getInstance().getAuthorizationManager();
         String actionReq = intent.getAction();
-        typingtext.setText("");
-        typingtext.setVisibility(View.GONE);
         chatText.setText("");//akshit code to Refresh Chat box text
 
 
@@ -1208,7 +1213,11 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             temp.originalMessageID = intent.getExtras().getString("originalChatId");
             temp.messageSenderId = authManager.getQBId();
             temp.textMsg = intent.getExtras().getString("textMsg");
-            temp.shareComment = intent.getExtras().getString("caption");
+
+
+            temp.shareComment= intent.getExtras().getString("caption");
+
+
             temp.isMessageSender = intent.getExtras().getString("isMessageSender");
             temp.shareStatus = intent.getExtras().getString("shareStatus");
             temp.facebookToken = intent.getExtras().getString("facebookToken");
@@ -1236,6 +1245,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
 
             ChatMessageBody objToSend = new ChatMessageBody(temp); //we truncate clicks from text in showvalue function,
+
             //so keep original object here
             ShowValueinChat(temp);
             objToSend.chatType = Constants.CHAT_TYPE_SHARING;
@@ -1394,6 +1404,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         authManager = ModelManager.getInstance().getAuthorizationManager();
         if (message.equalsIgnoreCase("FecthChat True")) {
             Utils.dismissBarDialog();
+
 //            load_earlier.setVisibility(View.VISIBLE);
 //            chatListView.onRefreshComplete();
             if (chatManager.chatMessageList.size() != 0) {
@@ -1427,16 +1438,19 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                     });
                 }
             }
+         }else if(message.equalsIgnoreCase("No chat history found")){
+//               chat_history = "false" ;
+            Log.e("Error Response", "No Chat history");
+//                load_earlier.setVisibility(View.GONE);
+//                 chat_history_present="no";
 
+        }
 
-        } else if (message.equalsIgnoreCase("FecthChat False")) {
+         else if (message.equalsIgnoreCase("FecthChat False")) {
 //            chatListView.onRefreshComplete();
+       /* on dismiss */
+       Utils.dismissBarDialog();
 
-
-
-
-            /* on dismiss */
-            Utils.dismissBarDialog();
         } else if (message.equalsIgnoreCase("FecthChat Network Error")) {
             Utils.fromSignalDialog(ChatRecordView.this, AlertMessage.connectionError);
         } else if (message.equalsIgnoreCase("Chat Message Recieve")) {
@@ -1458,10 +1472,13 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         } else if (message.equalsIgnoreCase("Composing YES")) {
             typingtext.setVisibility(View.VISIBLE);
             typingtext.setText("Typing..");
+
+
         } else if (message.equalsIgnoreCase("Composing NO")) {
 
             typingtext.setVisibility(View.VISIBLE);
             typingtext.setText("online");
+
 
         } else if (message.equalsIgnoreCase("Delivered")) {
             adapter.notifyDataSetChanged();
@@ -1483,6 +1500,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         } else if (message.equalsIgnoreCase("online")) {
             typingtext.setVisibility(View.VISIBLE);
             typingtext.setText("online");
+
             /* to update value of last seen time prafull code */
             long timestamp = Utils.ConvertIntoTimeStamp() / 1000;
             relationManager.acceptedList.get(relationListIndex).mLastSeenTime = String.valueOf(timestamp);
@@ -2021,9 +2039,10 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             sharedMessage.add(obj.senderQbId);
             sharedMessage.add(obj.isAccepted);
             sharedMessage.add(obj.isMessageSender);
-            if(obj.shareComment.equalsIgnoreCase("Write your caption here...")){
+            if(obj.shareComment.equalsIgnoreCase("Write your caption here...")){//code to filter if Comments are not there (For History Only )//Akshit
 
-                sharedMessage.add("");
+                obj.shareComment = " ";
+                sharedMessage.add(obj.shareComment);
             }else {
 
                 sharedMessage.add(obj.shareComment);

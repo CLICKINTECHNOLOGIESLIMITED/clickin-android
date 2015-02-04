@@ -39,7 +39,6 @@ import com.sourcefuse.clickinandroid.model.ChatManager;
 import com.sourcefuse.clickinandroid.model.ClickInNotificationManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.NewsFeedManager;
-import com.sourcefuse.clickinandroid.model.PicassoManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.Constants;
@@ -444,6 +443,12 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
                         String rId = relationManager.acceptedList.get(position - 1).getRelationshipId();
                         partnerPic = relationManager.acceptedList.get(position - 1).getPartnerPic();
                         quickBlockId = relationManager.acceptedList.get(position - 1).getPartnerQBId();
+
+
+                        ModelManager.getInstance().getAuthorizationManager().partnerQbId = quickBlockId;
+
+
+
                         partnerId = relationManager.acceptedList.get(position - 1).getPartner_id();
                         userClicks = relationManager.acceptedList.get(position - 1).getClicks();
                         myClicks = relationManager.acceptedList.get(position - 1).getUserClicks();
@@ -963,7 +968,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
                 if (!slidemenu.isSecondaryMenuShowing()) {//akshit code to hit notification ,on opening secondary menu
                     mNotificationText.setText("" + mValue);
                     mNotificationText.setTextColor(Color.parseColor("#39cad4"));
-                    notificationMngr.getNotification(getApplicationContext(), "", authManager.getPhoneNo(), authManager.getUsrToken());
+                    //notificationMngr.getNotification(getApplicationContext(), "", authManager.getPhoneNo(), authManager.getUsrToken());
                 }
 
 

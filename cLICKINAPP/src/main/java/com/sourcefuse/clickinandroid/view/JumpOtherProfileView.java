@@ -74,6 +74,20 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
 
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if (intent.hasExtra("FromOwnProfile") && intent.getBooleanExtra("FromOwnProfile", false)) {
+            authManager = ModelManager.getInstance().getAuthorizationManager();
+            relationManager = ModelManager.getInstance().getRelationManager();
+            phForOtherUser = intent.getExtras().getString("phNumber");
+            Utils.launchBarDialog(this);
+            authManager.getProfileInfo(phForOtherUser, authManager.getPhoneNo(), authManager.getUsrToken());
+            if (slidemenu.isMenuShowing())
+                slidemenu.showContent();
+        }
+    }
+
     /* akshit code to set data */
     public void setView() {
         setContentView(R.layout.view_othersprofile);
@@ -254,7 +268,7 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
             Utils.dismissBarDialog();
         } else if (message.equalsIgnoreCase("ProfileInfoNetwork Error")) {
             Utils.fromSignalDialog(this, AlertMessage.connectionError);
-        } else if (message.equalsIgnoreCase("Fetchprofilerelationships True")  || message.equalsIgnoreCase("GetRelationShips False") || message.equalsIgnoreCase("GetRelationShips Network Error")) {
+        } else if (message.equalsIgnoreCase("Fetchprofilerelationships True") || message.equalsIgnoreCase("GetRelationShips False") || message.equalsIgnoreCase("GetRelationShips Network Error")) {
 
             //akshit code
             if (Utils.isEmptyString(relationManager.getRelationStatus())) {
@@ -406,7 +420,6 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
             follower.setText(Html.fromHtml(text));
             String textfollowing = "<font color=#f29691>" + getResources().getString(R.string.txt_following) + "</font> <font color=#cccccc>" + authManager.getTmpFollowing() + "</font>";
             following.setText(Html.fromHtml(textfollowing));
-
 
 
             if (!Utils.isEmptyString(authManager.getTmpGender())) {

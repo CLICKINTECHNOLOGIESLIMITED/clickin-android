@@ -40,8 +40,6 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:choiceMode="singleChoice"
-
-
             android:divider="@null"
             android:fadingEdge="none"
             android:listSelector="#00000000"

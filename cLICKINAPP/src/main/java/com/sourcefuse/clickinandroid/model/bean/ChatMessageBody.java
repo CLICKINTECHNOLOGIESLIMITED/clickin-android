@@ -44,7 +44,7 @@ public class ChatMessageBody {
 
     public String isMessageSender = null;
     public String shareStatus = null;
-    public String shareComment = " ";
+    public String shareComment = "";
     public String originalMessageID = null;
     public String sharingMedia = null;
     public String isAccepted = null;

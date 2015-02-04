@@ -81,6 +81,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
         RelativeLayout parentChatLayout = (RelativeLayout) row.findViewById(R.id.chat_parent_layout);
         relationManager = ModelManager.getInstance().getRelationManager();
 
+
         if(currentChatList.size()>19) {//akshit code set visibility of load earlier ,only is chat records are greater then 20
             ChatRecordView.load_earlier.setVisibility(View.VISIBLE);
         }
@@ -1385,7 +1386,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     chatManager.chatShare(authM.getPhoneNo(), authM.getUsrToken(), item.relationshipId, item.originalMessageID, item.sharingMedia, item.facebookToken, item.shareComment, "no");
 
                     //akshit code to change images to deactive state
-                    ((TextView) row.findViewById(R.id.shared_message_reject)).setBackgroundResource(R.drawable.c_card_reject_deactive);
+                            ((TextView) row.findViewById(R.id.shared_message_reject)).setBackgroundResource(R.drawable.c_card_reject_deactive);
                     ((TextView) row.findViewById(R.id.shared_message_accept)).setBackgroundResource(R.drawable.c_card_accepted_deactive);
                     //ends
 

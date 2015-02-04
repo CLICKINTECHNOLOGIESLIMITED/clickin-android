@@ -10,6 +10,7 @@ public class NotificationBean {
     public String _id;  // last chat Id prafull
     public String mUser_id;  // last partner Id
     public String newsfeed_id;  // last partner Id
+    public String update_user_id;
 
     public String getIs_read() {
         return is_read;

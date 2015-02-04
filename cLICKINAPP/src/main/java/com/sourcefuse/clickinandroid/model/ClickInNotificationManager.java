@@ -1,7 +1,6 @@
 package com.sourcefuse.clickinandroid.model;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -94,9 +93,14 @@ public class ClickInNotificationManager implements NotificationManagerI {
                                     ntificationBeanList._id  = data.getString("_id");
                                     ntificationBeanList.mUser_id  = data.getString("user_id");
                                     ntificationBeanList.setIs_read(data.getString("read"));
+                                    if(data.getString("read").equalsIgnoreCase("false")) {
+                                        int i1 =  ModelManager.getInstance().getAuthorizationManager().getNotificationCounter();
+                                        ModelManager.getInstance().getAuthorizationManager().setNotificationCounter(i1+1);
+                                    }
                                     if(data.has("newsfeed_id"))
                                         ntificationBeanList.newsfeed_id = data.getString("newsfeed_id");
-
+                                    if(data.has("update_user_id"))
+                                        ntificationBeanList.update_user_id = data.getString("update_user_id");
 
                                     notificationArray.add(ntificationBeanList);
                                 }
@@ -114,6 +118,7 @@ public class ClickInNotificationManager implements NotificationManagerI {
 
 
                                 EventBus.getDefault().postSticky("Notification true");
+                                EventBus.getDefault().post("update Counter");
 
                             }
 

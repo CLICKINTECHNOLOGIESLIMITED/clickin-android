@@ -18,7 +18,6 @@ import android.widget.TextView;
 
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
-import com.sourcefuse.clickinandroid.model.PicassoManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
 import com.sourcefuse.clickinandroid.model.bean.FollowerFollowingBean;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
@@ -27,7 +26,6 @@ import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.FollowingListView;
 import com.sourcefuse.clickinandroid.view.JumpOtherProfileView;
 import com.sourcefuse.clickinapp.R;
-import com.squareup.picasso.LruCache;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -43,16 +41,16 @@ public class FollowingAdapter extends ArrayAdapter<FollowerFollowingBean> {
     private AuthManager authManager;
     private RelationManager relationManager;
 
-    LruCache mLruCahe;
-    Picasso picasso;
+    /*LruCache mLruCahe;
+    Picasso picasso;*/
     public FollowingAdapter(Context context, int layoutResourceId,
                             List<FollowerFollowingBean> item1) {
         super(context, layoutResourceId, item1);
         this.layoutResourceId = layoutResourceId;
         this.context = context;
         this.item = item1;
-        mLruCahe = new LruCache(context);
-        picasso = new Picasso.Builder(context).memoryCache(mLruCahe).build();
+        /*mLruCahe = new LruCache(context);
+        picasso = new Picasso.Builder(context).memoryCache(mLruCahe).build();*/
     }
 
     @Override
@@ -105,7 +103,7 @@ public class FollowingAdapter extends ArrayAdapter<FollowerFollowingBean> {
         if (!item.get(position).getFolloweePic().equalsIgnoreCase("")) {
             try {
 
-                picasso.load(item.get(position).getFolloweePic())
+                Picasso.with(context).load(item.get(position).getFolloweePic())
                         .into(rholder.usrimg);
             } catch (Exception e) {
                 //holder.usrimg.setImageResource(R.drawable.male_user);
@@ -124,8 +122,6 @@ public class FollowingAdapter extends ArrayAdapter<FollowerFollowingBean> {
                 relationManager = ModelManager.getInstance().getRelationManager();
 
                 if (item.get(position).getAccepted().equalsIgnoreCase("true") && item.get(position).getIsFollowing().equalsIgnoreCase("false")) {
-                    item.get(position).setIsFollowing("true");
-                    rholder.reqbtn.setBackgroundResource(R.drawable.c_owner_follow_btn);
                     unfallowingDialog(position, rholder.reqbtn, layout);
 /* condition to unfollow dialog*/
 
@@ -208,7 +204,9 @@ public class FollowingAdapter extends ArrayAdapter<FollowerFollowingBean> {
         dismiss.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
+
                 dialog.dismiss();
+
 
             }
         });
