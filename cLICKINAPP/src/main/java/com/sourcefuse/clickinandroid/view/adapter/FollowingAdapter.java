@@ -43,16 +43,16 @@ public class FollowingAdapter extends ArrayAdapter<FollowerFollowingBean> {
     private AuthManager authManager;
     private RelationManager relationManager;
 
-    LruCache mLruCahe;
-    Picasso picasso;
+    /*LruCache mLruCahe;
+    Picasso picasso;*/
     public FollowingAdapter(Context context, int layoutResourceId,
                             List<FollowerFollowingBean> item1) {
         super(context, layoutResourceId, item1);
         this.layoutResourceId = layoutResourceId;
         this.context = context;
         this.item = item1;
-        mLruCahe = new LruCache(context);
-        picasso = new Picasso.Builder(context).memoryCache(mLruCahe).build();
+        /*mLruCahe = new LruCache(context);
+        picasso = new Picasso.Builder(context).memoryCache(mLruCahe).build();*/
     }
 
     @Override
@@ -105,7 +105,7 @@ public class FollowingAdapter extends ArrayAdapter<FollowerFollowingBean> {
         if (!item.get(position).getFolloweePic().equalsIgnoreCase("")) {
             try {
 
-                picasso.load(item.get(position).getFolloweePic())
+                Picasso.with(context).load(item.get(position).getFolloweePic())
                         .into(rholder.usrimg);
             } catch (Exception e) {
                 //holder.usrimg.setImageResource(R.drawable.male_user);

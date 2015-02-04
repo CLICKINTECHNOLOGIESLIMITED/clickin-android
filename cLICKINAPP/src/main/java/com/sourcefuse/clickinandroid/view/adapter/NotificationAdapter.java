@@ -5,7 +5,6 @@ import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +13,14 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.PicassoManager;
+import com.sourcefuse.clickinandroid.model.RelationManager;
 import com.sourcefuse.clickinandroid.model.bean.NotificationBean;
 import com.sourcefuse.clickinandroid.view.FeedView;
 import com.sourcefuse.clickinandroid.view.FollowerList;
 import com.sourcefuse.clickinandroid.view.FollowingListView;
+import com.sourcefuse.clickinandroid.view.JumpOtherProfileView;
 import com.sourcefuse.clickinandroid.view.PostView;
 import com.sourcefuse.clickinandroid.view.UserProfileView;
 import com.sourcefuse.clickinapp.R;
@@ -132,9 +134,21 @@ public class NotificationAdapter extends ArrayAdapter<NotificationBean> {
                 } else if (item.getNotificationType().equalsIgnoreCase(context.getResources().getString(R.string.type_update))) {
 
 
-                    Intent intent = new Intent(getContext(), UserProfileView.class);
+                    RelationManager relationManager = ModelManager.getInstance().getRelationManager();
+                    String ph = "";
+                    for(int i=0;i<relationManager.acceptedList.size();i++)
+                    {
+                        if(relationManager.acceptedList.get(i).getPartner_id().equalsIgnoreCase(item.update_user_id))
+                        {
+                            ph = relationManager.acceptedList.get(i).getPhoneNo();
+
+                        }
+                    }
+
+                    Intent intent = new Intent(getContext(), JumpOtherProfileView.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                    intent.putExtra("updatephoto", true);
+                    intent.putExtra("phNumber", ph);
+                    intent.putExtra("FromOwnProfile", true);
                     context.startActivity(intent);
 
 

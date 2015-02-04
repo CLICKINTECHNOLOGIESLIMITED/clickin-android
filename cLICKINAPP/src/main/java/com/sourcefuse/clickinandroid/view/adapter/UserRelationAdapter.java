@@ -44,8 +44,8 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
     private boolean showpending = false;
 
 
-    LruCache mLruCahe;
-    Picasso picasso;
+    /*LruCache mLruCahe;
+    Picasso picasso;*/
     public UserRelationAdapter(Context context, int layoutResourceId,
                                List<GetrelationshipsBean> item) {
         super(context, layoutResourceId, item);
@@ -53,8 +53,8 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
         this.layoutResourceId = layoutResourceId;
         this.context = context;
 
-        mLruCahe = new LruCache(context);
-        picasso = new Picasso.Builder(context).memoryCache(mLruCahe).build();
+       /* mLruCahe = new LruCache(context);
+        picasso = new Picasso.Builder(context).memoryCache(mLruCahe).build();*/
 
     }
 //    ((ImageView)row.findViewById(R.id.iv_accept_card)).setTag(position);
@@ -162,8 +162,8 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
         if (!itemList.get(position).getPartnerPic().equalsIgnoreCase("")) {
             try {
 
-               // Picasso.with(context)
-                 picasso.load(itemList.get(position).getPartnerPic())
+                Picasso.with(context)
+                 .load(itemList.get(position).getPartnerPic())
                         .into(usrimg);
 
 

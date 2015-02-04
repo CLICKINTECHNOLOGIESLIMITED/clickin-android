@@ -34,15 +34,15 @@ public class ClickInWithAdapter extends BaseAdapter implements
     int layoutResourceId;
     List<GetrelationshipsBean> item1;
     private Typeface typeface;
-    LruCache mLruCahe;
-    Picasso picasso;
+    /*LruCache mLruCahe;
+    Picasso picasso;*/
     public ClickInWithAdapter(Context context, int layoutResourceId, List<GetrelationshipsBean> item) {
 
         this.layoutResourceId = layoutResourceId;
         this.context = context;
         this.item1 = item;
-        mLruCahe = new LruCache(context);
-        picasso = new Picasso.Builder(context).memoryCache(mLruCahe).build();
+        /*mLruCahe = new LruCache(context);
+        picasso = new Picasso.Builder(context).memoryCache(mLruCahe).build();*/
 
     }
 
@@ -115,7 +115,7 @@ public class ClickInWithAdapter extends BaseAdapter implements
                     try {
 
 
-                              picasso.load(item1.get(position).getPartnerPic())
+                              Picasso.with(context).load(item1.get(position).getPartnerPic())
                                 .into(rholder.clickInUsrimg);
                     } catch (Exception e) {
                         // rholder.clickInUsrimg.setImageResource(R.drawable.male_user);

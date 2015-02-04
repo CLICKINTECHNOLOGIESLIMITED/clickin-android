@@ -96,7 +96,8 @@ public class ClickInNotificationManager implements NotificationManagerI {
                                     ntificationBeanList.setIs_read(data.getString("read"));
                                     if(data.has("newsfeed_id"))
                                         ntificationBeanList.newsfeed_id = data.getString("newsfeed_id");
-
+                                    if(data.has("update_user_id"))
+                                        ntificationBeanList.update_user_id = data.getString("update_user_id");
 
                                     notificationArray.add(ntificationBeanList);
                                 }
