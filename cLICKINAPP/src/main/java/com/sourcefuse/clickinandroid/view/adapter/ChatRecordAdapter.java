@@ -50,6 +50,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.Field;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -82,7 +84,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
         RelativeLayout parentChatLayout = (RelativeLayout) row.findViewById(R.id.chat_parent_layout);
         relationManager = ModelManager.getInstance().getRelationManager();
 
-        if(currentChatList.size()>19) {//akshit code set visibility of load earlier ,only is chat records are greater then 20
+        if (currentChatList.size() > 19) {//akshit code set visibility of load earlier ,only is chat records are greater then 20
             ChatRecordView.load_earlier.setVisibility(View.VISIBLE);
         }
 
@@ -182,7 +184,6 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 image_attached.setScaleType(ImageView.ScaleType.FIT_XY);
 
   /* for map to set text location shared */
-
 
 
                 TextView mLongTextView = (TextView) row.findViewById(R.id.long_chat_text_share);
@@ -353,7 +354,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     ((LinearLayout) row.findViewById(R.id.acc_rej_layout_second)).setVisibility(View.VISIBLE);
                     String name = " ";
                     //code to decide who is accepted the card- basis on card owner- importance while sharing card
-                    if(!Utils.isEmptyString(temp.sharingMedia)) {
+                    if (!Utils.isEmptyString(temp.sharingMedia)) {
 
 
                         if (!Utils.isEmptyString(temp.card_owner) && temp.card_owner.equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getQBId())) {
@@ -366,8 +367,8 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                             name = "You";
 
                         }
-                    }else{
-                        name="You"; //without sharing case, at sender side, it always you accept/reject
+                    } else {
+                        name = "You"; //without sharing case, at sender side, it always you accept/reject
                     }
                     ((TextView) row.findViewById(R.id.tv_acc_res_name)).setText(name);
                     ((TextView) row.findViewById(R.id.tv_acc_res_status)).setText("ACCEPTED!");
@@ -382,20 +383,20 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     ((LinearLayout) row.findViewById(R.id.acc_rej_layout_second)).setVisibility(View.VISIBLE);
                     String name = " ";
                     //code to decide who is accepted the card- basis on card owner- importance while sharing card
-                    if (!Utils.isEmptyString(temp.sharingMedia)){
+                    if (!Utils.isEmptyString(temp.sharingMedia)) {
 
-                    if (!Utils.isEmptyString(temp.card_owner) && temp.card_owner.equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getQBId())) {
+                        if (!Utils.isEmptyString(temp.card_owner) && temp.card_owner.equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getQBId())) {
 
-                        //parnter accepted the card
-                        String[] splitted = relationManager.getPartnerName.split("\\s+");
-                        name = splitted[0];
+                            //parnter accepted the card
+                            String[] splitted = relationManager.getPartnerName.split("\\s+");
+                            name = splitted[0];
+                        } else {
+                            //it means you accepted the card
+                            name = "You";
+
+                        }
                     } else {
-                        //it means you accepted the card
-                        name = "You";
-
-                    }
-                }else{
-                        name="You"; //without sharing case, at sender side, it always you accept/reject
+                        name = "You"; //without sharing case, at sender side, it always you accept/reject
                     }
 
                     ((TextView) row.findViewById(R.id.tv_acc_res_name)).setText(name);
@@ -444,7 +445,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
             //only text-SENDER CASE
             //in case share accept/reject, ignore the text
             if (!Utils.isEmptyString(temp.textMsg) && temp.clicks.equalsIgnoreCase("no")
-                    && Utils.isEmptyString(temp.location_coordinates) ) {
+                    && Utils.isEmptyString(temp.location_coordinates)) {
 
 
                 //code to hide share icon for text messages-monika
@@ -466,7 +467,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 } else {
                     TextView chatText = (TextView) row.findViewById(R.id.long_chat_text); // prafull code
                     chatText.setVisibility(View.VISIBLE);
-                     chatText.setTextColor(context.getResources().getColor(R.color.black));
+                    chatText.setTextColor(context.getResources().getColor(R.color.black));
                     parent_shared_layout.setBackgroundResource(R.drawable.newbg_grey);
                     chatText.setBackgroundResource(R.drawable.grey_square);
                     chatText.setText("" + temp.textMsg);
@@ -495,7 +496,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     if (temp.textMsg.length() > Constants.CHAT_LENTH_LIMIT) {
 
                         LinearLayout.LayoutParams mChatLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                        mChatLayoutParams.setMargins(0,0,0,pxlToDp(-5));
+                        mChatLayoutParams.setMargins(0, 0, 0, pxlToDp(-5));
 
                         chatText.setText(temp.textMsg.substring(0, 17));
                         TextView chatTextLong = (TextView) row.findViewById(R.id.long_chat_text);
@@ -552,7 +553,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                         mShareLong.setVisibility(View.VISIBLE);
 
                         LinearLayout.LayoutParams mChatLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                        mChatLayoutParams.setMargins(0,0,0,pxlToDp(-5));
+                        mChatLayoutParams.setMargins(0, 0, 0, pxlToDp(-5));
                         mClickArea.setLayoutParams(mChatLayoutParams);// code to set margin from bottom in chat Record view
                     } else {
                         mShareSort.setText(temp.textMsg);
@@ -885,7 +886,6 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                             if (temp.card_Played_Countered.equalsIgnoreCase("playing")) {
 
 
-
                                 temp.card_Played_Countered = "played";
                                 sendUpdateCardValues(position, "rejected", "REJECTED!");
 
@@ -911,7 +911,6 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                                 temp.card_Played_Countered = "played";
 
 
-
                                 sendUpdateCardValues(position, "accepted", "ACCEPTED!");
 
                             }
@@ -935,7 +934,6 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                                 //   temp.card_Played_Countered = "played";
 
 
-
                                 sendUpdateCardValues(position, "countered", "COUNTERED CARD!");
 
                             }
@@ -955,8 +953,8 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     ((LinearLayout) row.findViewById(R.id.acc_rej_layout_second)).setVisibility(View.VISIBLE);
 
                     //code to decide who is accepted the card- basis on card owner- importance while sharing card
-                    String name=" ";
-                    if(!Utils.isEmptyString(temp.sharingMedia)) {
+                    String name = " ";
+                    if (!Utils.isEmptyString(temp.sharingMedia)) {
 
                         if (!Utils.isEmptyString(temp.card_owner) && temp.card_owner.equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getQBId())) {
 
@@ -968,7 +966,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                             name = "You";
 
                         }
-                    }else{
+                    } else {
                         String[] splitted = relationManager.getPartnerName.split("\\s+");
                         name = splitted[0];
                     }
@@ -985,8 +983,8 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     ((LinearLayout) row.findViewById(R.id.ll_for_share_icon)).setVisibility(View.VISIBLE);
                     ((LinearLayout) row.findViewById(R.id.acc_rej_layout_second)).setVisibility(View.VISIBLE);
                     //code to decide who is accepted the card- basis on card owner- importance while sharing card
-                    String name=" ";
-                    if(!Utils.isEmptyString(temp.sharingMedia)) {
+                    String name = " ";
+                    if (!Utils.isEmptyString(temp.sharingMedia)) {
 
 
                         if (!Utils.isEmptyString(temp.card_owner) && temp.card_owner.equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getQBId())) {
@@ -999,11 +997,10 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                             name = "You";
 
                         }
+                    } else {
+                        String[] splitted = relationManager.getPartnerName.split("\\s+");
+                        name = splitted[0];
                     }
-                        else{
-                            String[] splitted = relationManager.getPartnerName.split("\\s+");
-                            name = splitted[0];
-                        }
 
 
                     ((TextView) row.findViewById(R.id.tv_acc_res_name)).setText(name);
@@ -1036,7 +1033,6 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                                 temp.card_Played_Countered = "played";
 
 
-
                                 sendUpdateCardValues(position, "rejected", "REJECTED!");
 
                                 /* code to play sound */
@@ -1051,9 +1047,6 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                         public void onClick(View v) {
                             //Card ACCEPT Action
                             int position = (Integer) v.getTag();
-
-
-
 
 
                             //card is allowed to play once only- reject, accept or counter change state to played
@@ -1078,7 +1071,6 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                             //card is allowed to play once only- reject, accept or counter change state to played
                             if (temp.card_Played_Countered.equalsIgnoreCase("playing")) {
                                 //   temp.card_Played_Countered = "played";
-
 
 
                                 sendUpdateCardValues(position, "countered", "COUNTERED CARD!");
@@ -1123,9 +1115,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
             /* only text reciver case*/
             //in case share accept/reject, ignore the text
 
-            if (!Utils.isEmptyString(temp.textMsg) && temp.clicks.equalsIgnoreCase("no")  && Utils.isEmptyString(temp.location_coordinates)
+            if (!Utils.isEmptyString(temp.textMsg) && temp.clicks.equalsIgnoreCase("no") && Utils.isEmptyString(temp.location_coordinates)
 
-                   ) {
+                    ) {
 
                 //code to hide share icon for text messages-monika
                 if (Utils.isEmptyString(temp.content_url))
@@ -1193,9 +1185,8 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                         parent_shared_layout.setBackgroundResource(R.drawable.newbg_pinkright);  //code for double line
 
 
-
                         LinearLayout.LayoutParams mChatLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                        mChatLayoutParams.setMargins(0,0,0,pxlToDp(-5));
+                        mChatLayoutParams.setMargins(0, 0, 0, pxlToDp(-5));
                         clicksArea.setLayoutParams(mChatLayoutParams);// code to set margin from bottom in chat Record view
 
 
@@ -1246,7 +1237,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                         mShareLong.setVisibility(View.VISIBLE);
 
                         LinearLayout.LayoutParams mChatLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                        mChatLayoutParams.setMargins(0,0,0,pxlToDp(-5));
+                        mChatLayoutParams.setMargins(0, 0, 0, pxlToDp(-5));
                         mClickArea.setLayoutParams(mChatLayoutParams);// code to set margin from bottom in chat Record view
 
                     } else {
@@ -1283,7 +1274,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     if (!Utils.isEmptyString(temp.card_id)) {
                         row.findViewById(R.id.except_share).setVisibility(View.GONE);
                         row.findViewById(R.id.incase_share).setVisibility(View.VISIBLE);
-                        ((ImageView)row.findViewById(R.id.incase_share_footer)).setVisibility(View.VISIBLE);//akshit code to shaow divider
+                        ((ImageView) row.findViewById(R.id.incase_share_footer)).setVisibility(View.VISIBLE);//akshit code to shaow divider
                     }
 
                     ((LinearLayout) row.findViewById(R.id.shared_footer_view)).setVisibility(View.VISIBLE);
@@ -1436,7 +1427,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
                     ChatManager chatManager = ModelManager.getInstance().getChatManager();
                     String mFb_access_token = item.facebookToken;
-                    if(mFb_access_token.equalsIgnoreCase("-"))
+                    if (mFb_access_token.equalsIgnoreCase("-"))
                         mFb_access_token = "";
 
                     chatManager.chatShare(authM.getPhoneNo(), authM.getUsrToken(), item.relationshipId, item.originalMessageID, item.sharingMedia, mFb_access_token, item.shareComment, "yes");
@@ -1495,7 +1486,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 if (Utils.isConnectingToInternet((Activity) context) && !Utils.isEmptyString(item.content_url))
                     new DownloadMusicfromInternet().execute(item.content_url);
             } else {  // play video
-                Log.e("play video-------->","play video-------->");
+                Log.e("play video-------->", "play video-------->");
                 Utils.playvideo(context, uri.toString());
             }
 
@@ -1511,7 +1502,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 if (Utils.isConnectingToInternet((Activity) context) && !Utils.isEmptyString(item.content_url))
                     new DownloadMusicfromInternet().execute(item.content_url);
             } else {  // play Audio
-                Log.e("play audio-------->","play audio-------->");
+                Log.e("play audio-------->", "play audio-------->");
                 Utils.playvideo(context, uri.toString());
             }
         }
@@ -1532,7 +1523,6 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
         i.putExtra("card_Accepted_Rejected", action);
         i.putExtra("played_Countered", item.card_Played_Countered);
         i.putExtra("card_originator", item.card_originator);
-
 
 
         i.putExtra("card_owner", item.card_owner);
@@ -1590,7 +1580,6 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
             i.putExtra("is_CustomCard", item.is_CustomCard);
 
 
-
         } else if (!Utils.isEmptyString(item.content_url) && Utils.isEmptyString(item.imageRatio) && Utils.isEmptyString(item.video_thumb)) {
             i.putExtra("audioID", item.content_url);
         }
@@ -1633,56 +1622,64 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
         @Override
         protected String doInBackground(final String... f_url) {
             int count;
+            Log.e("in doInBackground--------->", "in doInBackground--------->");
             try {
                 URL url = new URL(f_url[0]);
-                prgDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                prgDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
                     @Override
-                    public void onDismiss(DialogInterface dialogInterface) {
-                        if (output != null && input != null) {
-                            try {
-                                cancel(true);
-                                Log.e("async rask status----->",""+isCancelled());
-                                String mPath = path + Utils.mName + ".mp4";
-                                if (precentage != 100) {   // delate file if video/Audio download intrupted
-                                    File file = new File(mPath);
-                                    if (file.exists()) {
-                                        Log.e("delete file-------->","delete file-------->");
-                                        file.delete();
-                                    }
-                                }
-
-                            } catch (Exception e) {
-                                e.printStackTrace();
-
-                            }
+                    public void onCancel(DialogInterface dialog) {
+                        Log.e("in cancle---------->", "in cancle---------->");
+                        try {
+                            cancel(true);
+                            return;
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Log.e("Catch--------->", "" + e.toString());
                         }
                     }
                 });
+
                 conection = url.openConnection();
                 conection.connect();
+
+                // only when async task is not cancel
+                Log.e("is cancled-------->", "" + isCancelled());
                 int lenghtOfFile = conection.getContentLength();
                 input = new BufferedInputStream(url.openStream(), 10 * 1024);
-                mFile = new File(path);
-                if (!mFile.exists()) {
-                    mFile.mkdir();
-                }
-                mFile.setWritable(true);
-                mFile.setReadable(true);
+                if (!isCancelled()) {
+                    mFile = new File(path);
+                    if (!mFile.exists()) {
+                        mFile.mkdir();
+                    }
+                    mFile.setWritable(true);
+                    mFile.setReadable(true);
 
-                mPath = mFile.getAbsolutePath() + "/" + Utils.mName + ".mp4";
-                output = new FileOutputStream(mPath);
-                byte data[] = new byte[1024];
-                long total = 0;
-                while ((count = input.read(data)) != -1) {
-                    total += count;
-                    publishProgress("" + (int) ((total * 100) / lenghtOfFile));
-                    output.write(data, 0, count);
+                    mPath = mFile.getAbsolutePath() + "/" + Utils.mName + ".mp4";
+                    output = new FileOutputStream(mPath);
+                    byte data[] = new byte[1024];
+                    long total = 0;
+                    while ((count = input.read(data)) != -1) {
+                        if (!isCancelled()) {
+                            total += count;
+                            publishProgress("" + (int) ((total * 100) / lenghtOfFile));
+                            output.write(data, 0, count);
+                        } else {
+                            return null;
+                        }
+                    }
+
+                } else {
+                    return null;
                 }
                 output.flush();
                 output.close();
-                input.close();
+                if (input != null)
+                    input.close();
+
+
             } catch (Exception e) {
 
+                Log.e("Exception------->", "Exception------->" + e.toString());
             }
             return null;
         }
@@ -1690,17 +1687,52 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
         // While Downloading Music File
         protected void onProgressUpdate(String... progress) {
             prgDialog.setProgress(Integer.parseInt(progress[0]));
-            precentage = Integer.parseInt(progress[0]);
+            if (!isCancelled())
+                precentage = Integer.parseInt(progress[0]);
 
         }
 
+        @Override
+        protected void onCancelled() {
+
+            Log.e("in isCancelled--->", "in isCancelled--->");
+            try {
+
+                String path1 = path + Utils.mName + ".mp4";
+               /* File file = new File(path1);
+                file.deleteOnExit();*/
+
+                Log.e("path1------->", "" + path1);
+                Log.e("path------->", "" + path);
+
+
+                precentage = 0;
+
+                File file1 = new File(path1);   // delete file if exists on exists
+                Log.e("file---------->", "" + file1.exists());
+                if (file1.exists())
+                    file1.delete();
+
+                if (input != null)
+                    input.reset();
+
+            } catch (Exception e) {
+                Log.e("result on exception---------->", "" + e.toString());
+            }
+
+            super.onCancelled();
+
+            return;
+        }
+
+        /*Uri mUri;*/
         // Once Music File is downloaded
         @Override
         protected void onPostExecute(String file_url) {
-    Log.e("in post execute--------------->","in post execute--------------->");
+            Log.e("in post execute--------------->", "in post execute--------------->");
 
             if (precentage == 100) {
-                Log.e("100%-------->","100%-------->");
+                Log.e("100%-------->", "100%-------->");
                 /* to mount media in gallery */
                 if (path.contains(Utils.mAudioPath)) {  // code to mount Audio
 
@@ -1740,11 +1772,11 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
                 prgDialog.dismiss();
             } else {
-                Log.e("less than 100%-------->","less than 100%-------->");
+                Log.e("less than 100%-------->", "less than 100%-------->");
                 String mPath = path + Utils.mName + ".mp4";
                 File file = new File(mPath);
                 if (file.exists()) {
-                    Log.e("delete file-------->","delete file-------->");
+                    Log.e("delete file-------->", "delete file-------->");
                     file.delete();
                 }
 
