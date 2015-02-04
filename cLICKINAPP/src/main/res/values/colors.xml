@@ -64,7 +64,7 @@
     <color name="menu_footer">#64718f</color>
     <color name="sahred_text_background">#cdcccc</color>
 
-    <color name="noti_read">#64718f</color>
+    <color name="noti_unread">#64718f</color>
 
     <color name="lightest_gray">#F6F6F6</color>
 

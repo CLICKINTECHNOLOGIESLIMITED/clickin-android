@@ -8,7 +8,6 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +26,7 @@ import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.ProfileManager;
 import com.sourcefuse.clickinandroid.model.bean.NewsFeedBean;
+import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.FeedCommentsView;
 import com.sourcefuse.clickinandroid.view.FeedStarsView;
@@ -59,7 +59,8 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
     ArrayList<String> mId;
     MediaPlayer player;
     AuthManager authMgr;
-    Typeface typeface;
+    Typeface typeface,typeface_avenera_medium;
+
     ArrayList<String> senderName;
     ArrayList<String> senderId;
     ArrayList<String> receiverName;
@@ -458,7 +459,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
                 ModelManager.getInstance().getNewsFeedManager().reportInAppropriate(authMgr.getPhoneNo(), authMgr.getUsrToken(), eachNewsFeed.get(position).getNewsfeedArray_id());
             }
         });
-        if (eachNewsFeed.get(position).getCommentArrayList() != null) {
+        if (eachNewsFeed.get(position).getCommentArrayList() != null ) {
 
 
             holder.feed_comments_layout.setVisibility(VISIBLE);
@@ -468,10 +469,6 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
                 holder.no_comments.setTypeface(null,Typeface.NORMAL);
                 String html = "<font><b>" + "View all " + eachNewsFeed.get(position).getNewsfeedArray_comments_count() + " comments" + "</b></font>" ;
                 holder.no_comments.setText(Html.fromHtml(html));
-//=======
-//
-//                holder.no_comments.setText("View all " + eachNewsFeed.get(position).getNewsfeedArray_comments_count() + " comments");
-
 
                 for (int k = 0; k < eachNewsFeed.get(position).getCommentArrayList().size(); k++) {
 
@@ -537,7 +534,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
                     holder.comment4.setText(Html.fromHtml(text3));
 
                 } else {
-
+                    typeface_avenera_medium = Typeface.createFromAsset(getContext().getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
                     holder.comment2.setVisibility(GONE);
 
                     holder.comment3.setVisibility(GONE);
@@ -546,6 +543,8 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
                     holder.feed_comments_layout1.setVisibility(VISIBLE);
                     String no_comment = "<font ><b>" + "No Comments" + "</b></font>";
                     holder.no_comments.setText(Html.fromHtml(no_comment));
+//                    holder.no_comments.setTypeface(typeface_avenera_medium);
+//                    holder.no_comments.setText("No Comments");
                 }
             }
 
