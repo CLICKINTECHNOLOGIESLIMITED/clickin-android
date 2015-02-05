@@ -65,7 +65,6 @@
         </activity>
 
         <activity
-            android:taskAffinity="a"
             android:name="com.sourcefuse.clickinandroid.view.SplashView"
             android:launchMode="standard"
             android:screenOrientation="portrait">
