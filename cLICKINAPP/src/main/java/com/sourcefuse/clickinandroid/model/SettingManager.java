@@ -295,13 +295,14 @@ public class SettingManager {
     }
 
 
-    public void changeLastSeenTime(String phone_no, String user_token) {
+    public void changeLastSeenTime(String phone_no, String user_token,String reset_device) {
         authManager = ModelManager.getInstance().getAuthorizationManager();
         JSONObject userInputDetails = new JSONObject();
         try {
             userInputDetails.put("phone_no", phone_no);
             userInputDetails.put("user_token", user_token);
-
+            if(reset_device.equalsIgnoreCase("yes"))
+            userInputDetails.put("recet_device", reset_device);
 
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());

@@ -24,7 +24,6 @@ import com.facebook.UiLifecycleHelper;
 import com.facebook.widget.FacebookDialog;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
-import com.sourcefuse.clickinandroid.model.NotificationManagerI;
 import com.sourcefuse.clickinandroid.model.SettingManager;
 import com.sourcefuse.clickinandroid.services.MyQbChatService;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
@@ -417,7 +416,8 @@ public class SettingView extends Activity implements View.OnClickListener, Compo
                 editor.apply();
                 ModelManager.getInstance().getSettingManager().changeLastSeenTime(
                         ModelManager.getInstance().getAuthorizationManager().getPhoneNo(),
-                        ModelManager.getInstance().getAuthorizationManager().getUsrToken());
+                        ModelManager.getInstance().getAuthorizationManager().getUsrToken(),"yes");//akshit code to logout
+
                 //monika- stop service running in background
                 Intent i = new Intent(this, MyQbChatService.class);
                 stopService(i);

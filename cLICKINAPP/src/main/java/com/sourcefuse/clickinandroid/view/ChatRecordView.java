@@ -1407,6 +1407,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
 //            load_earlier.setVisibility(View.VISIBLE);
 //            chatListView.onRefreshComplete();
+
             if (chatManager.chatMessageList.size() != 0) {
                 if (adapter == null) {
                     adapter = new ChatRecordAdapter(this,R.layout.view_chat_demo, chatManager.chatMessageList);
@@ -1438,6 +1439,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                     });
                 }
             }
+
          }else if(message.equalsIgnoreCase("No chat history found")){
 //               chat_history = "false" ;
             Log.e("Error Response", "No Chat history");
@@ -1496,7 +1498,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             send_text.setEnabled(false);
             ModelManager.getInstance().getSettingManager().changeLastSeenTime(
                     ModelManager.getInstance().getAuthorizationManager().getPhoneNo(),
-                    ModelManager.getInstance().getAuthorizationManager().getUsrToken());
+                    ModelManager.getInstance().getAuthorizationManager().getUsrToken(),"");
         } else if (message.equalsIgnoreCase("online")) {
             typingtext.setVisibility(View.VISIBLE);
             typingtext.setText("online");

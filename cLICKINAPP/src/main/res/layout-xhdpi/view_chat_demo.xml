@@ -21,7 +21,7 @@
         android:id="@+id/parent_shared_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/newbg_pinkleft"
+        android:background="@drawable/newbg_grey"
         android:layout_alignParentLeft="true"
         android:orientation="vertical">
 
@@ -200,6 +200,7 @@
                     android:paddingBottom="5dp"
                     android:paddingLeft="3dp"
                     android:singleLine="false"
+                    android:text="vjdslkvjbdskjvbsdklajv"
                     android:textColor="@color/black"
                     android:textSize="14sp"
                     android:visibility="gone" />
@@ -614,7 +615,7 @@
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/media_layout"
             android:layout_marginBottom="3dp"
-            android:background="@color/profile_name_b"
+
             android:gravity="center_vertical"
             android:orientation="vertical"
             android:visibility="gone">
@@ -662,7 +663,6 @@
                     android:paddingLeft="5dp"
                     android:paddingRight="10dp"
                     android:singleLine="true"
-
                     android:textColor="@color/white"
                     android:textSize="14sp"
                     android:visibility="gone" />
