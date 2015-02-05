@@ -162,8 +162,8 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
         if (!itemList.get(position).getPartnerPic().equalsIgnoreCase("")) {
             try {
 
-                Picasso.with(context)
-                 .load(itemList.get(position).getPartnerPic())
+                //Picasso.with(context)
+                PicassoManager.getPicasso().load(itemList.get(position).getPartnerPic())
                         .into(usrimg);
 
 

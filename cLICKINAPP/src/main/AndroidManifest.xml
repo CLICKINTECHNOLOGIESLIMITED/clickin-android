@@ -65,12 +65,18 @@
         </activity>
 
         <activity
+            android:taskAffinity="a"
             android:name="com.sourcefuse.clickinandroid.view.SplashView"
             android:launchMode="standard"
             android:screenOrientation="portrait">
 
         </activity>
+        <activity
+            android:name="com.sourcefuse.clickinandroid.view.ReloadApp"
+            android:launchMode="standard"
+            android:screenOrientation="portrait">
 
+        </activity>
 
         <activity
             android:name="com.sourcefuse.clickinandroid.view.SignInView"

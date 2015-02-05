@@ -153,8 +153,8 @@ public class NotificationAdapter extends ArrayAdapter<NotificationBean> {
                     context.startActivity(intent);
 
 
-                    PicassoManager.setLruCache(context);
-                    PicassoManager.setPicasso(context,PicassoManager.getLruCache());
+                    PicassoManager.setPicasso(context);
+                    PicassoManager.clearCache();
 
                 } else if (item.getNotificationType().equalsIgnoreCase(context.getResources().getString(R.string.star)) ||
                         item.getNotificationType().equalsIgnoreCase(context.getResources().getString(R.string.commented)) ||

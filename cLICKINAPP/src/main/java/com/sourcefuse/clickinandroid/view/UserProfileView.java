@@ -25,6 +25,7 @@ import android.widget.TextView;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ClickInNotificationManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
+import com.sourcefuse.clickinandroid.model.PicassoManager;
 import com.sourcefuse.clickinandroid.model.ProfileManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
 import com.sourcefuse.clickinandroid.services.MyQbChatService;
@@ -101,8 +102,9 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         addMenu(true);
         this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
-
-
+        if (PicassoManager.getPicasso() == null) {
+            PicassoManager.setPicasso(this);
+        }
 
 
         authManager = ModelManager.getInstance().getAuthorizationManager();
@@ -114,7 +116,6 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         EditProfile = (TextView) findViewById(R.id.btn_edit_profile);
 
         mUserRelationlistView = (ListView) findViewById(R.id.list_click_with_profile);
-
 
 
         ((TextView) findViewById(R.id.tv_profile_txt)).setText("PROFILE");
@@ -146,7 +147,6 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         mUserRelationlistView.addFooterView(footerView);
 
 
-
         authManager = ModelManager.getInstance().getAuthorizationManager();
         notificationMngr = ModelManager.getInstance().getNotificationManagerManager();
         //  notificationMngr.getNotification("", authManager.getPhoneNo(), authManager.getUsrToken());
@@ -171,6 +171,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
             }
 
         }
+        Log.e("FromSignup ---- isChangeInList ----- updatephoto",""+ FromSignup +"" + isChangeInList +""+ updatephoto);
 
 
         if (FromSignup) {
@@ -183,7 +184,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
             setlist();
         }
         if (updatephoto || isChangeInList) {
-           // Utils.launchBarDialog(this);
+            // Utils.launchBarDialog(this);
             ModelManager.getInstance().getRelationManager().getRelationShips(authManager.getPhoneNo(), authManager.getUsrToken());
         }
 
@@ -490,7 +491,10 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         super.onNewIntent(intent);
 
 
+
         if (intent.getExtras() != null && intent.getExtras().containsKey("isChangeInList")) {
+
+            Log.e("on new Intent-------->isChangeInList","on new Intent-------->isChangeInList");
 
             if (intent.getExtras().getBoolean("isChangeInList")) {
                 if (slidemenu.isMenuShowing())
@@ -500,7 +504,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
                 relationManager.getRelationShips(authManager.getPhoneNo(), authManager.getUsrToken());
             }
         } else if (intent.getExtras() != null && intent.getExtras().containsKey("updatephoto")) {
-
+            Log.e("on new Intent-------->updatephoto","on new Intent-------->updatephoto");
 
             if (slidemenu.isMenuShowing())
                 slidemenu.showContent();
