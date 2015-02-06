@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
@@ -22,6 +23,7 @@ import com.sourcefuse.clickinandroid.model.PicassoManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
 import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.view.ChatRecordView;
+import com.sourcefuse.clickinandroid.view.ClickInBaseView;
 import com.sourcefuse.clickinandroid.view.FeedView;
 import com.sourcefuse.clickinandroid.view.FollowerList;
 import com.sourcefuse.clickinandroid.view.JumpOtherProfileView;
@@ -66,7 +68,7 @@ public class GcmIntentService extends IntentService {
 
                 Log.e("in this case-------->", "in this case-------->");
 
-                try {
+                /*try {
 
                     JSONObject jsonObject = new JSONObject();
                     for (String key : extras.keySet()) {
@@ -77,44 +79,112 @@ public class GcmIntentService extends IntentService {
 
                 } catch (JSONException e) {
                     e.printStackTrace();
-                }
-
- /*CR for clickin with from other userpage and also form add someone from contact
- CRA when user accept clickinwith request from tick button
- RD when user remove other user from clickin with list
-  FR when user request to follow using fllow button
- clk when user send click request
- chat when send chat */
+                }*/
+                Intent data = new Intent();
+                data.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                data.putExtra("isChangeInList", true);
+/* CR for clickin with from other userpage and also form add someone from contact */
+/* CRA when user accept clickinwith request from tick button */
+/* RD when user remove other user from clickin with list */
+/*  FR when user request to follow using fllow button  */
+/* clk when user send click request */
+/* chat when send chat */
 
                 if (extras.containsKey("Tp")) {
 
                     if (extras.getString("Tp").equalsIgnoreCase("CR") ||
                             extras.getString("Tp").equalsIgnoreCase("CRA") || extras.getString("Tp").equalsIgnoreCase("RV") ||
-                            extras.getString("Tp").equalsIgnoreCase("CRR") || extras.getString("Tp").equalsIgnoreCase("clk")
-                            || extras.getString("Tp").equalsIgnoreCase("RD")
+                            extras.getString("Tp").equalsIgnoreCase("CRR")
                             ) {
 
-                        //data.setClass(getApplicationContext(), UserProfileView.class);
+                        data.setClass(getApplicationContext(), ReloadApp.class);
+                        data.putExtra("Tp", extras.getString("Tp"));
+                        sendNotification("Clickin'", extras.getString("chat_message"), data);
+                    } else if (extras.getString("Tp").equalsIgnoreCase("FR")) {  // case follow request
 
-                        Log.e("in case 1","in case 1");
-                        if (ModelManager.getInstance().getAuthorizationManager().getUserId() == null) {
-                            ModelManager.getInstance().getAuthorizationManager().
-                                    getProfileInfo("", ModelManager.getInstance().getAuthorizationManager().getPhoneNo(),
-                                            ModelManager.getInstance().getAuthorizationManager().getUsrToken());
+                        data.setClass(getApplicationContext(), ReloadApp.class);
+                        data.putExtra("FromOwnProfile", true);
+                        data.putExtra("Tp", extras.getString("Tp"));
+                        sendNotification("Clickin'", extras.getString("chat_message"), data);
+                    } else if (extras.getString("Tp").equalsIgnoreCase("clk")) {
+
+
+                        data.setClass(getApplicationContext(), ReloadApp.class);
+                        data.putExtra("Tp", extras.getString("Tp"));
+                        String mPartnerId = extras.getString("pid");
+                        data.putExtra("pid", mPartnerId);
+
+                        sendNotification("Clickin'", extras.getString("chat_message"), data);
+
+
+                        /*  pending */
+                    } else if (extras.getString("Tp").equalsIgnoreCase("chat")) {
+
+                        data.setClass(getApplicationContext(), ReloadApp.class);
+                        data.putExtra("Tp", extras.getString("Tp"));
+                        String mPartnerId = extras.getString("pid");
+                        data.putExtra("pid", mPartnerId);
+
+                        /**/
+                        if (extras.getString("message").contains(getResources().getString(R.string.chat_msg))) {
+                            sendNotification("Clickin'", extras.getString("chat_message"), data);
                         }
+                        if (extras.getString("message").contains(getResources().getString(R.string.chat_image))) {
+                            sendNotification("Clickin'", extras.getString("chat_message"), data);
+                        }
+                    } else if (extras.getString("Tp").equalsIgnoreCase("RD")) {
+
+                        data.setClass(getApplicationContext(), ReloadApp.class);
+                        data.putExtra("Tp", extras.getString("Tp"));
+                        sendNotification("Clickin'", extras.getString("message"), data);
+                    } else if (extras.getString("Tp").equalsIgnoreCase("media")) {  // case when share media and send media
+
+                        String mPartnerId = extras.getString("pid");
+                        data.putExtra("pid", mPartnerId);
+                        data.setClass(getApplicationContext(), ReloadApp.class);
+                        sendNotification("Clickin'", extras.getString("message"), data);
+                    } else if (extras.getString("Tp").equalsIgnoreCase("shr")) //case for share
+                    {
+
+                        data.setClass(getApplicationContext(), ReloadApp.class);
+                        data.putExtra("Tp", extras.getString("Tp"));
+                        sendNotification("Clickin'", extras.getString("chat_message"), data);
+
+
+                    } else if (extras.getString("Tp").equalsIgnoreCase("Upp")) //case for Profile Update
+                    {
+
+                        data.setClass(getApplicationContext(), ReloadApp.class);
+                        data.putExtra("Tp", extras.getString("Tp"));
+                        data.putExtra("FromOwnProfile", true);
+                        data.putExtra("phone_no", extras.getString("phone_no"));
+
+                        sendNotification("Clickin'", extras.getString("message"), data);
+                        EventBus.getDefault().post("updatePhoto");
+
+                    } else if (extras.getString("Tp").equalsIgnoreCase("card")) //case for card
+                    {
+
+                        String mPartnerId = extras.getString("pid");
+
+                        data.setClass(getApplicationContext(), ReloadApp.class);
+                        data.putExtra("Tp", extras.getString("Tp"));
+                        data.putExtra("pid", mPartnerId);
+                        sendNotification("Clickin'", extras.getString("chat_message"), data);
+                    } else if (extras.getString("Tp").equalsIgnoreCase("str") || extras.getString("Tp").equalsIgnoreCase("cmt")
+                            || extras.getString("Tp").equalsIgnoreCase("Rpt")) //case for feed star
+                    {
+
+                        data.setClass(getApplicationContext(), ReloadApp.class);
+                        data.putExtra("Nid", extras.getString("Nid"));
+                        data.putExtra("Tp", extras.getString("Tp"));
+                        sendNotification("Clickin'", extras.getString("chat_message"), data);
+
+
                     }
 
                 }
 
-                Intent intent1 = new Intent();
-                Bundle bundle = new Bundle();
-                bundle.putAll(extras);
-                intent1.setClass(getApplicationContext(), ReloadApp.class);
-                intent1.putExtras(bundle);
-
-                /*intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                intent.setClass(getApplicationContext(), ReloadApp.class);*/
-                sendNotification("Clickin'", extras.getString("chat_message"), intent1);
 
             }
         }
@@ -125,14 +195,28 @@ public class GcmIntentService extends IntentService {
 
     private void sendNotification(String title, String msg, Intent intent) {
 
+
+        /* code to fetch notifiacation */
+
+
+
+        /* code to fetch notifiacation */
+
         mNotificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
 
         Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
         PendingIntent contentIntent = null;
         if (intent != null) {
-            contentIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, PendingIntent.FLAG_ONE_SHOT);
+            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            contentIntent = PendingIntent.getActivity(this,0,intent,PendingIntent.FLAG_CANCEL_CURRENT
+            );
         }
+
+        NotificationCompat.Action action =
+                new NotificationCompat.Action.Builder(R.drawable.app_icon,
+                        "Clickin", contentIntent)
+                        .build();
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
@@ -140,6 +224,8 @@ public class GcmIntentService extends IntentService {
                         .setContentTitle(title)
                         .setStyle(new NotificationCompat.BigTextStyle().bigText(msg))
                         .setContentText(msg)
+                        .extend(new NotificationCompat.WearableExtender().addAction(action))
+                        .setNumber(NOTIFICATION_ID)
                         .setSound(soundUri).setVibrate(new long[]{0, 100, 200, 300});
         mBuilder.setContentIntent(contentIntent);
         mBuilder.setAutoCancel(true);

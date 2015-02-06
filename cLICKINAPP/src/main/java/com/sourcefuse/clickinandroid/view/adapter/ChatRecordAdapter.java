@@ -1464,13 +1464,13 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
             Intent intent = new Intent(context, MapView.class);
             intent.putExtra("from", "chatrecord");
             intent.putExtra("coordinates", coordinates);
-            try {
+//            try {
                 context.startActivity(intent);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
+//
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//
 
         } else if (!(Utils.isEmptyString(item.imageRatio))) {
 
@@ -1478,11 +1478,11 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
             Uri uri = Uri.parse(item.content_url);
             Intent it = new Intent(Intent.ACTION_VIEW);
             it.setDataAndType(uri, "image/*");
-            try {
+//            try {
                 context.startActivity(it);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
         } else if (!Utils.isEmptyString(item.video_thumb)) {
 
             Utils.mName = item.chatId;
@@ -1648,7 +1648,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                                 }
 
                             } catch (Exception e) {
-                                e.printStackTrace();
+//                                e.printStackTrace();
 
                             }
                         }

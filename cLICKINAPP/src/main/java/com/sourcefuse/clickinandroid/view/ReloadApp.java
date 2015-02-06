@@ -35,10 +35,10 @@ public class ReloadApp extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         Utils.launchBarDialog(this);
 
-        Log.e("reload activity---------->", "reload activity---------->");
+
         ClickinDbHelper dbHelper = new ClickinDbHelper(this);
         try {
-            dbHelper.clearDB();
+            dbHelper.clearDB();  //clear db one applicatoin start from crashing
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -46,12 +46,13 @@ public class ReloadApp extends Activity {
 
         Log.e("in Reload app------>", "in Reload app------>");
         extras = getIntent().getExtras();
-        if (!Utils.isEmptyString(ModelManager.getInstance().getAuthorizationManager().getUserId())) {
+
+        if (!Utils.isEmptyString(ModelManager.getInstance().getAuthorizationManager().getUserId())) {  // process value if userid is not null
             Log.e("case 1---->", "case 1---->");
             mProfile = true;
             mRelation = true;
             processvalue();
-        } else {
+        } else {  // else signin again to get value as if needed.
             setContentView(R.layout.view_splash);
             Log.e("case 2---->", "case 2---->");
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -78,10 +79,12 @@ public class ReloadApp extends Activity {
 
         Intent data = new Intent();
         data.putExtra("isChangeInList", true);
+
         data.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         if (mProfile && mRelation) {
             if (extras.containsKey("Tp")) {
 
+                Log.e("value of tp---->", "" + extras.getString("Tp"));
                 if (extras.getString("Tp").equalsIgnoreCase("CR") ||
                         extras.getString("Tp").equalsIgnoreCase("CRA") || extras.getString("Tp").equalsIgnoreCase("RV") ||
                         extras.getString("Tp").equalsIgnoreCase("CRR")
@@ -139,8 +142,6 @@ public class ReloadApp extends Activity {
                     data.putExtra("phNumber", extras.getString("phone_no"));
 
 
-
-
                     Log.e("JumpOtherProfileView---------", "JumpOtherProfileView---------");
                     PicassoManager.setPicasso(getApplicationContext());
                     PicassoManager.clearCache();
@@ -167,7 +168,6 @@ public class ReloadApp extends Activity {
                 }
             }
             startActivity(data);
-            finish();
             Utils.dismissBarDialog();
         }
 
@@ -176,14 +176,15 @@ public class ReloadApp extends Activity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        extras.clear();
         extras = intent.getExtras();
 
-        if (!Utils.isEmptyString(ModelManager.getInstance().getAuthorizationManager().getUserId())) {
+        if (!Utils.isEmptyString(ModelManager.getInstance().getAuthorizationManager().getUserId())) {// process value if userid is not null
             Log.e("case 1---->", "case 1---->");
             mProfile = true;
             mRelation = true;
             processvalue();
-        } else {
+        } else {// else signin again to get value as if needed.
             Log.e("case 2---->", "case 2---->");
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
             String myPhone = preferences.getString("myPhoneNo", null);
@@ -247,7 +248,7 @@ public class ReloadApp extends Activity {
         }
         if (message.equalsIgnoreCase("GetRelationShips True")) {
             mRelation = true;
-            Intent i = new Intent(this, MyQbChatService.class);
+            Intent i = new Intent(this, MyQbChatService.class);  // start service again
             startService(i);
             processvalue();
         }

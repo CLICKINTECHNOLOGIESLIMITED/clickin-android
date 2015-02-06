@@ -1404,6 +1404,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
 //            load_earlier.setVisibility(View.VISIBLE);
 //            chatListView.onRefreshComplete();
+
             if (chatManager.chatMessageList.size() != 0) {
                 if (adapter == null) {
                     adapter = new ChatRecordAdapter(this, R.layout.view_chat_demo, chatManager.chatMessageList);
@@ -1433,6 +1434,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                     });
                 }
             }
+
          }else if(message.equalsIgnoreCase("No chat history found")){
 //               chat_history = "false" ;
             Log.e("Error Response", "No Chat history");
@@ -1491,7 +1493,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             send_text.setEnabled(false);
             ModelManager.getInstance().getSettingManager().changeLastSeenTime(
                     ModelManager.getInstance().getAuthorizationManager().getPhoneNo(),
-                    ModelManager.getInstance().getAuthorizationManager().getUsrToken());
+                    ModelManager.getInstance().getAuthorizationManager().getUsrToken(),"");
         } else if (message.equalsIgnoreCase("online")) {
             typingtext.setVisibility(View.VISIBLE);
             typingtext.setText("online");
@@ -1554,7 +1556,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                                 intent.putExtra("uri", mImageCaptureUri);
                                 startActivityForResult(intent, Constants.CROP_PICTURE);
                             } catch (Exception e) {
-                                e.printStackTrace();
+//                                e.printStackTrace();
                             }
                         }
                         mImageCaptureUri = Utils.decodeUri(ChatRecordView.this, mImageCaptureUri, 550);
@@ -1587,7 +1589,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                                 intent.putExtra("uri", data.getData());
                                 startActivityForResult(intent, Constants.CROP_PICTURE);
                             } catch (Exception e) {
-                                e.printStackTrace();
+//                                e.printStackTrace();
                             }
                         }
                         mImageCaptureUri = Utils.decodeUri(ChatRecordView.this, data.getData(), 550);
@@ -1713,7 +1715,6 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 }
             }
         } catch (Exception e) {
-        } catch (Error e) {
         }
     }
 
@@ -1741,7 +1742,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             bm = BitmapFactory.decodeStream(getContentResolver().openInputStream(uri), null, options);
         } catch (FileNotFoundException e) {
 
-            e.printStackTrace();
+//            e.printStackTrace();
 
         }
 
