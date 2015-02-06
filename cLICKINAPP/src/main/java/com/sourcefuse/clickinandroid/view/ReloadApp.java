@@ -48,13 +48,13 @@ public class ReloadApp extends Activity {
         extras = getIntent().getExtras();
 
         if (!Utils.isEmptyString(ModelManager.getInstance().getAuthorizationManager().getUserId())) {  // process value if userid is not null
-            Log.e("case 1---->", "case 1---->");
+
             mProfile = true;
             mRelation = true;
             processvalue();
         } else {  // else signin again to get value as if needed.
             setContentView(R.layout.view_splash);
-            Log.e("case 2---->", "case 2---->");
+
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
             String myPhone = preferences.getString("myPhoneNo", null);
             pwd = preferences.getString("pwd", null);
@@ -90,7 +90,7 @@ public class ReloadApp extends Activity {
                         extras.getString("Tp").equalsIgnoreCase("CRR")
                         ) {
 
-                    Log.e("user profile---------", "user profile---------");
+
                     data.setClass(getApplicationContext(), UserProfileView.class);
                     data.putExtra("FromSignup", true);
 
@@ -98,14 +98,14 @@ public class ReloadApp extends Activity {
 
                     data.setClass(getApplicationContext(), FollowerList.class);
                     data.putExtra("FromOwnProfile", true);
-                    Log.e("FollowerList---------", "FollowerList---------");
+
 
                 } else if (extras.getString("Tp").equalsIgnoreCase("clk")) {
 
 
                     data.setClass(getApplicationContext(), ChatRecordView.class);
                     String mPartnerId = extras.getString("pid");
-                    Log.e("ChatRecordView---------", "ChatRecordView---------");
+
                     putChatData(data, mPartnerId);
 
 
@@ -115,24 +115,24 @@ public class ReloadApp extends Activity {
                     String mPartnerId = extras.getString("pid");
 
                     putChatData(data, mPartnerId);
-                    Log.e("ChatRecordView---------", "ChatRecordView---------");
+
                 } else if (extras.getString("Tp").equalsIgnoreCase("RD")) {
 
                     data.setClass(getApplicationContext(), UserProfileView.class);
                     data.putExtra("FromSignup", true);
 
-                    Log.e("UserProfileView---------", "UserProfileView---------");
+
                 } else if (extras.getString("Tp").equalsIgnoreCase("media")) {  // case when share media and send media
 
                     String mPartnerId = extras.getString("pid");
                     putChatData(data, mPartnerId);
                     data.setClass(getApplicationContext(), ChatRecordView.class);
-                    Log.e("ChatRecordView---------", "ChatRecordView---------");
+
                 } else if (extras.getString("Tp").equalsIgnoreCase("shr")) //case for share
                 {
 
                     data.setClass(getApplicationContext(), FeedView.class);
-                    Log.e("FeedView---------", "FeedView---------");
+
 
                 } else if (extras.getString("Tp").equalsIgnoreCase("Upp")) //case for Profile Update
                 {
@@ -142,7 +142,7 @@ public class ReloadApp extends Activity {
                     data.putExtra("phNumber", extras.getString("phone_no"));
 
 
-                    Log.e("JumpOtherProfileView---------", "JumpOtherProfileView---------");
+
                     PicassoManager.setPicasso(getApplicationContext());
                     PicassoManager.clearCache();
 
@@ -156,14 +156,14 @@ public class ReloadApp extends Activity {
                     String mPartnerId = extras.getString("pid");
                     putChatData(data, mPartnerId);
                     data.setClass(getApplicationContext(), ChatRecordView.class);
-                    Log.e("ChatRecordView---------", "ChatRecordView---------");
+
                 } else if (extras.getString("Tp").equalsIgnoreCase("str") || extras.getString("Tp").equalsIgnoreCase("cmt")
                         || extras.getString("Tp").equalsIgnoreCase("Rpt")) //case for feed star
                 {
 
                     data.setClass(getApplicationContext(), PostView.class);
                     data.putExtra("feedId", extras.getString("Nid"));
-                    Log.e("PostView---------", "PostView---------");
+
 
                 }
             }
@@ -178,14 +178,14 @@ public class ReloadApp extends Activity {
         super.onNewIntent(intent);
         extras.clear();
         extras = intent.getExtras();
-
+        Log.e("on new intent","on new intent");
         if (!Utils.isEmptyString(ModelManager.getInstance().getAuthorizationManager().getUserId())) {// process value if userid is not null
-            Log.e("case 1---->", "case 1---->");
+
             mProfile = true;
             mRelation = true;
             processvalue();
         } else {// else signin again to get value as if needed.
-            Log.e("case 2---->", "case 2---->");
+
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
             String myPhone = preferences.getString("myPhoneNo", null);
             pwd = preferences.getString("pwd", null);
@@ -234,7 +234,7 @@ public class ReloadApp extends Activity {
                 message.equalsIgnoreCase("ProfileInfo Network Error") ||
                 message.equalsIgnoreCase("GetRelationShips False") ||
                 message.equalsIgnoreCase("GetRelationShips Network Error")) {
-            Log.e("sign in false----->", "sign in false----->");
+
         } else if (message.equalsIgnoreCase("SignIn True")) {
 
             ModelManager.getInstance().getAuthorizationManager().getProfileInfo("", ModelManager.getInstance().getAuthorizationManager().getPhoneNo(),
