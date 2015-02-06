@@ -525,9 +525,7 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
                         }else{//if comments are there
                             temp.shareComment = extraParamsObj.getString("comment");
                         }
-
-
-                    }
+            }
                 }
 
                 if (!Utils.isEmptyString(temp.clicks)) {// in case of shared accept reject- no clicks are there-monika

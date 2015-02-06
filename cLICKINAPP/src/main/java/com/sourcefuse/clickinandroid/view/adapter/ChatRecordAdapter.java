@@ -63,6 +63,8 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
     String path;
     private AuthManager authManager;
     private RelationManager relationManager;
+    private ChatManager chatmanager ;
+
 
     public ChatRecordAdapter(Context context, int layoutResourceId,
                              ArrayList<ChatMessageBody> chatList) {
@@ -80,10 +82,13 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
         String oursQbId = ModelManager.getInstance().getAuthorizationManager().getQBId();
         RelativeLayout parentChatLayout = (RelativeLayout) row.findViewById(R.id.chat_parent_layout);
         relationManager = ModelManager.getInstance().getRelationManager();
+        chatmanager = ModelManager.getInstance().getChatManager();
 
 
-        if(currentChatList.size()>19) {//akshit code set visibility of load earlier ,only is chat records are greater then 20
-            ChatRecordView.load_earlier.setVisibility(View.VISIBLE);
+        if(currentChatList.size()>19 && chatmanager.chat_history_size.equalsIgnoreCase("true")) {//akshit code set visibility of load earlier ,only is chat records are greater then 20
+            ChatRecordView.load_earlier.setVisibility(View.VISIBLE);                             //also if chat fetched is greater then 20
+        } else {
+            ChatRecordView.load_earlier.setVisibility(View.GONE);
         }
 
         if (imageLoader == null)
@@ -142,12 +147,12 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
                 Uri mUri = Utils.getImageContentUri(context, new File(mContentUri));  //check file exist or not
                 if (!Utils.isEmptyString("" + mUri)) {
-                    try {
+//                    try {//removed by akshit
                         image_attached.setImageURI(mUri); // if file exists set it by uri
-                    } catch (Exception e) {
-                        e.printStackTrace();
-
-                    }
+//                    } catch (Exception e) {
+////                        e.printStackTrace();
+//
+//                    }
                 } else {  // when file not exists
                     final ProgressBar progressBar = (ProgressBar) row.findViewById(R.id.progress_bar);
                     progressBar.setVisibility(View.VISIBLE);  // show prpgress bar
@@ -273,14 +278,14 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
                 Uri mUri = Utils.getImageContentUri(context, new File(mContentUri));
                 if (!Utils.isEmptyString("" + mUri)) {  // check video thumb exists or not
-                    try {
+//                    try {
                         image_attached.setImageURI(mUri);  // set thumb from uri
                         play_buttom.setVisibility(View.VISIBLE);
 
-                    } catch (Exception e) {
-                        e.printStackTrace();
-
-                    }
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//
+//                    }//removed by akshit
                 } else {  // download image from server
 
                     final ProgressBar progressBar = (ProgressBar) row.findViewById(R.id.progress_bar);
@@ -336,15 +341,15 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                         custom_heading.setText(temp.card_heading);
                         trade_image.setImageResource(R.drawable.tradecardpink_big);//Akshit code
                     } else {
-                        try {
+//                        try {
                             String url_to_load = (temp.card_url).replaceFirst("cards\\/(\\d+)\\.jpg", "cards\\/a\\/1080\\/$1\\.jpg");
 
                             Picasso.with(context).load(url_to_load)
                                     .into(trade_image);
 
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                        }removed by akshit
                     }
 
                 } else if (temp.card_Accepted_Rejected.equalsIgnoreCase("accepted")) {//enf of first time played card
@@ -356,7 +361,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     if(!Utils.isEmptyString(temp.sharingMedia)) {
 
 
-                        if (!Utils.isEmptyString(temp.card_owner) && temp.card_owner.equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getQBId())) {
+                        if (temp.isMessageSender.equalsIgnoreCase("false")) {//check if not sender set to receiver name to receiver
 
                             //parnter accepted the card
                             String[] splitted = relationManager.getPartnerName.split("\\s+");
@@ -384,7 +389,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     //code to decide who is accepted the card- basis on card owner- importance while sharing card
                     if (!Utils.isEmptyString(temp.sharingMedia)){
 
-                    if (!Utils.isEmptyString(temp.card_owner) && temp.card_owner.equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getQBId())) {
+                    if (temp.isMessageSender.equalsIgnoreCase("false")) {//check if not sender set to receiver name to receiver
 
                         //parnter accepted the card
                         String[] splitted = relationManager.getPartnerName.split("\\s+");
@@ -606,6 +611,24 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 ImageView sendStatusView = (ImageView) row.findViewById(R.id.iv_send_status);
                 sendStatusView.setImageResource(R.drawable.double_check);
             }
+
+
+
+            // Click Action On Share ICon
+            ((ImageView) row.findViewById(R.id.iv_type_two_share_icon_r)).setTag(position);
+            ((ImageView) row.findViewById(R.id.iv_type_two_share_icon_r)).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    int position = (Integer) v.getTag();
+
+                    sendShareValues(position,"true");//Clicked from sender side set flag ismessage sender to true
+
+
+                }
+            });
+
+
         }//end of sender loop
         else {
 
@@ -662,11 +685,11 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 String mContentUri = Utils.mImagePath + tempChatid + ".jpg"; // fetch data from
                 Uri mUri = Utils.getImageContentUri(context, new File(mContentUri));
                 if (!Utils.isEmptyString("" + mUri)) {  // check if image exists on uri
-                    try {
+//                    try {removed by akshit
                         image_attached.setImageURI(mUri); // set image from uri
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
                 } else {  // else part to download image from url
 
                     final ProgressBar progressBar = (ProgressBar) row.findViewById(R.id.progress_bar);
@@ -774,11 +797,11 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
                 Uri mUri = Utils.getImageContentUri(context, new File(mContentUri));
                 if (!Utils.isEmptyString("" + mUri)) {  // chdeck video thumb exist or not
-                    try {
+//                    try {removed by akshit
                         image_attached.setImageURI(mUri);  // set thumb if exists
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
                 } else {  // download thumb from server
                     final ProgressBar progressBar = (ProgressBar) row.findViewById(R.id.progress_bar);
                     progressBar.setVisibility(View.VISIBLE);
@@ -958,7 +981,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     String name=" ";
                     if(!Utils.isEmptyString(temp.sharingMedia)) {
 
-                        if (!Utils.isEmptyString(temp.card_owner) && temp.card_owner.equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getQBId())) {
+                        if (temp.isMessageSender.equalsIgnoreCase("false")) {//check if not sender set to receiver name to receiver
 
                             //parnter accepted the card
                             String[] splitted = relationManager.getPartnerName.split("\\s+");
@@ -989,7 +1012,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     if(!Utils.isEmptyString(temp.sharingMedia)) {
 
 
-                        if (!Utils.isEmptyString(temp.card_owner) && temp.card_owner.equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getQBId())) {
+                        if (temp.isMessageSender.equalsIgnoreCase("false")) {//check if not sender set to receiver name to receiver
 
                             //parnter accepted the card
                             String[] splitted = relationManager.getPartnerName.split("\\s+");
@@ -1312,6 +1335,18 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 ((ImageView) row.findViewById(R.id.iv_type_two_share_icon_r)).setVisibility(View.GONE);
             }
 
+
+            // Click Action On Share ICon Receiver Side //akshit Code to set Onclick on share icon on receifer side
+            ((ImageView) row.findViewById(R.id.iv_type_two_share_icon_r)).setTag(position);
+            ((ImageView) row.findViewById(R.id.iv_type_two_share_icon_r)).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    int position = (Integer) v.getTag();
+                    sendShareValues(position,"false");//if click from receiver then ismessagesender flag false
+
+                }
+            });
         }//end of share view at reciver side
 
 
@@ -1339,18 +1374,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
         });
 
         row.setTag(position);
-// Click Action On Share ICon
-        ((ImageView) row.findViewById(R.id.iv_type_two_share_icon_r)).setTag(position);
-        ((ImageView) row.findViewById(R.id.iv_type_two_share_icon_r)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                int position = (Integer) v.getTag();
-                sendShareValues(position);
-
-
-            }
-        });
 
 
         // Click Action On Share With REJECT
@@ -1464,7 +1488,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
             Intent intent = new Intent(context, MapView.class);
             intent.putExtra("from", "chatrecord");
             intent.putExtra("coordinates", coordinates);
-//            try {
+//            try {removed by akshit
                 context.startActivity(intent);
 //
 //            } catch (Exception e) {
@@ -1478,7 +1502,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
             Uri uri = Uri.parse(item.content_url);
             Intent it = new Intent(Intent.ACTION_VIEW);
             it.setDataAndType(uri, "image/*");
-//            try {
+//            try {removed by akshit
                 context.startActivity(it);
 //            } catch (Exception e) {
 //                e.printStackTrace();
@@ -1555,15 +1579,15 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
     }
 
     //mukesh
-    private void sendShareValues(int index) {
+    private void sendShareValues(int index ,String is_sender) {
         ChatMessageBody item = ModelManager.getInstance().getChatManager().chatMessageList.get(index);
-        String isMessageSender = "false";
+
         Intent i = new Intent();
         //    i.putExtra("chatType", item.chatType);
         i.putExtra("clicks", item.clicks);
         i.putExtra("textMsg", item.textMsg);
         i.putExtra("originalChatId", item.chatId);
-        i.putExtra("isMessageSender", isMessageSender);
+        i.putExtra("isMessageSender", is_sender);
 
         if (!Utils.isEmptyString(item.imageRatio)) {
             i.putExtra("imageRatio", item.imageRatio);

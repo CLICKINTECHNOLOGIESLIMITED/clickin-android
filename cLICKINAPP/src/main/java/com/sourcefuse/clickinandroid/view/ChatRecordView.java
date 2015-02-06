@@ -266,7 +266,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
 
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();removed by akshit
 
         }
         return mPath;
@@ -686,7 +686,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                             }
                             dialog.dismiss();
                         } catch (Exception e) {
-                            e.printStackTrace();
+//                            e.printStackTrace();removed by akshit
                         }
                         break;
                 }
@@ -726,7 +726,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
 
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();removed by akshit
         }
 
 
@@ -736,17 +736,13 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.load_earlier://akshit code to fetch history of chat ,after load earlier is clicked
-                try {
-                    // int lastIndex = chatManager.chatMessageList.size() - 1;
 
+                    // int lastIndex = chatManager.chatMessageList.size() - 1;
                     chatListSize = chatManager.chatMessageList.size();
                     String lastChatId = chatManager.chatMessageList.get(0).chatId;
                     Utils.launchBarDialog(this);
                     chatManager.fetchChatRecord(rId, authManager.getPhoneNo(), authManager.getUsrToken(), lastChatId);
-                } catch (Exception e) {
-                    e.printStackTrace();
 
-                }
 
                 break;
             case R.id.btn_send:
@@ -1298,12 +1294,12 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         // Unregister since the activity is about to be closed.
         super.onDestroy();
 
-        try {
-            // dbHelper.deleteChat(authManager.getQBId(), qBId);
-            //dbHelper.addChatList(chatManager.chatListFromServer);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            // dbHelper.deleteChat(authManager.getQBId(), qBId);
+//            //dbHelper.addChatList(chatManager.chatListFromServer);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
         if (mIsBound) {
             // Detach our existing connection.
@@ -1402,15 +1398,10 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         if (message.equalsIgnoreCase("FecthChat True")) {
             Utils.dismissBarDialog();
 
-//            load_earlier.setVisibility(View.VISIBLE);
-//            chatListView.onRefreshComplete();
-
             if (chatManager.chatMessageList.size() != 0) {
                 if (adapter == null) {
                     adapter = new ChatRecordAdapter(this, R.layout.view_chat_demo, chatManager.chatMessageList);
-//
-//                    if(chatManager.chatMessageList.size()<20)
-//                        load_earlier.setVisibility(View.GONE);
+
                     chatListView.setAdapter(adapter);
                     chatListView.setSelection(chatManager.chatMessageList.size());
 
@@ -1810,17 +1801,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             message.addExtension(extension);
             // chatObject.sendMessage(Integer.parseInt(qBId), message);
         } catch (Exception e) {
-            try {
-                //chatObject.removeChatMessageListener(this);
-                // chatObject.addChatMessageListener(this);
-            } catch (Exception e1) {
-            }
-          /*  chatObject = null;
-            authManager = ModelManager.getInstance().getAuthorizationManager();
-            chatObject = authManager.getqBPrivateChat();
-            chatObject.addChatMessageListener(this);*/
-            e.printStackTrace();
-        }
+                   }
     }
 
     // Audio STUFF END
@@ -1869,24 +1850,24 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             authManager = ModelManager.getInstance().getAuthorizationManager();
             chatObject = authManager.getqBPrivateChat();
             chatObject.addChatMessageListener(this);*/
-            e.printStackTrace();
+//            e.printStackTrace();
         }
     }
 
     private void loginToQuickBlox() {
 
-        try {
+//        try {
             // chatObject = null;
             authManager = ModelManager.getInstance().getAuthorizationManager();
             // chatObject = authManager.getqBPrivateChat();
             // chatObject.addChatMessageListener(this);
             //chatObject.notifyAll();
-        } catch (Exception e) {
+//        } catch (Exception e) {
             // authManager = ModelManager.getInstance().getAuthorizationManager();
             //chatObject = authManager.getqBPrivateChat();
             //againLoginToQuickBlox();
-            e.printStackTrace();
-        }
+//            e.printStackTrace();
+//        }
     }
 
     private boolean isClicks() {
@@ -2317,7 +2298,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 dbHelper.deleteChat(relId);
                 dbHelper.addChatList(chatManager.chatMessageList);
             } catch (Exception e) {
-                e.printStackTrace();
+//                e.printStackTrace();removed by akshit
             }
             return null;
 
@@ -2344,7 +2325,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 // Decode Bitmap
                 bitmap = BitmapFactory.decodeStream(input);
             } catch (Exception e) {
-                e.printStackTrace();
+//                e.printStackTrace();removed by akshit
             }
             return bitmap;
         }

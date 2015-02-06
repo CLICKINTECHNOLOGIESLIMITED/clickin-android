@@ -16,7 +16,6 @@ import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -39,7 +38,6 @@ import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
 import com.splunk.mint.Mint;
 
-import java.io.File;
 import java.io.InputStream;
 
 import de.greenrobot.event.EventBus;
@@ -160,7 +158,7 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
 
 
 //            //akshit code for country Code
-        try {
+//        try { try {
             String countryCode = Utils.getCountryCodeFromSim(this);
             if (countryCode == null) {
                 ephone.setText("+(null)");
@@ -168,16 +166,13 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
                 ephone.setText(countryCode);
             }
 
-
-        } catch (Exception e) {
-        }
+//
+//        } catch (Exception e) {
+//        }
 
 
         ephone.setSelection(ephone.getText().toString().length());
         //No need. For this akshit
-
-
-
 
         /* to save default lat and lng */
 

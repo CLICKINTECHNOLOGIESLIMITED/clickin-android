@@ -206,8 +206,8 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         String dtails = "";
         String gender = "";
         String dob = "";
-        try {
-            try {
+//        try {
+//            try {removed by akshit
                 if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl")) {
                     dtails = "Female, ";
                     gender = "girl";
@@ -215,11 +215,11 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
                     dtails = "Male,";
                     gender = "guy";
                 }
-            } catch (Exception e) {
-            }
+//            } catch (Exception e) {
+//            }//removed by akshit
             dtails = dtails + Utils.getCurrentYear(authManager.getdOB()) + " " + getResources().getString(R.string.txt_yold);
-        } catch (Exception e) {
-        }
+//        } catch (Exception e) {
+//        }removed by akshit
 
         if (!Utils.isEmptyString(authManager.getUserCity()) && Utils.isEmptyString(authManager.getUserCountry())) {
             dtails = dtails + "\n" + authManager.getUserCity();
