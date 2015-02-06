@@ -36,6 +36,7 @@ public class ChatManager {
     AsyncHttpClient client;
     ArrayList<ArrayList<CardBean>> lists = new ArrayList<ArrayList<CardBean>>();
     private AuthManager authManager;
+    public String chat_history_size = "true";
     private ChatManager chatManager;
     private CardBean cardBean = null;
     private ChatRecordBeen chatRecordBeen = null;
@@ -254,11 +255,20 @@ public class ChatManager {
                                             //   e1.printStackTrace();
                                             //                        refreshivechatList.add(temp);
                                         }
+
                                         refreshivechatList.add(temp);
                                     }
                                 }
 
                                 chatManager.chatMessageList.addAll(0, refreshivechatList);
+
+                                //akshit code to find the size of new records fetched
+                                int size_of_list = refreshivechatList.size();
+                                if (size_of_list < 20) {
+                                    chat_history_size = "false";
+                                } else {
+                                    chat_history_size = "true";
+                                }
 
                                 EventBus.getDefault().post("FecthChat True");
                             } else {
