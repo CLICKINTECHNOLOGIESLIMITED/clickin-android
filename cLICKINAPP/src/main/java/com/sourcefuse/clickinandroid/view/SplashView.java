@@ -255,8 +255,8 @@ public class SplashView extends Activity implements View.OnClickListener {
         @Override
         protected void onPostExecute(Bitmap result) {
             String mPath = "";
-            if(result != null)
-            mPath = Utils.storeImage(result, "" + ModelManager.getInstance().getAuthorizationManager().getUserId(), SplashView.this);
+            if (result != null)
+                mPath = Utils.storeImage(result, "" + ModelManager.getInstance().getAuthorizationManager().getUserId(), SplashView.this);
 
             if (!Utils.isEmptyString("" + mPath))
                 ModelManager.getInstance().getAuthorizationManager().setUserImageUri(Uri.parse(mPath));

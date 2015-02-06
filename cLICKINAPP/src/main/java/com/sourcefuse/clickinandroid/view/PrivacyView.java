@@ -61,9 +61,9 @@ public class PrivacyView extends Activity implements View.OnClickListener {
 
     @Override
     public void onBackPressed() {
-            super.onBackPressed();
-            finish();
-            overridePendingTransition(0, R.anim.top_out);//akshit code for animation
+        super.onBackPressed();
+        finish();
+        overridePendingTransition(0, R.anim.top_out);//akshit code for animation
 
     }
 

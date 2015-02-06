@@ -51,7 +51,7 @@ public class ChatMessageBody {
     public String isShared = null;
 
     public String facebookToken = null;
-    public String messageSenderId=null;
+    public String messageSenderId = null;
     //monika- to show image from uri
     public String content_uri = null;
 
@@ -93,7 +93,7 @@ public class ChatMessageBody {
         senderUserToken = body.senderUserToken;
         senderQbId = body.senderQbId;
         isMessageSender = body.isMessageSender;
-        messageSenderId=body.messageSenderId;
+        messageSenderId = body.messageSenderId;
 
         // Share message
         shareStatus = body.shareStatus;

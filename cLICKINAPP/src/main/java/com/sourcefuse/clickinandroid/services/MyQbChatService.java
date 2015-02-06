@@ -9,14 +9,11 @@ import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 
 import com.quickblox.core.QBCallbackImpl;
 import com.quickblox.core.result.Result;
@@ -29,17 +26,10 @@ import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
 
-import org.jivesoftware.smack.packet.Message;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-
 
 import de.greenrobot.event.EventBus;
 
@@ -48,12 +38,12 @@ import de.greenrobot.event.EventBus;
  */
 public class MyQbChatService extends Service {
 
+    public static final int MSG_DELIVERED = 1;
     private final IBinder mBinder = new LocalBinder();
     Pattern p = Pattern.compile("[\\d]+_(.*?)@.*?");
     private NotificationManager mNM;
     private int mId = 0;
     private ChatThread mChatThread;
-    public static final int MSG_DELIVERED=1;
 
     @Override
     public void onCreate() {
@@ -62,35 +52,35 @@ public class MyQbChatService extends Service {
         Handler handler = new Handler() {
             @Override
             public void handleMessage(android.os.Message msg) {
-              switch(msg.what){
-                  case MSG_DELIVERED:
-                      Bundle data=msg.getData();
-                      HashMap<String, Object> fields = new HashMap<String, Object>();
-                      fields.put("type", Constants.CHAT_TYPE_DELIVERED);
+                switch (msg.what) {
+                    case MSG_DELIVERED:
+                        Bundle data = msg.getData();
+                        HashMap<String, Object> fields = new HashMap<String, Object>();
+                        fields.put("type", Constants.CHAT_TYPE_DELIVERED);
 
-                      fields.put("chatId", data.getString("chatID"));
+                        fields.put("chatId", data.getString("chatID"));
 
-                      fields.put("deliveredChatID", data.getString("deliveredChatID"));
+                        fields.put("deliveredChatID", data.getString("deliveredChatID"));
 
-                      QBCustomObject qbCustomObject = new QBCustomObject();
-                      qbCustomObject.setClassName("chats");  // your Class name
-                      qbCustomObject.setFields(fields);
+                        QBCustomObject qbCustomObject = new QBCustomObject();
+                        qbCustomObject.setClassName("chats");  // your Class name
+                        qbCustomObject.setFields(fields);
 
-                      // Activity currentActivity = application.getApplicationContext().getCurrentActivity();
-                      QBCustomObjects.createObject(qbCustomObject, new QBCallbackImpl() {
-                          @Override
-                          public void onComplete(Result result) {
-                              if (result.isSuccess()) {
-                                  QBCustomObjectResult qbCustomObjectResult = (QBCustomObjectResult) result;
-                                  QBCustomObject qbCustomObject = qbCustomObjectResult.getCustomObject();
+                        // Activity currentActivity = application.getApplicationContext().getCurrentActivity();
+                        QBCustomObjects.createObject(qbCustomObject, new QBCallbackImpl() {
+                            @Override
+                            public void onComplete(Result result) {
+                                if (result.isSuccess()) {
+                                    QBCustomObjectResult qbCustomObjectResult = (QBCustomObjectResult) result;
+                                    QBCustomObject qbCustomObject = qbCustomObjectResult.getCustomObject();
 
-                              } else {
+                                } else {
 
-                              }
-                          }
-                      });
+                                }
+                            }
+                        });
 
-              }
+                }
             }
         };
         mChatThread = new ChatThread(getApplication(), handler);
@@ -135,9 +125,9 @@ public class MyQbChatService extends Service {
         switch (msgObject.chatType) {
             case Constants.CHAT_TYPE_CARD:
 
-                    data.putString("card_DB_ID", msgObject.card_DB_ID);
+                data.putString("card_DB_ID", msgObject.card_DB_ID);
 
-                    data.putString("card_url", msgObject.card_url);
+                data.putString("card_url", msgObject.card_url);
 
                 // data.putString("card_clicks",msgObject.clicks);
                 data.putString("card_content", msgObject.card_content);
@@ -187,10 +177,9 @@ public class MyQbChatService extends Service {
                 } else if (!Utils.isEmptyString(mCardOriginator)) {
 
 
+                    data.putString("card_DB_ID", msgObject.card_DB_ID);
 
-                        data.putString("card_DB_ID", msgObject.card_DB_ID);
-
-                        data.putString("card_url", msgObject.card_url);
+                    data.putString("card_url", msgObject.card_url);
 
                     data.putString("card_content", msgObject.card_content);
                     data.putString("card_owner", msgObject.card_owner);
@@ -206,7 +195,7 @@ public class MyQbChatService extends Service {
                 data.putString("caption", msgObject.shareComment);
                 data.putString("isMessageSender", msgObject.isMessageSender);
                 data.putString("shareStatus", msgObject.shareStatus);
-                data.putString("messageSenderID",msgObject.messageSenderId);
+                data.putString("messageSenderID", msgObject.messageSenderId);
                 data.putString("facebookToken", msgObject.facebookToken);
                 if (Utils.isEmptyString(msgObject.isAccepted)) {
                     data.putString("isAccepted", "null");

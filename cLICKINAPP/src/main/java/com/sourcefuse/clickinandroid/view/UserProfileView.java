@@ -171,7 +171,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
             }
 
         }
-        Log.e("FromSignup ---- isChangeInList ----- updatephoto",""+ FromSignup +"" + isChangeInList +""+ updatephoto);
+        Log.e("FromSignup ---- isChangeInList ----- updatephoto", "" + FromSignup + "" + isChangeInList + "" + updatephoto);
 
 
         if (FromSignup) {
@@ -207,15 +207,15 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         String gender = "";
         String dob = "";
 
-                if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl")) {
-                    dtails = "Female, ";
-                    gender = "girl";
-                } else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("guy")) {
-                    dtails = "Male,";
-                    gender = "guy";
-                }
+        if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl")) {
+            dtails = "Female, ";
+            gender = "girl";
+        } else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("guy")) {
+            dtails = "Male,";
+            gender = "guy";
+        }
 
-            dtails = dtails + Utils.getCurrentYear(authManager.getdOB()) + " " + getResources().getString(R.string.txt_yold);
+        dtails = dtails + Utils.getCurrentYear(authManager.getdOB()) + " " + getResources().getString(R.string.txt_yold);
 
 
         if (!Utils.isEmptyString(authManager.getUserCity()) && Utils.isEmptyString(authManager.getUserCountry())) {
@@ -482,10 +482,9 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         super.onNewIntent(intent);
 
 
-
         if (intent.getExtras() != null && intent.getExtras().containsKey("isChangeInList")) {
 
-            Log.e("on new Intent-------->isChangeInList","on new Intent-------->isChangeInList");
+            Log.e("on new Intent-------->isChangeInList", "on new Intent-------->isChangeInList");
 
             if (intent.getExtras().getBoolean("isChangeInList")) {
                 if (slidemenu.isMenuShowing())
@@ -495,7 +494,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
                 relationManager.getRelationShips(authManager.getPhoneNo(), authManager.getUsrToken());
             }
         } else if (intent.getExtras() != null && intent.getExtras().containsKey("updatephoto")) {
-            Log.e("on new Intent-------->updatephoto","on new Intent-------->updatephoto");
+            Log.e("on new Intent-------->updatephoto", "on new Intent-------->updatephoto");
 
             if (slidemenu.isMenuShowing())
                 slidemenu.showContent();

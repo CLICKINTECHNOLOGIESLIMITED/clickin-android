@@ -18,7 +18,6 @@ import android.widget.TextView;
 
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
-import com.sourcefuse.clickinandroid.model.PicassoManager;
 import com.sourcefuse.clickinandroid.model.ProfileManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
 import com.sourcefuse.clickinandroid.model.bean.FollowerFollowingBean;
@@ -28,7 +27,6 @@ import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.FollowerList;
 import com.sourcefuse.clickinandroid.view.JumpOtherProfileView;
 import com.sourcefuse.clickinapp.R;
-import com.squareup.picasso.LruCache;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -42,6 +40,7 @@ public class FollowerAdapter extends ArrayAdapter<FollowerFollowingBean> {
     private AuthManager authManager;
     private RelationManager relationManager;
     private ProfileManager profileManager;
+
     /*LruCache mLruCahe;
     Picasso picasso;*/
     public FollowerAdapter(Context context, int layoutResourceId,
@@ -89,7 +88,7 @@ public class FollowerAdapter extends ArrayAdapter<FollowerFollowingBean> {
         if (!item.get(position).getFolloweePic().equalsIgnoreCase("")) {
             try {
 
-               Picasso.with(context).load(item.get(position).getFolloweePic())
+                Picasso.with(context).load(item.get(position).getFolloweePic())
                         .into(rholder.usrimg);
             } catch (Exception e) {
                 e.printStackTrace();

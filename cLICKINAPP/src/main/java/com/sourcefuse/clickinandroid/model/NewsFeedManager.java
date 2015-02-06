@@ -207,7 +207,7 @@ public class NewsFeedManager {
 
                                     for (int l = 0; l < commentArray.length(); l++) {
                                         NewsFeedBean commentUserData = new NewsFeedBean();
-                                        String comment="" ;
+                                        String comment = "";
 
                                         commentUserData.setNewsFeedArray_commentArray_id(commentArray.getJSONObject(l).getString("_id"));
                                         commentUserData.setNewsFeedArray_commentArray_chat_id(commentArray.getJSONObject(l).getString("chat_id"));
@@ -215,7 +215,7 @@ public class NewsFeedManager {
                                         commentUserData.setNewsFeedArray_commentArray_type(commentArray.getJSONObject(l).getString("type"));
 //                                        comment = commentArray.getJSONObject(l).getString("comment");
 //                                        if(!Utils.isEmptyString(comment))
-                                            commentUserData.setNewsFeedArray_commentArray_comment(commentArray.getJSONObject(l).getString("comment"));
+                                        commentUserData.setNewsFeedArray_commentArray_comment(commentArray.getJSONObject(l).getString("comment"));
 
                                         commentUserData.setNewsFeedArray_commentArray_user_id(commentArray.getJSONObject(l).getString("user_id"));
                                         commentUserData.setNewsFeedArray_commentArray_user_name(commentArray.getJSONObject(l).getString("user_name"));
@@ -684,10 +684,6 @@ public class NewsFeedManager {
     }
 
 
-
-
-
-
     public void ViewNewsFeed(String lastNewsfeedId, String phone, String usertoken) {
         // TODO Auto-generated method stub
         JSONObject userInputDetails = new JSONObject();
@@ -867,7 +863,7 @@ public class NewsFeedManager {
 
                                     for (int l = 0; l < commentArray.length(); l++) {
                                         NewsFeedBean commentUserData = new NewsFeedBean();
-                                        String comment="" ;
+                                        String comment = "";
 
                                         commentUserData.setNewsFeedArray_commentArray_id(commentArray.getJSONObject(l).getString("_id"));
                                         commentUserData.setNewsFeedArray_commentArray_chat_id(commentArray.getJSONObject(l).getString("chat_id"));

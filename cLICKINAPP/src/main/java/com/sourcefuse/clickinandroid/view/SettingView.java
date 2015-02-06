@@ -416,7 +416,7 @@ public class SettingView extends Activity implements View.OnClickListener, Compo
                 editor.apply();
                 ModelManager.getInstance().getSettingManager().changeLastSeenTime(
                         ModelManager.getInstance().getAuthorizationManager().getPhoneNo(),
-                        ModelManager.getInstance().getAuthorizationManager().getUsrToken(),"yes");//akshit code to logout
+                        ModelManager.getInstance().getAuthorizationManager().getUsrToken(), "yes");//akshit code to logout
 
                 //monika- stop service running in background
                 Intent i = new Intent(this, MyQbChatService.class);

@@ -25,7 +25,6 @@ import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.FetchContactFromPhone;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
-import com.squareup.picasso.LruCache;
 import com.squareup.picasso.Picasso;
 
 import de.greenrobot.event.EventBus;

@@ -102,15 +102,16 @@ public class ChatManager {
                         super.onFailure(statusCode, e, errorResponse);
 
                         if (errorResponse != null) {
-                            if(errorResponse.has("message")){
+                            if (errorResponse.has("message")) {
                                 try {
-                                    if(errorResponse.getString("message").equalsIgnoreCase("No chat history found")){
+                                    if (errorResponse.getString("message").equalsIgnoreCase("No chat history found")) {
                                         Log.e("Error Response", "No Chat history");
                                         EventBus.getDefault().post("No chat history found");
                                     }
                                 } catch (JSONException e1) {
                                     e1.printStackTrace();
-                                }{
+                                }
+                                {
 
                                 }
                             }
@@ -128,7 +129,7 @@ public class ChatManager {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         ChatMessageBody temp = null;
-                        JSONObject chatObj=null;
+                        JSONObject chatObj = null;
                         try {
                             state = response.getBoolean("success");
                             if (state) {
@@ -141,7 +142,7 @@ public class ChatManager {
                                     try {
                                         temp = new ChatMessageBody();
                                         JSONObject data = list.getJSONObject(i);
-                                         chatObj = data.getJSONObject("Chat");
+                                        chatObj = data.getJSONObject("Chat");
 
                                         // if (chatObj.has("receiverQB_id"))
                                         //   temp.re(chatObj.getString("receiverQB_id"));
@@ -180,9 +181,9 @@ public class ChatManager {
                                         }
                                         if (chatObj.has("isDelivered")) {
                                             temp.isDelivered = chatObj.getString("isDelivered");
-                                            if(temp.isDelivered.equalsIgnoreCase("yes")){
+                                            if (temp.isDelivered.equalsIgnoreCase("yes")) {
                                                 temp.deliveredChatID = temp.chatId; //if deliveredChatId exists, it means delivered-monika
-                                                                                    //we have to do this to match live chat params
+                                                //we have to do this to match live chat params
                                             }
                                         }
                                         if (chatObj.has("imageRatio"))
@@ -204,15 +205,15 @@ public class ChatManager {
                                             temp.is_CustomCard = Boolean.valueOf((String) cards.get(7));
                                             temp.card_DB_ID = (String) cards.get(8);
                                             temp.card_Played_Countered = (String) cards.get(9);
-                                            if(temp.card_Accepted_Rejected.equalsIgnoreCase("countered"))
-                                                temp.card_Played_Countered="played";
+                                            if (temp.card_Accepted_Rejected.equalsIgnoreCase("countered"))
+                                                temp.card_Played_Countered = "played";
 
                                             //this param is added new, in history might be it not come
-                                            if(cards.length()>10) {
+                                            if (cards.length() > 10) {
                                                 temp.card_owner = (String) cards.get(10);
                                                 if (Utils.isEmptyString(temp.card_owner))
                                                     temp.card_owner = "";
-                                            }else{
+                                            } else {
                                                 temp.card_owner = "";
                                             }
                                         }
@@ -249,9 +250,9 @@ public class ChatManager {
                                                 temp.facebookToken = (String) sharedMessage.get(7);
 
                                             }
-                                        }catch (Exception e1){
-                                         //   e1.printStackTrace();
-                    //                        refreshivechatList.add(temp);
+                                        } catch (Exception e1) {
+                                            //   e1.printStackTrace();
+                                            //                        refreshivechatList.add(temp);
                                         }
                                         refreshivechatList.add(temp);
                                     }
@@ -263,15 +264,16 @@ public class ChatManager {
                             } else {
                                 EventBus.getDefault().post("FecthChat False");
                                 if (response != null) {
-                                    if(response.has("message")){//akshit Code to Fetch message if NO more History
+                                    if (response.has("message")) {//akshit Code to Fetch message if NO more History
                                         try {
-                                            if(response.getString("message").equalsIgnoreCase("No chat history found")){
+                                            if (response.getString("message").equalsIgnoreCase("No chat history found")) {
                                                 Log.e("Error Response", "No Chat history");
                                                 EventBus.getDefault().post("No chat history found");
                                             }
                                         } catch (JSONException e1) {
                                             e1.printStackTrace();
-                                        }{
+                                        }
+                                        {
 
                                         }
                                     }
@@ -368,8 +370,8 @@ public class ChatManager {
                                 cardBean.setCardActive(cardObject.getString("active"));
                                 cardBean.setCardDescription(cardObject.getString("description"));
                                 cardBean.setCardTitle(cardObject.getString("title"));
-                                if(ls != null)
-                                ls.add(cardBean);
+                                if (ls != null)
+                                    ls.add(cardBean);
 
                             }
 
@@ -402,7 +404,7 @@ public class ChatManager {
             userInputDetails.put("comment", comment);
             userInputDetails.put("accepted", accepted);
 
-            Log.e("Chat Share","Message With Comment" +comment);
+            Log.e("Chat Share", "Message With Comment" + comment);
 
 
             client = new AsyncHttpClient();

@@ -21,8 +21,8 @@
         android:id="@+id/parent_shared_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/newbg_pinkleft"
         android:layout_alignParentLeft="true"
+        android:background="@drawable/newbg_pinkleft"
         android:orientation="vertical">
 
         <!-- layout for share header-->
@@ -41,8 +41,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="2dp"
                 android:layout_marginTop="2dp"
-                geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"
-                android:textColor="@color/text_color_share" />
+                android:textColor="@color/text_color_share"
+                geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
 
             <com.sourcefuse.clickinandroid.utils.ClickInTextView
                 android:id="@+id/shared_message"
@@ -52,9 +52,9 @@
                 android:layout_marginTop="2dp"
                 android:layout_toRightOf="@+id/shared_by_name"
                 android:text="You Want to share"
+                android:textColor="@color/text_color_share"
                 android:textStyle="bold"
-                geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"
-                android:textColor="@color/text_color_share" />
+                geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
 
             <ImageView
                 android:id="@+id/except_share"
@@ -71,8 +71,8 @@
                 android:layout_height="3dp"
                 android:layout_below="@+id/shared_message"
                 android:layout_marginTop="4dp"
-                android:visibility="gone"
-                android:background="@drawable/chat_divider" />
+                android:background="@drawable/chat_divider"
+                android:visibility="gone" />
 
         </RelativeLayout>
 
@@ -97,13 +97,13 @@
                     android:id="@+id/iv_chat_image"
                     android:layout_width="206dp"
                     android:layout_height="180dp"
-                    android:layout_marginTop="4dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="1dp"
                     android:layout_marginLeft="3dp"
                     android:layout_marginRight="3dp"
-                    android:layout_marginBottom="1dp"
 
+                    android:layout_marginTop="4dp"
                     android:adjustViewBounds="true"
-                    android:layout_gravity="center"
                     android:visibility="gone" />
 
                 <com.sourcefuse.clickinandroid.utils.FeedImageView
@@ -123,8 +123,8 @@
                 android:id="@+id/temp_"
                 android:layout_width="210dp"
                 android:layout_height="1dp"
-                android:layout_marginBottom="3dp"
                 android:layout_below="@+id/temp_layout"
+                android:layout_marginBottom="3dp"
                 android:background="@color/color_"
                 android:visibility="gone" />
 
@@ -138,9 +138,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/media_layout"
+                android:layout_marginBottom="4dp"
                 android:layout_marginLeft="4dp"
                 android:layout_marginRight="4dp"
-                android:layout_marginBottom="4dp"
                 android:orientation="vertical"
                 android:visibility="visible">
 
@@ -157,9 +157,9 @@
                         android:id="@+id/clicks_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="3dp"
                         android:gravity="top"
                         android:paddingRight="5dp"
-                        android:layout_marginLeft="3dp"
                         android:text="+101"
                         android:textColor="@color/white"
                         android:textSize="20sp"
@@ -180,9 +180,9 @@
                         android:id="@+id/chat_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="3dp"
                         android:ellipsize="none"
                         android:maxEms="8"
-                        android:layout_marginLeft="3dp"
                         android:paddingRight="5dp"
                         android:singleLine="true"
                         android:textColor="@color/white"
@@ -212,10 +212,10 @@
                 android:id="@+id/send_card_first_time"
                 android:layout_width="240dp"
                 android:layout_height="320dp"
-                android:layout_marginTop="1dp"
                 android:layout_marginBottom="1dp"
                 android:layout_marginLeft="3dp"
                 android:layout_marginRight="3dp"
+                android:layout_marginTop="1dp"
                 android:orientation="vertical"
                 android:visibility="gone">
 
@@ -223,8 +223,7 @@
                     android:id="@+id/trade_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    />
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/trd_clicks_top"
@@ -278,9 +277,9 @@
                 android:layout_width="206dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="3dp"
+                android:layout_marginLeft="2dp"
                 android:layout_marginRight="2dp"
                 android:layout_marginTop="3dp"
-                android:layout_marginLeft="2dp"
                 android:background="@color/background_grey"
                 android:gravity="center_vertical"
                 android:padding="5dp"
@@ -517,8 +516,8 @@
                     android:layout_marginLeft="3dp"
                     android:paddingRight="3dp"
                     android:text="Toby made a"
-                    geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/black"
+                    geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
 
                 <com.sourcefuse.clickinandroid.utils.ClickInTextView
                     android:id="@+id/tv_acc_res_status"
@@ -527,8 +526,8 @@
                     android:layout_marginLeft="3dp"
                     android:paddingRight="2dp"
                     android:text="COUNTER OFFER"
-                    geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
                     android:textColor="@color/black"
+                    geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
 
                     />
 
@@ -610,10 +609,10 @@
             android:id="@+id/parent_clicks_area_share"
             android:layout_width="204dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/media_layout"
             android:layout_marginBottom="3dp"
+            android:layout_marginLeft="5dp"
             android:background="@color/profile_name_b"
             android:gravity="center_vertical"
             android:orientation="vertical"
@@ -673,8 +672,8 @@
                 android:id="@+id/long_chat_text_share"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
                 android:ems="13"
+                android:gravity="center_vertical"
                 android:paddingBottom="5dp"
                 android:paddingLeft="5dp"
                 android:paddingRight="10dp"
@@ -691,10 +690,10 @@
             android:layout_width="266dp"
             android:layout_height="3dp"
             android:layout_below="@+id/trade_image"
-            android:layout_marginTop="3dp"
             android:layout_marginLeft="3dp"
-            android:visibility="gone"
-            android:background="@drawable/chat_divider" />
+            android:layout_marginTop="3dp"
+            android:background="@drawable/chat_divider"
+            android:visibility="gone" />
 
         <LinearLayout
             android:id="@+id/shared_footer_view"
@@ -703,8 +702,8 @@
             android:layout_alignParentBottom="true"
             android:layout_below="@+id/chat_parent_layout"
             android:layout_marginTop="5dp"
-            android:paddingBottom="10dp"
             android:orientation="horizontal"
+            android:paddingBottom="10dp"
             android:visibility="gone">
 
 

@@ -324,11 +324,11 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                         trade_image.setImageResource(R.drawable.tradecardpink_big);//Akshit code
                     } else {
 
-                        if(!Utils.isEmptyString(temp.card_url)) {
+                        if (!Utils.isEmptyString(temp.card_url)) {
                             String url_to_load = (temp.card_url).replaceFirst("cards\\/(\\d+)\\.jpg", "cards\\/a\\/1080\\/$1\\.jpg");
                             Picasso.with(context).load(url_to_load)
                                     .into(trade_image);
-                        }else {
+                        } else {
 
                         }
 
@@ -812,7 +812,6 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                         clicks = "05";
                     ((TextView) row.findViewById(R.id.trd_clicks_top)).setVisibility(View.VISIBLE);//akshit code
                     ((TextView) row.findViewById(R.id.trd_clicks_bottom)).setVisibility(View.VISIBLE);//akshit code
-
 
 
                     ((TextView) row.findViewById(R.id.trd_clicks_top)).setText(clicks);
@@ -1568,6 +1567,13 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
         ((Activity) context).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
+    private int pxlToDp(int pixel) {
+
+        final float scale = context.getResources().getDisplayMetrics().density;
+        int dp = (int) (pixel * scale + 0.5f);
+        return dp;
+    }
+
     public class DownloadMusicfromInternet extends AsyncTask<String, String, String> { // Async task to download video
 
         // default video path
@@ -1709,12 +1715,5 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
             }
 
         }
-    }
-
-    private int pxlToDp(int pixel) {
-
-        final float scale = context.getResources().getDisplayMetrics().density;
-        int dp = (int) (pixel * scale + 0.5f);
-        return dp;
     }
 }

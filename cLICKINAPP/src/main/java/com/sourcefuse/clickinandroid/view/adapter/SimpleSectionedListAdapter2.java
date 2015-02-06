@@ -119,7 +119,6 @@ public class SimpleSectionedListAdapter2 extends BaseAdapter implements PinnedSe
     }
 
 
-
     public boolean isSectionHeaderPosition(int position) {
         return mSections.get(position) != null;
     }

@@ -285,8 +285,7 @@ public class MapActivity extends Activity implements ConnectionCallbacks, OnConn
     private boolean checkGPSEnabled() {
         final LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
-        return  !manager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-
+        return !manager.isProviderEnabled(LocationManager.GPS_PROVIDER);
 
 
     }

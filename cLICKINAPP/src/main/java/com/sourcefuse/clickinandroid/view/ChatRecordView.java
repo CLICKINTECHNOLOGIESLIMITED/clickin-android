@@ -101,6 +101,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     public static String rId = "";
     //flag to start and stop thread to check online status
     public static boolean CHECK_ONLINE_STATUS_FLAG = false;
+    public static TextView load_earlier;
     public MyQbChatService myQbChatService;
     int myvalue = 0, min = -10;//akshit ,To set my value initially to zero for send paper rocket condition
     String chatString = "";
@@ -126,7 +127,6 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         }
     };
     private SeekBar mybar;
-
     private TextView pos, neg, profileName, typingtext, myclicksView, partnerClicksView;
     private Button send, btnToCard;
     private int relationListIndex = -1;
@@ -138,7 +138,6 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     private ImageView mypix, partnerPix, attachBtn;
     //    private PullToRefreshListView chatListView;
     private ListView chatListView;
-    public static TextView load_earlier;
     private ChatRecordAdapter adapter = null;
     private TextSwitcher mSwitcher;
     private boolean showAttachmentView = true;
@@ -517,9 +516,6 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         });
 
 
-
-
-
         adapter = new ChatRecordAdapter(this, R.layout.view_chat_demo, chatManager.chatMessageList);
 
         chatListView.setAdapter(adapter);
@@ -714,11 +710,11 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         switch (v.getId()) {
             case R.id.load_earlier://akshit code to fetch history of chat ,after load earlier is clicked
 
-                    // int lastIndex = chatManager.chatMessageList.size() - 1;
-                    chatListSize = chatManager.chatMessageList.size();
-                    String lastChatId = chatManager.chatMessageList.get(0).chatId;
-                    Utils.launchBarDialog(this);
-                    chatManager.fetchChatRecord(rId, authManager.getPhoneNo(), authManager.getUsrToken(), lastChatId);
+                // int lastIndex = chatManager.chatMessageList.size() - 1;
+                chatListSize = chatManager.chatMessageList.size();
+                String lastChatId = chatManager.chatMessageList.get(0).chatId;
+                Utils.launchBarDialog(this);
+                chatManager.fetchChatRecord(rId, authManager.getPhoneNo(), authManager.getUsrToken(), lastChatId);
 
 
                 break;
@@ -1185,7 +1181,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             temp.textMsg = intent.getExtras().getString("textMsg");
 
 
-            temp.shareComment= intent.getExtras().getString("caption");
+            temp.shareComment = intent.getExtras().getString("caption");
 
 
             temp.isMessageSender = intent.getExtras().getString("isMessageSender");
@@ -1401,18 +1397,16 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 }
             }
 
-         }else if(message.equalsIgnoreCase("No chat history found")){
+        } else if (message.equalsIgnoreCase("No chat history found")) {
 //               chat_history = "false" ;
             Log.e("Error Response", "No Chat history");
 //                load_earlier.setVisibility(View.GONE);
 //                 chat_history_present="no";
 
-        }
-
-         else if (message.equalsIgnoreCase("FecthChat False")) {
+        } else if (message.equalsIgnoreCase("FecthChat False")) {
 //            chatListView.onRefreshComplete();
        /* on dismiss */
-       Utils.dismissBarDialog();
+            Utils.dismissBarDialog();
 
         } else if (message.equalsIgnoreCase("FecthChat Network Error")) {
             Utils.fromSignalDialog(ChatRecordView.this, AlertMessage.connectionError);
@@ -1459,7 +1453,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             send_text.setEnabled(false);
             ModelManager.getInstance().getSettingManager().changeLastSeenTime(
                     ModelManager.getInstance().getAuthorizationManager().getPhoneNo(),
-                    ModelManager.getInstance().getAuthorizationManager().getUsrToken(),"");
+                    ModelManager.getInstance().getAuthorizationManager().getUsrToken(), "");
         } else if (message.equalsIgnoreCase("online")) {
             typingtext.setVisibility(View.VISIBLE);
             typingtext.setText("online");
@@ -1498,196 +1492,196 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
        /* try {*/  // Prafull code remove Try
-            super.onActivityResult(requestCode, resultCode, data);
-            if (resultCode == RESULT_OK) {
-                switch (requestCode) {
-                    case Constants.CAMERA_REQUEST:
-                        Uri targetUri = mImageCaptureUri;
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case Constants.CAMERA_REQUEST:
+                    Uri targetUri = mImageCaptureUri;
 
 
-                        Display display = getWindowManager().getDefaultDisplay();
-                        Point size = new Point();
-                        display.getSize(size);
-                        int width = size.x;
-                        int height = size.y;
+                    Display display = getWindowManager().getDefaultDisplay();
+                    Point size = new Point();
+                    display.getSize(size);
+                    int width = size.x;
+                    int height = size.y;
 
-                        Bitmap bitmap = null;
-                        bitmap = decodeSampledBitmapFromUri(targetUri, width, height);
-                        if (bitmap != null) {
+                    Bitmap bitmap = null;
+                    bitmap = decodeSampledBitmapFromUri(targetUri, width, height);
+                    if (bitmap != null) {
                             /*try {*/  // Prafull code remove Try
-                                authManager.setOrginalBitmap(bitmap.copy(Bitmap.Config.ARGB_8888, true));
-                                Intent intent = new Intent(ChatRecordView.this, CropView.class);
-                                intent.putExtra("name", mChatId);  // save image name
-                                intent.putExtra("from", "fromchatCamare");
-                                intent.putExtra("uri", mImageCaptureUri);
-                                startActivityForResult(intent, Constants.CROP_PICTURE);
+                        authManager.setOrginalBitmap(bitmap.copy(Bitmap.Config.ARGB_8888, true));
+                        Intent intent = new Intent(ChatRecordView.this, CropView.class);
+                        intent.putExtra("name", mChatId);  // save image name
+                        intent.putExtra("from", "fromchatCamare");
+                        intent.putExtra("uri", mImageCaptureUri);
+                        startActivityForResult(intent, Constants.CROP_PICTURE);
                             /*} catch (Exception e) {
 //                                e.printStackTrace();
                             }*/
-                        }
-                        try {   // Prafull code put Try for smaller block
-                            mImageCaptureUri = Utils.decodeUri(ChatRecordView.this, mImageCaptureUri, 550);
-                        } catch (FileNotFoundException e) {
-                            e.printStackTrace();
-                        }
-                        path = Utils.getRealPathFromURI(mImageCaptureUri, this);
-                        currentImagepath = mImageCaptureUri.toString();
+                    }
+                    try {   // Prafull code put Try for smaller block
+                        mImageCaptureUri = Utils.decodeUri(ChatRecordView.this, mImageCaptureUri, 550);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                    path = Utils.getRealPathFromURI(mImageCaptureUri, this);
+                    currentImagepath = mImageCaptureUri.toString();
 
-                        bitmap.recycle();
-                        break;
-                    case Constants.SELECT_PICTURE:
-
-
-                        Uri targetUri1 = data.getData();
+                    bitmap.recycle();
+                    break;
+                case Constants.SELECT_PICTURE:
 
 
-                        Display display1 = getWindowManager().getDefaultDisplay();
-                        Point size1 = new Point();
-                        display1.getSize(size1);
-                        int width1 = size1.x;
-                        int height1 = size1.y;
+                    Uri targetUri1 = data.getData();
 
-                        Bitmap bitmap1 = null;
-                        bitmap1 = decodeSampledBitmapFromUri(targetUri1, width1, height1);
 
-                        if (bitmap1 != null) { // Prafull code remove try
+                    Display display1 = getWindowManager().getDefaultDisplay();
+                    Point size1 = new Point();
+                    display1.getSize(size1);
+                    int width1 = size1.x;
+                    int height1 = size1.y;
+
+                    Bitmap bitmap1 = null;
+                    bitmap1 = decodeSampledBitmapFromUri(targetUri1, width1, height1);
+
+                    if (bitmap1 != null) { // Prafull code remove try
                             /*try {*/
-                                authManager.setOrginalBitmap(bitmap1);
-                                Intent intent = new Intent(ChatRecordView.this, CropView.class);
-                                intent.putExtra("name", ""+mChatId);   // save image by name
-                                intent.putExtra("from", "fromchatGallery");
-                                intent.putExtra("uri", data.getData());
-                                startActivityForResult(intent, Constants.CROP_PICTURE);
+                        authManager.setOrginalBitmap(bitmap1);
+                        Intent intent = new Intent(ChatRecordView.this, CropView.class);
+                        intent.putExtra("name", "" + mChatId);   // save image by name
+                        intent.putExtra("from", "fromchatGallery");
+                        intent.putExtra("uri", data.getData());
+                        startActivityForResult(intent, Constants.CROP_PICTURE);
                            /* } catch (Exception e) {
 //                                e.printStackTrace();
                             }*/
-                        }
-                        try { // Prafull code put Try for smaller block
-                            mImageCaptureUri = Utils.decodeUri(ChatRecordView.this, data.getData(), 550);
-                        } catch (FileNotFoundException e) {
-                            e.printStackTrace();
-                        }
-                        path = Utils.getRealPathFromURI(mImageCaptureUri, this);
-                        currentImagepath = mImageCaptureUri.toString();
+                    }
+                    try { // Prafull code put Try for smaller block
+                        mImageCaptureUri = Utils.decodeUri(ChatRecordView.this, data.getData(), 550);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                    path = Utils.getRealPathFromURI(mImageCaptureUri, this);
+                    currentImagepath = mImageCaptureUri.toString();
 
 
-                        break;
-                    case VideoUtil.REQUEST_VIDEO_CAPTURED:
-                        if (!Utils.isEmptyString(VideoUtil.videofilePath)) {
-                            videofilePath = VideoUtil.videofilePath;
-                            Bitmap bMap = ThumbnailUtils.createVideoThumbnail(VideoUtil.videofilePath, MediaStore.Video.Thumbnails.MINI_KIND);
-                            if (videofilePath.contains(".mp4")) {
-                                Random mRandom = new Random();
-                                int mName = mRandom.nextInt();
-                                mName = Math.abs(mName);
-                                thumurl = videofilePath.replace(".mp4", "" + mName);
-                                thumurl = writePhotoJpg(bMap, thumurl);
-                                //thumurl = Utils.getRealPathFromURI(Uri.parse(thumurl),ChatRecordView.this);
-                            }
-                            attachBtn.setImageBitmap(bMap);
-                            //akshit code to check wether image buton contains image or not;
-                            if (attachBtn.getDrawable().getConstantState() == getResources().getDrawable(R.drawable.r_footer_icon).getConstantState()) {
-                                setVisibilityForSendButton();
-
-                            } else {
-                                setVisibilityForSend();
-                            }
-
-                            /* prafull code for image */
-                            attachBtn.setImageResource(R.drawable.ic_playvideoicon);
-                        }
-                        break;
-                    case VideoUtil.REQUEST_VIDEO_CAPTURED_FROM_GALLERY:
-                        // mImageCaptureUri = data.getData();
-                        path = Utils.getRealPathFromURI(data.getData(), ChatRecordView.this);
-                        videofilePath = path;
-                        Bitmap bMap = ThumbnailUtils.createVideoThumbnail(path, MediaStore.Video.Thumbnails.MINI_KIND);
-
+                    break;
+                case VideoUtil.REQUEST_VIDEO_CAPTURED:
+                    if (!Utils.isEmptyString(VideoUtil.videofilePath)) {
+                        videofilePath = VideoUtil.videofilePath;
+                        Bitmap bMap = ThumbnailUtils.createVideoThumbnail(VideoUtil.videofilePath, MediaStore.Video.Thumbnails.MINI_KIND);
                         if (videofilePath.contains(".mp4")) {
                             Random mRandom = new Random();
                             int mName = mRandom.nextInt();
                             mName = Math.abs(mName);
-
                             thumurl = videofilePath.replace(".mp4", "" + mName);
-
                             thumurl = writePhotoJpg(bMap, thumurl);
-
-
-
-                            /* prafull code for image */
-                            attachBtn.setImageResource(R.drawable.ic_playvideoicon);
-                            //akshit code to check wether image buton contains image or not;
-
-                        } else {
-                            path = null;
-                            audioFilePath = null;
-                            thumurl = null;
-                            videofilePath = null;
-                            attachBtn.setImageResource(R.drawable.r_footer_icon);
-
+                            //thumurl = Utils.getRealPathFromURI(Uri.parse(thumurl),ChatRecordView.this);
                         }
+                        attachBtn.setImageBitmap(bMap);
+                        //akshit code to check wether image buton contains image or not;
                         if (attachBtn.getDrawable().getConstantState() == getResources().getDrawable(R.drawable.r_footer_icon).getConstantState()) {
                             setVisibilityForSendButton();
+
                         } else {
                             setVisibilityForSend();
                         }
 
+                            /* prafull code for image */
+                        attachBtn.setImageResource(R.drawable.ic_playvideoicon);
+                    }
+                    break;
+                case VideoUtil.REQUEST_VIDEO_CAPTURED_FROM_GALLERY:
+                    // mImageCaptureUri = data.getData();
+                    path = Utils.getRealPathFromURI(data.getData(), ChatRecordView.this);
+                    videofilePath = path;
+                    Bitmap bMap = ThumbnailUtils.createVideoThumbnail(path, MediaStore.Video.Thumbnails.MINI_KIND);
 
-                        //ends
-                        break;
+                    if (videofilePath.contains(".mp4")) {
+                        Random mRandom = new Random();
+                        int mName = mRandom.nextInt();
+                        mName = Math.abs(mName);
 
+                        thumurl = videofilePath.replace(".mp4", "" + mName);
 
-                    case Constants.CROP_PICTURE:
-                        if (data.getStringExtra("retake").equalsIgnoreCase("fromchatCamare")) {
-                            Intent intent1 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                            mImageCaptureUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
-                            intent1.putExtra("return-data", true);
-                            intent1.putExtra(MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
-                            startActivityForResult(intent1, Constants.CAMERA_REQUEST);
-                        } else if (data.getStringExtra("retake").equalsIgnoreCase("fromchatGallery")) {
-                            Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                            startActivityForResult(pickPhoto, Constants.SELECT_PICTURE);
-                        } else if (authManager.getmResizeBitmap() != null) {
-                            ImageView view = (ImageView) findViewById(R.id.iv_attach);
-                            view.setImageBitmap(authManager.getmResizeBitmap());
-                            authManager.setmResizeBitmap(null);
-
-                            String mPath = data.getStringExtra("path");
+                        thumurl = writePhotoJpg(bMap, thumurl);
 
 
-                            //mImageCaptureUri = Uri.parse(path);
-                            path = mPath;
-                            //currentImagepath = mImageCaptureUri.toString();
 
-                            ((ImageView) findViewById(R.id.iv_attach)).setImageURI(Uri.parse(path));
+                            /* prafull code for image */
+                        attachBtn.setImageResource(R.drawable.ic_playvideoicon);
+                        //akshit code to check wether image buton contains image or not;
 
-                            //akshit code to check wether image buton contains image or not;
-                            if (view.getDrawable().getConstantState() == getResources().getDrawable(R.drawable.r_footer_icon).getConstantState()) {
-                                setVisibilityForSendButton();
+                    } else {
+                        path = null;
+                        audioFilePath = null;
+                        thumurl = null;
+                        videofilePath = null;
+                        attachBtn.setImageResource(R.drawable.r_footer_icon);
 
-                            } else {
-                                setVisibilityForSend();
-                            }
-                            //ends
+                    }
+                    if (attachBtn.getDrawable().getConstantState() == getResources().getDrawable(R.drawable.r_footer_icon).getConstantState()) {
+                        setVisibilityForSendButton();
+                    } else {
+                        setVisibilityForSend();
+                    }
+
+
+                    //ends
+                    break;
+
+
+                case Constants.CROP_PICTURE:
+                    if (data.getStringExtra("retake").equalsIgnoreCase("fromchatCamare")) {
+                        Intent intent1 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        mImageCaptureUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
+                        intent1.putExtra("return-data", true);
+                        intent1.putExtra(MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
+                        startActivityForResult(intent1, Constants.CAMERA_REQUEST);
+                    } else if (data.getStringExtra("retake").equalsIgnoreCase("fromchatGallery")) {
+                        Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        startActivityForResult(pickPhoto, Constants.SELECT_PICTURE);
+                    } else if (authManager.getmResizeBitmap() != null) {
+                        ImageView view = (ImageView) findViewById(R.id.iv_attach);
+                        view.setImageBitmap(authManager.getmResizeBitmap());
+                        authManager.setmResizeBitmap(null);
+
+                        String mPath = data.getStringExtra("path");
+
+
+                        //mImageCaptureUri = Uri.parse(path);
+                        path = mPath;
+                        //currentImagepath = mImageCaptureUri.toString();
+
+                        ((ImageView) findViewById(R.id.iv_attach)).setImageURI(Uri.parse(path));
+
+                        //akshit code to check wether image buton contains image or not;
+                        if (view.getDrawable().getConstantState() == getResources().getDrawable(R.drawable.r_footer_icon).getConstantState()) {
+                            setVisibilityForSendButton();
+
                         } else {
-                            mImageCaptureUri = null;
-                            path = null;
+                            setVisibilityForSend();
                         }
-                        break;
+                        //ends
+                    } else {
+                        mImageCaptureUri = null;
+                        path = null;
+                    }
+                    break;
 
-                    case Constants.START_MAP:
-                        Utils.launchBarDialog(this);
-                        Double latitude = data.getDoubleExtra("lat", 0.0);
-                        Double longitude = data.getDoubleExtra("lng", 0.0);
-                        mLocation_Coordinates = latitude + "," + longitude;
-                        String url = "http://maps.google.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&markers=color%3ared|color%3ared|label%3aA|" + latitude + "," + longitude + "&zoom=15&size=650x400&sensor=true";
-                        new DownloadImage().execute(url);
+                case Constants.START_MAP:
+                    Utils.launchBarDialog(this);
+                    Double latitude = data.getDoubleExtra("lat", 0.0);
+                    Double longitude = data.getDoubleExtra("lng", 0.0);
+                    mLocation_Coordinates = latitude + "," + longitude;
+                    String url = "http://maps.google.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&markers=color%3ared|color%3ared|label%3aA|" + latitude + "," + longitude + "&zoom=15&size=650x400&sensor=true";
+                    new DownloadImage().execute(url);
 
-                        break;
-                    default:
-                        break;
-                }
+                    break;
+                default:
+                    break;
             }
+        }
        /* } catch (Exception e) {
         }*/
     }
@@ -1784,7 +1778,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             message.addExtension(extension);
             // chatObject.sendMessage(Integer.parseInt(qBId), message);
         } catch (Exception e) {
-                   }
+        }
     }
 
     // Audio STUFF END
@@ -1833,7 +1827,6 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     }
 
 
-
     private boolean isClicks() {
         if (seekValue != 0 && (-10 <= seekValue && seekValue <= 10)) {
             chatManager = ModelManager.getInstance().getChatManager();
@@ -1843,8 +1836,6 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             return false;
         }
     }
-
-
 
 
     private String clickForFlipper(int clicks) {
@@ -1934,11 +1925,11 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             sharedMessage.add(obj.senderQbId);
             sharedMessage.add(obj.isAccepted);
             sharedMessage.add(obj.isMessageSender);
-            if(obj.shareComment.equalsIgnoreCase("Write your caption here...")){//code to filter if Comments are not there (For History Only )//Akshit
+            if (obj.shareComment.equalsIgnoreCase("Write your caption here...")) {//code to filter if Comments are not there (For History Only )//Akshit
 
                 obj.shareComment = " ";
                 sharedMessage.add(obj.shareComment);
-            }else {
+            } else {
                 sharedMessage.add(obj.shareComment);
             }
 

@@ -59,7 +59,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
     ArrayList<String> mId;
     MediaPlayer player;
     AuthManager authMgr;
-    Typeface typeface,typeface_avenera_medium;
+    Typeface typeface, typeface_avenera_medium;
 
     ArrayList<String> senderName;
     ArrayList<String> senderId;
@@ -71,6 +71,8 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
     ArrayList<String> senderPhNo;
     ArrayList<String> recieverPhNo;
     ArrayList<String> timeOfFeed;
+    private LayoutInflater mInflater;
+
 
     public FeedsAdapter(Activity context, int layoutResourceId,
                         ArrayList<NewsFeedBean> item,
@@ -109,7 +111,6 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
         }*/
 
     }
-
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
@@ -210,7 +211,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
                                 holder.clickedInMessage.setText(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().trim());
                             }
                         }
-                    }else {
+                    } else {
                         holder.clickedInMessage.setVisibility(GONE);
                         holder.clickedInMessageLong.setVisibility(GONE);
                     }
@@ -459,15 +460,15 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
                 ModelManager.getInstance().getNewsFeedManager().reportInAppropriate(authMgr.getPhoneNo(), authMgr.getUsrToken(), eachNewsFeed.get(position).getNewsfeedArray_id());
             }
         });
-        if (eachNewsFeed.get(position).getCommentArrayList() != null ) {
+        if (eachNewsFeed.get(position).getCommentArrayList() != null) {
 
 
             holder.feed_comments_layout.setVisibility(VISIBLE);
             if (eachNewsFeed.get(position).getNewsfeedArray_comments_count() > 3) {
                 holder.feed_comments_layout1.setVisibility(VISIBLE);
 
-                holder.no_comments.setTypeface(null,Typeface.NORMAL);
-                String html = "<font><b>" + "View all " + eachNewsFeed.get(position).getNewsfeedArray_comments_count() + " comments" + "</b></font>" ;
+                holder.no_comments.setTypeface(null, Typeface.NORMAL);
+                String html = "<font><b>" + "View all " + eachNewsFeed.get(position).getNewsfeedArray_comments_count() + " comments" + "</b></font>";
                 holder.no_comments.setText(Html.fromHtml(html));
 
                 for (int k = 0; k < eachNewsFeed.get(position).getCommentArrayList().size(); k++) {
@@ -623,10 +624,10 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
                         if (stars.equalsIgnoreCase("")) {
                             String name_user = "<font><b>" + ModelManager.getInstance().getAuthorizationManager().getUserName() + "</b></font>";
                             holder.feed_star_user.setText(Html.fromHtml(name_user));
-                        }  else if (stars.endsWith("Stars")) {
+                        } else if (stars.endsWith("Stars")) {
                             stars = stars.substring(0, stars.indexOf(" "));
                             int star = Integer.parseInt(stars) - 1;
-                            String number_stars =  "<font><b>" + star + "Stars" +"</b></font>";
+                            String number_stars = "<font><b>" + star + "Stars" + "</b></font>";
                             holder.feed_star_user.setText(Html.fromHtml(number_stars));
                             holder.feed_star_user.setTextColor(context.getResources().getColor(R.color.dark_gray));//akshit code Black is not needed
                         } else {
@@ -651,7 +652,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
                         if (stars.equalsIgnoreCase("")) {
                             String html_text = "<font><b>" + ModelManager.getInstance().getAuthorizationManager().getUserName() + "</b></font>";
                             holder.feed_star_user.setText(Html.fromHtml(html_text));
-                        }else if (stars.endsWith("Stars")) {
+                        } else if (stars.endsWith("Stars")) {
                             stars = stars.substring(0, stars.indexOf(" "));
                             int star = Integer.parseInt(stars) + 1;
                             String star_number = "<font><b>" + star + "Stars" + "</b></font>";
@@ -744,8 +745,6 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
     public int getSectionForPosition(int position) {
         return eachNewsFeed.get(position).getNewsfeedArray_comments_count();  // get length of section index
     }
-
-    private LayoutInflater mInflater;
 
     @Override
     public View getHeaderView(final int position, View convertView, ViewGroup parent) {

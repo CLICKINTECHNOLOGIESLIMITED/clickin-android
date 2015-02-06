@@ -56,8 +56,6 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
             myQbChatService = ((MyQbChatService.LocalBinder) service).getService();
 
 
-
-
             // Tell the user about this for our demo.
 
         }
@@ -126,8 +124,6 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
         ePwd.setOnClickListener(this);
 
 
-
-
         // akshit code for closing keypad if touched anywhere outside
         ((RelativeLayout) findViewById(R.id.relative_layout_root_signin)).setOnClickListener(new View.OnClickListener() {
 
@@ -148,14 +144,12 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
 
 //            //akshit code for country Code
 
-            String countryCode = Utils.getCountryCodeFromSim(this);
-            if (countryCode == null) {
-                ephone.setText("+(null)");
-            } else {
-                ephone.setText(countryCode);
-            }
-
-
+        String countryCode = Utils.getCountryCodeFromSim(this);
+        if (countryCode == null) {
+            ephone.setText("+(null)");
+        } else {
+            ephone.setText(countryCode);
+        }
 
 
         ephone.setSelection(ephone.getText().toString().length());
@@ -192,7 +186,6 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_get_clickin_signin:
-
 
 
                 RelativeLayout layout = (RelativeLayout) findViewById(R.id.relative_layout_root_signin);
@@ -292,8 +285,7 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
                 authManager = ModelManager.getInstance().getAuthorizationManager();
             if (authManager.getUserPic() != null) {
                 new DownloadImage().execute(authManager.getUserPic());
-            }
-            else {
+            } else {
                 Utils.dismissBarDialog();
                 switchView();
             }
@@ -310,8 +302,7 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
             if (authManager.getUserPic() != null) {
 
                 new DownloadImage().execute(authManager.getUserPic());
-            }
-            else {
+            } else {
 
                 Utils.dismissBarDialog();
                 switchView();
@@ -413,12 +404,12 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
         @Override
         protected void onPostExecute(Bitmap result) {
             String mPath = "";
-            if(result != null)
-                mPath = Utils.storeImage(result, ""+ModelManager.getInstance().getAuthorizationManager().getUserId(), SignInView.this);
+            if (result != null)
+                mPath = Utils.storeImage(result, "" + ModelManager.getInstance().getAuthorizationManager().getUserId(), SignInView.this);
 
-            if (!Utils.isEmptyString(""+mPath))
+            if (!Utils.isEmptyString("" + mPath))
                 ModelManager.getInstance().getAuthorizationManager().setUserImageUri(Uri.parse(mPath)); // save image Uri
-            if(result != null)
+            if (result != null)
                 ModelManager.getInstance().getAuthorizationManager().setUserbitmap(result);
             Utils.dismissBarDialog();
             switchView();

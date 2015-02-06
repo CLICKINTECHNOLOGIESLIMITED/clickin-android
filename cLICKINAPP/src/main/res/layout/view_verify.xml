@@ -84,9 +84,9 @@
                     android:gravity="center"
                     android:inputType="number|textNoSuggestions"
                     android:maxLength="1"
-                    android:textIsSelectable="true"
                     android:padding="10dp"
                     android:textColor="@color/white"
+                    android:textIsSelectable="true"
                     android:textSize="45sp"
                     android:textStyle="bold"></EditText>
 
@@ -101,9 +101,9 @@
                     android:gravity="center"
                     android:inputType="number|textNoSuggestions"
                     android:maxLength="1"
-                    android:textIsSelectable="true"
                     android:padding="10dp"
                     android:textColor="@color/white"
+                    android:textIsSelectable="true"
                     android:textSize="45sp"
                     android:textStyle="bold"></EditText>
 
@@ -115,12 +115,12 @@
                     android:layout_weight="1"
                     android:background="@drawable/e_v_number_field_empty"
                     android:cursorVisible="false"
-                    android:textIsSelectable="true"
                     android:gravity="center"
                     android:inputType="number|textNoSuggestions"
                     android:maxLength="1"
                     android:padding="10dp"
                     android:textColor="@color/white"
+                    android:textIsSelectable="true"
                     android:textSize="45sp"
                     android:textStyle="bold"></EditText>
 
@@ -134,11 +134,11 @@
                     android:cursorVisible="false"
                     android:ems="1"
                     android:gravity="center"
-                    android:textIsSelectable="true"
                     android:inputType="number|textNoSuggestions"
                     android:maxLength="1"
                     android:padding="10dp"
                     android:textColor="@color/white"
+                    android:textIsSelectable="true"
                     android:textSize="45sp"
                     android:textStyle="bold"></EditText>
             </LinearLayout>

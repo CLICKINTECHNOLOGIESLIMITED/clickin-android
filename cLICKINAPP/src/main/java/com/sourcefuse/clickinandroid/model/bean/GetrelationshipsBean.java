@@ -3,6 +3,7 @@ package com.sourcefuse.clickinandroid.model.bean;
 public class GetrelationshipsBean {
 
     public String mLastSeenTime = null;
+    public String mIs_new_partner = null;
     private String partner_id;
     private String statusAccepted;
     private String userClicks;
@@ -18,7 +19,6 @@ public class GetrelationshipsBean {
     private String partnerName;
     private int mUnreadMsg;
 
-    public String mIs_new_partner = null;
     public int getUnreadMsg() {
         return mUnreadMsg;
     }

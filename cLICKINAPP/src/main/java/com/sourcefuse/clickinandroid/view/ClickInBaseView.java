@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
@@ -64,11 +63,9 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
     public Boolean stopSearch = true;
     public EditText edt_search;
     //Right Menu.....
-
-    String mLastchatID = "";
     public NewsFeedManager newsFeedManager;
     public SlidingMenu slidemenu;
-
+    String mLastchatID = "";
     View header;
     /// Left Menu
     private TextView userName;
