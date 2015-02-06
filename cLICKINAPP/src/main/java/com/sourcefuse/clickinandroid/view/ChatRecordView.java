@@ -1556,7 +1556,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                                 intent.putExtra("uri", mImageCaptureUri);
                                 startActivityForResult(intent, Constants.CROP_PICTURE);
                             } catch (Exception e) {
-                                e.printStackTrace();
+//                                e.printStackTrace();
                             }
                         }
                         mImageCaptureUri = Utils.decodeUri(ChatRecordView.this, mImageCaptureUri, 550);
@@ -1589,7 +1589,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                                 intent.putExtra("uri", data.getData());
                                 startActivityForResult(intent, Constants.CROP_PICTURE);
                             } catch (Exception e) {
-                                e.printStackTrace();
+//                                e.printStackTrace();
                             }
                         }
                         mImageCaptureUri = Utils.decodeUri(ChatRecordView.this, data.getData(), 550);
