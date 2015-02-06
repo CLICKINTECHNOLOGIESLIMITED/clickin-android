@@ -63,6 +63,8 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
     String path;
     private AuthManager authManager;
     private RelationManager relationManager;
+    private ChatManager chatmanager ;
+
 
     public ChatRecordAdapter(Context context, int layoutResourceId,
                              ArrayList<ChatMessageBody> chatList) {
@@ -80,10 +82,13 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
         String oursQbId = ModelManager.getInstance().getAuthorizationManager().getQBId();
         RelativeLayout parentChatLayout = (RelativeLayout) row.findViewById(R.id.chat_parent_layout);
         relationManager = ModelManager.getInstance().getRelationManager();
+        chatmanager = ModelManager.getInstance().getChatManager();
 
 
-        if (currentChatList.size() > 19) {//akshit code set visibility of load earlier ,only is chat records are greater then 20
-            ChatRecordView.load_earlier.setVisibility(View.VISIBLE);
+        if(currentChatList.size()>19 && chatmanager.chat_history_size.equalsIgnoreCase("true")) {//akshit code set visibility of load earlier ,only is chat records are greater then 20
+            ChatRecordView.load_earlier.setVisibility(View.VISIBLE);                             //also if chat fetched is greater then 20
+        } else {
+            ChatRecordView.load_earlier.setVisibility(View.GONE);
         }
 
         if (imageLoader == null)
@@ -107,12 +112,18 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
             //code -for image -sender-start here
             if (!(Utils.isEmptyString(temp.imageRatio))) {    /// imgage code for sender end
+                //set layout properties for image view
+                /* layout params for image */
+
+
                 LinearLayout mImageLayout = (LinearLayout) row.findViewById(R.id.media_layout);
                 final ImageView image_attached = (ImageView) row.findViewById(R.id.iv_chat_image);
                 FeedImageView iv_chat_image_ = (FeedImageView) row.findViewById(R.id.iv_chat_image_);
                 LinearLayout media_layout = (LinearLayout) row.findViewById(R.id.media_layout);
                 media_layout.setVisibility(View.VISIBLE);
                 image_attached.setVisibility(View.VISIBLE);
+
+
                 //code to set msg deilvery notification
                 if (!(Utils.isEmptyString(temp.isDelivered)) && temp.isDelivered.equalsIgnoreCase(Constants.MSG_SENDING)) {
                     ((ProgressBar) row.findViewById(R.id.pb_loding)).setVisibility(View.VISIBLE);
@@ -343,7 +354,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     if (!Utils.isEmptyString(temp.sharingMedia)) {
 
 
-                        if (!Utils.isEmptyString(temp.card_owner) && temp.card_owner.equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getQBId())) {
+                        if (temp.isMessageSender.equalsIgnoreCase("false")) {//check if not sender set to receiver name to receiver
 
                             //parnter accepted the card
                             String[] splitted = relationManager.getPartnerName.split("\\s+");
@@ -353,8 +364,8 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                             name = "You";
 
                         }
-                    } else {
-                        name = "You"; //without sharing case, at sender side, it always you accept/reject
+                    }else{
+                        name="You"; //without sharing case, at sender side, it always you accept/reject
                     }
                     ((TextView) row.findViewById(R.id.tv_acc_res_name)).setText(name);
                     ((TextView) row.findViewById(R.id.tv_acc_res_status)).setText("ACCEPTED!");
@@ -369,20 +380,20 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     ((LinearLayout) row.findViewById(R.id.acc_rej_layout_second)).setVisibility(View.VISIBLE);
                     String name = " ";
                     //code to decide who is accepted the card- basis on card owner- importance while sharing card
-                    if (!Utils.isEmptyString(temp.sharingMedia)) {
+                    if (!Utils.isEmptyString(temp.sharingMedia)){
 
-                        if (!Utils.isEmptyString(temp.card_owner) && temp.card_owner.equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getQBId())) {
+                    if (temp.isMessageSender.equalsIgnoreCase("false")) {//check if not sender set to receiver name to receiver
 
-                            //parnter accepted the card
-                            String[] splitted = relationManager.getPartnerName.split("\\s+");
-                            name = splitted[0];
-                        } else {
-                            //it means you accepted the card
-                            name = "You";
-
-                        }
+                        //parnter accepted the card
+                        String[] splitted = relationManager.getPartnerName.split("\\s+");
+                        name = splitted[0];
                     } else {
-                        name = "You"; //without sharing case, at sender side, it always you accept/reject
+                        //it means you accepted the card
+                        name = "You";
+
+                    }
+                }else{
+                        name="You"; //without sharing case, at sender side, it always you accept/reject
                     }
 
                     ((TextView) row.findViewById(R.id.tv_acc_res_name)).setText(name);
@@ -593,6 +604,24 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 ImageView sendStatusView = (ImageView) row.findViewById(R.id.iv_send_status);
                 sendStatusView.setImageResource(R.drawable.double_check);
             }
+
+
+
+            // Click Action On Share ICon
+            ((ImageView) row.findViewById(R.id.iv_type_two_share_icon_r)).setTag(position);
+            ((ImageView) row.findViewById(R.id.iv_type_two_share_icon_r)).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    int position = (Integer) v.getTag();
+
+                    sendShareValues(position,"true");//Clicked from sender side set flag ismessage sender to true
+
+
+                }
+            });
+
+
         }//end of sender loop
         else {
 
@@ -938,7 +967,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     String name = " ";
                     if (!Utils.isEmptyString(temp.sharingMedia)) {
 
-                        if (!Utils.isEmptyString(temp.card_owner) && temp.card_owner.equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getQBId())) {
+                        if (temp.isMessageSender.equalsIgnoreCase("false")) {//check if not sender set to receiver name to receiver
 
                             //parnter accepted the card
                             String[] splitted = relationManager.getPartnerName.split("\\s+");
@@ -948,7 +977,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                             name = "You";
 
                         }
-                    } else {
+                    }else{
                         String[] splitted = relationManager.getPartnerName.split("\\s+");
                         name = splitted[0];
                     }
@@ -969,7 +998,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     if (!Utils.isEmptyString(temp.sharingMedia)) {
 
 
-                        if (!Utils.isEmptyString(temp.card_owner) && temp.card_owner.equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getQBId())) {
+                        if (temp.isMessageSender.equalsIgnoreCase("false")) {//check if not sender set to receiver name to receiver
 
                             //parnter accepted the card
                             String[] splitted = relationManager.getPartnerName.split("\\s+");
@@ -1285,6 +1314,18 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 ((ImageView) row.findViewById(R.id.iv_type_two_share_icon_r)).setVisibility(View.GONE);
             }
 
+
+            // Click Action On Share ICon Receiver Side //akshit Code to set Onclick on share icon on receifer side
+            ((ImageView) row.findViewById(R.id.iv_type_two_share_icon_r)).setTag(position);
+            ((ImageView) row.findViewById(R.id.iv_type_two_share_icon_r)).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    int position = (Integer) v.getTag();
+                    sendShareValues(position,"false");//if click from receiver then ismessagesender flag false
+
+                }
+            });
         }//end of share view at reciver side
 
 
@@ -1312,19 +1353,6 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
         });
 
         row.setTag(position);
-// Click Action On Share ICon
-        ((ImageView) row.findViewById(R.id.iv_type_two_share_icon_r)).setTag(position);
-        ((ImageView) row.findViewById(R.id.iv_type_two_share_icon_r)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                int position = (Integer) v.getTag();
-                sendShareValues(position);
-
-
-            }
-        });
-
 
         // Click Action On Share With REJECT
         ((TextView) row.findViewById(R.id.shared_message_reject)).setTag(position);
@@ -1521,15 +1549,15 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
     }
 
     //mukesh
-    private void sendShareValues(int index) {
+    private void sendShareValues(int index ,String is_sender) {
         ChatMessageBody item = ModelManager.getInstance().getChatManager().chatMessageList.get(index);
-        String isMessageSender = "false";
+
         Intent i = new Intent();
         //    i.putExtra("chatType", item.chatType);
         i.putExtra("clicks", item.clicks);
         i.putExtra("textMsg", item.textMsg);
         i.putExtra("originalChatId", item.chatId);
-        i.putExtra("isMessageSender", isMessageSender);
+        i.putExtra("isMessageSender", is_sender);
 
         if (!Utils.isEmptyString(item.imageRatio)) {
             i.putExtra("imageRatio", item.imageRatio);
