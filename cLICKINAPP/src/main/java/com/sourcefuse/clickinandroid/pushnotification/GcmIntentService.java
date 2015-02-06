@@ -80,19 +80,16 @@ public class GcmIntentService extends IntentService {
                             extras.getString("Tp").equalsIgnoreCase("CRR")
                             ) {
 
-                        data.setClass(getApplicationContext(), ReloadApp.class);
                         data.putExtra("Tp", extras.getString("Tp"));
                         sendNotification("Clickin'", extras.getString("chat_message"), data);
                     } else if (extras.getString("Tp").equalsIgnoreCase("FR")) {  // case follow request
 
-                        data.setClass(getApplicationContext(), ReloadApp.class);
                         data.putExtra("FromOwnProfile", true);
                         data.putExtra("Tp", extras.getString("Tp"));
                         sendNotification("Clickin'", extras.getString("chat_message"), data);
                     } else if (extras.getString("Tp").equalsIgnoreCase("clk")) {
 
 
-                        data.setClass(getApplicationContext(), ReloadApp.class);
                         data.putExtra("Tp", extras.getString("Tp"));
                         String mPartnerId = extras.getString("pid");
                         data.putExtra("pid", mPartnerId);
@@ -101,7 +98,6 @@ public class GcmIntentService extends IntentService {
 
                     } else if (extras.getString("Tp").equalsIgnoreCase("chat")) {
 
-                        data.setClass(getApplicationContext(), ReloadApp.class);
                         data.putExtra("Tp", extras.getString("Tp"));
                         String mPartnerId = extras.getString("pid");
                         data.putExtra("pid", mPartnerId);
@@ -115,19 +111,16 @@ public class GcmIntentService extends IntentService {
                         }
                     } else if (extras.getString("Tp").equalsIgnoreCase("RD")) {
 
-                        data.setClass(getApplicationContext(), ReloadApp.class);
                         data.putExtra("Tp", extras.getString("Tp"));
                         sendNotification("Clickin'", extras.getString("message"), data);
                     } else if (extras.getString("Tp").equalsIgnoreCase("media")) {  // case when share media and send media
 
                         String mPartnerId = extras.getString("pid");
                         data.putExtra("pid", mPartnerId);
-                        data.setClass(getApplicationContext(), ReloadApp.class);
                         sendNotification("Clickin'", extras.getString("message"), data);
                     } else if (extras.getString("Tp").equalsIgnoreCase("shr")) //case for share
                     {
 
-                        data.setClass(getApplicationContext(), ReloadApp.class);
                         data.putExtra("Tp", extras.getString("Tp"));
                         sendNotification("Clickin'", extras.getString("chat_message"), data);
 
@@ -135,7 +128,6 @@ public class GcmIntentService extends IntentService {
                     } else if (extras.getString("Tp").equalsIgnoreCase("Upp")) //case for Profile Update
                     {
 
-                        data.setClass(getApplicationContext(), ReloadApp.class);
                         data.putExtra("Tp", extras.getString("Tp"));
                         data.putExtra("FromOwnProfile", true);
                         data.putExtra("phone_no", extras.getString("phone_no"));
@@ -148,7 +140,6 @@ public class GcmIntentService extends IntentService {
 
                         String mPartnerId = extras.getString("pid");
 
-                        data.setClass(getApplicationContext(), ReloadApp.class);
                         data.putExtra("Tp", extras.getString("Tp"));
                         data.putExtra("pid", mPartnerId);
                         sendNotification("Clickin'", extras.getString("chat_message"), data);
@@ -156,7 +147,7 @@ public class GcmIntentService extends IntentService {
                             || extras.getString("Tp").equalsIgnoreCase("Rpt")) //case for feed star
                     {
 
-                        data.setClass(getApplicationContext(), ReloadApp.class);
+
                         data.putExtra("Nid", extras.getString("Nid"));
                         data.putExtra("Tp", extras.getString("Tp"));
                         sendNotification("Clickin'", extras.getString("chat_message"), data);
@@ -188,10 +179,10 @@ public class GcmIntentService extends IntentService {
 
         PendingIntent contentIntent = null;
         if (intent != null) {
+            intent.setClass(getApplicationContext(), ReloadApp.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             int iUniqueId = (int) (System.currentTimeMillis() & 0xfffffff);
-            contentIntent = PendingIntent.getActivity(this, iUniqueId, intent, PendingIntent.FLAG_ONE_SHOT
-            );
+            contentIntent = PendingIntent.getActivity(this, iUniqueId, intent, PendingIntent.FLAG_ONE_SHOT);
         }
 
 
