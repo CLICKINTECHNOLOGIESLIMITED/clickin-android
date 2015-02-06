@@ -16,7 +16,6 @@ import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -39,7 +38,6 @@ import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
 import com.splunk.mint.Mint;
 
-import java.io.File;
 import java.io.InputStream;
 
 import de.greenrobot.event.EventBus;
@@ -56,13 +54,12 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
             // service that we know is running in our own process, we can
             // cast its IBinder to a concrete class and directly access it.
             myQbChatService = ((MyQbChatService.LocalBinder) service).getService();
-           /* myQbChatService.createRoom(mRoomName);*/
 
-            // showMessages();
+
+
 
             // Tell the user about this for our demo.
-//            Toast.makeText(Binding.this, R.string.local_service_connected,
-//                    Toast.LENGTH_SHORT).show();
+
         }
 
         public void onServiceDisconnected(ComponentName className) {
@@ -71,8 +68,7 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
             // Because it is running in our same process, we should never
             // see this happen.
             myQbChatService = null;
-//            Toast.makeText(Binding.this, R.string.local_service_disconnected,
-//                    Toast.LENGTH_SHORT).show();
+
         }
     };
     private Button do_latter;
@@ -81,7 +77,6 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
     private boolean activeDone = false;
     private AuthManager authManager;
     private Dialog mDialog;
-    // private Typeface typeface, typefaceBold;
     private boolean mIsBound;
 
     @Override
@@ -95,15 +90,9 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
         PicassoManager.setPicasso(getApplicationContext());
         PicassoManager.clearCache();
 
-        try{
+
         Mint.initAndStartSession(SignInView.this, Constants.mSplunk_Api);  // to start the session of Splunk Crashlytics
         Mint.enableDebug();
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-
-
-
 
         authManager = ModelManager.getInstance().getAuthorizationManager();
         try {
@@ -137,9 +126,7 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
         ePwd.setOnClickListener(this);
 
 
-//        forgotPwd.setTypeface(typeface);
-//        signUp.setTypeface(typeface);
-//        signUp.setTypeface(typeface);
+
 
         // akshit code for closing keypad if touched anywhere outside
         ((RelativeLayout) findViewById(R.id.relative_layout_root_signin)).setOnClickListener(new View.OnClickListener() {
@@ -160,7 +147,7 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
 
 
 //            //akshit code for country Code
-        try {
+
             String countryCode = Utils.getCountryCodeFromSim(this);
             if (countryCode == null) {
                 ephone.setText("+(null)");
@@ -169,15 +156,10 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
             }
 
 
-        } catch (Exception e) {
-        }
 
 
         ephone.setSelection(ephone.getText().toString().length());
         //No need. For this akshit
-
-
-
 
         /* to save default lat and lng */
 
@@ -200,13 +182,7 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
         if (ephone.getText().toString().length() > 0 && ePwd.getText().toString().length() > 0) {
             activeDone = true;
             do_latter.setBackgroundResource(R.drawable.c_getclicin_active);
-//        } else if(ephone.getText().toString().length()==0){
-//            Utils.fromSignalDialog(this,AlertMessage.enterPhoneEmail);
-//
-////            activeDone = false;ep
-////            do_latter.setBackgroundResource(R.drawable.c_getclicin_deactive);
-//        }
-//       }
+
         }
 
 
@@ -218,7 +194,7 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
             case R.id.btn_get_clickin_signin:
 
 
-             /*  ClickInAlertDialog.networkErrorAlert(SignInView.this);*/
+
                 RelativeLayout layout = (RelativeLayout) findViewById(R.id.relative_layout_root_signin);
 
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -240,8 +216,6 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
                 break;
             case R.id.tv_signup:
                 Intent intent = new Intent(SignInView.this, SignUpView.class);
-
-                //   intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
                 this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
                 break;
@@ -250,7 +224,6 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
 
     private void switchView() {
         Intent intent = new Intent(SignInView.this, UserProfileView.class);
-        //  intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();
     }
@@ -281,59 +254,28 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
             editor.putString("DeviceId", Utils.deviceId);
             editor.putString("authToken", ModelManager.getInstance().getAuthorizationManager().getUsrToken());
             editor.putString("userid", ModelManager.getInstance().getAuthorizationManager().getUserId());
-            //  editor.putString("DeviceType",Constants.DEVICETYPE);
             editor.commit();
-
-
-            //  new MyPreference(SignInView.this).setToken(authManager.getUsrToken());
-            //new MyPreference(SignInView.this).setmyPhoneNo(authManager.getPhoneNo());
-            //  authManager.getProfileInfo("", authManager.getPhoneNo(), authManager.getUsrToken());
-
-            //loginToQuickBlox();
             authManager.getProfileInfo("", authManager.getPhoneNo(), authManager.getUsrToken());
         } else if (getMsg.equalsIgnoreCase("SignIn False")) {
             Utils.dismissBarDialog();
             Utils.fromSignalDialog(this, AlertMessage.wrong_signIn_details);
-            //  Utils.showAlert(this,AlertMessage.wrong_signIn_details);
-            //Utils.showAlert(SignInView.this, authManager.getMessage());
         } else if (getMsg.equalsIgnoreCase("SignIn Network Error")) {
             Utils.dismissBarDialog();
             Utils.fromSignalDialog(this, AlertMessage.connectionError);
-            //Utils.showAlert(act, AlertMessage.connectionError);
         } else if (getMsg.equalsIgnoreCase("ProfileInfo True")) {
             //save values of user in shared prefrence for later use
-
-     /*       SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-            SharedPreferences.Editor editor = preferences.edit();
-            editor.putString("gender", authManager.getGender());
-            editor.putString("follower", authManager.getFollower());
-            editor.putString("following", authManager.getFollowing());
-            editor.putString("is_following", authManager.getIsFollowing());
-            editor.putString("name", authManager.getUserName());
-            editor.putString("user_pic", authManager.getUserPic());
-            editor.putString("dob", authManager.getdOB());
-            editor.putString("city", authManager.getUserCity());
-            editor.putString("country", authManager.getUserCountry());
-            editor.putString("email", authManager.getEmailId());
-            editor.commit();*/
             RelationManager relationManager = ModelManager.getInstance().getRelationManager();
             relationManager.getRelationShips(authManager.getPhoneNo(), authManager.getUsrToken());
-            // new ImageDownloadTask().execute();
-
-
         } else if (getMsg.equalsIgnoreCase("ProfileInfo False")) {
             Utils.dismissBarDialog();
             Utils.fromSignalDialog(this, authManager.getMessage());
-            // Utils.showAlert(SignInView.this, authManager.getMessage());
         } else if (getMsg.equalsIgnoreCase("ProfileInfo Network Error")) {
             Utils.dismissBarDialog();
             Utils.fromSignalDialog(this, AlertMessage.connectionError);
-            //Utils.showAlert(act, AlertMessage.connectionError);
         } else if (getMsg.equalsIgnoreCase("ForgotPassword True")) {
 
             mDialog.dismiss();
             Utils.fromSignalDialog(this, AlertMessage.password_recovey);
-            // ClickInAlertDialog.clickInAlert(SignInView.this, authManager.getMessage(), "", false);
             authManager.getMessage();
             Utils.dismissBarDialog();
         } else if (getMsg.equalsIgnoreCase("ForgotPassword False")) {
@@ -349,12 +291,9 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
             if (authManager == null)
                 authManager = ModelManager.getInstance().getAuthorizationManager();
             if (authManager.getUserPic() != null) {
-
                 new DownloadImage().execute(authManager.getUserPic());
-
             }
             else {
-
                 Utils.dismissBarDialog();
                 switchView();
             }
@@ -393,16 +332,12 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
         mDialog.setCancelable(false);
         // set the custom dialog components - text, image and button
         TextView text = (TextView) mDialog.findViewById(R.id.text);
-        //text.setText("Android custom dialog example!");
         getemailid = (EditText) mDialog.findViewById(R.id.edt_getemailid);
-
         Button dialogButton = (Button) mDialog.findViewById(R.id.dialog_cancel);
         // if button is clicked, close the custom dialog
         dialogButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 //akshit code to hide keyboard
                 InputMethodManager imm = (InputMethodManager) getSystemService(contex.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(getemailid.getWindowToken(), 0);
@@ -428,7 +363,6 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
 
                 } else {
                     Utils.fromSignalDialog(SignInView.this, AlertMessage.vEmailid);
-                    //    ClickInAlertDialog.clickInAlert(SignInView.this,"Please enter a valid email address","Error",true);
                 }
             }
         });
@@ -478,13 +412,14 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
 
         @Override
         protected void onPostExecute(Bitmap result) {
-            String mPath = Utils.storeImage(result, ""+ModelManager.getInstance().getAuthorizationManager().getUserId(), SignInView.this);
-            if (authManager == null)
-                authManager = ModelManager.getInstance().getAuthorizationManager();
-            if (!Utils.isEmptyString(""+mPath))
-                authManager.setUserImageUri(Uri.parse(mPath)); // save image Uri
+            String mPath = "";
             if(result != null)
-                authManager.setUserbitmap(result);
+                mPath = Utils.storeImage(result, ""+ModelManager.getInstance().getAuthorizationManager().getUserId(), SignInView.this);
+
+            if (!Utils.isEmptyString(""+mPath))
+                ModelManager.getInstance().getAuthorizationManager().setUserImageUri(Uri.parse(mPath)); // save image Uri
+            if(result != null)
+                ModelManager.getInstance().getAuthorizationManager().setUserbitmap(result);
             Utils.dismissBarDialog();
             switchView();
 

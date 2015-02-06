@@ -266,7 +266,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
 
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();removed by akshit
 
         }
         return mPath;
@@ -277,20 +277,16 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_chat_layout);
-        //  Utils.launchBarDialog(ChatRecordView.this);
+
         rId = getIntent().getExtras().getString("rId");
         //clear the message list always to initiate a new chat
         ModelManager.getInstance().getChatManager().chatMessageList.clear();
         setlist();
-        //  setlist();
-        //  Intent i = new Intent(this, MyQbChatService.class);
-        //bindService(i, mConnection, Context.BIND_AUTO_CREATE);
+
         addMenu(false);
         slidemenu.setTouchModeAbove(2);
 
         send = (Button) findViewById(R.id.btn_send);
-//        load_earlier = (TextView)findViewById(R.id.load_earlier);
-
         chatListView = (ListView) findViewById(R.id.chat_list);
 
         //akshit code to implement Load Earlier ,Remove Pull to refresh
@@ -454,7 +450,6 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                     mybar.setThumb(getResources().getDrawable(R.drawable.clickinpinkthumb));//akshit code
                     findViewById(R.id.rl_flipper).setVisibility(View.VISIBLE);
                     findViewById(R.id.rl_flipper).setBackgroundResource(R.color.white_with_transparent);
-//                   ((TextView) findViewById(R.id.tv_flipper_value)).setText("" + clickForFlipper(myvalue));
                     mSwitcher.setText("" + clickForFlipper(myvalue));
                     seekValue = myvalue;
                 }
@@ -469,7 +464,6 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                     mybar.setThumb(getResources().getDrawable(R.drawable.clickinpinkthumb));//akshit code
                     findViewById(R.id.rl_flipper).setVisibility(View.VISIBLE);
                     findViewById(R.id.rl_flipper).setBackgroundResource(R.color.black_opacity);
-//                    ((TextView) findViewById(R.id.tv_flipper_value)).setText("" + myvalue);
                     mSwitcher.setText("" + clickForFlipper(myvalue));
 
                 }
@@ -523,28 +517,11 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         });
 
 
-//        chatListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ListView>() {
-//            @Override
-//            public void onRefresh(PullToRefreshBase<ListView> refreshView) {
-//                // Do work to refresh the list here.
-//                try {
-//                    // int lastIndex = chatManager.chatMessageList.size() - 1;
-//                    chatListSize = chatManager.chatMessageList.size();
-//                    String lastChatId = chatManager.chatMessageList.get(0).chatId;
-//                    chatManager.fetchChatRecord(rId, authManager.getPhoneNo(), authManager.getUsrToken(), lastChatId);
-//                } catch (Exception e) {
-//
-//
-//                }
-//            }
-//        });
 
-        //  setlist();
+
+
         adapter = new ChatRecordAdapter(this, R.layout.view_chat_demo, chatManager.chatMessageList);
-        // adapter = new ChatRecordAdapter(this, R.layout.view_chat_demo,chatData);
-//        if(chatManager.chatMessageList.size()<20){
-//            load_earlier.setVisibility(View.GONE);
-//        }
+
         chatListView.setAdapter(adapter);
         chatListView.setSelection(chatManager.chatMessageList.size());//akshit code
 
@@ -686,7 +663,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                             }
                             dialog.dismiss();
                         } catch (Exception e) {
-                            e.printStackTrace();
+//                            e.printStackTrace();removed by akshit
                         }
                         break;
                 }
@@ -726,7 +703,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
 
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();removed by akshit
         }
 
 
@@ -736,17 +713,13 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.load_earlier://akshit code to fetch history of chat ,after load earlier is clicked
-                try {
-                    // int lastIndex = chatManager.chatMessageList.size() - 1;
 
+                    // int lastIndex = chatManager.chatMessageList.size() - 1;
                     chatListSize = chatManager.chatMessageList.size();
                     String lastChatId = chatManager.chatMessageList.get(0).chatId;
                     Utils.launchBarDialog(this);
                     chatManager.fetchChatRecord(rId, authManager.getPhoneNo(), authManager.getUsrToken(), lastChatId);
-                } catch (Exception e) {
-                    e.printStackTrace();
 
-                }
 
                 break;
             case R.id.btn_send:
@@ -1298,13 +1271,6 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         // Unregister since the activity is about to be closed.
         super.onDestroy();
 
-        try {
-            // dbHelper.deleteChat(authManager.getQBId(), qBId);
-            //dbHelper.addChatList(chatManager.chatListFromServer);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
         if (mIsBound) {
             // Detach our existing connection.
             unbindService(mConnection);
@@ -1531,7 +1497,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        try {
+       /* try {*/  // Prafull code remove Try
             super.onActivityResult(requestCode, resultCode, data);
             if (resultCode == RESULT_OK) {
                 switch (requestCode) {
@@ -1548,18 +1514,22 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                         Bitmap bitmap = null;
                         bitmap = decodeSampledBitmapFromUri(targetUri, width, height);
                         if (bitmap != null) {
-                            try {
+                            /*try {*/  // Prafull code remove Try
                                 authManager.setOrginalBitmap(bitmap.copy(Bitmap.Config.ARGB_8888, true));
                                 Intent intent = new Intent(ChatRecordView.this, CropView.class);
                                 intent.putExtra("name", mChatId);  // save image name
                                 intent.putExtra("from", "fromchatCamare");
                                 intent.putExtra("uri", mImageCaptureUri);
                                 startActivityForResult(intent, Constants.CROP_PICTURE);
-                            } catch (Exception e) {
+                            /*} catch (Exception e) {
 //                                e.printStackTrace();
-                            }
+                            }*/
                         }
-                        mImageCaptureUri = Utils.decodeUri(ChatRecordView.this, mImageCaptureUri, 550);
+                        try {   // Prafull code put Try for smaller block
+                            mImageCaptureUri = Utils.decodeUri(ChatRecordView.this, mImageCaptureUri, 550);
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
                         path = Utils.getRealPathFromURI(mImageCaptureUri, this);
                         currentImagepath = mImageCaptureUri.toString();
 
@@ -1580,19 +1550,23 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                         Bitmap bitmap1 = null;
                         bitmap1 = decodeSampledBitmapFromUri(targetUri1, width1, height1);
 
-                        if (bitmap1 != null) {
-                            try {
+                        if (bitmap1 != null) { // Prafull code remove try
+                            /*try {*/
                                 authManager.setOrginalBitmap(bitmap1);
                                 Intent intent = new Intent(ChatRecordView.this, CropView.class);
-                                intent.putExtra("name", mChatId);   // save image by name
+                                intent.putExtra("name", ""+mChatId);   // save image by name
                                 intent.putExtra("from", "fromchatGallery");
                                 intent.putExtra("uri", data.getData());
                                 startActivityForResult(intent, Constants.CROP_PICTURE);
-                            } catch (Exception e) {
+                           /* } catch (Exception e) {
 //                                e.printStackTrace();
-                            }
+                            }*/
                         }
-                        mImageCaptureUri = Utils.decodeUri(ChatRecordView.this, data.getData(), 550);
+                        try { // Prafull code put Try for smaller block
+                            mImageCaptureUri = Utils.decodeUri(ChatRecordView.this, data.getData(), 550);
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
                         path = Utils.getRealPathFromURI(mImageCaptureUri, this);
                         currentImagepath = mImageCaptureUri.toString();
 
@@ -1714,8 +1688,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                         break;
                 }
             }
-        } catch (Exception e) {
-        }
+       /* } catch (Exception e) {
+        }*/
     }
 
 
@@ -1810,17 +1784,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             message.addExtension(extension);
             // chatObject.sendMessage(Integer.parseInt(qBId), message);
         } catch (Exception e) {
-            try {
-                //chatObject.removeChatMessageListener(this);
-                // chatObject.addChatMessageListener(this);
-            } catch (Exception e1) {
-            }
-          /*  chatObject = null;
-            authManager = ModelManager.getInstance().getAuthorizationManager();
-            chatObject = authManager.getqBPrivateChat();
-            chatObject.addChatMessageListener(this);*/
-            e.printStackTrace();
-        }
+                   }
     }
 
     // Audio STUFF END
@@ -1864,30 +1828,11 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             // chatObject.sendMessage(Integer.parseInt(qBId), message);
 
         } catch (Exception e) {
-            // againLoginToQuickBlox();
-            /*chatObject = null;
-            authManager = ModelManager.getInstance().getAuthorizationManager();
-            chatObject = authManager.getqBPrivateChat();
-            chatObject.addChatMessageListener(this);*/
-            e.printStackTrace();
+
         }
     }
 
-    private void loginToQuickBlox() {
 
-        try {
-            // chatObject = null;
-            authManager = ModelManager.getInstance().getAuthorizationManager();
-            // chatObject = authManager.getqBPrivateChat();
-            // chatObject.addChatMessageListener(this);
-            //chatObject.notifyAll();
-        } catch (Exception e) {
-            // authManager = ModelManager.getInstance().getAuthorizationManager();
-            //chatObject = authManager.getqBPrivateChat();
-            //againLoginToQuickBlox();
-            e.printStackTrace();
-        }
-    }
 
     private boolean isClicks() {
         if (seekValue != 0 && (-10 <= seekValue && seekValue <= 10)) {
@@ -1899,52 +1844,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         }
     }
 
-    private int grandClicksForReceiverEndInt(String clicksValue) {
-        int changeClicks = 0;
-        if (clicksValue.equalsIgnoreCase("+01")) {
-            changeClicks = 1;
-        } else if (clicksValue.equalsIgnoreCase("+02")) {
-            changeClicks = 2;
-        } else if (clicksValue.equalsIgnoreCase("+03")) {
-            changeClicks = 3;
-        } else if (clicksValue.equalsIgnoreCase("+04")) {
-            changeClicks = 4;
-        } else if (clicksValue.equalsIgnoreCase("+05")) {
-            changeClicks = 5;
-        } else if (clicksValue.equalsIgnoreCase("+06")) {
-            changeClicks = 6;
-        } else if (clicksValue.equalsIgnoreCase("+07")) {
-            changeClicks = 7;
-        } else if (clicksValue.equalsIgnoreCase("+08")) {
-            changeClicks = 8;
-        } else if (clicksValue.equalsIgnoreCase("+09")) {
-            changeClicks = 9;
-        } else if (clicksValue.equalsIgnoreCase("+10")) {
-            changeClicks = 10;
-        } else if (clicksValue.equalsIgnoreCase("-1")) {
-            changeClicks = 1;
-        } else if (clicksValue.equalsIgnoreCase("-2")) {
-            changeClicks = -2;
-        } else if (clicksValue.equalsIgnoreCase("-3")) {
-            changeClicks = -3;
-        } else if (clicksValue.equalsIgnoreCase("-4")) {
-            changeClicks = -4;
-        } else if (clicksValue.equalsIgnoreCase("-5")) {
-            changeClicks = -5;
-        } else if (clicksValue.equalsIgnoreCase("-6")) {
-            changeClicks = -6;
-        } else if (clicksValue.equalsIgnoreCase("-7")) {
-            changeClicks = -7;
-        } else if (clicksValue.equalsIgnoreCase("-8")) {
-            changeClicks = -8;
-        } else if (clicksValue.equalsIgnoreCase("-9")) {
-            changeClicks = -9;
-        } else if (clicksValue.equalsIgnoreCase("-10")) {
-            changeClicks = -10;
-        }
-        return changeClicks;
 
-    }
 
 
     private String clickForFlipper(int clicks) {
@@ -2317,7 +2217,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 dbHelper.deleteChat(relId);
                 dbHelper.addChatList(chatManager.chatMessageList);
             } catch (Exception e) {
-                e.printStackTrace();
+//                e.printStackTrace();removed by akshit
             }
             return null;
 
@@ -2344,7 +2244,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 // Decode Bitmap
                 bitmap = BitmapFactory.decodeStream(input);
             } catch (Exception e) {
-                e.printStackTrace();
+//                e.printStackTrace();removed by akshit
             }
             return bitmap;
         }

@@ -206,8 +206,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         String dtails = "";
         String gender = "";
         String dob = "";
-        try {
-            try {
+
                 if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl")) {
                     dtails = "Female, ";
                     gender = "girl";
@@ -215,11 +214,9 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
                     dtails = "Male,";
                     gender = "guy";
                 }
-            } catch (Exception e) {
-            }
+
             dtails = dtails + Utils.getCurrentYear(authManager.getdOB()) + " " + getResources().getString(R.string.txt_yold);
-        } catch (Exception e) {
-        }
+
 
         if (!Utils.isEmptyString(authManager.getUserCity()) && Utils.isEmptyString(authManager.getUserCountry())) {
             dtails = dtails + "\n" + authManager.getUserCity();
@@ -233,14 +230,12 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
             userdetails.setText(dtails + "\n");
         }
         setFollowAndFollowingCount();
-
+        Bitmap imagebitmap1 = authManager.getUserbitmap();
+        String mUserImagePath = null;
+        Uri mUserImageUri = null;
+        boolean userpic = Utils.isEmptyString(authManager.getUserPic());
         //prafull code to set image bitmap
         try {
-
-            Bitmap imagebitmap1 = authManager.getUserbitmap();
-            String mUserImagePath = null;
-            Uri mUserImageUri = null;
-            boolean userpic = Utils.isEmptyString(authManager.getUserPic());
             if (authManager.getUserImageUri() != null)
                 mUserImagePath = "" + authManager.getUserImageUri().toString();
             if (!Utils.isEmptyString(mUserImagePath))
@@ -360,8 +355,6 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
             case R.id.btn_edit_profile:
                 Intent editProfile = new Intent(UserProfileView.this, EditMyProfileView.class);
                 startActivity(editProfile);
-                //akshit code for animation
-                //  overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_right);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
         }
@@ -465,16 +458,14 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
 
     private void switchView() {
         Intent intent = new Intent(UserProfileView.this, FollowerList.class);
-        //	intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
-        //this.finish();
+
     }
 
     private void switchViewToFollowingList() {
         Intent intent = new Intent(UserProfileView.this, FollowingListView.class);
-        //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
-        //this.finish();
+
     }
 
     private void doRestInitialization() {

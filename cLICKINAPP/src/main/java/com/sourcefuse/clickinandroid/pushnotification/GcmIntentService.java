@@ -59,7 +59,7 @@ public class GcmIntentService extends IntentService {
 
         mRelationManager = ModelManager.getInstance().getRelationManager();
 
-        GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(getApplicationContext());
+        GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
         String messageType = gcm.getMessageType(intent);
 
 
@@ -209,16 +209,24 @@ public class GcmIntentService extends IntentService {
         PendingIntent contentIntent = null;
         if (intent != null) {
             intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            contentIntent = PendingIntent.getActivity(getApplicationContext(),100,intent,PendingIntent.FLAG_ONE_SHOT);
+            contentIntent = PendingIntent.getActivity(this,0,intent,PendingIntent.FLAG_CANCEL_CURRENT
+            );
         }
 
-
+        NotificationCompat.Action action =
+                new NotificationCompat.Action.Builder(R.drawable.app_icon,
+                        "Clickin", contentIntent)
+                        .build();
 
         NotificationCompat.Builder mBuilder =
-                new NotificationCompat.Builder(getApplicationContext())
+                new NotificationCompat.Builder(this)
                         .setSmallIcon(R.drawable.app_icon)
                         .setContentTitle(title)
-                        .setStyle(new NotificationCompat.BigTextStyle().bigText(msg));
+                        .setStyle(new NotificationCompat.BigTextStyle().bigText(msg))
+                        .setContentText(msg)
+                        .extend(new NotificationCompat.WearableExtender().addAction(action))
+                        .setNumber(NOTIFICATION_ID)
+                        .setSound(soundUri).setVibrate(new long[]{0, 100, 200, 300});
         mBuilder.setContentIntent(contentIntent);
         mBuilder.setAutoCancel(true);
 
@@ -231,7 +239,6 @@ public class GcmIntentService extends IntentService {
         if (!isAppOnForeground(getApplicationContext()) || !isScreenOn)
             mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
 
-        Log.e("notification id",""+NOTIFICATION_ID);
 
     }
 
