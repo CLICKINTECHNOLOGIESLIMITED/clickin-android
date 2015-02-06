@@ -84,7 +84,7 @@ public class ReloadApp extends Activity {
         if (mProfile && mRelation) {
             if (extras.containsKey("Tp")) {
 
-                Log.e("value of tp---->",""+extras.getString("Tp"));
+                Log.e("value of tp---->", "" + extras.getString("Tp"));
                 if (extras.getString("Tp").equalsIgnoreCase("CR") ||
                         extras.getString("Tp").equalsIgnoreCase("CRA") || extras.getString("Tp").equalsIgnoreCase("RV") ||
                         extras.getString("Tp").equalsIgnoreCase("CRR")
@@ -142,8 +142,6 @@ public class ReloadApp extends Activity {
                     data.putExtra("phNumber", extras.getString("phone_no"));
 
 
-
-
                     Log.e("JumpOtherProfileView---------", "JumpOtherProfileView---------");
                     PicassoManager.setPicasso(getApplicationContext());
                     PicassoManager.clearCache();
@@ -170,7 +168,6 @@ public class ReloadApp extends Activity {
                 }
             }
             startActivity(data);
-            finish();
             Utils.dismissBarDialog();
         }
 
@@ -179,6 +176,7 @@ public class ReloadApp extends Activity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        extras.clear();
         extras = intent.getExtras();
 
         if (!Utils.isEmptyString(ModelManager.getInstance().getAuthorizationManager().getUserId())) {// process value if userid is not null

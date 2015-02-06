@@ -1715,7 +1715,6 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 }
             }
         } catch (Exception e) {
-        } catch (Error e) {
         }
     }
 
@@ -1743,7 +1742,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             bm = BitmapFactory.decodeStream(getContentResolver().openInputStream(uri), null, options);
         } catch (FileNotFoundException e) {
 
-            e.printStackTrace();
+//            e.printStackTrace();
 
         }
 
