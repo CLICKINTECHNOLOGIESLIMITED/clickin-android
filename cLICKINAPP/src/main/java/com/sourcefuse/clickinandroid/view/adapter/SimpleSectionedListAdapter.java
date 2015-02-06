@@ -20,7 +20,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.DataSetObserver;
 import android.graphics.Typeface;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;

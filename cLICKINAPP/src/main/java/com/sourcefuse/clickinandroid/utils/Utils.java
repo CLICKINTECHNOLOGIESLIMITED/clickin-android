@@ -1409,14 +1409,6 @@ public class
         }
     }
 
-    private int pxlToDp(int pixel, Context mContext) {
-
-        final float scale = mContext.getResources().getDisplayMetrics().density;
-        int dp = (int) (pixel * scale + 0.5f);
-        return dp;
-    }
-
-
     public static void showDialog(Context context) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View layout = inflater.inflate(R.layout.popup, null);
@@ -1430,7 +1422,6 @@ public class
             }
         });
     }
-
 
     public static String getTopActivity(Context context) {
         ActivityManager am = (ActivityManager) context.getSystemService(android.content.Context.ACTIVITY_SERVICE);
@@ -1456,6 +1447,13 @@ public class
 
             }
         });
+    }
+
+    private int pxlToDp(int pixel, Context mContext) {
+
+        final float scale = mContext.getResources().getDisplayMetrics().density;
+        int dp = (int) (pixel * scale + 0.5f);
+        return dp;
     }
 }
 

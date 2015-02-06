@@ -27,6 +27,7 @@ public class AuthManager {
     public String ourClicks = null;
     //to track with which user we are in chat currently
     public String partnerQbId = null;
+    public String mIs_new_clickin_user = null;
     StringEntity se = null;
     AsyncHttpClient client;
     private AuthManager authManager;
@@ -35,7 +36,7 @@ public class AuthManager {
     private String message;
     private String phoneNo;
     private String QBId;
-//    private String is_new_clickin_user = "";
+    //    private String is_new_clickin_user = "";
     private String usrToken;
     private String userId;
     private String userName;
@@ -74,10 +75,6 @@ public class AuthManager {
     private String mLatLan;
     /* for notification counter */
     private int mNotificationCounter;
-
-
-    public String mIs_new_clickin_user = null;
-
 
     public String getLatLan() {
         return mLatLan;
@@ -600,7 +597,7 @@ public class AuthManager {
 
         }
 
-        Log.e("userdetails-------->",""+userInputDetails);
+        Log.e("userdetails-------->", "" + userInputDetails);
 
         client.post(null, APIs.SIGNIN, se, "application/json",
                 new JsonHttpResponseHandler() {
@@ -1132,7 +1129,7 @@ public class AuthManager {
     }
 
 
-    public void reSetFlag(String phone, String user_token,String relationship_id, final String is_new_partner, final String is_new_clickin_user, final int mPosition) {
+    public void reSetFlag(String phone, String user_token, String relationship_id, final String is_new_partner, final String is_new_clickin_user, final int mPosition) {
         // TODO Auto-generated method stub
 
         authManager = ModelManager.getInstance().getAuthorizationManager();

@@ -33,7 +33,7 @@ public class Card extends Activity implements View.OnClickListener, TextWatcher 
     private static Dialog dialog;
     ImageView mBackButton;
     String url, clicks, cardTitle, cardDiscription, card_Db_id, card_id = "", card_Accepted_Rejected;
-    String card_originator = null, card_owner =" ";
+    String card_originator = null, card_owner = " ";
     Context context;
     ImageView imageView, btnPlay;
     boolean forCounter = false;

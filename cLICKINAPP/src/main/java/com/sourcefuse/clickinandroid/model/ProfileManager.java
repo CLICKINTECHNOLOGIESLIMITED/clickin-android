@@ -1,8 +1,6 @@
 package com.sourcefuse.clickinandroid.model;
 
 
-import android.util.Log;
-
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.sourcefuse.clickinandroid.model.bean.ContactBean;
@@ -53,7 +51,7 @@ public class ProfileManager {
 
     public void setProfile(String fname, String lname, String phone,
                            String usertoken, String gender, String dob, String city,
-                           String country, String email, String fbaccesstoken, String userpic,String profile_image_change) {
+                           String country, String email, String fbaccesstoken, String userpic, String profile_image_change) {
         authManager = ModelManager.getInstance().getAuthorizationManager();
         JSONObject userInputDetails = new JSONObject();
         try {

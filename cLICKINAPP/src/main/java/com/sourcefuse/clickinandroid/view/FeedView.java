@@ -1,10 +1,7 @@
 package com.sourcefuse.clickinandroid.view;
 
 import android.os.Bundle;
-import android.text.SpannableStringBuilder;
-import android.util.Log;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import com.sourcefuse.clickinandroid.model.AuthManager;
@@ -12,7 +9,6 @@ import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.NewsFeedManager;
 import com.sourcefuse.clickinandroid.model.bean.NewsFeedBean;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
-import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.adapter.FeedsAdapter;
 import com.sourcefuse.clickinandroid.view.adapter.SimpleSectionedListAdapter2;

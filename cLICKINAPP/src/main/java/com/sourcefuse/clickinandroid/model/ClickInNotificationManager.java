@@ -90,27 +90,27 @@ public class ClickInNotificationManager implements NotificationManagerI {
                                     JSONObject data = list.getJSONObject(i);
                                     ntificationBeanList.setNotificationMsg(data.getString("notification_msg"));
                                     ntificationBeanList.setNotificationType(data.getString("type"));
-                                    ntificationBeanList._id  = data.getString("_id");
-                                    ntificationBeanList.mUser_id  = data.getString("user_id");
+                                    ntificationBeanList._id = data.getString("_id");
+                                    ntificationBeanList.mUser_id = data.getString("user_id");
                                     ntificationBeanList.setIs_read(data.getString("read"));
-                                    if(data.getString("read").equalsIgnoreCase("false")) {
-                                        int i1 =  ModelManager.getInstance().getAuthorizationManager().getNotificationCounter();
-                                        ModelManager.getInstance().getAuthorizationManager().setNotificationCounter(i1+1);
+                                    if (data.getString("read").equalsIgnoreCase("false")) {
+                                        int i1 = ModelManager.getInstance().getAuthorizationManager().getNotificationCounter();
+                                        ModelManager.getInstance().getAuthorizationManager().setNotificationCounter(i1 + 1);
                                     }
-                                    if(data.has("newsfeed_id"))
+                                    if (data.has("newsfeed_id"))
                                         ntificationBeanList.newsfeed_id = data.getString("newsfeed_id");
-                                    if(data.has("update_user_id"))
+                                    if (data.has("update_user_id"))
                                         ntificationBeanList.update_user_id = data.getString("update_user_id");
 
                                     notificationArray.add(ntificationBeanList);
                                 }
 
 
-                                if(Utils.isEmptyString(lastNotificationId)) {//akshit code to item at Top and Bottom after refresh
+                                if (Utils.isEmptyString(lastNotificationId)) {//akshit code to item at Top and Bottom after refresh
 
                                     notificationData.clear();
-                                    notificationData.addAll(0,notificationArray);
-                                }else {
+                                    notificationData.addAll(0, notificationArray);
+                                } else {
 
                                     notificationData.addAll(notificationArray);
 

@@ -9,23 +9,23 @@
     <com.sourcefuse.clickinandroid.utils.ClickInTextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_marginRight="12dp"
         android:layout_marginTop="10dp"
         android:gravity="center"
-        android:layout_marginRight="12dp"
         android:text="+ 25 C"
-        android:textStyle="bold"
-        geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
         android:textColor="@color/Pop_upcolor"
-        android:textSize="29dp" />
+        android:textSize="29dp"
+        android:textStyle="bold"
+        geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
 
     <com.sourcefuse.clickinandroid.utils.ClickInTextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="1dp"
         android:gravity="center"
-        geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"
         android:text="@string/popup_text"
-        android:textSize="18dp" />
+        android:textSize="18dp"
+        geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
 
     <com.sourcefuse.clickinandroid.utils.ClickInTextView
         android:layout_width="fill_parent"
@@ -35,9 +35,9 @@
         android:gravity="center"
         android:paddingBottom="10dp"
         android:paddingTop="10dp"
-        geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"
-        android:textStyle="bold"
         android:text="@string/popup_button"
         android:textColor="@color/white"
-        android:textSize="21dp" />
+        android:textSize="21dp"
+        android:textStyle="bold"
+        geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
 </LinearLayout>

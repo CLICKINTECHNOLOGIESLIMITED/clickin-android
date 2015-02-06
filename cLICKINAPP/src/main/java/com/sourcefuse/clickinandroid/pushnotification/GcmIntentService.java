@@ -12,28 +12,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.sourcefuse.clickinandroid.model.AuthManager;
-import com.sourcefuse.clickinandroid.model.ChatManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
-import com.sourcefuse.clickinandroid.model.PicassoManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
-import com.sourcefuse.clickinandroid.utils.Constants;
-import com.sourcefuse.clickinandroid.view.ChatRecordView;
-import com.sourcefuse.clickinandroid.view.ClickInBaseView;
-import com.sourcefuse.clickinandroid.view.FeedView;
-import com.sourcefuse.clickinandroid.view.FollowerList;
-import com.sourcefuse.clickinandroid.view.JumpOtherProfileView;
-import com.sourcefuse.clickinandroid.view.PostView;
 import com.sourcefuse.clickinandroid.view.ReloadApp;
-import com.sourcefuse.clickinandroid.view.UserProfileView;
 import com.sourcefuse.clickinapp.R;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.List;
 
@@ -41,11 +27,9 @@ import de.greenrobot.event.EventBus;
 
 
 public class GcmIntentService extends IntentService {
-    private static final String TAG = AuthManager.class.getSimpleName();
     public static int NOTIFICATION_ID = 1;
-    NotificationCompat.Builder builder;
-    private NotificationManager mNotificationManager;
     RelationManager mRelationManager;
+    private NotificationManager mNotificationManager;
 
     public GcmIntentService() {
         super("GcmIntentService");
@@ -82,7 +66,6 @@ public class GcmIntentService extends IntentService {
                 }*/
                 Intent data = new Intent();
                 data.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                data.putExtra("isChangeInList", true);
 /* CR for clickin with from other userpage and also form add someone from contact */
 /* CRA when user accept clickinwith request from tick button */
 /* RD when user remove other user from clickin with list */
@@ -116,8 +99,6 @@ public class GcmIntentService extends IntentService {
 
                         sendNotification("Clickin'", extras.getString("chat_message"), data);
 
-
-                        /*  pending */
                     } else if (extras.getString("Tp").equalsIgnoreCase("chat")) {
 
                         data.setClass(getApplicationContext(), ReloadApp.class);
@@ -125,7 +106,7 @@ public class GcmIntentService extends IntentService {
                         String mPartnerId = extras.getString("pid");
                         data.putExtra("pid", mPartnerId);
 
-                        /**/
+
                         if (extras.getString("message").contains(getResources().getString(R.string.chat_msg))) {
                             sendNotification("Clickin'", extras.getString("chat_message"), data);
                         }
@@ -196,7 +177,6 @@ public class GcmIntentService extends IntentService {
     private void sendNotification(String title, String msg, Intent intent) {
 
 
-        /* code to fetch notifiacation */
 
 
 
@@ -209,14 +189,11 @@ public class GcmIntentService extends IntentService {
         PendingIntent contentIntent = null;
         if (intent != null) {
             intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            contentIntent = PendingIntent.getActivity(this,0,intent,PendingIntent.FLAG_CANCEL_CURRENT
+            int iUniqueId = (int) (System.currentTimeMillis() & 0xfffffff);
+            contentIntent = PendingIntent.getActivity(this, iUniqueId, intent, PendingIntent.FLAG_ONE_SHOT
             );
         }
 
-        NotificationCompat.Action action =
-                new NotificationCompat.Action.Builder(R.drawable.app_icon,
-                        "Clickin", contentIntent)
-                        .build();
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
@@ -224,7 +201,6 @@ public class GcmIntentService extends IntentService {
                         .setContentTitle(title)
                         .setStyle(new NotificationCompat.BigTextStyle().bigText(msg))
                         .setContentText(msg)
-                        .extend(new NotificationCompat.WearableExtender().addAction(action))
                         .setNumber(NOTIFICATION_ID)
                         .setSound(soundUri).setVibrate(new long[]{0, 100, 200, 300});
         mBuilder.setContentIntent(contentIntent);

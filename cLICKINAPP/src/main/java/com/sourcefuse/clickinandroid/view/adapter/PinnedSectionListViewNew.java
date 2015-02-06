@@ -66,7 +66,6 @@ public class PinnedSectionListViewNew extends AutoScrollListView {
         }
 
 
-
         @Override
         public void onInvalidated() {
             recreatePinnedShadow();
@@ -124,7 +123,6 @@ public class PinnedSectionListViewNew extends AutoScrollListView {
                 }
             }
         }
-
 
 
     };

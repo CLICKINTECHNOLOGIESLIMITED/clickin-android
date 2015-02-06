@@ -28,6 +28,7 @@ public class ReloadApp extends Activity {
 
     String pwd, deviceId;
     Bundle extras;
+    boolean mProfile = false, mRelation = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +63,6 @@ public class ReloadApp extends Activity {
             ModelManager.getInstance().getAuthorizationManager().signIn(myPhone, pwd, deviceId, Constants.DEVICETYPE);
         }
     }
-
 
     @Override
     protected void onStart() {
@@ -224,9 +224,6 @@ public class ReloadApp extends Activity {
         super.onStop();
         EventBus.getDefault().unregister(this);
     }
-
-
-    boolean mProfile = false, mRelation = false;
 
     public void onEventMainThread(String message) {
 
