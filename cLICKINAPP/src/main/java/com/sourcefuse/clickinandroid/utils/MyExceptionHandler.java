@@ -6,6 +6,9 @@ import android.content.Intent;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import android.os.Process;
+import android.widget.Toast;
+
+import com.sourcefuse.clickinandroid.view.SplashView;
 
 /**
  * Created by monika on 3/2/15.
@@ -13,20 +16,21 @@ import android.os.Process;
 public class MyExceptionHandler implements
         java.lang.Thread.UncaughtExceptionHandler {
     private final Context myContext;
-    private final Class<?> myActivityClass;
 
-    public MyExceptionHandler(Context context, Class<?> c) {
+
+    public MyExceptionHandler(Context context) {
 
         myContext = context;
-        myActivityClass = c;
+
     }
 
     public void uncaughtException(Thread thread, Throwable exception) {
 
+        Toast.makeText(myContext, "App Crashed",Toast.LENGTH_LONG).show();
         StringWriter stackTrace = new StringWriter();
         exception.printStackTrace(new PrintWriter(stackTrace));
         System.err.println(stackTrace);// You can use LogCat too
-        Intent intent = new Intent(myContext, myActivityClass);
+        Intent intent = new Intent(myContext, SplashView.class);
         String s = stackTrace.toString();
         //you can use this String to know what caused the exception and in which Activity
         intent.putExtra("uncaughtException",
