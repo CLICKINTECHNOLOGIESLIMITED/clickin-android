@@ -28,7 +28,7 @@ import android.os.AsyncTask;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.telephony.TelephonyManager;
-import android.util.Base64;
+import android.util.*;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -1032,24 +1032,43 @@ public class
 
     //function to update clicks of partner without card
     // //function to update clicks value for ours -without cards-monika
+
+    // last modified by akshit to fix the issue with negative clicks , Monika code commented.
     public static void updateClicksPartnerWithoutCard(String partnerClicks, String clicks, boolean add) {
+
         String tempPartnerClicksString = new String(partnerClicks);
-        if (tempPartnerClicksString.startsWith("+") || tempPartnerClicksString.startsWith("-"))
-            tempPartnerClicksString = tempPartnerClicksString.substring(1);
+//        if (tempPartnerClicksString.startsWith("+") || tempPartnerClicksString.startsWith("-"))
+//            tempPartnerClicksString = tempPartnerClicksString.substring(1);
 
         int tempPartnerClicks = Integer.parseInt(tempPartnerClicksString);
-
-        int tempClicks = convertToIntClicks(clicks.substring(1));
-
-        if (add) {
+        android.util.Log.e("Calculation of clicks In 0 ", "tempPartnerClicks" + tempPartnerClicks);
+        int tempClicks ;
+        if(clicks.startsWith("+")){
+            tempClicks = convertToIntClicks(clicks.substring(1));
             tempPartnerClicks = tempPartnerClicks + tempClicks;
-            ModelManager.getInstance().getRelationManager().partnerClicks = String.valueOf(tempPartnerClicks);
-
-        } else {//minus cicks
-            tempPartnerClicks = tempPartnerClicks - tempClicks;
-            ModelManager.getInstance().getRelationManager().partnerClicks = String.valueOf(tempPartnerClicks);
+         }else {
+            tempClicks = Integer.parseInt(clicks.toString()) ;
+            tempPartnerClicks = tempPartnerClicks + tempClicks;
 
         }
+        ModelManager.getInstance().getRelationManager().partnerClicks = String.valueOf(tempPartnerClicks);
+
+//        tempPartnerClicks = tempPartnerClicks + tempClicks;
+//        int tempClicks = convertToIntClicks(clicks.substring(1));
+//        android.util.Log.e("Calculation of clicks In 1 ", "tempClicks" + tempClicks);
+//
+//        if (add) {
+//
+//            tempPartnerClicks = tempPartnerClicks + tempClicks;
+//            android.util.Log.e("Calculation of clicks In add ", "tempPartnerClicks" + tempPartnerClicks);
+//            ModelManager.getInstance().getRelationManager().partnerClicks = String.valueOf(tempPartnerClicks);
+//
+//        } else {//minus cicks
+//            tempPartnerClicks = tempPartnerClicks - tempClicks;
+//            android.util.Log.e("Calculation of clicks In Subtract", "tempPartnerClicks" + tempPartnerClicks);
+//
+//            ModelManager.getInstance().getRelationManager().partnerClicks = String.valueOf(tempPartnerClicks);
+//        }
 
     }
 

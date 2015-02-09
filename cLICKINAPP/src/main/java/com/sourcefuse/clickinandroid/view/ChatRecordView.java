@@ -454,7 +454,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 }
 
                 if (myvalue < 0) {
-                    seekValue = myvalue;
+
                     ((TextView) findViewById(R.id.sign)).setText("-");
                     ((TextView) findViewById(R.id.sign)).setPadding(5, 0, 0, 0);
                     setVisibilityForSend();//akshit
@@ -464,6 +464,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                     findViewById(R.id.rl_flipper).setVisibility(View.VISIBLE);
                     findViewById(R.id.rl_flipper).setBackgroundResource(R.color.black_opacity);
                     mSwitcher.setText("" + clickForFlipper(myvalue));
+                    seekValue = myvalue;
 
                 }
 
@@ -861,7 +862,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             //calculate and updates clicks value only when card is not present ,also when sharing media is null-monika
             if (Utils.isEmptyString(obj.card_id) && Utils.isEmptyString(obj.sharingMedia)) {
                 if (obj.clicks.startsWith("+")) {
-                    Utils.updateClicksPartnerWithoutCard(relationManager.partnerClicks, obj.clicks, true);
+                    Utils.updateClicksPartnerWithoutCard(relationManager.partnerClicks, obj.clicks,true);
                 } else if (obj.clicks.startsWith("-")) {
                     Utils.updateClicksPartnerWithoutCard(relationManager.partnerClicks, obj.clicks, false);
                 }
@@ -1179,11 +1180,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             temp.originalMessageID = intent.getExtras().getString("originalChatId");
             temp.messageSenderId = authManager.getQBId();
             temp.textMsg = intent.getExtras().getString("textMsg");
-
-
             temp.shareComment = intent.getExtras().getString("caption");
-
-
             temp.isMessageSender = intent.getExtras().getString("isMessageSender");
             temp.shareStatus = intent.getExtras().getString("shareStatus");
             temp.facebookToken = intent.getExtras().getString("facebookToken");
