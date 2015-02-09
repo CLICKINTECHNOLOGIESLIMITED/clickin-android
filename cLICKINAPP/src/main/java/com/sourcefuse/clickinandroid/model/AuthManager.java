@@ -599,6 +599,7 @@ public class AuthManager {
 
         Log.e("userdetails-------->", "" + userInputDetails);
 
+
         client.post(null, APIs.SIGNIN, se, "application/json",
                 new JsonHttpResponseHandler() {
 
@@ -612,11 +613,13 @@ public class AuthManager {
                                 authManager.setMessage(errorResponse.getString("message"));
                             } catch (JSONException e1) {
                             }
+
                             EventBus.getDefault().postSticky("SignIn False");
                         } else {
                             EventBus.getDefault().postSticky("SignIn Network Error");
                         }
 
+                        Log.e("on failure----------","on failure----------");
                     }
 
                     @Override
@@ -654,14 +657,17 @@ public class AuthManager {
                                 }
 
                             }
+                            Log.e("on success----------","on success----------");
                             EventBus.getDefault().postSticky("SignIn True");
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            Log.e("on printStackTrace----------","on printStackTrace----------");
                         }
 
                     }
 
                 }
+
         );
 
     }

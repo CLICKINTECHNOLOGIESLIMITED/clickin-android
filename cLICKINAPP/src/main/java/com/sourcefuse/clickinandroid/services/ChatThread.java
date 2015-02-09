@@ -332,7 +332,7 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
                         }
                         break;
                     case CHAT_LOGOUT:
-                        logoutQB();
+                    //    logoutQB();
                         break;
                     case CHECK_PRESENCE:
                         Bundle data1 = msg.getData();

@@ -967,14 +967,16 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     String name = " ";
                     if (!Utils.isEmptyString(temp.sharingMedia)) {
 
+                        //the check is reverse for receiver side
                         if (temp.isMessageSender.equalsIgnoreCase("false")) {//check if not sender set to receiver name to receiver
+                            //it means you accepted the card
+                            name = "You";
+
+                        } else {
 
                             //parnter accepted the card
                             String[] splitted = relationManager.getPartnerName.split("\\s+");
                             name = splitted[0];
-                        } else {
-                            //it means you accepted the card
-                            name = "You";
 
                         }
                     }else{
