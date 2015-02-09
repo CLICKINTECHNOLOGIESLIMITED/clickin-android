@@ -1037,8 +1037,6 @@ public class
     public static void updateClicksPartnerWithoutCard(String partnerClicks, String clicks, boolean add) {
 
         String tempPartnerClicksString = new String(partnerClicks);
-//        if (tempPartnerClicksString.startsWith("+") || tempPartnerClicksString.startsWith("-"))
-//            tempPartnerClicksString = tempPartnerClicksString.substring(1);
 
         int tempPartnerClicks = Integer.parseInt(tempPartnerClicksString);
         android.util.Log.e("Calculation of clicks In 0 ", "tempPartnerClicks" + tempPartnerClicks);
@@ -1052,24 +1050,6 @@ public class
 
         }
         ModelManager.getInstance().getRelationManager().partnerClicks = String.valueOf(tempPartnerClicks);
-
-//        tempPartnerClicks = tempPartnerClicks + tempClicks;
-//        int tempClicks = convertToIntClicks(clicks.substring(1));
-//        android.util.Log.e("Calculation of clicks In 1 ", "tempClicks" + tempClicks);
-//
-//        if (add) {
-//
-//            tempPartnerClicks = tempPartnerClicks + tempClicks;
-//            android.util.Log.e("Calculation of clicks In add ", "tempPartnerClicks" + tempPartnerClicks);
-//            ModelManager.getInstance().getRelationManager().partnerClicks = String.valueOf(tempPartnerClicks);
-//
-//        } else {//minus cicks
-//            tempPartnerClicks = tempPartnerClicks - tempClicks;
-//            android.util.Log.e("Calculation of clicks In Subtract", "tempPartnerClicks" + tempPartnerClicks);
-//
-//            ModelManager.getInstance().getRelationManager().partnerClicks = String.valueOf(tempPartnerClicks);
-//        }
-
     }
 
     //monika- code to
