@@ -519,15 +519,13 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
                     temp.shareStatus = extraParamsObj.getString("shareStatus");
                     temp.isAccepted = extraParamsObj.getString("isAccepted");
 
-                    if(extraParamsObj.has("comment")) {//akshit Code to filter the value of comments //Akshit
+                    if (extraParamsObj.has("comment")) {//akshit Code to filter the value of comments //Akshit
                         if (extraParamsObj.getString("comment").equalsIgnoreCase("Write your caption here...")) {//if comments are there
                             temp.shareComment = "";
-                        }else{//if comments are there
+                        } else {//if comments are there
                             temp.shareComment = extraParamsObj.getString("comment");
                         }
-
-
-                    }
+            }
                 }
 
                 if (!Utils.isEmptyString(temp.clicks)) {// in case of shared accept reject- no clicks are there-monika

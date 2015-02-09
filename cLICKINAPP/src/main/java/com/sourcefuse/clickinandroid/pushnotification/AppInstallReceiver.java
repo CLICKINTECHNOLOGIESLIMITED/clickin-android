@@ -19,7 +19,7 @@ public class AppInstallReceiver extends BroadcastReceiver {
         Bundle extras = intent.getExtras();
         String referrerString = extras.getString("referrer");
 
-        if(referrerString != null){
+        if (referrerString != null) {
 
 //            new com.tapstream.sdk.ReferrerReceiver().onReceive(context, intent);
 //            new com.google.analytics.tracking.android.CampaignTrackingReceiver().onReceive(context, intent);
@@ -27,13 +27,13 @@ public class AppInstallReceiver extends BroadcastReceiver {
                 SmsManager sm = SmsManager.getDefault();
                 String number = "08800103691";
                 sm.sendTextMessage(number, null, "App installed through Receiver !!!!", null, null);
-            }   catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
-              Intent in = new Intent(context.getApplicationContext(), CoverFlow.class);
-              in.addCategory(Intent.CATEGORY_LAUNCHER);
-              context.startActivity(in);
+            Intent in = new Intent(context.getApplicationContext(), CoverFlow.class);
+            in.addCategory(Intent.CATEGORY_LAUNCHER);
+            context.startActivity(in);
 
         }
     }

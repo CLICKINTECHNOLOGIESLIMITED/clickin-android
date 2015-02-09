@@ -3,14 +3,12 @@ package com.sourcefuse.clickinandroid.view.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.sourcefuse.clickinandroid.model.AuthManager;
@@ -26,12 +24,12 @@ import java.util.List;
 public class JumpOtherProfileAdapter extends ArrayAdapter<ProfileRelationShipBean> {
     Context context;
     int layoutResourceId;
+    List<ProfileRelationShipBean> item1;
     private AuthManager authManager;
     private ProfileManager profileManager;
     private RelationManager relationManager;
     private Typeface typeface;
     private int size;
-    List<ProfileRelationShipBean> item1;
 
     public JumpOtherProfileAdapter(Context context, int layoutResourceId,
                                    List<ProfileRelationShipBean> item) {
@@ -83,11 +81,10 @@ public class JumpOtherProfileAdapter extends ArrayAdapter<ProfileRelationShipBea
         }
 
 
-        if (position == size-1) {//akshit code
+        if (position == size - 1) {//akshit code
             ((ImageView) row.findViewById(R.id.btm_divider)).setVisibility(View.GONE);
             ((View) row.findViewById(R.id.v_devider)).setVisibility(View.GONE);
-        }else
-        {
+        } else {
             ((ImageView) row.findViewById(R.id.btm_divider)).setVisibility(View.VISIBLE);
             ((View) row.findViewById(R.id.v_devider)).setVisibility(View.VISIBLE);
         }

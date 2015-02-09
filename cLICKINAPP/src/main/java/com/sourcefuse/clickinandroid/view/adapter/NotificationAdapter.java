@@ -137,10 +137,8 @@ public class NotificationAdapter extends ArrayAdapter<NotificationBean> {
 
                     RelationManager relationManager = ModelManager.getInstance().getRelationManager();
                     String ph = "";
-                    for(int i=0;i<relationManager.acceptedList.size();i++)
-                    {
-                        if(relationManager.acceptedList.get(i).getPartner_id().equalsIgnoreCase(item.update_user_id))
-                        {
+                    for (int i = 0; i < relationManager.acceptedList.size(); i++) {
+                        if (relationManager.acceptedList.get(i).getPartner_id().equalsIgnoreCase(item.update_user_id)) {
                             ph = relationManager.acceptedList.get(i).getPhoneNo();
 
                         }

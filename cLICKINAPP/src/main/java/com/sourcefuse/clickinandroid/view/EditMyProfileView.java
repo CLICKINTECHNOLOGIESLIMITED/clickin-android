@@ -43,14 +43,13 @@ public class EditMyProfileView extends ClickInBaseView implements View.OnClickLi
     public static final int MEDIA_TYPE_IMAGE = 1;
     private static final String TAG = EditMyProfileView.class.getSimpleName();
     private static final String IMAGE_DIRECTORY_NAME = "Clickin";
+    String mChangePhoto = "no"; // value to check user change photo or not
     private Button clickToSave;
     private ImageView mySelfy, OpenGallery, OpenCamera;
     private EditText myName, myLast, myEmail, myCity, myCountry;
     private AuthManager authManager;
     private ProfileManager profileManager;
     private Uri mImageCaptureUri;
-    String mChangePhoto = "no"; // value to check user change photo or not
-
     //variables use to maintain current values of user so we can set values later on in auth manager
     private String userName, userLastName, userEmail, userCity, userCountry;
 

@@ -63,6 +63,8 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
     String path;
     private AuthManager authManager;
     private RelationManager relationManager;
+    private ChatManager chatmanager ;
+
 
     public ChatRecordAdapter(Context context, int layoutResourceId,
                              ArrayList<ChatMessageBody> chatList) {
@@ -80,10 +82,13 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
         String oursQbId = ModelManager.getInstance().getAuthorizationManager().getQBId();
         RelativeLayout parentChatLayout = (RelativeLayout) row.findViewById(R.id.chat_parent_layout);
         relationManager = ModelManager.getInstance().getRelationManager();
+        chatmanager = ModelManager.getInstance().getChatManager();
 
 
-        if(currentChatList.size()>19) {//akshit code set visibility of load earlier ,only is chat records are greater then 20
-            ChatRecordView.load_earlier.setVisibility(View.VISIBLE);
+        if(currentChatList.size()>19 && chatmanager.chat_history_size.equalsIgnoreCase("true")) {//akshit code set visibility of load earlier ,only is chat records are greater then 20
+            ChatRecordView.load_earlier.setVisibility(View.VISIBLE);                             //also if chat fetched is greater then 20
+        } else {
+            ChatRecordView.load_earlier.setVisibility(View.GONE);
         }
 
         if (imageLoader == null)
@@ -142,12 +147,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
                 Uri mUri = Utils.getImageContentUri(context, new File(mContentUri));  //check file exist or not
                 if (!Utils.isEmptyString("" + mUri)) {
-                    try {
-                        image_attached.setImageURI(mUri); // if file exists set it by uri
-                    } catch (Exception e) {
-                        e.printStackTrace();
 
-                    }
+                    image_attached.setImageURI(mUri); // if file exists set it by uri
+
                 } else {  // when file not exists
                     final ProgressBar progressBar = (ProgressBar) row.findViewById(R.id.progress_bar);
                     progressBar.setVisibility(View.VISIBLE);  // show prpgress bar
@@ -182,7 +184,6 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 image_attached.setScaleType(ImageView.ScaleType.FIT_XY);
 
   /* for map to set text location shared */
-
 
 
                 TextView mLongTextView = (TextView) row.findViewById(R.id.long_chat_text_share);
@@ -273,14 +274,11 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
                 Uri mUri = Utils.getImageContentUri(context, new File(mContentUri));
                 if (!Utils.isEmptyString("" + mUri)) {  // check video thumb exists or not
-                    try {
-                        image_attached.setImageURI(mUri);  // set thumb from uri
-                        play_buttom.setVisibility(View.VISIBLE);
 
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                    image_attached.setImageURI(mUri);  // set thumb from uri
+                    play_buttom.setVisibility(View.VISIBLE);
 
-                    }
+
                 } else {  // download image from server
 
                     final ProgressBar progressBar = (ProgressBar) row.findViewById(R.id.progress_bar);
@@ -336,15 +334,15 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                         custom_heading.setText(temp.card_heading);
                         trade_image.setImageResource(R.drawable.tradecardpink_big);//Akshit code
                     } else {
-                        try {
-                            String url_to_load = (temp.card_url).replaceFirst("cards\\/(\\d+)\\.jpg", "cards\\/a\\/1080\\/$1\\.jpg");
 
+                        if (!Utils.isEmptyString(temp.card_url)) {
+                            String url_to_load = (temp.card_url).replaceFirst("cards\\/(\\d+)\\.jpg", "cards\\/a\\/1080\\/$1\\.jpg");
                             Picasso.with(context).load(url_to_load)
                                     .into(trade_image);
+                        } else {
 
-                        } catch (Exception e) {
-                            e.printStackTrace();
                         }
+
                     }
 
                 } else if (temp.card_Accepted_Rejected.equalsIgnoreCase("accepted")) {//enf of first time played card
@@ -353,10 +351,10 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     ((LinearLayout) row.findViewById(R.id.acc_rej_layout_second)).setVisibility(View.VISIBLE);
                     String name = " ";
                     //code to decide who is accepted the card- basis on card owner- importance while sharing card
-                    if(!Utils.isEmptyString(temp.sharingMedia)) {
+                    if (!Utils.isEmptyString(temp.sharingMedia)) {
 
 
-                        if (!Utils.isEmptyString(temp.card_owner) && temp.card_owner.equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getQBId())) {
+                        if (temp.isMessageSender.equalsIgnoreCase("false")) {//check if not sender set to receiver name to receiver
 
                             //parnter accepted the card
                             String[] splitted = relationManager.getPartnerName.split("\\s+");
@@ -384,7 +382,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     //code to decide who is accepted the card- basis on card owner- importance while sharing card
                     if (!Utils.isEmptyString(temp.sharingMedia)){
 
-                    if (!Utils.isEmptyString(temp.card_owner) && temp.card_owner.equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getQBId())) {
+                    if (temp.isMessageSender.equalsIgnoreCase("false")) {//check if not sender set to receiver name to receiver
 
                         //parnter accepted the card
                         String[] splitted = relationManager.getPartnerName.split("\\s+");
@@ -444,7 +442,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
             //only text-SENDER CASE
             //in case share accept/reject, ignore the text
             if (!Utils.isEmptyString(temp.textMsg) && temp.clicks.equalsIgnoreCase("no")
-                    && Utils.isEmptyString(temp.location_coordinates) ) {
+                    && Utils.isEmptyString(temp.location_coordinates)) {
 
 
                 //code to hide share icon for text messages-monika
@@ -466,7 +464,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 } else {
                     TextView chatText = (TextView) row.findViewById(R.id.long_chat_text); // prafull code
                     chatText.setVisibility(View.VISIBLE);
-                     chatText.setTextColor(context.getResources().getColor(R.color.black));
+                    chatText.setTextColor(context.getResources().getColor(R.color.black));
                     parent_shared_layout.setBackgroundResource(R.drawable.newbg_grey);
                     chatText.setBackgroundResource(R.drawable.grey_square);
                     chatText.setText("" + temp.textMsg);
@@ -495,7 +493,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     if (temp.textMsg.length() > Constants.CHAT_LENTH_LIMIT) {
 
                         LinearLayout.LayoutParams mChatLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                        mChatLayoutParams.setMargins(0,0,0,pxlToDp(-5));
+                        mChatLayoutParams.setMargins(0, 0, 0, pxlToDp(-5));
 
                         chatText.setText(temp.textMsg.substring(0, 17));
                         TextView chatTextLong = (TextView) row.findViewById(R.id.long_chat_text);
@@ -552,7 +550,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                         mShareLong.setVisibility(View.VISIBLE);
 
                         LinearLayout.LayoutParams mChatLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                        mChatLayoutParams.setMargins(0,0,0,pxlToDp(-5));
+                        mChatLayoutParams.setMargins(0, 0, 0, pxlToDp(-5));
                         mClickArea.setLayoutParams(mChatLayoutParams);// code to set margin from bottom in chat Record view
                     } else {
                         mShareSort.setText(temp.textMsg);
@@ -606,6 +604,24 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 ImageView sendStatusView = (ImageView) row.findViewById(R.id.iv_send_status);
                 sendStatusView.setImageResource(R.drawable.double_check);
             }
+
+
+
+            // Click Action On Share ICon
+            ((ImageView) row.findViewById(R.id.iv_type_two_share_icon_r)).setTag(position);
+            ((ImageView) row.findViewById(R.id.iv_type_two_share_icon_r)).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    int position = (Integer) v.getTag();
+
+                    sendShareValues(position,"true");//Clicked from sender side set flag ismessage sender to true
+
+
+                }
+            });
+
+
         }//end of sender loop
         else {
 
@@ -662,11 +678,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 String mContentUri = Utils.mImagePath + tempChatid + ".jpg"; // fetch data from
                 Uri mUri = Utils.getImageContentUri(context, new File(mContentUri));
                 if (!Utils.isEmptyString("" + mUri)) {  // check if image exists on uri
-                    try {
-                        image_attached.setImageURI(mUri); // set image from uri
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+
+                    image_attached.setImageURI(mUri); // set image from uri
+
                 } else {  // else part to download image from url
 
                     final ProgressBar progressBar = (ProgressBar) row.findViewById(R.id.progress_bar);
@@ -774,11 +788,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
                 Uri mUri = Utils.getImageContentUri(context, new File(mContentUri));
                 if (!Utils.isEmptyString("" + mUri)) {  // chdeck video thumb exist or not
-                    try {
-                        image_attached.setImageURI(mUri);  // set thumb if exists
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+
+                    image_attached.setImageURI(mUri);  // set thumb if exists
+
                 } else {  // download thumb from server
                     final ProgressBar progressBar = (ProgressBar) row.findViewById(R.id.progress_bar);
                     progressBar.setVisibility(View.VISIBLE);
@@ -830,8 +842,6 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     ((TextView) row.findViewById(R.id.trd_clicks_top)).setVisibility(View.VISIBLE);//akshit code
                     ((TextView) row.findViewById(R.id.trd_clicks_bottom)).setVisibility(View.VISIBLE);//akshit code
 
-//                    ((TextView) row.findViewById(R.id.trd_clicks_bottom)).setPadding(0, 13, 7, 13);//akshit code
-//                    ((TextView) row.findViewById(R.id.trd_clicks_top)).setPadding(0, 13, 0, 0);//akshit code
 
                     ((TextView) row.findViewById(R.id.trd_clicks_top)).setText(clicks);
                     ((TextView) row.findViewById(R.id.trd_clicks_bottom)).setText(clicks);
@@ -849,30 +859,32 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                         custom_heading.setText(temp.card_heading);
                         trade_image.setImageResource(R.drawable.tradecardpink_big);//Akshit code
                     } else {
-                        String url_to_load = (temp.card_url).replaceFirst("cards\\/(\\d+)\\.jpg", "cards\\/a\\/1080\\/$1\\.jpg");
-                        final RelativeLayout mTempLayout = (RelativeLayout) row.findViewById(R.id.temp_layout);
-                        final ProgressBar mProgressBar = (ProgressBar) row.findViewById(R.id.progress_bar);
-                        RelativeLayout.LayoutParams mTempLayoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                        mTempLayoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
-                        mTempLayout.setLayoutParams(mTempLayoutParams);
-                        mTempLayout.setBackgroundDrawable(null);
-                        mTempLayout.setVisibility(View.VISIBLE);
-                        mProgressBar.setVisibility(View.VISIBLE);
+                        if (!Utils.isEmptyString(temp.card_url)) {
+                            String url_to_load = (temp.card_url).replaceFirst("cards\\/(\\d+)\\.jpg", "cards\\/a\\/1080\\/$1\\.jpg");
+                            final RelativeLayout mTempLayout = (RelativeLayout) row.findViewById(R.id.temp_layout);
+                            final ProgressBar mProgressBar = (ProgressBar) row.findViewById(R.id.progress_bar);
+                            RelativeLayout.LayoutParams mTempLayoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                            mTempLayoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
+                            mTempLayout.setLayoutParams(mTempLayoutParams);
+                            mTempLayout.setBackgroundDrawable(null);
+                            mTempLayout.setVisibility(View.VISIBLE);
+                            mProgressBar.setVisibility(View.VISIBLE);
 
-                        Picasso.with(context).load(url_to_load)
-                                .into(trade_image, new Callback() {
-                                    @Override
-                                    public void onSuccess() {
-                                        mTempLayout.setVisibility(View.GONE);
-                                        mProgressBar.setVisibility(View.GONE);
-                                    }
+                            Picasso.with(context).load(url_to_load)
+                                    .into(trade_image, new Callback() {
+                                        @Override
+                                        public void onSuccess() {
+                                            mTempLayout.setVisibility(View.GONE);
+                                            mProgressBar.setVisibility(View.GONE);
+                                        }
 
-                                    @Override
-                                    public void onError() {
-                                        mTempLayout.setVisibility(View.GONE);
-                                        mProgressBar.setVisibility(View.GONE);
-                                    }
-                                });
+                                        @Override
+                                        public void onError() {
+                                            mTempLayout.setVisibility(View.GONE);
+                                            mProgressBar.setVisibility(View.GONE);
+                                        }
+                                    });
+                        }
                     }
 
                     ((ImageView) row.findViewById(R.id.iv_reject_card)).setTag(position);
@@ -883,7 +895,6 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                             int position = (Integer) v.getTag();
                             //card is allowed to play once only- reject, accept or counter change state to played
                             if (temp.card_Played_Countered.equalsIgnoreCase("playing")) {
-
 
 
                                 temp.card_Played_Countered = "played";
@@ -911,7 +922,6 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                                 temp.card_Played_Countered = "played";
 
 
-
                                 sendUpdateCardValues(position, "accepted", "ACCEPTED!");
 
                             }
@@ -935,7 +945,6 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                                 //   temp.card_Played_Countered = "played";
 
 
-
                                 sendUpdateCardValues(position, "countered", "COUNTERED CARD!");
 
                             }
@@ -955,10 +964,10 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     ((LinearLayout) row.findViewById(R.id.acc_rej_layout_second)).setVisibility(View.VISIBLE);
 
                     //code to decide who is accepted the card- basis on card owner- importance while sharing card
-                    String name=" ";
-                    if(!Utils.isEmptyString(temp.sharingMedia)) {
+                    String name = " ";
+                    if (!Utils.isEmptyString(temp.sharingMedia)) {
 
-                        if (!Utils.isEmptyString(temp.card_owner) && temp.card_owner.equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getQBId())) {
+                        if (temp.isMessageSender.equalsIgnoreCase("false")) {//check if not sender set to receiver name to receiver
 
                             //parnter accepted the card
                             String[] splitted = relationManager.getPartnerName.split("\\s+");
@@ -985,11 +994,11 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     ((LinearLayout) row.findViewById(R.id.ll_for_share_icon)).setVisibility(View.VISIBLE);
                     ((LinearLayout) row.findViewById(R.id.acc_rej_layout_second)).setVisibility(View.VISIBLE);
                     //code to decide who is accepted the card- basis on card owner- importance while sharing card
-                    String name=" ";
-                    if(!Utils.isEmptyString(temp.sharingMedia)) {
+                    String name = " ";
+                    if (!Utils.isEmptyString(temp.sharingMedia)) {
 
 
-                        if (!Utils.isEmptyString(temp.card_owner) && temp.card_owner.equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getQBId())) {
+                        if (temp.isMessageSender.equalsIgnoreCase("false")) {//check if not sender set to receiver name to receiver
 
                             //parnter accepted the card
                             String[] splitted = relationManager.getPartnerName.split("\\s+");
@@ -999,11 +1008,10 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                             name = "You";
 
                         }
+                    } else {
+                        String[] splitted = relationManager.getPartnerName.split("\\s+");
+                        name = splitted[0];
                     }
-                        else{
-                            String[] splitted = relationManager.getPartnerName.split("\\s+");
-                            name = splitted[0];
-                        }
 
 
                     ((TextView) row.findViewById(R.id.tv_acc_res_name)).setText(name);
@@ -1036,7 +1044,6 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                                 temp.card_Played_Countered = "played";
 
 
-
                                 sendUpdateCardValues(position, "rejected", "REJECTED!");
 
                                 /* code to play sound */
@@ -1051,9 +1058,6 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                         public void onClick(View v) {
                             //Card ACCEPT Action
                             int position = (Integer) v.getTag();
-
-
-
 
 
                             //card is allowed to play once only- reject, accept or counter change state to played
@@ -1078,7 +1082,6 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                             //card is allowed to play once only- reject, accept or counter change state to played
                             if (temp.card_Played_Countered.equalsIgnoreCase("playing")) {
                                 //   temp.card_Played_Countered = "played";
-
 
 
                                 sendUpdateCardValues(position, "countered", "COUNTERED CARD!");
@@ -1123,9 +1126,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
             /* only text reciver case*/
             //in case share accept/reject, ignore the text
 
-            if (!Utils.isEmptyString(temp.textMsg) && temp.clicks.equalsIgnoreCase("no")  && Utils.isEmptyString(temp.location_coordinates)
+            if (!Utils.isEmptyString(temp.textMsg) && temp.clicks.equalsIgnoreCase("no") && Utils.isEmptyString(temp.location_coordinates)
 
-                   ) {
+                    ) {
 
                 //code to hide share icon for text messages-monika
                 if (Utils.isEmptyString(temp.content_url))
@@ -1193,9 +1196,8 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                         parent_shared_layout.setBackgroundResource(R.drawable.newbg_pinkright);  //code for double line
 
 
-
                         LinearLayout.LayoutParams mChatLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                        mChatLayoutParams.setMargins(0,0,0,pxlToDp(-5));
+                        mChatLayoutParams.setMargins(0, 0, 0, pxlToDp(-5));
                         clicksArea.setLayoutParams(mChatLayoutParams);// code to set margin from bottom in chat Record view
 
 
@@ -1246,7 +1248,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                         mShareLong.setVisibility(View.VISIBLE);
 
                         LinearLayout.LayoutParams mChatLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                        mChatLayoutParams.setMargins(0,0,0,pxlToDp(-5));
+                        mChatLayoutParams.setMargins(0, 0, 0, pxlToDp(-5));
                         mClickArea.setLayoutParams(mChatLayoutParams);// code to set margin from bottom in chat Record view
 
                     } else {
@@ -1283,7 +1285,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     if (!Utils.isEmptyString(temp.card_id)) {
                         row.findViewById(R.id.except_share).setVisibility(View.GONE);
                         row.findViewById(R.id.incase_share).setVisibility(View.VISIBLE);
-                        ((ImageView)row.findViewById(R.id.incase_share_footer)).setVisibility(View.VISIBLE);//akshit code to shaow divider
+                        ((ImageView) row.findViewById(R.id.incase_share_footer)).setVisibility(View.VISIBLE);//akshit code to shaow divider
                     }
 
                     ((LinearLayout) row.findViewById(R.id.shared_footer_view)).setVisibility(View.VISIBLE);
@@ -1312,6 +1314,18 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 ((ImageView) row.findViewById(R.id.iv_type_two_share_icon_r)).setVisibility(View.GONE);
             }
 
+
+            // Click Action On Share ICon Receiver Side //akshit Code to set Onclick on share icon on receifer side
+            ((ImageView) row.findViewById(R.id.iv_type_two_share_icon_r)).setTag(position);
+            ((ImageView) row.findViewById(R.id.iv_type_two_share_icon_r)).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    int position = (Integer) v.getTag();
+                    sendShareValues(position,"false");//if click from receiver then ismessagesender flag false
+
+                }
+            });
         }//end of share view at reciver side
 
 
@@ -1339,19 +1353,6 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
         });
 
         row.setTag(position);
-// Click Action On Share ICon
-        ((ImageView) row.findViewById(R.id.iv_type_two_share_icon_r)).setTag(position);
-        ((ImageView) row.findViewById(R.id.iv_type_two_share_icon_r)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                int position = (Integer) v.getTag();
-                sendShareValues(position);
-
-
-            }
-        });
-
 
         // Click Action On Share With REJECT
         ((TextView) row.findViewById(R.id.shared_message_reject)).setTag(position);
@@ -1386,7 +1387,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     chatManager.chatShare(authM.getPhoneNo(), authM.getUsrToken(), item.relationshipId, item.originalMessageID, item.sharingMedia, item.facebookToken, item.shareComment, "no");
 
                     //akshit code to change images to deactive state
-                            ((TextView) row.findViewById(R.id.shared_message_reject)).setBackgroundResource(R.drawable.c_card_reject_deactive);
+                    ((TextView) row.findViewById(R.id.shared_message_reject)).setBackgroundResource(R.drawable.c_card_reject_deactive);
                     ((TextView) row.findViewById(R.id.shared_message_accept)).setBackgroundResource(R.drawable.c_card_accepted_deactive);
                     //ends
 
@@ -1436,7 +1437,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
                     ChatManager chatManager = ModelManager.getInstance().getChatManager();
                     String mFb_access_token = item.facebookToken;
-                    if(mFb_access_token.equalsIgnoreCase("-"))
+                    if (mFb_access_token.equalsIgnoreCase("-"))
                         mFb_access_token = "";
 
                     chatManager.chatShare(authM.getPhoneNo(), authM.getUsrToken(), item.relationshipId, item.originalMessageID, item.sharingMedia, mFb_access_token, item.shareComment, "yes");
@@ -1464,13 +1465,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
             Intent intent = new Intent(context, MapView.class);
             intent.putExtra("from", "chatrecord");
             intent.putExtra("coordinates", coordinates);
-//            try {
-                context.startActivity(intent);
-//
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//
+
+            context.startActivity(intent);
+
 
         } else if (!(Utils.isEmptyString(item.imageRatio))) {
 
@@ -1478,11 +1475,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
             Uri uri = Uri.parse(item.content_url);
             Intent it = new Intent(Intent.ACTION_VIEW);
             it.setDataAndType(uri, "image/*");
-//            try {
-                context.startActivity(it);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
+
+            context.startActivity(it);
+
         } else if (!Utils.isEmptyString(item.video_thumb)) {
 
             Utils.mName = item.chatId;
@@ -1532,7 +1527,6 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
         i.putExtra("card_originator", item.card_originator);
 
 
-
         i.putExtra("card_owner", item.card_owner);
         i.putExtra("chat_id", item.chatId); //update the value to "played" only when user actually counter the card
         //from card- its in case of counter case only-monika
@@ -1555,15 +1549,15 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
     }
 
     //mukesh
-    private void sendShareValues(int index) {
+    private void sendShareValues(int index ,String is_sender) {
         ChatMessageBody item = ModelManager.getInstance().getChatManager().chatMessageList.get(index);
-        String isMessageSender = "false";
+
         Intent i = new Intent();
         //    i.putExtra("chatType", item.chatType);
         i.putExtra("clicks", item.clicks);
         i.putExtra("textMsg", item.textMsg);
         i.putExtra("originalChatId", item.chatId);
-        i.putExtra("isMessageSender", isMessageSender);
+        i.putExtra("isMessageSender", is_sender);
 
         if (!Utils.isEmptyString(item.imageRatio)) {
             i.putExtra("imageRatio", item.imageRatio);
@@ -1588,7 +1582,6 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
             i.putExtra("is_CustomCard", item.is_CustomCard);
 
 
-
         } else if (!Utils.isEmptyString(item.content_url) && Utils.isEmptyString(item.imageRatio) && Utils.isEmptyString(item.video_thumb)) {
             i.putExtra("audioID", item.content_url);
         }
@@ -1600,6 +1593,13 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
         context.startActivity(i);
         ((Activity) context).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
+
+    private int pxlToDp(int pixel) {
+
+        final float scale = context.getResources().getDisplayMetrics().density;
+        int dp = (int) (pixel * scale + 0.5f);
+        return dp;
     }
 
     public class DownloadMusicfromInternet extends AsyncTask<String, String, String> { // Async task to download video
@@ -1637,20 +1637,20 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     @Override
                     public void onDismiss(DialogInterface dialogInterface) {
                         if (output != null && input != null) {
-                            try {
-                                cancel(true);
-                                String mPath = path + Utils.mName + ".mp4";
-                                if (precentage != 100) {   // delate file if video/Audio download intrupted
-                                    File file = new File(mPath);
-                                    if (file.exists()) {
-                                        file.delete();
-                                    }
+                            /*try {*/
+                            cancel(true);
+                            String mPath = path + Utils.mName + ".mp4";
+                            if (precentage != 100) {   // delate file if video/Audio download intrupted
+                                File file = new File(mPath);
+                                if (file.exists()) {
+                                    file.delete();
                                 }
+                            }
 
-                            } catch (Exception e) {
+                            /*} catch (Exception e) {
 //                                e.printStackTrace();
 
-                            }
+                            }*/
                         }
                     }
                 });
@@ -1743,12 +1743,5 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
             }
 
         }
-    }
-
-    private int pxlToDp(int pixel) {
-
-        final float scale = context.getResources().getDisplayMetrics().density;
-        int dp = (int) (pixel * scale + 0.5f);
-        return dp;
     }
 }

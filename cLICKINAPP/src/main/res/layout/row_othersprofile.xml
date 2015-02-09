@@ -34,18 +34,18 @@
             android:layout_height="18dp"
             android:layout_below="@+id/iv_usr_pic"
             android:background="@color/transparent"
-            android:visibility="visible"/>
+            android:visibility="visible" />
 
         <ImageView
             android:id="@+id/btm_divider"
             android:layout_width="fill_parent"
             android:layout_height="3dp"
+            android:layout_below="@+id/v_devider"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginTop="3dp"
-            android:layout_below="@+id/v_devider"
             android:background="@color/edit_profile_clr"
-            android:visibility="visible"/>
+            android:visibility="visible" />
     </RelativeLayout>
 
 </RelativeLayout>

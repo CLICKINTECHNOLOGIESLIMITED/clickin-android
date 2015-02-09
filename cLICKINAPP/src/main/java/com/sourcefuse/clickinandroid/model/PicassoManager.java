@@ -1,10 +1,7 @@
 package com.sourcefuse.clickinandroid.model;
 
 import android.content.Context;
-import android.util.Log;
 
-
-import com.squareup.picasso.Cache;
 import com.squareup.picasso.LruCache;
 import com.squareup.picasso.Picasso;
 

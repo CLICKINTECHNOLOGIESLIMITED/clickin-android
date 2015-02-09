@@ -69,7 +69,7 @@ public class CropView extends Activity implements View.OnClickListener {
                 if (bitmap == null) {
                     finish();
                 } else {
-                    ((CropImageView) findViewById(R.id.crop_image)).setImageBitmap(bitmap.copy(Bitmap.Config.ARGB_8888,true));
+                    ((CropImageView) findViewById(R.id.crop_image)).setImageBitmap(bitmap.copy(Bitmap.Config.ARGB_8888, true));
                     bitmap.recycle();
 
                 }
@@ -168,7 +168,7 @@ public class CropView extends Activity implements View.OnClickListener {
 
 
                 if (getIntent().getStringExtra("from").equalsIgnoreCase("fromchatGallery") || getIntent().getStringExtra("from").equalsIgnoreCase("fromchatCamare")) {
-                    authManager.setmResizeBitmap(resizebitmap.copy(Bitmap.Config.ARGB_8888,true));
+                    authManager.setmResizeBitmap(resizebitmap.copy(Bitmap.Config.ARGB_8888, true));
                     Intent intent = new Intent(getApplicationContext(), EditMyProfileView.class);
                     intent.putExtra("retake", "fckoff");
                     intent.putExtra("path", path);
@@ -179,7 +179,7 @@ public class CropView extends Activity implements View.OnClickListener {
                     //Utils.dismissBarDialog();
                 } else {
                     if (resizebitmap != null) {
-                        authManager.setmResizeBitmap(resizebitmap.copy(Bitmap.Config.ARGB_8888,true));
+                        authManager.setmResizeBitmap(resizebitmap.copy(Bitmap.Config.ARGB_8888, true));
                         authManager.setUserImageUri(Uri.parse(path));
                         Intent intent = new Intent(getApplicationContext(), EditMyProfileView.class);
                         intent.putExtra("retake", "fckoff");

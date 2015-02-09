@@ -17,7 +17,6 @@ import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.AddSomeoneView;
 import com.sourcefuse.clickinapp.R;
-import com.squareup.picasso.LruCache;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -34,6 +33,8 @@ public class ClickInWithAdapter extends BaseAdapter implements
     int layoutResourceId;
     List<GetrelationshipsBean> item1;
     private Typeface typeface;
+    private LayoutInflater mInflater;
+
     /*LruCache mLruCahe;
     Picasso picasso;*/
     public ClickInWithAdapter(Context context, int layoutResourceId, List<GetrelationshipsBean> item) {
@@ -72,6 +73,10 @@ public class ClickInWithAdapter extends BaseAdapter implements
     public long getItemId(int position) {
         return position;
     }
+
+
+
+    /* for sticky header list*/
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
@@ -115,7 +120,7 @@ public class ClickInWithAdapter extends BaseAdapter implements
                     try {
 
 
-                              Picasso.with(context).load(item1.get(position).getPartnerPic())
+                        Picasso.with(context).load(item1.get(position).getPartnerPic())
                                 .into(rholder.clickInUsrimg);
                     } catch (Exception e) {
                         // rholder.clickInUsrimg.setImageResource(R.drawable.male_user);
@@ -150,11 +155,6 @@ public class ClickInWithAdapter extends BaseAdapter implements
         return row;
     }
 
-
-
-    /* for sticky header list*/
-
-
     @Override
     public Object[] getSections() {
         return new Object[0];
@@ -169,8 +169,6 @@ public class ClickInWithAdapter extends BaseAdapter implements
     public int getSectionForPosition(int position) {
         return 0;
     }
-
-    private LayoutInflater mInflater;
 
     @Override
     public View getHeaderView(int position, View convertView, ViewGroup parent) {
