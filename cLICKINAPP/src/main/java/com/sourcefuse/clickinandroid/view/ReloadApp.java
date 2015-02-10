@@ -27,7 +27,6 @@ import de.greenrobot.event.EventBus;
  */
 public class ReloadApp extends Activity {
 
-    String pwd, deviceId;
     Bundle extras;
     boolean mProfile = false, mRelation = false;
 
@@ -59,9 +58,15 @@ public class ReloadApp extends Activity {
             Log.e("case 2---->", "case 2---->");
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
             String myPhone = preferences.getString("myPhoneNo", null);
-            pwd = preferences.getString("pwd", null);
-            deviceId = preferences.getString("DeviceId", null);
-            ModelManager.getInstance().getAuthorizationManager().signIn(myPhone, pwd, deviceId, Constants.DEVICETYPE);
+            String pwd = preferences.getString("pwd", null);
+            String deviceId = preferences.getString("DeviceId", null);
+            if(!Utils.isEmptyString(myPhone) && !Utils.isEmptyString(pwd) && !Utils.isEmptyString(deviceId))
+                ModelManager.getInstance().getAuthorizationManager().signIn(myPhone, pwd, deviceId, Constants.DEVICETYPE);
+            else {
+                Intent intent = new Intent(ReloadApp.this,SplashView.class);
+                startActivity(intent);
+                finish();
+            }
         }
     }
 
@@ -102,6 +107,7 @@ public class ReloadApp extends Activity {
 
                     data.setClass(getApplicationContext(), ChatRecordView.class);
                     String mPartnerId = extras.getString("pid");
+                    Log.e("Pid-------->",""+mPartnerId);
                     putChatData(data, mPartnerId);
 
                 } else if (extras.getString("Tp").equalsIgnoreCase("shr")) //case for share
@@ -148,9 +154,15 @@ public class ReloadApp extends Activity {
             Log.e("case 2---->", "case 2---->");
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
             String myPhone = preferences.getString("myPhoneNo", null);
-            pwd = preferences.getString("pwd", null);
-            deviceId = preferences.getString("DeviceId", null);
-            ModelManager.getInstance().getAuthorizationManager().signIn(myPhone, pwd, deviceId, Constants.DEVICETYPE);
+            String pwd = preferences.getString("pwd", null);
+            String deviceId = preferences.getString("DeviceId", null);
+            if(!Utils.isEmptyString(myPhone) && !Utils.isEmptyString(pwd) && !Utils.isEmptyString(deviceId))
+                ModelManager.getInstance().getAuthorizationManager().signIn(myPhone, pwd, deviceId, Constants.DEVICETYPE);
+            else {
+                Intent intent1 = new Intent(ReloadApp.this,SplashView.class);
+                startActivity(intent1);
+                finish();
+            }
         }
     }
 
@@ -158,21 +170,40 @@ public class ReloadApp extends Activity {
 
 
         for (int i = 0; i < ModelManager.getInstance().getRelationManager().acceptedList.size(); i++) {
+            Log.e("getPartner_id------>",""+ModelManager.getInstance().getRelationManager().acceptedList.get(i).getPartner_id());
             if (ModelManager.getInstance().getRelationManager().acceptedList.get(i).getPartner_id().equalsIgnoreCase(mPartnerId)) {
                 mIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 mIntent.setAction("UPDATE");
                 mIntent.putExtra("quickId", ModelManager.getInstance().getRelationManager().acceptedList.get(i).getPartnerQBId());
+                Log.e("quickId---->",""+ModelManager.getInstance().getRelationManager().acceptedList.get(i).getPartnerQBId());
                 mIntent.putExtra("partnerPic", ModelManager.getInstance().getRelationManager().acceptedList.get(i).getPartnerPic());
+                Log.e("partnerPic---->",""+ModelManager.getInstance().getRelationManager().acceptedList.get(i).getPartnerPic());
+
                 mIntent.putExtra("partnerName", ModelManager.getInstance().getRelationManager().acceptedList.get(i).getPartnerName());
+                Log.e("partnerPic---->",""+ModelManager.getInstance().getRelationManager().acceptedList.get(i).getPartnerPic());
+
                 mIntent.putExtra("rId", ModelManager.getInstance().getRelationManager().acceptedList.get(i).getRelationshipId());
+                Log.e("getRelationshipId---->",""+ModelManager.getInstance().getRelationManager().acceptedList.get(i).getRelationshipId());
+
                 mIntent.putExtra("partnerId", ModelManager.getInstance().getRelationManager().acceptedList.get(i).getPartner_id());
+                Log.e("getPartner_id---->",""+ModelManager.getInstance().getRelationManager().acceptedList.get(i).getPartner_id());
 
                 mIntent.putExtra("myClicks", ModelManager.getInstance().getRelationManager().acceptedList.get(i).getUserClicks());
+                Log.e("getUserClicks---->",""+ModelManager.getInstance().getRelationManager().acceptedList.get(i).getUserClicks());
+
                 mIntent.putExtra("userClicks", ModelManager.getInstance().getRelationManager().acceptedList.get(i).getClicks());
+                Log.e("userClicks---->",""+ModelManager.getInstance().getRelationManager().acceptedList.get(i).getClicks());
+
                 mIntent.putExtra("partnerPh", ModelManager.getInstance().getRelationManager().acceptedList.get(i).getPhoneNo());
+                Log.e("getPhoneNo---->",""+ModelManager.getInstance().getRelationManager().acceptedList.get(i).getPhoneNo());
+
                 mIntent.putExtra("relationListIndex", i);
+                Log.e("relationListIndex---->",""+i);
+
                 ChatManager chatManager = ModelManager.getInstance().getChatManager();
                 chatManager.setrelationshipId(ModelManager.getInstance().getRelationManager().acceptedList.get(i).getRelationshipId());
+
+                Log.e("partnerPic---->",""+ModelManager.getInstance().getRelationManager().acceptedList.get(i).getPartnerPic());
             }
         }
 

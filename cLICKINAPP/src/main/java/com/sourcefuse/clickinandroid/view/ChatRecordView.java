@@ -66,6 +66,7 @@ import com.sourcefuse.clickinandroid.services.MyQbChatService;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.AudioUtil;
 import com.sourcefuse.clickinandroid.utils.Constants;
+import com.sourcefuse.clickinandroid.utils.UnCaughtExceptionHandler;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.utils.VideoUtil;
 import com.sourcefuse.clickinandroid.view.adapter.ChatRecordAdapter;
@@ -276,6 +277,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_chat_layout);
+//code- to handle uncaught exception
+        Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
         rId = getIntent().getExtras().getString("rId");
         //clear the message list always to initiate a new chat

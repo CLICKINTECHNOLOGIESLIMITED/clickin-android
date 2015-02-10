@@ -23,6 +23,7 @@ import com.sourcefuse.clickinandroid.services.MyQbChatService;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.GPSTracker;
+import com.sourcefuse.clickinandroid.utils.UnCaughtExceptionHandler;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
 
@@ -42,6 +43,8 @@ public class SplashView extends Activity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+//code- to handle uncaught exception
+        Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
 
         /*set picasso maneger value */

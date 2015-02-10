@@ -27,6 +27,7 @@ import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.bean.ChatMessageBody;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
+import com.sourcefuse.clickinandroid.utils.UnCaughtExceptionHandler;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
 
@@ -56,7 +57,14 @@ public class ViewTradeCart extends Activity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //code- to handle uncaught exception
+        Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
+
+
         setContentView(R.layout.view_tradecart);
+
+
+
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         layout = (RelativeLayout) findViewById(R.id.rr_send);

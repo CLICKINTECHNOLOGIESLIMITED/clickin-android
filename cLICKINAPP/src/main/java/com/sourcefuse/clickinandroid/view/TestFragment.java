@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.sourcefuse.clickinandroid.utils.UnCaughtExceptionHandler;
 import com.sourcefuse.clickinapp.R;
 
 public final class TestFragment extends Fragment {
@@ -37,6 +38,8 @@ public final class TestFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //code- to handle uncaught exception
+        Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(getActivity()));
         _activity = super.getActivity();
         if (getArguments() != null) {
             imageS = getArguments().getInt("img");

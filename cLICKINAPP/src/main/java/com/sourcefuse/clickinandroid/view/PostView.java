@@ -14,6 +14,7 @@ import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.NewsFeedManager;
 import com.sourcefuse.clickinandroid.model.bean.NewsFeedBean;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
+import com.sourcefuse.clickinandroid.utils.UnCaughtExceptionHandler;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.adapter.FeedsAdapter;
 import com.sourcefuse.clickinandroid.view.adapter.SimpleSectionedListAdapter2;
@@ -51,6 +52,9 @@ public class PostView extends ClickInBaseView implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+//code- to handle uncaught exception
+        Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
 
         setContentView(R.layout.postview);
