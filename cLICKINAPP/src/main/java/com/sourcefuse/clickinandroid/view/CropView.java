@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.edmodo.cropper.CropImageView;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
+import com.sourcefuse.clickinandroid.utils.UnCaughtExceptionHandler;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
 
@@ -39,6 +40,10 @@ public class CropView extends Activity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        //code- to handle uncaught exception
+        Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
+
         setContentView(R.layout.crop_view);
         findViewById(R.id.btn_use).setOnClickListener(this);
         findViewById(R.id.btn_retake).setOnClickListener(this);

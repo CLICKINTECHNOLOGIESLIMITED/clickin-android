@@ -31,6 +31,7 @@ import com.sourcefuse.clickinandroid.model.RelationManager;
 import com.sourcefuse.clickinandroid.services.MyQbChatService;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.Constants;
+import com.sourcefuse.clickinandroid.utils.UnCaughtExceptionHandler;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.adapter.SimpleSectionedListAdapter1;
 import com.sourcefuse.clickinandroid.view.adapter.SimpleSectionedListAdapter1.Section;
@@ -97,6 +98,10 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //code- to handle uncaught exception
+        Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
+
         setContentView(R.layout.view_userprofile);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         addMenu(true);
@@ -215,7 +220,9 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
             gender = "guy";
         }
 
-        dtails = dtails + Utils.getCurrentYear(authManager.getdOB()) + " " + getResources().getString(R.string.txt_yold);
+        if(!Utils.isEmptyString(authManager.getdOB()))
+            dtails = dtails + Utils.getCurrentYear(authManager.getdOB()) + " " + getResources().getString(R.string.txt_yold);
+
 
 
         if (!Utils.isEmptyString(authManager.getUserCity()) && Utils.isEmptyString(authManager.getUserCountry())) {

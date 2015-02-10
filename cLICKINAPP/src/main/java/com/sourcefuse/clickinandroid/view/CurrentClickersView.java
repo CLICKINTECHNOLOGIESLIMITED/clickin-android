@@ -22,6 +22,7 @@ import com.sourcefuse.clickinandroid.model.ProfileManager;
 import com.sourcefuse.clickinandroid.model.bean.CurrentClickerBean;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.FetchContactFromPhone;
+import com.sourcefuse.clickinandroid.utils.UnCaughtExceptionHandler;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.adapter.CurrentClickersAdapter;
 import com.sourcefuse.clickinapp.R;
@@ -59,6 +60,10 @@ public class CurrentClickersView extends Activity implements OnClickListener {
         super.onCreate(savedInstanceState);
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        //code- to handle uncaught exception
+        Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
+
         setContentView(R.layout.view_currentclickers);
         this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
         phonebook = (Button) findViewById(R.id.btn_phb);

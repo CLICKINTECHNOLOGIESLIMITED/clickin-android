@@ -29,6 +29,7 @@ import com.sourcefuse.clickinandroid.services.MyQbChatService;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.MyCustomAnimation;
+import com.sourcefuse.clickinandroid.utils.UnCaughtExceptionHandler;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.adapter.DeactivateAccountView;
 import com.sourcefuse.clickinapp.R;
@@ -69,6 +70,11 @@ public class SettingView extends Activity implements View.OnClickListener, Compo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+
+        //code- to handle uncaught exception
+        Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
+
         setContentView(R.layout.view_setting);
         this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
         backarrow = (ImageView) findViewById(R.id.iv_back_noti);

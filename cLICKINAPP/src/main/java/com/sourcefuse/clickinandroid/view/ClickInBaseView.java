@@ -41,6 +41,7 @@ import com.sourcefuse.clickinandroid.model.NewsFeedManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.Constants;
+import com.sourcefuse.clickinandroid.utils.UnCaughtExceptionHandler;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.adapter.ClickInWithAdapter;
 import com.sourcefuse.clickinandroid.view.adapter.NotificationAdapter;
@@ -90,6 +91,8 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         authManager = ModelManager.getInstance().getAuthorizationManager();
+        //code- to handle uncaught exception
+        Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(ClickInBaseView.this));
     }
 
     @Override
@@ -127,7 +130,8 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
     private void switchView(String rid, int relationListIndex) {
 
         relationManager = ModelManager.getInstance().getRelationManager();
-        Intent intent = new Intent(ClickInBaseView.this, ChatRecordView.class);
+        Intent intent = new Intent();
+       /* Intent intent = new Intent(ClickInBaseView.this, ChatRecordView.class);*/
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         intent.setAction("UPDATE");
         intent.putExtra("quickId", quickBlockId);
@@ -997,9 +1001,12 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
     public void onBackPressed() {
 
         super.onBackPressed();
-
-        InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        try {
+            InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 

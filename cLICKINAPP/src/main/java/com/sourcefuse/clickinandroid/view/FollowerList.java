@@ -12,6 +12,7 @@ import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.ProfileManager;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
+import com.sourcefuse.clickinandroid.utils.UnCaughtExceptionHandler;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.adapter.FollowerAdapter;
 import com.sourcefuse.clickinapp.R;
@@ -40,6 +41,8 @@ public class FollowerList extends ClickInBaseView implements
         addMenu(true);
         slidemenu.setTouchModeAbove(2);
 
+//code- to handle uncaught exception
+        Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
         listView = (ListView) findViewById(R.id.list_follower);
         mFollowerListView = (RelativeLayout) findViewById(R.id.rl_followerdata);
@@ -67,7 +70,7 @@ public class FollowerList extends ClickInBaseView implements
     public void onBackPressed() {
 
         if (mListchangeVariable_flag) {
-            super.onBackPressed();
+
             Intent intent = new Intent(this, UserProfileView.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             intent.putExtra("isChangeInList", true);
@@ -75,10 +78,11 @@ public class FollowerList extends ClickInBaseView implements
             finish();
             overridePendingTransition(0, R.anim.top_out);
         } else {
-            super.onBackPressed();
+
             finish();
             overridePendingTransition(0, R.anim.top_out);
         }
+        super.onBackPressed();
 
 
     }

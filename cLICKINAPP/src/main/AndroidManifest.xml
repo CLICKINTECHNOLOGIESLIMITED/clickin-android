@@ -33,7 +33,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />
-    <uses-permission android:name="android.permission.GET_TASKS"></uses-permission>
+    <uses-permission android:name="android.permission.GET_TASKS" />
 
 
     <uses-feature android:name="android.hardware.camera" />
@@ -67,89 +67,92 @@
         <activity
             android:name="com.sourcefuse.clickinandroid.view.SplashView"
             android:launchMode="standard"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" />
 
-        </activity>
         <activity
             android:name="com.sourcefuse.clickinandroid.view.ReloadApp"
             android:launchMode="standard"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.sourcefuse.clickinandroid.view.DialogActivity"
+            android:launchMode="standard"
+            android:theme="@android:style/Theme.Dialog"
+            android:screenOrientation="portrait" />
 
-        </activity>
 
         <activity
             android:name="com.sourcefuse.clickinandroid.view.SignInView"
 
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.sourcefuse.clickinandroid.view.SpreadWordView"
 
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name="com.sourcefuse.clickinandroid.view.SignUpView"
 
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible|adjustPan"></activity>
+            android:windowSoftInputMode="stateVisible|adjustPan" />
         <activity
             android:name="com.sourcefuse.clickinandroid.view.ProfileView"
 
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.sourcefuse.clickinandroid.view.VerifyView"
 
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible|adjustPan"></activity>
+            android:windowSoftInputMode="stateVisible|adjustPan" />
         <activity
             android:name="com.sourcefuse.clickinandroid.view.PlayItSafeView"
 
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible|adjustPan"></activity>
+            android:windowSoftInputMode="stateVisible|adjustPan" />
         <activity
             android:name="com.sourcefuse.clickinandroid.view.UserProfileView"
 
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.sourcefuse.clickinandroid.view.FollowerList"
 
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name="com.sourcefuse.clickinandroid.view.AddViaNumberView"
 
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.sourcefuse.clickinandroid.view.AddViaContactView"
 
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.sourcefuse.clickinandroid.view.AddSomeoneView"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name="com.sourcefuse.clickinandroid.view.OthersFollowingFollowView"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name="com.sourcefuse.clickinandroid.view.CurrentClickersView"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.sourcefuse.clickinandroid.view.FollowingListView"
 
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.sourcefuse.clickinandroid.view.JumpOtherProfileView"
             android:launchMode="standard"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.sourcefuse.clickinandroid.view.ChatRecordView"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"></activity>
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name="com.sourcefuse.clickinandroid.view.ClickInBaseView"
             android:launchMode="standard"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -160,28 +163,28 @@
             android:name="com.facebook.LoginActivity"
             android:configChanges="orientation"
             android:label="Facebook Login"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name="com.sourcefuse.clickinandroid.view.MapView"
             android:launchMode="standard"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustNothing|stateHidden"></activity>
+            android:windowSoftInputMode="adjustNothing|stateHidden" />
 
         <activity
             android:name="com.sourcefuse.clickinandroid.view.ImageViewer"
             android:launchMode="standard"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name="com.sourcefuse.clickinandroid.view.SettingView"
             android:launchMode="standard"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name="com.sourcefuse.clickinandroid.view.EditMyProfileView"
             android:launchMode="standard"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name="com.sourcefuse.clickinandroid.view.Card"
@@ -195,25 +198,25 @@
         <activity
             android:name="com.sourcefuse.clickinandroid.view.ViewTradeCart"
             android:launchMode="standard"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.sourcefuse.clickinandroid.view.adapter.DeactivateAccountView"
             android:launchMode="standard"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"></activity>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name="com.sourcefuse.clickinandroid.view.PrivacyView"
             android:launchMode="standard"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.sourcefuse.clickinandroid.view.TermUseView"
             android:launchMode="standard"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.sourcefuse.clickinandroid.view.ViewSpamorAbuse"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize|stateHidden"></activity>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <receiver
             android:name="com.sourcefuse.clickinandroid.pushnotification.GcmBroadcastReceiver"
@@ -240,58 +243,49 @@
         <activity
             android:name="com.sourcefuse.clickinandroid.view.FeedView"
             android:launchMode="standard"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.sourcefuse.clickinandroid.view.FeedStarsView"
             android:launchMode="standard"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
-        <service android:name="com.sourcefuse.clickinandroid.services.MyQbChatService"></service>
-        <service android:name="com.sourcefuse.clickinandroid.utils.GPSTracker"></service>
+        <service android:name="com.sourcefuse.clickinandroid.services.MyQbChatService" />
+        <service android:name="com.sourcefuse.clickinandroid.utils.GPSTracker" />
 
         <activity
             android:name="com.sourcefuse.clickinandroid.view.Feed_large_img"
             android:launchMode="standard"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.sourcefuse.clickinandroid.view.FeedCommentsView"
             android:launchMode="standard"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.sourcefuse.clickinandroid.view.ViewShare"
             android:launchMode="standard"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.sourcefuse.clickinandroid.view.FeedVideoView"
             android:launchMode="standard"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name="com.sourcefuse.clickinandroid.view.CropView"
             android:launchMode="standard"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name="com.sourcefuse.clickinandroid.view.PostView"
             android:launchMode="standard"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
 
         <activity
             android:name="com.sourcefuse.clickinandroid.view.MapActivity"
             android:launchMode="standard"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustNothing|stateHidden"></activity>
+            android:windowSoftInputMode="adjustNothing|stateHidden" />
 
-
-        <!--
-                <receiver android:name="com.sourcefuse.clickinandroid.pushnotification.AppInstallReceiver"
-                    android:exported="true">
-                    <intent-filter>
-                        <action android:name="com.android.vending.INSTALL_REFERRER" />
-                    </intent-filter>
-                </receiver>
-        -->
 
     </application>
 
