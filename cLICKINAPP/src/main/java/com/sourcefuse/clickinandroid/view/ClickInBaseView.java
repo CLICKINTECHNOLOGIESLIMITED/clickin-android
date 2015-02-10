@@ -130,8 +130,8 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
     private void switchView(String rid, int relationListIndex) {
 
         relationManager = ModelManager.getInstance().getRelationManager();
-        Intent intent = new Intent();
-       /* Intent intent = new Intent(ClickInBaseView.this, ChatRecordView.class);*/
+        /*Intent intent = new Intent();*/
+        Intent intent = new Intent(ClickInBaseView.this, ChatRecordView.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         intent.setAction("UPDATE");
         intent.putExtra("quickId", quickBlockId);
@@ -1001,6 +1001,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
     public void onBackPressed() {
 
         super.onBackPressed();
+
         try {
             InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
@@ -1008,6 +1009,8 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
             e.printStackTrace();
         }
 
+
     }
+
 
 }
