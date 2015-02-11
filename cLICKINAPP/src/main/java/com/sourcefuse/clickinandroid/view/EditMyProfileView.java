@@ -106,7 +106,7 @@ public class EditMyProfileView extends ClickInBaseView implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ModelManager.getInstance().getAuthorizationManager().setMixpanelAPI(this);
+        ModelManager.getInstance().getAuthorizationManager().setMixpanelAPI(this); // set Context to MixPanel
         //code- to handle uncaught exception
         Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
@@ -273,7 +273,7 @@ public class EditMyProfileView extends ClickInBaseView implements View.OnClickLi
 
     @Override
     public void onDestroy() {
-        ModelManager.getInstance().getAuthorizationManager().getMixpanelAPI().flush();
+        ModelManager.getInstance().getAuthorizationManager().getMixpanelAPI().flush();  // send data to mixpanel server before destroy activity.
         super.onDestroy();
     }
 

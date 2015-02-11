@@ -1025,7 +1025,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         super.onBackPressed();
 
 
-        if(getCurrentFocus().getWindowToken() != null) {
+        if(getCurrentFocus().getWindowToken() != null) { // check window token is null or not
             InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         }

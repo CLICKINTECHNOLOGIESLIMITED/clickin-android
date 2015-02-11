@@ -80,7 +80,7 @@ public class ProfileManager {
             userInputDetails.put("profile_image_change", profile_image_change);
             // userInputDetails.put("fb_access_token", "jh");
 
-            ModelManager.getInstance().getAuthorizationManager().getMixpanelAPI().registerSuperProperties(userInputDetails);
+            ModelManager.getInstance().getAuthorizationManager().getMixpanelAPI().track("EditProfile",userInputDetails);  // post data on mixPanel
 
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
