@@ -17,6 +17,7 @@ import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.PicassoManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
 import com.sourcefuse.clickinandroid.model.bean.NotificationBean;
+import com.sourcefuse.clickinandroid.view.ClickInBaseView;
 import com.sourcefuse.clickinandroid.view.FeedView;
 import com.sourcefuse.clickinandroid.view.FollowerList;
 import com.sourcefuse.clickinandroid.view.FollowingListView;
@@ -66,7 +67,8 @@ public class NotificationAdapter extends ArrayAdapter<NotificationBean> {
 
         if (item.getIs_read().equalsIgnoreCase("false")) {//akshit code to set color for unread notification
             holder.mNotificationLayout.setBackgroundResource(R.color.noti_unread);
-//            holder.notificationMsg.setBackgroundResource(R.color.noti_read);
+        } else {
+            holder.mNotificationLayout.setBackgroundResource(R.color.notification_background);
         }
 
         if (item.getNotificationType().matches(context.getResources().getString(R.string.txt_relation_visibility))) {

@@ -1,6 +1,7 @@
 package com.sourcefuse.clickinandroid.model;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -16,6 +17,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 
 import de.greenrobot.event.EventBus;
 
@@ -106,16 +109,30 @@ public class ClickInNotificationManager implements NotificationManagerI {
                                 }
 
 
-                                if (Utils.isEmptyString(lastNotificationId)) {//akshit code to item at Top and Bottom after refresh
+                                if (Utils.isEmptyString(lastNotificationId)) {
+                                    if (notificationData.size() > 0) {
+                                        for (int j = 0; j < notificationData.size(); j++) {  // compare last notification with new one to get only
+                                            for (int i = 0; i < notificationArray.size(); i++) {
+                                                if (notificationArray.get(i)._id.equalsIgnoreCase(notificationData.get(j)._id)) {
+                                                    notificationArray.remove(i);
+                                                }
+                                            }
+                                        }
 
-                                    notificationData.clear();
-                                    notificationData.addAll(0, notificationArray);
+                                        notificationData.addAll(0, notificationArray); // add new notification in notification list at top.
+                                    } else {
+                                        notificationData.addAll(notificationArray);
+                                    }
+
+
                                 } else {
 
                                     notificationData.addAll(notificationArray);
 
                                 }
 
+
+                                Log.e("notificationData size---", "" + notificationData.size());
 
                                 EventBus.getDefault().postSticky("Notification true");
                                 EventBus.getDefault().post("update Counter");
