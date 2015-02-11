@@ -78,9 +78,9 @@ public class ViewSpamorAbuse extends Activity implements View.OnClickListener {
 
             @Override
             public void onClick(View arg0) {
-                InputMethodManager imm = (InputMethodManager) getSystemService(
-                        INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(((EditText) findViewById(R.id.spam_edit_txt)).getWindowToken(), 0);
+                InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                if(((EditText) findViewById(R.id.spam_edit_txt)).getWindowToken() != null)
+                    imm.hideSoftInputFromWindow(((EditText) findViewById(R.id.spam_edit_txt)).getWindowToken(), 0);
 
             }
 
@@ -124,7 +124,8 @@ public class ViewSpamorAbuse extends Activity implements View.OnClickListener {
             case R.id.spam_radio_nine:
 
                 InputMethodManager inputMethodManager1 = (InputMethodManager) this.getSystemService(Activity.INPUT_METHOD_SERVICE);
-                inputMethodManager1.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
+                if(this.getCurrentFocus().getWindowToken() != null)
+                    inputMethodManager1.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
 
                 break;// akshit code ends
 

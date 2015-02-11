@@ -197,7 +197,8 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
             @Override
             public void onClick(View view) {
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
+                if(edt_search.getWindowToken() != null)
+                    imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
             }
         });
 

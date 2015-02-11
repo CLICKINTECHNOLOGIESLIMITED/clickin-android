@@ -80,6 +80,8 @@ public class ProfileManager {
             userInputDetails.put("profile_image_change", profile_image_change);
             // userInputDetails.put("fb_access_token", "jh");
 
+            ModelManager.getInstance().getAuthorizationManager().getMixpanelAPI().registerSuperProperties(userInputDetails);
+
             client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,
@@ -128,6 +130,7 @@ public class ProfileManager {
                                 // authManager.setUserPic(response.getString("user_pic"));
 
                                 EventBus.getDefault().post("UpdateProfile True");
+
                             }
 
                         } catch (JSONException e) {

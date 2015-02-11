@@ -807,8 +807,10 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 mChatId = authManager.getQBId() + authManager.partnerQbId + sentOntime1;  // put value in mChatId once button is pressed
 
                 //akshit code to hide keyboard
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(chatText.getWindowToken(), 0);
+                if(chatText.getWindowToken() != null) {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(chatText.getWindowToken(), 0);
+                }
                 //endp
                 Intent intent = new Intent(ChatRecordView.this, CardView.class);
                 intent.putExtra("qBId", authManager.partnerQbId);
@@ -2053,11 +2055,11 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 @Override
                 public void onClick(View arg0) {
 
-
-                    InputMethodManager imm = (InputMethodManager) getSystemService(
-                            INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(chatText.getWindowToken(), 0);
-
+                    if(chatText.getWindowToken() != null) {
+                        InputMethodManager imm = (InputMethodManager) getSystemService(
+                                INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(chatText.getWindowToken(), 0);
+                    }
 
                 }
 

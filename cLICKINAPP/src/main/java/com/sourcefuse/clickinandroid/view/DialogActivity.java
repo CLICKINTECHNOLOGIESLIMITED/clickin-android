@@ -71,12 +71,11 @@ public class DialogActivity extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
         Log.e("in onactivity result", "in onactivity result");
 
-        try {
+
             InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            if(getCurrentFocus().getWindowToken() != null)
+                inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+
         Intent intent = new Intent(DialogActivity.this, SplashView.class);
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
