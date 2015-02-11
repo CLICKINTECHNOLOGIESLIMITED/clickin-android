@@ -131,7 +131,7 @@ public class FollowingAdapter extends ArrayAdapter<FollowerFollowingBean> {
 /*  conditoin to change follow into requested */
                     TextView button = (TextView) layout.getChildAt(2);
                     button.setBackgroundResource(R.drawable.requested_btn);
-                    rholder.reqbtn.setBackgroundResource(R.drawable.requested_btn);
+//                    rholder.reqbtn.setBackgroundResource(R.drawable.requested_btn);//removed by akshit
                     relationManager.followUser(item.get(position).getPhoneNo(), authManager.getPhoneNo(), authManager.getUsrToken());
                     item.get(position).setIsFollowing("false");
                     //FollowerList.adapter.notifyDataSetChanged();

@@ -306,6 +306,14 @@
                     android:src="@drawable/audio_play"
                     android:visibility="gone" />
 
+                <!--<View-->
+                    <!--android:id="@+id/margin"-->
+                    <!--android:layout_width="206dp"-->
+                    <!--android:layout_height="1dp"-->
+                    <!--android:layout_below="@+id/iv_play_btn_"-->
+                    <!--android:background="@drawable/chat_divider"-->
+                    <!--android:visibility="gone"-->
+                    <!--android:paddingTop="2dp"/>-->
 
                 <ProgressBar
                     android:id="@+id/progress_bar"
