@@ -7,11 +7,12 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.PowerManager;
+import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -19,6 +20,7 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
+import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.ReloadApp;
 import com.sourcefuse.clickinapp.R;
@@ -27,24 +29,30 @@ import java.util.List;
 
 import de.greenrobot.event.EventBus;
 
+import android.os.Handler;
 
 public class GcmIntentService extends IntentService {
     public static int NOTIFICATION_ID = 1;
     RelationManager mRelationManager;
     private NotificationManager mNotificationManager;
-
     Handler handler;
+
     public GcmIntentService() {
         super("GcmIntentService");
-        handler=new Handler(){
-            public void handleMessage(android.os.Message msg){
-                switch(msg.what){
+        handler = new Handler() {
+            public void handleMessage(android.os.Message msg) {
+                switch (msg.what) {
                     case 1:
-                        if(!Utils.isEmptyString(ModelManager.getInstance().getAuthorizationManager().getUsrToken()))
-                        ModelManager.getInstance().getRelationManager().getRelationShips(
-                                ModelManager.getInstance().getAuthorizationManager().getPhoneNo(),
-                                ModelManager.getInstance().getAuthorizationManager().getUsrToken());
+                        if (!Utils.isEmptyString(ModelManager.getInstance().getAuthorizationManager().getUsrToken()))
+                            ModelManager.getInstance().getRelationManager().getRelationShips(
+                                    ModelManager.getInstance().getAuthorizationManager().getPhoneNo(),
+                                    ModelManager.getInstance().getAuthorizationManager().getUsrToken());
                         break;
+                    case 2:
+                        if (!Utils.isEmptyString(ModelManager.getInstance().getAuthorizationManager().getUsrToken()))
+                            ModelManager.getInstance().getNotificationManagerManager().getNotification(getApplicationContext(),
+                                    "", ModelManager.getInstance().getAuthorizationManager().getPhoneNo(),
+                                    ModelManager.getInstance().getAuthorizationManager().getUsrToken());
 
                 }
             }
@@ -55,7 +63,7 @@ public class GcmIntentService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         Bundle extras = intent.getExtras();
-
+       // EventBus.getDefault().post("update Counter");
         mRelationManager = ModelManager.getInstance().getRelationManager();
 
         GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
@@ -218,10 +226,14 @@ public class GcmIntentService extends IntentService {
         boolean isScreenOn = pm.isScreenOn();  // check screen state to show notification
 
 
-        if (!isAppOnForeground(getApplicationContext()) || !isScreenOn)
+        if (!isAppOnForeground(getApplicationContext()) || !isScreenOn) {
             mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+            android.os.Message msg1 = new android.os.Message();
+            msg1.what = 1;
+            handler.sendMessage(msg1);
+        }
         android.os.Message msg1 = new android.os.Message();
-        msg1.what=1;
+        msg1.what = 2;
         handler.sendMessage(msg1);
 
     }

@@ -3,6 +3,7 @@ package com.sourcefuse.clickinandroid.view;
 
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.app.NotificationManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +11,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -39,8 +41,10 @@ import com.sourcefuse.clickinandroid.model.ClickInNotificationManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.NewsFeedManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
+import com.sourcefuse.clickinandroid.model.bean.NotificationBean;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.Constants;
+import com.sourcefuse.clickinandroid.utils.UnCaughtExceptionHandler;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.adapter.ClickInWithAdapter;
 import com.sourcefuse.clickinandroid.view.adapter.NotificationAdapter;
@@ -72,7 +76,6 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
     private ImageView userPic, hideSearchlist;
     private AuthManager authManager;
     private RelationManager relationManager;
-    private ClickInNotificationManager notificationMngr;
     private TextView searchInviteView;
     private LinearLayout theFeed, inviteF, findFriend, setting;
     private String quickBlockId, partnerPic, partnerName, partnerId, myClicks, userClicks, partnerPh;
@@ -90,6 +93,8 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         authManager = ModelManager.getInstance().getAuthorizationManager();
+        //code- to handle uncaught exception
+        Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(ClickInBaseView.this));
     }
 
     @Override
@@ -127,6 +132,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
     private void switchView(String rid, int relationListIndex) {
 
         relationManager = ModelManager.getInstance().getRelationManager();
+        /*Intent intent = new Intent();*/
         Intent intent = new Intent(ClickInBaseView.this, ChatRecordView.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         intent.setAction("UPDATE");
@@ -246,22 +252,29 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
             @Override
             public void onOpened() {
 
-                if (slidemenu.isMenuShowing()) {
 
-
-                }
                 if (slidemenu.isSecondaryMenuShowing()) {
-                    if (authManager != null) {
-                        authManager.setNotificationCounter(0);
-                        EventBus.getDefault().postSticky("update Counter");
-                        notificationMngr = ModelManager.getInstance().getNotificationManagerManager();
-                        if (notificationMngr.notificationData.size() == 0) {
-                            Utils.launchBarDialog(ClickInBaseView.this);
-                            mLastchatID = "";
-                            notificationMngr.getNotification(getApplicationContext(), "", authManager.getPhoneNo(), authManager.getUsrToken());
-                        }
+                    setNotificationList();
 
+                    ModelManager.getInstance().getAuthorizationManager().setNotificationCounter(0);
+                    if (ModelManager.getInstance().getNotificationManagerManager().notificationData.size() == 0) {
+                        Utils.launchBarDialog(ClickInBaseView.this);
+                        mLastchatID = "";
+                        ModelManager.getInstance().getNotificationManagerManager().getNotification(getApplicationContext(), "", ModelManager.getInstance().getAuthorizationManager().getPhoneNo(),
+                                ModelManager.getInstance().getAuthorizationManager().getUsrToken());
                     }
+
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() { // put delay of 500 millisecond so that adapter get set first.
+                        @Override
+                        public void run() {
+
+                            for (NotificationBean bean : ModelManager.getInstance().getNotificationManagerManager().notificationData)
+                                bean.setIs_read("true");
+
+                        }
+                    }, 500);
+
 
                 }
 
@@ -273,7 +286,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         slidemenu.setSecondaryMenu(R.layout.view_notification);
         //slidemenu.setSecondaryShadowDrawable(R.drawable.shadow);
         rightMenuElements();
-        setNotificationList();
+
 
         slidemenu.setOnClosedListener(new SlidingMenu.OnClosedListener() {
             @Override
@@ -628,7 +641,6 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
     public void rightMenuElements() {
 
         authManager = ModelManager.getInstance().getAuthorizationManager();
-        notificationMngr = ModelManager.getInstance().getNotificationManagerManager();
 
 
         backArrowRightSide = (ImageView) slidemenu.findViewById(R.id.iv_back_right);
@@ -647,14 +659,13 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 
     public void setNotificationList() { //akshit code ,Implementation of Pull to refresh library.
 
-        notificationMngr = ModelManager.getInstance().getNotificationManagerManager();
-        notificationAdapter = new NotificationAdapter(ClickInBaseView.this, R.layout.row_notification, notificationMngr.notificationData);
+        notificationAdapter = new NotificationAdapter(ClickInBaseView.this, R.layout.row_notification, ModelManager.getInstance().getNotificationManagerManager().notificationData);
         notificationList = (PullToRefreshListView) slidemenu.findViewById(R.id.list_click_notification);
         notificationList.setMode(PullToRefreshBase.Mode.BOTH);
         notificationList.setAdapter(notificationAdapter);
 
         if (!Utils.isEmptyString(mLastchatID)) {
-            notificationList.getRefreshableView().setSelection(notificationMngr.notificationData.size());
+            notificationList.getRefreshableView().setSelection(ModelManager.getInstance().getNotificationManagerManager().notificationData.size());
         }
 
         notificationList.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
@@ -662,18 +673,16 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
             public void onPullDownToRefresh(PullToRefreshBase<ListView> listViewPullToRefreshBase) {
 //                mFirstid = notificationMngr.notificationData.get(0)._id;
                 mLastchatID = "";
-                notificationMngr = ModelManager.getInstance().getNotificationManagerManager();
-                notificationMngr.getNotification(getApplicationContext(), "", authManager.getPhoneNo(), authManager.getUsrToken());
+                ModelManager.getInstance().getNotificationManagerManager().getNotification(getApplicationContext(), "", authManager.getPhoneNo(), authManager.getUsrToken());
 
             }
 
 
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> listViewPullToRefreshBase) {
-                String mLastId = notificationMngr.notificationData.get(notificationMngr.notificationData.size() - 1)._id;
+                String mLastId = ModelManager.getInstance().getNotificationManagerManager().notificationData.get(ModelManager.getInstance().getNotificationManagerManager().notificationData.size() - 1)._id;
                 mLastchatID = mLastId;
-                notificationMngr = ModelManager.getInstance().getNotificationManagerManager();
-                notificationMngr.getNotification(getApplicationContext(), mLastId, authManager.getPhoneNo(), authManager.getUsrToken());
+                ModelManager.getInstance().getNotificationManagerManager().getNotification(getApplicationContext(), mLastId, authManager.getPhoneNo(), authManager.getUsrToken());
             }
 
 
@@ -742,7 +751,6 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         authManager = ModelManager.getInstance().getAuthorizationManager();
         relationManager = ModelManager.getInstance().getRelationManager();
         setLeftMenuList();
-        notificationMngr = ModelManager.getInstance().getNotificationManagerManager();
 
 
     }
@@ -883,13 +891,11 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         } else if (message.equalsIgnoreCase("update Counter")) { // prafull code for notification update andrid
             TextView mNotificationText = (TextView) findViewById(R.id.iv_open_right_menu);
 
-            if (authManager == null)
-                authManager = ModelManager.getInstance().getAuthorizationManager();
 
-            if (authManager.getNotificationCounter() > 0) {
+            if (ModelManager.getInstance().getAuthorizationManager().getNotificationCounter() > 0) {
 
                 String mValue = "";
-                int mNotificationValue = authManager.getNotificationCounter();
+                int mNotificationValue = ModelManager.getInstance().getAuthorizationManager().getNotificationCounter();
 
                 if (mNotificationValue > 99) {
                     mValue = "99+";
@@ -897,13 +903,19 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
                     mValue = String.valueOf(mNotificationValue);
                 }
 
-                if (!mNotificationText.getText().toString().equalsIgnoreCase("" + mNotificationValue))
-                    Utils.playSound(ClickInBaseView.this, R.raw.notification_inapp);
 
                 if (!slidemenu.isSecondaryMenuShowing()) {//akshit code to hit notification ,on opening secondary menu
                     mNotificationText.setText("" + mValue);
                     mNotificationText.setTextColor(Color.parseColor("#39cad4"));
-
+                    ModelManager.getInstance().getNotificationManagerManager().getNotification(this, "",
+                            ModelManager.getInstance().getAuthorizationManager().getPhoneNo(),
+                            ModelManager.getInstance().getAuthorizationManager().getUsrToken());
+                    if (!mNotificationText.getText().toString().equalsIgnoreCase("" + mNotificationValue))
+                        Utils.playSound(ClickInBaseView.this, R.raw.notification_inapp);
+                } else {
+                    ModelManager.getInstance().getAuthorizationManager().setNotificationCounter(0);
+                    mNotificationText.setText("0");
+                    mNotificationText.setTextColor(Color.parseColor("#000000"));
                 }
 
 
@@ -915,14 +927,10 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 
             }
 
-            if (notificationMngr == null)
-                notificationMngr = ModelManager.getInstance().getNotificationManagerManager();
-
 
         } else if (message.equalsIgnoreCase("updatephoto")) {
-            if (authManager == null)
-                authManager = ModelManager.getInstance().getAuthorizationManager();
-            authManager.getProfileInfo("", authManager.getPhoneNo(), authManager.getUsrToken());
+
+            ModelManager.getInstance().getAuthorizationManager().getProfileInfo("", authManager.getPhoneNo(), authManager.getUsrToken());
         }
 
     }
@@ -998,12 +1006,16 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 
         super.onBackPressed();
 
-        if(getCurrentFocus().getWindowToken()!=null) {
+        try {
             InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-
             inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
+
+
     }
+
 
 }

@@ -231,7 +231,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     RelativeLayout mRelative = (RelativeLayout) row.findViewById(R.id.temp_layout);
                     mRelative.setBackgroundResource(R.color.transparent);
                 }
-                //code to set msg deilvery notificatio
+                //code to set msg deilvery notification
                 if (!(Utils.isEmptyString(temp.isDelivered)) && temp.isDelivered.equalsIgnoreCase(Constants.MSG_SENDING)) {
                     ((ProgressBar) row.findViewById(R.id.pb_loding)).setVisibility(View.VISIBLE);
                     ((ImageView) row.findViewById(R.id.iv_type_two_share_icon_r)).setVisibility(View.GONE);

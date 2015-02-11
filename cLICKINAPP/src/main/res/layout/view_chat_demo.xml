@@ -286,7 +286,7 @@
                 android:background="@color/background_grey"
                 android:gravity="center_vertical"
                 android:padding="5dp"
-                android:visibility="gone">
+                android:visibility="visible">
 
 
                 <ImageView
@@ -297,7 +297,7 @@
                     android:layout_marginLeft="100dp"
                     android:adjustViewBounds="true"
                     android:src="@drawable/soundicon_"
-                    android:visibility="gone" />
+                    android:visibility="visible" />
 
                 <ImageView
                     android:id="@+id/iv_play_btn"
@@ -307,8 +307,16 @@
                     android:layout_marginLeft="20dp"
                     android:adjustViewBounds="true"
                     android:src="@drawable/audio_play"
-                    android:visibility="gone" />
+                    android:visibility="visible" />
 
+                 <!--<View-->
+                     <!--android:id="@+id/margin"-->
+                     <!--android:layout_width="206dp"-->
+                     <!--android:layout_height="1dp"-->
+                     <!--android:layout_below="@+id/iv_play_btn_"-->
+                     <!--android:background="@drawable/chat_divider"-->
+                     <!--android:visibility="gone"-->
+                     <!--android:paddingTop="2dp"/>-->
 
                 <ProgressBar
                     android:id="@+id/progress_bar"

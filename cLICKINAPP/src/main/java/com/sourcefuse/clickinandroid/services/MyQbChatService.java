@@ -192,7 +192,12 @@ public class MyQbChatService extends Service {
                 }
                 data.putString("sharingMedia", msgObject.sharingMedia);
                 data.putString("originalChatId", msgObject.originalMessageID);
-                data.putString("caption", msgObject.shareComment);
+                if(Utils.isEmptyString(msgObject.shareComment)){
+                  //  msgObject.shareComment = "Write your caption here...";
+                    data.putString("caption","Write your caption here...");
+                }else {
+                    data.putString("caption", msgObject.shareComment);
+                }
                 data.putString("isMessageSender", msgObject.isMessageSender);
                 data.putString("shareStatus", msgObject.shareStatus);
                 data.putString("messageSenderID", msgObject.messageSenderId);
