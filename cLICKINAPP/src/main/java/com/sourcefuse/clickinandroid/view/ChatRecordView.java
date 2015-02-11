@@ -277,6 +277,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_chat_layout);
 
+        Intent i = new Intent(this, MyQbChatService.class);
+        bindService(i, mConnection, Context.BIND_AUTO_CREATE);
         rId = getIntent().getExtras().getString("rId");
         //clear the message list always to initiate a new chat
         ModelManager.getInstance().getChatManager().chatMessageList.clear();
@@ -1046,8 +1048,10 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
         if (actionReq.equalsIgnoreCase("UPDATE")) {
             //  Utils.launchBarDialog(this);
-            Intent i = new Intent(this, MyQbChatService.class);
-            bindService(i, mConnection, Context.BIND_AUTO_CREATE);
+            if(myQbChatService==null) {
+                Intent i = new Intent(this, MyQbChatService.class);
+                bindService(i, mConnection, Context.BIND_AUTO_CREATE);
+            }
 
             updateValues(intent);
         } else if (actionReq.equalsIgnoreCase("CARD")) {
@@ -1284,9 +1288,9 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         }
         EventBus.getDefault().register(this);
 
-        Intent i = new Intent(this, MyQbChatService.class);
-        bindService(i, mConnection, Context.BIND_AUTO_CREATE);
+
         myHandler = new Handler();
+
         myHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -1311,11 +1315,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this);
         }
-        if (mIsBound) {
-            // Detach our existing connection.
-            unbindService(mConnection);
-            mIsBound = false;
-        }
+
     }
 
     /*   public String getRealPathFromURI(Uri uri) {
