@@ -79,18 +79,7 @@ public class AuthManager {
     /* for notification counter */
     private int mNotificationCounter;
 
-    public MixpanelAPI getMixpanelAPI() {
-        return mixpanelAPI;
-    }
 
-    public void setMixpanelAPI(Context context) {
-
-        this.mixpanelAPI = MixpanelAPI.getInstance(context, Constants.MIX_PANEL_TOKEN);
-        this.mixpanelAPI.identify("131313");
-        this.mixpanelAPI.timeEvent("Edit");
-    }
-
-    private MixpanelAPI mixpanelAPI;
 
     public String getLatLan() {
         return mLatLan;
@@ -613,7 +602,6 @@ public class AuthManager {
 
         }
 
-        Log.e("userdetails-------->", "" + userInputDetails);
 
 
         client.post(null, APIs.SIGNIN, se, "application/json",
@@ -635,7 +623,6 @@ public class AuthManager {
                             EventBus.getDefault().postSticky("SignIn Network Error");
                         }
 
-                        Log.e("on failure----------","on failure----------");
                     }
 
                     @Override
@@ -673,11 +660,9 @@ public class AuthManager {
                                 }
 
                             }
-                            Log.e("on success----------","on success----------");
                             EventBus.getDefault().postSticky("SignIn True");
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Log.e("on printStackTrace----------","on printStackTrace----------");
                         }
 
                     }

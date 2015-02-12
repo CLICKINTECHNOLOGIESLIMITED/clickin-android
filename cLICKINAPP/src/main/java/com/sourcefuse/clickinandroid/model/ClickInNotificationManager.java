@@ -132,7 +132,6 @@ public class ClickInNotificationManager implements NotificationManagerI {
                                 }
 
 
-                                Log.e("notificationData size---", "" + notificationData.size());
 
                                 EventBus.getDefault().postSticky("Notification true");
                                 EventBus.getDefault().post("update Counter");

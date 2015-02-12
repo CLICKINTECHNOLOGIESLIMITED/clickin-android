@@ -28,7 +28,7 @@ import android.os.AsyncTask;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.telephony.TelephonyManager;
-import android.util.Base64;
+import android.util.*;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -70,8 +70,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.TimeZone;
 
-public class
-        Utils {
+public class Utils {
 
     public static boolean DEBUG = true;
 
@@ -94,9 +93,6 @@ public class
     private static Uri mImageCaptureUri;
     private static MediaPlayer mplayer;
     public AuthManager authManager;
-
-
-
 
     public static void launchBarDialog(Activity activity) {
 
@@ -1047,12 +1043,12 @@ public class
 
         int tempPartnerClicks = Integer.parseInt(tempPartnerClicksString);
         android.util.Log.e("Calculation of clicks In 0 ", "tempPartnerClicks" + tempPartnerClicks);
-        int tempClicks ;
-        if(clicks.startsWith("+")){
+        int tempClicks;
+        if (clicks.startsWith("+")) {
             tempClicks = convertToIntClicks(clicks.substring(1));
             tempPartnerClicks = tempPartnerClicks + tempClicks;
-         }else {
-            tempClicks = Integer.parseInt(clicks.toString()) ;
+        } else {
+            tempClicks = Integer.parseInt(clicks.toString());
             tempPartnerClicks = tempPartnerClicks + tempClicks;
 
         }
@@ -1462,7 +1458,8 @@ public class
         return dp;
     }
 
-    public static void trackMixpanel(Context context, String mEvent, String mValue) {
+
+    public void trackMixpanel(Context context, String mEvent, String mValue) {
 
         MixpanelAPI mixpanelAPI = MixpanelAPI.getInstance(context, Constants.MIX_PANEL_TOKEN);
         mixpanelAPI.identify("" + ModelManager.getInstance().getAuthorizationManager().getPhoneNo());
@@ -1476,5 +1473,7 @@ public class
         mixpanelAPI.flush();
 
     }
+
+
 }
 

@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -176,7 +175,6 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
             }
 
         }
-        Log.e("FromSignup ---- isChangeInList ----- updatephoto", "" + FromSignup + "" + isChangeInList + "" + updatephoto);
 
 
         if (FromSignup) {
@@ -499,7 +497,6 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         }
         if (intent.getExtras() != null && intent.getExtras().containsKey("isChangeInList")) {
 
-            Log.e("on new Intent-------->isChangeInList", "on new Intent-------->isChangeInList");
 
             if (intent.getExtras().getBoolean("isChangeInList")) {
                 if (slidemenu.isMenuShowing())
@@ -509,7 +506,6 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
                 relationManager.getRelationShips(authManager.getPhoneNo(), authManager.getUsrToken());
             }
         } else if (intent.getExtras() != null && intent.getExtras().containsKey("updatephoto")) {
-            Log.e("on new Intent-------->updatephoto", "on new Intent-------->updatephoto");
 
             if (slidemenu.isMenuShowing())
                 slidemenu.showContent();
