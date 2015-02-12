@@ -132,10 +132,11 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
             @Override
             public void onClick(View arg0) {
 
-                InputMethodManager imm = (InputMethodManager) getSystemService(
-                        INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(cntry_cd.getWindowToken(), 0);
-                imm.hideSoftInputFromWindow(phoneNo.getWindowToken(), 0);
+                InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                if(cntry_cd.getWindowToken() != null)
+                    imm.hideSoftInputFromWindow(cntry_cd.getWindowToken(), 0);
+                if(phoneNo.getWindowToken() != null)
+                    imm.hideSoftInputFromWindow(phoneNo.getWindowToken(), 0);
 
             }
 

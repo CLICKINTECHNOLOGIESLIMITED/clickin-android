@@ -78,7 +78,8 @@ public class FeedCommentsView extends Activity {
             @Override
             public void onClick(View v) {
                 finish();
-                imm.hideSoftInputFromWindow(comment.getWindowToken(), 0);
+                if(comment.getWindowToken() != null)
+                    imm.hideSoftInputFromWindow(comment.getWindowToken(), 0);
                 if (send) {
                     Constants.comments = true;
                     newsFeedManager.fetchNewsFeed("", ModelManager.getInstance().getAuthorizationManager().getPhoneNo(), ModelManager.getInstance().getAuthorizationManager().getUsrToken());
@@ -108,8 +109,8 @@ public class FeedCommentsView extends Activity {
                         list.setSelection(list.getCount());
                     }
 
-
-                    imm.hideSoftInputFromWindow(comment.getWindowToken(), 0);
+                    if(comment.getWindowToken() != null)
+                        imm.hideSoftInputFromWindow(comment.getWindowToken(), 0);
 
                     newsFeedManager.saveStarComment(authMgr.getPhoneNo(), authMgr.getUsrToken(), news_feedId, comment.getText().toString(), "comment");
                     comment.setText("");

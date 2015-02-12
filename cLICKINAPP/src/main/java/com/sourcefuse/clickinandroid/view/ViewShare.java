@@ -95,10 +95,11 @@ public class ViewShare extends Activity implements View.OnClickListener {
             @Override
             public void onClick(View arg0) {
 
-                InputMethodManager imm = (InputMethodManager) getSystemService(
-                        INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(shr_caption.getWindowToken(), 0);
-                imm.hideSoftInputFromWindow(shr_caption_trade.getWindowToken(), 0);
+                InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                if(shr_caption.getWindowToken() != null)
+                    imm.hideSoftInputFromWindow(shr_caption.getWindowToken(), 0);
+                if(shr_caption.getWindowToken() != null)
+                    imm.hideSoftInputFromWindow(shr_caption_trade.getWindowToken(), 0);
 
             }
 
@@ -396,8 +397,10 @@ public class ViewShare extends Activity implements View.OnClickListener {
             case R.id.linear_layout_share:
 
                 InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(shr_caption.getWindowToken(), 0);
-                imm.hideSoftInputFromWindow(shr_caption_trade.getWindowToken(), 0);
+                if(shr_caption.getWindowToken() != null)
+                    imm.hideSoftInputFromWindow(shr_caption.getWindowToken(), 0);
+                if(shr_caption_trade.getWindowToken() != null)
+                    imm.hideSoftInputFromWindow(shr_caption_trade.getWindowToken(), 0);
 
 
                 break;

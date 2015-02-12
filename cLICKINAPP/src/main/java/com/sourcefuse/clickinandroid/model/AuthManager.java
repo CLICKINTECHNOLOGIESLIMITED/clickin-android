@@ -1,13 +1,16 @@
 package com.sourcefuse.clickinandroid.model;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.util.Log;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.mixpanel.android.mpmetrics.MixpanelAPI;
 import com.quickblox.module.chat.QBPrivateChat;
 import com.sourcefuse.clickinandroid.utils.APIs;
+import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.Utils;
 
 import org.apache.http.entity.StringEntity;
@@ -75,6 +78,8 @@ public class AuthManager {
     private String mLatLan;
     /* for notification counter */
     private int mNotificationCounter;
+
+
 
     public String getLatLan() {
         return mLatLan;
@@ -597,7 +602,6 @@ public class AuthManager {
 
         }
 
-        Log.e("userdetails-------->", "" + userInputDetails);
 
 
         client.post(null, APIs.SIGNIN, se, "application/json",
@@ -619,7 +623,6 @@ public class AuthManager {
                             EventBus.getDefault().postSticky("SignIn Network Error");
                         }
 
-                        Log.e("on failure----------","on failure----------");
                     }
 
                     @Override
@@ -657,11 +660,9 @@ public class AuthManager {
                                 }
 
                             }
-                            Log.e("on success----------","on success----------");
                             EventBus.getDefault().postSticky("SignIn True");
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Log.e("on printStackTrace----------","on printStackTrace----------");
                         }
 
                     }

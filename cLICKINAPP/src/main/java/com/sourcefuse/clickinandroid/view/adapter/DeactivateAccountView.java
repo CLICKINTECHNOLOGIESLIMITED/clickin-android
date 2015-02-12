@@ -91,8 +91,10 @@ public class DeactivateAccountView extends Activity implements View.OnClickListe
 
                 InputMethodManager imm = (InputMethodManager) getSystemService(
                         INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(((EditText) findViewById(R.id.general_problem_text)).getWindowToken(), 0);
-                imm.hideSoftInputFromWindow(((EditText) findViewById(R.id.old_password)).getWindowToken(), 0);
+                if(((EditText) findViewById(R.id.general_problem_text)).getWindowToken() != null)
+                    imm.hideSoftInputFromWindow(((EditText) findViewById(R.id.general_problem_text)).getWindowToken(), 0);
+                if(((EditText) findViewById(R.id.old_password)).getWindowToken() != null)
+                    imm.hideSoftInputFromWindow(((EditText) findViewById(R.id.old_password)).getWindowToken(), 0);
 
             }
 
@@ -133,7 +135,8 @@ public class DeactivateAccountView extends Activity implements View.OnClickListe
             case R.id.deactivate_radio_msg_six:
             case R.id.deactivate_radio_msg_seven:
                 InputMethodManager inputMethodManager1 = (InputMethodManager) this.getSystemService(Activity.INPUT_METHOD_SERVICE);
-                inputMethodManager1.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
+                if(this.getCurrentFocus().getWindowToken() != null)
+                    inputMethodManager1.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
 
                 break;//ends
             case R.id.iv_back_noti:
@@ -180,15 +183,9 @@ public class DeactivateAccountView extends Activity implements View.OnClickListe
                 break;
             case R.id.mail_radio_button_layout:
                 InputMethodManager inputMethodManager2 = (InputMethodManager) this.getSystemService(Activity.INPUT_METHOD_SERVICE);
-                inputMethodManager2.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
-                /*RadioButton mail_radio_button = (RadioButton) findViewById(R.id.mail_radio_button);
-                if (mail_radio_button.isChecked()) {
-                    mail_radio_button.setChecked(false);
-                    mail_radio_button.setPressed(false);
-                } else if (!mail_radio_button.isChecked()) {
-                    mail_radio_button.setChecked(true);
-                    mail_radio_button.setPressed(true);
-                }*/
+                if(this.getCurrentFocus().getWindowToken() != null)
+                    inputMethodManager2.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
+
 
                 if (email_opt_out_b) {
                     ((ImageView) findViewById(R.id.mail_radio_button)).setImageDrawable(getResources().getDrawable(R.drawable.inactive_circle));

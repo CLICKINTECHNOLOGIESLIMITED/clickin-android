@@ -260,13 +260,20 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
             public void onClick(View arg0) {
 
                 InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(fname.getWindowToken(), 0);
-                imm.hideSoftInputFromWindow(lname.getWindowToken(), 0);
-                imm.hideSoftInputFromWindow(city.getWindowToken(), 0);
-                imm.hideSoftInputFromWindow(country.getWindowToken(), 0);
-                imm.hideSoftInputFromWindow(email.getWindowToken(), 0);
-                imm.hideSoftInputFromWindow(guy.getWindowToken(), 0);
-                imm.hideSoftInputFromWindow(girl.getWindowToken(), 0);
+                if(fname.getWindowToken() != null)
+                    imm.hideSoftInputFromWindow(fname.getWindowToken(), 0);
+                if(lname.getWindowToken() != null)
+                    imm.hideSoftInputFromWindow(lname.getWindowToken(), 0);
+                if(city.getWindowToken() != null)
+                    imm.hideSoftInputFromWindow(city.getWindowToken(), 0);
+                if(country.getWindowToken() != null)
+                    imm.hideSoftInputFromWindow(country.getWindowToken(), 0);
+                if(email.getWindowToken() != null)
+                    imm.hideSoftInputFromWindow(email.getWindowToken(), 0);
+                if(guy.getWindowToken() != null)
+                    imm.hideSoftInputFromWindow(guy.getWindowToken(), 0);
+                if(girl.getWindowToken() != null)
+                    imm.hideSoftInputFromWindow(girl.getWindowToken(), 0);
 
             }
 

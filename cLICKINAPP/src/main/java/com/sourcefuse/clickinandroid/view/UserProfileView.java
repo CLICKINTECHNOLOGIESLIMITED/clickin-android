@@ -176,7 +176,6 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
             }
 
         }
-        Log.e("FromSignup ---- isChangeInList ----- updatephoto", "" + FromSignup + "" + isChangeInList + "" + updatephoto);
 
 
         if (FromSignup) {
@@ -197,7 +196,8 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
             @Override
             public void onClick(View view) {
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
+                if(edt_search.getWindowToken() != null)
+                    imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
             }
         });
 //start service first, so that it will not get destroyed when unbind.
@@ -497,7 +497,6 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         }
         if (intent.getExtras() != null && intent.getExtras().containsKey("isChangeInList")) {
 
-            Log.e("on new Intent-------->isChangeInList", "on new Intent-------->isChangeInList");
 
             if (intent.getExtras().getBoolean("isChangeInList")) {
                 if (slidemenu.isMenuShowing())
@@ -507,7 +506,6 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
                 relationManager.getRelationShips(authManager.getPhoneNo(), authManager.getUsrToken());
             }
         } else if (intent.getExtras() != null && intent.getExtras().containsKey("updatephoto")) {
-            Log.e("on new Intent-------->updatephoto", "on new Intent-------->updatephoto");
 
             if (slidemenu.isMenuShowing())
                 slidemenu.showContent();

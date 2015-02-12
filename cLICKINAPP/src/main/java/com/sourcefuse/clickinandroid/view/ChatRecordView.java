@@ -809,8 +809,10 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 mChatId = authManager.getQBId() + authManager.partnerQbId + sentOntime1;  // put value in mChatId once button is pressed
 
                 //akshit code to hide keyboard
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(chatText.getWindowToken(), 0);
+                if (chatText.getWindowToken() != null) {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(chatText.getWindowToken(), 0);
+                }
                 //endp
                 Intent intent = new Intent(ChatRecordView.this, CardView.class);
                 intent.putExtra("qBId", authManager.partnerQbId);
@@ -867,7 +869,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             //calculate and updates clicks value only when card is not present ,also when sharing media is null-monika
             if (Utils.isEmptyString(obj.card_id) && Utils.isEmptyString(obj.sharingMedia)) {
                 if (obj.clicks.startsWith("+")) {
-                    Utils.updateClicksPartnerWithoutCard(relationManager.partnerClicks, obj.clicks,true);
+                    Utils.updateClicksPartnerWithoutCard(relationManager.partnerClicks, obj.clicks, true);
                 } else if (obj.clicks.startsWith("-")) {
                     Utils.updateClicksPartnerWithoutCard(relationManager.partnerClicks, obj.clicks, false);
                 }
@@ -1052,7 +1054,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
         if (actionReq.equalsIgnoreCase("UPDATE")) {
             //  Utils.launchBarDialog(this);
-            if(myQbChatService==null) {
+            if (myQbChatService == null) {
                 Intent i = new Intent(this, MyQbChatService.class);
                 bindService(i, mConnection, Context.BIND_AUTO_CREATE);
             }
@@ -1399,7 +1401,6 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
         } else if (message.equalsIgnoreCase("No chat history found")) {
 //               chat_history = "false" ;
-            Log.e("Error Response", "No Chat history");
 //                load_earlier.setVisibility(View.GONE);
 //                 chat_history_present="no";
 
@@ -2053,11 +2054,11 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 @Override
                 public void onClick(View arg0) {
 
-
-                    InputMethodManager imm = (InputMethodManager) getSystemService(
-                            INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(chatText.getWindowToken(), 0);
-
+                    if (chatText.getWindowToken() != null) {
+                        InputMethodManager imm = (InputMethodManager) getSystemService(
+                                INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(chatText.getWindowToken(), 0);
+                    }
 
                 }
 
@@ -2242,14 +2243,14 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
         @Override
         protected void onPostExecute(Bitmap result) {
-            String newpath = Utils.mAudioPath;
-            Random rn = new Random();
-            String path = newpath + "" + rn.nextInt();
-            String imagepath = writePhotoJpg(result, path);
-            CHAT_TYPE = Constants.CHAT_TYPE_LOCATION;
-
-
-            sendMsgToQB(imagepath);
+            if (result != null) {
+                String newpath = Utils.mAudioPath;
+                Random rn = new Random();
+                String path = newpath + "" + rn.nextInt();
+                String imagepath = writePhotoJpg(result, path);
+                CHAT_TYPE = Constants.CHAT_TYPE_LOCATION;
+                sendMsgToQB(imagepath);
+            }
             Utils.dismissBarDialog();
         }
     }

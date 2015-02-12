@@ -80,11 +80,9 @@ public class FeedsStarsAdapter extends ArrayAdapter<FeedStarsBean> {
                 if (eachNewsFeed.get(position).getIs_user_follower() == 1) {//1 means there is possibility of some relation-follower or following
                     if (eachNewsFeed.get(position).getIs_user_follower_acceptance() != null &&
                             eachNewsFeed.get(position).getIs_user_follower_acceptance().equalsIgnoreCase("true")) { // follow user if acceptance is true
-                        Log.e("user follow-------->", "" + eachNewsFeed.get(position).getUserName());
                         holder.reqbtn.setVisibility(View.VISIBLE);
                         holder.reqbtn.setBackgroundResource(R.drawable.c_owner_follow_btn);
                     } else if (eachNewsFeed.get(position).getIs_user_follower_acceptance() == null) {   // requested if user if acceptance is null
-                        Log.e("user requested-------->", "" + eachNewsFeed.get(position).getUserName());
                         holder.reqbtn.setVisibility(View.VISIBLE);
                         holder.reqbtn.setBackgroundResource(R.drawable.requested_btn);
                     }
@@ -93,10 +91,8 @@ public class FeedsStarsAdapter extends ArrayAdapter<FeedStarsBean> {
                     if (eachNewsFeed.get(position).getIs_user_following_acceptance() != null
                             && eachNewsFeed.get(position).getIs_user_following_acceptance().equalsIgnoreCase("true")) { // following if user if acceptance is null
                         holder.reqbtn.setVisibility(View.VISIBLE);
-                        Log.e("user following-------->", "" + eachNewsFeed.get(position).getUserName());
                         holder.reqbtn.setBackgroundResource(R.drawable.following_btn);
                     } else if (eachNewsFeed.get(position).getIs_user_following_acceptance() == null) { // requested if user if acceptance is null
-                        Log.e("user requested-------->", "" + eachNewsFeed.get(position).getUserName());
                         holder.reqbtn.setVisibility(View.VISIBLE);
                         holder.reqbtn.setBackgroundResource(R.drawable.requested_btn);
                     }

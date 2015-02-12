@@ -63,7 +63,7 @@ public class GcmIntentService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         Bundle extras = intent.getExtras();
-       // EventBus.getDefault().post("update Counter");
+        // EventBus.getDefault().post("update Counter");
         mRelationManager = ModelManager.getInstance().getRelationManager();
 
         GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
@@ -140,6 +140,7 @@ public class GcmIntentService extends IntentService {
 
                         String mPartnerId = extras.getString("pid");
                         data.putExtra("pid", mPartnerId);
+                        data.putExtra("Tp", extras.getString("Tp"));
                         sendNotification("Clickin'", extras.getString("message"), data);
                     } else if (extras.getString("Tp").equalsIgnoreCase("shr")) //case for share
                     {
@@ -204,8 +205,9 @@ public class GcmIntentService extends IntentService {
         if (intent != null) {
             intent.setClass(getApplicationContext(), ReloadApp.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            int iUniqueId = (int) (System.currentTimeMillis() & 0xfffffff);
-            contentIntent = PendingIntent.getActivity(this, iUniqueId, intent, PendingIntent.FLAG_ONE_SHOT);
+            contentIntent = PendingIntent.getActivity(this,NOTIFICATION_ID, intent, PendingIntent.FLAG_ONE_SHOT);
+        }else {
+            Log.e("intent null","intent null");
         }
 
 

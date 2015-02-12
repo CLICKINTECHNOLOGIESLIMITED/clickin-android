@@ -46,7 +46,7 @@ public class DialogActivity extends Activity {
         findViewById(R.id.coolio_ok).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String[] TO = {"monika.bindal@sourcefuse.com"};
+                String[] TO = {"monika.bindal@sourcefuse.com","akshit.sharma@sourcefuse.com"};
                 String[] CC = {"prafull.singh@sourcefuse.com"};
                 Intent emailIntent = new Intent(Intent.ACTION_SEND);
                 emailIntent.setData(Uri.parse("mailto:"));
@@ -60,7 +60,6 @@ public class DialogActivity extends Activity {
 
                 } catch (android.content.ActivityNotFoundException ex) {
 
-                    Log.e("exception--->", "" + ex.toString());
                 }
             }
         });
@@ -69,14 +68,12 @@ public class DialogActivity extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.e("in onactivity result", "in onactivity result");
 
-        try {
-            InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
+           /* InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            if(getCurrentFocus().getWindowToken() != null)
+                inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);*/
+
         Intent intent = new Intent(DialogActivity.this, SplashView.class);
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
