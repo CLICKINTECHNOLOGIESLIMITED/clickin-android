@@ -83,7 +83,6 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-        ModelManager.getInstance().getAuthorizationManager().setMixpanelAPI(this);
         //code- to handle uncaught exception
         Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 

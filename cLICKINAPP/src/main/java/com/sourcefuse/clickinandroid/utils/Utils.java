@@ -39,6 +39,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.mixpanel.android.mpmetrics.MixpanelAPI;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
@@ -47,6 +48,9 @@ import com.sourcefuse.clickinandroid.model.bean.ChatMessageBody;
 import com.sourcefuse.clickinandroid.model.bean.ContactBean;
 import com.sourcefuse.clickinandroid.model.bean.GetrelationshipsBean;
 import com.sourcefuse.clickinapp.R;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
@@ -66,8 +70,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.TimeZone;
 
-public class
-        Utils {
+public class Utils {
 
     public static boolean DEBUG = true;
 
@@ -1040,12 +1043,12 @@ public class
 
         int tempPartnerClicks = Integer.parseInt(tempPartnerClicksString);
         android.util.Log.e("Calculation of clicks In 0 ", "tempPartnerClicks" + tempPartnerClicks);
-        int tempClicks ;
-        if(clicks.startsWith("+")){
+        int tempClicks;
+        if (clicks.startsWith("+")) {
             tempClicks = convertToIntClicks(clicks.substring(1));
             tempPartnerClicks = tempPartnerClicks + tempClicks;
-         }else {
-            tempClicks = Integer.parseInt(clicks.toString()) ;
+        } else {
+            tempClicks = Integer.parseInt(clicks.toString());
             tempPartnerClicks = tempPartnerClicks + tempClicks;
 
         }
@@ -1454,5 +1457,23 @@ public class
         int dp = (int) (pixel * scale + 0.5f);
         return dp;
     }
+
+
+    public void trackMixpanel(Context context, String mEvent, String mValue) {
+
+        MixpanelAPI mixpanelAPI = MixpanelAPI.getInstance(context, Constants.MIX_PANEL_TOKEN);
+        mixpanelAPI.identify("" + ModelManager.getInstance().getAuthorizationManager().getPhoneNo());
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put(mEvent, mValue);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        mixpanelAPI.track(mEvent, jsonObject);
+        mixpanelAPI.flush();
+
+    }
+
+
 }
 

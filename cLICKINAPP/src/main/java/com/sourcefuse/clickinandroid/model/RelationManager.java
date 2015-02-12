@@ -88,7 +88,6 @@ public class RelationManager {
                 } else {
                     EventBus.getDefault().post("GetRelationShips Network Error");
                 }
-                Log.e("on onFailure---->","on onFailure---->");
             }
 
             @Override
@@ -129,14 +128,12 @@ public class RelationManager {
                         getrelationshipsData.addAll(acceptedList);
                         //getrelationshipsData.addAll(initiatorList);
                         EventBus.getDefault().post("GetRelationShips True");
-                        Log.e("on success---->","on success---->");
                     } else {
                         getrelationshipsData.clear();
                         acceptedList.clear();
                         initiatorList.clear();
                         requestedList.clear();
                         EventBus.getDefault().post("GetRelationShips False");
-                        Log.e("on success---->","on success---->");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -690,7 +687,6 @@ public class RelationManager {
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
 
-            Log.e("user Imput Details----------->", "" + userInputDetails);
         } catch (Exception e1) {
         }
         client.post(null, APIs.FOLLOWUPDATESTATUS, se, "application/json",

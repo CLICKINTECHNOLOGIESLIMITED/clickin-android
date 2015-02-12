@@ -106,7 +106,6 @@ public class ChatManager {
                             if (errorResponse.has("message")) {
                                 try {
                                     if (errorResponse.getString("message").equalsIgnoreCase("No chat history found")) {
-                                        Log.e("Error Response", "No Chat history");
                                         EventBus.getDefault().post("No chat history found");
                                     }
                                 } catch (JSONException e1) {
@@ -277,7 +276,6 @@ public class ChatManager {
                                     if (response.has("message")) {//akshit Code to Fetch message if NO more History
                                         try {
                                             if (response.getString("message").equalsIgnoreCase("No chat history found")) {
-                                                Log.e("Error Response", "No Chat history");
                                                 EventBus.getDefault().post("No chat history found");
                                             }
                                         } catch (JSONException e1) {
@@ -414,7 +412,6 @@ public class ChatManager {
             userInputDetails.put("comment", comment);
             userInputDetails.put("accepted", accepted);
 
-            Log.e("Chat Share", "Message With Comment" + comment);
 
 
             client = new AsyncHttpClient();

@@ -68,7 +68,7 @@ public class VerifyView extends Activity implements OnClickListener,
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 int action = event.getAction();
                 if (keyCode == KeyEvent.KEYCODE_DEL && action == KeyEvent.ACTION_DOWN) {
-                    Log.e("D-One", "Edit-Text1");
+                    //Log.e("D-One", "Edit-Text1");
                     d_one.requestFocus();
                     return true;
                 }
@@ -81,7 +81,7 @@ public class VerifyView extends Activity implements OnClickListener,
 
                 int action = event.getAction();
                 if (keyCode == KeyEvent.KEYCODE_DEL && action == KeyEvent.ACTION_DOWN) {
-                    Log.e("D-Two", "Edit-Text2");
+                    //Log.e("D-Two", "Edit-Text2");
                     d_one.requestFocus();
                     d_one.setText("");
                     return true;
@@ -94,7 +94,7 @@ public class VerifyView extends Activity implements OnClickListener,
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 int action = event.getAction();
                 if (keyCode == KeyEvent.KEYCODE_DEL && action == KeyEvent.ACTION_DOWN) {
-                    Log.e("D-Three", "Edit-Text3");
+                    //Log.e("D-Three", "Edit-Text3");
                     d_two.requestFocus();
                     d_two.setText("");
                     return true;
@@ -107,7 +107,7 @@ public class VerifyView extends Activity implements OnClickListener,
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 int action = event.getAction();
                 if (keyCode == KeyEvent.KEYCODE_DEL && action == KeyEvent.ACTION_DOWN) {
-                    Log.e("D-Four", "Edit-Text4");
+                    //Log.e("D-Four", "Edit-Text4");
                     d_three.requestFocus();
                     d_three.setText("");
 

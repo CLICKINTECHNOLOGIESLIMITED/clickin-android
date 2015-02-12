@@ -37,7 +37,7 @@ public class ReloadApp extends Activity {
         Utils.launchBarDialog(this);
 
 
-        ClickinDbHelper dbHelper = new ClickinDbHelper(this);
+        ClickinDbHelper dbHelper = new ClickinDbHelper(ReloadApp.this);
         try {
             dbHelper.clearDB();  //clear db one applicatoin start from crashing
         } catch (SQLException e) {
@@ -47,6 +47,10 @@ public class ReloadApp extends Activity {
 
         Log.e("in Reload app------>", "in Reload app------>");
         extras = getIntent().getExtras();
+        if(extras.containsKey("Tp"))
+        {
+            Log.e("value of tp",""+extras.getString("Tp"));
+        }
 
         if (!Utils.isEmptyString(ModelManager.getInstance().getAuthorizationManager().getUserId())) {  // process value if userid is not null
             Log.e("case 1---->", "case 1---->");
@@ -56,7 +60,7 @@ public class ReloadApp extends Activity {
         } else {  // else signin again to get value as if needed.
             setContentView(R.layout.view_splash);
             Log.e("case 2---->", "case 2---->");
-            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(ReloadApp.this);
             String myPhone = preferences.getString("myPhoneNo", null);
             String pwd = preferences.getString("pwd", null);
             String deviceId = preferences.getString("DeviceId", null);
@@ -85,8 +89,6 @@ public class ReloadApp extends Activity {
 
         Intent data = new Intent();
         data.putExtra("isChangeInList", true);
-
-        data.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         if (mProfile && mRelation) {
             if (extras.containsKey("Tp")) {
 
@@ -107,7 +109,7 @@ public class ReloadApp extends Activity {
 
                     data.setClass(getApplicationContext(), ChatRecordView.class);
                     String mPartnerId = extras.getString("pid");
-                    Log.e("Pid-------->",""+mPartnerId);
+
                     putChatData(data, mPartnerId);
 
                 } else if (extras.getString("Tp").equalsIgnoreCase("shr")) //case for share
@@ -129,10 +131,11 @@ public class ReloadApp extends Activity {
 
                     data.setClass(getApplicationContext(), PostView.class);
                     data.putExtra("feedId", extras.getString("Nid"));
-                    Log.e("PostView---------", "PostView---------");
+
 
                 }
             }
+            data.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(data);
             finish();
             Utils.dismissBarDialog();
@@ -143,17 +146,17 @@ public class ReloadApp extends Activity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        extras.clear();
+        //extras.clear();
         extras = intent.getExtras();
 
         if (!Utils.isEmptyString(ModelManager.getInstance().getAuthorizationManager().getUserId())) {// process value if userid is not null
-            Log.e("case 1---->", "case 1---->");
+            Log.e("case 1 on new Intent---->","case 1 on new Intent---->");
             mProfile = true;
             mRelation = true;
             processvalue();
         } else {// else signin again to get value as if needed.
-            Log.e("case 2---->", "case 2---->");
-            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+            Log.e("case 2 on new Intent---->","case 2 on new Intent---->");
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(ReloadApp.this);
             String myPhone = preferences.getString("myPhoneNo", null);
             String pwd = preferences.getString("pwd", null);
             String deviceId = preferences.getString("DeviceId", null);
@@ -171,40 +174,40 @@ public class ReloadApp extends Activity {
 
 
         for (int i = 0; i < ModelManager.getInstance().getRelationManager().acceptedList.size(); i++) {
-            Log.e("getPartner_id------>",""+ModelManager.getInstance().getRelationManager().acceptedList.get(i).getPartner_id());
+
             if (ModelManager.getInstance().getRelationManager().acceptedList.get(i).getPartner_id().equalsIgnoreCase(mPartnerId)) {
                 mIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 mIntent.setAction("UPDATE");
                 mIntent.putExtra("quickId", ModelManager.getInstance().getRelationManager().acceptedList.get(i).getPartnerQBId());
-                Log.e("quickId---->",""+ModelManager.getInstance().getRelationManager().acceptedList.get(i).getPartnerQBId());
+
                 mIntent.putExtra("partnerPic", ModelManager.getInstance().getRelationManager().acceptedList.get(i).getPartnerPic());
-                Log.e("partnerPic---->",""+ModelManager.getInstance().getRelationManager().acceptedList.get(i).getPartnerPic());
+
 
                 mIntent.putExtra("partnerName", ModelManager.getInstance().getRelationManager().acceptedList.get(i).getPartnerName());
-                Log.e("partnerPic---->",""+ModelManager.getInstance().getRelationManager().acceptedList.get(i).getPartnerPic());
+
 
                 mIntent.putExtra("rId", ModelManager.getInstance().getRelationManager().acceptedList.get(i).getRelationshipId());
-                Log.e("getRelationshipId---->",""+ModelManager.getInstance().getRelationManager().acceptedList.get(i).getRelationshipId());
+
 
                 mIntent.putExtra("partnerId", ModelManager.getInstance().getRelationManager().acceptedList.get(i).getPartner_id());
-                Log.e("getPartner_id---->",""+ModelManager.getInstance().getRelationManager().acceptedList.get(i).getPartner_id());
+
 
                 mIntent.putExtra("myClicks", ModelManager.getInstance().getRelationManager().acceptedList.get(i).getUserClicks());
-                Log.e("getUserClicks---->",""+ModelManager.getInstance().getRelationManager().acceptedList.get(i).getUserClicks());
+
 
                 mIntent.putExtra("userClicks", ModelManager.getInstance().getRelationManager().acceptedList.get(i).getClicks());
-                Log.e("userClicks---->",""+ModelManager.getInstance().getRelationManager().acceptedList.get(i).getClicks());
+
 
                 mIntent.putExtra("partnerPh", ModelManager.getInstance().getRelationManager().acceptedList.get(i).getPhoneNo());
-                Log.e("getPhoneNo---->",""+ModelManager.getInstance().getRelationManager().acceptedList.get(i).getPhoneNo());
+
 
                 mIntent.putExtra("relationListIndex", i);
-                Log.e("relationListIndex---->",""+i);
+
 
                 ChatManager chatManager = ModelManager.getInstance().getChatManager();
                 chatManager.setrelationshipId(ModelManager.getInstance().getRelationManager().acceptedList.get(i).getRelationshipId());
 
-                Log.e("partnerPic---->",""+ModelManager.getInstance().getRelationManager().acceptedList.get(i).getPartnerPic());
+
             }
         }
 
@@ -223,7 +226,7 @@ public class ReloadApp extends Activity {
                 message.equalsIgnoreCase("ProfileInfo Network Error") ||
                 message.equalsIgnoreCase("GetRelationShips False") ||
                 message.equalsIgnoreCase("GetRelationShips Network Error")) {
-            Log.e("sign in false----->", "sign in false----->");
+
             Utils.fromSignalDialogSplsh(this, AlertMessage.connectionError); // exit from application as it come false
         } else if (message.equalsIgnoreCase("SignIn True")) {
 
