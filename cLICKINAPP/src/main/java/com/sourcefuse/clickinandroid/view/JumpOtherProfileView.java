@@ -389,8 +389,10 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
                         + getResources().getString(R.string.txt_yold);
 
             } else {
-                dtails = "" + Utils.getCurrentYear(authManager.getTmpDOB()) + " "
-                        + getResources().getString(R.string.txt_yold);
+                if (!Utils.isEmptyString(authManager.getTmpDOB())) {
+                    dtails = "" + Utils.getCurrentYear(authManager.getTmpDOB()) + " "
+                            + getResources().getString(R.string.txt_yold);
+                }
             }
 
             //akshit code For otherUser City and Country

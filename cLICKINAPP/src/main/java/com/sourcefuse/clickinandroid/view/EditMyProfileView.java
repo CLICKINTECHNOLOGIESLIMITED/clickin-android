@@ -106,6 +106,7 @@ public class EditMyProfileView extends ClickInBaseView implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        ModelManager.getInstance().getAuthorizationManager().setMixpanelAPI(this); // set Context to MixPanel
         //code- to handle uncaught exception
         Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
@@ -134,14 +135,19 @@ public class EditMyProfileView extends ClickInBaseView implements View.OnClickLi
             @Override
             public void onClick(View arg0) {
 
-                InputMethodManager imm = (InputMethodManager) getSystemService(
-                        INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(myName.getWindowToken(), 0);
-                imm.hideSoftInputFromWindow(myLast.getWindowToken(), 0);
-                imm.hideSoftInputFromWindow(myEmail.getWindowToken(), 0);
-                imm.hideSoftInputFromWindow(myCity.getWindowToken(), 0);
-                imm.hideSoftInputFromWindow(myCountry.getWindowToken(), 0);
-                imm.hideSoftInputFromWindow(mySelfy.getWindowToken(), 0);
+                InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                if (myName.getWindowToken() != null)
+                    imm.hideSoftInputFromWindow(myName.getWindowToken(), 0);
+                if (myLast.getWindowToken() != null)
+                    imm.hideSoftInputFromWindow(myLast.getWindowToken(), 0);
+                if (myEmail.getWindowToken() != null)
+                    imm.hideSoftInputFromWindow(myEmail.getWindowToken(), 0);
+                if (myCity.getWindowToken() != null)
+                    imm.hideSoftInputFromWindow(myCity.getWindowToken(), 0);
+                if (myCountry.getWindowToken() != null)
+                    imm.hideSoftInputFromWindow(myCountry.getWindowToken(), 0);
+                if (mySelfy.getWindowToken() != null)
+                    imm.hideSoftInputFromWindow(mySelfy.getWindowToken(), 0);
 
 
             }
@@ -211,8 +217,6 @@ public class EditMyProfileView extends ClickInBaseView implements View.OnClickLi
                 break;
             case R.id.iv_edit_camera:
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-
                 mImageCaptureUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
                 intent.putExtra("return-data", true);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
@@ -243,9 +247,7 @@ public class EditMyProfileView extends ClickInBaseView implements View.OnClickLi
 //                            Bitmap imageBitmap1 = authManager.getUserbitmap();
 
                             if (bitmap != null) {
-
-                                profileManager.setProfile(userName, userLastName, authManager.getPhoneNo(),
-                                        authManager.getUsrToken(), "", "", userCity, userCountry, userEmail, "", Utils.encodeTobase64(bitmap), mChangePhoto);
+                                profileManager.setProfile(userName, userLastName, authManager.getPhoneNo(), authManager.getUsrToken(), "", "", userCity, userCountry, userEmail, "", Utils.encodeTobase64(bitmap), mChangePhoto);
                             } else {
                                 try {
                                     // imageBitmap = Picasso.with(EditMyProfileView.this).load(authManager.getUserPic()).get();
@@ -268,6 +270,13 @@ public class EditMyProfileView extends ClickInBaseView implements View.OnClickLi
                 break;
         }
     }
+
+    @Override
+    public void onDestroy() {
+        ModelManager.getInstance().getAuthorizationManager().getMixpanelAPI().flush();  // send data to mixpanel server before destroy activity.
+        super.onDestroy();
+    }
+
 
     public String getRealPathFromURI(Uri uri) {
         Cursor cursor = getContentResolver().query(uri, null, null, null, null);

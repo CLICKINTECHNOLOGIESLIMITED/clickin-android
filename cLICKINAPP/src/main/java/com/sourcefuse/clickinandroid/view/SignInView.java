@@ -83,6 +83,7 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
+        ModelManager.getInstance().getAuthorizationManager().setMixpanelAPI(this);
         //code- to handle uncaught exception
         Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
@@ -137,8 +138,10 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
 
                 InputMethodManager imm = (InputMethodManager) getSystemService(
                         INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(ePwd.getWindowToken(), 0);
-                imm.hideSoftInputFromWindow(ephone.getWindowToken(), 0);
+                if (ePwd.getWindowToken() != null)
+                    imm.hideSoftInputFromWindow(ePwd.getWindowToken(), 0);
+                if (ephone.getWindowToken() != null)
+                    imm.hideSoftInputFromWindow(ephone.getWindowToken(), 0);
 
             }
 
@@ -196,7 +199,8 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
                 RelativeLayout layout = (RelativeLayout) findViewById(R.id.relative_layout_root_signin);
 
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(layout.getWindowToken(), 0);
+                if (layout.getWindowToken() != null)
+                    imm.hideSoftInputFromWindow(layout.getWindowToken(), 0);
                 if (activeDone && ephone.getText().toString().trim().length() > 0 && ephone.getText().toString() != "+(null)" && ePwd.getText().toString().length() > 0) {
                     getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
                     authManager = ModelManager.getInstance().getAuthorizationManager();
@@ -336,7 +340,8 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
             public void onClick(View v) {
                 //akshit code to hide keyboard
                 InputMethodManager imm = (InputMethodManager) getSystemService(contex.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(getemailid.getWindowToken(), 0);
+                if (getemailid.getWindowToken() != null)
+                    imm.hideSoftInputFromWindow(getemailid.getWindowToken(), 0);
                 mDialog.dismiss();
 
             }
@@ -354,7 +359,8 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
                     settingManager.forgotYourPassword(getemailid.getText().toString());
 
                     InputMethodManager imm = (InputMethodManager) getSystemService(contex.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(getemailid.getWindowToken(), 0);
+                    if (getemailid.getWindowToken() != null)
+                        imm.hideSoftInputFromWindow(getemailid.getWindowToken(), 0);
                     mDialog.dismiss();
 
                 } else {

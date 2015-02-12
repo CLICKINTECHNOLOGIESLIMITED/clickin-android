@@ -197,10 +197,16 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
             @Override
             public void onClick(View view) {
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
+                if(edt_search.getWindowToken() != null)
+                    imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
             }
         });
+//start service first, so that it will not get destroyed when unbind.
+        //also unbind it onDestroy rather than onstop--monika
 
+        Intent i = new Intent(this, MyQbChatService.class);
+        startService(i);
+        bindService(i, mConnection, Context.BIND_AUTO_CREATE);
 
     }
 
@@ -370,8 +376,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
     @Override
     public void onStart() {
         super.onStart();
-        Intent i = new Intent(this, MyQbChatService.class);
-        bindService(i, mConnection, Context.BIND_AUTO_CREATE);
+
 
 
     }
@@ -383,11 +388,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
     @Override
     public void onStop() {
         super.onStop();
-        if (mIsBound) {
-            // Detach our existing connection.
-            unbindService(mConnection);
-            mIsBound = false;
-        }
+
 
 
     }
@@ -430,6 +431,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
 
                 @Override
                 public void run() {
+                    if(myQbChatService!=null)
                     myQbChatService.setChatListeners();
                 }
             }, 10000);
@@ -489,6 +491,11 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         super.onNewIntent(intent);
 
 
+        if(myQbChatService==null){
+            Intent i = new Intent(this, MyQbChatService.class);
+            startService(i);
+            bindService(i, mConnection, Context.BIND_AUTO_CREATE);
+        }
         if (intent.getExtras() != null && intent.getExtras().containsKey("isChangeInList")) {
 
             Log.e("on new Intent-------->isChangeInList", "on new Intent-------->isChangeInList");
@@ -513,6 +520,11 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
 
     public void onDestroy() {
         super.onDestroy();
+        if (mIsBound) {
+            // Detach our existing connection.
+            unbindService(mConnection);
+            mIsBound = false;
+        }
 
     }
 }

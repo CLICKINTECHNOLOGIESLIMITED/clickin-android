@@ -134,6 +134,7 @@ public class ReloadApp extends Activity {
                 }
             }
             startActivity(data);
+            finish();
             Utils.dismissBarDialog();
         }
 

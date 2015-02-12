@@ -58,9 +58,10 @@ public class AddSomeoneView extends Activity implements TextWatcher {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
 
-                InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(search_phbook.getWindowToken(), 0);
-
+                if (search_phbook.getWindowToken() != null) {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(search_phbook.getWindowToken(), 0);
+                }
 
                 ProfileManager prfManager = ModelManager.getInstance().getProfileManager();
 
@@ -92,9 +93,10 @@ public class AddSomeoneView extends Activity implements TextWatcher {
             @Override
             public void onClick(View arg0) {
 
-                InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-
-                imm.hideSoftInputFromWindow(search_phbook.getWindowToken(), 0);
+                if (search_phbook.getWindowToken() != null) {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(search_phbook.getWindowToken(), 0);
+                }
 
             }
 

@@ -214,6 +214,7 @@ public class MyQbChatService extends Service {
 
         msg.setData(data);
         msg.what = ChatThread.SEND_CHAT;
+        if(handler!=null)
         handler.sendMessage(msg);
     }
 
@@ -228,6 +229,7 @@ public class MyQbChatService extends Service {
         data.putString("partnerQBId", partnerQbId);
         msg.setData(data);
         msg.what = ChatThread.SEND_CHAT;
+        if(handler!=null)
         handler.sendMessage(msg);
     }
 
@@ -295,6 +297,7 @@ public class MyQbChatService extends Service {
 
         msg.setData(data);
         msg.what = ChatThread.ADD_CHAT_LISTENERS;
+        if(handler!=null)
         handler.sendMessage(msg);
     }
 
@@ -306,6 +309,7 @@ public class MyQbChatService extends Service {
         data.putInt("partnerQBId", partnerQBId);
         msg.setData(data);
         msg.what = ChatThread.CHECK_PRESENCE;
+        if(handler!=null)
         handler.sendMessage(msg);
     }
 
@@ -317,6 +321,7 @@ public class MyQbChatService extends Service {
 
         msg.setData(data);
         msg.what = ChatThread.CHAT_LOGOUT;
+        if(handler!=null)
         handler.sendMessage(msg);
     }
 

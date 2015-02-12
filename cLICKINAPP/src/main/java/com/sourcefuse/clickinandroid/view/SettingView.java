@@ -121,9 +121,9 @@ public class SettingView extends Activity implements View.OnClickListener, Compo
             @Override
             public void onClick(View arg0) {
                 TextView view = (TextView) findViewById(R.id.change_password);
-                InputMethodManager imm = (InputMethodManager) getSystemService(
-                        INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                if(view.getWindowToken() != null)
+                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
 
             }

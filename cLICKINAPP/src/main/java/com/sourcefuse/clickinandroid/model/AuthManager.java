@@ -1,13 +1,16 @@
 package com.sourcefuse.clickinandroid.model;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.util.Log;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.mixpanel.android.mpmetrics.MixpanelAPI;
 import com.quickblox.module.chat.QBPrivateChat;
 import com.sourcefuse.clickinandroid.utils.APIs;
+import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.Utils;
 
 import org.apache.http.entity.StringEntity;
@@ -75,6 +78,19 @@ public class AuthManager {
     private String mLatLan;
     /* for notification counter */
     private int mNotificationCounter;
+
+    public MixpanelAPI getMixpanelAPI() {
+        return mixpanelAPI;
+    }
+
+    public void setMixpanelAPI(Context context) {
+
+        this.mixpanelAPI = MixpanelAPI.getInstance(context, Constants.MIX_PANEL_TOKEN);
+        this.mixpanelAPI.identify("131313");
+        this.mixpanelAPI.timeEvent("Edit");
+    }
+
+    private MixpanelAPI mixpanelAPI;
 
     public String getLatLan() {
         return mLatLan;

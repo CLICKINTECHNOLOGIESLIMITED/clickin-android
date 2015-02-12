@@ -147,7 +147,8 @@ public class MapActivity extends Activity implements ConnectionCallbacks, OnConn
                 try {
                     EditText myEditText = (EditText) findViewById(R.id.locationText);
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(myEditText.getWindowToken(), 0);
+                    if(myEditText.getWindowToken() != null)
+                        imm.hideSoftInputFromWindow(myEditText.getWindowToken(), 0);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -210,7 +211,8 @@ public class MapActivity extends Activity implements ConnectionCallbacks, OnConn
                 try {
                     EditText myEditText = (EditText) findViewById(R.id.locationText);
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(myEditText.getWindowToken(), 0);
+                    if(myEditText.getWindowToken() != null)
+                        imm.hideSoftInputFromWindow(myEditText.getWindowToken(), 0);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

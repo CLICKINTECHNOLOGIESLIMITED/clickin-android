@@ -63,4 +63,6 @@ public class Constants {
     public static String CUSTOM_CARD_URL = "https://s3.amazonaws.com/clickin-dev/cards/a/1080/custom_tradecart.jpg";
 
     public static boolean mInAppNotification = false;
+
+    public static final String MIX_PANEL_TOKEN = "34b90dcc1a3f069eec5baa3208229d4b";
 }

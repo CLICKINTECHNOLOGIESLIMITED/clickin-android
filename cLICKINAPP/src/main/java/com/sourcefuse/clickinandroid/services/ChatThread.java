@@ -83,6 +83,7 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
     //list to maintain chat message to add in db
     ArrayList<ChatMessageBody> messageInDb;
     QBRoster chatRoster;
+    QBChatService chatService=null;
     QBSubscriptionListener subscriptionListener = new QBSubscriptionListener() {
         @Override
         public void subscriptionRequested(int userID) {
@@ -355,9 +356,10 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
     private void loginToChat() {
         try {
 
-            QBChatService chatService;
+
             if (!QBChatService.isInitialized()) {
                 QBChatService.init(application.getApplicationContext());
+                chatService=QBChatService.getInstance();
             }
             mUser = new QBUser();
             authManager = ModelManager.getInstance().getAuthorizationManager();
@@ -378,14 +380,18 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
                 mUser.setPassword(userToken);
                 QBSession result = QBAuth.createSession(new QBUser(userId, userToken));
                 mUser.setId(result.getUserId());
-                QBChatService.getInstance().login(mUser);
-                QBChatService.getInstance().startAutoSendPresence(5);
+                if(chatService!=null) {
+                    chatService.login(mUser);
+                    chatService.startAutoSendPresence(5);
 
-                //monika-connection listener
-                QBChatService.getInstance().addConnectionListener(this);
-                // if (chatRoster == null) {
-                chatRoster = QBChatService.getInstance().getRoster(QBRoster.SubscriptionMode.mutual, subscriptionListener);
-                chatRoster.addRosterListener(rosterListener);
+                    //monika-connection listener
+                    chatService.addConnectionListener(this);
+                    // if (chatRoster == null) {
+                    chatRoster =chatService.getRoster(QBRoster.SubscriptionMode.mutual, subscriptionListener);
+                    chatRoster.addRosterListener(rosterListener);
+                }else{
+                    showDialog("Please Sign in again");
+                }
                 //}
             } else {
                 showDialog("Please Sign in again");
@@ -587,49 +593,58 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
 
     //monika-function to set message listeners for all accepted members
     private void registerListeners() {
-        if (QBChatService.getInstance().isLoggedIn()) {
-            ArrayList<GetrelationshipsBean> clickInPartnerList = new ArrayList<GetrelationshipsBean>(ModelManager.getInstance().getRelationManager().acceptedList);
+        if(chatService!=null) {
+            if (chatService.isLoggedIn()) {
+                ArrayList<GetrelationshipsBean> clickInPartnerList = new ArrayList<GetrelationshipsBean>(ModelManager.getInstance().getRelationManager().acceptedList);
 
-            if (clickInPartnerList.size() != 0) {
+
                 for (GetrelationshipsBean temp : clickInPartnerList) {
                     int partnerQBId = Integer.parseInt(temp.getPartnerQBId());
                     QBPrivateChat chatObject = null;
-                    chatObject = QBChatService.getInstance().getPrivateChatManager().getChat(partnerQBId);
+                    chatObject = chatService.getPrivateChatManager().getChat(partnerQBId);
                     if (chatObject == null) {
-                        chatObject = QBChatService.getInstance().getPrivateChatManager().createChat(partnerQBId, ChatThread.this);
+                        chatObject = chatService.getPrivateChatManager().createChat(partnerQBId, ChatThread.this);
+                        if (chatRoster != null) {
+                            if (chatRoster.contains(partnerQBId)) {
+                                try {
 
-                        if (chatRoster.contains(partnerQBId)) {
-                            try {
+                                    chatRoster.subscribe(partnerQBId);
+                                } catch (SmackException.NotConnectedException e) {
 
-                                chatRoster.subscribe(partnerQBId);
-                            } catch (SmackException.NotConnectedException e) {
+                                }
+                            } else {
+                                try {
 
-                            }
-                        } else {
-                            try {
+                                    chatRoster.createEntry(partnerQBId, null);
+                                } catch (XMPPException e) {
 
-                                chatRoster.createEntry(partnerQBId, null);
-                            } catch (XMPPException e) {
+                                } catch (SmackException.NotLoggedInException e) {
 
-                            } catch (SmackException.NotLoggedInException e) {
+                                } catch (SmackException.NotConnectedException e) {
 
-                            } catch (SmackException.NotConnectedException e) {
+                                } catch (SmackException.NoResponseException e) {
 
-                            } catch (SmackException.NoResponseException e) {
+                                }
 
-                            }
 
-                        }
+                            }//else
+                        }//if chat roaster is not null check
 
-                    }
+                    }// for chatobject check
 
-                }
+                }//for loop end
+            }else{ //if chat is not logged in
+                if (!chatService.isLoggedIn())
+                    loginToChat();
             }
+        }else{
+        //if chatservice is not initialized and chatservice object is null
+            showDialog("Sign up again");
         }
     }
 
     //monika-code for updating clicks value
-    private void updateValuesClicks(ChatMessageBody tempObject) {
+/*    private void updateValuesClicks(ChatMessageBody tempObject) {
         RelationManager manager = ModelManager.getInstance().getRelationManager();
         AuthManager authManager1 = ModelManager.getInstance().getAuthorizationManager();
         if (tempObject.card_originator.equalsIgnoreCase(authManager1.getUserId())) {
@@ -637,7 +652,7 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
         } else {
             Utils.updateClicksValue(authManager.ourClicks, manager.partnerClicks, tempObject.clicks, true);
         }
-    }
+    }*/
 
     //monika-fucntion to log out from QB chat
     public void logoutQB() {
