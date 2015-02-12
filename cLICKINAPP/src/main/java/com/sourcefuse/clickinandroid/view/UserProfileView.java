@@ -369,6 +369,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
                 Intent editProfile = new Intent(UserProfileView.this, EditMyProfileView.class);
                 startActivity(editProfile);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                Utils.trackMixpanel(this,"Edit Button","Edit Profile");//Event For Edit profile Button
                 break;
         }
     }

@@ -28,7 +28,7 @@ import android.os.AsyncTask;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.telephony.TelephonyManager;
-import android.util.*;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -39,6 +39,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.mixpanel.android.mpmetrics.MixpanelAPI;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
@@ -47,6 +48,9 @@ import com.sourcefuse.clickinandroid.model.bean.ChatMessageBody;
 import com.sourcefuse.clickinandroid.model.bean.ContactBean;
 import com.sourcefuse.clickinandroid.model.bean.GetrelationshipsBean;
 import com.sourcefuse.clickinapp.R;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
@@ -90,6 +94,9 @@ public class
     private static Uri mImageCaptureUri;
     private static MediaPlayer mplayer;
     public AuthManager authManager;
+
+
+
 
     public static void launchBarDialog(Activity activity) {
 
@@ -1453,6 +1460,21 @@ public class
         final float scale = mContext.getResources().getDisplayMetrics().density;
         int dp = (int) (pixel * scale + 0.5f);
         return dp;
+    }
+
+    public static void trackMixpanel(Context context, String mEvent, String mValue) {
+
+        MixpanelAPI mixpanelAPI = MixpanelAPI.getInstance(context, Constants.MIX_PANEL_TOKEN);
+        mixpanelAPI.identify("" + ModelManager.getInstance().getAuthorizationManager().getPhoneNo());
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put(mEvent, mValue);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        mixpanelAPI.track(mEvent, jsonObject);
+        mixpanelAPI.flush();
+
     }
 }
 
