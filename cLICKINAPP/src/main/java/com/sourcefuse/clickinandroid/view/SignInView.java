@@ -84,6 +84,7 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         //code- to handle uncaught exception
+        if(Utils.mStartExceptionTrack)
         Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
         setContentView(R.layout.view_signin);
@@ -219,6 +220,9 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
                 Intent intent = new Intent(SignInView.this, SignUpView.class);
                 startActivity(intent);
                 this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+                //To track through mixPanel.
+                //Click to signup
+                Utils.trackMixpanel(SignInView.this,"","","SignUpButtonClicked");
                 break;
         }
     }

@@ -297,6 +297,13 @@ public class Card extends Activity implements View.OnClickListener, TextWatcher 
                         overridePendingTransition(0, R.anim.slide_out_finish_up);
                         /*code to play sound in case of trade cart */
                         Utils.playSound(Card.this, R.raw.message_sent);
+
+                        //To track through mixPanel.
+                        //Click send with tradecard.
+                        Utils.trackMixpanel(this,"PointsPlayed",""+clicks,"RPageTradeButtonClicked");
+                        //To track through mixPanel.
+                        //Send card name
+                        Utils.trackMixpanel(this,"CardPlayedName",""+cardTitle,"RPageTradeButtonClicked");
                     }
                     //loop- ends here if user is card owner
                 } else {//
@@ -347,6 +354,13 @@ public class Card extends Activity implements View.OnClickListener, TextWatcher 
                     overridePendingTransition(0, R.anim.slide_out_finish_up);
 
                             /*code to play sound in case of trade cart */
+
+                    //To track through mixPanel.
+                    //Click send with tradecard.
+                    Utils.trackMixpanel(this,"PointsPlayed",""+clicks,"RPageTradeButtonClicked");
+                    //To track through mixPanel.
+                    //Send card name
+                    Utils.trackMixpanel(this,"CardPlayedName",""+cardTitle,"RPageTradeButtonClicked");
                     Utils.playSound(Card.this, R.raw.message_sent);
 
                 }//loop ends here if user is not card owner

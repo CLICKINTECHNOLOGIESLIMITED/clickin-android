@@ -40,7 +40,8 @@ public class SignUpView extends Activity implements TextWatcher, OnClickListener
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         //code- to handle uncaught exception
-        Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
+        if (Utils.mStartExceptionTrack)
+            Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
 
         setContentView(R.layout.view_signup);
@@ -50,6 +51,7 @@ public class SignUpView extends Activity implements TextWatcher, OnClickListener
         cntrycode = (EditText) findViewById(R.id.edt_code);
         phoneNo = (EditText) findViewById(R.id.edt_phoneno);
         phoneNo.addTextChangedListener(this);
+        cntrycode.addTextChangedListener(this);
         checkmeout.setOnClickListener(this);
         checkmeout.setEnabled(false);
         ((RelativeLayout) findViewById(R.id.rl_main_signup)).setOnClickListener(new OnClickListener() {
@@ -58,9 +60,9 @@ public class SignUpView extends Activity implements TextWatcher, OnClickListener
             public void onClick(View arg0) {
 
                 InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                if(cntrycode.getWindowToken() != null)
+                if (cntrycode.getWindowToken() != null)
                     imm.hideSoftInputFromWindow(cntrycode.getWindowToken(), 0);
-                if(phoneNo.getWindowToken() != null)
+                if (phoneNo.getWindowToken() != null)
                     imm.hideSoftInputFromWindow(phoneNo.getWindowToken(), 0);
 
             }
@@ -124,6 +126,11 @@ public class SignUpView extends Activity implements TextWatcher, OnClickListener
             checkmeout.setBackgroundResource(R.drawable.s_checkout_inactive);
         }
 
+        if (cntrycode.getText().toString().length() >= 1) {
+            //To track through mixPanel.
+            //Edit Country Code check Size is Greater than one.
+            Utils.trackMixpanel(SignUpView.this, "", "", "CountryCodeEdited");
+        }
     }
 
 
@@ -148,6 +155,12 @@ public class SignUpView extends Activity implements TextWatcher, OnClickListener
             Intent intent = new Intent(this, VerifyView.class);
             intent.putExtra("fromsignup", true);
             startActivity(intent);
+
+            //To track through mixPanel.
+            //Verify Entered UserPhone No.
+            Utils.trackMixpanel(SignUpView.this, "", "", "UserEnteredPhoneNumber");
+            Utils.trackMixpanel(SignUpView.this, "", "", "UserPhoneNumberSubmitted");
+
             finish();
         } else if (getMsg.equalsIgnoreCase("SignUp False")) {
             Utils.dismissBarDialog();

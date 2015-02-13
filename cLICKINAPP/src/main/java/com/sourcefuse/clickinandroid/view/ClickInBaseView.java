@@ -92,7 +92,8 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         authManager = ModelManager.getInstance().getAuthorizationManager();
         //code- to handle uncaught exception
-        Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(ClickInBaseView.this));
+        if(Utils.mStartExceptionTrack)
+            Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(ClickInBaseView.this));
     }
 
     @Override
@@ -149,6 +150,9 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         String mRelationShipId = relationManager.acceptedList.get(relationListIndex).getRelationshipId();
         String mNewUser = authManager.mIs_new_clickin_user;
 
+        //To track through mixPanel.
+        //Total Number of user clicks.
+        Utils.trackMixpanel(ClickInBaseView.this,"TotalClicksSent",""+userClicks,"RPageShareButtonClicked");
 
         String mValue;
         if (mNewUser != null && mNewUser.equalsIgnoreCase("yes") && mNewPrtner != null && mNewPrtner.equalsIgnoreCase("yes")) {
@@ -330,7 +334,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
                         searchList.setVisibility(View.GONE);
 
                         InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                        if(getCurrentFocus().getWindowToken() != null)
+                        if(getCurrentFocus() != null && getCurrentFocus().getWindowToken() != null)
                             inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 
                     }
@@ -1003,7 +1007,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         searchList.setVisibility(View.GONE);
 
         InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        if(getCurrentFocus().getWindowToken() != null)
+        if(getCurrentFocus() != null && getCurrentFocus().getWindowToken() != null)
             inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 
 
@@ -1027,7 +1031,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         super.onBackPressed();
 
 
-        if(getCurrentFocus().getWindowToken() != null) { // check window token is null or not
+        if(getCurrentFocus() != null && getCurrentFocus().getWindowToken() != null) { // check window token is null or not
             InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         }

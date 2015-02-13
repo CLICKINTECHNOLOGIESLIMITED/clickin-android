@@ -45,7 +45,9 @@ public class AddSomeoneView extends Activity implements TextWatcher {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         //code- to handle uncaught exception
-        Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
+        if(Utils.mStartExceptionTrack)
+            Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
+
         setContentView(R.layout.view_addsomeone);
         this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
         search_phbook = (EditText) findViewById(R.id.edt_search_ph);
@@ -153,15 +155,13 @@ public class AddSomeoneView extends Activity implements TextWatcher {
         ((Button) findViewById(R.id.btn_do_itlatter)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent clickersView = new Intent(AddSomeoneView.this, CurrentClickersView.class);
-//                clickersView.putExtra("FromSignup", true);
-//                clickersView.putExtra("fromsignup", getIntent().getBooleanExtra("fromsignup", false));
-//                clickersView.putExtra("FromMenu", false);
-//                startActivity(clickersView);
 
                 Intent clickersView = new Intent(AddSomeoneView.this, UserProfileView.class);
                 clickersView.putExtra("FromSignup", true);
                 startActivity(clickersView);
+                //To track through mixPanel.
+                //Skip Adding Partner from Signup
+                Utils.trackMixpanel(AddSomeoneView.this,"","","SignUpSkipAddingPartner");
                 finish();
             }
         });
@@ -170,16 +170,13 @@ public class AddSomeoneView extends Activity implements TextWatcher {
         ((Button) findViewById(R.id.btn_been_invited)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//
-//                Intent clickersView = new Intent(AddSomeoneView.this, CurrentClickersView.class);
-//                clickersView.putExtra("FromSignup", true);
-//                clickersView.putExtra("fromsignup", getIntent().getBooleanExtra("fromsignup", false));
-//                clickersView.putExtra("FromMenu", false);
-//                startActivity(clickersView);
 
                 Intent clickersView = new Intent(AddSomeoneView.this, UserProfileView.class);
                 clickersView.putExtra("FromSignup", true);
                 startActivity(clickersView);
+                //To track through mixPanel.
+                //Skip Adding Partner from Signup
+                Utils.trackMixpanel(AddSomeoneView.this,"","","SignUpSkipAddingPartner");
                 finish();
 
             }

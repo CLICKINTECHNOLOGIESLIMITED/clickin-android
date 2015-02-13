@@ -39,6 +39,7 @@ public class ViewSpamorAbuse extends Activity implements View.OnClickListener {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         //code- to handle uncaught exception
+        if(Utils.mStartExceptionTrack)
         Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
 
@@ -124,7 +125,7 @@ public class ViewSpamorAbuse extends Activity implements View.OnClickListener {
             case R.id.spam_radio_nine:
 
                 InputMethodManager inputMethodManager1 = (InputMethodManager) this.getSystemService(Activity.INPUT_METHOD_SERVICE);
-                if(this.getCurrentFocus().getWindowToken() != null)
+                if(getCurrentFocus() != null && getCurrentFocus().getWindowToken() != null)
                     inputMethodManager1.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
 
                 break;// akshit code ends

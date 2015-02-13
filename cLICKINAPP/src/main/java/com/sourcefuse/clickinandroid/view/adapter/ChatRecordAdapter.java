@@ -905,6 +905,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                             ((ImageView) row.findViewById(R.id.tv_counter_card)).setImageResource(R.drawable.counterbtnx_deactive);
                             ((ImageView) row.findViewById(R.id.iv_accept_card)).setBackgroundResource(R.drawable.c_card_accepted_deactive);
                             ((ImageView) row.findViewById(R.id.iv_reject_card)).setBackgroundResource(R.drawable.c_card_reject_deactive);
+                            //To track through mixPanel.
+                            //Click To Reject TradeCard.
+                            Utils.trackMixpanel(context,"CardRejectedName",""+temp.card_heading,"RPageTradeButtonClicked");
                             //akshit code ends for making button inactive
 
 
@@ -930,6 +933,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                             ((ImageView) row.findViewById(R.id.iv_accept_card)).setBackgroundResource(R.drawable.c_card_accepted_deactive);
                             ((ImageView) row.findViewById(R.id.iv_reject_card)).setBackgroundResource(R.drawable.c_card_reject_deactive);
                             //akshit code ends for making button inactive
+                            //To track through mixPanel.
+                            //Click To Accept TradeCard.
+                            Utils.trackMixpanel(context,"CardAcceptedName",""+temp.card_heading,"RPageTradeButtonClicked");
 
 
                         }
@@ -1050,6 +1056,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
                                 /* code to play sound */
                                 Utils.playSound((Activity) getContext(), R.raw.tradecard_rejected);
+                                //To track through mixPanel.
+                                //Click To Reject TradeCard.
+                                Utils.trackMixpanel(context,"CardRejectedName",""+temp.card_heading,"RPageTradeButtonClicked");
                             }
                         }
                     });
@@ -1070,6 +1079,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
                                 /* code to play sound */
                                 Utils.playSound((Activity) getContext(), R.raw.tradecard_accepted);
+                                //To track through mixPanel.
+                                //Click To Accept TradeCard.
+                                Utils.trackMixpanel(context,"CardAcceptedName",""+temp.card_heading,"RPageTradeButtonClicked");
                             }
 
 
@@ -1395,7 +1407,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
                     /* code to play sound */
                     Utils.playSound((Activity) getContext(), R.raw.message_sent);
-
+                    //To track through mixPanel.
+                    //Click To Reject Share
+                    Utils.trackMixpanel(context,"Activity","ShareRequestRejected","RPageShareButtonClicked");
 
                 }
             }
@@ -1451,6 +1465,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
                     /* code to play sound */
                     Utils.playSound((Activity) getContext(), R.raw.message_sent);
+                    //To track through mixPanel.
+                    //ClickIn To Accept TradeCard.
+                    Utils.trackMixpanel(context,"Activity","ShareRequestAccepted","RPageShareButtonClicked");
                 }
             }
         });

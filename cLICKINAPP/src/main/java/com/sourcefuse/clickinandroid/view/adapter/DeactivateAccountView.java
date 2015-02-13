@@ -135,7 +135,7 @@ public class DeactivateAccountView extends Activity implements View.OnClickListe
             case R.id.deactivate_radio_msg_six:
             case R.id.deactivate_radio_msg_seven:
                 InputMethodManager inputMethodManager1 = (InputMethodManager) this.getSystemService(Activity.INPUT_METHOD_SERVICE);
-                if(this.getCurrentFocus().getWindowToken() != null)
+                if(getCurrentFocus() != null && getCurrentFocus().getWindowToken() != null)
                     inputMethodManager1.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
 
                 break;//ends
@@ -185,7 +185,7 @@ public class DeactivateAccountView extends Activity implements View.OnClickListe
                 break;
             case R.id.mail_radio_button_layout:
                 InputMethodManager inputMethodManager2 = (InputMethodManager) this.getSystemService(Activity.INPUT_METHOD_SERVICE);
-                if(this.getCurrentFocus().getWindowToken() != null)
+                if(getCurrentFocus() != null && getCurrentFocus().getWindowToken() != null)
                     inputMethodManager2.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
 
 

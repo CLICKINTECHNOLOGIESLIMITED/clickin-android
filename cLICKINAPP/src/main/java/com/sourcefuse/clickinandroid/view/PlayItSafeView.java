@@ -47,6 +47,7 @@ public class PlayItSafeView extends Activity implements View.OnClickListener, Te
 
 
         //code- to handle uncaught exception
+        if(Utils.mStartExceptionTrack)
         Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
 

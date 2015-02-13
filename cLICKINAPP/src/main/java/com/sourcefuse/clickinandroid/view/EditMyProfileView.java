@@ -108,7 +108,8 @@ public class EditMyProfileView extends ClickInBaseView implements View.OnClickLi
 
 //        ModelManager.getInstance().getAuthorizationManager().setMixpanelAPI(this); // set Context to MixPanel
         //code- to handle uncaught exception
-        Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
+        if(Utils.mStartExceptionTrack)
+            Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
         setContentView(R.layout.view_editprofile);
         addMenu(false);

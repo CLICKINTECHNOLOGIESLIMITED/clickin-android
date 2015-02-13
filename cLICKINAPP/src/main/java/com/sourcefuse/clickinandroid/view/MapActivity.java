@@ -70,6 +70,7 @@ public class MapActivity extends Activity implements ConnectionCallbacks, OnConn
         super.onCreate(savedInstanceState);
 
         //code- to handle uncaught exception
+        if(Utils.mStartExceptionTrack)
         Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
         setContentView(R.layout.layout_mapview);

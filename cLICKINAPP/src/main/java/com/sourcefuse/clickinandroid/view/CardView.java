@@ -100,6 +100,7 @@ public class CardView extends FragmentActivity {
             spec1.setContent(R.id.Layout_Tab_2);
             spec1.setIndicator(chatManager.tabArray.get(i).getCategoriesName());
 
+
             tabHost.addTab(spec1);
             tabHost.setCurrentTab(0);
             tabHost.getTabWidget().setStripEnabled(false);
@@ -117,6 +118,10 @@ public class CardView extends FragmentActivity {
                 int pos = tabHost.getCurrentTab();
                 bean.setTab_content(chatManager.tabArray.get(pos).getCategoriesName());
                 card = bean.getTab_content();
+                //To track through mixPanel.
+                //Card Category Selected.
+                Utils.trackMixpanel(CardView.this,"CategorySelected",card,"RPageTradeButtonClicked");
+
                 tabHost.getTabWidget().getChildAt(pos);
                 setTabindicator();
                 setTabTextColor();

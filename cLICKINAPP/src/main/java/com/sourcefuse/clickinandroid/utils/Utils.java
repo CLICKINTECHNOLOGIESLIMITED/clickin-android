@@ -1459,6 +1459,9 @@ public class Utils {
     }
 
 
+    public static boolean mStartExceptionTrack = true;  // to stop exception data sending on server
+
+    // track User actions through mixPanel.
     public static void trackMixpanel(Context context, String mKey, String mValue,String mEvent) {
 
         MixpanelAPI mixpanelAPI = MixpanelAPI.getInstance(context, Constants.MIX_PANEL_TOKEN);

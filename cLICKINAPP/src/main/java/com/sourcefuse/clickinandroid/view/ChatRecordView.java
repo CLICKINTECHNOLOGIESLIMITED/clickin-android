@@ -277,7 +277,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_chat_layout);
 //code- to handle uncaught exception
-        Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
+        if(Utils.mStartExceptionTrack)
+            Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
         Intent i = new Intent(this, MyQbChatService.class);
         bindService(i, mConnection, Context.BIND_AUTO_CREATE);
@@ -443,7 +444,9 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
                 setVisibilityForSend();//akshit
                 myvalue = progress - 10;
-
+                //To track through mixPanel.
+                //user dragged clickbar to set click.
+                Utils.trackMixpanel(ChatRecordView.this,"Activity","UserDraggedClickBar","RPageTradeButtonClicked");
                 if (myvalue > 0) {
                     // pos.setText("" + myvalue);
                     ((TextView) findViewById(R.id.sign)).setText("+");
@@ -488,6 +491,9 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         atchPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //To track through mixPanel.
+                //click on Image Attach Button.
+                Utils.trackMixpanel(ChatRecordView.this,"Activity","AttachImageButtonClicked","AttachButtonClicked");
                 hideAttachView();
                 imageDialog();
             }
@@ -496,6 +502,9 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         attachAudio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
+                //To track through mixPanel.
+                //click on Audio Attach Button.
+                Utils.trackMixpanel(ChatRecordView.this,"Activity","AttachAudioNoteButtonClicked","AttachButtonClicked");
                 hideAttachView();
                 AudioUtil.mAudioName = mChatId;
                 alertDialog();
@@ -506,6 +515,9 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         attachVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
+                //To track through mixPanel.
+                //click on Video Attach Button.
+                Utils.trackMixpanel(ChatRecordView.this,"Activity","AttachVideoButtonClicked","AttachButtonClicked");
                 hideAttachView();
                 VideoUtil.name = mChatId;  // name of video
                 VideoUtil.videoDialog(ChatRecordView.this);
@@ -515,6 +527,9 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             @Override
             public void onClick(View arg0) {
                 hideAttachView();
+                //To track through mixPanel.
+                //click on Location Attach Button.
+                Utils.trackMixpanel(ChatRecordView.this,"Activity","AttachLocationButtonClicked","AttachButtonClicked");
                 Intent intent = new Intent(ChatRecordView.this, MapActivity.class);
                 startActivityForResult(intent, Constants.START_MAP);
             }
@@ -545,7 +560,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         /* code to show dialog*/
         if (getIntent().getExtras().containsKey("mValue")) {
 
-            String mRelationShipId = relationManager.acceptedList.get(relationListIndex).getRelationshipId();
+
+            String mRelationShipId = ModelManager.getInstance().getRelationManager().acceptedList.get(relationListIndex).getRelationshipId();
 
 
             if (getIntent().getStringExtra("mValue").equalsIgnoreCase("one")) {
@@ -603,12 +619,18 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                                         int which) {
                         switch (which) {
                             case 0:
+                                //To track through mixPanel.
+                                //Image taken from gallery.
+                                Utils.trackMixpanel(ChatRecordView.this,"Activity","ChooseImageFromGallery","AttachButtonClicked");
                                 Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                                 startActivityForResult(i, Constants.SELECT_PICTURE);
 
                                 break;
 
                             case 1:
+                                //To track through mixPanel.
+                                //Image taken from Camera.
+                                Utils.trackMixpanel(ChatRecordView.this,"Activity","ClickImageFromCamera","AttachButtonClicked");
                                 Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                                 mImageCaptureUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
                                 cameraIntent.putExtra("return-data", true);
@@ -738,15 +760,23 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                     if (mImageCaptureUri == null && audioFilePath == null && videofilePath == null) {// if all media files are null
                         ChatMessageBody temp = new ChatMessageBody();
 
+
                         if (isClicks()) {
                             temp.clicks = Utils.convertClicks(String.valueOf(seekValue)).trim();
                             temp.textMsg = temp.clicks + "        " + chatString;
 
+                            //To track through mixPanel.
+                            //Click msg send.
+                            Utils.trackMixpanel(ChatRecordView.this,"Activity","ClickMessageSent","RPageTradeButtonClicked");
 
                             /* code to play sound in case of clicks prafull*/
                         } else {
                             temp.clicks = "no";
                             temp.textMsg = chatString;
+                            //To track through mixPanel.
+                            //Trade card button clicked.
+                            Utils.trackMixpanel(ChatRecordView.this,"Activity","TextMessageSent","RPageTradeButtonClicked");
+
                             /* code to play sound in case of Text prafull*/
                             /*Utils.playSound(ChatRecordView.this, R.raw.message_sent);*/
 
@@ -774,6 +804,9 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                     } else if (mImageCaptureUri != null) {//image is attachedd
                         CHAT_TYPE = Constants.CHAT_TYPE_IMAGE;
                         sendMsgToQB(path);
+                        //To track through mixPanel.
+                        //Image send.
+                        Utils.trackMixpanel(ChatRecordView.this,"Activity","MediaSent","RPageTradeButtonClicked");
                         /* code to play sound in case of image prafull*/
                        /* Utils.playSound(ChatRecordView.this, R.raw.message_sent);*/
 
@@ -781,12 +814,18 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
                         CHAT_TYPE = Constants.CHAT_TYPE_AUDIO;
                         sendMsgToQB(audioFilePath);
+                        //To track through mixPanel.
+                        //Audio Send.
+                        Utils.trackMixpanel(ChatRecordView.this,"Activity","MediaSent","RPageTradeButtonClicked");
                         /* code to play sound in case of audio prafull*/
                         /*Utils.playSound(ChatRecordView.this, R.raw.message_sent);*/
                     } else if (!Utils.isEmptyString(videofilePath)) { //Video is attached
 
                         CHAT_TYPE = Constants.CHAT_TYPE_VIDEO;
                         sendMsgToQB(videofilePath);
+                        //To track through mixPanel.
+                        //Video Send.
+                        Utils.trackMixpanel(ChatRecordView.this,"Activity","MediaSent","RPageTradeButtonClicked");
                         /* code to play sound in case of video prafull*/
                         /*Utils.playSound(ChatRecordView.this, R.raw.message_sent);*/
                     }
@@ -856,6 +895,10 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 viewProfile.putExtra("phNumber", partnerPh);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
                 startActivity(viewProfile);
+
+                //To track through mixPanel.
+                //click on partner pic.
+                Utils.trackMixpanel(this,"","","RPageCheckMyPartnerProfile");
                 break;
 
 
@@ -1006,6 +1049,9 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         temp.content_uri = tempPath;
         //     setValueForHistory(temp);
         ShowValueinChat(temp);
+        //To track through mixPanel.
+        //No of clicks send with Media(Audio,Video,Image).
+        Utils.trackMixpanel(ChatRecordView.this,"ClicksSent",""+temp.clicks,"RPageTradeButtonClicked");
 
         // mImageCaptureUri=null;
 
@@ -1640,8 +1686,10 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 case Constants.CROP_PICTURE:
                     if (data.getStringExtra("retake").equalsIgnoreCase("fromchatCamare")) {
 
+
                         //To track through mixPanel.if User Cancells image Clicked from Camera.
                         Utils.trackMixpanel(this,"Activity","ImageAttachmentCancelled","AttachButtonClicked");
+
                         Intent intent1 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                         mImageCaptureUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
                         intent1.putExtra("return-data", true);

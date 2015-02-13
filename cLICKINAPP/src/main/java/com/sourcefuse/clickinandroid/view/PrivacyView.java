@@ -33,6 +33,7 @@ public class PrivacyView extends Activity implements View.OnClickListener {
 
 
         //code- to handle uncaught exception
+        if(Utils.mStartExceptionTrack)
         Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
 

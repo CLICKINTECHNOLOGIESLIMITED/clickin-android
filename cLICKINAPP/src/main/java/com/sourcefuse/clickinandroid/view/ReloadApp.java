@@ -136,6 +136,7 @@ public class ReloadApp extends Activity {
                 }
             }
             data.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
             startActivity(data);
             finish();
             Utils.dismissBarDialog();

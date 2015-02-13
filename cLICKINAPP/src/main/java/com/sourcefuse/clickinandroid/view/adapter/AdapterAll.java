@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.sourcefuse.clickinandroid.model.bean.CardBean;
+import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.Card;
 import com.sourcefuse.clickinandroid.view.ViewTradeCart;
 import com.sourcefuse.clickinapp.R;
@@ -89,6 +90,9 @@ public class AdapterAll extends ArrayAdapter<CardBean> {
 
                     context.startActivity(intent);
                     ((Activity) context).overridePendingTransition(R.anim.slide_in_up, R.anim.stay);
+                    //To track through mixPanel.
+                    //TradeCard Visited.
+                    Utils.trackMixpanel(context, "Card Visited", Title,"RPageTradeButtonClicked");
 
                 }
 
