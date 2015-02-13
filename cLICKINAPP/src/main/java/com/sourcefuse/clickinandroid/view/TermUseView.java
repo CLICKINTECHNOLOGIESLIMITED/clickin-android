@@ -26,6 +26,7 @@ public class TermUseView extends Activity implements View.OnClickListener {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         //code- to handle uncaught exception
+        if(Utils.mStartExceptionTrack)
         Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
         setContentView(R.layout.view_term_use);

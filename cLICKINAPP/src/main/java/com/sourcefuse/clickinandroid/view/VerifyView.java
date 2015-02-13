@@ -39,6 +39,7 @@ public class VerifyView extends Activity implements OnClickListener,
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         //code- to handle uncaught exception
+        if(Utils.mStartExceptionTrack)
         Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
         setContentView(R.layout.view_verify);
@@ -169,6 +170,9 @@ public class VerifyView extends Activity implements OnClickListener,
 
             Utils.launchBarDialog(this);
             authManager.getVerifyCode(authManager.getPhoneNo(), Utils.deviceId, digits, Constants.DEVICETYPE);
+            //To track through mixPanel.
+            //Verify Verification Code.
+            Utils.trackMixpanel(VerifyView.this,"","","VerificationCodeEntered");//track Verification Code Entered through mixPanel
 
         } else {
             d_four.setBackgroundDrawable(getResources().getDrawable(R.drawable.e_v_number_field_empty));
@@ -185,6 +189,9 @@ public class VerifyView extends Activity implements OnClickListener,
                 Utils.fromSignalertDialogDammit(VerifyView.this);
                 authManager = ModelManager.getInstance().getAuthorizationManager();
                 authManager.reSendVerifyCode(authManager.getPhoneNo(), authManager.getUsrToken());
+                //To track through mixPanel.
+                //Click Resend Verification Code.
+                Utils.trackMixpanel(VerifyView.this,"","","ResendVerificationCode");
                 break;
         }
     }
@@ -212,6 +219,9 @@ public class VerifyView extends Activity implements OnClickListener,
             Intent intent = new Intent(VerifyView.this, ProfileView.class);
             intent.putExtra("fromsignup", getIntent().getBooleanExtra("fromsignup", false));
             startActivity(intent);
+
+
+
             finish();
         } else if (getMsg.equalsIgnoreCase("Verify False")) {
             Utils.dismissBarDialog();

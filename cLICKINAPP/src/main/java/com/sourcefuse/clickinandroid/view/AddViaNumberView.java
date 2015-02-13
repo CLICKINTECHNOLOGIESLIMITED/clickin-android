@@ -39,8 +39,10 @@ public class AddViaNumberView extends Activity implements View.OnClickListener, 
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
+
         //code- to handle uncaught exception
-        Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
+        if(Utils.mStartExceptionTrack)
+            Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
         setContentView(R.layout.view_addvianumber);
 
@@ -110,6 +112,9 @@ public class AddViaNumberView extends Activity implements View.OnClickListener, 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_get_click_via_no:
+                //To track through mixPanel.
+                //Signup AddPartner.
+                Utils.trackMixpanel(AddViaNumberView.this,"","","SignUpAddAPartner");
                 if (Utils.isCountryCodeValid(edtCountryCode.getText().toString())) {
                     if (Utils.isPhoneValid(edtPhoneNo.getText().toString()) && (edtPhoneNo.getText().toString().length() >= 5) && !((EditText) findViewById(R.id.edt_cntry_cd)).getText().toString().equalsIgnoreCase("+(null)")) {
                         mPhNo = edtCountryCode.getText().toString().trim() + edtPhoneNo.getText().toString().trim();

@@ -204,6 +204,7 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
 
 
         //code- to handle uncaught exception
+        if(Utils.mStartExceptionTrack)
         Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
 
@@ -299,6 +300,10 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
                 && lname.getText().toString().length() > 1
                 && email.getText().toString().length() > 1 && Utils.isEmailValid(email.getText().toString()) && ((mCurrentyear - year) <= 17)) {
             done.setBackgroundResource(R.drawable.c_next_active);
+            if(fname.hasFocus()) // check user editing first name
+                //To track through mixPanel.
+                //Fill User Profile Natively(Manually).
+                Utils.trackMixpanel(ProfileView.this,"","","FillProfileInfoNatively");
         } else {
             done.setBackgroundResource(R.drawable.c_next_active);
         }
@@ -450,6 +455,9 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
             /*
              * Connect With FB only session is create in this Activity
 			 */
+                //To track through mixPanel.
+                //Fill User Information through facebook.
+                Utils.trackMixpanel(ProfileView.this,"","","FillProfileInfoThroughFacebook");
 
                 if (Utils.isConnectingToInternet(ProfileView.this)) {
 

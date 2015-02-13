@@ -3,6 +3,7 @@ package com.sourcefuse.clickinandroid.view.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.sourcefuse.clickinandroid.model.ChatManager;
 import com.sourcefuse.clickinandroid.model.bean.CardBean;
+import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.Card;
 import com.sourcefuse.clickinapp.R;
 
@@ -85,10 +87,13 @@ public class CardGridViewAdapter extends ArrayAdapter<CardBean> {
                 intent.putExtra("Discription", Discription);
                 intent.putExtra("card_url", url);
                 intent.putExtra("card_DB_ID", bean.getCard_Id());
-                // intent.putExtra("card_id", bean.getCard_Id());
+
 
                 context.startActivity(intent);
                 ((Activity) context).overridePendingTransition(R.anim.slide_in_up, R.anim.stay);
+                //To track through mixPanel.
+                //TradeCard Visited.
+                Utils.trackMixpanel(context, "Card Visited", Discription,"RPageTradeButtonClicked");
 
             }
 

@@ -49,6 +49,7 @@ public class FeedView extends ClickInBaseView implements View.OnClickListener {
         super.onCreate(savedInstanceState);
 
 //code- to handle uncaught exception
+        if(Utils.mStartExceptionTrack)
         Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
 

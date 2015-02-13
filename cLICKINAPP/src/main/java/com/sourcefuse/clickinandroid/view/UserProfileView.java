@@ -100,6 +100,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         super.onCreate(savedInstanceState);
 
         //code- to handle uncaught exception
+        if(Utils.mStartExceptionTrack)
         Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
         setContentView(R.layout.view_userprofile);
@@ -351,12 +352,16 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
                 intentFollower.putExtra("FromOwnProfile", true);
                 startActivity(intentFollower);
                 this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
+
+
                 break;
             case R.id.btn_following:
                 Intent intentFollowing = new Intent(UserProfileView.this, FollowingListView.class);
                 intentFollowing.putExtra("FromOwnProfile", true);
                 startActivity(intentFollowing);
                 this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
                 break;
             case R.id.btn_add_someone:
                 Intent intent = new Intent(UserProfileView.this, AddSomeoneView.class);

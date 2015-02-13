@@ -70,9 +70,9 @@ public class DialogActivity extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
 
 
-           /* InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            if(getCurrentFocus().getWindowToken() != null)
-                inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);*/
+            InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            if(getCurrentFocus() != null && getCurrentFocus().getWindowToken() != null)
+                inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 
         Intent intent = new Intent(DialogActivity.this, SplashView.class);
         startActivity(intent);

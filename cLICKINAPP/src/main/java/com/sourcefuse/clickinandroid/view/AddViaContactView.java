@@ -45,6 +45,7 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
 
 
         //code- to handle uncaught exception
+        if(Utils.mStartExceptionTrack)
         Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
 
@@ -188,7 +189,9 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
                 String mPhNo;
                 String countryCode = cntry_cd.getText().toString().trim();
 
-
+                //To track through mixPanel.
+                //Signup AddPartner.
+                Utils.trackMixpanel(AddViaContactView.this,"","","SignUpAddAPartner");
                 if (phoneNo.getText().toString().length() >= 5) {
                     if (!(countryCode.contains("null"))) {
                         mPhNo = cntry_cd.getText().toString().trim() + phoneNo.getText().toString().trim();

@@ -107,7 +107,8 @@ public class EditMyProfileView extends ClickInBaseView implements View.OnClickLi
         super.onCreate(savedInstanceState);
 
         //code- to handle uncaught exception
-        Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
+        if(Utils.mStartExceptionTrack)
+            Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
         setContentView(R.layout.view_editprofile);
         addMenu(false);

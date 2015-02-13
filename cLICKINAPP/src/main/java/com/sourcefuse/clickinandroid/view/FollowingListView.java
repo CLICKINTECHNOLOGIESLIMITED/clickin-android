@@ -35,6 +35,7 @@ public class FollowingListView extends ClickInBaseView implements View.OnClickLi
         super.onCreate(savedInstanceState);
 
         //code- to handle uncaught exception
+        if(Utils.mStartExceptionTrack)
         Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
         setContentView(R.layout.view_followinglist);

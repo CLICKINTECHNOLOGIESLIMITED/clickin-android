@@ -58,6 +58,7 @@ public class ViewTradeCart extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         //code- to handle uncaught exception
+        if(Utils.mStartExceptionTrack)
         Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
 
@@ -346,6 +347,14 @@ public class ViewTradeCart extends Activity implements View.OnClickListener {
                         overridePendingTransition(0, R.anim.slide_out_finish_up);
                             /*code to play sound in case of trade cart */
                         Utils.playSound(ViewTradeCart.this, R.raw.message_sent);
+
+                        //To track through mixPanel.
+                        //TradeCard Visited.
+                        Utils.trackMixpanel(this, "Card Visited", cardTitle,"RPageTradeButtonClicked");
+                        //To track through mixPanel.
+                        //TradeCard Played.
+                        Utils.trackMixpanel(this,"CardPlayedName",""+cardTitle,"RPageTradeButtonClicked");
+
                     }
                     //loop- ends here if user is card owner
                 } else {//
@@ -395,6 +404,13 @@ public class ViewTradeCart extends Activity implements View.OnClickListener {
                     overridePendingTransition(0, R.anim.slide_out_finish_up);
                         /*code to play sound in case of trade cart */
                     Utils.playSound(ViewTradeCart.this, R.raw.message_sent);
+
+                    //To track through mixPanel.
+                    //TradeCard Visited.
+                    Utils.trackMixpanel(this, "Card Visited", cardTitle,"RPageTradeButtonClicked");
+                    //To track through mixPanel.
+                    //TradeCard Played.
+                    Utils.trackMixpanel(this,"CardPlayedName",""+cardTitle,"RPageTradeButtonClicked");
                 }//loop ends here if user is not card owner
                 //  finish();
                 break;
@@ -403,6 +419,7 @@ public class ViewTradeCart extends Activity implements View.OnClickListener {
                 card_text.requestFocus();
                 card_text.setHint("");
                 card_text.setGravity(Gravity.CENTER);
+
         }
 
 

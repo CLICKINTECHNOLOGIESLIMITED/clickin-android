@@ -7,6 +7,7 @@ import android.view.Window;
 import android.widget.ImageView;
 
 import com.sourcefuse.clickinandroid.utils.UnCaughtExceptionHandler;
+import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
 import com.squareup.picasso.Picasso;
 
@@ -23,7 +24,8 @@ public class Feed_large_img extends Activity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 //code- to handle uncaught exception
-        Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
+        if(Utils.mStartExceptionTrack)
+            Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
         setContentView(R.layout.feeds_image);
         this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);

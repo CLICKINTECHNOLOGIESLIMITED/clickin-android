@@ -42,6 +42,7 @@ public class FollowerList extends ClickInBaseView implements
         slidemenu.setTouchModeAbove(2);
 
 //code- to handle uncaught exception
+        if(Utils.mStartExceptionTrack)
         Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
         listView = (ListView) findViewById(R.id.list_follower);

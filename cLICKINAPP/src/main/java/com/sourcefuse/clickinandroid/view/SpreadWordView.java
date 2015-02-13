@@ -56,7 +56,8 @@ public class SpreadWordView extends Activity implements OnClickListener {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         //code- to handle uncaught exception
-        Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
+        if (Utils.mStartExceptionTrack)
+            Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
         setContentView(R.layout.view_spread_word);
         this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
@@ -178,6 +179,9 @@ public class SpreadWordView extends Activity implements OnClickListener {
             case R.id.btn_next:
                 Utils.launchBarDialog(this);
 
+                //To track through mixPanel.
+                //Click To Skip Inviting Friends.
+                Utils.trackMixpanel(SpreadWordView.this, "", "", "SignUpSkipInvitingFriends");
                 //   authManager.getProfileInfo("", authManager.getPhoneNo(), authManager.getUsrToken());
                 Intent clickersView = new Intent(SpreadWordView.this, UserProfileView.class);
                 clickersView.putExtra("FromSignup", true);
@@ -197,7 +201,9 @@ public class SpreadWordView extends Activity implements OnClickListener {
                             uri.append(",");
                     }
 
-
+                    //To track through mixPanel.
+                    //Click To Invite Friends
+                    Utils.trackMixpanel(SpreadWordView.this, "", "" + Utils.groupSms.size(), "FriendsInvited");
                     /* send sms if not not register */
                  /*  send sms for nexus 5 check build version*/
                  /* prafull code */

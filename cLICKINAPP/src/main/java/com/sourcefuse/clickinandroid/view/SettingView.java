@@ -73,6 +73,7 @@ public class SettingView extends Activity implements View.OnClickListener, Compo
 
 
         //code- to handle uncaught exception
+        if(Utils.mStartExceptionTrack)
         Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
         setContentView(R.layout.view_setting);

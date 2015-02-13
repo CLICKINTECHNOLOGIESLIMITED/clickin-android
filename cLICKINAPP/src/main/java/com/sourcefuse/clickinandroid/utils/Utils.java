@@ -1459,17 +1459,21 @@ public class Utils {
     }
 
 
-    public void trackMixpanel(Context context, String mEvent, String mValue) {
+    public static boolean mStartExceptionTrack = true;  // to stop exception data sending on server
+
+    // track User actions through mixPanel.
+    public static void trackMixpanel(Context context, String mKey, String mValue,String mEvent) {
 
         MixpanelAPI mixpanelAPI = MixpanelAPI.getInstance(context, Constants.MIX_PANEL_TOKEN);
         mixpanelAPI.identify("" + ModelManager.getInstance().getAuthorizationManager().getPhoneNo());
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put(mEvent, mValue);
+            jsonObject.put(mKey, mValue);
         } catch (JSONException e) {
             e.printStackTrace();
         }
         mixpanelAPI.track(mEvent, jsonObject);
+        mixpanelAPI.timeEvent(mEvent);
         mixpanelAPI.flush();
 
     }
