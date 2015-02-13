@@ -3,7 +3,6 @@ package com.sourcefuse.clickinandroid.view;
 
 import android.app.Activity;
 import android.app.ActivityManager;
-import android.app.NotificationManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -37,7 +36,6 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ChatManager;
-import com.sourcefuse.clickinandroid.model.ClickInNotificationManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.NewsFeedManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
@@ -105,7 +103,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         header.findViewById(R.id.iv_open_left_menu).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Utils.trackMixpanel(ClickInBaseView.this,"","","LeftMenuOpened");////To track through mixPanel,if Left Menu is opened.
                 slidemenu.showMenu();
             }
         });
@@ -326,6 +324,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
                 boolean handled = false;
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
 
+                Utils.trackMixpanel(ClickInBaseView.this,"","","UserSearched");//Track event for MixPanel,if user searched from left slide menu
                     if (!(edt_search.getText().toString().length() > 0)) {
                         hideSearchlist.setVisibility(View.GONE);
                         searchList.setVisibility(View.GONE);
@@ -451,10 +450,9 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
                         clickInadapter.notifyDataSetChanged();
                     }
 /* prafulll code to set counter to zero */
-
+                    //Track event for MixPanel,If Partner name is clicked from left menu.
+                    Utils.trackMixpanel(ClickInBaseView.this,"","","LeftMenuPartnerButtonClicked");
                     switchView(rId, relationListIndex);
-
-
                 }
             }
         });
@@ -464,9 +462,9 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
             public void onClick(View arg0) {
 
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+
                 if(edt_search.getWindowToken() != null)
                     imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
-
 
                 Intent intent = new Intent(ClickInBaseView.this, AddSomeoneView.class);
                 intent.putExtra("fromsignup", false);
@@ -519,6 +517,8 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
                         /* code for animation prafull*/
 
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+                //To track through mixPanel. if Invite Button is clicked from Left Menu.
+                Utils.trackMixpanel(ClickInBaseView.this,"","","LeftMenuInviteButtonClicked");
             }
         });
         theFeed.setOnClickListener(new View.OnClickListener() {
@@ -571,6 +571,8 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
                 }
                 Constants.mInAppNotification = false;
+
+                Utils.trackMixpanel(ClickInBaseView.this,"","","OwnProfileOpened");//To track through mixPanel,If Own Profile is opened from left menu
 
             }
         });

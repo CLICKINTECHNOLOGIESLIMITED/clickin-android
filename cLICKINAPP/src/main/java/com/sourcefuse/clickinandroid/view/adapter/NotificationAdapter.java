@@ -17,7 +17,7 @@ import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.PicassoManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
 import com.sourcefuse.clickinandroid.model.bean.NotificationBean;
-import com.sourcefuse.clickinandroid.view.ClickInBaseView;
+import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.FeedView;
 import com.sourcefuse.clickinandroid.view.FollowerList;
 import com.sourcefuse.clickinandroid.view.FollowingListView;
@@ -99,11 +99,13 @@ public class NotificationAdapter extends ArrayAdapter<NotificationBean> {
         holder.mNotificationLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Utils.trackMixpanel((Activity)context,"ViewedNotificationName",item.getNotificationType(),"NotificationsOpened");//track notification through mixpanel
 
                 if (item.getNotificationType().matches(context.getResources().getString(R.string.txt_relationstatus)) ||
                         item.getNotificationType().matches(context.getResources().getString(R.string.txt_relation_visibility))
                         || item.getNotificationType().equalsIgnoreCase(context.getResources().getString(R.string.txt_relationrequest)) ||
                         item.getNotificationType().equalsIgnoreCase(context.getResources().getString(R.string.txt_relationdelete))) {
+
 
 
                     Intent intent = new Intent(getContext(), UserProfileView.class);
@@ -125,15 +127,18 @@ public class NotificationAdapter extends ArrayAdapter<NotificationBean> {
                     intentFollower.putExtra("FromOwnProfile", true);
                     context.startActivity(intentFollower);
                     ((Activity) context).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
                 } else if (item.getNotificationType().equalsIgnoreCase(context.getResources().getString(R.string.follow_status))) {
                     Intent intentFollowing = new Intent(getContext(), FollowingListView.class);
                     intentFollowing.putExtra("FromOwnProfile", true);
                     context.startActivity(intentFollowing);
                     ((Activity) context).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
                 } else if (item.getNotificationType().equalsIgnoreCase(context.getResources().getString(R.string.type_share))) {
                     Intent intent = new Intent(getContext(), FeedView.class);
                     context.startActivity(intent);
                     ((Activity) context).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+
                 } else if (item.getNotificationType().equalsIgnoreCase(context.getResources().getString(R.string.type_update))) {
 
 
@@ -156,6 +161,7 @@ public class NotificationAdapter extends ArrayAdapter<NotificationBean> {
                     PicassoManager.setPicasso(context);
                     PicassoManager.clearCache();
 
+
                 } else if (item.getNotificationType().equalsIgnoreCase(context.getResources().getString(R.string.star)) ||
                         item.getNotificationType().equalsIgnoreCase(context.getResources().getString(R.string.commented)) ||
                         item.getNotificationType().equalsIgnoreCase(context.getResources().getString(R.string.report))) {
@@ -165,6 +171,7 @@ public class NotificationAdapter extends ArrayAdapter<NotificationBean> {
                     intent.putExtra("feedId", item.newsfeed_id);
                     context.startActivity(intent);
                     ((Activity) context).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+
                 }
             }
         });

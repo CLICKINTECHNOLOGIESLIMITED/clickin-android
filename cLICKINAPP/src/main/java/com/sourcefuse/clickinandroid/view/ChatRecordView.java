@@ -24,7 +24,6 @@ import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -587,6 +586,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         super.onBackPressed();
         finish();
         overridePendingTransition(0, R.anim.top_out);
+
+
     }
 
     public void imageDialog() {
@@ -1569,6 +1570,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                     break;
                 case VideoUtil.REQUEST_VIDEO_CAPTURED:
                     if (!Utils.isEmptyString(VideoUtil.videofilePath)) {
+                        ////To track through mixPanel.Vedio Attached from Camera
+                        Utils.trackMixpanel(this,"Activity","SelectedVideoAttached","AttachButtonClicked");
                         videofilePath = VideoUtil.videofilePath;
                         Bitmap bMap = ThumbnailUtils.createVideoThumbnail(VideoUtil.videofilePath, MediaStore.Video.Thumbnails.MINI_KIND);
                         if (videofilePath.contains(".mp4")) {
@@ -1594,6 +1597,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                     break;
                 case VideoUtil.REQUEST_VIDEO_CAPTURED_FROM_GALLERY:
                     // mImageCaptureUri = data.getData();
+                    //To track through mixPanel.Attach Vedio From Gallery
+                    Utils.trackMixpanel(this,"Activity","SelectedVideoAttached","AttachButtonClicked");
                     path = Utils.getRealPathFromURI(data.getData(), ChatRecordView.this);
                     videofilePath = path;
                     Bitmap bMap = ThumbnailUtils.createVideoThumbnail(path, MediaStore.Video.Thumbnails.MINI_KIND);
@@ -1634,12 +1639,17 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
                 case Constants.CROP_PICTURE:
                     if (data.getStringExtra("retake").equalsIgnoreCase("fromchatCamare")) {
+
+                        //To track through mixPanel.if User Cancells image Clicked from Camera.
+                        Utils.trackMixpanel(this,"Activity","ImageAttachmentCancelled","AttachButtonClicked");
                         Intent intent1 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                         mImageCaptureUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
                         intent1.putExtra("return-data", true);
                         intent1.putExtra(MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
                         startActivityForResult(intent1, Constants.CAMERA_REQUEST);
                     } else if (data.getStringExtra("retake").equalsIgnoreCase("fromchatGallery")) {
+                        //To track through mixPanel.if User Cancells image Picked from Gallery.
+                        Utils.trackMixpanel(this,"Activity","ImageAttachmentCancelled","AttachButtonClicked");
                         Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                         startActivityForResult(pickPhoto, Constants.SELECT_PICTURE);
                     } else if (authManager.getmResizeBitmap() != null) {
