@@ -715,7 +715,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                  /* for map to set text location shared */
 
 
-                if (!(Utils.isEmptyString(temp.location_coordinates))) {
+                if (!(Utils.isEmptyString(temp.location_coordinates))) {//REceiver
                     row.findViewById(R.id.parent_clicks_area_share).setVisibility(View.VISIBLE);
                     if (!(Utils.isEmptyString(temp.sharingMedia))) {
                         ((LinearLayout) row.findViewById(R.id.parent_clicks_area_share)).setBackgroundColor(context.getResources().getColor(R.color.owner_relation_header_with_m));

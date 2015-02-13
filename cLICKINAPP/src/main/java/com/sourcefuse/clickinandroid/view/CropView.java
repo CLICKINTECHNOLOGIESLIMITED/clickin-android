@@ -139,6 +139,7 @@ public class CropView extends Activity implements View.OnClickListener {
                         e.printStackTrace();
                     }
                 } else if (getIntent().getStringExtra("from").equalsIgnoreCase("fromchatGallery") || getIntent().getStringExtra("from").equalsIgnoreCase("fromchatCamare")) {
+
                     try {
                         Intent intent = new Intent(CropView.this, ChatRecordView.class);
                         intent.putExtra("retake", getIntent().getStringExtra("from"));
@@ -174,6 +175,8 @@ public class CropView extends Activity implements View.OnClickListener {
 
 
                 if (getIntent().getStringExtra("from").equalsIgnoreCase("fromchatGallery") || getIntent().getStringExtra("from").equalsIgnoreCase("fromchatCamare")) {
+                    //To track through mixPanel.if Image is attached.
+                    Utils.trackMixpanel(CropView.this,"Activity","SelectedImageAttached","AttachButtonClicked");
                     authManager.setmResizeBitmap(resizebitmap.copy(Bitmap.Config.ARGB_8888, true));
                     Intent intent = new Intent(getApplicationContext(), EditMyProfileView.class);
                     intent.putExtra("retake", "fckoff");

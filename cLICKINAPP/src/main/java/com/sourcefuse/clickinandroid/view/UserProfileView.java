@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -353,7 +352,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
                 startActivity(intentFollower);
                 this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 
-
+                Utils.trackMixpanel(this,"","","MyFollowers");//track Followers Button mixpanel
 
                 break;
             case R.id.btn_following:
@@ -362,17 +361,21 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
                 startActivity(intentFollowing);
                 this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 
+                Utils.trackMixpanel(this,"","","MyFollowing");//track Following Button mixpanel
+
                 break;
             case R.id.btn_add_someone:
                 Intent intent = new Intent(UserProfileView.this, AddSomeoneView.class);
                 intent.putExtra("FromOwnProfile", true);
                 intent.putExtra("fromsignup", false);
                 startActivity(intent);
+                Utils.trackMixpanel(this,"","","ClickInWithSomeone");//track Click on Add Someone Button mixpanel
                 break;
             case R.id.btn_edit_profile:
                 Intent editProfile = new Intent(UserProfileView.this, EditMyProfileView.class);
                 startActivity(editProfile);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                Utils.trackMixpanel(this,"","","Edit Profile");////track For Edit profile Button Followers Button mixpanel
                 break;
         }
     }

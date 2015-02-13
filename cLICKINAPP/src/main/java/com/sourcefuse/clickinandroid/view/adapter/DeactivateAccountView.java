@@ -145,6 +145,7 @@ public class DeactivateAccountView extends Activity implements View.OnClickListe
             case R.id.btn_good_bye:
 
 
+
                 String phone_no, user_token, password, reason_type, other_reason;
 
                 int radioButtonID = mradioGroup.getCheckedRadioButtonId();
@@ -166,6 +167,7 @@ public class DeactivateAccountView extends Activity implements View.OnClickListe
                 }*/
                 if (!password.isEmpty() && password.length() >= 8) {
                     Utils.launchBarDialog(DeactivateAccountView.this);
+                    Utils.trackMixpanel(DeactivateAccountView.this,"Activity","AccountDeactivated","LeftMenuSettingsButtonClicked");//track Account Deactivation mixpanel
                     settingManager.deactivteAccount(phone_no, user_token, reason_type, other_reason, email_opt_out, password);
                 } else if (password.isEmpty()) {
                     Utils.fromSignalDialog(DeactivateAccountView.this, AlertMessage.DEACTIVATE_ENTER_PASSWORD);
