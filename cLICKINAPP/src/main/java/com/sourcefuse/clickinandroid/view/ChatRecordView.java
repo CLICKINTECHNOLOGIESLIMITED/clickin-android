@@ -102,7 +102,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     //flag to start and stop thread to check online status
     public static boolean CHECK_ONLINE_STATUS_FLAG = false;
     public static TextView load_earlier;
-    /*public MyQbChatService myQbChatService;*/
+    public MyQbChatService myQbChatService;
     int myvalue = 0, min = -10;//akshit ,To set my value initially to zero for send paper rocket condition
     String chatString = "";
     int seekValue = 0;
@@ -152,7 +152,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     private int CHAT_TYPE;
     private boolean mIsBound;
 
-    /*private ServiceConnection mConnection = new ServiceConnection() {
+    private ServiceConnection mConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
             // This is called when the connection with the service has been
             // established, giving us the service object we can use to
@@ -161,7 +161,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             // cast its IBinder to a concrete class and directly access it.
             myQbChatService = ((MyQbChatService.LocalBinder) service).getService();
             mIsBound = true;
-           *//* myQbChatService.createRoom(mRoomName);*//*
+           /* myQbChatService.createRoom(mRoomName);*/
 
             // showMessages();
 
@@ -180,7 +180,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 //            Toast.makeText(Binding.this, R.string.local_service_disconnected,
 //                    Toast.LENGTH_SHORT).show();
         }
-    };*/
+    };
     private String onlineStatus;
     private String mChatId;  // to save image qbchatid and systemmillseconds
     private String mLocation_Coordinates = "";
@@ -282,7 +282,6 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
         Intent i = new Intent(this, MyQbChatService.class);
         bindService(i, mConnection, Context.BIND_AUTO_CREATE);
-
         rId = getIntent().getExtras().getString("rId");
         //clear the message list always to initiate a new chat
         ModelManager.getInstance().getChatManager().chatMessageList.clear();
@@ -793,7 +792,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                         temp.chatId = authManager.getQBId() + authManager.partnerQbId + sentOntime;   // chat id for text and clicks
 
 
-                        mQbChatService.sendMessage(temp);
+                        myQbChatService.sendMessage(temp);
                         ShowValueinChat(temp);
 
                         createRecordForHistory(temp);
@@ -1102,7 +1101,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
         if (actionReq.equalsIgnoreCase("UPDATE")) {
             //  Utils.launchBarDialog(this);
-            if (mQbChatService == null) {
+            if (myQbChatService == null) {
                 Intent i = new Intent(this, MyQbChatService.class);
                 bindService(i, mConnection, Context.BIND_AUTO_CREATE);
             }
@@ -1173,8 +1172,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
             ShowValueinChat(temp);
 
-            if (mQbChatService != null)
-                mQbChatService.sendMessage(temp);
+            if (myQbChatService != null)
+                myQbChatService.sendMessage(temp);
 
             createRecordForHistory(temp);
 
@@ -1269,8 +1268,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             //so keep original object here
             ShowValueinChat(temp);
             objToSend.chatType = Constants.CHAT_TYPE_SHARING;
-            if (mQbChatService != null)
-                mQbChatService.sendMessage(objToSend);
+            if (myQbChatService != null)
+                myQbChatService.sendMessage(objToSend);
 
             createRecordForHistory(temp);
 
@@ -1299,12 +1298,12 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         // TODO Auto-generated method stub
         if (s.toString().trim().length() > 0) {//akshit to trim the space while showing send button
             setVisibilityForSend();//akshit code
-            mQbChatService.sendTypeNotification("YES", authManager.partnerQbId);
+            myQbChatService.sendTypeNotification("YES", authManager.partnerQbId);
 
         } else {
             setVisibilityForSendButton();//akshit code if length is 0
             if (chatText.hasFocus())//akshit code to check focus on edit box.if not focused then isComposing will not appear.
-                mQbChatService.sendTypeNotification("NO", authManager.partnerQbId);
+                myQbChatService.sendTypeNotification("NO", authManager.partnerQbId);
 
         }
 
@@ -1347,9 +1346,9 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 //code to check online status or not
                 if (!Utils.isEmptyString(ModelManager.getInstance().getAuthorizationManager().partnerQbId)) {
 
-                    if (mQbChatService != null) {
+                    if (myQbChatService != null) {
                         if (ModelManager.getInstance().getAuthorizationManager().partnerQbId != null)
-                            mQbChatService.CheckOnlineStatus(Integer.parseInt(ModelManager.getInstance().getAuthorizationManager().partnerQbId));
+                            myQbChatService.CheckOnlineStatus(Integer.parseInt(ModelManager.getInstance().getAuthorizationManager().partnerQbId));
                     }
                 }
             }
@@ -1368,6 +1367,12 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
     }
 
+    /*   public String getRealPathFromURI(Uri uri) {
+             Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+             cursor.moveToFirst();
+             int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+             return cursor.getString(idx);
+       }*/
 
 
     protected void onResume() {
@@ -2176,7 +2181,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
                             tempObj.textMsg = temp.clicks + "        " + temp.textMsg;
                         }
-                        mQbChatService.sendMessage(tempObj); // copy constructor
+                        myQbChatService.sendMessage(tempObj); // copy constructor
 
                         adapter.notifyDataSetChanged();
                         createRecordForHistory(temp);

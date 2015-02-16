@@ -2,18 +2,14 @@ package com.sourcefuse.clickinandroid.view;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.sourcefuse.clickinapp.R;
@@ -68,25 +64,39 @@ public class DialogActivity extends Activity {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                String[] TO = {"monika.bindal@sourcefuse.com", "akshit.sharma@sourcefuse.com"};
-                String[] CC = {"prafull.singh@sourcefuse.com"};
-                Intent emailIntent = new Intent(Intent.ACTION_SEND);
-                emailIntent.setData(Uri.parse("mailto:"));
-                emailIntent.setType("text/plain");
-                emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
-                emailIntent.putExtra(Intent.EXTRA_CC, CC);
-                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Error Report");
-                emailIntent.putExtra(Intent.EXTRA_TEXT, "" + mInfo);
-                try {
-                    startActivityForResult(Intent.createChooser(emailIntent, "Send mail..."), RESULT);
+                new Thread(new Runnable() {
 
-                } catch (android.content.ActivityNotFoundException ex) { // In case of Exception start Splash View.
+                    public void run() {
 
-                    Intent intent = new Intent(DialogActivity.this, SplashView.class);
-                    startActivity(intent);
-                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
-                    finish();
-                }
+                        try {
+
+                            GmailCrashLogSender sender = new GmailCrashLogSender(
+
+                                    "tester.sourcefuse@gmail.com",//sender username and password for authentication.
+                                    "sourcefuse");
+
+                            sender.sendMail("Error Report", ""+mInfo,
+                                    "tester.sourcefuse@gmail.com"//sender email to set sender in mail
+                         );
+
+                        } catch (Exception e) {// In case of Exception start Splash View.
+
+                            Intent intent = new Intent(DialogActivity.this, SplashView.class);
+                            startActivity(intent);
+                            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+                            finish();
+
+                        }
+
+                    }
+
+                }).start();
+
+                Intent intent = new Intent(DialogActivity.this, SplashView.class);//start splash view
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+                finish();
+
             }
         });
 

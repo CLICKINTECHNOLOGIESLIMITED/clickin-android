@@ -139,7 +139,6 @@ public class PlayItSafeView extends Activity implements View.OnClickListener, Te
             //monika-code to fetch Qb id as we are not getting it while verifycode service
             authManager.signIn(authManager.getPhoneNo(), pwd, Utils.deviceId, Constants.DEVICETYPE);
 
-
         } else if (message.equalsIgnoreCase("PlayItSafe False")) {
             Utils.dismissBarDialog();
             Utils.fromSignalDialog(this, authManager.getMessage());

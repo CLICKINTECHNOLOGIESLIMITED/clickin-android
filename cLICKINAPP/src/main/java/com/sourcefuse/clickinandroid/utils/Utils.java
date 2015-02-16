@@ -1475,7 +1475,7 @@ public class Utils {
     }
 
 
-    public static boolean mStartExceptionTrack = false;  // to stop exception data sending on server
+    public static boolean mStartExceptionTrack = true;  // to stop exception data sending on server
 
     // track User actions through mixPanel.
     public static void trackMixpanel(Context context, String mKey, String mValue, String mEvent, boolean mSetProfile) {
@@ -1484,9 +1484,7 @@ public class Utils {
         mixpanelAPI.identify("" + ModelManager.getInstance().getAuthorizationManager().getPhoneNo());
 
 
-        Log.e("name---->", "" + ModelManager.getInstance().getAuthorizationManager().getUserName());
-        Log.e("getEmailId---->", "" + ModelManager.getInstance().getAuthorizationManager().getEmailId());
-        Log.e("getGender---->", "" + ModelManager.getInstance().getAuthorizationManager().getGender());
+        
         if (mSetProfile) {
             JSONObject jsonObject1 = new JSONObject();
             try {
