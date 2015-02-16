@@ -30,6 +30,10 @@ import com.sourcefuse.clickinapp.R;
 /**
  * Created by monika on 3/2/15.
  */
+/**
+* This class is called when Uncaught Exception is occurs.
+*
+* */
 public class UnCaughtExceptionHandler implements
         Thread.UncaughtExceptionHandler {
     private final Activity myContext;
@@ -44,12 +48,19 @@ public class UnCaughtExceptionHandler implements
         exception.printStackTrace(new PrintWriter(stackTrace));
         String s = stackTrace.toString();
 
+
+        /* Information When Application Got Crashed.*/
         String mInfo = "BRAND ====>" + Build.BRAND + "\nDevice ====>" + Build.DEVICE + "\nModel ====>" + Build.MODEL +
                 "\nId ====>" + Build.ID + "\nProduct ====>" + Build.PRODUCT + "\nSDK ====>" +
                 Build.VERSION.SDK + "\nRelease ====>" + Build.VERSION.RELEASE + "\nIncremental ====>" +
                 Build.VERSION.INCREMENTAL + "\nMANUFACTURER ====>" + Build.MANUFACTURER + "\nActivity ====>" + myContext + "\nException ====>" + stackTrace.toString();
 
 
+
+        /**
+        * Start Dialog Activity when application got crashed.
+        *
+        * */
         Intent intent = new Intent(myContext, DialogActivity.class);
         intent.putExtra("mInfo", mInfo);
         myContext.startActivity(intent);
