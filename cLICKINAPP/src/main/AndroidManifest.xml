@@ -75,7 +75,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.sourcefuse.clickinandroid.view.DialogActivity"
-            android:theme="@android:style/Theme.Dialog"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait" />
 
 

@@ -131,7 +131,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
     private void switchView(String rid, int relationListIndex) {
 
         relationManager = ModelManager.getInstance().getRelationManager();
-        /*Intent intent = new Intent();*/
+       /* Intent intent = new Intent();*/
         Intent intent = new Intent(ClickInBaseView.this, ChatRecordView.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         intent.setAction("UPDATE");
