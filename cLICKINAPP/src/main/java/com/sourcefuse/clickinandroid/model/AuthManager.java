@@ -42,13 +42,13 @@ public class AuthManager {
     //    private String is_new_clickin_user = "";
     private String usrToken;
     private String userId;
-    private String userName;
+    private String userName = null;
     private String userPic;
-    private String emailId;
+    private String emailId = null;
     private String follower;
     private String following;
     private String isFollowing;
-    private String gender;
+    private String gender = null;
     private String dOB;
     private String deviceRegistereId;
     private String userCity;
@@ -78,7 +78,6 @@ public class AuthManager {
     private String mLatLan;
     /* for notification counter */
     private int mNotificationCounter;
-
 
 
     public String getLatLan() {
@@ -601,7 +600,6 @@ public class AuthManager {
             e1.printStackTrace();
 
         }
-
 
 
         client.post(null, APIs.SIGNIN, se, "application/json",

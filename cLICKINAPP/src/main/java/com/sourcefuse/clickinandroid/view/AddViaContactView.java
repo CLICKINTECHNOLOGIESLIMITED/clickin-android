@@ -191,7 +191,7 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
 
                 //To track through mixPanel.
                 //Signup AddPartner.
-                Utils.trackMixpanel(AddViaContactView.this,"","","SignUpAddAPartner");
+                Utils.trackMixpanel(AddViaContactView.this,"","","SignUpAddAPartner",false);
                 if (phoneNo.getText().toString().length() >= 5) {
                     if (!(countryCode.contains("null"))) {
                         mPhNo = cntry_cd.getText().toString().trim() + phoneNo.getText().toString().trim();
