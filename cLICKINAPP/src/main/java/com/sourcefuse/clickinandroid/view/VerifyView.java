@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -219,10 +218,10 @@ public class VerifyView extends Activity implements OnClickListener,
             Intent intent = new Intent(VerifyView.this, ProfileView.class);
             intent.putExtra("fromsignup", getIntent().getBooleanExtra("fromsignup", false));
             startActivity(intent);
-
-
-
             finish();
+
+
+
         } else if (getMsg.equalsIgnoreCase("Verify False")) {
             Utils.dismissBarDialog();
             alertDialog(AlertMessage.WRONGVERIFYCODEI, AlertMessage.WRONGVERIFYCODEII);
