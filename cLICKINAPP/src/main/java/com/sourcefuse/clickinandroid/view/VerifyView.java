@@ -219,7 +219,6 @@ public class VerifyView extends Activity implements OnClickListener,
             finish();
 
 
-
         } else if (getMsg.equalsIgnoreCase("Verify False")) {
             Utils.dismissBarDialog();
             alertDialog(AlertMessage.WRONGVERIFYCODEI, AlertMessage.WRONGVERIFYCODEII);

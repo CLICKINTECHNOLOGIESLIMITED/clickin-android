@@ -151,6 +151,10 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         String mRelationShipId = relationManager.acceptedList.get(relationListIndex).getRelationshipId();
         String mNewUser = authManager.mIs_new_clickin_user;
 
+        //To track through mixPanel.
+        //Total Number of user clicks.
+//        Utils.trackMixpanel(ClickInBaseView.this, "TotalClicksSent", "" + userClicks, "RPageShareButtonClicked", false);
+
 
         String mValue;
         if (mNewUser != null && mNewUser.equalsIgnoreCase("yes") && mNewPrtner != null && mNewPrtner.equalsIgnoreCase("yes")) {
