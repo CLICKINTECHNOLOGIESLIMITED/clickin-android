@@ -24,6 +24,7 @@ import com.sourcefuse.clickinandroid.dbhelper.ClickinDbHelper;
 import com.sourcefuse.clickinandroid.model.bean.ChatMessageBody;
 import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.Utils;
+import com.sourcefuse.clickinandroid.view.ReloadApp;
 import com.sourcefuse.clickinapp.R;
 
 import java.sql.SQLException;
@@ -39,6 +40,7 @@ import de.greenrobot.event.EventBus;
 public class MyQbChatService extends Service {
 
     public static final int MSG_DELIVERED = 1;
+    public static final int RELOAD_APP=2;
     private final IBinder mBinder = new LocalBinder();
     Pattern p = Pattern.compile("[\\d]+_(.*?)@.*?");
     private NotificationManager mNM;
@@ -79,6 +81,12 @@ public class MyQbChatService extends Service {
                                 }
                             }
                         });
+                        break;
+                    case RELOAD_APP:
+                        Intent i=new Intent(getApplicationContext(), ReloadApp.class);
+                        startActivity(i);
+                        break;
+
 
                 }
             }
@@ -192,10 +200,10 @@ public class MyQbChatService extends Service {
                 }
                 data.putString("sharingMedia", msgObject.sharingMedia);
                 data.putString("originalChatId", msgObject.originalMessageID);
-                if (Utils.isEmptyString(msgObject.shareComment)) {
-                    //  msgObject.shareComment = "Write your caption here...";
-                    data.putString("caption", "Write your caption here...");
-                } else {
+                if(Utils.isEmptyString(msgObject.shareComment)){
+                  //  msgObject.shareComment = "Write your caption here...";
+                    data.putString("caption","Write your caption here...");
+                }else {
                     data.putString("caption", msgObject.shareComment);
                 }
                 data.putString("isMessageSender", msgObject.isMessageSender);
@@ -214,8 +222,8 @@ public class MyQbChatService extends Service {
 
         msg.setData(data);
         msg.what = ChatThread.SEND_CHAT;
-        if (handler != null)
-            handler.sendMessage(msg);
+        if(handler!=null)
+        handler.sendMessage(msg);
     }
 
 
@@ -229,8 +237,8 @@ public class MyQbChatService extends Service {
         data.putString("partnerQBId", partnerQbId);
         msg.setData(data);
         msg.what = ChatThread.SEND_CHAT;
-        if (handler != null)
-            handler.sendMessage(msg);
+        if(handler!=null)
+        handler.sendMessage(msg);
     }
 
     @Override
@@ -260,6 +268,35 @@ public class MyQbChatService extends Service {
         return mBinder;
     }
 
+    /**
+     * Show a notification while this service is running.
+     */
+    private void showNotification(String title, String message, String match_id, boolean on_team) {
+        // In this sample, we'll use the same text for the ticker and the expanded notification
+
+        // Set the icon, scrolling text and timestamp
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(this)
+                        .setSmallIcon(R.drawable.ic_launcher)
+                        .setContentTitle(title)
+                        .setContentText(message);
+//        Notification notification = new Notification(R.drawable.ic_launcher, message, System.currentTimeMillis());
+
+        // The PendingIntent to launch our activity if the user selects this notification
+     /*   Intent intent = new Intent(this, MatchOrganizer.class);
+        intent.putExtra("match_id", match_id);
+        intent.putExtra("OnChat", true);
+        intent.putExtra("on_team", on_team);
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent, 0);
+        mBuilder.setAutoCancel(true);
+        mBuilder.setContentIntent(contentIntent);*/
+        // Set the info for the views that show in the notification panel.
+//        notification.setLatestEventInfo(this, getText(R.string.local_service_label),
+//                text, contentIntent);
+
+        // Send the notification.
+        mNM.notify(mId++, mBuilder.build());
+    }
 
     public void setChatListeners() {
         Handler handler = mChatThread.getHandler();
@@ -268,8 +305,8 @@ public class MyQbChatService extends Service {
 
         msg.setData(data);
         msg.what = ChatThread.ADD_CHAT_LISTENERS;
-        if (handler != null)
-            handler.sendMessage(msg);
+        if(handler!=null)
+        handler.sendMessage(msg);
     }
 
     //function to send online status of partner
@@ -280,8 +317,8 @@ public class MyQbChatService extends Service {
         data.putInt("partnerQBId", partnerQBId);
         msg.setData(data);
         msg.what = ChatThread.CHECK_PRESENCE;
-        if (handler != null)
-            handler.sendMessage(msg);
+        if(handler!=null)
+        handler.sendMessage(msg);
     }
 
 
@@ -289,34 +326,47 @@ public class MyQbChatService extends Service {
         Handler handler = mChatThread.getHandler();
         android.os.Message msg = new android.os.Message();
         Bundle data = new Bundle();
+
         msg.setData(data);
         msg.what = ChatThread.CHAT_LOGOUT;
-        if (handler != null)
-            handler.sendMessage(msg);
-    }
-
-    public void loginToQb() {
-        Handler handler = mChatThread.getHandler();
-        android.os.Message msg = new android.os.Message();
-        Bundle data = new Bundle();
-        msg.setData(data);
-        msg.what = ChatThread.CHAT_LOGIN;
-        if (handler != null)
-            handler.sendMessage(msg);
-    }
-
-    public void stopAutoPresence() {
-        Handler handler = mChatThread.getHandler();
-        android.os.Message msg = new android.os.Message();
-        Bundle data = new Bundle();
-        msg.setData(data);
-        msg.what = ChatThread.STOP_PRESENCE;
-        if (handler != null)
-            handler.sendMessage(msg);
+        if(handler!=null)
+        handler.sendMessage(msg);
     }
 
     public void onEventMainThread(String getMsg) {
-
+        /*switch (event.getType()) {
+            case FgEvent.EVENT_GETMESSAGE_LIST:
+                if (event.getStatus()) {
+                    JSONObject object = (JSONObject) event.getValue();
+                    try {
+                        boolean status;
+                        status = object.getBoolean("ok");
+                        if (status) {
+                            JSONArray list = object.getJSONArray("msg");
+                            for (int i = 0; i < list.length(); i++) {
+                                JSONObject data = list.getJSONObject(i);
+                                android.os.Message msg = new android.os.Message();
+                                Bundle bundle = new Bundle();
+                                bundle.putString("room", data.getString("match_id"));
+                                msg.setData(bundle);
+                                msg.what = ChatThread.CREATE_ROOM;
+                                mChatThread.getHandler().sendMessage(msg);
+                                msg = new android.os.Message();
+                                bundle = new Bundle();
+                                bundle.putString("room", data.getString("match_id") + data.getString("room_team"));
+                                msg.setData(bundle);
+                                msg.what = ChatThread.CREATE_ROOM;
+                                mChatThread.getHandler().sendMessage(msg);
+                            }
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                break;
+            default:
+                break;
+        }*/
     }
 
     /**

@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -99,7 +100,6 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         super.onCreate(savedInstanceState);
 
         //code- to handle uncaught exception
-        if(Utils.mStartExceptionTrack)
         Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
         setContentView(R.layout.view_userprofile);
@@ -351,31 +351,23 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
                 intentFollower.putExtra("FromOwnProfile", true);
                 startActivity(intentFollower);
                 this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-
-                Utils.trackMixpanel(this,"","","MyFollowers",false);//track Followers Button mixpanel
-
                 break;
             case R.id.btn_following:
                 Intent intentFollowing = new Intent(UserProfileView.this, FollowingListView.class);
                 intentFollowing.putExtra("FromOwnProfile", true);
                 startActivity(intentFollowing);
                 this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-
-                Utils.trackMixpanel(this,"","","MyFollowing",false);//track Following Button mixpanel
-
                 break;
             case R.id.btn_add_someone:
                 Intent intent = new Intent(UserProfileView.this, AddSomeoneView.class);
                 intent.putExtra("FromOwnProfile", true);
                 intent.putExtra("fromsignup", false);
                 startActivity(intent);
-                Utils.trackMixpanel(this,"","","ClickInWithSomeone",false);//track Click on Add Someone Button mixpanel
                 break;
             case R.id.btn_edit_profile:
                 Intent editProfile = new Intent(UserProfileView.this, EditMyProfileView.class);
                 startActivity(editProfile);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                Utils.trackMixpanel(this,"","","Edit Profile",false);////track For Edit profile Button Followers Button mixpanel
                 break;
         }
     }
@@ -469,7 +461,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
 
     @Override
     public void onBackPressed() {
-
+            super.onBackPressed();
     }
 
     private void switchView() {

@@ -1475,7 +1475,7 @@ public class Utils {
     }
 
 
-    public static boolean mStartExceptionTrack = true;  // to stop exception data sending on server
+    public static boolean mStartExceptionTrack = false;  // to stop exception data sending on server
 
     // track User actions through mixPanel.
     public static void trackMixpanel(Context context, String mKey, String mValue, String mEvent, boolean mSetProfile) {
