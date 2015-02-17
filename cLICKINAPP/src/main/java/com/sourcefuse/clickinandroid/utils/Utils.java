@@ -1484,7 +1484,7 @@ public class Utils {
         mixpanelAPI.identify("" + ModelManager.getInstance().getAuthorizationManager().getPhoneNo());
 
 
-        
+
         if (mSetProfile) {
             JSONObject jsonObject1 = new JSONObject();
             try {
