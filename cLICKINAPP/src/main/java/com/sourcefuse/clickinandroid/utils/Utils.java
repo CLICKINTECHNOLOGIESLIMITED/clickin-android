@@ -29,6 +29,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.telephony.TelephonyManager;
 import android.util.*;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -223,6 +224,21 @@ public class Utils {
             }
         });
         dialog.show();
+    }
+
+    public static boolean isAppOnForeground(Context context) {
+        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningAppProcessInfo> appProcesses = activityManager.getRunningAppProcesses();
+        if (appProcesses == null) {
+            return false;
+        }
+        final String packageName = context.getPackageName();
+        for (ActivityManager.RunningAppProcessInfo appProcess : appProcesses) {
+            if (appProcess.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND && appProcess.processName.equals(packageName)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static void fromSignalDialogSplsh(Activity activity, String str) {
@@ -1462,10 +1478,35 @@ public class Utils {
     public static boolean mStartExceptionTrack = true;  // to stop exception data sending on server
 
     // track User actions through mixPanel.
-    public static void trackMixpanel(Context context, String mKey, String mValue,String mEvent) {
+    public static void trackMixpanel(Context context, String mKey, String mValue, String mEvent, boolean mSetProfile) {
 
         MixpanelAPI mixpanelAPI = MixpanelAPI.getInstance(context, Constants.MIX_PANEL_TOKEN);
         mixpanelAPI.identify("" + ModelManager.getInstance().getAuthorizationManager().getPhoneNo());
+
+
+
+        if (mSetProfile) {
+            JSONObject jsonObject1 = new JSONObject();
+            try {
+                if (!Utils.isEmptyString(ModelManager.getInstance().getAuthorizationManager().getPhoneNo()))
+                    jsonObject1.put("phone", "" + ModelManager.getInstance().getAuthorizationManager().getPhoneNo());
+                if (!Utils.isEmptyString(ModelManager.getInstance().getAuthorizationManager().getUserName()))
+                    jsonObject1.put("name", "" + ModelManager.getInstance().getAuthorizationManager().getUserName());
+                if (!Utils.isEmptyString(ModelManager.getInstance().getAuthorizationManager().getEmailId()))
+                    jsonObject1.put("email", "" + ModelManager.getInstance().getAuthorizationManager().getEmailId());
+                if (!Utils.isEmptyString(ModelManager.getInstance().getAuthorizationManager().getGender()))
+                    jsonObject1.put("Gender", "" + ModelManager.getInstance().getAuthorizationManager().getGender());
+                DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                Date date = new Date();
+                jsonObject1.put("created", "" + dateFormat.format(date));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            mixpanelAPI.getPeople().identify("" + ModelManager.getInstance().getAuthorizationManager().getPhoneNo());
+            mixpanelAPI.getPeople().set(jsonObject1);
+
+        }
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put(mKey, mValue);

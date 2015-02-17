@@ -120,7 +120,7 @@ public class CardView extends FragmentActivity {
                 card = bean.getTab_content();
                 //To track through mixPanel.
                 //Card Category Selected.
-                Utils.trackMixpanel(CardView.this,"CategorySelected",card,"RPageTradeButtonClicked");
+                Utils.trackMixpanel(CardView.this,"CategorySelected",card,"RPageTradeButtonClicked",false);
 
                 tabHost.getTabWidget().getChildAt(pos);
                 setTabindicator();

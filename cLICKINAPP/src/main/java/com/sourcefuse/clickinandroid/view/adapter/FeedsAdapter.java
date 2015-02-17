@@ -372,7 +372,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
             @Override
             public void onClick(View v) {
                 //To track through mixPanel.If User View attached image from feed
-                Utils.trackMixpanel((Activity)context,"Activity","ViewAttachedMedia","LeftMenuTheFeedButtonClicked");
+                Utils.trackMixpanel((Activity)context,"Activity","ViewAttachedMedia","LeftMenuTheFeedButtonClicked",false);
                 if (eachNewsFeed.get(position).getNewsFeedArray_chatDetail_type().equalsIgnoreCase("2")) {
                     Intent i = new Intent(context, Feed_large_img.class);
                     i.putExtra("url", eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content());
@@ -389,7 +389,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
             public void onClick(View view) {
 
                 //To track through mixPanel.If User play attached Audio from feed
-                Utils.trackMixpanel((Activity)context,"Activity","ViewAttachedMedia","LeftMenuTheFeedButtonClicked");
+                Utils.trackMixpanel((Activity)context,"Activity","ViewAttachedMedia","LeftMenuTheFeedButtonClicked",false);
                 Uri myUri = Uri.parse(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content());
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setDataAndType(myUri, "audio/*");
@@ -402,7 +402,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
             @Override
             public void onClick(View view) {
                 //To track through mixPanel.If User Play attached Video from feed
-                Utils.trackMixpanel((Activity)context,"Activity","ViewAttachedMedia","LeftMenuTheFeedButtonClicked");
+                Utils.trackMixpanel((Activity)context,"Activity","ViewAttachedMedia","LeftMenuTheFeedButtonClicked",false);
                 Uri intentUri = Uri.parse(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_content());
 
                 Intent intent1 = new Intent();
@@ -428,7 +428,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
                 if (rholder.layout.getVisibility() == GONE) {
 
                     //To track through mixPanel.If User View's more option in feed
-                    Utils.trackMixpanel((Activity)context,"Activity","MoreButtonClicked","LeftMenuTheFeedButtonClicked");
+                    Utils.trackMixpanel((Activity)context,"Activity","MoreButtonClicked","LeftMenuTheFeedButtonClicked",false);
                     rholder.layout.startAnimation(slideLeft);
                     rholder.layout.setVisibility(VISIBLE);
                     holder.feed_menu.setImageResource(R.drawable.cross_icon);
@@ -600,7 +600,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
             public void onClick(View v) {
 
                 //To track through mixPanel.If User click's on star Button from feed
-                Utils.trackMixpanel((Activity)context,"Activity","StarButtonPressed","LeftMenuTheFeedButtonClicked");
+                Utils.trackMixpanel((Activity)context,"Activity","StarButtonPressed","LeftMenuTheFeedButtonClicked",false);
                 String stars = holder.feed_star_user.getText().toString().trim();
                 if (stars.contains(authMgr.getUserName())) {
                     holder.feed_star_image_button.setImageResource(R.drawable.star_btn);
@@ -687,7 +687,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
                 intent.putExtra("comment_count", eachNewsFeed.get(position).getNewsfeedArray_comments_count());
                 context.startActivity(intent);
                 //To track through mixPanel.If user clicks on comment button
-                Utils.trackMixpanel((Activity)context,"Activity","CommentsButtonPressed","LeftMenuTheFeedButtonClicked");
+                Utils.trackMixpanel((Activity)context,"Activity","CommentsButtonPressed","LeftMenuTheFeedButtonClicked",false);
             }
         });
         holder.feed_star_user.setOnClickListener(new OnClickListener() {
@@ -875,7 +875,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
             @Override
             public void onClick(View v) {
                 //To track through mixPanel.If User click on his own name from feed header
-                Utils.trackMixpanel((Activity)context,"Activity","FeedScreenMyProfileOpened","LeftMenuTheFeedButtonClicked");
+                Utils.trackMixpanel((Activity)context,"Activity","FeedScreenMyProfileOpened","LeftMenuTheFeedButtonClicked",false);
                 String phNo, name;
                 if (view.getText().toString().trim().equalsIgnoreCase(senderName.get(position).toString())) {
                     phNo = senderPhNo.get(position);
@@ -897,7 +897,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
             public void onClick(View v) {
 
                 //To track through mixPanel.If User click on sender's name from feed header
-                Utils.trackMixpanel((Activity)context,"Activity","FeedScreenOtherUserProfileOpened","LeftMenuTheFeedButtonClicked");
+                Utils.trackMixpanel((Activity)context,"Activity","FeedScreenOtherUserProfileOpened","LeftMenuTheFeedButtonClicked",false);
                 String phNo;
                 if (view1.getText().toString().trim().equalsIgnoreCase(senderName.get(position))) {
                     phNo = senderPhNo.get(position);

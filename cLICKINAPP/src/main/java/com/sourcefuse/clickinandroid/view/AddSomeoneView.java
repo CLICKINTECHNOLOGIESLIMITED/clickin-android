@@ -161,7 +161,7 @@ public class AddSomeoneView extends Activity implements TextWatcher {
                 startActivity(clickersView);
                 //To track through mixPanel.
                 //Skip Adding Partner from Signup
-                Utils.trackMixpanel(AddSomeoneView.this,"","","SignUpSkipAddingPartner");
+                Utils.trackMixpanel(AddSomeoneView.this,"","","SignUpSkipAddingPartner",false);
                 finish();
             }
         });
@@ -176,7 +176,7 @@ public class AddSomeoneView extends Activity implements TextWatcher {
                 startActivity(clickersView);
                 //To track through mixPanel.
                 //Skip Adding Partner from Signup
-                Utils.trackMixpanel(AddSomeoneView.this,"","","SignUpSkipAddingPartner");
+                Utils.trackMixpanel(AddSomeoneView.this,"","","SignUpSkipAddingPartner",false);
                 finish();
 
             }

@@ -73,7 +73,6 @@ public class GcmIntentService extends IntentService {
         if (!extras.isEmpty()) {
             if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)) {
 
-                Log.e("in this case-------->", "in this case-------->");
 
                 /*try {
 
@@ -207,7 +206,6 @@ public class GcmIntentService extends IntentService {
             intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             contentIntent = PendingIntent.getActivity(this,NOTIFICATION_ID, intent, PendingIntent.FLAG_ONE_SHOT);
         }else {
-            Log.e("intent null","intent null");
         }
 
 

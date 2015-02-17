@@ -45,7 +45,6 @@ public class ReloadApp extends Activity {
         }
 
 
-        Log.e("in Reload app------>", "in Reload app------>");
         extras = getIntent().getExtras();
         if(extras.containsKey("Tp"))
         {
@@ -53,7 +52,6 @@ public class ReloadApp extends Activity {
         }
 
         if (!Utils.isEmptyString(ModelManager.getInstance().getAuthorizationManager().getUserId())) {  // process value if userid is not null
-            Log.e("case 1---->", "case 1---->");
             mProfile = true;
             mRelation = true;
             processvalue();
@@ -92,7 +90,6 @@ public class ReloadApp extends Activity {
         if (mProfile && mRelation) {
             if (extras.containsKey("Tp")) {
 
-                Log.e("value of tp---->", "" + extras.getString("Tp"));
                 if (extras.getString("Tp").equalsIgnoreCase("CR") ||
                         extras.getString("Tp").equalsIgnoreCase("CRA") || extras.getString("Tp").equalsIgnoreCase("RV") ||
                         extras.getString("Tp").equalsIgnoreCase("CRR") || extras.getString("Tp").equalsIgnoreCase("RD")
@@ -151,7 +148,6 @@ public class ReloadApp extends Activity {
         extras = intent.getExtras();
 
         if (!Utils.isEmptyString(ModelManager.getInstance().getAuthorizationManager().getUserId())) {// process value if userid is not null
-            Log.e("case 1 on new Intent---->","case 1 on new Intent---->");
             mProfile = true;
             mRelation = true;
             processvalue();

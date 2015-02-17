@@ -98,7 +98,7 @@ public class CurrentClickersAdapter extends ArrayAdapter<CurrentClickerBean> {
                     relationManager.followUser(item.getGetClickerPhone(), authManager.getPhoneNo(), authManager.getUsrToken());
                     rholder.follow.setBackgroundResource(R.drawable.requested_grey);
                     CurrentClickersView.followReqStatus = true;
-                    Utils.trackMixpanel((Activity)context,"Activity","FollowUser","LeftMenuFindFriendsButtonClicked");
+                    Utils.trackMixpanel((Activity)context,"Activity","FollowUser","LeftMenuFindFriendsButtonClicked",false);
                 }
 
             }
