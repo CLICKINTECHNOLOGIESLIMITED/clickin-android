@@ -336,11 +336,11 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
 
             if (mFromFacebook && mFillNatively) {
                 Utils.trackMixpanel(ProfileView.this, "", "", "FillProfileInfoThroughFacebook", true);
-                Utils.trackMixpanel(ProfileView.this, "", "", "FillProfileInfoThroughFacebook", true);
+                Utils.trackMixpanel(ProfileView.this, "", "", "FillProfileInfoNatively", true);
             } else if (mFromFacebook)
                 Utils.trackMixpanel(ProfileView.this, "", "", "FillProfileInfoThroughFacebook", true);
             else if (mFillNatively)
-                Utils.trackMixpanel(ProfileView.this, "", "", "FillProfileInfoThroughFacebook", true);
+                Utils.trackMixpanel(ProfileView.this, "", "", "FillProfileInfoNatively", true);
 
         } else if (message.equalsIgnoreCase("UpdateProfile False")) {
             Utils.dismissBarDialog();
@@ -521,9 +521,9 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
         Request request = Request.newMeRequest(session, new Request.GraphUserCallback() {
             @Override
             public void onCompleted(GraphUser user, Response response) {
-                mFromFacebook = true;
-                if (user != null) {
 
+                if (user != null) {
+                    mFromFacebook = true;
                     try {
                         email.setText(user.getInnerJSONObject().getString("email"));
                     } catch (Exception e1) {

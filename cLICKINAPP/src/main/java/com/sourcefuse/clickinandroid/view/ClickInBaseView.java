@@ -152,7 +152,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 
         //To track through mixPanel.
         //Total Number of user clicks.
-        Utils.trackMixpanel(ClickInBaseView.this, "TotalClicksSent", "" + userClicks, "RPageShareButtonClicked", false);
+//        Utils.trackMixpanel(ClickInBaseView.this, "TotalClicksSent", "" + userClicks, "RPageShareButtonClicked", false);
 
         String mValue;
         if (mNewUser != null && mNewUser.equalsIgnoreCase("yes") && mNewPrtner != null && mNewPrtner.equalsIgnoreCase("yes")) {
