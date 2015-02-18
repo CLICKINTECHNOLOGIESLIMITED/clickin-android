@@ -83,9 +83,9 @@ public class MyQbChatService extends Service {
                         });
                         break;
                     case RELOAD_APP:
-                        Intent i = new Intent(getApplicationContext(), ReloadApp.class);
+                        /*Intent i = new Intent(getApplicationContext(), ReloadApp.class);
                         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(i);
+                        startActivity(i);*/
                         break;
 
 

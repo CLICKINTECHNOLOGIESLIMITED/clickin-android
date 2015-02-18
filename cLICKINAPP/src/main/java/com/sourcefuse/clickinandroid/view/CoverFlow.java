@@ -9,6 +9,8 @@ import android.support.v4.view.ViewPager;
 import android.view.Window;
 
 import com.sourcefuse.clickinandroid.utils.CustomCirclePageIndicator;
+import com.sourcefuse.clickinandroid.utils.UnCaughtExceptionHandler;
+import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
 import com.viewpagerindicator.PageIndicator;
 
@@ -28,6 +30,9 @@ public class CoverFlow extends FragmentActivity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.cover_flow);
+
+        if (Utils.mStartExceptionTrack)
+            Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
 
         try {

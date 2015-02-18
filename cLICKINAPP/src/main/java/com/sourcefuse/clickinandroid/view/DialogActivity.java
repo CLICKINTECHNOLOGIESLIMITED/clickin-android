@@ -12,6 +12,8 @@ import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
+import com.sourcefuse.clickinandroid.utils.UnCaughtExceptionHandler;
+import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
 
 /**
@@ -27,7 +29,8 @@ public class DialogActivity extends Activity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_activity);
-
+        if (Utils.mStartExceptionTrack)
+            Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
