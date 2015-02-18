@@ -16,6 +16,7 @@ import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -297,6 +298,7 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
                 authManager = ModelManager.getInstance().getAuthorizationManager();
             if (authManager.getUserPic() != null) {
                 new DownloadImage().execute(authManager.getUserPic());
+
             } else {
                 Utils.dismissBarDialog();
                 switchView();
@@ -312,6 +314,7 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
             if (authManager == null)
                 authManager = ModelManager.getInstance().getAuthorizationManager();
             if (authManager.getUserPic() != null) {
+
 
                 new DownloadImage().execute(authManager.getUserPic());
             } else {

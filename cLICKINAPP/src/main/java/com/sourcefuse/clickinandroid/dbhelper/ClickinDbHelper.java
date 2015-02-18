@@ -184,74 +184,85 @@ public class ClickinDbHelper extends SQLiteOpenHelper implements ChatRecordI {
 
     @Override
     public ArrayList<ChatMessageBody> getAllChat(String rId) throws SQLException {
-
-        if (dbObj == null || !dbObj.isOpen())
-            openDataBase();
-
         ArrayList<ChatMessageBody> chatList = new ArrayList<ChatMessageBody>();
         ChatMessageBody chat;
-        //String selectUserChats = "SELECT  * FROM " + TABLE_CHATRECORD + " ORDER BY "+COLUMN_TIMESTAMP +" DESC  WHERE ("+ COLUMN_SID + " = "+sQbId+" AND " +COLUMN_RID +" = "+rQbId+" ) OR ( "+ COLUMN_SID + " = "+rQbId+" AND " +COLUMN_RID +" = "+sQbId +" )";
-        //String selectUserChats = "SELECT * FROM " + TABLE_CHATRECORD +" WHERE("+ COLUMN_SID + "="+sQbId+" AND " +COLUMN_RID +"="+rQbId+") OR ("+ COLUMN_SID + "="+rQbId+" AND " +COLUMN_RID +" = "+sQbId +")";
-        //  String selectUserChats = "SELECT * FROM " + TABLE_CHATRECORD +  " WHERE "+ relationshipId + " = "+rId;
+        Cursor chatCursor = null;
+        try {
+            if (dbObj == null || !dbObj.isOpen())
+                openDataBase();
 
-        //Cursor chatCursor = dbObj. rawQuery( selectUserChats, null );
-        Cursor chatCursor =
-                dbObj.query(TABLE_CHATRECORD, // a. table
-                        null, // b. column names
-                        " relationshipId = ?", // c. selections
-                        new String[]{String.valueOf(rId)}, // d. selections args
-                        null, // e. group by
-                        null, // f. having
-                        sentOn, // g. order by
-                        null); // h. limit
-        int si = chatCursor.getCount();
 
-        if (chatCursor != null) {
-            if (chatCursor.moveToFirst()) {
-                do {
-                    chat = new ChatMessageBody();
-                    chat.partnerQbId = chatCursor.getString(chatCursor.getColumnIndex(partnerQbId));
-                    chat.textMsg = chatCursor.getString(chatCursor.getColumnIndex(textMsg));
-                    chat.clicks = chatCursor.getString(chatCursor.getColumnIndex(clicks));
-                    chat.chatType = Integer.parseInt(chatCursor.getString(chatCursor.getColumnIndex(chatType)));
-                    chat.content_url = chatCursor.getString(chatCursor.getColumnIndex(content_url));
-                    chat.imageRatio = chatCursor.getString(chatCursor.getColumnIndex(imageRatio));
-                    // Card Start
-                    chat.card_owner = (chatCursor.getString(chatCursor.getColumnIndex(card_owner)));
-                    chat.card_content = (chatCursor.getString(chatCursor.getColumnIndex(card_content)));
-                    chat.is_CustomCard = Boolean.parseBoolean((chatCursor.getString(chatCursor.getColumnIndex(is_CustomCard))));
-                    chat.card_DB_ID = (chatCursor.getString(chatCursor.getColumnIndex(card_DB_ID)));
-                    chat.card_Accepted_Rejected = (chatCursor.getString(chatCursor.getColumnIndex(card_Accepted_Rejected)));
-                    chat.card_heading = (chatCursor.getString(chatCursor.getColumnIndex(card_heading)));
-                    chat.card_url = (chatCursor.getString(chatCursor.getColumnIndex(card_url)));
-                    chat.card_id = (chatCursor.getString(chatCursor.getColumnIndex(card_id)));
-                    chat.originalMessageID = (chatCursor.getString(chatCursor.getColumnIndex(originalMessageID)));
-                    chat.card_Played_Countered = (chatCursor.getString(chatCursor.getColumnIndex(card_Played_Countered)));
-                    chat.card_originator = (chatCursor.getString(chatCursor.getColumnIndex(card_originator)));
-                    // Card End
-                    chat.video_thumb = (chatCursor.getString(chatCursor.getColumnIndex(video_thumb)));
-                    chat.chatId = (chatCursor.getString(chatCursor.getColumnIndex(chatId)));
-                    chat.sentOn = (chatCursor.getString(chatCursor.getColumnIndex(sentOn)));
-                    chat.location_coordinates = (chatCursor.getString(chatCursor.getColumnIndex(location_coordinates)));
-                    chat.sharedMessage = (chatCursor.getString(chatCursor.getColumnIndex(sharedMessage)));
-                    chat.isDelivered = (chatCursor.getString(chatCursor.getColumnIndex(isDelivered)));
-                    chat.deliveredChatID = (chatCursor.getString(chatCursor.getColumnIndex(deliveredChatId)));
+            //String selectUserChats = "SELECT  * FROM " + TABLE_CHATRECORD + " ORDER BY "+COLUMN_TIMESTAMP +" DESC  WHERE ("+ COLUMN_SID + " = "+sQbId+" AND " +COLUMN_RID +" = "+rQbId+" ) OR ( "+ COLUMN_SID + " = "+rQbId+" AND " +COLUMN_RID +" = "+sQbId +" )";
+            //String selectUserChats = "SELECT * FROM " + TABLE_CHATRECORD +" WHERE("+ COLUMN_SID + "="+sQbId+" AND " +COLUMN_RID +"="+rQbId+") OR ("+ COLUMN_SID + "="+rQbId+" AND " +COLUMN_RID +" = "+sQbId +")";
+            //  String selectUserChats = "SELECT * FROM " + TABLE_CHATRECORD +  " WHERE "+ relationshipId + " = "+rId;
 
-                    chat.relationshipId = (chatCursor.getString(chatCursor.getColumnIndex(relationshipId)));
-                    chat.userId = (chatCursor.getString(chatCursor.getColumnIndex(userId)));
-                    chat.senderUserToken = (chatCursor.getString(chatCursor.getColumnIndex(senderUserToken)));
-                    chat.senderQbId = (chatCursor.getString(chatCursor.getColumnIndex(senderQbId)));
+            //Cursor chatCursor = dbObj. rawQuery( selectUserChats, null );
+            chatCursor =
+                    dbObj.query(TABLE_CHATRECORD, // a. table
+                            null, // b. column names
+                            " relationshipId = ?", // c. selections
+                            new String[]{String.valueOf(rId)}, // d. selections args
+                            null, // e. group by
+                            null, // f. having
+                            sentOn, // g. order by
+                            null); // h. limit
+            int si = chatCursor.getCount();
+
+            if (chatCursor != null) {
+                if (chatCursor.moveToFirst()) {
+                    do {
+                        chat = new ChatMessageBody();
+                        chat.partnerQbId = chatCursor.getString(chatCursor.getColumnIndex(partnerQbId));
+                        chat.textMsg = chatCursor.getString(chatCursor.getColumnIndex(textMsg));
+                        chat.clicks = chatCursor.getString(chatCursor.getColumnIndex(clicks));
+                        chat.chatType = Integer.parseInt(chatCursor.getString(chatCursor.getColumnIndex(chatType)));
+                        chat.content_url = chatCursor.getString(chatCursor.getColumnIndex(content_url));
+                        chat.imageRatio = chatCursor.getString(chatCursor.getColumnIndex(imageRatio));
+                        // Card Start
+                        chat.card_owner = (chatCursor.getString(chatCursor.getColumnIndex(card_owner)));
+                        chat.card_content = (chatCursor.getString(chatCursor.getColumnIndex(card_content)));
+                        chat.is_CustomCard = Boolean.parseBoolean((chatCursor.getString(chatCursor.getColumnIndex(is_CustomCard))));
+                        chat.card_DB_ID = (chatCursor.getString(chatCursor.getColumnIndex(card_DB_ID)));
+                        chat.card_Accepted_Rejected = (chatCursor.getString(chatCursor.getColumnIndex(card_Accepted_Rejected)));
+                        chat.card_heading = (chatCursor.getString(chatCursor.getColumnIndex(card_heading)));
+                        chat.card_url = (chatCursor.getString(chatCursor.getColumnIndex(card_url)));
+                        chat.card_id = (chatCursor.getString(chatCursor.getColumnIndex(card_id)));
+                        chat.originalMessageID = (chatCursor.getString(chatCursor.getColumnIndex(originalMessageID)));
+                        chat.card_Played_Countered = (chatCursor.getString(chatCursor.getColumnIndex(card_Played_Countered)));
+                        chat.card_originator = (chatCursor.getString(chatCursor.getColumnIndex(card_originator)));
+                        // Card End
+                        chat.video_thumb = (chatCursor.getString(chatCursor.getColumnIndex(video_thumb)));
+                        chat.chatId = (chatCursor.getString(chatCursor.getColumnIndex(chatId)));
+                        chat.sentOn = (chatCursor.getString(chatCursor.getColumnIndex(sentOn)));
+                        chat.location_coordinates = (chatCursor.getString(chatCursor.getColumnIndex(location_coordinates)));
+                        chat.sharedMessage = (chatCursor.getString(chatCursor.getColumnIndex(sharedMessage)));
+                        chat.isDelivered = (chatCursor.getString(chatCursor.getColumnIndex(isDelivered)));
+                        chat.deliveredChatID = (chatCursor.getString(chatCursor.getColumnIndex(deliveredChatId)));
+
+                        chat.relationshipId = (chatCursor.getString(chatCursor.getColumnIndex(relationshipId)));
+                        chat.userId = (chatCursor.getString(chatCursor.getColumnIndex(userId)));
+                        chat.senderUserToken = (chatCursor.getString(chatCursor.getColumnIndex(senderUserToken)));
+                        chat.senderQbId = (chatCursor.getString(chatCursor.getColumnIndex(senderQbId)));
 //code for share-monika
-                    chat.sharingMedia = (chatCursor.getString(chatCursor.getColumnIndex(sharingMedia)));
-                    chat.shareStatus = (chatCursor.getString(chatCursor.getColumnIndex(shareStatus)));
-                    chat.isAccepted = (chatCursor.getString(chatCursor.getColumnIndex(isAccepted)));
-                    chat.shareComment = (chatCursor.getString(chatCursor.getColumnIndex(shareComment)));
-                    chat.facebookToken = (chatCursor.getString(chatCursor.getColumnIndex(facebookToken)));
-                    chat.isMessageSender = (chatCursor.getString(chatCursor.getColumnIndex(isMessageSender)));
-                    chatList.add(chat);
+                        chat.sharingMedia = (chatCursor.getString(chatCursor.getColumnIndex(sharingMedia)));
+                        chat.shareStatus = (chatCursor.getString(chatCursor.getColumnIndex(shareStatus)));
+                        chat.isAccepted = (chatCursor.getString(chatCursor.getColumnIndex(isAccepted)));
+                        chat.shareComment = (chatCursor.getString(chatCursor.getColumnIndex(shareComment)));
+                        chat.facebookToken = (chatCursor.getString(chatCursor.getColumnIndex(facebookToken)));
+                        chat.isMessageSender = (chatCursor.getString(chatCursor.getColumnIndex(isMessageSender)));
+                        chatList.add(chat);
+                    } while (chatCursor.moveToNext());
                 }
-                while (chatCursor.moveToNext());
             }
+
+
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        finally {
+            if (chatCursor != null)
+                chatCursor.close();
         }
         return chatList;
     }

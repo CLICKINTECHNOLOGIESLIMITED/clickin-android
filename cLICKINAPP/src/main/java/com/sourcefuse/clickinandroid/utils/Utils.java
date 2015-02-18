@@ -449,21 +449,19 @@ public class Utils {
 
     public static String getRealPathFromURI(Uri contentUri, Activity mContext) {
         Cursor cursor = null;
+        String path = null;
         try {
             String[] proj = {MediaStore.Images.Media.DATA};
             cursor = mContext.getContentResolver().query(contentUri, proj, null, null, null);
             int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
             cursor.moveToFirst();
-            return cursor.getString(column_index);
+            path = cursor.getString(column_index);
+            cursor.close();
         } catch (Exception e) {
             e.printStackTrace();
-
-            return "";
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
+            path = null;
         }
+        return path;
     }
 
     public static String decodeSampledBitmapFromUri(Context context, Uri uri, int reqWidth, int reqHeight) {
@@ -1288,6 +1286,7 @@ public class Utils {
 
     public static Uri getImageContentUri(Context context, File imageFile) {
         String filePath = imageFile.getAbsolutePath();
+        Uri uri = null;
         Cursor cursor = context.getContentResolver().query(
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                 new String[]{MediaStore.Images.Media._ID},
@@ -1297,7 +1296,8 @@ public class Utils {
             int id = cursor.getInt(cursor
                     .getColumnIndex(MediaStore.MediaColumns._ID));
             int id1 = cursor.getInt(cursor.getColumnIndex(MediaStore.MediaColumns._ID));
-            return Uri.withAppendedPath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "" + id1);
+            uri = Uri.withAppendedPath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "" + id1);
+            cursor.close();
         } else {
             if (imageFile.exists()) {
                 ContentValues values = new ContentValues();
@@ -1305,9 +1305,11 @@ public class Utils {
                 return context.getContentResolver().insert(
                         MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
             } else {
-                return null;
+                uri = null;
             }
         }
+
+        return uri;
     }
 
     public static Uri getVideoContentUri(Context context, File imageFile) {
@@ -1321,6 +1323,7 @@ public class Utils {
             int id = cursor.getInt(cursor
                     .getColumnIndex(MediaStore.MediaColumns._ID));
             int id1 = cursor.getInt(cursor.getColumnIndex(MediaStore.MediaColumns._ID));
+            cursor.close();
             return Uri.withAppendedPath(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, "" + id1);
         } else {
             if (imageFile.exists()) {
@@ -1339,40 +1342,43 @@ public class Utils {
 
     public static Uri getAudioContentUri(Context context, File imageFile) {
         String filePath = imageFile.getAbsolutePath();
+        Uri uri = null;
         Cursor cursor = context.getContentResolver().query(
                 MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
                 new String[]{MediaStore.Audio.Media._ID},
                 MediaStore.Audio.Media.DATA + "=? ",
                 new String[]{filePath}, null);
-        if (cursor != null && cursor.moveToFirst()) {
-            int id = cursor.getInt(cursor
-                    .getColumnIndex(MediaStore.MediaColumns._ID));
-            int id1 = cursor.getInt(cursor.getColumnIndex(MediaStore.MediaColumns._ID));
-            return Uri.withAppendedPath(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, "" + id1);
-        } else {
-            if (imageFile.exists()) {
-                ContentValues values = new ContentValues();
-                values.put(MediaStore.Audio.Media.DATA, filePath);
-                return context.getContentResolver().insert(
-                        MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, values);
+        try {
+            if (cursor != null && cursor.moveToFirst()) {
+                int id = cursor.getInt(cursor
+                        .getColumnIndex(MediaStore.MediaColumns._ID));
+                int id1 = cursor.getInt(cursor.getColumnIndex(MediaStore.MediaColumns._ID));
+                uri = Uri.withAppendedPath(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, "" + id1);
+                cursor.close(); // close cursor
             } else {
-                return null;
+                if (imageFile.exists()) {
+                    ContentValues values = new ContentValues();
+                    values.put(MediaStore.Audio.Media.DATA, filePath);
+                    return context.getContentResolver().insert(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, values);
+                } else {
+                    uri = null;
+                }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        return uri;
     }
 
     public static Uri getUriFromPath(String filePath, Context context) {
         long photoId;
         Uri photoUri = MediaStore.Images.Media.getContentUri("external");
-
         String[] projection = {MediaStore.Images.ImageColumns._ID};
         // TODO This will break if we have no matching item in the MediaStore.
         Cursor cursor = context.getContentResolver().query(photoUri, projection, MediaStore.Images.ImageColumns.DATA + " LIKE ?", new String[]{filePath}, null);
         cursor.moveToFirst();
-
         int columnIndex = cursor.getColumnIndex(projection[0]);
         photoId = cursor.getLong(columnIndex);
-
         cursor.close();
         return Uri.parse(photoUri.toString() + "/" + photoId);
     }

@@ -24,6 +24,7 @@ public class CardGridViewAdapter extends ArrayAdapter<CardBean> {
     private List item;
     int listsize = 0 ;
 
+
     public CardGridViewAdapter(Context context, int layoutResourceId, List<CardBean> item) {
         super(context, layoutResourceId, item);
         this.layoutResourceId = layoutResourceId;
@@ -45,10 +46,7 @@ public class CardGridViewAdapter extends ArrayAdapter<CardBean> {
             card_items = getItem(position-1);
         }
         RecordHolder holder = null;
-
-
-        if (row == null) {
-
+     if (row == null) {
 
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
             row = inflater.inflate(layoutResourceId, parent, false);
