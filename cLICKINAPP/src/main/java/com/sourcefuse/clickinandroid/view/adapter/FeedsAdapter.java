@@ -8,6 +8,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -103,12 +104,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
         this.timeOfFeed = mTimeOfFeed;
         this.senderPhNo = mSenderPhNo;
 
-        /*for (int i = 0; i < ModelManager.getInstance().getProfileManager().following.size(); i++) {
-            mId.add("" + ModelManager.getInstance().getProfileManager().following.get(i).getFolloweeId());
-        }
-        for (int i = 0; i < ModelManager.getInstance().getRelationManager().acceptedList.size(); i++) {
-            mId.add("" + ModelManager.getInstance().getRelationManager().acceptedList.get(i).getPartner_id());
-        }*/
+
 
     }
 
@@ -638,7 +634,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
                         } else if (stars.endsWith("Stars")) {
                             stars = stars.substring(0, stars.indexOf(" "));
                             int star = Integer.parseInt(stars) - 1;
-                            String number_stars = "<font><b>" + star + "Stars" + "</b></font>";
+                            String number_stars = "<font><b>" + star + " Stars" + "</b></font>";
                             holder.feed_star_user.setText(Html.fromHtml(number_stars));
                             holder.feed_star_user.setTextColor(context.getResources().getColor(R.color.dark_gray));//akshit code Black is not needed
                         } else {
@@ -666,7 +662,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
                         } else if (stars.endsWith("Stars")) {
                             stars = stars.substring(0, stars.indexOf(" "));
                             int star = Integer.parseInt(stars) + 1;
-                            String star_number = "<font><b>" + star + "Stars" + "</b></font>";
+                            String star_number = "<font><b>" + star + " Stars" + "</b></font>";
                             holder.feed_star_user.setText(Html.fromHtml(star_number));
                             holder.feed_star_user.setTextColor(context.getResources().getColor(R.color.dark_gray));//akshit code Black is not needed
                         } else {
