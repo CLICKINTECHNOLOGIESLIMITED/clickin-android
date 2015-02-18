@@ -42,8 +42,8 @@ public class FollowerList extends ClickInBaseView implements
         slidemenu.setTouchModeAbove(2);
 
 //code- to handle uncaught exception
-        if(Utils.mStartExceptionTrack)
-        Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
+        if (Utils.mStartExceptionTrack)
+            Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
         listView = (ListView) findViewById(R.id.list_follower);
         mFollowerListView = (RelativeLayout) findViewById(R.id.rl_followerdata);
@@ -70,10 +70,11 @@ public class FollowerList extends ClickInBaseView implements
     @Override
     public void onBackPressed() {
 
+        Utils.launchBarDialog(this);
         if (mListchangeVariable_flag) {
-
             Intent intent = new Intent(this, UserProfileView.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             intent.putExtra("isChangeInList", true);
             startActivity(intent);
             finish();
@@ -84,7 +85,7 @@ public class FollowerList extends ClickInBaseView implements
             overridePendingTransition(0, R.anim.top_out);
         }
         super.onBackPressed();
-
+        Utils.dismissBarDialog();
 
     }
 

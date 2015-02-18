@@ -447,7 +447,6 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 setVisibilityForSend();//akshit
                 myvalue = progress - 10;
 
-
                 if (myvalue > 0) {
                     // pos.setText("" + myvalue);
                     ((TextView) findViewById(R.id.sign)).setText("+");
@@ -766,6 +765,9 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                             temp.clicks = Utils.convertClicks(String.valueOf(seekValue)).trim();
                             temp.textMsg = temp.clicks + "        " + chatString;
 
+                            //To track through mixPanel.
+                            //Click msg send.
+                            Utils.trackMixpanel(ChatRecordView.this,"Activity","ClickMessageSent","RPageTradeButtonClicked",false);
 
                             //To track through mixPanel.
                             //user dragged clickbar to set click.
@@ -781,6 +783,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                             temp.textMsg = chatString;
                             //To track through mixPanel.
                             //Trade card button clicked.
+
                             Utils.trackMixpanel(ChatRecordView.this,"Activity","TextMessageSent","RPageShareButtonClicked",false);
 
                             /* code to play sound in case of Text prafull*/
@@ -814,6 +817,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                         //To track through mixPanel.
                         //Image send.
                         Utils.trackMixpanel(ChatRecordView.this,"Activity","MediaSent","RPageShareButtonClicked",false);
+
                         /* code to play sound in case of image prafull*/
                        /* Utils.playSound(ChatRecordView.this, R.raw.message_sent);*/
 
@@ -823,7 +827,9 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                         sendMsgToQB(audioFilePath);
                         //To track through mixPanel.
                         //Audio Send.
+
                         Utils.trackMixpanel(ChatRecordView.this,"Activity","MediaSent","RPageShareButtonClicked",false);
+
                         /* code to play sound in case of audio prafull*/
                         /*Utils.playSound(ChatRecordView.this, R.raw.message_sent);*/
                     } else if (!Utils.isEmptyString(videofilePath)) { //Video is attached
@@ -832,7 +838,9 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                         sendMsgToQB(videofilePath);
                         //To track through mixPanel.
                         //Video Send.
+
                         Utils.trackMixpanel(ChatRecordView.this,"Activity","MediaSent","RPageShareButtonClicked",false);
+
                         /* code to play sound in case of video prafull*/
                         /*Utils.playSound(ChatRecordView.this, R.raw.message_sent);*/
                     }
@@ -1058,6 +1066,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         ShowValueinChat(temp);
         //To track through mixPanel.
         //No of clicks send with Media(Audio,Video,Image).
+
         Utils.trackMixpanel(ChatRecordView.this,"ClicksSent",""+temp.clicks,"RPageShareButtonClicked",false);
 
         // mImageCaptureUri=null;

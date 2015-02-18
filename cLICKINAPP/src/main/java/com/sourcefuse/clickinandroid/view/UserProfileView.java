@@ -469,7 +469,6 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
 
     @Override
     public void onBackPressed() {
-
     }
 
     private void switchView() {
