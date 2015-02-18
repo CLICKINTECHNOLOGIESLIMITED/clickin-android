@@ -77,7 +77,7 @@ public class GcmIntentService extends IntentService {
 
                         if (!Utils.isEmptyString(ModelManager.getInstance().getAuthorizationManager().getUsrToken()))
                         ModelManager.getInstance().getProfileManager().getFollwer(
-                              " ",
+                              "",
                                 ModelManager.getInstance().getAuthorizationManager().getPhoneNo(),
                                 ModelManager.getInstance().getAuthorizationManager().getUsrToken());
 
