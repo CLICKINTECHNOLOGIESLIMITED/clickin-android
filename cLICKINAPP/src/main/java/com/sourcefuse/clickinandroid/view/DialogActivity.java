@@ -73,9 +73,9 @@ public class DialogActivity extends Activity {
                             GmailCrashLogSender sender = new GmailCrashLogSender(
                                     "tester.sourcefuse@gmail.com",//sender username and password for authentication.
                                     "sourcefuse");
-                            sender.sendMail("Error Report", ""+mInfo,
+                            sender.sendMail("Error Report", "" + mInfo,
                                     "tester.sourcefuse@gmail.com"//sender email to set sender in mail
-                         );
+                            );
 
                         } catch (Exception e) {// In case of Exception start Splash View.
                             Intent intent = new Intent(DialogActivity.this, SplashView.class);

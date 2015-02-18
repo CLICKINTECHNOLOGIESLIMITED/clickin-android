@@ -38,8 +38,8 @@ public class VerifyView extends Activity implements OnClickListener,
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         //code- to handle uncaught exception
-        if(Utils.mStartExceptionTrack)
-        Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
+        if (Utils.mStartExceptionTrack)
+            Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
         setContentView(R.layout.view_verify);
         this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
@@ -169,7 +169,7 @@ public class VerifyView extends Activity implements OnClickListener,
             authManager.getVerifyCode(authManager.getPhoneNo(), Utils.deviceId, digits, Constants.DEVICETYPE);
             //To track through mixPanel.
             //Verify Verification Code.
-            Utils.trackMixpanel(VerifyView.this,"","","VerificationCodeEntered",false);//track Verification Code Entered through mixPanel
+            Utils.trackMixpanel(VerifyView.this, "", "", "VerificationCodeEntered", false);//track Verification Code Entered through mixPanel
 
         } else {
             d_four.setBackgroundDrawable(getResources().getDrawable(R.drawable.e_v_number_field_empty));
@@ -188,7 +188,7 @@ public class VerifyView extends Activity implements OnClickListener,
                 authManager.reSendVerifyCode(authManager.getPhoneNo(), authManager.getUsrToken());
                 //To track through mixPanel.
                 //Click Resend Verification Code.
-                Utils.trackMixpanel(VerifyView.this,"","","ResendVerificationCode",false);
+                Utils.trackMixpanel(VerifyView.this, "", "", "ResendVerificationCode", false);
                 break;
         }
     }

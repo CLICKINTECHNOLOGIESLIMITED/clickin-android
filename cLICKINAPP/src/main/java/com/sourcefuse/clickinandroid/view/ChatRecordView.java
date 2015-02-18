@@ -131,9 +131,6 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     private Button send, btnToCard;
     private int relationListIndex = -1;
     private String qBId, partnerPic, partnerName, partnerId, partnerPh, myClicks, partnerClicks;
-    private ChatManager chatManager;
-    private AuthManager authManager;
-    private RelationManager relationManager;
     private EditText chatText;
     private ImageView mypix, partnerPix, attachBtn;
     //    private PullToRefreshListView chatListView;
@@ -151,7 +148,9 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     private String audioFilePath = null;
     private int CHAT_TYPE;
     private boolean mIsBound;
-
+    private ChatManager chatManager;
+    private AuthManager authManager;
+    private RelationManager relationManager;
     private ServiceConnection mConnection = new ServiceConnection() {
         public void onServiceConnected(ComponentName className, IBinder service) {
             // This is called when the connection with the service has been
@@ -200,7 +199,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         cursor.moveToFirst();
         int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
         String picturePath = cursor.getString(columnIndex);
-        cursor.close();
+        cursor.close(); // close cursor
         return BitmapFactory.decodeFile(picturePath);
     }
 
@@ -277,16 +276,37 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_chat_layout);
 //code- to handle uncaught exception
-        if(Utils.mStartExceptionTrack)
+        if (Utils.mStartExceptionTrack)
             Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
         Intent i = new Intent(this, MyQbChatService.class);
         bindService(i, mConnection, Context.BIND_AUTO_CREATE);
-        rId = getIntent().getExtras().getString("rId");
+
+
+        //check for values, if not set by parent class Clickinbase view, then set it using index
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            if (extras.containsKey("partnerIndex")) {
+                setValuesUsingIndex(extras.getInt("partnerIndex"));
+            } else {
+                partnerPic = extras.getString("partnerPic");
+                partnerName = extras.getString("partnerName");
+                partnerId = extras.getString("partnerId");
+
+                partnerPh = extras.getString("partnerPh");
+                relationListIndex = extras.getInt("relationListIndex");
+                rId = extras.getString("rId");
+                myClicks = extras.getString("myClicks");
+
+                userClicks = extras.getString("userClicks");
+                quickBlockId = extras.getString("quickId");
+            }
+
+        }
+
         //clear the message list always to initiate a new chat
         ModelManager.getInstance().getChatManager().chatMessageList.clear();
         setlist();
-
         addMenu(false);
         slidemenu.setTouchModeAbove(2);
 
@@ -367,29 +387,22 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
 
         attachBtn.setOnClickListener(this);
-        authManager = ModelManager.getInstance().getAuthorizationManager();
-        authManager.partnerQbId = getIntent().getExtras().getString("quickId");
-        partnerPic = getIntent().getExtras().getString("partnerPic");
-        partnerName = getIntent().getExtras().getString("partnerName");
+
+        ModelManager.getInstance().getAuthorizationManager().partnerQbId = quickBlockId;
+
         splitted = partnerName.split("\\s+");
         firstname = splitted[0].toUpperCase();
 
 
-        partnerId = getIntent().getExtras().getString("partnerId");
-        relationManager = ModelManager.getInstance().getRelationManager();
-        relationManager.getPartnerName = firstname;
+        ModelManager.getInstance().getRelationManager().getPartnerName = firstname;
 
 
-        authManager.ourClicks = getIntent().getExtras().getString("myClicks");
+        ModelManager.getInstance().getAuthorizationManager().ourClicks = myClicks;
 
-        relationManager.partnerClicks = getIntent().getExtras().getString("userClicks");
+        ModelManager.getInstance().getRelationManager().partnerClicks = userClicks;
 
-        myclicksView.setText("" + authManager.ourClicks);
-        partnerClicksView.setText("" + relationManager.partnerClicks);
-
-        partnerPh = getIntent().getExtras().getString("partnerPh");
-        relationListIndex = getIntent().getExtras().getInt("relationListIndex");
-        chatManager = ModelManager.getInstance().getChatManager();
+        myclicksView.setText("" + ModelManager.getInstance().getAuthorizationManager().ourClicks);
+        partnerClicksView.setText("" + ModelManager.getInstance().getRelationManager().partnerClicks);
 
 
         profileName.setText("" + splitted[0]);
@@ -397,9 +410,9 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             Bitmap imageBitmap;
             String mUserImagePath = null;
             Uri mUserImageUri = null;
-            imageBitmap = authManager.getUserbitmap();
-            if (authManager.getUserImageUri() != null)
-                mUserImagePath = "" + authManager.getUserImageUri().toString();
+            imageBitmap = ModelManager.getInstance().getAuthorizationManager().getUserbitmap();
+            if (ModelManager.getInstance().getAuthorizationManager().getUserImageUri() != null)
+                mUserImagePath = "" + ModelManager.getInstance().getAuthorizationManager().getUserImageUri().toString();
 
             if (!Utils.isEmptyString(mUserImagePath))
                 mUserImageUri = Utils.getImageContentUri(ChatRecordView.this, new File(mUserImagePath));
@@ -409,15 +422,17 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 mypix.setImageURI(mUserImageUri);
             else if (imageBitmap != null) {
                 mypix.setImageBitmap(imageBitmap);
-            } else if (!Utils.isEmptyString(authManager.getUserPic()) && Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl"))
-                Picasso.with(this).load(authManager.getUserPic()).error(R.drawable.female_user).into(mypix);
+            } else if (!Utils.isEmptyString(ModelManager.getInstance().getAuthorizationManager().getUserPic()) && Utils.isEmptyString(ModelManager.getInstance().getAuthorizationManager().getGender()) && ModelManager.getInstance().getAuthorizationManager().getGender().equalsIgnoreCase("girl"))
+                Picasso.with(this).load(ModelManager.getInstance().getAuthorizationManager().getUserPic()).error(R.drawable.female_user).into(mypix);
             else
-                Picasso.with(this).load(authManager.getUserPic()).error(R.drawable.male_user).into(mypix);
+                Picasso.with(this).load(ModelManager.getInstance().getAuthorizationManager().getUserPic()).error(R.drawable.male_user).into(mypix);
 
         } catch (Exception e) {
-            if (!Utils.isEmptyString(authManager.getUserPic()) && !Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("guy"))
+            if (!Utils.isEmptyString(ModelManager.getInstance().getAuthorizationManager().getUserPic()) && !Utils.isEmptyString(ModelManager.getInstance().getAuthorizationManager().getGender()) &&
+                    ModelManager.getInstance().getAuthorizationManager().getGender().equalsIgnoreCase("guy"))
                 mypix.setImageResource(R.drawable.male_user);
-            else if (!Utils.isEmptyString(authManager.getUserPic()) && !Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl"))
+            else if (!Utils.isEmptyString(ModelManager.getInstance().getAuthorizationManager().getUserPic()) && !Utils.isEmptyString(ModelManager.getInstance().getAuthorizationManager().getGender()) &&
+                    ModelManager.getInstance().getAuthorizationManager().getGender().equalsIgnoreCase("girl"))
                 mypix.setImageResource(R.drawable.female_user);
             else
                 mypix.setImageResource(R.drawable.male_user);
@@ -436,8 +451,6 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-
-
             }
 
             @Override
@@ -446,7 +459,9 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
                 setVisibilityForSend();//akshit
                 myvalue = progress - 10;
-
+                //To track through mixPanel.
+                //user dragged clickbar to set click.
+                Utils.trackMixpanel(ChatRecordView.this, "Activity", "UserDraggedClickBar", "RPageTradeButtonClicked", false);
                 if (myvalue > 0) {
                     // pos.setText("" + myvalue);
                     ((TextView) findViewById(R.id.sign)).setText("+");
@@ -493,7 +508,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             public void onClick(View v) {
                 //To track through mixPanel.
                 //click on Image Attach Button.
-                Utils.trackMixpanel(ChatRecordView.this,"Activity","AttachImageButtonClicked","AttachButtonClicked",false);
+                Utils.trackMixpanel(ChatRecordView.this, "Activity", "AttachImageButtonClicked", "AttachButtonClicked", false);
                 hideAttachView();
                 imageDialog();
             }
@@ -504,7 +519,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             public void onClick(View arg0) {
                 //To track through mixPanel.
                 //click on Audio Attach Button.
-                Utils.trackMixpanel(ChatRecordView.this,"Activity","AttachAudioNoteButtonClicked","AttachButtonClicked",false);
+                Utils.trackMixpanel(ChatRecordView.this, "Activity", "AttachAudioNoteButtonClicked", "AttachButtonClicked", false);
                 hideAttachView();
                 AudioUtil.mAudioName = mChatId;
                 alertDialog();
@@ -517,7 +532,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             public void onClick(View arg0) {
                 //To track through mixPanel.
                 //click on Video Attach Button.
-                Utils.trackMixpanel(ChatRecordView.this,"Activity","AttachVideoButtonClicked","AttachButtonClicked",false);
+                Utils.trackMixpanel(ChatRecordView.this, "Activity", "AttachVideoButtonClicked", "AttachButtonClicked", false);
                 hideAttachView();
                 VideoUtil.name = mChatId;  // name of video
                 VideoUtil.videoDialog(ChatRecordView.this);
@@ -529,17 +544,17 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 hideAttachView();
                 //To track through mixPanel.
                 //click on Location Attach Button.
-                Utils.trackMixpanel(ChatRecordView.this,"Activity","AttachLocationButtonClicked","AttachButtonClicked",false);
+                Utils.trackMixpanel(ChatRecordView.this, "Activity", "AttachLocationButtonClicked", "AttachButtonClicked", false);
                 Intent intent = new Intent(ChatRecordView.this, MapActivity.class);
                 startActivityForResult(intent, Constants.START_MAP);
             }
         });
 
 
-        adapter = new ChatRecordAdapter(this, R.layout.view_chat_demo, chatManager.chatMessageList);
+        adapter = new ChatRecordAdapter(this, R.layout.view_chat_demo, ModelManager.getInstance().getChatManager().chatMessageList);
 
         chatListView.setAdapter(adapter);
-        chatListView.setSelection(chatManager.chatMessageList.size());//akshit code
+        chatListView.setSelection(ModelManager.getInstance().getChatManager().chatMessageList.size());//akshit code
 
 
         //code to check online of offline status
@@ -567,9 +582,9 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             if (getIntent().getStringExtra("mValue").equalsIgnoreCase("one")) {
 
                 Utils.showOverlay(ChatRecordView.this);
-                authManager.reSetFlag(authManager.getPhoneNo(), authManager.getUsrToken(), mRelationShipId, "no", "no", relationListIndex);
+                ModelManager.getInstance().getAuthorizationManager().reSetFlag(ModelManager.getInstance().getAuthorizationManager().getPhoneNo(), ModelManager.getInstance().getAuthorizationManager().getUsrToken(), mRelationShipId, "no", "no", relationListIndex);
             } else if (getIntent().getStringExtra("mValue").equalsIgnoreCase("two")) {
-                authManager.reSetFlag(authManager.getPhoneNo(), authManager.getUsrToken(), mRelationShipId, "no", "null", relationListIndex);
+                ModelManager.getInstance().getAuthorizationManager().reSetFlag(ModelManager.getInstance().getAuthorizationManager().getPhoneNo(), ModelManager.getInstance().getAuthorizationManager().getUsrToken(), mRelationShipId, "no", "null", relationListIndex);
                 Utils.showDialog(ChatRecordView.this);
             }
 
@@ -588,11 +603,9 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     }
 
     private void updateClicksInRelationshipList() {
-        authManager = ModelManager.getInstance().getAuthorizationManager();
-        relationManager = ModelManager.getInstance().getRelationManager();
         //monika-swap values as per naming convention on server
-        relationManager.acceptedList.get(relationListIndex).setClicks(relationManager.partnerClicks);
-        relationManager.acceptedList.get(relationListIndex).setUserClicks(authManager.ourClicks);
+        ModelManager.getInstance().getRelationManager().acceptedList.get(relationListIndex).setClicks(ModelManager.getInstance().getRelationManager().partnerClicks);
+        ModelManager.getInstance().getRelationManager().acceptedList.get(relationListIndex).setUserClicks(ModelManager.getInstance().getAuthorizationManager().ourClicks);
 
     }
 
@@ -621,7 +634,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                             case 0:
                                 //To track through mixPanel.
                                 //Image taken from gallery.
-                                Utils.trackMixpanel(ChatRecordView.this,"Activity","ChooseImageFromGallery","AttachButtonClicked",false);
+                                Utils.trackMixpanel(ChatRecordView.this, "Activity", "ChooseImageFromGallery", "AttachButtonClicked", false);
                                 Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                                 startActivityForResult(i, Constants.SELECT_PICTURE);
 
@@ -630,7 +643,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                             case 1:
                                 //To track through mixPanel.
                                 //Image taken from Camera.
-                                Utils.trackMixpanel(ChatRecordView.this,"Activity","ClickImageFromCamera","AttachButtonClicked",false);
+                                Utils.trackMixpanel(ChatRecordView.this, "Activity", "ClickImageFromCamera", "AttachButtonClicked", false);
                                 Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                                 mImageCaptureUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
                                 cameraIntent.putExtra("return-data", true);
@@ -711,15 +724,13 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         try {
             dbHelper = new ClickinDbHelper(this);
             dbHelper.openDataBase();
-            authManager = ModelManager.getInstance().getAuthorizationManager();
-            chatManager = ModelManager.getInstance().getChatManager();
+            ModelManager.getInstance().getChatManager().chatMessageList = dbHelper.getAllChat(rId);
 
-            chatManager.chatMessageList = dbHelper.getAllChat(rId);
-
-            if (chatManager.chatMessageList.size() < 20) {
+            if (ModelManager.getInstance().getChatManager().chatMessageList.size() < 20) {
                 //emptyDb = true;
-                chatManager.chatMessageList.clear();
-                chatManager.fetchChatRecord(rId, authManager.getPhoneNo(), authManager.getUsrToken(), "");
+                ModelManager.getInstance().getChatManager().chatMessageList.clear();
+                ModelManager.getInstance().getChatManager().fetchChatRecord(rId, ModelManager.getInstance().getAuthorizationManager().getPhoneNo(),
+                        ModelManager.getInstance().getAuthorizationManager().getUsrToken(), "");
             } else {
                 int listsize = chatManager.chatMessageList.size();
 //                chatListView.getRefreshableView().setSelection(0);
@@ -765,9 +776,6 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                             temp.clicks = Utils.convertClicks(String.valueOf(seekValue)).trim();
                             temp.textMsg = temp.clicks + "        " + chatString;
 
-//                            //To track through mixPanel.
-//                            //Click msg send.
-//                            Utils.trackMixpanel(ChatRecordView.this,"Activity","ClickMessageSent","RPageTradeButtonClicked",false);
 
                             //To track through mixPanel.
                             //user dragged clickbar to set click.
@@ -777,20 +785,19 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                             //Click msg send.
                             Utils.trackMixpanel(ChatRecordView.this,"Activity","ClickMessageSent","RPageShareButtonClicked",false);
 
+
                             /* code to play sound in case of clicks prafull*/
                         } else {
                             temp.clicks = "no";
                             temp.textMsg = chatString;
                             //To track through mixPanel.
                             //Trade card button clicked.
-
-                            Utils.trackMixpanel(ChatRecordView.this,"Activity","TextMessageSent","RPageShareButtonClicked",false);
+                            Utils.trackMixpanel(ChatRecordView.this, "Activity", "TextMessageSent", "RPageTradeButtonClicked", false);
 
                             /* code to play sound in case of Text prafull*/
                             /*Utils.playSound(ChatRecordView.this, R.raw.message_sent);*/
 
                         }
-
                         temp.partnerQbId = authManager.partnerQbId;
                         temp.senderQbId = authManager.getQBId();
                         temp.chatType = Constants.CHAT_TYPE_TEXT;
@@ -816,8 +823,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                         sendMsgToQB(path);
                         //To track through mixPanel.
                         //Image send.
-                        Utils.trackMixpanel(ChatRecordView.this,"Activity","MediaSent","RPageShareButtonClicked",false);
-
+                        Utils.trackMixpanel(ChatRecordView.this, "Activity", "MediaSent", "RPageTradeButtonClicked", false);
                         /* code to play sound in case of image prafull*/
                        /* Utils.playSound(ChatRecordView.this, R.raw.message_sent);*/
 
@@ -827,9 +833,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                         sendMsgToQB(audioFilePath);
                         //To track through mixPanel.
                         //Audio Send.
-
-                        Utils.trackMixpanel(ChatRecordView.this,"Activity","MediaSent","RPageShareButtonClicked",false);
-
+                        Utils.trackMixpanel(ChatRecordView.this, "Activity", "MediaSent", "RPageTradeButtonClicked", false);
                         /* code to play sound in case of audio prafull*/
                         /*Utils.playSound(ChatRecordView.this, R.raw.message_sent);*/
                     } else if (!Utils.isEmptyString(videofilePath)) { //Video is attached
@@ -838,9 +842,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                         sendMsgToQB(videofilePath);
                         //To track through mixPanel.
                         //Video Send.
-
-                        Utils.trackMixpanel(ChatRecordView.this,"Activity","MediaSent","RPageShareButtonClicked",false);
-
+                        Utils.trackMixpanel(ChatRecordView.this, "Activity", "MediaSent", "RPageTradeButtonClicked", false);
                         /* code to play sound in case of video prafull*/
                         /*Utils.playSound(ChatRecordView.this, R.raw.message_sent);*/
                     }
@@ -913,7 +915,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
                 //To track through mixPanel.
                 //click on partner pic.
-                Utils.trackMixpanel(this,"","","RPageCheckMyPartnerProfile",false);
+                Utils.trackMixpanel(this, "", "", "RPageCheckMyPartnerProfile", false);
                 break;
 
 
@@ -1066,8 +1068,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         ShowValueinChat(temp);
         //To track through mixPanel.
         //No of clicks send with Media(Audio,Video,Image).
-
-        Utils.trackMixpanel(ChatRecordView.this,"ClicksSent",""+temp.clicks,"RPageShareButtonClicked",false);
+        Utils.trackMixpanel(ChatRecordView.this, "ClicksSent", "" + temp.clicks, "RPageTradeButtonClicked", false);
 
         // mImageCaptureUri=null;
 
@@ -1096,31 +1097,50 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         chatText.setText("");//akshit code to Refresh Chat box text
 
 
-/* code to show dialog */
-        /* code to show dialog */
-        if (intent.getExtras().containsKey("mValue")) {
-
-            String mRelationShipId = relationManager.acceptedList.get(relationListIndex).getRelationshipId();
-
-
-            if (intent.getStringExtra("mValue").equalsIgnoreCase("one")) {
-
-                Utils.showOverlay(ChatRecordView.this);
-                authManager.reSetFlag(authManager.getPhoneNo(), authManager.getUsrToken(), mRelationShipId, "no", "no", relationListIndex);
-            } else if (intent.getStringExtra("mValue").equalsIgnoreCase("two")) {
-                authManager.reSetFlag(authManager.getPhoneNo(), authManager.getUsrToken(), mRelationShipId, "no", "null", relationListIndex);
-                Utils.showDialog(ChatRecordView.this);
-            }
-
-        }
-
-
         if (actionReq.equalsIgnoreCase("UPDATE")) {
-            //  Utils.launchBarDialog(this);
+
             if (myQbChatService == null) {
                 Intent i = new Intent(this, MyQbChatService.class);
                 bindService(i, mConnection, Context.BIND_AUTO_CREATE);
             }
+            //check for values, if not set by parent class Clickinbase view, then set it using index
+            Bundle extras = intent.getExtras();
+            if (extras != null) {
+                if (extras.containsKey("partnerIndex")) {
+                    setValuesUsingIndex(extras.getInt("partnerIndex"));
+                } else {
+                    partnerPic = extras.getString("partnerPic");
+                    partnerName = extras.getString("partnerName");
+                    partnerId = extras.getString("partnerId");
+
+                    partnerPh = extras.getString("partnerPh");
+                    relationListIndex = extras.getInt("relationListIndex");
+                    rId = extras.getString("rId");
+                    myClicks = extras.getString("myClicks");
+                    quickBlockId = extras.getString("quickId");
+                    userClicks = extras.getString("userClicks");
+                }
+
+            }
+            /* code to show dialog */
+        /* code to show dialog */
+            if (extras != null && extras.containsKey("mValue")) {
+
+                String mRelationShipId = relationManager.acceptedList.get(relationListIndex).getRelationshipId();
+
+
+                if (intent.getStringExtra("mValue").equalsIgnoreCase("one")) {
+
+                    Utils.showOverlay(ChatRecordView.this);
+                    authManager.reSetFlag(authManager.getPhoneNo(), authManager.getUsrToken(), mRelationShipId, "no", "no", relationListIndex);
+                } else if (intent.getStringExtra("mValue").equalsIgnoreCase("two")) {
+                    authManager.reSetFlag(authManager.getPhoneNo(), authManager.getUsrToken(), mRelationShipId, "no", "null", relationListIndex);
+                    Utils.showDialog(ChatRecordView.this);
+                }
+
+            }
+            //  Utils.launchBarDialog(this);
+
 
             updateValues(intent);
         } else if (actionReq.equalsIgnoreCase("CARD")) {
@@ -1383,12 +1403,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
     }
 
-    /*   public String getRealPathFromURI(Uri uri) {
-             Cursor cursor = getContentResolver().query(uri, null, null, null, null);
-             cursor.moveToFirst();
-             int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-             return cursor.getString(idx);
-       }*/
+
 
 
     protected void onResume() {
@@ -1633,7 +1648,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 case VideoUtil.REQUEST_VIDEO_CAPTURED:
                     if (!Utils.isEmptyString(VideoUtil.videofilePath)) {
                         ////To track through mixPanel.Vedio Attached from Camera
-                        Utils.trackMixpanel(this,"Activity","SelectedVideoAttached","AttachButtonClicked",false);
+                        Utils.trackMixpanel(this, "Activity", "SelectedVideoAttached", "AttachButtonClicked", false);
                         videofilePath = VideoUtil.videofilePath;
                         Bitmap bMap = ThumbnailUtils.createVideoThumbnail(VideoUtil.videofilePath, MediaStore.Video.Thumbnails.MINI_KIND);
                         if (videofilePath.contains(".mp4")) {
@@ -1660,7 +1675,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 case VideoUtil.REQUEST_VIDEO_CAPTURED_FROM_GALLERY:
                     // mImageCaptureUri = data.getData();
                     //To track through mixPanel.Attach Vedio From Gallery
-                    Utils.trackMixpanel(this,"Activity","SelectedVideoAttached","AttachButtonClicked",false);
+                    Utils.trackMixpanel(this, "Activity", "SelectedVideoAttached", "AttachButtonClicked", false);
                     path = Utils.getRealPathFromURI(data.getData(), ChatRecordView.this);
                     videofilePath = path;
                     Bitmap bMap = ThumbnailUtils.createVideoThumbnail(path, MediaStore.Video.Thumbnails.MINI_KIND);
@@ -1704,7 +1719,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
 
                         //To track through mixPanel.if User Cancells image Clicked from Camera.
-                        Utils.trackMixpanel(this,"Activity","ImageAttachmentCancelled","AttachButtonClicked",false);
+                        Utils.trackMixpanel(this, "Activity", "ImageAttachmentCancelled", "AttachButtonClicked", false);
 
                         Intent intent1 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                         mImageCaptureUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
@@ -1713,7 +1728,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                         startActivityForResult(intent1, Constants.CAMERA_REQUEST);
                     } else if (data.getStringExtra("retake").equalsIgnoreCase("fromchatGallery")) {
                         //To track through mixPanel.if User Cancells image Picked from Gallery.
-                        Utils.trackMixpanel(this,"Activity","ImageAttachmentCancelled","AttachButtonClicked",false);
+                        Utils.trackMixpanel(this, "Activity", "ImageAttachmentCancelled", "AttachButtonClicked", false);
                         Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                         startActivityForResult(pickPhoto, Constants.SELECT_PICTURE);
                     } else if (authManager.getmResizeBitmap() != null) {
@@ -2047,10 +2062,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         thumurl = null;
         videofilePath = null;
         attachBtn.setImageDrawable(getResources().getDrawable(R.drawable.attachedfileiconx));
-        //save previous chat here
-        String temprId = intent.getExtras().getString("rId");
-        //     Utils.launchBarDialog(ChatRecordView.this);
-        rId = temprId;
+
         //clear the message list always to initiate a new chat
         ModelManager.getInstance().getChatManager().chatMessageList.clear();
         setlist();
@@ -2059,15 +2071,14 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
         if (bundle != null) {
             authManager = ModelManager.getInstance().getAuthorizationManager();
+            //access value directly from parent class
+            authManager.partnerQbId = quickBlockId;
 
-            authManager.partnerQbId = bundle.getString("quickId");
-            partnerPic = bundle.getString("partnerPic");
-            partnerName = bundle.getString("partnerName");
+            ModelManager.getInstance().getRelationManager().getPartnerName = firstname;
+
             String[] splitted = partnerName.split("\\s+");
             firstname = splitted[0].toUpperCase();
             relationManager.getPartnerName = firstname;
-
-            partnerId = bundle.getString("partnerId");
 
 
             //reset values of clicks
@@ -2075,19 +2086,18 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             authManager.ourClicks = null;
             RelationManager relationManager = ModelManager.getInstance().getRelationManager();
             relationManager.partnerClicks = null;
-            authManager.ourClicks = bundle.getString("myClicks");
+            authManager.ourClicks = myClicks;
 
-            relationManager.partnerClicks = bundle.getString("userClicks");
+            relationManager.partnerClicks = userClicks;
 
             myclicksView.setText("" + authManager.ourClicks);
             partnerClicksView.setText("" + relationManager.partnerClicks);
 
-            partnerPh = bundle.getString("partnerPh");
 
 // get Chat record From server
             chatManager = ModelManager.getInstance().getChatManager();
             chatManager.chatListFromServer.clear();
-            relationListIndex = bundle.getInt("relationListIndex");
+
             //chatManager.fetchChatRecord(rId, authManager.getPhoneNo(), authManager.getUsrToken(),"");
 
 
@@ -2274,6 +2284,29 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
      /* downoad image from server */
 
+    private void setValuesUsingIndex(int index) {
+
+        if (ModelManager.getInstance().getRelationManager().acceptedList != null &&
+                ModelManager.getInstance().getRelationManager().acceptedList.size() > index) {
+            GetrelationshipsBean temp = ModelManager.getInstance().getRelationManager().acceptedList.get(index);
+            partnerName = temp.getPartnerName();
+            rId = temp.getRelationshipId();
+            partnerPic = temp.getPartnerPic();
+            quickBlockId = temp.getPartnerQBId();
+
+
+            ModelManager.getInstance().getAuthorizationManager().partnerQbId = temp.getPartnerQBId();
+
+
+            partnerId = temp.getPartner_id();
+            userClicks = temp.getClicks();
+            myClicks = temp.getUserClicks();
+            partnerPh = temp.getPhoneNo();
+            relationListIndex = index;
+
+        }
+    }
+
     class DBTask extends AsyncTask<String, Void, Void> {
 
         @Override
@@ -2328,7 +2361,6 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             Utils.dismissBarDialog();
         }
     }
-
 
 }
 

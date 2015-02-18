@@ -46,7 +46,7 @@ public class VideoUtil {
                                 contex.startActivityForResult(photoPickerIntent, REQUEST_VIDEO_CAPTURED_FROM_GALLERY);
                                 //To track through mixPanel.
                                 //Video Taken from Gallery.
-                                Utils.trackMixpanel(contex, "Activity", "ChooseVideoFromGallery", "AttachButtonClicked",false);
+                                Utils.trackMixpanel(contex, "Activity", "ChooseVideoFromGallery", "AttachButtonClicked", false);
 
                                 break;
 
@@ -55,7 +55,7 @@ public class VideoUtil {
                                 try {
                                     //To track through mixPanel.
                                     //Video Taken from Camera.
-                                    Utils.trackMixpanel(contex, "Activity", "RecordVideoFromCamera", "AttachButtonClicked",false);
+                                    Utils.trackMixpanel(contex, "Activity", "RecordVideoFromCamera", "AttachButtonClicked", false);
                                     Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
                                     fileUri = getOutputMediaFileUri(contex);
                                     intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);

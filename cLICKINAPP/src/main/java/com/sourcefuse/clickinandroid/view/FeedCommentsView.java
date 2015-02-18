@@ -51,7 +51,7 @@ public class FeedCommentsView extends Activity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 //code- to handle uncaught exception
-        if(Utils.mStartExceptionTrack)
+        if (Utils.mStartExceptionTrack)
             Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
         setContentView(R.layout.view_feeds_comments);
@@ -79,7 +79,7 @@ public class FeedCommentsView extends Activity {
             @Override
             public void onClick(View v) {
                 finish();
-                if(comment.getWindowToken() != null)
+                if (comment.getWindowToken() != null)
                     imm.hideSoftInputFromWindow(comment.getWindowToken(), 0);
                 if (send) {
                     Constants.comments = true;
@@ -110,7 +110,7 @@ public class FeedCommentsView extends Activity {
                         list.setSelection(list.getCount());
                     }
 
-                    if(comment.getWindowToken() != null)
+                    if (comment.getWindowToken() != null)
                         imm.hideSoftInputFromWindow(comment.getWindowToken(), 0);
 
                     newsFeedManager.saveStarComment(authMgr.getPhoneNo(), authMgr.getUsrToken(), news_feedId, comment.getText().toString(), "comment");

@@ -74,6 +74,7 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
     private static final String IMAGE_DIRECTORY_NAME = "ClickIn/ClickinImages";
     long diffrence_in_mills;
     long mills_in_17yrs;
+    boolean mFillNatively = false, mFromFacebook = false;
     private String TAG = this.getClass().getSimpleName();
     private EditText fname, lname, city, country, email;
     private TextView tvDate, tvMonth, tvYear;
@@ -93,9 +94,6 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
     private Uri userImageUri;
     private SimpleDateFormat mSimpleDateFormat;
     private int age;
-
-    boolean mFillNatively = false, mFromFacebook = false;
-
     private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
 
         public void onDateSet(DatePicker view, int selectedYear,

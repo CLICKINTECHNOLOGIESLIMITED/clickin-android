@@ -2,13 +2,13 @@ package com.sourcefuse.clickinandroid.utils;
 
 import android.content.Context;
 import android.content.Intent;
-
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import android.os.Process;
 import android.widget.Toast;
 
 import com.sourcefuse.clickinandroid.view.SplashView;
+
+import java.io.PrintWriter;
+import java.io.StringWriter;
 
 /**
  * Created by monika on 3/2/15.
@@ -26,7 +26,7 @@ public class MyExceptionHandler implements
 
     public void uncaughtException(Thread thread, Throwable exception) {
 
-        Toast.makeText(myContext, "App Crashed",Toast.LENGTH_LONG).show();
+        Toast.makeText(myContext, "App Crashed", Toast.LENGTH_LONG).show();
         StringWriter stackTrace = new StringWriter();
         exception.printStackTrace(new PrintWriter(stackTrace));
         System.err.println(stackTrace);// You can use LogCat too

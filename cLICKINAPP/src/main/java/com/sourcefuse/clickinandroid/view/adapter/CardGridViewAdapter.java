@@ -98,7 +98,7 @@ public class CardGridViewAdapter extends ArrayAdapter<CardBean> {
                 ((Activity) context).overridePendingTransition(R.anim.slide_in_up, R.anim.stay);
                 //To track through mixPanel.
                 //TradeCard Visited.
-                Utils.trackMixpanel(context, "Card Visited", Discription,"RPageTradeButtonClicked",false);
+                Utils.trackMixpanel(context, "Card Visited", Discription, "RPageTradeButtonClicked", false);
 
             }
 

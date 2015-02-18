@@ -132,6 +132,10 @@ public class SignUpView extends Activity implements TextWatcher, OnClickListener
 
         if (cntrycode.getText().toString().length() >= 1) {
 
+            //To track through mixPanel.
+            //Edit Country Code check Size is Greater than one.
+            Utils.trackMixpanel(SignUpView.this, "", "", "CountryCodeEdited", false);
+
         }
     }
 
@@ -160,8 +164,8 @@ public class SignUpView extends Activity implements TextWatcher, OnClickListener
 
             //To track through mixPanel.
             //Verify Entered UserPhone No.
-            Utils.trackMixpanel(SignUpView.this, "", "", "UserEnteredPhoneNumber",true);
-            Utils.trackMixpanel(SignUpView.this, "", "", "UserPhoneNumberSubmitted",true);
+            Utils.trackMixpanel(SignUpView.this, "", "", "UserEnteredPhoneNumber", true);
+            Utils.trackMixpanel(SignUpView.this, "", "", "UserPhoneNumberSubmitted", true);
 
             finish();
         } else if (getMsg.equalsIgnoreCase("SignUp False")) {

@@ -39,8 +39,8 @@ public class OthersFollowingFollowView extends ClickInBaseView implements View.O
         super.onCreate(savedInstanceState);
 
         //code- to handle uncaught exception
-        if(Utils.mStartExceptionTrack)
-        Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
+        if (Utils.mStartExceptionTrack)
+            Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
         setContentView(R.layout.view_othes_follow_following);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);

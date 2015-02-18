@@ -108,7 +108,7 @@ public class EditMyProfileView extends ClickInBaseView implements View.OnClickLi
 
 //        ModelManager.getInstance().getAuthorizationManager().setMixpanelAPI(this); // set Context to MixPanel
         //code- to handle uncaught exception
-        if(Utils.mStartExceptionTrack)
+        if (Utils.mStartExceptionTrack)
             Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
         setContentView(R.layout.view_editprofile);
@@ -282,10 +282,21 @@ public class EditMyProfileView extends ClickInBaseView implements View.OnClickLi
 
 
     public String getRealPathFromURI(Uri uri) {
-        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
-        cursor.moveToFirst();
-        int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-        return cursor.getString(idx);
+        Cursor cursor = null;
+        String path = null;
+        try {
+            cursor = getContentResolver().query(uri, null, null, null, null);
+            cursor.moveToFirst();
+            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+            path = cursor.getString(idx);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cursor != null)
+                cursor.close();
+        }
+
+        return path;
     }
       /* test code prafull */
 
