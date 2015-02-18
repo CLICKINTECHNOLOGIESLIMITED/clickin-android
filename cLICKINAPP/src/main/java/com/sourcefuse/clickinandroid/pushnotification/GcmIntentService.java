@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.PowerManager;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.sourcefuse.clickinandroid.model.ModelManager;
@@ -93,6 +94,8 @@ public class GcmIntentService extends IntentService {
         Bundle extras = intent.getExtras();
         // EventBus.getDefault().post("update Counter");
         mRelationManager = ModelManager.getInstance().getRelationManager();
+
+        Log.e("on GCMINTENT----","on GCMINTENT----");
 
         GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
         String messageType = gcm.getMessageType(intent);
