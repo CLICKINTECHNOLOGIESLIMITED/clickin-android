@@ -394,10 +394,9 @@ public class ViewShare extends Activity implements View.OnClickListener {
                 if (!Utils.isEmptyString(commentStr) && !commentStr.equalsIgnoreCase("Write your caption here...")) {
                     //To track through mixPanel.
                     //Share data with Comment
+
                     Utils.trackMixpanel(ViewShare.this, "Activity", "ShareWithComment", "RPageShareButtonClicked", false);
-                } else  //To track through mixPanel.
-                    //Share data without Comment
-                    Utils.trackMixpanel(ViewShare.this, "Activity", "UserShares", "RPageShareButtonClicked", false);
+                }
 
                 if (!Utils.isEmptyString(mLocationCoordinates)) {
                     //To track through mixPanel.
@@ -409,6 +408,9 @@ public class ViewShare extends Activity implements View.OnClickListener {
                     Utils.trackMixpanel(ViewShare.this, "Activity", "AudioShared", "AttachButtonClicked", false);
                 }
 
+                //To track through mixPanel.
+                //Share data without Comment
+                Utils.trackMixpanel(ViewShare.this, "Activity", "UserShares", "RPageShareButtonClicked",false);
                 break;
             case R.id.shr_caption:
 

@@ -108,6 +108,9 @@ public class SplashView extends Activity implements View.OnClickListener {
                 Intent intent = new Intent(SplashView.this, SignInView.class);
                 startActivity(intent);
                 finish();
+                //To track through mixPanel.
+                //Click on SignIn Button
+                Utils.trackMixpanel(SplashView.this,"","","SignInButtonClicked",false);
                 // this.overridePendingTransition(R.anim.slide_in_right
                 // ,R.anim.slide_out_right);
                 break;
@@ -115,6 +118,9 @@ public class SplashView extends Activity implements View.OnClickListener {
                 Intent signUp = new Intent(SplashView.this, SignUpView.class);
                 startActivity(signUp);
                 this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+                //To track through mixPanel.
+                //Click To SignUp.
+                Utils.trackMixpanel(SplashView.this,"","","SignUpButtonClicked",false);
                 finish();
                 break;
         }
