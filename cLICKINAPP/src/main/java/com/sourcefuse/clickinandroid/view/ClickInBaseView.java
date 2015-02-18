@@ -3,7 +3,6 @@ package com.sourcefuse.clickinandroid.view;
 
 import android.app.Activity;
 import android.app.ActivityManager;
-import android.app.NotificationManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -37,7 +36,6 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ChatManager;
-import com.sourcefuse.clickinandroid.model.ClickInNotificationManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.NewsFeedManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
@@ -78,7 +76,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
     private RelationManager relationManager;
     private TextView searchInviteView;
     private LinearLayout theFeed, inviteF, findFriend, setting;
-    public String quickBlockId, partnerPic, partnerName, partnerId, myClicks, userClicks, partnerPh,rId;
+    private String quickBlockId, partnerPic, partnerName, partnerId, myClicks, userClicks, partnerPh;
     private SearchAdapter searchListadapter;
     private RelativeLayout imageMenuRefresh;
     private int relationListIndex;
@@ -94,7 +92,8 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         authManager = ModelManager.getInstance().getAuthorizationManager();
         //code- to handle uncaught exception
-        Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(ClickInBaseView.this));
+        if (Utils.mStartExceptionTrack)
+            Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(ClickInBaseView.this));
     }
 
     @Override
@@ -105,7 +104,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         header.findViewById(R.id.iv_open_left_menu).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Utils.trackMixpanel(ClickInBaseView.this, "", "", "LeftMenuOpened", false);////To track through mixPanel,if Left Menu is opened.
                 slidemenu.showMenu();
             }
         });
@@ -154,7 +153,6 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         //To track through mixPanel.
         //Total Number of user clicks.
 //        Utils.trackMixpanel(ClickInBaseView.this, "TotalClicksSent", "" + userClicks, "RPageShareButtonClicked", false);
-
 
         String mValue;
         if (mNewUser != null && mNewUser.equalsIgnoreCase("yes") && mNewPrtner != null && mNewPrtner.equalsIgnoreCase("yes")) {
@@ -258,8 +256,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 
 
                 if (slidemenu.isSecondaryMenuShowing()) {
-                    if (notificationAdapter != null)
-                        notificationAdapter.notifyDataSetChanged();
+                    setNotificationList();
 
                     ModelManager.getInstance().getAuthorizationManager().setNotificationCounter(0);
                     if (ModelManager.getInstance().getNotificationManagerManager().notificationData.size() == 0) {
@@ -298,7 +295,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
             public void onClosed() {
 
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                if(edt_search.getWindowToken() != null)
+                if (edt_search.getWindowToken() != null)
                     imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
 
             }
@@ -330,12 +327,13 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
                 boolean handled = false;
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
 
+                    Utils.trackMixpanel(ClickInBaseView.this, "", "", "UserSearched", false);//Track event for MixPanel,if user searched from left slide menu
                     if (!(edt_search.getText().toString().length() > 0)) {
                         hideSearchlist.setVisibility(View.GONE);
                         searchList.setVisibility(View.GONE);
 
                         InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                        if(getCurrentFocus().getWindowToken() != null)
+                        if (getCurrentFocus() != null && getCurrentFocus().getWindowToken() != null)
                             inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 
                     }
@@ -434,7 +432,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
                 if (relationManager.acceptedList.size() > 0 && position >= 1) {
 //                    try {removed by akshit
                     partnerName = relationManager.acceptedList.get(position - 1).getPartnerName();
-                     rId = relationManager.acceptedList.get(position - 1).getRelationshipId();
+                    String rId = relationManager.acceptedList.get(position - 1).getRelationshipId();
                     partnerPic = relationManager.acceptedList.get(position - 1).getPartnerPic();
                     quickBlockId = relationManager.acceptedList.get(position - 1).getPartnerQBId();
 
@@ -455,10 +453,9 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
                         clickInadapter.notifyDataSetChanged();
                     }
 /* prafulll code to set counter to zero */
-
+                    //Track event for MixPanel,If Partner name is clicked from left menu.
+                    Utils.trackMixpanel(ClickInBaseView.this, "", "", "LeftMenuPartnerButtonClicked", false);
                     switchView(rId, relationListIndex);
-
-
                 }
             }
         });
@@ -468,9 +465,9 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
             public void onClick(View arg0) {
 
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                if(edt_search.getWindowToken() != null)
-                    imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
 
+                if (edt_search.getWindowToken() != null)
+                    imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
 
                 Intent intent = new Intent(ClickInBaseView.this, AddSomeoneView.class);
                 intent.putExtra("fromsignup", false);
@@ -492,7 +489,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
             public void onClick(View arg0) {
 
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                if(edt_search.getWindowToken() != null)
+                if (edt_search.getWindowToken() != null)
                     imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
 
                 Intent intent = new Intent(ClickInBaseView.this, CurrentClickersView.class);
@@ -513,7 +510,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
             public void onClick(View arg0) {
 
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                if(edt_search.getWindowToken() != null)
+                if (edt_search.getWindowToken() != null)
                     imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
 
                 Intent intent = new Intent(ClickInBaseView.this, SpreadWordView.class);
@@ -523,6 +520,8 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
                         /* code for animation prafull*/
 
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+                //To track through mixPanel. if Invite Button is clicked from Left Menu.
+                Utils.trackMixpanel(ClickInBaseView.this, "", "", "LeftMenuInviteButtonClicked", false);
             }
         });
         theFeed.setOnClickListener(new View.OnClickListener() {
@@ -531,7 +530,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 
 
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                if(edt_search.getWindowToken() != null)
+                if (edt_search.getWindowToken() != null)
                     imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
 
                 Intent intent = new Intent(ClickInBaseView.this, FeedView.class);
@@ -548,7 +547,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
             public void onClick(View arg0) {
 
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                if(edt_search.getWindowToken() != null)
+                if (edt_search.getWindowToken() != null)
                     imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
 
 
@@ -576,6 +575,8 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
                 }
                 Constants.mInAppNotification = false;
 
+                Utils.trackMixpanel(ClickInBaseView.this, "", "", "OwnProfileOpened", false);//To track through mixPanel,If Own Profile is opened from left menu
+
             }
         });
 
@@ -584,7 +585,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
             public void onClick(View arg0) {
 
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                if(edt_search.getWindowToken() != null)
+                if (edt_search.getWindowToken() != null)
                     imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
 
 
@@ -602,7 +603,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
             public void onClick(View arg0) {
 
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                if(edt_search.getWindowToken() != null)
+                if (edt_search.getWindowToken() != null)
                     imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
 
                 Intent intent = new Intent(ClickInBaseView.this, AddSomeoneView.class);
@@ -627,7 +628,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
                 if (relationManager.fetchUsersByNameData.size() > 0) {
 
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    if(edt_search.getWindowToken() != null)
+                    if (edt_search.getWindowToken() != null)
                         imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
 
 
@@ -837,7 +838,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
             slidemenu.findViewById(R.id.btn_progressBar).setVisibility(View.GONE);
 
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            if(edt_search.getWindowToken() != null)
+            if (edt_search.getWindowToken() != null)
                 imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
 
 
@@ -850,7 +851,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
             slidemenu.findViewById(R.id.btn_progressBar).setVisibility(View.GONE);
 
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            if(edt_search.getWindowToken() != null)
+            if (edt_search.getWindowToken() != null)
                 imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
 
             searchList.setVisibility(View.VISIBLE);
@@ -867,7 +868,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 
 
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            if(edt_search.getWindowToken() != null)
+            if (edt_search.getWindowToken() != null)
                 imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
 
             Intent intent = new Intent(ClickInBaseView.this, FeedView.class);
@@ -887,7 +888,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 
 
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            if(edt_search.getWindowToken() != null)
+            if (edt_search.getWindowToken() != null)
                 imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
 
 
@@ -1005,7 +1006,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         searchList.setVisibility(View.GONE);
 
         InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        if(getCurrentFocus().getWindowToken() != null)
+        if (getCurrentFocus() != null && getCurrentFocus().getWindowToken() != null)
             inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 
 
@@ -1029,11 +1030,10 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         super.onBackPressed();
 
 
-      /*  if(getCurrentFocus().getWindowToken() != null) { // check window token is null or not
+        if (getCurrentFocus() != null && getCurrentFocus().getWindowToken() != null) { // check window token is null or not
             InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-        }*/
-
+        }
 
 
     }

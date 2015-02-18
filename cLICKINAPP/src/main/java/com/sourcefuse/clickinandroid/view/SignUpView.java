@@ -118,6 +118,10 @@ public class SignUpView extends Activity implements TextWatcher, OnClickListener
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
 
+        //To track through mixPanel.
+        //Edit Country Code check Size is Greater than one.
+        Utils.trackMixpanel(SignUpView.this, "", "", "CountryCodeEdited",false);
+
         if (phoneNo.getText().toString().length() >= 1) {
             checkmeout.setEnabled(true);
             checkmeout.setBackgroundResource(R.drawable.s_checkout_active);
@@ -127,9 +131,7 @@ public class SignUpView extends Activity implements TextWatcher, OnClickListener
         }
 
         if (cntrycode.getText().toString().length() >= 1) {
-            //To track through mixPanel.
-            //Edit Country Code check Size is Greater than one.
-            Utils.trackMixpanel(SignUpView.this, "", "", "CountryCodeEdited",false);
+
         }
     }
 
