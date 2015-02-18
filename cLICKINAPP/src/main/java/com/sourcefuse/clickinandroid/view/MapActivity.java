@@ -70,8 +70,8 @@ public class MapActivity extends Activity implements ConnectionCallbacks, OnConn
         super.onCreate(savedInstanceState);
 
         //code- to handle uncaught exception
-        if(Utils.mStartExceptionTrack)
-        Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
+        if (Utils.mStartExceptionTrack)
+            Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
         setContentView(R.layout.layout_mapview);
 
@@ -148,7 +148,7 @@ public class MapActivity extends Activity implements ConnectionCallbacks, OnConn
                 try {
                     EditText myEditText = (EditText) findViewById(R.id.locationText);
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    if(myEditText.getWindowToken() != null)
+                    if (myEditText.getWindowToken() != null)
                         imm.hideSoftInputFromWindow(myEditText.getWindowToken(), 0);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -212,7 +212,7 @@ public class MapActivity extends Activity implements ConnectionCallbacks, OnConn
                 try {
                     EditText myEditText = (EditText) findViewById(R.id.locationText);
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    if(myEditText.getWindowToken() != null)
+                    if (myEditText.getWindowToken() != null)
                         imm.hideSoftInputFromWindow(myEditText.getWindowToken(), 0);
                 } catch (Exception e) {
                     e.printStackTrace();

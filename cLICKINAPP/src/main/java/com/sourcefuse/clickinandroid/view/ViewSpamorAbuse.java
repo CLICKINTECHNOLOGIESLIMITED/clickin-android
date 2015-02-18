@@ -39,8 +39,8 @@ public class ViewSpamorAbuse extends Activity implements View.OnClickListener {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         //code- to handle uncaught exception
-        if(Utils.mStartExceptionTrack)
-        Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
+        if (Utils.mStartExceptionTrack)
+            Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
 
         setContentView(R.layout.view_spam);
@@ -80,7 +80,7 @@ public class ViewSpamorAbuse extends Activity implements View.OnClickListener {
             @Override
             public void onClick(View arg0) {
                 InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                if(((EditText) findViewById(R.id.spam_edit_txt)).getWindowToken() != null)
+                if (((EditText) findViewById(R.id.spam_edit_txt)).getWindowToken() != null)
                     imm.hideSoftInputFromWindow(((EditText) findViewById(R.id.spam_edit_txt)).getWindowToken(), 0);
 
             }
@@ -125,7 +125,7 @@ public class ViewSpamorAbuse extends Activity implements View.OnClickListener {
             case R.id.spam_radio_nine:
 
                 InputMethodManager inputMethodManager1 = (InputMethodManager) this.getSystemService(Activity.INPUT_METHOD_SERVICE);
-                if(getCurrentFocus() != null && getCurrentFocus().getWindowToken() != null)
+                if (getCurrentFocus() != null && getCurrentFocus().getWindowToken() != null)
                     inputMethodManager1.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
 
                 break;// akshit code ends
@@ -145,7 +145,7 @@ public class ViewSpamorAbuse extends Activity implements View.OnClickListener {
                 if (Utils.isEmptyString(comment)) {
                     comment = "";
                 }
-                Utils.trackMixpanel(ViewSpamorAbuse.this,"Activity","ReportProblemSpamOrAbuse","LeftMenuSettingsButtonClicked",false);//track Spam Or Abuse mixpanel
+                Utils.trackMixpanel(ViewSpamorAbuse.this, "Activity", "ReportProblemSpamOrAbuse", "LeftMenuSettingsButtonClicked", false);//track Spam Or Abuse mixpanel
                 settingManager.reportaproblem(phone_no, user_token, problem_type, spam_or_abuse_type, comment);
 
                 break;

@@ -9,11 +9,11 @@ package com.sourcefuse.clickinandroid.view;
 * This Class is created to send mail in back ground.It provide
 * security permissions so that SSL content may be handled.
 * */
-import java.security.AccessController;
 
+import java.security.AccessController;
 import java.security.Provider;
 
-public class JSSLProvider  extends Provider {
+public class JSSLProvider extends Provider {
 
     public JSSLProvider() {
 

@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -100,8 +99,8 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         super.onCreate(savedInstanceState);
 
         //code- to handle uncaught exception
-        if(Utils.mStartExceptionTrack)
-        Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
+        if (Utils.mStartExceptionTrack)
+            Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
         setContentView(R.layout.view_userprofile);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
@@ -197,7 +196,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
             @Override
             public void onClick(View view) {
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                if(edt_search.getWindowToken() != null)
+                if (edt_search.getWindowToken() != null)
                     imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
             }
         });
@@ -226,9 +225,8 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
             gender = "guy";
         }
 
-        if(!Utils.isEmptyString(authManager.getdOB()))
+        if (!Utils.isEmptyString(authManager.getdOB()))
             dtails = dtails + Utils.getCurrentYear(authManager.getdOB()) + " " + getResources().getString(R.string.txt_yold);
-
 
 
         if (!Utils.isEmptyString(authManager.getUserCity()) && Utils.isEmptyString(authManager.getUserCountry())) {
@@ -353,7 +351,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
                 startActivity(intentFollower);
                 this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 
-                Utils.trackMixpanel(this,"","","MyFollowers",false);//track Followers Button mixpanel
+                Utils.trackMixpanel(this, "", "", "MyFollowers", false);//track Followers Button mixpanel
 
                 break;
             case R.id.btn_following:
@@ -362,7 +360,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
                 startActivity(intentFollowing);
                 this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 
-                Utils.trackMixpanel(this,"","","MyFollowing",false);//track Following Button mixpanel
+                Utils.trackMixpanel(this, "", "", "MyFollowing", false);//track Following Button mixpanel
 
                 break;
             case R.id.btn_add_someone:
@@ -370,13 +368,13 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
                 intent.putExtra("FromOwnProfile", true);
                 intent.putExtra("fromsignup", false);
                 startActivity(intent);
-                Utils.trackMixpanel(this,"","","ClickInWithSomeone",false);//track Click on Add Someone Button mixpanel
+                Utils.trackMixpanel(this, "", "", "ClickInWithSomeone", false);//track Click on Add Someone Button mixpanel
                 break;
             case R.id.btn_edit_profile:
                 Intent editProfile = new Intent(UserProfileView.this, EditMyProfileView.class);
                 startActivity(editProfile);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                Utils.trackMixpanel(this,"","","Edit Profile",false);////track For Edit profile Button Followers Button mixpanel
+                Utils.trackMixpanel(this, "", "", "Edit Profile", false);////track For Edit profile Button Followers Button mixpanel
                 break;
         }
     }
@@ -384,7 +382,6 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
     @Override
     public void onStart() {
         super.onStart();
-
 
 
     }
@@ -396,7 +393,6 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
     @Override
     public void onStop() {
         super.onStop();
-
 
 
     }
@@ -439,8 +435,8 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
 
                 @Override
                 public void run() {
-                    if(myQbChatService!=null)
-                    myQbChatService.setChatListeners();
+                    if (myQbChatService != null)
+                        myQbChatService.setChatListeners();
                 }
             }, 10000);
             setLeftMenuList();
@@ -470,7 +466,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
 
     @Override
     public void onBackPressed() {
-           // super.onBackPressed();
+        // super.onBackPressed();
     }
 
     private void switchView() {
@@ -499,7 +495,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         super.onNewIntent(intent);
 
 
-        if(myQbChatService==null){
+        if (myQbChatService == null) {
             Intent i = new Intent(this, MyQbChatService.class);
             startService(i);
             bindService(i, mConnection, Context.BIND_AUTO_CREATE);

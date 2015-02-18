@@ -40,8 +40,8 @@ public final class TestFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //code- to handle uncaught exception
-        if(Utils.mStartExceptionTrack)
-        Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(getActivity()));
+        if (Utils.mStartExceptionTrack)
+            Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(getActivity()));
         _activity = super.getActivity();
         if (getArguments() != null) {
             imageS = getArguments().getInt("img");
@@ -94,7 +94,7 @@ public final class TestFragment extends Fragment {
                     getActivity().finish();
                     //To track through mixPanel.
                     //Click To Signup
-                    Utils.trackMixpanel(getActivity(),"","","SignUpButtonClicked",false);
+                    Utils.trackMixpanel(getActivity(), "", "", "SignUpButtonClicked", false);
                     coverFlowChecked();
                 }
             });
@@ -107,7 +107,7 @@ public final class TestFragment extends Fragment {
                     coverFlowChecked();
                     //To track through mixPanel.
                     //Click To SignIn.
-                    Utils.trackMixpanel(getActivity(),"","","SignInButtonClicked",false);
+                    Utils.trackMixpanel(getActivity(), "", "", "SignInButtonClicked", false);
                     getActivity().finish();
                 }
             });

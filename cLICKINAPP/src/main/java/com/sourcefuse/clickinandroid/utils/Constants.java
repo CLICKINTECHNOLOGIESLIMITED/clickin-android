@@ -57,20 +57,17 @@ public class Constants {
     public static final String MSG_SENT = "SENT";
     public static final String MSG_DELIVERED = "DELIVERED";
     public static final int START_MAP = 200;
+    public static final String MIX_PANEL_TOKEN = "34b90dcc1a3f069eec5baa3208229d4b";
+    //constants to filter notification type, to know which activity is to start
+    public static final int USERPROFILE_NOTF = 1;
+    public static final int CHATRECORDVIEW_NOTF = 2;
+    public static final int FOLLOWER_FOLLOWING_NOTF = 3;
+    public static final int POSTVIEW_NOTF = 4;
+    public static final int JUMPOTHERPROFILEVIEW_NOTF = 5;
+    public static final int FEEDVIEW_NOTF = 6;
     public static boolean addChatMessageListener = false;
     public static int itemPosition = 0;
     public static boolean comments = false;
     public static String CUSTOM_CARD_URL = "https://s3.amazonaws.com/clickin-dev/cards/a/1080/custom_tradecart.jpg";
-
     public static boolean mInAppNotification = false;
-
-    public static final String MIX_PANEL_TOKEN = "34b90dcc1a3f069eec5baa3208229d4b";
-
-    //constants to filter notification type, to know which activity is to start
-    public static final int USERPROFILE_NOTF=1;
-    public static final int CHATRECORDVIEW_NOTF=2;
-    public static final int FOLLOWER_FOLLOWING_NOTF=3;
-    public static final int POSTVIEW_NOTF=4;
-    public static final int JUMPOTHERPROFILEVIEW_NOTF=5;
-    public static final int FEEDVIEW_NOTF=6;
 }

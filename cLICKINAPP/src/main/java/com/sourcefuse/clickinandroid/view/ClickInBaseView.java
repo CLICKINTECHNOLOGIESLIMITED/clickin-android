@@ -3,7 +3,6 @@ package com.sourcefuse.clickinandroid.view;
 
 import android.app.Activity;
 import android.app.ActivityManager;
-import android.app.NotificationManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -37,7 +36,6 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ChatManager;
-import com.sourcefuse.clickinandroid.model.ClickInNotificationManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.NewsFeedManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
@@ -69,6 +67,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
     //Right Menu.....
     public NewsFeedManager newsFeedManager;
     public SlidingMenu slidemenu;
+    public String quickBlockId, partnerPic, partnerName, partnerId, myClicks, userClicks, partnerPh, rId;
     String mLastchatID = "";
     View header;
     /// Left Menu
@@ -78,7 +77,6 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
     private RelationManager relationManager;
     private TextView searchInviteView;
     private LinearLayout theFeed, inviteF, findFriend, setting;
-    public String quickBlockId, partnerPic, partnerName, partnerId, myClicks, userClicks, partnerPh,rId;
     private SearchAdapter searchListadapter;
     private RelativeLayout imageMenuRefresh;
     private int relationListIndex;
@@ -298,7 +296,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
             public void onClosed() {
 
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                if(edt_search.getWindowToken() != null)
+                if (edt_search.getWindowToken() != null)
                     imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
 
             }
@@ -435,7 +433,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
                 if (relationManager.acceptedList.size() > 0 && position >= 1) {
 //                    try {removed by akshit
                     partnerName = relationManager.acceptedList.get(position - 1).getPartnerName();
-                     rId = relationManager.acceptedList.get(position - 1).getRelationshipId();
+                    rId = relationManager.acceptedList.get(position - 1).getRelationshipId();
                     partnerPic = relationManager.acceptedList.get(position - 1).getPartnerPic();
                     quickBlockId = relationManager.acceptedList.get(position - 1).getPartnerQBId();
 
@@ -470,7 +468,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
             public void onClick(View arg0) {
 
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                if(edt_search.getWindowToken() != null)
+                if (edt_search.getWindowToken() != null)
                     imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
 
 
@@ -494,7 +492,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
             public void onClick(View arg0) {
 
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                if(edt_search.getWindowToken() != null)
+                if (edt_search.getWindowToken() != null)
                     imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
 
                 Intent intent = new Intent(ClickInBaseView.this, CurrentClickersView.class);
@@ -515,7 +513,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
             public void onClick(View arg0) {
 
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                if(edt_search.getWindowToken() != null)
+                if (edt_search.getWindowToken() != null)
                     imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
 
                 Intent intent = new Intent(ClickInBaseView.this, SpreadWordView.class);
@@ -535,7 +533,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 
 
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                if(edt_search.getWindowToken() != null)
+                if (edt_search.getWindowToken() != null)
                     imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
 
                 Intent intent = new Intent(ClickInBaseView.this, FeedView.class);
@@ -552,7 +550,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
             public void onClick(View arg0) {
 
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                if(edt_search.getWindowToken() != null)
+                if (edt_search.getWindowToken() != null)
                     imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
 
 
@@ -590,7 +588,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
             public void onClick(View arg0) {
 
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                if(edt_search.getWindowToken() != null)
+                if (edt_search.getWindowToken() != null)
                     imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
 
 
@@ -608,7 +606,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
             public void onClick(View arg0) {
 
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                if(edt_search.getWindowToken() != null)
+                if (edt_search.getWindowToken() != null)
                     imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
 
                 Intent intent = new Intent(ClickInBaseView.this, AddSomeoneView.class);
@@ -633,7 +631,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
                 if (relationManager.fetchUsersByNameData.size() > 0) {
 
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    if(edt_search.getWindowToken() != null)
+                    if (edt_search.getWindowToken() != null)
                         imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
 
 
@@ -843,7 +841,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
             slidemenu.findViewById(R.id.btn_progressBar).setVisibility(View.GONE);
 
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            if(edt_search.getWindowToken() != null)
+            if (edt_search.getWindowToken() != null)
                 imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
 
 
@@ -856,7 +854,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
             slidemenu.findViewById(R.id.btn_progressBar).setVisibility(View.GONE);
 
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            if(edt_search.getWindowToken() != null)
+            if (edt_search.getWindowToken() != null)
                 imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
 
             searchList.setVisibility(View.VISIBLE);
@@ -873,7 +871,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 
 
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            if(edt_search.getWindowToken() != null)
+            if (edt_search.getWindowToken() != null)
                 imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
 
             Intent intent = new Intent(ClickInBaseView.this, FeedView.class);
@@ -893,7 +891,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 
 
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            if(edt_search.getWindowToken() != null)
+            if (edt_search.getWindowToken() != null)
                 imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
 
 
@@ -1039,7 +1037,6 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
             InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         }*/
-
 
 
     }

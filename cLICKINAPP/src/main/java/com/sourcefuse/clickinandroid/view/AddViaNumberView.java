@@ -31,7 +31,6 @@ public class AddViaNumberView extends Activity implements View.OnClickListener, 
     String mPhNo;
     boolean fromProfile = false;
     private Button getClickInVn;
-    private AuthManager authManager;
     private EditText edtPhoneNo, edtCountryCode;
 
     @Override
@@ -41,7 +40,7 @@ public class AddViaNumberView extends Activity implements View.OnClickListener, 
 
 
         //code- to handle uncaught exception
-        if(Utils.mStartExceptionTrack)
+        if (Utils.mStartExceptionTrack)
             Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
         setContentView(R.layout.view_addvianumber);
@@ -60,9 +59,9 @@ public class AddViaNumberView extends Activity implements View.OnClickListener, 
             public void onClick(View arg0) {
 
                 InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                if(edtPhoneNo.getWindowToken() != null)
+                if (edtPhoneNo.getWindowToken() != null)
                     imm.hideSoftInputFromWindow(edtPhoneNo.getWindowToken(), 0);
-                if(edtCountryCode.getWindowToken() != null)
+                if (edtCountryCode.getWindowToken() != null)
                     imm.hideSoftInputFromWindow(edtCountryCode.getWindowToken(), 0);
 
             }
@@ -83,7 +82,6 @@ public class AddViaNumberView extends Activity implements View.OnClickListener, 
             }
         });
 
-        authManager = ModelManager.getInstance().getAuthorizationManager();
 
 
         //akshit code start For country Code ,
@@ -114,7 +112,7 @@ public class AddViaNumberView extends Activity implements View.OnClickListener, 
             case R.id.btn_get_click_via_no:
                 //To track through mixPanel.
                 //Signup AddPartner.
-                Utils.trackMixpanel(AddViaNumberView.this,"","","SignUpAddAPartner",false);
+                Utils.trackMixpanel(AddViaNumberView.this, "", "", "SignUpAddAPartner", false);
                 if (Utils.isCountryCodeValid(edtCountryCode.getText().toString())) {
                     if (Utils.isPhoneValid(edtPhoneNo.getText().toString()) && (edtPhoneNo.getText().toString().length() >= 5) && !((EditText) findViewById(R.id.edt_cntry_cd)).getText().toString().equalsIgnoreCase("+(null)")) {
                         mPhNo = edtCountryCode.getText().toString().trim() + edtPhoneNo.getText().toString().trim();
@@ -150,7 +148,6 @@ public class AddViaNumberView extends Activity implements View.OnClickListener, 
     }
 
     public void onEventMainThread(String message) {
-        authManager = ModelManager.getInstance().getAuthorizationManager();
         if (message.equalsIgnoreCase("RequestSend True")) {
             Utils.dismissBarDialog();
             if (getIntent().getBooleanExtra("fromsignup", false)) {
@@ -171,7 +168,7 @@ public class AddViaNumberView extends Activity implements View.OnClickListener, 
             //switchView();
         } else if (message.equalsIgnoreCase("RequestSend False")) {
             Utils.dismissBarDialog();
-            Utils.fromSignalDialog(this, authManager.getMessage());
+            Utils.fromSignalDialog(this, ModelManager.getInstance().getAuthorizationManager().getMessage());
             //Utils.showAlert(AddViaNumberView.this, authManager.getMessage());
             // finish();
         } else if (message.equalsIgnoreCase("RequestSend Network Error")) {
@@ -223,11 +220,11 @@ public class AddViaNumberView extends Activity implements View.OnClickListener, 
 
         } else if (message.equalsIgnoreCase("Num Registered")) {
             /*Utils.launchBarDialog(this);*/
-            authManager = ModelManager.getInstance().getAuthorizationManager();
-            authManager.sendNewRequest(authManager.getPhoneNo(), mPhNo, authManager.getUsrToken());
+            ModelManager.getInstance().getAuthorizationManager().sendNewRequest(ModelManager.getInstance().getAuthorizationManager().getPhoneNo(), mPhNo,
+                                ModelManager.getInstance().getAuthorizationManager().getUsrToken());
         } else if (message.equalsIgnoreCase("Num Check False")) {
             Utils.dismissBarDialog();
-            Utils.fromSignalDialog(this, authManager.getMessage());
+            Utils.fromSignalDialog(this, ModelManager.getInstance().getAuthorizationManager().getMessage());
         }
     }
 

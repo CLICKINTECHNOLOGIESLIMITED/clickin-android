@@ -46,24 +46,22 @@ public class PostView extends ClickInBaseView implements View.OnClickListener {
     SimpleSectionedListAdapter2 simpleSectionedGridAdapter2;
     private StickyListHeadersListView list;
     private ArrayList<Section> sections = new ArrayList<Section>();
-    private NewsFeedManager newsFeedManager;
-    private AuthManager authManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
 //code- to handle uncaught exception
-        if(Utils.mStartExceptionTrack)
-        Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
+        if (Utils.mStartExceptionTrack)
+            Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
 
         setContentView(R.layout.postview);
         addMenu(true);
 
 
-        newsFeedManager = ModelManager.getInstance().getNewsFeedManager();
-        authManager = ModelManager.getInstance().getAuthorizationManager();
+        NewsFeedManager newsFeedManager = ModelManager.getInstance().getNewsFeedManager();
+        AuthManager authManager = ModelManager.getInstance().getAuthorizationManager();
 
         String FeedID = getIntent().getStringExtra("feedId");
 
@@ -138,7 +136,7 @@ public class PostView extends ClickInBaseView implements View.OnClickListener {
 
         sections.clear();
 
-        adapter = new FeedsAdapter(PostView.this, R.layout.feed_list_item, newsFeedManager.PostFeed, mHeaderPositions,
+        adapter = new FeedsAdapter(PostView.this, R.layout.feed_list_item, ModelManager.getInstance().getNewsFeedManager().PostFeed, mHeaderPositions,
                 senderName, receiverName, senderImages, recieverImages, timeOfFeed, senderId, receiverId, senderPhNo, recieverPhNo);
 
         list.setAdapter(adapter);
@@ -158,11 +156,13 @@ public class PostView extends ClickInBaseView implements View.OnClickListener {
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         if (intent.hasExtra("feedId")) {
+            AuthManager authManager = ModelManager.getInstance().getAuthorizationManager();
+
             slidemenu.showContent();
             String FeedID = intent.getStringExtra("feedId");
             Utils.launchBarDialog(PostView.this);
             ModelManager.getInstance().getProfileManager().getFollwer("", authManager.getPhoneNo(), authManager.getUsrToken()); // get following list as we need it.
-            newsFeedManager.ViewNewsFeed(FeedID, authManager.getPhoneNo(), authManager.getUsrToken());
+            ModelManager.getInstance().getNewsFeedManager().ViewNewsFeed(FeedID, authManager.getPhoneNo(), authManager.getUsrToken());
         }
     }
 
@@ -170,20 +170,19 @@ public class PostView extends ClickInBaseView implements View.OnClickListener {
 
         super.onEventMainThread(message);
 
-        authManager = ModelManager.getInstance().getAuthorizationManager();
 
         if (message.equalsIgnoreCase("GetFollower True")) {
             if (adapter != null)
                 adapter.notifyDataSetChanged();
         } else if (message.equalsIgnoreCase("NewsFeed True")) {
-            newsFeedBeanArrayList = newsFeedManager.PostFeed;
+            newsFeedBeanArrayList = ModelManager.getInstance().getNewsFeedManager().PostFeed;
             initData();
             initControls();
             //Utils.dismissBarDialog();
         } else if (message.equalsIgnoreCase("NewsFeed False")) {
             stopSearch = true;
             Utils.dismissBarDialog();
-            newsFeedManager.PostFeed.clear();
+            ModelManager.getInstance().getNewsFeedManager().PostFeed.clear();
             ((RelativeLayout) findViewById(R.id.no_feed_image)).setVisibility(View.VISIBLE);
             // no_feed_image.setVisibility(View.VISIBLE);
 
@@ -193,7 +192,7 @@ public class PostView extends ClickInBaseView implements View.OnClickListener {
             Utils.fromSignalDialog(PostView.this, AlertMessage.connectionError);
         } else if (message.equalsIgnoreCase("NewsFeedDelete False")) {
         } else if (message.equalsIgnoreCase("NewsFeedDelete True")) {
-            newsFeedManager.fetchNewsFeed("", ModelManager.getInstance().getAuthorizationManager().getPhoneNo(), ModelManager.getInstance().getAuthorizationManager().getUsrToken());
+            ModelManager.getInstance().getNewsFeedManager().fetchNewsFeed("", ModelManager.getInstance().getAuthorizationManager().getPhoneNo(), ModelManager.getInstance().getAuthorizationManager().getUsrToken());
         } else if (message.equalsIgnoreCase("NewsFeedDelete Network Error")) {
             Utils.dismissBarDialog();
             Utils.fromSignalDialog(PostView.this, AlertMessage.connectionError);

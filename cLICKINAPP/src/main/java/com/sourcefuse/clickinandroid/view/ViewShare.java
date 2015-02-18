@@ -388,26 +388,25 @@ public class ViewShare extends Activity implements View.OnClickListener {
                 if (!access_Token.equalsIgnoreCase("-")) {
                     //To track through mixPanel.
                     //Share data on facebook and chat.
-                    Utils.trackMixpanel(ViewShare.this, "Activity", "AppShareandFBshare", "RPageShareButtonClicked",false);
+                    Utils.trackMixpanel(ViewShare.this, "Activity", "AppShareandFBshare", "RPageShareButtonClicked", false);
 
                 }
-                if (!Utils.isEmptyString(commentStr)&& !commentStr.equalsIgnoreCase("Write your caption here...")) {
+                if (!Utils.isEmptyString(commentStr) && !commentStr.equalsIgnoreCase("Write your caption here...")) {
                     //To track through mixPanel.
                     //Share data with Comment
-                    Utils.trackMixpanel(ViewShare.this, "Activity", "ShareWithComment", "RPageShareButtonClicked",false);
-                }
-                else  //To track through mixPanel.
-                        //Share data without Comment
-                    Utils.trackMixpanel(ViewShare.this, "Activity", "UserShares", "RPageShareButtonClicked",false);
+                    Utils.trackMixpanel(ViewShare.this, "Activity", "ShareWithComment", "RPageShareButtonClicked", false);
+                } else  //To track through mixPanel.
+                    //Share data without Comment
+                    Utils.trackMixpanel(ViewShare.this, "Activity", "UserShares", "RPageShareButtonClicked", false);
 
                 if (!Utils.isEmptyString(mLocationCoordinates)) {
                     //To track through mixPanel.
                     //Share Location.
-                    Utils.trackMixpanel(ViewShare.this, "Activity", "LocationShared", "AttachButtonClicked",false);
+                    Utils.trackMixpanel(ViewShare.this, "Activity", "LocationShared", "AttachButtonClicked", false);
                 } else if (!Utils.isEmptyString(audioID)) {
                     //To track through mixPanel.
                     //Share Audio.
-                    Utils.trackMixpanel(ViewShare.this, "Activity", "AudioShared", "AttachButtonClicked",false);
+                    Utils.trackMixpanel(ViewShare.this, "Activity", "AudioShared", "AttachButtonClicked", false);
                 }
 
                 break;
@@ -496,15 +495,15 @@ public class ViewShare extends Activity implements View.OnClickListener {
         if (!Utils.isEmptyString(mLocationCoordinates)) {
             //To track through mixPanel.
             //Location Shared Cancelled.
-            Utils.trackMixpanel(ViewShare.this, "Activity", "LocationSharingCancelled", "AttachButtonClicked",false);
+            Utils.trackMixpanel(ViewShare.this, "Activity", "LocationSharingCancelled", "AttachButtonClicked", false);
         } else if (!Utils.isEmptyString(audioID)) {
             //To track through mixPanel.
             //Audio Shared Cancelled.
-            Utils.trackMixpanel(ViewShare.this, "Activity", "AudioSharingCancelled", "AttachButtonClicked",false);
+            Utils.trackMixpanel(ViewShare.this, "Activity", "AudioSharingCancelled", "AttachButtonClicked", false);
         } else
             //To track through mixPanel.
             //Shared Cancelled.
-            Utils.trackMixpanel(ViewShare.this, "Activity", "ShareCancelled", "RPageShareButtonClicked",false);
+            Utils.trackMixpanel(ViewShare.this, "Activity", "ShareCancelled", "RPageShareButtonClicked", false);
 
         super.onBackPressed();
         finish();
