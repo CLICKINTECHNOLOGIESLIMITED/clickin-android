@@ -786,6 +786,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                             //Click msg send.
                             Utils.trackMixpanel(ChatRecordView.this,"Activity","ClickMessageSent","RPageShareButtonClicked",false);
 
+                            Utils.trackMixpanel_superProperties(this,seekValue,"clicks");//Track Mix Panel To send,Clicks,To send Clicks Value
                             /* code to play sound in case of clicks prafull*/
                         } else {
                             temp.clicks = "no";
@@ -852,6 +853,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                         /* code to play sound in case of video prafull*/
                         /*Utils.playSound(ChatRecordView.this, R.raw.message_sent);*/
                     }
+
 
                 }
 
@@ -1079,7 +1081,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         //To track through mixPanel.
         //No of clicks send with Media(Audio,Video,Image).
 
-        Utils.trackMixpanel(ChatRecordView.this,"ClicksSent",""+temp.clicks,"RPageShareButtonClicked",false);
+        Utils.trackMixpanel(ChatRecordView.this,"ClicksSent",""+seekValue,"RPageShareButtonClicked",false);
 
         // mImageCaptureUri=null;
 

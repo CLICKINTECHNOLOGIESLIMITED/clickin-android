@@ -360,6 +360,9 @@ public class MapActivity extends Activity implements ConnectionCallbacks, OnConn
 
     @Override
     public void onBackPressed() {
+        //Track Mixpanel
+        //if Location Shared Canceled
+        Utils.trackMixpanel(MapActivity.this,"Activity","LocationSharingCancelled","AttachButtonClicked",false);
         super.onBackPressed();
         overridePendingTransition(0, R.anim.top_out);
 

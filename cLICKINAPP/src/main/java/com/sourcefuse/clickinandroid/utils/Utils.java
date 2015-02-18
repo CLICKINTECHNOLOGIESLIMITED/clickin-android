@@ -1476,6 +1476,7 @@ public class Utils {
                     jsonObject1.put("email", "" + ModelManager.getInstance().getAuthorizationManager().getEmailId());
                 if (!Utils.isEmptyString(ModelManager.getInstance().getAuthorizationManager().getGender()))
                     jsonObject1.put("Gender", "" + ModelManager.getInstance().getAuthorizationManager().getGender());
+
                 DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                 Date date = new Date();
                 jsonObject1.put("created", "" + dateFormat.format(date));
@@ -1506,6 +1507,31 @@ public class Utils {
         return dp;
     }
 
+    //Method To Track mixpanel Super properties ,clicks & relationship count
+    public static void trackMixpanel_superProperties(Context context,int value ,String Case){
+
+        MixpanelAPI mixpanelAPI = MixpanelAPI.getInstance(context, Constants.MIX_PANEL_TOKEN);
+        mixpanelAPI.identify("" + ModelManager.getInstance().getAuthorizationManager().getPhoneNo());
+
+//        JSONObject jsonObject1 = new JSONObject();
+//        try {
+//            jsonObject1.put("clicks", clicks);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+
+        if(Case.equalsIgnoreCase("clicks")) {//if we have to send clicks.
+            int clicks_tosend = Math.abs(value);//To convert Negative clicks to positive.
+            mixpanelAPI.getPeople().identify("" + ModelManager.getInstance().getAuthorizationManager().getPhoneNo());
+            mixpanelAPI.getPeople().increment("TotalClicksSent", (double) clicks_tosend);
+        }
+        else{//for the case of relationship count .
+            mixpanelAPI.getPeople().identify("" + ModelManager.getInstance().getAuthorizationManager().getPhoneNo());
+            mixpanelAPI.getPeople().increment("RelationShipCount", (double) value);
+        }
+
+        mixpanelAPI.flush();
+    }
 
 }
 

@@ -54,7 +54,8 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
        /* mLruCahe = new LruCache(context);
         picasso = new Picasso.Builder(context).memoryCache(mLruCahe).build();*/
 
-        Utils.trackMixpanel((Activity) context, "", "" + itemList.size(), "RelationShipCount", false);//Track RelationShipCount through mixpanel
+        Utils.trackMixpanel_superProperties((Activity) context,itemList.size(),"relationshipcount");//Track Relationship Count Through Mix panel
+//
     }
 //    ((ImageView)row.findViewById(R.id.iv_accept_card)).setTag(position);
 //    ((ImageView) row.findViewById(R.id.iv_accept_card)).setOnClickListener(new View.OnClickListener() {
