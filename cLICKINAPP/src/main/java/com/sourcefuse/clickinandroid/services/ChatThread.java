@@ -643,7 +643,7 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
             }
         } else {
             //if chatservice is not initialized and chatservice object is null
-            showDialog("Sign up again");
+          //  showDialog("Sign up again");
         }
     }
 

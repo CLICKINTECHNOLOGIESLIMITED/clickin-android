@@ -281,6 +281,7 @@ public class FetchContactFromPhone {
             Collections.sort(Utils.itData, FetchContactFromPhone.NameComparator);
             cur.close(); // close cursor after fetch contact fetch done
         }
+
     }
 
     public void getClickerList(final String phone, String usertoken, final int clickers) {

@@ -44,7 +44,8 @@ public class SplashView extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
 
 //code- to handle uncaught exception
-        if (Utils.mStartExceptionTrack)
+
+        if(Utils.mStartExceptionTrack)
             Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
 
