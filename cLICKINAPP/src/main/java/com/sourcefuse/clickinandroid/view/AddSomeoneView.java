@@ -32,7 +32,6 @@ import de.greenrobot.event.EventBus;
 
 public class AddSomeoneView extends Activity implements TextWatcher {
 
-    AuthManager authManager;
     boolean FromOwnProfile;
     private EditText search_phbook;
     private ListView listView;
@@ -45,7 +44,7 @@ public class AddSomeoneView extends Activity implements TextWatcher {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         //code- to handle uncaught exception
-        if(Utils.mStartExceptionTrack)
+        if (Utils.mStartExceptionTrack)
             Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
         setContentView(R.layout.view_addsomeone);
@@ -54,7 +53,6 @@ public class AddSomeoneView extends Activity implements TextWatcher {
         listView = (ListView) findViewById(R.id.list_contact);
         showContactlist = (RelativeLayout) findViewById(R.id.rr_con_list);
         search_phbook.addTextChangedListener(this);
-        authManager = ModelManager.getInstance().getAuthorizationManager();
 
         listView.setOnItemClickListener(new OnItemClickListener() {
             @Override
@@ -65,7 +63,6 @@ public class AddSomeoneView extends Activity implements TextWatcher {
                     imm.hideSoftInputFromWindow(search_phbook.getWindowToken(), 0);
                 }
 
-                ProfileManager prfManager = ModelManager.getInstance().getProfileManager();
 
                 Intent intent = new Intent(AddSomeoneView.this, AddViaContactView.class);
                 intent.putExtra("fromsignup", getIntent().getBooleanExtra("fromsignup", false));
@@ -161,7 +158,7 @@ public class AddSomeoneView extends Activity implements TextWatcher {
                 startActivity(clickersView);
                 //To track through mixPanel.
                 //Skip Adding Partner from Signup
-                Utils.trackMixpanel(AddSomeoneView.this,"","","SignUpSkipAddingPartner",false);
+                Utils.trackMixpanel(AddSomeoneView.this, "", "", "SignUpSkipAddingPartner", false);
                 finish();
             }
         });
@@ -176,7 +173,7 @@ public class AddSomeoneView extends Activity implements TextWatcher {
                 startActivity(clickersView);
                 //To track through mixPanel.
                 //Skip Adding Partner from Signup
-                Utils.trackMixpanel(AddSomeoneView.this,"","","SignUpSkipAddingPartner",false);
+                Utils.trackMixpanel(AddSomeoneView.this, "", "", "SignUpSkipAddingPartner", false);
                 finish();
 
             }
@@ -243,7 +240,6 @@ public class AddSomeoneView extends Activity implements TextWatcher {
     public void onEventMainThread(String message) {
 
 
-        authManager = ModelManager.getInstance().getAuthorizationManager();
         if (message.equalsIgnoreCase("CheckFriend True")) {
             Utils.dismissBarDialog();
             adapter = new ContactAdapter(this, R.layout.row_contacts, Utils.itData);
@@ -271,7 +267,8 @@ public class AddSomeoneView extends Activity implements TextWatcher {
 
         @Override
         protected void onPostExecute(Void voids) {
-            new FetchContactFromPhone(AddSomeoneView.this).getClickerList(authManager.getPhoneNo(), authManager.getUsrToken(), 1);
+            new FetchContactFromPhone(AddSomeoneView.this).getClickerList(ModelManager.getInstance().getAuthorizationManager().getPhoneNo(),
+                    ModelManager.getInstance().getAuthorizationManager().getUsrToken(), 1);
         }
     }
 }

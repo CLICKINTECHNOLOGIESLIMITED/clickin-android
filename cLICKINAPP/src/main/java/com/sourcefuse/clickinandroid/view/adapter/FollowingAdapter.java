@@ -131,6 +131,8 @@ public class FollowingAdapter extends ArrayAdapter<FollowerFollowingBean> {
 /*  conditoin to change follow into requested */
                     TextView button = (TextView) layout.getChildAt(2);
                     button.setBackgroundResource(R.drawable.requested_btn);
+                    //Track MixPanel ,Follow User .
+                    Utils.trackMixpanel((Activity)context,"","","FollowUser",false);
 //                    rholder.reqbtn.setBackgroundResource(R.drawable.requested_btn);//removed by akshit
                     relationManager.followUser(item.get(position).getPhoneNo(), authManager.getPhoneNo(), authManager.getUsrToken());
                     item.get(position).setIsFollowing("false");
@@ -190,6 +192,9 @@ public class FollowingAdapter extends ArrayAdapter<FollowerFollowingBean> {
                 TextView button1 = (TextView) view.getTag();
                 button1.setBackgroundResource(R.drawable.c_owner_follow_btn);
 
+                //Track MixPanel through
+
+                Utils.trackMixpanel((Activity)context,"","","UnfollowUser",false);
                 relationManager.unFollowUser(item.get(position1).getrFollowerId(), "true", authManager.getPhoneNo(), authManager.getUsrToken());
                 item.get(position1).setIsFollowing("true");
                 item.get(position1).setAccepted("null");

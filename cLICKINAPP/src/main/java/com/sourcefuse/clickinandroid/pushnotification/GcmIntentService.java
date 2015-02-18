@@ -7,17 +7,14 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.PowerManager;
-import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
-import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
 import com.sourcefuse.clickinandroid.utils.Constants;
@@ -27,17 +24,13 @@ import com.sourcefuse.clickinapp.R;
 
 import java.util.List;
 
-import de.greenrobot.event.EventBus;
-
-import android.os.Handler;
-
 public class GcmIntentService extends IntentService {
     public static int NOTIFICATION_ID = 1;
     RelationManager mRelationManager;
-    private NotificationManager mNotificationManager;
     Handler handler;
-    String feedId=null;
-    int msg_type=-1; //to determine which webservice needs to be hit to update data-monika
+    String feedId = null;
+    int msg_type = -1; //to determine which webservice needs to be hit to update data-monika
+    private NotificationManager mNotificationManager;
 
     public GcmIntentService() {
         super("GcmIntentService");
@@ -51,37 +44,37 @@ public class GcmIntentService extends IntentService {
                             ModelManager.getInstance().getRelationManager().getRelationShips(
                                     ModelManager.getInstance().getAuthorizationManager().getPhoneNo(),
                                     ModelManager.getInstance().getAuthorizationManager().getUsrToken());
-                          break;
+                        break;
                     case Constants.FEEDVIEW_NOTF:
                         if (!Utils.isEmptyString(ModelManager.getInstance().getAuthorizationManager().getUsrToken()))
-                        ModelManager.getInstance().getNewsFeedManager().fetchNewsFeed("",
-                                ModelManager.getInstance().getAuthorizationManager().getPhoneNo(),
-                                ModelManager.getInstance().getAuthorizationManager().getUsrToken());
+                            ModelManager.getInstance().getNewsFeedManager().fetchNewsFeed("",
+                                    ModelManager.getInstance().getAuthorizationManager().getPhoneNo(),
+                                    ModelManager.getInstance().getAuthorizationManager().getUsrToken());
                         break;
                     case Constants.POSTVIEW_NOTF:
-                        if (!Utils.isEmptyString(ModelManager.getInstance().getAuthorizationManager().getUsrToken())){
+                        if (!Utils.isEmptyString(ModelManager.getInstance().getAuthorizationManager().getUsrToken())) {
                             ModelManager.getInstance().getProfileManager().getFollwer("",
                                     ModelManager.getInstance().getAuthorizationManager().getPhoneNo(),
                                     ModelManager.getInstance().getAuthorizationManager().getUsrToken());
-                            String feedId=null;
-                            if(data.containsKey("FeedId"))
-                                 feedId=data.getString("FeedId");
-                            if(!Utils.isEmptyString(feedId))
-                            ModelManager.getInstance().getNewsFeedManager().ViewNewsFeed(feedId,
-                                    ModelManager.getInstance().getAuthorizationManager().getPhoneNo(),
-                                    ModelManager.getInstance().getAuthorizationManager().getUsrToken());
+                            String feedId = null;
+                            if (data.containsKey("FeedId"))
+                                feedId = data.getString("FeedId");
+                            if (!Utils.isEmptyString(feedId))
+                                ModelManager.getInstance().getNewsFeedManager().ViewNewsFeed(feedId,
+                                        ModelManager.getInstance().getAuthorizationManager().getPhoneNo(),
+                                        ModelManager.getInstance().getAuthorizationManager().getUsrToken());
                         }
 
                         break;
                     case Constants.FOLLOWER_FOLLOWING_NOTF:
 
                         if (!Utils.isEmptyString(ModelManager.getInstance().getAuthorizationManager().getUsrToken()))
-                        ModelManager.getInstance().getProfileManager().getFollwer(
-                              " ",
-                                ModelManager.getInstance().getAuthorizationManager().getPhoneNo(),
-                                ModelManager.getInstance().getAuthorizationManager().getUsrToken());
+                            ModelManager.getInstance().getProfileManager().getFollwer(
+                                    "",
+                                    ModelManager.getInstance().getAuthorizationManager().getPhoneNo(),
+                                    ModelManager.getInstance().getAuthorizationManager().getUsrToken());
 
-                    break;
+                        break;
                     case Constants.JUMPOTHERPROFILEVIEW_NOTF:
 
 
@@ -146,8 +139,8 @@ public class GcmIntentService extends IntentService {
                         //  msg_type=Constants.FOLLOWER_FOLLOWING_NOTF;
                     }
 
-                        //common for all- monika
-                        sendNotification(intent, extras.getString("chat_message"),dataToBeSend);
+                    //common for all- monika
+                    sendNotification(intent, extras.getString("chat_message"), dataToBeSend);
 
                 }
             }
@@ -157,7 +150,7 @@ public class GcmIntentService extends IntentService {
     }
 
 
-    private void sendNotification(Intent intent,String msg,Bundle data) {
+    private void sendNotification(Intent intent, String msg, Bundle data) {
     /* code to fetch notifiacation */
 
         mNotificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -167,10 +160,10 @@ public class GcmIntentService extends IntentService {
         PendingIntent contentIntent = null;
         if (intent != null) {
             intent.setClass(getApplicationContext(), ReloadApp.class);
-            intent.putExtra("NOTIFICATION_TYPE",data.getInt("msg_type"));
-       //     intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            intent.putExtra("NOTIFICATION_TYPE", data.getInt("msg_type"));
+            //     intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
-            contentIntent = PendingIntent.getActivity(this,NOTIFICATION_ID, intent, PendingIntent.FLAG_ONE_SHOT);
+            contentIntent = PendingIntent.getActivity(this, NOTIFICATION_ID, intent, PendingIntent.FLAG_ONE_SHOT);
         }
 
 
@@ -191,8 +184,8 @@ public class GcmIntentService extends IntentService {
         boolean isScreenOn = pm.isScreenOn();  // check screen state to show notification
 
 
-          if (!isAppOnForeground(getApplicationContext()) || !isScreenOn)
-        mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+        if (!isAppOnForeground(getApplicationContext()) || !isScreenOn)
+            mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
 
         android.os.Message msg1 = new android.os.Message();
         msg1.what = data.getInt("msg_type");

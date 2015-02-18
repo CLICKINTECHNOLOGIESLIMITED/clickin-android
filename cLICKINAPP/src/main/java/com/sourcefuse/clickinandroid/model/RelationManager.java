@@ -1,8 +1,5 @@
 package com.sourcefuse.clickinandroid.model;
 
-import android.util.Log;
-
-import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.sourcefuse.clickinandroid.model.bean.FetchUsersByNameBean;
 import com.sourcefuse.clickinandroid.model.bean.GetrelationshipsBean;
@@ -22,7 +19,6 @@ import java.util.ArrayList;
 import de.greenrobot.event.EventBus;
 
 public class RelationManager {
-    private static final String TAG = RelationManager.class.getSimpleName();
     public ArrayList<ProfileRelationShipBean> usrRelationShipData = new ArrayList<ProfileRelationShipBean>();
     public ArrayList<ProfileRelationShipBean> profileRelationShipData = new ArrayList<ProfileRelationShipBean>();
     public ArrayList<GetrelationshipsBean> getrelationshipsData = new ArrayList<GetrelationshipsBean>();
@@ -33,9 +29,7 @@ public class RelationManager {
     public String getPartnerName = "";
     public String partnerClicks = null;
     StringEntity se = null;
-    AsyncHttpClient client;
     String strService = null;
-    private RelationManager relationManager;
     // getrelation data
     private GetrelationshipsBean getRelationShipList = null;
     private ArrayList<GetrelationshipsBean> getRelationShipArray = null;
@@ -57,14 +51,12 @@ public class RelationManager {
     public void
     getRelationShips(String phone, String usertoken) {
         // TODO Auto-generated method stub
-        relationManager = ModelManager.getInstance().getRelationManager();
         JSONObject userInputDetails = new JSONObject();
         try {
             userInputDetails.put("phone_no", phone);
             userInputDetails.put("user_token", usertoken);
 
 
-            client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
 
@@ -74,7 +66,7 @@ public class RelationManager {
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        client.post(null, strService, se, "application/json", new JsonHttpResponseHandler() {
+        ClickinRestClient.post(null, strService, se, "application/json", new JsonHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
                 super.onFailure(statusCode, e, errorResponse);
@@ -103,8 +95,8 @@ public class RelationManager {
                         initiatorList.clear();
                         requestedList.clear();
                         try {
-                            relationManager.setFollowerListCount(response.getString("follower"));
-                            relationManager.setFollowingListCount(response.getString("following"));
+                            ModelManager.getInstance().getRelationManager().setFollowerListCount(response.getString("follower"));
+                            ModelManager.getInstance().getRelationManager().setFollowingListCount(response.getString("following"));
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -210,24 +202,13 @@ public class RelationManager {
     public void fetchprofilerelationships(String othersPhone, String phone,
                                           String usertoken) {
         // TODO Auto-generated method stub
-        relationManager = ModelManager.getInstance().getRelationManager();
-//		JSONObject userInputDetails = new JSONObject();
+
         try {
-//			userInputDetails.put("phone_no", phone);
-//			userInputDetails.put("user_token", usertoken);
-
-            client = new AsyncHttpClient();
-//			client.addHeader("user_token", usertoken);
-//			client.addHeader("phone_no", phone);
-            client.addHeader("User-Token", usertoken);
-            client.addHeader("Phone-No", phone);
-
-            strService = APIs.FETCHPROFILERELATIONSHIPS
-                    + othersPhone.substring(1);
+            strService = APIs.FETCHPROFILERELATIONSHIPS + othersPhone.substring(1);
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        client.get(strService, new JsonHttpResponseHandler() {
+        ClickinRestClient.get(strService, new JsonHttpResponseHandler() {
 
             @Override
             public void onFailure(int statusCode, Throwable e,
@@ -265,12 +246,12 @@ public class RelationManager {
                         JSONArray list = response.getJSONArray("relationships");
 
                         if (response.has("relation_status"))
-                            relationManager.setRelationStatus(response.getString("relation_status"));
+                            ModelManager.getInstance().getRelationManager().setRelationStatus(response.getString("relation_status"));
 
                         if (response.has("follower"))
-                            relationManager.setOFollowerListCount(response.getString("follower"));
+                            ModelManager.getInstance().getRelationManager().setOFollowerListCount(response.getString("follower"));
                         if (response.has("following"))
-                            relationManager.setOFollowingListCount(response.getString("following"));
+                            ModelManager.getInstance().getRelationManager().setOFollowingListCount(response.getString("following"));
 
                         ProfileRelationShipArray = new ArrayList<ProfileRelationShipBean>();
                         for (int i = 0; i < list.length(); i++) {
@@ -316,7 +297,6 @@ public class RelationManager {
     public void changeUserVisibility(String relationshipIid, String mode,
                                      String phone, String usertoken) {
         // TODO Auto-generated method stub
-        relationManager = ModelManager.getInstance().getRelationManager();
         JSONObject userInputDetails = new JSONObject();
         try {
             userInputDetails.put("phone_no", phone);
@@ -324,14 +304,13 @@ public class RelationManager {
             userInputDetails.put("relationship_id", relationshipIid);
             userInputDetails.put("public", mode);
 
-            client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
 
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        client.post(null, APIs.CHANGEVISIBILITY, se, "application/json", new JsonHttpResponseHandler() {
+        ClickinRestClient.post(null, APIs.CHANGEVISIBILITY, se, "application/json", new JsonHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
                 super.onFailure(statusCode, e, errorResponse);
@@ -365,7 +344,6 @@ public class RelationManager {
 
     public void followUser(String followeePhoneNo, String phone,
                            String usertoken) {
-        relationManager = ModelManager.getInstance().getRelationManager();
         // TODO Auto-generated method stub
         JSONObject userInputDetails = new JSONObject();
         try {
@@ -373,7 +351,6 @@ public class RelationManager {
             userInputDetails.put("user_token", usertoken);
             userInputDetails.put("followee_phone_no", followeePhoneNo);
 
-            client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
 
@@ -381,7 +358,7 @@ public class RelationManager {
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        client.post(null, APIs.FOLLOWUSER, se, "application/json",
+        ClickinRestClient.post(null, APIs.FOLLOWUSER, se, "application/json",
                 new JsonHttpResponseHandler() {
                     @Override
                     public void onFailure(int statusCode, Throwable e,
@@ -390,7 +367,7 @@ public class RelationManager {
                         try {
 
                             if (errorResponse != null) {
-                                relationManager.setStatusMsg(errorResponse.getString("message"));
+                                ModelManager.getInstance().getRelationManager().setStatusMsg(errorResponse.getString("message"));
                                 EventBus.getDefault().post("FollowUser false");
                             } else {
                                 EventBus.getDefault().post("FollowUser Network Error");
@@ -409,7 +386,7 @@ public class RelationManager {
 
                             state = response.getBoolean("success");
                             if (state) {
-                                relationManager.setStatusMsg(response.getString("message"));
+                                ModelManager.getInstance().getRelationManager().setStatusMsg(response.getString("message"));
                                 EventBus.getDefault().post("FollowUser true");
                             }
                         } catch (JSONException e) {
@@ -425,7 +402,6 @@ public class RelationManager {
     public void unFollowUser(String followId, String followingMode, String phone,
                              String usertoken) {
         // TODO Auto-generated method stub
-        relationManager = ModelManager.getInstance().getRelationManager();
         JSONObject userInputDetails = new JSONObject();
         try {
             userInputDetails.put("phone_no", phone);
@@ -434,7 +410,6 @@ public class RelationManager {
             userInputDetails.put("following", followingMode);
             //  userInputDetails.put("accepted", accepted);
 
-            client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,
                     "application/json"));
@@ -443,7 +418,7 @@ public class RelationManager {
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        client.post(null, APIs.UNFOLLOWUSER, se, "application/json",
+        ClickinRestClient.post(null, APIs.UNFOLLOWUSER, se, "application/json",
                 new JsonHttpResponseHandler() {
                     @Override
                     public void onFailure(int statusCode, Throwable e,
@@ -452,7 +427,7 @@ public class RelationManager {
                         try {
 
                             if (errorResponse != null) {
-                                relationManager.setStatusMsg(errorResponse.getString("message"));
+                                ModelManager.getInstance().getRelationManager().setStatusMsg(errorResponse.getString("message"));
                                 EventBus.getDefault().post("UnFollowUser  false");
                             } else {
                                 EventBus.getDefault().post("UnFollowUser Network Errer");
@@ -471,7 +446,7 @@ public class RelationManager {
 
                             state = response.getBoolean("success");
                             if (state) {
-                                relationManager.setStatusMsg(response.getString("message"));
+                                ModelManager.getInstance().getRelationManager().setStatusMsg(response.getString("message"));
                                 EventBus.getDefault().post("UnFollowUser true");
                             }
                         } catch (JSONException e) {
@@ -484,7 +459,6 @@ public class RelationManager {
 
     public void updateStatus(String relationshipIid, String phone,
                              String usertoken, String mode) {
-        relationManager = ModelManager.getInstance().getRelationManager();
         JSONObject userInputDetails = new JSONObject();
         try {
             userInputDetails.put("phone_no", phone);
@@ -492,7 +466,6 @@ public class RelationManager {
             userInputDetails.put("relationship_id", relationshipIid);
             userInputDetails.put("accepted", mode);
 
-            client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
 
@@ -500,7 +473,7 @@ public class RelationManager {
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        client.post(null, APIs.UPDATESTATUS, se, "application/json", new JsonHttpResponseHandler() {
+        ClickinRestClient.post(null, APIs.UPDATESTATUS, se, "application/json", new JsonHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
                 super.onFailure(statusCode, e, errorResponse);
@@ -537,14 +510,12 @@ public class RelationManager {
     }
 
     public void deleteRelationship(String relationshipIid, String phone, String usertoken) {
-        relationManager = ModelManager.getInstance().getRelationManager();
         JSONObject userInputDetails = new JSONObject();
         try {
             userInputDetails.put("phone_no", phone);
             userInputDetails.put("user_token", usertoken);
             userInputDetails.put("relationship_id", relationshipIid);
 
-            client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
 
@@ -552,7 +523,7 @@ public class RelationManager {
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        client.post(null, APIs.DELETERELATIONSHIP, se, "application/json",
+        ClickinRestClient.post(null, APIs.DELETERELATIONSHIP, se, "application/json",
                 new JsonHttpResponseHandler() {
                     @Override
                     public void onFailure(int statusCode, Throwable e,
@@ -591,14 +562,12 @@ public class RelationManager {
     }
 
     public void fetchusersbyname(String name, String phone, String usertoken) {
-        relationManager = ModelManager.getInstance().getRelationManager();
         JSONObject userInputDetails = new JSONObject();
         try {
             userInputDetails.put("phone_no", phone);
             userInputDetails.put("user_token", usertoken);
             userInputDetails.put("name", name);
 
-            client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
 
 
@@ -606,7 +575,7 @@ public class RelationManager {
 
         } catch (Exception e1) {
         }
-        client.post(null, APIs.FETCHUSERSBYNAME, se, "application/json",
+        ClickinRestClient.post(null, APIs.FETCHUSERSBYNAME, se, "application/json",
                 new JsonHttpResponseHandler() {
                     @Override
                     public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
@@ -676,20 +645,18 @@ public class RelationManager {
     }
 
     public void followupdatestatus(String followId, String accepted, String phone, String usertoken) {
-        relationManager = ModelManager.getInstance().getRelationManager();
         JSONObject userInputDetails = new JSONObject();
         try {
             userInputDetails.put("phone_no", phone);
             userInputDetails.put("user_token", usertoken);
             userInputDetails.put("accepted", accepted);
             userInputDetails.put("follow_id", followId);
-            client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
 
         } catch (Exception e1) {
         }
-        client.post(null, APIs.FOLLOWUPDATESTATUS, se, "application/json",
+        ClickinRestClient.post(null, APIs.FOLLOWUPDATESTATUS, se, "application/json",
                 new JsonHttpResponseHandler() {
                     @Override
                     public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {

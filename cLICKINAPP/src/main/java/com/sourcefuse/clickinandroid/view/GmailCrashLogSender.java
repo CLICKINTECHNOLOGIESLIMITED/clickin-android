@@ -96,7 +96,6 @@ public class GmailCrashLogSender extends javax.mail.Authenticator {
                                       String sender) throws Exception {//send mail from here
 
 
-
         MimeMessage message = new MimeMessage(session);
 
         DataHandler handler = new DataHandler(new ByteArrayDataSource(

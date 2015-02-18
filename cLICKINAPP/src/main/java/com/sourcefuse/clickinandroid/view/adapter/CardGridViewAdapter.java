@@ -3,14 +3,12 @@ package com.sourcefuse.clickinandroid.view.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.sourcefuse.clickinandroid.model.ChatManager;
 import com.sourcefuse.clickinandroid.model.bean.CardBean;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.Card;
@@ -22,27 +20,31 @@ public class CardGridViewAdapter extends ArrayAdapter<CardBean> {
     private static final String TAG = "CardViewAdapter";
     Context context;
     int layoutResourceId;
-    int card1;
-    ChatManager chatManager;
-    int pos;
-    View row;
-    boolean debug = false;
     // String url = "https://s3.amazonaws.com/clickin-dev/cards/a/1080/39.jpg" ;
     private List item;
+<<<<<<< HEAD
     int listSize=-1;
+=======
+    int listsize = 0 ;
+>>>>>>> 796283f2632160d8fbc8c63600f4592231785bec
 
     public CardGridViewAdapter(Context context, int layoutResourceId, List<CardBean> item) {
         super(context, layoutResourceId, item);
         this.layoutResourceId = layoutResourceId;
         this.context = context;
         this.item = item;
+<<<<<<< HEAD
         listSize=item.size();
+=======
+        listsize = item.size();
+>>>>>>> 796283f2632160d8fbc8c63600f4592231785bec
 
     }
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
+<<<<<<< HEAD
         pos = position;
         row = convertView;
 
@@ -50,10 +52,21 @@ public class CardGridViewAdapter extends ArrayAdapter<CardBean> {
        CardBean  item = getItem(position);
 
 
+=======
+        CardBean card_items = null;
+
+        View row = convertView;
+        if(listsize > position) {
+        card_items = getItem(position);
+        }else {
+            card_items = getItem(position-1);
+        }
+>>>>>>> 796283f2632160d8fbc8c63600f4592231785bec
         RecordHolder holder = null;
 
 
         if (row == null) {
+
 
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
             row = inflater.inflate(layoutResourceId, parent, false);
@@ -71,16 +84,20 @@ public class CardGridViewAdapter extends ArrayAdapter<CardBean> {
             holder = (RecordHolder) row.getTag();
         }
 
-        holder.cardTittle.setText(item.getCardTitle());
-        holder.cardDescription.setText(item.getCardDescription());
 
+            holder.cardTittle.setText(card_items.getCardTitle());
+            holder.cardDescription.setText(card_items.getCardDescription());
 
         row.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-
-                CardBean bean = getItem(position);
+                CardBean bean = null;
+                if(listsize > position) {
+                   bean = getItem(position);
+                }else {
+                    bean = getItem(position-1);
+                }
                 String url = bean.getCardUrl();
 
 
@@ -99,7 +116,7 @@ public class CardGridViewAdapter extends ArrayAdapter<CardBean> {
                 ((Activity) context).overridePendingTransition(R.anim.slide_in_up, R.anim.stay);
                 //To track through mixPanel.
                 //TradeCard Visited.
-                Utils.trackMixpanel(context, "Card Visited", Discription,"RPageTradeButtonClicked",false);
+                Utils.trackMixpanel(context, "Card Visited", Discription, "RPageTradeButtonClicked", false);
 
             }
 

@@ -1,9 +1,7 @@
 package com.sourcefuse.clickinandroid.model;
 
 import android.content.Context;
-import android.util.Log;
 
-import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.sourcefuse.clickinandroid.model.bean.NotificationBean;
 import com.sourcefuse.clickinandroid.utils.APIs;
@@ -17,8 +15,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 
 import de.greenrobot.event.EventBus;
 
@@ -28,7 +24,6 @@ import de.greenrobot.event.EventBus;
  */
 public class ClickInNotificationManager implements NotificationManagerI {
     StringEntity se = null;
-    AsyncHttpClient client;
 
     private ArrayList<NotificationBean> notificationArray = null;
     private NotificationBean ntificationBeanList = null;
@@ -43,14 +38,13 @@ public class ClickInNotificationManager implements NotificationManagerI {
             userInputDetails.put("user_token", usertoken);
             userInputDetails.put("last_notification_id", lastNotificationId);
 
-            client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
 
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        client.post(context, APIs.FETCHNOTIFICATIONS, se, "application/json",
+        ClickinRestClient.post(context, APIs.FETCHNOTIFICATIONS, se, "application/json",
                 new JsonHttpResponseHandler() {
 
                     @Override
@@ -130,7 +124,6 @@ public class ClickInNotificationManager implements NotificationManagerI {
                                     notificationData.addAll(notificationArray);
 
                                 }
-
 
 
                                 EventBus.getDefault().postSticky("Notification true");

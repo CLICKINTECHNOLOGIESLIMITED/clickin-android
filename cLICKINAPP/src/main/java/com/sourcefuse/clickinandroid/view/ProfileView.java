@@ -74,6 +74,7 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
     private static final String IMAGE_DIRECTORY_NAME = "ClickIn/ClickinImages";
     long diffrence_in_mills;
     long mills_in_17yrs;
+    boolean mFillNatively = false, mFromFacebook = false;
     private String TAG = this.getClass().getSimpleName();
     private EditText fname, lname, city, country, email;
     private TextView tvDate, tvMonth, tvYear;
@@ -93,9 +94,6 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
     private Uri userImageUri;
     private SimpleDateFormat mSimpleDateFormat;
     private int age;
-
-    boolean mFillNatively = false, mFromFacebook = false;
-
     private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
 
         public void onDateSet(DatePicker view, int selectedYear,
@@ -656,10 +654,21 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
     }
 
     public String getRealPathFromURI(Uri uri) {
-        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
-        cursor.moveToFirst();
-        int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-        return cursor.getString(idx);
+        Cursor cursor = null;
+        String path = null;
+        try {
+            cursor = getContentResolver().query(uri, null, null, null, null);
+            cursor.moveToFirst();
+            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+            path = cursor.getString(idx);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cursor != null)
+                cursor.close();
+        }
+
+        return path;
     }
 
     @Override

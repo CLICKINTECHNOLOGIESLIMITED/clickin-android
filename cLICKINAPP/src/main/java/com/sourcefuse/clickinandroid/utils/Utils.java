@@ -28,8 +28,7 @@ import android.os.AsyncTask;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.telephony.TelephonyManager;
-import android.util.*;
-import android.util.Log;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -87,6 +86,7 @@ public class Utils {
     public static ArrayList<String> groupSms = new ArrayList<String>();
     public static HashMap<String, ContactBean> contactMap = new HashMap<String, ContactBean>();
     public static String mName;
+    public static boolean mStartExceptionTrack = false;  // to stop exception data sending on server
     static GoogleCloudMessaging gcm;
     static String regid;
     private static CustomProgressDialog barProgressDialog;
@@ -117,7 +117,6 @@ public class Utils {
         }
     }
 
-
     public static void clickInpdOpen(Activity activity, String dialogMessage) {
         dialog = null;
         dialog = new Dialog(activity);
@@ -144,6 +143,8 @@ public class Utils {
         }
     }
 
+    //akshit code dialog
+
     public static void showAlert(Activity activity, String masg) {
         new AlertDialog.Builder(activity).setTitle("Alert").setMessage(masg)
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -154,8 +155,6 @@ public class Utils {
                 }).show();
 
     }
-
-    //akshit code dialog
 
     //akshit code starts
     public static void fromSignalDialog1(Activity activity, String msgStrI, String msgStrII) {
@@ -179,6 +178,7 @@ public class Utils {
         });
         dialog.show();
     }
+    // Ends
 
     public static void fromSignalertDialogDammit(Activity activity) {
         dialog = new Dialog(activity);
@@ -201,7 +201,6 @@ public class Utils {
         });
         dialog.show();
     }
-    // Ends
 
     // Akshit Code Starts
     public static void fromSignalDialog(Activity activity, String str) {
@@ -372,13 +371,13 @@ public class Utils {
                 .openInputStream(selectedImage), null, o2);
     }
 
+
+    //Check for Internet Connection
+
     public static boolean isEmptyString(String str) {
         return str == null || str.equalsIgnoreCase("null")
                 || str.equalsIgnoreCase("") || str.length() < 1;
     }
-
-
-    //Check for Internet Connection
 
     public static String getCurrentYear(String str) {
         int len = str.length();
@@ -398,20 +397,7 @@ public class Utils {
         return networkInfo != null && networkInfo.isConnected();
     }
 
-    // public static Boolean DeleteImage(Uri uri,Activity act) {
-    // boolean deleted = false;
-    // String[] projection = { MediaStore.Images.Media.DATA };
-    // Cursor cursor = act.managedQuery(uri, projection, null, null, null);
-    // if(cursor!=null){
-    // int column_index =
-    // cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-    // cursor.moveToFirst();
-    // File file = new File(cursor.getString(column_index));
-    // deleted = file.delete();
-    // }
-    // return deleted;
-    //
-    // }
+
     public static void showToast(Activity act, String msg) {
         Toast.makeText(act, "" + msg, Toast.LENGTH_SHORT).show();
     }
@@ -463,21 +449,19 @@ public class Utils {
 
     public static String getRealPathFromURI(Uri contentUri, Activity mContext) {
         Cursor cursor = null;
+        String path = null;
         try {
             String[] proj = {MediaStore.Images.Media.DATA};
             cursor = mContext.getContentResolver().query(contentUri, proj, null, null, null);
             int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
             cursor.moveToFirst();
-            return cursor.getString(column_index);
+            path = cursor.getString(column_index);
+            cursor.close();
         } catch (Exception e) {
             e.printStackTrace();
-
-            return "";
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
+            path = null;
         }
+        return path;
     }
 
     public static String decodeSampledBitmapFromUri(Context context, Uri uri, int reqWidth, int reqHeight) {
@@ -659,6 +643,11 @@ public class Utils {
         return dateFormatted;
     }
 
+
+
+
+      /* code for camera*/
+
     //monika- function to get country code from Sim
     public static String getCountryCodeFromSim(Context context) {
 
@@ -692,11 +681,6 @@ public class Utils {
         }
         return CountryZipCode;
     }
-
-
-
-
-      /* code for camera*/
 
     public static String GetCountryZipCode(Context context) {
         String CountryID = "";
@@ -860,6 +844,9 @@ public class Utils {
 
     }
 
+
+    /* find bitmap */
+
     public static String convertClicks(String clicks) {
 
         String changeClicks = "";
@@ -910,9 +897,6 @@ public class Utils {
         }
         return changeClicks;
     }
-
-
-    /* find bitmap */
 
     //function to update clicks value for ours and partner- in case of Cards only monika
     public static void updateClicksValue(String oursClicks, String partnerClicks, String clicks, boolean ours) {
@@ -1027,6 +1011,9 @@ public class Utils {
         return changeClicks;
     }
 
+    //function to update clicks of partner without card
+    // //function to update clicks value for ours -without cards-monika
+
     // //function to update clicks value for ours -without cards-monika
     public static void updateClicksWithoutCard(String oursClicks, String clicks, boolean add) {
         String tempOurClicksString = new String(oursClicks);
@@ -1049,8 +1036,7 @@ public class Utils {
 
     }
 
-    //function to update clicks of partner without card
-    // //function to update clicks value for ours -without cards-monika
+    //monika- code to
 
     // last modified by akshit to fix the issue with negative clicks , Monika code commented.
     public static void updateClicksPartnerWithoutCard(String partnerClicks, String clicks, boolean add) {
@@ -1070,8 +1056,6 @@ public class Utils {
         }
         ModelManager.getInstance().getRelationManager().partnerClicks = String.valueOf(tempPartnerClicks);
     }
-
-    //monika- code to
 
     //akshit code to play sound
     public static void playSound(Activity activity, int resID) {
@@ -1302,6 +1286,7 @@ public class Utils {
 
     public static Uri getImageContentUri(Context context, File imageFile) {
         String filePath = imageFile.getAbsolutePath();
+        Uri uri = null;
         Cursor cursor = context.getContentResolver().query(
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                 new String[]{MediaStore.Images.Media._ID},
@@ -1311,7 +1296,8 @@ public class Utils {
             int id = cursor.getInt(cursor
                     .getColumnIndex(MediaStore.MediaColumns._ID));
             int id1 = cursor.getInt(cursor.getColumnIndex(MediaStore.MediaColumns._ID));
-            return Uri.withAppendedPath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "" + id1);
+            uri = Uri.withAppendedPath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "" + id1);
+            cursor.close();
         } else {
             if (imageFile.exists()) {
                 ContentValues values = new ContentValues();
@@ -1319,9 +1305,11 @@ public class Utils {
                 return context.getContentResolver().insert(
                         MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
             } else {
-                return null;
+                uri = null;
             }
         }
+
+        return uri;
     }
 
     public static Uri getVideoContentUri(Context context, File imageFile) {
@@ -1335,6 +1323,7 @@ public class Utils {
             int id = cursor.getInt(cursor
                     .getColumnIndex(MediaStore.MediaColumns._ID));
             int id1 = cursor.getInt(cursor.getColumnIndex(MediaStore.MediaColumns._ID));
+            cursor.close();
             return Uri.withAppendedPath(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, "" + id1);
         } else {
             if (imageFile.exists()) {
@@ -1349,45 +1338,47 @@ public class Utils {
     }
 
 
+    /* download video from url */
+
     public static Uri getAudioContentUri(Context context, File imageFile) {
         String filePath = imageFile.getAbsolutePath();
+        Uri uri = null;
         Cursor cursor = context.getContentResolver().query(
                 MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
                 new String[]{MediaStore.Audio.Media._ID},
                 MediaStore.Audio.Media.DATA + "=? ",
                 new String[]{filePath}, null);
-        if (cursor != null && cursor.moveToFirst()) {
-            int id = cursor.getInt(cursor
-                    .getColumnIndex(MediaStore.MediaColumns._ID));
-            int id1 = cursor.getInt(cursor.getColumnIndex(MediaStore.MediaColumns._ID));
-            return Uri.withAppendedPath(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, "" + id1);
-        } else {
-            if (imageFile.exists()) {
-                ContentValues values = new ContentValues();
-                values.put(MediaStore.Audio.Media.DATA, filePath);
-                return context.getContentResolver().insert(
-                        MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, values);
+        try {
+            if (cursor != null && cursor.moveToFirst()) {
+                int id = cursor.getInt(cursor
+                        .getColumnIndex(MediaStore.MediaColumns._ID));
+                int id1 = cursor.getInt(cursor.getColumnIndex(MediaStore.MediaColumns._ID));
+                uri = Uri.withAppendedPath(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, "" + id1);
+                cursor.close(); // close cursor
             } else {
-                return null;
+                if (imageFile.exists()) {
+                    ContentValues values = new ContentValues();
+                    values.put(MediaStore.Audio.Media.DATA, filePath);
+                    return context.getContentResolver().insert(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, values);
+                } else {
+                    uri = null;
+                }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        return uri;
     }
-
-
-    /* download video from url */
 
     public static Uri getUriFromPath(String filePath, Context context) {
         long photoId;
         Uri photoUri = MediaStore.Images.Media.getContentUri("external");
-
         String[] projection = {MediaStore.Images.ImageColumns._ID};
         // TODO This will break if we have no matching item in the MediaStore.
         Cursor cursor = context.getContentResolver().query(photoUri, projection, MediaStore.Images.ImageColumns.DATA + " LIKE ?", new String[]{filePath}, null);
         cursor.moveToFirst();
-
         int columnIndex = cursor.getColumnIndex(projection[0]);
         photoId = cursor.getLong(columnIndex);
-
         cursor.close();
         return Uri.parse(photoUri.toString() + "/" + photoId);
     }
@@ -1467,22 +1458,11 @@ public class Utils {
         });
     }
 
-    private int pxlToDp(int pixel, Context mContext) {
-
-        final float scale = mContext.getResources().getDisplayMetrics().density;
-        int dp = (int) (pixel * scale + 0.5f);
-        return dp;
-    }
-
-
-    public static boolean mStartExceptionTrack = false;  // to stop exception data sending on server
-
     // track User actions through mixPanel.
     public static void trackMixpanel(Context context, String mKey, String mValue, String mEvent, boolean mSetProfile) {
 
         MixpanelAPI mixpanelAPI = MixpanelAPI.getInstance(context, Constants.MIX_PANEL_TOKEN);
         mixpanelAPI.identify("" + ModelManager.getInstance().getAuthorizationManager().getPhoneNo());
-
 
 
         if (mSetProfile) {
@@ -1517,6 +1497,13 @@ public class Utils {
         mixpanelAPI.timeEvent(mEvent);
         mixpanelAPI.flush();
 
+    }
+
+    private int pxlToDp(int pixel, Context mContext) {
+
+        final float scale = mContext.getResources().getDisplayMetrics().density;
+        int dp = (int) (pixel * scale + 0.5f);
+        return dp;
     }
 
 

@@ -279,6 +279,7 @@ public class FetchContactFromPhone {
 
 
             Collections.sort(Utils.itData, FetchContactFromPhone.NameComparator);
+            cur.close(); // close cursor after fetch contact fetch done
         }
 
     }

@@ -1,8 +1,5 @@
 package com.sourcefuse.clickinandroid.model;
 
-import android.util.Log;
-
-import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.sourcefuse.clickinandroid.model.bean.CardBean;
 import com.sourcefuse.clickinandroid.model.bean.ChatMessageBody;
@@ -32,12 +29,9 @@ public class ChatManager {
     public ArrayList<CardBean> all = new ArrayList<CardBean>();
     //this list to maintain current chat list to view in chat record view
     public ArrayList<ChatMessageBody> chatMessageList = new ArrayList<ChatMessageBody>();
-    StringEntity se = null;
-    AsyncHttpClient client;
-    ArrayList<ArrayList<CardBean>> lists = new ArrayList<ArrayList<CardBean>>();
-    private AuthManager authManager;
     public String chat_history_size = "true";
-    private ChatManager chatManager;
+    StringEntity se = null;
+    ArrayList<ArrayList<CardBean>> lists = new ArrayList<ArrayList<CardBean>>();
     private CardBean cardBean = null;
     private ChatRecordBeen chatRecordBeen = null;
     private int myTotalClick = 0;
@@ -76,7 +70,6 @@ public class ChatManager {
     public void fetchChatRecord(String relationshipId, String phone, String usertoken, String chatId) {
 
 
-        chatManager = ModelManager.getInstance().getChatManager();
         // TODO Auto-generated method stub
         JSONObject userInputDetails = new JSONObject();
         try {
@@ -87,14 +80,13 @@ public class ChatManager {
                 userInputDetails.put("last_chat_id", chatId);
             }
 
-            client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
 
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        client.post(null, APIs.FETCHCHATRECORDS, se, "application/json",
+        ClickinRestClient.post(null, APIs.FETCHCHATRECORDS, se, "application/json",
                 new JsonHttpResponseHandler() {
 
                     @Override
@@ -259,7 +251,7 @@ public class ChatManager {
                                     }
                                 }
 
-                                chatManager.chatMessageList.addAll(0, refreshivechatList);
+                                ModelManager.getInstance().getChatManager().chatMessageList.addAll(0, refreshivechatList);
 
                                 //akshit code to find the size of new records fetched
                                 int size_of_list = refreshivechatList.size();
@@ -304,17 +296,8 @@ public class ChatManager {
 
     public void fetchCards(String phone, String usertoken) {
 
-        try {
-            client = new AsyncHttpClient();
 
-            client.addHeader("User-Token", usertoken);
-            client.addHeader("Phone-No", phone);
-
-        } catch (Exception e1) {
-            e1.printStackTrace();
-        }
-
-        client.get(APIs.FETCHCARDS, new JsonHttpResponseHandler() {
+        ClickinRestClient.get(APIs.FETCHCARDS, new JsonHttpResponseHandler() {
             boolean success = false;
 
             @Override
@@ -400,7 +383,6 @@ public class ChatManager {
     }
 
     public void chatShare(String phone_no, String user_token, String relationshipId, String chatId, String media, String fbAccessToken, String comment, String accepted) {
-        authManager = ModelManager.getInstance().getAuthorizationManager();
         JSONObject userInputDetails = new JSONObject();
         try {
             userInputDetails.put("phone_no", phone_no);
@@ -413,15 +395,13 @@ public class ChatManager {
             userInputDetails.put("accepted", accepted);
 
 
-
-            client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
 
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        client.post(null, APIs.CHATSHARE, se, "application/json",
+        ClickinRestClient.post(null, APIs.CHATSHARE, se, "application/json",
                 new JsonHttpResponseHandler() {
 
                     @Override
@@ -459,7 +439,6 @@ public class ChatManager {
     }
 
     public void sharingAction(String phone_no, String user_token, String sharingId, String status) {
-        authManager = ModelManager.getInstance().getAuthorizationManager();
         JSONObject userInputDetails = new JSONObject();
         try {
             userInputDetails.put("phone_no", phone_no);
@@ -467,14 +446,13 @@ public class ChatManager {
             userInputDetails.put("sharing_id", sharingId);
             userInputDetails.put("status", status);
 
-            client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
 
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        client.post(null, APIs.SHARINGACTION, se, "application/json",
+        ClickinRestClient.post(null, APIs.SHARINGACTION, se, "application/json",
                 new JsonHttpResponseHandler() {
 
                     @Override
@@ -510,21 +488,19 @@ public class ChatManager {
     }
 
     public void savecards(String phone_no, String user_token, String title) {
-        authManager = ModelManager.getInstance().getAuthorizationManager();
         JSONObject userInputDetails = new JSONObject();
         try {
             userInputDetails.put("phone_no", phone_no);
             userInputDetails.put("user_token", user_token);
             userInputDetails.put("title", title);
 
-            client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
 
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        client.post(null, APIs.SAVECARDS, se, "application/json",
+        ClickinRestClient.post(null, APIs.SAVECARDS, se, "application/json",
                 new JsonHttpResponseHandler() {
 
                     @Override
@@ -560,21 +536,19 @@ public class ChatManager {
     }
 
     public void getUnReadMessageCount(String phone_no, String user_token, String relationshipId) {
-        authManager = ModelManager.getInstance().getAuthorizationManager();
         JSONObject userInputDetails = new JSONObject();
         try {
             userInputDetails.put("phone_no", phone_no);
             userInputDetails.put("user_token", user_token);
             userInputDetails.put("relationship_id", relationshipId);
 
-            client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
 
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        client.post(null, APIs.GETUNREADMESSAGECOUNT, se, "application/json",
+        ClickinRestClient.post(null, APIs.GETUNREADMESSAGECOUNT, se, "application/json",
                 new JsonHttpResponseHandler() {
 
                     @Override
@@ -611,21 +585,19 @@ public class ChatManager {
 
 
     public void resetUnReadMessageCount(String phone_no, String user_token, String relationshipId) {
-        authManager = ModelManager.getInstance().getAuthorizationManager();
         JSONObject userInputDetails = new JSONObject();
         try {
             userInputDetails.put("phone_no", phone_no);
             userInputDetails.put("user_token", user_token);
             userInputDetails.put("relationship_id", relationshipId);
 
-            client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
 
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        client.post(null, APIs.RESETUNREADMESSAGECOUNT, se, "application/json",
+        ClickinRestClient.post(null, APIs.RESETUNREADMESSAGECOUNT, se, "application/json",
                 new JsonHttpResponseHandler() {
 
                     @Override
@@ -661,20 +633,18 @@ public class ChatManager {
     }
 
     public void resetBadgeCount(String phone_no, String user_token) {
-        authManager = ModelManager.getInstance().getAuthorizationManager();
         JSONObject userInputDetails = new JSONObject();
         try {
             userInputDetails.put("phone_no", phone_no);
             userInputDetails.put("user_token", user_token);
 
-            client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
 
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        client.post(null, APIs.RESETBADGECOUNT, se, "application/json",
+        ClickinRestClient.post(null, APIs.RESETBADGECOUNT, se, "application/json",
                 new JsonHttpResponseHandler() {
 
                     @Override
