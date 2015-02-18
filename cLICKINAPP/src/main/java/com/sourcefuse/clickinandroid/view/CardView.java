@@ -53,6 +53,7 @@ public class CardView extends FragmentActivity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 //code- to handle uncaught exception
+        if (Utils.mStartExceptionTrack)
         Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
         bean = new TabBean();

@@ -33,6 +33,7 @@ public class ReloadApp extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //code- to handle uncaught exception
+        if (Utils.mStartExceptionTrack)
         Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
         //  requestWindowFeature(Window.FEATURE_NO_TITLE);
 

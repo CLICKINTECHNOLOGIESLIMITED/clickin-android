@@ -44,7 +44,8 @@ public class SplashView extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
 
 //code- to handle uncaught exception
-        Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
+        if (Utils.mStartExceptionTrack)
+            Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
 
         /*set picasso maneger value */
@@ -110,7 +111,7 @@ public class SplashView extends Activity implements View.OnClickListener {
                 finish();
                 //To track through mixPanel.
                 //Click on SignIn Button
-                Utils.trackMixpanel(SplashView.this,"","","SignInButtonClicked",false);
+                Utils.trackMixpanel(SplashView.this, "", "", "SignInButtonClicked", false);
                 // this.overridePendingTransition(R.anim.slide_in_right
                 // ,R.anim.slide_out_right);
                 break;
@@ -120,7 +121,7 @@ public class SplashView extends Activity implements View.OnClickListener {
                 this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
                 //To track through mixPanel.
                 //Click To SignUp.
-                Utils.trackMixpanel(SplashView.this,"","","SignUpButtonClicked",false);
+                Utils.trackMixpanel(SplashView.this, "", "", "SignUpButtonClicked", false);
                 finish();
                 break;
         }
