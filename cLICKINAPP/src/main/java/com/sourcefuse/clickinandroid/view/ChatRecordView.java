@@ -765,9 +765,9 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                             temp.clicks = Utils.convertClicks(String.valueOf(seekValue)).trim();
                             temp.textMsg = temp.clicks + "        " + chatString;
 
-                            //To track through mixPanel.
-                            //Click msg send.
-                            Utils.trackMixpanel(ChatRecordView.this,"Activity","ClickMessageSent","RPageTradeButtonClicked",false);
+//                            //To track through mixPanel.
+//                            //Click msg send.
+//                            Utils.trackMixpanel(ChatRecordView.this,"Activity","ClickMessageSent","RPageTradeButtonClicked",false);
 
                             //To track through mixPanel.
                             //user dragged clickbar to set click.
