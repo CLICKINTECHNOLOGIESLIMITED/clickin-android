@@ -280,6 +280,7 @@ public class FetchContactFromPhone {
 
             Collections.sort(Utils.itData, FetchContactFromPhone.NameComparator);
         }
+
     }
 
     public void getClickerList(final String phone, String usertoken, final int clickers) {

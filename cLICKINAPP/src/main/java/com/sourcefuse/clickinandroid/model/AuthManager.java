@@ -32,7 +32,7 @@ public class AuthManager {
     public String partnerQbId = null;
     public String mIs_new_clickin_user = null;
     StringEntity se = null;
-    AsyncHttpClient client;
+  //  AsyncHttpClient client;
     private AuthManager authManager;
     //values stored in Authmanager
     private Boolean isDeviceRegistered;
@@ -593,7 +593,7 @@ public class AuthManager {
             userInputDetails.put("password", password);
             userInputDetails.put("device_type", deviceType);
 
-            client = new AsyncHttpClient();
+       //     client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
         } catch (Exception e1) {
@@ -602,7 +602,7 @@ public class AuthManager {
         }
 
 
-        client.post(null, APIs.SIGNIN, se, "application/json",
+        ClickinRestClient.post(null, APIs.SIGNIN, se, "application/json",
                 new JsonHttpResponseHandler() {
 
                     @Override
@@ -679,13 +679,13 @@ public class AuthManager {
             userInputDetails.put("phone_no", phone);
             userInputDetails.put("device_token", deviceToken);
 
-            client = new AsyncHttpClient();
+          //  client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        client.post(null, APIs.CREATEUSER, se, "application/json", new JsonHttpResponseHandler() {
+        ClickinRestClient.post(null, APIs.CREATEUSER, se, "application/json", new JsonHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
                 super.onFailure(statusCode, e, errorResponse);
@@ -733,13 +733,13 @@ public class AuthManager {
             inputDetails.put("device_type", deviceType);
 
 
-            client = new AsyncHttpClient();
+           // client = new AsyncHttpClient();
             se = new StringEntity(inputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        client.post(null, APIs.VERIFYCODE, se, "application/json",
+        ClickinRestClient.post(null, APIs.VERIFYCODE, se, "application/json",
                 new JsonHttpResponseHandler() {
 
                     @Override
@@ -800,14 +800,14 @@ public class AuthManager {
             inputDetails.put("email", email);
             inputDetails.put("password", password);
 
-            client = new AsyncHttpClient();
+           // client = new AsyncHttpClient();
             se = new StringEntity(inputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,
                     "application/json"));
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        client.post(null, APIs.INSERTEMAIL, se, "application/json",
+        ClickinRestClient.post(null, APIs.INSERTEMAIL, se, "application/json",
                 new JsonHttpResponseHandler() {
                     @Override
                     public void onFailure(int statusCode, Throwable e,
@@ -864,14 +864,14 @@ public class AuthManager {
             inputDetails.put("phone_no", phone);
             inputDetails.put("device_token", deviceToken);
 
-            client = new AsyncHttpClient();
+          //  client = new AsyncHttpClient();
             se = new StringEntity(inputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
 
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        client.post(null, APIs.RESENDVERIFYCODE, se, "application/json", new JsonHttpResponseHandler() {
+        ClickinRestClient.post(null, APIs.RESENDVERIFYCODE, se, "application/json", new JsonHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
                 super.onFailure(statusCode, e, errorResponse);
@@ -923,7 +923,7 @@ public class AuthManager {
             inputDetails.put("phone_no", phone);
             inputDetails.put("partner_phone_no", partner);
             inputDetails.put("user_token", usertoken);
-            client = new AsyncHttpClient();
+           // client = new AsyncHttpClient();
             se = new StringEntity(inputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,
                     "application/json"));
@@ -931,7 +931,7 @@ public class AuthManager {
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        client.post(null, APIs.NEWREQUEST, se, "application/json",
+        ClickinRestClient.post(null, APIs.NEWREQUEST, se, "application/json",
                 new JsonHttpResponseHandler() {
                     @Override
                     public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
@@ -980,7 +980,7 @@ public class AuthManager {
         authManager = ModelManager.getInstance().getAuthorizationManager();
         String str = null;
         try {
-            client = new AsyncHttpClient();
+           // client = new AsyncHttpClient();
 
 
             //for development
@@ -988,8 +988,8 @@ public class AuthManager {
 //            client.addHeader("phone_no", phone);
 
             //for prod
-            client.addHeader("User-Token", usertoken);
-            client.addHeader("Phone-No", phone);
+          //  client.addHeader("User-Token", usertoken);
+            //client.addHeader("Phone-No", phone);
 
 
             if (!Utils.isEmptyString(othersphone)) {
@@ -1001,7 +1001,7 @@ public class AuthManager {
             e1.printStackTrace();
         }
 
-        client.get(APIs.FETCHPROFILEINFO + "%2B" + str, new JsonHttpResponseHandler() {
+        ClickinRestClient.get(APIs.FETCHPROFILEINFO + "%2B" + str, new JsonHttpResponseHandler() {
             boolean success = false;
 
             @Override
@@ -1146,14 +1146,14 @@ public class AuthManager {
             inputDetails.put("is_new_partner", is_new_partner);
             inputDetails.put("is_new_clickin_user", is_new_clickin_user);
 
-            client = new AsyncHttpClient();
+         //   client = new AsyncHttpClient();
             se = new StringEntity(inputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
 
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        client.post(null, APIs.RESETFLAGS, se, "application/json", new JsonHttpResponseHandler() {
+        ClickinRestClient.post(null, APIs.RESETFLAGS, se, "application/json", new JsonHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
                 super.onFailure(statusCode, e, errorResponse);

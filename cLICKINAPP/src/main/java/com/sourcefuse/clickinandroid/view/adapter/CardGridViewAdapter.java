@@ -29,12 +29,14 @@ public class CardGridViewAdapter extends ArrayAdapter<CardBean> {
     boolean debug = false;
     // String url = "https://s3.amazonaws.com/clickin-dev/cards/a/1080/39.jpg" ;
     private List item;
+    int listSize=-1;
 
     public CardGridViewAdapter(Context context, int layoutResourceId, List<CardBean> item) {
         super(context, layoutResourceId, item);
         this.layoutResourceId = layoutResourceId;
         this.context = context;
         this.item = item;
+        listSize=item.size();
 
     }
 
@@ -43,7 +45,11 @@ public class CardGridViewAdapter extends ArrayAdapter<CardBean> {
 
         pos = position;
         row = convertView;
-        final CardBean item = getItem(position);
+
+
+       CardBean  item = getItem(position);
+
+
         RecordHolder holder = null;
 
 

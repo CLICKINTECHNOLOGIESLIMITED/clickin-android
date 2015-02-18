@@ -163,6 +163,7 @@ public class ProfileManager {
         if (!Utils.isEmptyString(othersPhone)) {
             str = othersPhone.substring(1);
         } else {
+            if(!Utils.isEmptyString(phone))
             str = phone.substring(1);
         }
 
