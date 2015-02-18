@@ -44,7 +44,8 @@ public class SplashView extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
 
 //code- to handle uncaught exception
-        Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
+        if(Utils.mStartExceptionTrack)
+            Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
 
         /*set picasso maneger value */
