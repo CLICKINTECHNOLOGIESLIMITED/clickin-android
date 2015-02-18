@@ -93,6 +93,9 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
     private Uri userImageUri;
     private SimpleDateFormat mSimpleDateFormat;
     private int age;
+
+    boolean mFillNatively = false, mFromFacebook = false;
+
     private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
 
         public void onDateSet(DatePicker view, int selectedYear,
@@ -204,8 +207,8 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
 
 
         //code- to handle uncaught exception
-        if(Utils.mStartExceptionTrack)
-        Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
+        if (Utils.mStartExceptionTrack)
+            Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
 
         setContentView(R.layout.view_profile);
@@ -261,19 +264,19 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
             public void onClick(View arg0) {
 
                 InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                if(fname.getWindowToken() != null)
+                if (fname.getWindowToken() != null)
                     imm.hideSoftInputFromWindow(fname.getWindowToken(), 0);
-                if(lname.getWindowToken() != null)
+                if (lname.getWindowToken() != null)
                     imm.hideSoftInputFromWindow(lname.getWindowToken(), 0);
-                if(city.getWindowToken() != null)
+                if (city.getWindowToken() != null)
                     imm.hideSoftInputFromWindow(city.getWindowToken(), 0);
-                if(country.getWindowToken() != null)
+                if (country.getWindowToken() != null)
                     imm.hideSoftInputFromWindow(country.getWindowToken(), 0);
-                if(email.getWindowToken() != null)
+                if (email.getWindowToken() != null)
                     imm.hideSoftInputFromWindow(email.getWindowToken(), 0);
-                if(guy.getWindowToken() != null)
+                if (guy.getWindowToken() != null)
                     imm.hideSoftInputFromWindow(guy.getWindowToken(), 0);
-                if(girl.getWindowToken() != null)
+                if (girl.getWindowToken() != null)
                     imm.hideSoftInputFromWindow(girl.getWindowToken(), 0);
 
             }
@@ -300,10 +303,10 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
                 && lname.getText().toString().length() > 1
                 && email.getText().toString().length() > 1 && Utils.isEmailValid(email.getText().toString()) && ((mCurrentyear - year) <= 17)) {
             done.setBackgroundResource(R.drawable.c_next_active);
-            if(fname.hasFocus()) // check user editing first name
-                //To track through mixPanel.
-                //Fill User Profile Natively(Manually).
-                Utils.trackMixpanel(ProfileView.this,"","","FillProfileInfoNatively");
+            //To track through mixPanel.
+            //Fill User Profile Natively(Manually).
+            mFillNatively = true;
+
         } else {
             done.setBackgroundResource(R.drawable.c_next_active);
         }
@@ -330,6 +333,15 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
             Utils.dismissBarDialog();
             bitmapImage = null;
             switchView();
+
+            if (mFromFacebook && mFillNatively) {
+                Utils.trackMixpanel(ProfileView.this, "", "", "FillProfileInfoThroughFacebook", true);
+                Utils.trackMixpanel(ProfileView.this, "", "", "FillProfileInfoNatively", true);
+            } else if (mFromFacebook)
+                Utils.trackMixpanel(ProfileView.this, "", "", "FillProfileInfoThroughFacebook", true);
+            else if (mFillNatively)
+                Utils.trackMixpanel(ProfileView.this, "", "", "FillProfileInfoNatively", true);
+
         } else if (message.equalsIgnoreCase("UpdateProfile False")) {
             Utils.dismissBarDialog();
             Utils.fromSignalDialog(this, authManager.getMessage());
@@ -393,6 +405,9 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
                             if (country.getText() != null) {
                                 countryStr = country.getText().toString();
                             }
+                            ModelManager.getInstance().getAuthorizationManager().setUserName("" + fname.getText().toString() + " " + lname.getText().toString());
+                            ModelManager.getInstance().getAuthorizationManager().setEmailId(email.getText().toString());
+
                             profileManager.setProfile(fname.getText().toString(), lname.getText().toString(), authManager.getPhoneNo(),
                                     authManager.getUsrToken(), gender_var, "" + day + month + year, cityStr, countryStr, email.getText().toString(), "", Utils.encodeTobase64(bitmapImage), "no");
                         } else {
@@ -421,6 +436,8 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
                             if (country.getText() != null) {
                                 countryStr = country.getText().toString();
                             }
+                            ModelManager.getInstance().getAuthorizationManager().setUserName("" + fname.getText().toString() + " " + lname.getText().toString());
+                            ModelManager.getInstance().getAuthorizationManager().setEmailId(email.getText().toString());
                             profileManager.setProfile(fname.getText().toString(), lname.getText().toString(), authManager.getPhoneNo(),
                                     authManager.getUsrToken(), gender_var, "" + day + month + year, cityStr, countryStr, email.getText().toString(), "", Utils.encodeTobase64(bitmap), "no");
                         } else {
@@ -457,7 +474,8 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
 			 */
                 //To track through mixPanel.
                 //Fill User Information through facebook.
-                Utils.trackMixpanel(ProfileView.this,"","","FillProfileInfoThroughFacebook");
+                /*Utils.trackMixpanel(ProfileView.this, "", "", "FillProfileInfoThroughFacebook", true);*/
+
 
                 if (Utils.isConnectingToInternet(ProfileView.this)) {
 
@@ -503,8 +521,9 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
         Request request = Request.newMeRequest(session, new Request.GraphUserCallback() {
             @Override
             public void onCompleted(GraphUser user, Response response) {
-                if (user != null) {
 
+                if (user != null) {
+                    mFromFacebook = true;
                     try {
                         email.setText(user.getInnerJSONObject().getString("email"));
                     } catch (Exception e1) {

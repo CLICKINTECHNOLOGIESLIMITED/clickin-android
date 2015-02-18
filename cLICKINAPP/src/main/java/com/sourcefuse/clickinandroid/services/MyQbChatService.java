@@ -24,6 +24,7 @@ import com.sourcefuse.clickinandroid.dbhelper.ClickinDbHelper;
 import com.sourcefuse.clickinandroid.model.bean.ChatMessageBody;
 import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.Utils;
+import com.sourcefuse.clickinandroid.view.ReloadApp;
 import com.sourcefuse.clickinapp.R;
 
 import java.sql.SQLException;
@@ -39,6 +40,7 @@ import de.greenrobot.event.EventBus;
 public class MyQbChatService extends Service {
 
     public static final int MSG_DELIVERED = 1;
+    public static final int RELOAD_APP=2;
     private final IBinder mBinder = new LocalBinder();
     Pattern p = Pattern.compile("[\\d]+_(.*?)@.*?");
     private NotificationManager mNM;
@@ -79,6 +81,12 @@ public class MyQbChatService extends Service {
                                 }
                             }
                         });
+                        break;
+                    case RELOAD_APP:
+                        Intent i=new Intent(getApplicationContext(), ReloadApp.class);
+                        startActivity(i);
+                        break;
+
 
                 }
             }

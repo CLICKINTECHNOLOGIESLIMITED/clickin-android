@@ -157,7 +157,7 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
 
                     //To track through mixPanel.
                     //Click To other Partner Profile.
-                    Utils.trackMixpanel(JumpOtherProfileView.this,"","","CheckOthersPartnerProfile");
+                    Utils.trackMixpanel(JumpOtherProfileView.this,"","","CheckOthersPartnerProfile",false);
 
                     String phNo = relationManager.profileRelationShipData.get(position).getPhoneNo();
                     switchView(phNo);
@@ -204,7 +204,7 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 //To track through mixPanel.
                 //Click on Other User Followers
-                Utils.trackMixpanel(JumpOtherProfileView.this,"","","OtherUserFollowers");
+                Utils.trackMixpanel(JumpOtherProfileView.this,"","","OtherUserFollowers",false);
                 break;
             case R.id.btn_following_other:
                 //Intent intentFollowing = new Intent(JumpOtherProfileView.this,FollowingListView.class);
@@ -218,7 +218,7 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 //To track through mixPanel.
                 //Click on Other User Following
-                Utils.trackMixpanel(JumpOtherProfileView.this,"","","OtherUserFollowing");
+                Utils.trackMixpanel(JumpOtherProfileView.this,"","","OtherUserFollowing",false);
 
 
                 break;
@@ -228,7 +228,7 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
                 relationManager.followUser(phForOtherUser, authManager.getPhoneNo(), authManager.getUsrToken());
                 //To track through mixPanel.
                 //Click to follow user
-                Utils.trackMixpanel(JumpOtherProfileView.this,"","","FollowUser");
+                Utils.trackMixpanel(JumpOtherProfileView.this,"","","FollowUser",false);
                 break;
 
             case R.id.rl_add_someone:
@@ -236,7 +236,7 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
                     dialogClickwith();
                     //To track through mixPanel.
                     //Click to clickin with user.
-                    Utils.trackMixpanel(JumpOtherProfileView.this,"","","RequestToClickInOtherUserPartnerProfile");
+                    Utils.trackMixpanel(JumpOtherProfileView.this,"","","RequestToClickInOtherUserPartnerProfile",false);
                 }
                 break;
 

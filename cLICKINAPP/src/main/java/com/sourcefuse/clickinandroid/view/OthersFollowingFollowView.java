@@ -162,6 +162,7 @@ public class OthersFollowingFollowView extends ClickInBaseView implements View.O
     }
 
     public void onEventMainThread(String getMsg) {
+        super.onEventMainThread(getMsg);
         authManager = ModelManager.getInstance().getAuthorizationManager();
         if (getMsg.equalsIgnoreCase("GetFollower True")) {
             Utils.dismissBarDialog();

@@ -300,10 +300,10 @@ public class Card extends Activity implements View.OnClickListener, TextWatcher 
 
                         //To track through mixPanel.
                         //Click send with tradecard.
-                        Utils.trackMixpanel(this,"PointsPlayed",""+clicks,"RPageTradeButtonClicked");
+                        Utils.trackMixpanel(this,"PointsPlayed",""+clicks,"RPageTradeButtonClicked",false);
                         //To track through mixPanel.
                         //Send card name
-                        Utils.trackMixpanel(this,"CardPlayedName",""+cardTitle,"RPageTradeButtonClicked");
+                        Utils.trackMixpanel(this,"CardPlayedName",""+cardTitle,"RPageTradeButtonClicked",false);
                     }
                     //loop- ends here if user is card owner
                 } else {//
@@ -357,10 +357,10 @@ public class Card extends Activity implements View.OnClickListener, TextWatcher 
 
                     //To track through mixPanel.
                     //Click send with tradecard.
-                    Utils.trackMixpanel(this,"PointsPlayed",""+clicks,"RPageTradeButtonClicked");
+                    Utils.trackMixpanel(this,"PointsPlayed",""+clicks,"RPageTradeButtonClicked",false);
                     //To track through mixPanel.
                     //Send card name
-                    Utils.trackMixpanel(this,"CardPlayedName",""+cardTitle,"RPageTradeButtonClicked");
+                    Utils.trackMixpanel(this,"CardPlayedName",""+cardTitle,"RPageTradeButtonClicked",false);
                     Utils.playSound(Card.this, R.raw.message_sent);
 
                 }//loop ends here if user is not card owner

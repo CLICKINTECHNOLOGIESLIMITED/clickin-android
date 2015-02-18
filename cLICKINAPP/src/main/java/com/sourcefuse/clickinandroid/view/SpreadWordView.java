@@ -181,7 +181,7 @@ public class SpreadWordView extends Activity implements OnClickListener {
 
                 //To track through mixPanel.
                 //Click To Skip Inviting Friends.
-                Utils.trackMixpanel(SpreadWordView.this, "", "", "SignUpSkipInvitingFriends");
+                Utils.trackMixpanel(SpreadWordView.this, "", "", "SignUpSkipInvitingFriends",false);
                 //   authManager.getProfileInfo("", authManager.getPhoneNo(), authManager.getUsrToken());
                 Intent clickersView = new Intent(SpreadWordView.this, UserProfileView.class);
                 clickersView.putExtra("FromSignup", true);
@@ -203,7 +203,7 @@ public class SpreadWordView extends Activity implements OnClickListener {
 
                     //To track through mixPanel.
                     //Click To Invite Friends
-                    Utils.trackMixpanel(SpreadWordView.this, "", "" + Utils.groupSms.size(), "FriendsInvited");
+                    Utils.trackMixpanel(SpreadWordView.this, "", "" + Utils.groupSms.size(), "FriendsInvited",false);
                     /* send sms if not not register */
                  /*  send sms for nexus 5 check build version*/
                  /* prafull code */

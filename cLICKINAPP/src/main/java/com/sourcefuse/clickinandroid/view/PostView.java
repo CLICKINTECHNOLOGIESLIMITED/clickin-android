@@ -138,26 +138,7 @@ public class PostView extends ClickInBaseView implements View.OnClickListener {
 
         sections.clear();
 
-
-
-        /*for (int i = 0; i < senderName.size(); i++) {
-            sections.add(new Section(mHeaderPositions.get(i), senderName.get(i), receiverName.get(i),
-                    senderImages.get(i), recieverImages.get(i),
-                    timeOfFeed.get(i), senderId.get(i),
-                    receiverId.get(i), senderPhNo.get(i), recieverPhNo.get(i)));
-        }*/
-        /*simpleSectionedGridAdapter2 = new SimpleSectionedListAdapter2(this, adapter,
-                R.layout.list_item_header_feed, R.id.senderUser, R.id.imageView1, R.id.recieverUser, R.id.feed_time);
-        simpleSectionedGridAdapter2.setSections(sections.toArray(new Section[0]));
-        if (Constants.comments) {
-            simpleSectionedGridAdapter2.notifyDataSetChanged();
-            list.invalidateViews();
-
-            Constants.comments = false;
-        } else*/
-
-
-        adapter = new FeedsAdapter(PostView.this, R.layout.feed_list_item, newsFeedManager.userFeed, mHeaderPositions,
+        adapter = new FeedsAdapter(PostView.this, R.layout.feed_list_item, newsFeedManager.PostFeed, mHeaderPositions,
                 senderName, receiverName, senderImages, recieverImages, timeOfFeed, senderId, receiverId, senderPhNo, recieverPhNo);
 
         list.setAdapter(adapter);
@@ -195,14 +176,14 @@ public class PostView extends ClickInBaseView implements View.OnClickListener {
             if (adapter != null)
                 adapter.notifyDataSetChanged();
         } else if (message.equalsIgnoreCase("NewsFeed True")) {
-            newsFeedBeanArrayList = newsFeedManager.userFeed;
+            newsFeedBeanArrayList = newsFeedManager.PostFeed;
             initData();
             initControls();
             //Utils.dismissBarDialog();
         } else if (message.equalsIgnoreCase("NewsFeed False")) {
             stopSearch = true;
             Utils.dismissBarDialog();
-            newsFeedManager.userFeed.clear();
+            newsFeedManager.PostFeed.clear();
             ((RelativeLayout) findViewById(R.id.no_feed_image)).setVisibility(View.VISIBLE);
             // no_feed_image.setVisibility(View.VISIBLE);
 

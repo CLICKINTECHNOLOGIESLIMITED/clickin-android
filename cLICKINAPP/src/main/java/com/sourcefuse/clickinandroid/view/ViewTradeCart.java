@@ -350,10 +350,10 @@ public class ViewTradeCart extends Activity implements View.OnClickListener {
 
                         //To track through mixPanel.
                         //TradeCard Visited.
-                        Utils.trackMixpanel(this, "Card Visited", cardTitle,"RPageTradeButtonClicked");
+                        Utils.trackMixpanel(this, "Card Visited", cardTitle,"RPageTradeButtonClicked",false);
                         //To track through mixPanel.
                         //TradeCard Played.
-                        Utils.trackMixpanel(this,"CardPlayedName",""+cardTitle,"RPageTradeButtonClicked");
+                        Utils.trackMixpanel(this,"CardPlayedName",""+cardTitle,"RPageTradeButtonClicked",false);
 
                     }
                     //loop- ends here if user is card owner
@@ -407,10 +407,10 @@ public class ViewTradeCart extends Activity implements View.OnClickListener {
 
                     //To track through mixPanel.
                     //TradeCard Visited.
-                    Utils.trackMixpanel(this, "Card Visited", cardTitle,"RPageTradeButtonClicked");
+                    Utils.trackMixpanel(this, "Card Visited", cardTitle,"RPageTradeButtonClicked",false);
                     //To track through mixPanel.
                     //TradeCard Played.
-                    Utils.trackMixpanel(this,"CardPlayedName",""+cardTitle,"RPageTradeButtonClicked");
+                    Utils.trackMixpanel(this,"CardPlayedName",""+cardTitle,"RPageTradeButtonClicked",false);
                 }//loop ends here if user is not card owner
                 //  finish();
                 break;

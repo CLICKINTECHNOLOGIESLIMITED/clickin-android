@@ -20,6 +20,7 @@ import de.greenrobot.event.EventBus;
 
 public class NewsFeedManager {
     public ArrayList<NewsFeedBean> userFeed = new ArrayList<NewsFeedBean>();
+    public ArrayList<NewsFeedBean> PostFeed = new ArrayList<NewsFeedBean>(); // Used To View Feed
     public ArrayList<FeedStarsBean> feedStarsList = new ArrayList<FeedStarsBean>();
     StringEntity se = null;
     AsyncHttpClient client;
@@ -707,7 +708,7 @@ public class NewsFeedManager {
                     public void onFailure(int statusCode, Throwable e,
                                           JSONObject errorResponse) {
                         super.onFailure(statusCode, e, errorResponse);
-                        userFeed.clear();
+                        PostFeed.clear();
                         if (errorResponse != null) {
 
                             EventBus.getDefault().post("NewsFeed False");
@@ -732,7 +733,7 @@ public class NewsFeedManager {
 							}*/
 
                             JSONArray newsfeedArray = response.getJSONArray("newsfeedArray");
-                            userFeed.clear();
+                            PostFeed.clear();
 
                             for (int i = 0; i < newsfeedArray.length(); i++) {
                                 NewsFeedBean allNewsFeed = new NewsFeedBean();
@@ -927,17 +928,12 @@ public class NewsFeedManager {
                                         allNewsFeed.setNewsFeedArray_senderDetail_user_pic(newsfeedArray.getJSONObject(i).getJSONObject("senderDetail").getString("user_pic"));
                                         allNewsFeed.setNewsFeedArray_senderDetail_phno(newsfeedArray.getJSONObject(i).getJSONObject("senderDetail").getString("phone_no"));
 
-                                        userFeed.add(allNewsFeed);
+                                        PostFeed.add(allNewsFeed);
 
                                     }
 
                                 }
-//                                else
-//                                {
-//                                    allNewsFeed.setNewsFeedArray_senderDetail_id("");
-//                                    allNewsFeed.setNewsFeedArray_senderDetail_name("");
-//                                    allNewsFeed.setNewsFeedArray_senderDetail_phno("");
-//                                }
+
 
 
                             }

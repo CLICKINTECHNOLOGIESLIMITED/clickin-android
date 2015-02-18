@@ -68,7 +68,6 @@ public class VerifyView extends Activity implements OnClickListener,
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 int action = event.getAction();
                 if (keyCode == KeyEvent.KEYCODE_DEL && action == KeyEvent.ACTION_DOWN) {
-                    //Log.e("D-One", "Edit-Text1");
                     d_one.requestFocus();
                     return true;
                 }
@@ -94,7 +93,6 @@ public class VerifyView extends Activity implements OnClickListener,
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 int action = event.getAction();
                 if (keyCode == KeyEvent.KEYCODE_DEL && action == KeyEvent.ACTION_DOWN) {
-                    //Log.e("D-Three", "Edit-Text3");
                     d_two.requestFocus();
                     d_two.setText("");
                     return true;
@@ -171,7 +169,7 @@ public class VerifyView extends Activity implements OnClickListener,
             authManager.getVerifyCode(authManager.getPhoneNo(), Utils.deviceId, digits, Constants.DEVICETYPE);
             //To track through mixPanel.
             //Verify Verification Code.
-            Utils.trackMixpanel(VerifyView.this,"","","VerificationCodeEntered");//track Verification Code Entered through mixPanel
+            Utils.trackMixpanel(VerifyView.this,"","","VerificationCodeEntered",false);//track Verification Code Entered through mixPanel
 
         } else {
             d_four.setBackgroundDrawable(getResources().getDrawable(R.drawable.e_v_number_field_empty));
@@ -190,7 +188,7 @@ public class VerifyView extends Activity implements OnClickListener,
                 authManager.reSendVerifyCode(authManager.getPhoneNo(), authManager.getUsrToken());
                 //To track through mixPanel.
                 //Click Resend Verification Code.
-                Utils.trackMixpanel(VerifyView.this,"","","ResendVerificationCode");
+                Utils.trackMixpanel(VerifyView.this,"","","ResendVerificationCode",false);
                 break;
         }
     }
@@ -219,7 +217,6 @@ public class VerifyView extends Activity implements OnClickListener,
             intent.putExtra("fromsignup", getIntent().getBooleanExtra("fromsignup", false));
             startActivity(intent);
             finish();
-
 
 
         } else if (getMsg.equalsIgnoreCase("Verify False")) {

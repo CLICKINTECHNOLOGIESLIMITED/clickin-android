@@ -176,7 +176,7 @@ public class CropView extends Activity implements View.OnClickListener {
 
                 if (getIntent().getStringExtra("from").equalsIgnoreCase("fromchatGallery") || getIntent().getStringExtra("from").equalsIgnoreCase("fromchatCamare")) {
                     //To track through mixPanel.if Image is attached.
-                    Utils.trackMixpanel(CropView.this,"Activity","SelectedImageAttached","AttachButtonClicked");
+                    Utils.trackMixpanel(CropView.this,"Activity","SelectedImageAttached","AttachButtonClicked",false);
                     authManager.setmResizeBitmap(resizebitmap.copy(Bitmap.Config.ARGB_8888, true));
                     Intent intent = new Intent(getApplicationContext(), EditMyProfileView.class);
                     intent.putExtra("retake", "fckoff");

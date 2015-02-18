@@ -222,7 +222,7 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
                 this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
                 //To track through mixPanel.
                 //Click to signup
-                Utils.trackMixpanel(SignInView.this,"","","SignUpButtonClicked");
+                Utils.trackMixpanel(SignInView.this,"","","SignUpButtonClicked",false);
                 break;
         }
     }

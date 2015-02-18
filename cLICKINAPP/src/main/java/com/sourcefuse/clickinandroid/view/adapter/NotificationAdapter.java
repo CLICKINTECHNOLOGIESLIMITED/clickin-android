@@ -99,7 +99,7 @@ public class NotificationAdapter extends ArrayAdapter<NotificationBean> {
         holder.mNotificationLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Utils.trackMixpanel((Activity)context,"ViewedNotificationName",item.getNotificationType(),"NotificationsOpened");//track notification through mixpanel
+                Utils.trackMixpanel((Activity)context,"ViewedNotificationName",item.getNotificationType(),"NotificationsOpened",false);//track notification through mixpanel
 
                 if (item.getNotificationType().matches(context.getResources().getString(R.string.txt_relationstatus)) ||
                         item.getNotificationType().matches(context.getResources().getString(R.string.txt_relation_visibility))

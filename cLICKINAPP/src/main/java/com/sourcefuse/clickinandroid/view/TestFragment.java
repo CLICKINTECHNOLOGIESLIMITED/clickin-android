@@ -94,7 +94,7 @@ public final class TestFragment extends Fragment {
                     getActivity().finish();
                     //To track through mixPanel.
                     //Click To Signup
-                    Utils.trackMixpanel(getActivity(),"","","SignUpButtonClicked");
+                    Utils.trackMixpanel(getActivity(),"","","SignUpButtonClicked",false);
                     coverFlowChecked();
                 }
             });
@@ -107,7 +107,7 @@ public final class TestFragment extends Fragment {
                     coverFlowChecked();
                     //To track through mixPanel.
                     //Click To SignIn.
-                    Utils.trackMixpanel(getActivity(),"","","SignInButtonClicked");
+                    Utils.trackMixpanel(getActivity(),"","","SignInButtonClicked",false);
                     getActivity().finish();
                 }
             });
