@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.provider.Settings.Secure;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -118,9 +119,7 @@ public class SignUpView extends Activity implements TextWatcher, OnClickListener
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-        //To track through mixPanel.
-        //Edit Country Code check Size is Greater than one.
-        Utils.trackMixpanel(SignUpView.this, "", "", "CountryCodeEdited",false);
+
 
         if (phoneNo.getText().toString().length() >= 1) {
             checkmeout.setEnabled(true);
@@ -130,8 +129,8 @@ public class SignUpView extends Activity implements TextWatcher, OnClickListener
             checkmeout.setBackgroundResource(R.drawable.s_checkout_inactive);
         }
 
+        Log.e("length of ",""+cntrycode.getText().toString().length());
         if (cntrycode.getText().toString().length() == 2) {
-
             //To track through mixPanel.
             //Edit Country Code check Size is Greater than one.
             Utils.trackMixpanel(SignUpView.this, "", "", "CountryCodeEdited", false);
