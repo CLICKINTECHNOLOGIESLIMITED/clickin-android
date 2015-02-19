@@ -130,7 +130,7 @@ public class SignUpView extends Activity implements TextWatcher, OnClickListener
             checkmeout.setBackgroundResource(R.drawable.s_checkout_inactive);
         }
 
-        if (cntrycode.getText().toString().length() >= 1) {
+        if (cntrycode.getText().toString().length() == 2) {
 
             //To track through mixPanel.
             //Edit Country Code check Size is Greater than one.

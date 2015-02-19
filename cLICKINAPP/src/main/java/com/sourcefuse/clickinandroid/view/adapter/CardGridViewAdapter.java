@@ -22,7 +22,10 @@ public class CardGridViewAdapter extends ArrayAdapter<CardBean> {
     int layoutResourceId;
     // String url = "https://s3.amazonaws.com/clickin-dev/cards/a/1080/39.jpg" ;
     private List item;
+<<<<<<< HEAD
 
+=======
+>>>>>>> b505f08268d37edf3a37475795e65fb9a95d8a29
     int listsize = 0 ;
 
 
@@ -31,21 +34,29 @@ public class CardGridViewAdapter extends ArrayAdapter<CardBean> {
         this.layoutResourceId = layoutResourceId;
         this.context = context;
         this.item = item;
+<<<<<<< HEAD
 
         listsize = item.size();
 
+=======
+>>>>>>> b505f08268d37edf3a37475795e65fb9a95d8a29
 
-    }
+        listsize = item.size();
+ }
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
+<<<<<<< HEAD
 
 
 
 
 
 
+=======
+
+>>>>>>> b505f08268d37edf3a37475795e65fb9a95d8a29
         CardBean card_items = null;
 
         View row = convertView;
@@ -54,12 +65,17 @@ public class CardGridViewAdapter extends ArrayAdapter<CardBean> {
         }else {
             card_items = getItem(position-1);
         }
+<<<<<<< HEAD
 
         RecordHolder holder = null;
 
 
         if (row == null) {
+=======
+>>>>>>> b505f08268d37edf3a37475795e65fb9a95d8a29
 
+        RecordHolder holder = null;
+     if (row == null) {
 
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
             row = inflater.inflate(layoutResourceId, parent, false);
