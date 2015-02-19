@@ -172,6 +172,12 @@ public class ReloadApp extends Activity {
                 break;
 
             default:
+                intent.setClass(getApplicationContext(), UserProfileView.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+                Utils.dismissBarDialog();
+                finish();
 
         }
 
