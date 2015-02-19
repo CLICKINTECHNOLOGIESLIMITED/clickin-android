@@ -100,9 +100,10 @@ public class ReloadApp extends Activity {
             case Constants.USERPROFILE_NOTF:
                 intent.putExtra("isChangeInList", true);
                 intent.setClass(getApplicationContext(), UserProfileView.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+             //   intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+               // intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                //intent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent);
                 Utils.dismissBarDialog();
                 finish();
@@ -114,9 +115,10 @@ public class ReloadApp extends Activity {
                         intent.setAction("UPDATE");
                         intent.putExtra("partnerIndex", partnerIndex);
                         intent.setClass(getApplicationContext(), ChatRecordView.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+                    //    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                      //  intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                         startActivity(intent);
                         Utils.dismissBarDialog();
                         finish();
@@ -131,8 +133,9 @@ public class ReloadApp extends Activity {
             case Constants.FOLLOWER_FOLLOWING_NOTF:
                 intent.putExtra("FromOwnProfile", true);
                 intent.setClass(getApplicationContext(), FollowerList.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+             //   intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+               // intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent);
                 Utils.dismissBarDialog();
                 finish();
@@ -140,9 +143,10 @@ public class ReloadApp extends Activity {
             case Constants.POSTVIEW_NOTF:
                 intent.setClass(getApplicationContext(), PostView.class);
                 intent.putExtra("feedId", getIntent().getExtras().getString("Nid"));
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+           //     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+             //   intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
                 Utils.dismissBarDialog();
@@ -150,9 +154,10 @@ public class ReloadApp extends Activity {
                 break;
             case Constants.FEEDVIEW_NOTF:
                 intent.setClass(getApplicationContext(), FeedView.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            //    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+              //  intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 // intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
                 Utils.dismissBarDialog();
@@ -162,9 +167,10 @@ public class ReloadApp extends Activity {
                 intent.setClass(getApplicationContext(), JumpOtherProfileView.class);
                 intent.putExtra("FromOwnProfile", true);
                 intent.putExtra("phNumber", getIntent().getExtras().getString("phone_no"));
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+             //   intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+               // intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 // intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
                 Utils.dismissBarDialog();
