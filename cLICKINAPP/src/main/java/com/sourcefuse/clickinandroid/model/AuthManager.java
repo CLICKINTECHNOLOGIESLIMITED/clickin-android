@@ -984,9 +984,9 @@ public class AuthManager {
                     } catch (JSONException e1) {
                     }
 
-                    EventBus.getDefault().postSticky("ProfileInfo False");
+                    EventBus.getDefault().post("ProfileInfo False");
                 } else {
-                    EventBus.getDefault().postSticky("ProfileInfo Network Error");
+                    EventBus.getDefault().post("ProfileInfo Network Error");
                 }
 
             }
@@ -1090,7 +1090,7 @@ public class AuthManager {
                                 authManager.mIs_new_clickin_user = null;
                         }
 
-                        EventBus.getDefault().postSticky("ProfileInfo True");
+                        EventBus.getDefault().post("ProfileInfo True");
                     }
 
 
