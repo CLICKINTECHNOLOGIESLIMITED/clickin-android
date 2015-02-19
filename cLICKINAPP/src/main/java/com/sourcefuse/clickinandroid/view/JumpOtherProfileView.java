@@ -226,9 +226,7 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
                 authManager = ModelManager.getInstance().getAuthorizationManager();
                 relationManager = ModelManager.getInstance().getRelationManager();
                 relationManager.followUser(phForOtherUser, authManager.getPhoneNo(), authManager.getUsrToken());
-                //To track through mixPanel.
-                //Click to follow user
-                Utils.trackMixpanel(JumpOtherProfileView.this, "", "", "FollowUser", false);
+
                 break;
 
             case R.id.rl_add_someone:
@@ -311,6 +309,9 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
             Utils.fromSignalDialog(this, AlertMessage.connectionError);
         } else if (message.equalsIgnoreCase("FollowUser True")) {
             relationManager = ModelManager.getInstance().getRelationManager();
+            //To track through mixPanel.
+            //Click to follow user
+            Utils.trackMixpanel(JumpOtherProfileView.this, "", "", "FollowUser", false);
             follow.setBackgroundResource(R.drawable.requested_otherprofile_new);
             //Utils.showToast(JumpOtherProfileView.this, relationManager.getStatusMsg());
         } else if (message.equalsIgnoreCase("FollowUser  false")) {

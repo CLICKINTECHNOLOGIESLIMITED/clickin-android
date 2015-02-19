@@ -332,7 +332,7 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
                         }
                         break;
                     case CHAT_LOGOUT:
-                        //    logoutQB();
+                            logoutQB();
                         break;
                     case CHECK_PRESENCE:
                         Bundle data1 = msg.getData();
@@ -389,10 +389,7 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
                     chatRoster = chatService.getRoster(QBRoster.SubscriptionMode.mutual, subscriptionListener);
                     chatRoster.addRosterListener(rosterListener);
                 } else {
-                    //need to reload app again
-                    android.os.Message msg = new android.os.Message();
-                    msg.what = MyQbChatService.RELOAD_APP;
-                    serviceHandler.sendMessage(msg);
+                 loginToChat();
                 }
                 //}
             } else {
