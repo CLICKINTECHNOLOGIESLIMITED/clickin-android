@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -43,7 +44,7 @@ public class EditMyProfileView extends ClickInBaseView implements View.OnClickLi
     /* test code prafull */
     public static final int MEDIA_TYPE_IMAGE = 1;
     private static final String TAG = EditMyProfileView.class.getSimpleName();
-    private static final String IMAGE_DIRECTORY_NAME = "Clickin";
+    private static final String IMAGE_DIRECTORY_NAME = "ClickIn/ClickinImages";
     String mChangePhoto = "no"; // value to check user change photo or not
     private Button clickToSave;
     private ImageView mySelfy, OpenGallery, OpenCamera;
@@ -85,6 +86,8 @@ public class EditMyProfileView extends ClickInBaseView implements View.OnClickLi
             return null;
         }
 
+
+        Log.e("path--->", "" + mediaFile.getAbsolutePath());
         return mediaFile;
     }
 

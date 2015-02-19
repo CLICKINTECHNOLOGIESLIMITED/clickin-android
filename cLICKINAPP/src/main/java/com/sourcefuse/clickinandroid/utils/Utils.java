@@ -28,7 +28,7 @@ import android.os.AsyncTask;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.telephony.TelephonyManager;
-import android.util.Base64;
+import android.util.*;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -76,17 +76,21 @@ public class Utils {
 
     public static boolean mPlayChatSound = false;   // code to check sound in case of recive chat
     public static String deviceId, PROJECT_NUMBER = "1058681021160";
-    public static String mVideoPath = "/storage/emulated/0/ClickIn/ClickinVideo/";
-    public static String mImagePath = "/storage/emulated/0/ClickIn/ClickinImages/";
-    public static String mAudioPath = "/storage/emulated/0/ClickIn/ClickinAudio/";
+
+    public static String mBasePath = String.valueOf(Environment.getExternalStorageDirectory());
+    public static String mVideoPath = mBasePath + "/ClickIn/ClickinVideo/";
+    public static String mImagePath = mBasePath + "/ClickIn/ClickinImages/";
+    public static String mAudioPath = mBasePath + "/ClickIn/ClickinAudio/";
     public static boolean appSound;
     public static SharedPreferences prefrences;
+
+
     public static Activity acty;
     public static ArrayList<ContactBean> itData = new ArrayList<ContactBean>();
     public static ArrayList<String> groupSms = new ArrayList<String>();
     public static HashMap<String, ContactBean> contactMap = new HashMap<String, ContactBean>();
     public static String mName;
-    public static boolean mStartExceptionTrack = true;  // to stop exception data sending on server
+    public static boolean mStartExceptionTrack = false;  // to stop exception data sending on server
     static GoogleCloudMessaging gcm;
     static String regid;
     private static CustomProgressDialog barProgressDialog;
@@ -533,11 +537,13 @@ public class Utils {
 
     public static void clickCustomLog(String sBody) {
         try {
+
+            String path = mBasePath;
             File mediaDir = new File("/sdcard/download/media");
             if (!mediaDir.exists()) {
                 mediaDir.mkdir();
             }
-            File resolveMeSDCard = new File("/sdcard/download/media/clickinCustomLog.txt");
+            File resolveMeSDCard = new File(path + "/clickinCustomLog.txt");
             resolveMeSDCard.createNewFile();
             FileOutputStream fos = new FileOutputStream(resolveMeSDCard);
             fos.write(sBody.getBytes());
@@ -1208,6 +1214,13 @@ public class Utils {
         return sdf.format(netDate);
     }
 
+    public static String getCurrentTimeStamp() {
+        SimpleDateFormat sdfDate = new SimpleDateFormat("MMM dd, HH:mm aa");//dd/MM/yyyy
+        Date now = new Date();
+        String strDate = sdfDate.format(now);
+        return strDate;
+    }
+
     public static String getTodaySeenDate(long timeStamp) {
         DateFormat sdf = new SimpleDateFormat("hh:mm a");
         Date netDate = (new Date(timeStamp));
@@ -1477,9 +1490,9 @@ public class Utils {
                 if (!Utils.isEmptyString(ModelManager.getInstance().getAuthorizationManager().getGender()))
                     jsonObject1.put("Gender", "" + ModelManager.getInstance().getAuthorizationManager().getGender());
 
-                DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-                Date date = new Date();
-                jsonObject1.put("created", "" + dateFormat.format(date));
+
+                jsonObject1.put("created", "" + getCurrentTimeStamp());
+                android.util.Log.e("date---------->", "" + getCurrentTimeStamp());
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -1508,26 +1521,19 @@ public class Utils {
     }
 
     //Method To Track mixpanel Super properties ,clicks & relationship count
-    public static void trackMixpanel_superProperties(Context context,int value ,String Case){
+    public static void trackMixpanel_superProperties(Context context, int value, String Case) {
 
         MixpanelAPI mixpanelAPI = MixpanelAPI.getInstance(context, Constants.MIX_PANEL_TOKEN);
         mixpanelAPI.identify("" + ModelManager.getInstance().getAuthorizationManager().getPhoneNo());
 
-//        JSONObject jsonObject1 = new JSONObject();
-//        try {
-//            jsonObject1.put("clicks", clicks);
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
 
-        if(Case.equalsIgnoreCase("clicks")) {//if we have to send clicks.
+        if (Case.equalsIgnoreCase("clicks")) {//if we have to send clicks.
             int clicks_tosend = Math.abs(value);//To convert Negative clicks to positive.
             mixpanelAPI.getPeople().identify("" + ModelManager.getInstance().getAuthorizationManager().getPhoneNo());
             mixpanelAPI.getPeople().increment("TotalClicksSent", (double) clicks_tosend);
-        }
-        else{//for the case of relationship count .
+        } else {//for the case of relationship count .
             mixpanelAPI.getPeople().identify("" + ModelManager.getInstance().getAuthorizationManager().getPhoneNo());
-            mixpanelAPI.getPeople().increment("RelationShipCount", (double) value);
+            mixpanelAPI.getPeople().set("RelationShipCount", (double) value);
         }
 
         mixpanelAPI.flush();

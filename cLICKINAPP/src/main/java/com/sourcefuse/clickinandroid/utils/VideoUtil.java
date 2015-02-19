@@ -20,7 +20,7 @@ import java.io.File;
 public class VideoUtil {
     public static final int REQUEST_VIDEO_CAPTURED = 20;
     public static final int REQUEST_VIDEO_CAPTURED_FROM_GALLERY = 100;
-    private static final String VIDEO_RECORDER_FOLDER = "ClickIn/ClickinVideo";
+    private static final String VIDEO_RECORDER_FOLDER = "ClickIn/ClickinVideo/";
     public static String videofilePath = null;
     public static String name;
     private static Uri fileUri = null;

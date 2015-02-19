@@ -1,6 +1,7 @@
 package com.sourcefuse.clickinandroid.view;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -8,8 +9,10 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.edmodo.cropper.CropImageView;
@@ -53,16 +56,21 @@ public class CropView extends Activity implements View.OnClickListener {
         mCropImageView.setFixedAspectRatio(true);
         mCropImageView.setGuidelines(1);
         authManager = ModelManager.getInstance().getAuthorizationManager();
-        if (getIntent().getExtras() != null) {
+
+        Bundle bundle = getIntent().getExtras();
+
+        if (bundle != null && bundle.containsKey("from")) {
+            String from = bundle.getString("from");
             try {
 
-                if (getIntent().getStringExtra("from").equalsIgnoreCase("fromgallery") || getIntent().getStringExtra("from").equalsIgnoreCase("fromchatGallery")) {
+
+                if (from.equalsIgnoreCase("fromgallery") || from.equalsIgnoreCase("fromchatGallery")) {
                     ((TextView) findViewById(R.id.btn_retake)).setText(getString(R.string.cancel));
                     ((TextView) findViewById(R.id.btn_use)).setText(getString(R.string.choose));
 
 
                 }
-                if (getIntent().getStringExtra("from").equalsIgnoreCase("fromchatCamare") || getIntent().getStringExtra("from").equalsIgnoreCase("fromchatGallery")) {
+                if (from.equalsIgnoreCase("fromchatCamare") || from.equalsIgnoreCase("fromchatGallery")) {
                     try {
                         mName = getIntent().getStringExtra("name");  // name to save image by chatid when came from chat
                     } catch (Exception e) {
@@ -169,35 +177,41 @@ public class CropView extends Activity implements View.OnClickListener {
                 if (!Utils.isEmptyString(path)) {
                     resizebitmap = BitmapFactory.decodeFile(path);
                 }
-
+                if (!Utils.isEmptyString(path)) {
 
                         /*test code*/
 
+                    Log.e("value of path---->", "" + path);
 
-                if (getIntent().getStringExtra("from").equalsIgnoreCase("fromchatGallery") || getIntent().getStringExtra("from").equalsIgnoreCase("fromchatCamare")) {
-                    //To track through mixPanel.if Image is attached.
-                    Utils.trackMixpanel(CropView.this, "Activity", "SelectedImageAttached", "AttachButtonClicked", false);
-                    authManager.setmResizeBitmap(resizebitmap.copy(Bitmap.Config.ARGB_8888, true));
-                    Intent intent = new Intent(getApplicationContext(), EditMyProfileView.class);
-                    intent.putExtra("retake", "fckoff");
-                    intent.putExtra("path", path);
-                    setResult(Activity.RESULT_OK, intent);
-                    resizebitmap.recycle();
-                    finish();
-
-                    //Utils.dismissBarDialog();
-                } else {
-                    if (resizebitmap != null) {
+                    if (getIntent().getStringExtra("from").equalsIgnoreCase("fromchatGallery") || getIntent().getStringExtra("from").equalsIgnoreCase("fromchatCamare")) {
+                        //To track through mixPanel.if Image is attached.
+                        Utils.trackMixpanel(CropView.this, "Activity", "SelectedImageAttached", "AttachButtonClicked", false);
                         authManager.setmResizeBitmap(resizebitmap.copy(Bitmap.Config.ARGB_8888, true));
-                        authManager.setUserImageUri(Uri.parse(path));
                         Intent intent = new Intent(getApplicationContext(), EditMyProfileView.class);
                         intent.putExtra("retake", "fckoff");
                         intent.putExtra("path", path);
-                        resizebitmap.recycle();
                         setResult(Activity.RESULT_OK, intent);
+                        resizebitmap.recycle();
+                        finish();
+
+                        //Utils.dismissBarDialog();
+                    } else {
+                        if (resizebitmap != null) {
+                            authManager.setmResizeBitmap(resizebitmap.copy(Bitmap.Config.ARGB_8888, true));
+                            authManager.setUserImageUri(Uri.parse(path));
+                            Intent intent = new Intent(getApplicationContext(), EditMyProfileView.class);
+                            intent.putExtra("retake", "fckoff");
+                            intent.putExtra("path", path);
+
+
+                            resizebitmap.recycle();
+                            setResult(Activity.RESULT_OK, intent);
+                        }
+                        finish();
+                        //Utils.dismissBarDialog();
                     }
-                    finish();
-                    //Utils.dismissBarDialog();
+                } else {
+                    spaceDialog(CropView.this);  // in this case means user don't have enough storage space.
                 }
                 break;
         }
@@ -219,6 +233,8 @@ public class CropView extends Activity implements View.OnClickListener {
         if (!sdIconStorageDir.exists()) {
             sdIconStorageDir.mkdirs();
         }
+        Log.e("directory ---->", "" + sdIconStorageDir.exists());
+
         sdIconStorageDir.setWritable(true);
         sdIconStorageDir.setReadable(true);
 
@@ -246,10 +262,13 @@ public class CropView extends Activity implements View.OnClickListener {
 
         } catch (FileNotFoundException e) {
 
+            Log.e("Exception---->1", "" + e.toString());
             return "";
         } catch (IOException e) {
+            Log.e("Exception---->2", "" + e.toString());
             return "";
         } catch (Exception e) {
+            Log.e("Exception---->3", "" + e.toString());
             e.printStackTrace();
             return "";
         }
@@ -257,5 +276,27 @@ public class CropView extends Activity implements View.OnClickListener {
         return filePath;
     }
 
+
+    // Akshit Code Starts
+    public void spaceDialog(Activity activity) {
+
+        final Dialog dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.setContentView(R.layout.alert_check_dialogs);
+        dialog.setCancelable(false);
+        TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
+        msgI.setText(activity.getString(R.string.storage_issue));
+        Button dismiss = (Button) dialog.findViewById(R.id.coolio);
+        dismiss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                dialog.dismiss();
+                finish();
+
+            }
+        });
+        dialog.show();
+    }
 
 }
