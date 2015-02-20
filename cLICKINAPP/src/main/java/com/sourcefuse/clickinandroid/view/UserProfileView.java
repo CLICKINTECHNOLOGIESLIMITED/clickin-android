@@ -105,11 +105,10 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         setContentView(R.layout.view_userprofile);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         addMenu(true);
-        this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
-        if (PicassoManager.getPicasso() == null) {
-            PicassoManager.setPicasso(this);
-        }
+
+
 
 
         authManager = ModelManager.getInstance().getAuthorizationManager();
@@ -440,6 +439,8 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
                 }
             }, 10000);
             setLeftMenuList();
+            if(adapter != null)
+                adapter.notifyDataSetChanged();;
             setlist();
         } else if (message.equalsIgnoreCase("ProfileInfo True")) {
             //monika-start service in case of sign up only, else it will be done from sign in

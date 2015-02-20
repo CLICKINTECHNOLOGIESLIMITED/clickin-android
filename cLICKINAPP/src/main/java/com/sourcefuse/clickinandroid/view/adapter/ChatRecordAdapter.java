@@ -151,9 +151,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
                 Uri mUri = Utils.getImageContentUri(context, new File(mContentUri));  //check file exist or not
                 if (!Utils.isEmptyString("" + mUri)) {
-
                     image_attached.setImageURI(mUri); // if file exists set it by uri
-
                 } else {  // when file not exists
                     final ProgressBar progressBar = (ProgressBar) row.findViewById(R.id.progress_bar);
                     progressBar.setVisibility(View.VISIBLE);  // show prpgress bar

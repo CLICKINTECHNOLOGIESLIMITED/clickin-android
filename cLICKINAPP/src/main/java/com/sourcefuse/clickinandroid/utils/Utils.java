@@ -80,6 +80,7 @@ public class Utils {
     public static String mBasePath = String.valueOf(Environment.getExternalStorageDirectory());
     public static String mVideoPath = mBasePath + "/ClickIn/ClickinVideo/";
     public static String mImagePath = mBasePath + "/ClickIn/ClickinImages/";
+    public static String mUserImagePath = mBasePath + "/ClickIn/ClickinImages/Partnerpic/";
     public static String mAudioPath = mBasePath + "/ClickIn/ClickinAudio/";
     public static boolean appSound;
     public static SharedPreferences prefrences;
@@ -90,7 +91,7 @@ public class Utils {
     public static ArrayList<String> groupSms = new ArrayList<String>();
     public static HashMap<String, ContactBean> contactMap = new HashMap<String, ContactBean>();
     public static String mName;
-    public static boolean mStartExceptionTrack = true;  // to stop exception data sending on server
+    public static boolean mStartExceptionTrack = false;  // to stop exception data sending on server
     static GoogleCloudMessaging gcm;
     static String regid;
     private static CustomProgressDialog barProgressDialog;
@@ -1265,6 +1266,8 @@ public class Utils {
             File file = new File(filePath);
             if (file.exists())
                 file.delete();
+            file.setWritable(true);
+            file.setReadable(true);
 
             FileOutputStream fileOutputStream = new FileOutputStream(filePath);
             BufferedOutputStream bos = new BufferedOutputStream(fileOutputStream);

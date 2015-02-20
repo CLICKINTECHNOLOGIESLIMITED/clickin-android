@@ -4,21 +4,30 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
+import com.sourcefuse.clickinandroid.model.PicassoManager;
 import com.sourcefuse.clickinandroid.model.bean.GetrelationshipsBean;
+import com.sourcefuse.clickinandroid.utils.AppController;
 import com.sourcefuse.clickinandroid.utils.Constants;
+import com.sourcefuse.clickinandroid.utils.FeedImageView;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.AddSomeoneView;
 import com.sourcefuse.clickinapp.R;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.List;
 
 import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
@@ -34,6 +43,7 @@ public class ClickInWithAdapter extends BaseAdapter implements
     List<GetrelationshipsBean> item1;
     private Typeface typeface;
     private LayoutInflater mInflater;
+    ImageLoader imageLoader = AppController.getInstance().getImageLoader();
 
     /*LruCache mLruCahe;
     Picasso picasso;*/
@@ -83,26 +93,31 @@ public class ClickInWithAdapter extends BaseAdapter implements
         View row = convertView;
 
         RecordHolder holder = null;
+
+        if (row == null) {
+            LayoutInflater inflater = ((Activity) context).getLayoutInflater();
+            row = inflater.inflate(layoutResourceId, parent, false);
+            holder = new RecordHolder();
+            holder.clickInUsrName = (TextView) row.findViewById(R.id.tv_clickInUsr_name);
+            holder.unReadNo = (TextView) row.findViewById(R.id.tv_unread);
+            holder.clickInUsrimg = (ImageView) row.findViewById(R.id.iv_ClickInUsrImg);
+            holder.iv_usr_pic_ = (FeedImageView) row.findViewById(R.id.iv_ClickInUsrImg_);
+            holder.header_layout = (LinearLayout) row.findViewById(R.id.header_layout);
+            holder.user_layout = (LinearLayout) row.findViewById(R.id.user_layout);
+            typeface = Typeface.createFromAsset(context.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
+            holder.clickInUsrName.setTypeface(typeface, typeface.BOLD);
+
+            row.setTag(holder);
+        } else {
+            holder = (RecordHolder) row.getTag();
+        }
+
+        final RecordHolder rholder = (RecordHolder) row.getTag();
+        if (imageLoader == null)
+            imageLoader = AppController.getInstance().getImageLoader();
         if (item1.size() != 0) {
-            if (row == null) {
-                LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-                row = inflater.inflate(layoutResourceId, parent, false);
-                holder = new RecordHolder();
-                holder.clickInUsrName = (TextView) row.findViewById(R.id.tv_clickInUsr_name);
-                holder.unReadNo = (TextView) row.findViewById(R.id.tv_unread);
-                holder.clickInUsrimg = (ImageView) row.findViewById(R.id.iv_ClickInUsrImg);
-
-
-                typeface = Typeface.createFromAsset(context.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
-                holder.clickInUsrName.setTypeface(typeface, typeface.BOLD);
-
-                row.setTag(holder);
-            } else {
-                holder = (RecordHolder) row.getTag();
-            }
-
-            final RecordHolder rholder = (RecordHolder) row.getTag();
-
+            rholder.user_layout.setVisibility(View.VISIBLE);
+            rholder.header_layout.setVisibility(View.GONE);
             if (!Utils.isEmptyString(item1.get(position).getStatusAccepted()) && item1.get(position).getStatusAccepted().equalsIgnoreCase("true")) {
 
                 rholder.clickInUsrName.setText(item1.get(position).getPartnerName());
@@ -116,19 +131,31 @@ public class ClickInWithAdapter extends BaseAdapter implements
 
                 }
 
-                if (!item1.get(position).getPartnerPic().equalsIgnoreCase("")) {
-                    try {
+                final String finalMUserImageId = item1.get(position).getRelationshipId();
 
+                String mContentUri = Utils.mImagePath + finalMUserImageId + ".jpg";
+                Uri mUri = Utils.getImageContentUri(context, new File(mContentUri));  //check file exist or not
 
-                        Picasso.with(context).load(item1.get(position).getPartnerPic())
-                                .into(rholder.clickInUsrimg);
-                    } catch (Exception e) {
-                        // rholder.clickInUsrimg.setImageResource(R.drawable.male_user);
-
-                    }
-
+                if (!Utils.isEmptyString("" + mUri)) {
+                    rholder.clickInUsrimg.setImageURI(mUri); // if file exists set it by uri
                 } else {
-                    rholder.clickInUsrimg.setImageResource(R.drawable.male_user);
+                    Log.e("User relation adapter ---> ", "" + item1.get(position).getPartnerPic());
+                    holder.iv_usr_pic_.setImageUrl(item1.get(position).getPartnerPic(), imageLoader);
+                    holder.iv_usr_pic_.setResponseObserver(new FeedImageView.ResponseObserver() { // download image
+                        @Override
+                        public void onError(VolleyError volleyError) {
+                        }
+
+                        @Override
+                        public void onSuccess(ImageLoader.ImageContainer loader) {
+                            Log.e("on success--->", "on success--->");
+                            if (loader.getBitmap() != null) {
+                                String path = Utils.storeImage(loader.getBitmap(), finalMUserImageId, context);  // save image bitmap by chat id
+                                rholder.clickInUsrimg.setImageURI(Utils.getImageContentUri(context, new File(path))); // set image form uri once downloadedd
+
+                            }
+                        }
+                    });
                 }
             } else {
                 rholder.clickInUsrimg.setImageResource(R.drawable.male_user);
@@ -138,10 +165,10 @@ public class ClickInWithAdapter extends BaseAdapter implements
                 row.findViewById(R.id.clcth_divider).setVisibility(View.GONE);
             else
                 row.findViewById(R.id.clcth_divider).setVisibility(View.VISIBLE);
-        } else {
-            LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-            row = inflater.inflate(R.layout.header_view, parent, false);
-            row.findViewById(R.id.header_layout).setOnClickListener(new View.OnClickListener() {
+        }else {
+            rholder.user_layout.setVisibility(View.GONE);
+            rholder.header_layout.setVisibility(View.VISIBLE);
+            holder.header_layout.findViewById(R.id.header_layout).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, AddSomeoneView.class);
@@ -149,6 +176,7 @@ public class ClickInWithAdapter extends BaseAdapter implements
                     context.startActivity(intent);
                 }
             });
+
 
         }
 
@@ -185,6 +213,8 @@ public class ClickInWithAdapter extends BaseAdapter implements
     static class RecordHolder {
         TextView clickInUsrName, unReadNo;
         ImageView clickInUsrimg;
+        FeedImageView iv_usr_pic_;
+        LinearLayout header_layout,user_layout;
 
 
     }
