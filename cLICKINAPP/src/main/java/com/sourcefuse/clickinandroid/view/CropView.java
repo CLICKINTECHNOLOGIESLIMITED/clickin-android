@@ -292,7 +292,12 @@ public class CropView extends Activity implements View.OnClickListener {
             @Override
             public void onClick(View arg0) {
                 dialog.dismiss();
+                Intent intent = new Intent(CropView.this, ChatRecordView.class);
+
+                setResult(Activity.RESULT_CANCELED, intent);
                 finish();
+                overridePendingTransition(0, R.anim.top_out);
+
 
             }
         });
