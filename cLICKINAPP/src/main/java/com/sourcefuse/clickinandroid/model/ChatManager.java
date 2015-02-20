@@ -197,8 +197,7 @@ public class ChatManager {
                                             temp.is_CustomCard = Boolean.valueOf((String) cards.get(7));
                                             temp.card_DB_ID = (String) cards.get(8);
                                             temp.card_Played_Countered = (String) cards.get(9);
-                                            if (temp.card_Accepted_Rejected.equalsIgnoreCase("countered"))
-                                                temp.card_Played_Countered = "played";
+
 
                                             //this param is added new, in history might be it not come
                                             if (cards.length() > 10) {

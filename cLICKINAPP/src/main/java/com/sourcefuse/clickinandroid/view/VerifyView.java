@@ -194,9 +194,10 @@ public class VerifyView extends Activity implements OnClickListener,
                 Utils.fromSignalertDialogDammit(VerifyView.this);
                 authManager = ModelManager.getInstance().getAuthorizationManager();
                 authManager.reSendVerifyCode(authManager.getPhoneNo(), authManager.getUsrToken());
-                //To track through mixPanel.
-                //Click Resend Verification Code.
-                Utils.trackMixpanel(VerifyView.this, "", "", "ResendVerificationCode", false);
+                    //To track through mixPanel.
+                    //Click Resend Verification Code.
+                    Utils.trackMixpanel(VerifyView.this, "", "", "ResendVerificationCode", false);
+
                 break;
             case R.id.edt_one:
             case R.id.edt_two:
@@ -239,6 +240,9 @@ public class VerifyView extends Activity implements OnClickListener,
 
         } else if (getMsg.equalsIgnoreCase("Verify False")) {
             Utils.dismissBarDialog();
+            //To track through mixPanel.
+            //Click Resend Verification Code.
+            Utils.trackMixpanel(VerifyView.this, "", "", "ResendVerificationCode", false);
             alertDialog(AlertMessage.WRONGVERIFYCODEI, AlertMessage.WRONGVERIFYCODEII);
         } else if (getMsg.equalsIgnoreCase("Verify Network Error")) {
             Utils.dismissBarDialog();

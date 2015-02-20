@@ -201,6 +201,7 @@ public class Utils {
         dismiss.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
+
                 dialog.dismiss();
 
             }
@@ -1535,9 +1536,12 @@ public class Utils {
             int clicks_tosend = Math.abs(value);//To convert Negative clicks to positive.
             mixpanelAPI.getPeople().identify("" + ModelManager.getInstance().getAuthorizationManager().getPhoneNo());
             mixpanelAPI.getPeople().increment("TotalClicksSent", (double) clicks_tosend);
-        } else {//for the case of relationship count .
+        } else if(Case.equalsIgnoreCase("relationshipcount")) {//for the case of relationship count .
             mixpanelAPI.getPeople().identify("" + ModelManager.getInstance().getAuthorizationManager().getPhoneNo());
             mixpanelAPI.getPeople().set("RelationShipCount", (double) value);
+        }else {//for the case of inviting friends ,through Spread a word
+            mixpanelAPI.getPeople().identify("" + ModelManager.getInstance().getAuthorizationManager().getPhoneNo());
+            mixpanelAPI.getPeople().increment("FriendsInvited", (double) value);
         }
 
         mixpanelAPI.flush();
