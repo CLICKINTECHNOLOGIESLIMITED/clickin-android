@@ -85,11 +85,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
         chatmanager = ModelManager.getInstance().getChatManager();
 
 
-        if (currentChatList.size() > 19 && chatmanager.chat_history_size.equalsIgnoreCase("true")) {//akshit code set visibility of load earlier ,only is chat records are greater then 20
-            ChatRecordView.load_earlier.setVisibility(View.VISIBLE);                             //also if chat fetched is greater then 20
-        } else {
-            ChatRecordView.load_earlier.setVisibility(View.GONE);
-        }
+
 
         if (imageLoader == null)
             imageLoader = AppController.getInstance().getImageLoader();
@@ -1651,9 +1647,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
             int count;
             try {
                 URL url = new URL(f_url[0]);
-                prgDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                prgDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
                     @Override
-                    public void onDismiss(DialogInterface dialogInterface) {
+                    public void onCancel(DialogInterface dialogInterface) {
                         if (output != null && input != null) {
                             /*try {*/
                             cancel(true);
