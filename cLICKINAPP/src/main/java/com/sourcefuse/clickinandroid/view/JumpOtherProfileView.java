@@ -453,9 +453,7 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
 
                     try {
                         if (!authManager.getTmpUserPic().equalsIgnoreCase("")) {
-                            /*Picasso.with(this)*/
-
-                            PicassoManager.getPicasso()
+                            Picasso.with(this)
                                     .load(authManager.getTmpUserPic())
                                     .skipMemoryCache()
                                     .error(R.drawable.male_user).into(userimage);
@@ -468,8 +466,7 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
                 } else {
                     try {
                         if (!authManager.getTmpUserPic().equalsIgnoreCase("")) {
-                            //Picasso.with(this)
-                            PicassoManager.getPicasso()
+                            Picasso.with(this)
                                     .load(authManager.getTmpUserPic())
                                     .skipMemoryCache()
                                     .error(R.drawable.female_user).into(userimage);

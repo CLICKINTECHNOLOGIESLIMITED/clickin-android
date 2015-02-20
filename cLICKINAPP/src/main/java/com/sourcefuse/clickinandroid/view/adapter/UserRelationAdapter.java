@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,8 @@ import android.widget.ImageView.ScaleType;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.PicassoManager;
@@ -22,11 +26,14 @@ import com.sourcefuse.clickinandroid.model.ProfileManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
 import com.sourcefuse.clickinandroid.model.bean.GetrelationshipsBean;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
+import com.sourcefuse.clickinandroid.utils.AppController;
 import com.sourcefuse.clickinandroid.utils.Constants;
+import com.sourcefuse.clickinandroid.utils.FeedImageView;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.JumpOtherProfileView;
 import com.sourcefuse.clickinapp.R;
 
+import java.io.File;
 import java.util.List;
 
 public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
@@ -41,6 +48,7 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
     private RelationManager relationManager;
     private boolean showpending = false;
 
+    ImageLoader imageLoader = AppController.getInstance().getImageLoader();
 
     /*LruCache mLruCahe;
     Picasso picasso;*/
@@ -50,24 +58,8 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
         itemList = item;
         this.layoutResourceId = layoutResourceId;
         this.context = context;
-
-       /* mLruCahe = new LruCache(context);
-        picasso = new Picasso.Builder(context).memoryCache(mLruCahe).build();*/
-
-        Utils.trackMixpanel_superProperties((Activity) context,itemList.size(),"relationshipcount");//Track Relationship Count Through Mix panel
-//
+        Utils.trackMixpanel_superProperties((Activity) context, itemList.size(), "relationshipcount");//Track Relationship Count Through Mix panel
     }
-//    ((ImageView)row.findViewById(R.id.iv_accept_card)).setTag(position);
-//    ((ImageView) row.findViewById(R.id.iv_accept_card)).setOnClickListener(new View.OnClickListener() {
-//        @Override
-//        public void onClick(View v) {
-//            //Card ACCEPT Action
-//            int position = (Integer) v.getTag();
-//            sendUpdateCardValues(position, "accepted", "ACCEPTED!");
-//
-//
-//        }
-//    });
 
 
     @Override
@@ -76,23 +68,56 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
 
 
         relationManager = ModelManager.getInstance().getRelationManager();
-            /*RecordHolder holder = null;*/
-           /* if (row == null) {*/
         LayoutInflater inflater = ((Activity) context).getLayoutInflater();
         row = inflater.inflate(layoutResourceId, parent, false);
-                  /*holder = new RecordHolder();*/
         final TextView usr_name = (TextView) row.findViewById(R.id.tv_usr_name);
         TextView pending = (TextView) row.findViewById(R.id.tv_pending);
         final ImageView usrimg = (ImageView) row.findViewById(R.id.iv_usr_pic);
+        final FeedImageView iv_usr_pic_ = (FeedImageView) row.findViewById(R.id.iv_usr_pic_);
 
         View whiteview = (View) row.findViewById(R.id.v_whiteview);
         View devider = (View) row.findViewById(R.id.v_devider);
         ImageView btm_divider = (ImageView) row.findViewById(R.id.btm_divider);
         TextView delete = (TextView) row.findViewById(R.id.btn_delete_item);
-
         usrimg.setScaleType(ScaleType.FIT_XY);
+        if (imageLoader == null)
+            imageLoader = AppController.getInstance().getImageLoader();
 
 
+        final String finalMUserImageId = itemList.get(position).getRelationshipId();
+
+        String mContentUri = Utils.mImagePath + finalMUserImageId + ".jpg";
+        Uri mUri = Utils.getImageContentUri(context, new File(mContentUri));  //check file exist or not
+
+        File file = new File(mContentUri);
+        Log.e("value of uri--->", "" + mUri);
+        Log.e("file.exists--->", "" + file.exists());
+        if (!Utils.isEmptyString("" + mUri) && file.exists()) {
+            usrimg.setImageURI(mUri); // if file exists set it by uri
+        } else {
+            if(file.exists())
+                file.delete();
+
+            Log.e("User relation adapter ---> ", "" + itemList.get(position).getPartnerPic());
+            iv_usr_pic_.setImageUrl(itemList.get(position).getPartnerPic(), imageLoader);
+            iv_usr_pic_.setVisibility(View.VISIBLE);
+            iv_usr_pic_.setResponseObserver(new FeedImageView.ResponseObserver() { // download image
+                @Override
+                public void onError(VolleyError volleyError) {
+                }
+
+                @Override
+                public void onSuccess(ImageLoader.ImageContainer loader) {
+                    Log.e("on success--->", "on success--->");
+                    if (loader.getBitmap() != null) {
+                        iv_usr_pic_.setVisibility(View.GONE);
+                        String path = Utils.storeImage(loader.getBitmap(), finalMUserImageId, context);  // save image bitmap by chat id
+                        usrimg.setImageURI(Utils.getImageContentUri(context, new File(path))); // set image form uri once downloadedd
+
+                    }
+                }
+            });
+        }
 
             /*}*/
         privacy = (TextView) row.findViewById(R.id.btn_privacy);
@@ -161,21 +186,6 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
         showpending = false;
 
 
-        if (!itemList.get(position).getPartnerPic().equalsIgnoreCase("")) {
-            try {
-
-                //Picasso.with(context)
-                PicassoManager.getPicasso().load(itemList.get(position).getPartnerPic())
-                        .into(usrimg);
-
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                // usrimg.setImageResource(R.drawable.male_user);
-            }
-        } else {
-            usrimg.setImageResource(R.drawable.male_user);
-        }
         privacy.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 authManager = ModelManager.getInstance().getAuthorizationManager();
@@ -205,6 +215,7 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
 
             }
         });
+
 
         //akshit Code For clickin
         usrimg.setTag(position);
