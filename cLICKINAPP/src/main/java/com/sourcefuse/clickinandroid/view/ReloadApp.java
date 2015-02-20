@@ -38,7 +38,7 @@ public class ReloadApp extends Activity {
         //  requestWindowFeature(Window.FEATURE_NO_TITLE);
 
 
-        Log.e("in Reload app------>", "in Reload app------>");
+
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             if (extras.containsKey("NOTIFICATION_TYPE"))
@@ -67,7 +67,7 @@ public class ReloadApp extends Activity {
             }
 
 
-            Log.e("case 2---->", "case 2---->");
+
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(ReloadApp.this);
             String myPhone = preferences.getString("myPhoneNo", null);
             String pwd = preferences.getString("pwd", null);
@@ -98,6 +98,7 @@ public class ReloadApp extends Activity {
         Intent intent = new Intent();
         switch (notf_type) {
             case Constants.USERPROFILE_NOTF:
+
                 intent.putExtra("isChangeInList", true);
                 intent.setClass(getApplicationContext(), UserProfileView.class);
              //   intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -190,24 +191,7 @@ public class ReloadApp extends Activity {
 
     }
 
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
 
-        Log.e("case 2 on new Intent---->", "case 2 on new Intent---->");
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(ReloadApp.this);
-        String myPhone = preferences.getString("myPhoneNo", null);
-        String pwd = preferences.getString("pwd", null);
-        String deviceId = preferences.getString("DeviceId", null);
-        if (!Utils.isEmptyString(myPhone) && !Utils.isEmptyString(pwd) && !Utils.isEmptyString(deviceId))
-            ModelManager.getInstance().getAuthorizationManager().signIn(myPhone, pwd, deviceId, Constants.DEVICETYPE);
-        else {
-            Intent intent1 = new Intent(ReloadApp.this, SplashView.class);
-            startActivity(intent1);
-            finish();
-        }
-
-    }
 
 
     //function to find index in accepted list

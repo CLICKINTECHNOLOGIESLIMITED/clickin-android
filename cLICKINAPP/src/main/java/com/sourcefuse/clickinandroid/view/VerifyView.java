@@ -2,6 +2,7 @@ package com.sourcefuse.clickinandroid.view;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -10,6 +11,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -63,6 +65,12 @@ public class VerifyView extends Activity implements OnClickListener,
         Utils.fromSignalDialog1(this, AlertMessage.SENDVERIFYMSGI, AlertMessage.SENDVERIFYMSGII);
 
 
+        d_one.setOnClickListener(this);
+        d_two.setOnClickListener(this);
+        d_three.setOnClickListener(this);
+        d_four.setOnClickListener(this);
+
+
         d_one.setOnKeyListener(new EditText.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -80,7 +88,7 @@ public class VerifyView extends Activity implements OnClickListener,
 
                 int action = event.getAction();
                 if (keyCode == KeyEvent.KEYCODE_DEL && action == KeyEvent.ACTION_DOWN) {
-                    //Log.e("D-Two", "Edit-Text2");
+
                     d_one.requestFocus();
                     d_one.setText("");
                     return true;
@@ -105,7 +113,7 @@ public class VerifyView extends Activity implements OnClickListener,
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 int action = event.getAction();
                 if (keyCode == KeyEvent.KEYCODE_DEL && action == KeyEvent.ACTION_DOWN) {
-                    //Log.e("D-Four", "Edit-Text4");
+
                     d_three.requestFocus();
                     d_three.setText("");
 
@@ -190,6 +198,16 @@ public class VerifyView extends Activity implements OnClickListener,
                     //Click Resend Verification Code.
                     Utils.trackMixpanel(VerifyView.this, "", "", "ResendVerificationCode", false);
 
+                break;
+            case R.id.edt_one:
+            case R.id.edt_two:
+            case R.id.edt_three:
+            case R.id.edt_four:
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.showSoftInput(d_one, InputMethodManager.SHOW_IMPLICIT);
+                imm.showSoftInput(d_two, InputMethodManager.SHOW_IMPLICIT);
+                imm.showSoftInput(d_three, InputMethodManager.SHOW_IMPLICIT);
+                imm.showSoftInput(d_four, InputMethodManager.SHOW_IMPLICIT);
                 break;
         }
     }

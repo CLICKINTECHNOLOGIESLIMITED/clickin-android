@@ -74,7 +74,7 @@ public class Utils {
 
     public static boolean DEBUG = true;
 
-    public static boolean mPlayChatSound = false;   // code to check sound in case of recive chat
+    public static boolean mPlayChatSound = true;   // code to check sound in case of recive chat
     public static String deviceId, PROJECT_NUMBER = "1058681021160";
 
     public static String mBasePath = String.valueOf(Environment.getExternalStorageDirectory());
@@ -90,7 +90,7 @@ public class Utils {
     public static ArrayList<String> groupSms = new ArrayList<String>();
     public static HashMap<String, ContactBean> contactMap = new HashMap<String, ContactBean>();
     public static String mName;
-    public static boolean mStartExceptionTrack = false;  // to stop exception data sending on server
+    public static boolean mStartExceptionTrack = true;  // to stop exception data sending on server
     static GoogleCloudMessaging gcm;
     static String regid;
     private static CustomProgressDialog barProgressDialog;
@@ -1051,7 +1051,7 @@ public class Utils {
         String tempPartnerClicksString = new String(partnerClicks);
 
         int tempPartnerClicks = Integer.parseInt(tempPartnerClicksString);
-        android.util.Log.e("Calculation of clicks In 0 ", "tempPartnerClicks" + tempPartnerClicks);
+
         int tempClicks;
         if (clicks.startsWith("+")) {
             tempClicks = convertToIntClicks(clicks.substring(1));
@@ -1493,7 +1493,7 @@ public class Utils {
 
 
                 jsonObject1.put("created", "" + getCurrentTimeStamp());
-                android.util.Log.e("date---------->", "" + getCurrentTimeStamp());
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }

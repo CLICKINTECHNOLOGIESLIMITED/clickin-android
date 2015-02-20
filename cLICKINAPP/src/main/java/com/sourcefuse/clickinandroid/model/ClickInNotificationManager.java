@@ -56,12 +56,12 @@ public class ClickInNotificationManager implements NotificationManagerI {
                             if (errorResponse != null && errorResponse.has("message")) {
                                 if (errorResponse.getString("message").equalsIgnoreCase("User don't have any notification.")) {
 //                                    notificationData.clear(); // to clear notification list as no notification is available
-                                    EventBus.getDefault().postSticky("Notification error");
+                                    EventBus.getDefault().post("Notification error");
                                 }
                             }
                             if (errorResponse != null) {
 
-                                EventBus.getDefault().postSticky("Notification false");
+                                EventBus.getDefault().post("Notification false");
                             }
                         } catch (JSONException e1) {
                             e1.printStackTrace();
@@ -126,7 +126,7 @@ public class ClickInNotificationManager implements NotificationManagerI {
                                 }
 
 
-                                EventBus.getDefault().postSticky("Notification true");
+                                EventBus.getDefault().post("Notification true");
                                 EventBus.getDefault().post("update Counter");
 
                             }
