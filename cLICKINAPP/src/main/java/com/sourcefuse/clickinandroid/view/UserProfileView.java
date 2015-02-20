@@ -45,7 +45,6 @@ import java.util.ArrayList;
 
 
 public class UserProfileView extends ClickInBaseView implements View.OnClickListener {
-    private static final String TAG = UserProfileView.class.getSimpleName();
     public UserRelationAdapter adapter;
     public String phone;
     public MyQbChatService myQbChatService;
@@ -99,9 +98,6 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-
         //code- to handle uncaught exception
         if (Utils.mStartExceptionTrack)
             Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
@@ -117,8 +113,8 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
 
 
         authManager = ModelManager.getInstance().getAuthorizationManager();
-        typefaceMedium = Typeface.createFromAsset(UserProfileView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
-        typefaceBold = Typeface.createFromAsset(UserProfileView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_BOLD);
+        typefaceMedium = Typeface.createFromAsset(getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
+        typefaceBold = Typeface.createFromAsset(getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_BOLD);
 
         following = (TextView) findViewById(R.id.btn_following);
         follower = (TextView) findViewById(R.id.btn_follower);
@@ -183,7 +179,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
 
 
         if (FromSignup) {
-            Utils.launchBarDialog(UserProfileView.this);
+            Utils.launchBarDialog(this);
             authManager.getProfileInfo("", authManager.getPhoneNo(), authManager.getUsrToken());
         } else {
             setNotificationList();
@@ -254,16 +250,16 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
             if (authManager.getUserImageUri() != null)
                 mUserImagePath = "" + authManager.getUserImageUri().toString();
             if (!Utils.isEmptyString(mUserImagePath))
-                mUserImageUri = Utils.getImageContentUri(UserProfileView.this, new File(mUserImagePath));
+                mUserImageUri = Utils.getImageContentUri(this, new File(mUserImagePath));
 
             if (!Utils.isEmptyString("" + mUserImageUri))
                 userimage.setImageURI(mUserImageUri);
             else if (imagebitmap1 != null)
                 userimage.setImageBitmap(imagebitmap1);
             else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl") && !userpic)
-                Picasso.with(UserProfileView.this).load(authManager.getUserPic()).error(R.drawable.female_user).into(userimage);
+                Picasso.with(this).load(authManager.getUserPic()).error(R.drawable.female_user).into(userimage);
             else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("guy") && !userpic)
-                Picasso.with(UserProfileView.this).load(authManager.getUserPic()).error(R.drawable.male_user).into(userimage);
+                Picasso.with(this).load(authManager.getUserPic()).error(R.drawable.male_user).into(userimage);
             else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl"))
                 userimage.setImageResource(R.drawable.female_user);
             else
@@ -308,7 +304,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         ArrayList<Section> sections = new ArrayList<Section>();
         SimpleSectionedListAdapter1 simpleSectionedGridAdapter;
         relationManager = ModelManager.getInstance().getRelationManager();
-        adapter = new UserRelationAdapter(UserProfileView.this, R.layout.row_userprofile, relationManager.getrelationshipsData);
+        adapter = new UserRelationAdapter(this, R.layout.row_userprofile, relationManager.getrelationshipsData);
         String[] mHeaderNames = {"CLICKIN'", "CLICKIN'"};
         String[] mHeaderNames2 = {" REQUESTS", " WITH"};
         Integer[] mHeaderPositions = {0, relationManager.requestedList.size()};
@@ -331,7 +327,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         for (int i = positionOfHeader; i < noOfHeader; i++) {
             sections.add(new Section(mHeaderPositions[i], mHeaderNames[i], mHeaderNames2[i]));
         }
-        simpleSectionedGridAdapter = new SimpleSectionedListAdapter1(UserProfileView.this, adapter, R.layout.list_item_header, R.id.tv_clickintx, R.id.tv_with);
+        simpleSectionedGridAdapter = new SimpleSectionedListAdapter1(this, adapter, R.layout.list_item_header, R.id.tv_clickintx, R.id.tv_with);
         simpleSectionedGridAdapter.setSections(sections.toArray(new Section[0]));
         mUserRelationlistView.setAdapter(simpleSectionedGridAdapter);
 
@@ -350,7 +346,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         ProfileManager profileManager = ModelManager.getInstance().getProfileManager();
         switch (v.getId()) {
             case R.id.btn_follower:
-                Intent intentFollower = new Intent(UserProfileView.this, FollowerList.class);
+                Intent intentFollower = new Intent(this, FollowerList.class);
                 intentFollower.putExtra("FromOwnProfile", true);
                 startActivity(intentFollower);
                 this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -359,7 +355,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
 
                 break;
             case R.id.btn_following:
-                Intent intentFollowing = new Intent(UserProfileView.this, FollowingListView.class);
+                Intent intentFollowing = new Intent(this, FollowingListView.class);
                 intentFollowing.putExtra("FromOwnProfile", true);
                 startActivity(intentFollowing);
                 this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -368,14 +364,14 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
 
                 break;
             case R.id.btn_add_someone:
-                Intent intent = new Intent(UserProfileView.this, AddSomeoneView.class);
+                Intent intent = new Intent(this, AddSomeoneView.class);
                 intent.putExtra("FromOwnProfile", true);
                 intent.putExtra("fromsignup", false);
                 startActivity(intent);
                 Utils.trackMixpanel(this, "", "", "ClickInWithSomeone", false);//track Click on Add Someone Button mixpanel
                 break;
             case R.id.btn_edit_profile:
-                Intent editProfile = new Intent(UserProfileView.this, EditMyProfileView.class);
+                Intent editProfile = new Intent(this, EditMyProfileView.class);
                 startActivity(editProfile);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 Utils.trackMixpanel(this, "", "", "Edit Profile", false);////track For Edit profile Button Followers Button mixpanel
@@ -455,7 +451,6 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         } else if (message.equalsIgnoreCase("ProfileInfo False")) {
             Utils.dismissBarDialog();
             Utils.fromSignalDialog(this, authManager.getMessage());
-            //Utils.showAlert(UserProfileView.this, authManager.getMessage());
         } else if (message.equalsIgnoreCase("ProfileInfo Network Error")) {
             Utils.dismissBarDialog();
             Utils.fromSignalDialog(this, AlertMessage.connectionError);
@@ -470,17 +465,17 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
 
     @Override
     public void onBackPressed() {
-
+            super.onBackPressed();
     }
 
     private void switchView() {
-        Intent intent = new Intent(UserProfileView.this, FollowerList.class);
+        Intent intent = new Intent(this, FollowerList.class);
         startActivity(intent);
 
     }
 
     private void switchViewToFollowingList() {
-        Intent intent = new Intent(UserProfileView.this, FollowingListView.class);
+        Intent intent = new Intent(this, FollowingListView.class);
         startActivity(intent);
 
     }

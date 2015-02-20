@@ -75,7 +75,7 @@
                 <EditText
                     android:id="@+id/edt_one"
                     android:layout_width="20dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="70dp"
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="5dp"
                     android:layout_weight="1"
@@ -93,7 +93,7 @@
                 <EditText
                     android:id="@+id/edt_two"
                     android:layout_width="20dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="70dp"
                     android:layout_marginRight="5dp"
                     android:layout_weight="1"
                     android:background="@drawable/e_v_number_field_empty"
@@ -110,7 +110,7 @@
                 <EditText
                     android:id="@+id/edt_three"
                     android:layout_width="20dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="70dp"
                     android:layout_marginRight="5dp"
                     android:layout_weight="1"
                     android:background="@drawable/e_v_number_field_empty"
@@ -127,7 +127,7 @@
                 <EditText
                     android:id="@+id/edt_four"
                     android:layout_width="20dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="70dp"
                     android:layout_marginRight="30dp"
                     android:layout_weight="1"
                     android:background="@drawable/e_v_number_field_empty"

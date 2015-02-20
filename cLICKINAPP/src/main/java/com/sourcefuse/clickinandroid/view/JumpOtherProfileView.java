@@ -250,12 +250,12 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
-    private void switchViewToFollowingList() {
+    /*private void switchViewToFollowingList() {
         Intent intent = new Intent(JumpOtherProfileView.this, FollowingListView.class);
         startActivity(intent);
         finish();
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-    }
+    }*/
 
     @Override
     public void onStart() {
@@ -279,7 +279,7 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
     public void onEventMainThread(String message) {
         super.onEventMainThread(message);
         relationManager = ModelManager.getInstance().getRelationManager();
-        if (message.equalsIgnoreCase("ProfileInfo True")) {
+        if (message.equalsIgnoreCase("ProfileInfo True")) { // rr
             setView();
             setProfileData();
             relationManager.fetchprofilerelationships(phForOtherUser, authManager.getPhoneNo(), authManager.getUsrToken());
@@ -290,6 +290,7 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
             Utils.fromSignalDialog(this, AlertMessage.connectionError);
         } else if (message.equalsIgnoreCase("Fetchprofilerelationships True") || message.equalsIgnoreCase("GetRelationShips False") || message.equalsIgnoreCase("GetRelationShips Network Error")) {
 
+            //
             //akshit code
             if (Utils.isEmptyString(relationManager.getRelationStatus())) {
                 clickwithHead.setVisibility(View.GONE);
@@ -324,14 +325,14 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
         } else if (message.equalsIgnoreCase("UnFollowUser  false")) {
             relationManager = ModelManager.getInstance().getRelationManager();
             Utils.showToast(JumpOtherProfileView.this, relationManager.getStatusMsg());
-        } else if (message.equalsIgnoreCase("GetFollower True")) {
+        } /*else if (message.equalsIgnoreCase("GetFollower True")) {
             Utils.dismissBarDialog();
             if (whichList) {
                 switchView();
             } else {
                 switchViewToFollowingList();
             }
-        } else if (message.equalsIgnoreCase("SearchResult True")) {
+        }*/ else if (message.equalsIgnoreCase("SearchResult True")) {
             Utils.dismissBarDialog();
             stopSearch = true;
             searchList.setVisibility(View.VISIBLE);

@@ -181,7 +181,7 @@ public class CropView extends Activity implements View.OnClickListener {
 
                         /*test code*/
 
-                    Log.e("value of path---->", "" + path);
+
 
                     if (getIntent().getStringExtra("from").equalsIgnoreCase("fromchatGallery") || getIntent().getStringExtra("from").equalsIgnoreCase("fromchatCamare")) {
                         //To track through mixPanel.if Image is attached.
@@ -233,7 +233,7 @@ public class CropView extends Activity implements View.OnClickListener {
         if (!sdIconStorageDir.exists()) {
             sdIconStorageDir.mkdirs();
         }
-        Log.e("directory ---->", "" + sdIconStorageDir.exists());
+
 
         sdIconStorageDir.setWritable(true);
         sdIconStorageDir.setReadable(true);
@@ -262,13 +262,13 @@ public class CropView extends Activity implements View.OnClickListener {
 
         } catch (FileNotFoundException e) {
 
-            Log.e("Exception---->1", "" + e.toString());
+
             return "";
         } catch (IOException e) {
-            Log.e("Exception---->2", "" + e.toString());
+
             return "";
         } catch (Exception e) {
-            Log.e("Exception---->3", "" + e.toString());
+
             e.printStackTrace();
             return "";
         }
