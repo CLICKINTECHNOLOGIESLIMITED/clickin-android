@@ -358,7 +358,7 @@ public class ProfileManager {
                         followers.addAll(pfollowerList);
                         following.addAll(followingArray);
 
-                        EventBus.getDefault().postSticky("GetFollower True");
+                        EventBus.getDefault().post("GetFollower True");
 
                     }
                 } catch (JSONException e) {

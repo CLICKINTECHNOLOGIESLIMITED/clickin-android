@@ -87,7 +87,7 @@ public class EditMyProfileView extends ClickInBaseView implements View.OnClickLi
         }
 
 
-        Log.e("path--->", "" + mediaFile.getAbsolutePath());
+
         return mediaFile;
     }
 

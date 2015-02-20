@@ -38,7 +38,7 @@ public class ReloadApp extends Activity {
         //  requestWindowFeature(Window.FEATURE_NO_TITLE);
 
 
-        Log.e("in Reload app------>", "in Reload app------>");
+
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             if (extras.containsKey("NOTIFICATION_TYPE"))
@@ -67,7 +67,7 @@ public class ReloadApp extends Activity {
             }
 
 
-            Log.e("case 2---->", "case 2---->");
+
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(ReloadApp.this);
             String myPhone = preferences.getString("myPhoneNo", null);
             String pwd = preferences.getString("pwd", null);
@@ -98,11 +98,13 @@ public class ReloadApp extends Activity {
         Intent intent = new Intent();
         switch (notf_type) {
             case Constants.USERPROFILE_NOTF:
+
                 intent.putExtra("isChangeInList", true);
                 intent.setClass(getApplicationContext(), UserProfileView.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+             //   intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+               // intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                //intent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent);
                 Utils.dismissBarDialog();
                 finish();
@@ -114,9 +116,10 @@ public class ReloadApp extends Activity {
                         intent.setAction("UPDATE");
                         intent.putExtra("partnerIndex", partnerIndex);
                         intent.setClass(getApplicationContext(), ChatRecordView.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+                    //    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                      //  intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+                        intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                         startActivity(intent);
                         Utils.dismissBarDialog();
                         finish();
@@ -131,8 +134,9 @@ public class ReloadApp extends Activity {
             case Constants.FOLLOWER_FOLLOWING_NOTF:
                 intent.putExtra("FromOwnProfile", true);
                 intent.setClass(getApplicationContext(), FollowerList.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+             //   intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+               // intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent);
                 Utils.dismissBarDialog();
                 finish();
@@ -140,9 +144,10 @@ public class ReloadApp extends Activity {
             case Constants.POSTVIEW_NOTF:
                 intent.setClass(getApplicationContext(), PostView.class);
                 intent.putExtra("feedId", getIntent().getExtras().getString("Nid"));
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+           //     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+             //   intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
                 Utils.dismissBarDialog();
@@ -150,9 +155,10 @@ public class ReloadApp extends Activity {
                 break;
             case Constants.FEEDVIEW_NOTF:
                 intent.setClass(getApplicationContext(), FeedView.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            //    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+              //  intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 // intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
                 Utils.dismissBarDialog();
@@ -162,9 +168,10 @@ public class ReloadApp extends Activity {
                 intent.setClass(getApplicationContext(), JumpOtherProfileView.class);
                 intent.putExtra("FromOwnProfile", true);
                 intent.putExtra("phNumber", getIntent().getExtras().getString("phone_no"));
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+             //   intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+               // intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 // intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
                 Utils.dismissBarDialog();
@@ -184,24 +191,7 @@ public class ReloadApp extends Activity {
 
     }
 
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
 
-        Log.e("case 2 on new Intent---->", "case 2 on new Intent---->");
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(ReloadApp.this);
-        String myPhone = preferences.getString("myPhoneNo", null);
-        String pwd = preferences.getString("pwd", null);
-        String deviceId = preferences.getString("DeviceId", null);
-        if (!Utils.isEmptyString(myPhone) && !Utils.isEmptyString(pwd) && !Utils.isEmptyString(deviceId))
-            ModelManager.getInstance().getAuthorizationManager().signIn(myPhone, pwd, deviceId, Constants.DEVICETYPE);
-        else {
-            Intent intent1 = new Intent(ReloadApp.this, SplashView.class);
-            startActivity(intent1);
-            finish();
-        }
-
-    }
 
 
     //function to find index in accepted list

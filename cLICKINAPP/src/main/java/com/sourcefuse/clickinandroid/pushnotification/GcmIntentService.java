@@ -95,7 +95,7 @@ public class GcmIntentService extends IntentService {
         // EventBus.getDefault().post("update Counter");
         mRelationManager = ModelManager.getInstance().getRelationManager();
 
-        Log.e("on GCMINTENT----","on GCMINTENT----");
+
 
         GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
         String messageType = gcm.getMessageType(intent);
