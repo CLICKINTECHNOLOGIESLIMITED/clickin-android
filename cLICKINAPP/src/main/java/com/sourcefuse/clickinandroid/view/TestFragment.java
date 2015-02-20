@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sourcefuse.clickinandroid.utils.UnCaughtExceptionHandler;
+import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
 
 public final class TestFragment extends Fragment {
@@ -39,7 +40,8 @@ public final class TestFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //code- to handle uncaught exception
-        Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(getActivity()));
+        if (Utils.mStartExceptionTrack)
+            Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(getActivity()));
         _activity = super.getActivity();
         if (getArguments() != null) {
             imageS = getArguments().getInt("img");
@@ -90,6 +92,9 @@ public final class TestFragment extends Fragment {
                     Intent signup = new Intent(getActivity(), SignUpView.class);
                     getActivity().startActivity(signup);
                     getActivity().finish();
+                    //To track through mixPanel.
+                    //Click To Signup
+                    Utils.trackMixpanel(getActivity(), "", "", "SignUpButtonClicked", false);
                     coverFlowChecked();
                 }
             });
@@ -100,6 +105,9 @@ public final class TestFragment extends Fragment {
                     Intent signIn = new Intent(getActivity(), SignInView.class);
                     getActivity().startActivity(signIn);
                     coverFlowChecked();
+                    //To track through mixPanel.
+                    //Click To SignIn.
+                    Utils.trackMixpanel(getActivity(), "", "", "SignInButtonClicked", false);
                     getActivity().finish();
                 }
             });

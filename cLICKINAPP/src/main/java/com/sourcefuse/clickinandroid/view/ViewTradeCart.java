@@ -58,12 +58,11 @@ public class ViewTradeCart extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         //code- to handle uncaught exception
-        Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
+        if (Utils.mStartExceptionTrack)
+            Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
 
         setContentView(R.layout.view_tradecart);
-
-
 
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
@@ -90,7 +89,7 @@ public class ViewTradeCart extends Activity implements View.OnClickListener {
             public void onClick(View arg0) {
 
                 InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                if(card_text.getWindowToken() != null)
+                if (card_text.getWindowToken() != null)
                     imm.hideSoftInputFromWindow(card_text.getWindowToken(), 0);
 
 
@@ -200,7 +199,7 @@ public class ViewTradeCart extends Activity implements View.OnClickListener {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (keyCode == KeyEvent.KEYCODE_ENTER) {
                     InputMethodManager imm = (InputMethodManager) getSystemService(context.INPUT_METHOD_SERVICE);
-                    if(card_text.getWindowToken() != null)
+                    if (card_text.getWindowToken() != null)
                         imm.hideSoftInputFromWindow(card_text.getWindowToken(), 0);
                 }
                 return false;
@@ -346,6 +345,14 @@ public class ViewTradeCart extends Activity implements View.OnClickListener {
                         overridePendingTransition(0, R.anim.slide_out_finish_up);
                             /*code to play sound in case of trade cart */
                         Utils.playSound(ViewTradeCart.this, R.raw.message_sent);
+
+                        //To track through mixPanel.
+                        //TradeCard Visited.
+                        Utils.trackMixpanel(this, "Card Visited", cardTitle, "RPageTradeButtonClicked", false);
+                        //To track through mixPanel.
+                        //TradeCard Played.
+                        Utils.trackMixpanel(this, "CardPlayedName", "" + cardTitle, "RPageTradeButtonClicked", false);
+
                     }
                     //loop- ends here if user is card owner
                 } else {//
@@ -395,6 +402,13 @@ public class ViewTradeCart extends Activity implements View.OnClickListener {
                     overridePendingTransition(0, R.anim.slide_out_finish_up);
                         /*code to play sound in case of trade cart */
                     Utils.playSound(ViewTradeCart.this, R.raw.message_sent);
+
+                    //To track through mixPanel.
+                    //TradeCard Visited.
+                    Utils.trackMixpanel(this, "Card Visited", cardTitle, "RPageTradeButtonClicked", false);
+                    //To track through mixPanel.
+                    //TradeCard Played.
+                    Utils.trackMixpanel(this, "CardPlayedName", "" + cardTitle, "RPageTradeButtonClicked", false);
                 }//loop ends here if user is not card owner
                 //  finish();
                 break;
@@ -403,6 +417,7 @@ public class ViewTradeCart extends Activity implements View.OnClickListener {
                 card_text.requestFocus();
                 card_text.setHint("");
                 card_text.setGravity(Gravity.CENTER);
+
         }
 
 

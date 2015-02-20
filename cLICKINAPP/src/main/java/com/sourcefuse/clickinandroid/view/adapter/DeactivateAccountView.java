@@ -91,9 +91,9 @@ public class DeactivateAccountView extends Activity implements View.OnClickListe
 
                 InputMethodManager imm = (InputMethodManager) getSystemService(
                         INPUT_METHOD_SERVICE);
-                if(((EditText) findViewById(R.id.general_problem_text)).getWindowToken() != null)
+                if (((EditText) findViewById(R.id.general_problem_text)).getWindowToken() != null)
                     imm.hideSoftInputFromWindow(((EditText) findViewById(R.id.general_problem_text)).getWindowToken(), 0);
-                if(((EditText) findViewById(R.id.old_password)).getWindowToken() != null)
+                if (((EditText) findViewById(R.id.old_password)).getWindowToken() != null)
                     imm.hideSoftInputFromWindow(((EditText) findViewById(R.id.old_password)).getWindowToken(), 0);
 
             }
@@ -135,7 +135,7 @@ public class DeactivateAccountView extends Activity implements View.OnClickListe
             case R.id.deactivate_radio_msg_six:
             case R.id.deactivate_radio_msg_seven:
                 InputMethodManager inputMethodManager1 = (InputMethodManager) this.getSystemService(Activity.INPUT_METHOD_SERVICE);
-                if(this.getCurrentFocus().getWindowToken() != null)
+                if (getCurrentFocus() != null && getCurrentFocus().getWindowToken() != null)
                     inputMethodManager1.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
 
                 break;//ends
@@ -166,6 +166,7 @@ public class DeactivateAccountView extends Activity implements View.OnClickListe
                 }*/
                 if (!password.isEmpty() && password.length() >= 8) {
                     Utils.launchBarDialog(DeactivateAccountView.this);
+                    Utils.trackMixpanel(DeactivateAccountView.this, "Activity", "AccountDeactivated", "LeftMenuSettingsButtonClicked", false);//track Account Deactivation mixpanel
                     settingManager.deactivteAccount(phone_no, user_token, reason_type, other_reason, email_opt_out, password);
                 } else if (password.isEmpty()) {
                     Utils.fromSignalDialog(DeactivateAccountView.this, AlertMessage.DEACTIVATE_ENTER_PASSWORD);
@@ -183,7 +184,7 @@ public class DeactivateAccountView extends Activity implements View.OnClickListe
                 break;
             case R.id.mail_radio_button_layout:
                 InputMethodManager inputMethodManager2 = (InputMethodManager) this.getSystemService(Activity.INPUT_METHOD_SERVICE);
-                if(this.getCurrentFocus().getWindowToken() != null)
+                if (getCurrentFocus() != null && getCurrentFocus().getWindowToken() != null)
                     inputMethodManager2.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
 
 

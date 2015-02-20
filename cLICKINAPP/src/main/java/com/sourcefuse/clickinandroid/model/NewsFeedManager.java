@@ -1,6 +1,5 @@
 package com.sourcefuse.clickinandroid.model;
 
-import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.sourcefuse.clickinandroid.model.bean.CurrentClickerBean;
 import com.sourcefuse.clickinandroid.model.bean.FeedStarsBean;
@@ -20,13 +19,10 @@ import de.greenrobot.event.EventBus;
 
 public class NewsFeedManager {
     public ArrayList<NewsFeedBean> userFeed = new ArrayList<NewsFeedBean>();
+    public ArrayList<NewsFeedBean> PostFeed = new ArrayList<NewsFeedBean>(); // Used To View Feed
     public ArrayList<FeedStarsBean> feedStarsList = new ArrayList<FeedStarsBean>();
     StringEntity se = null;
-    AsyncHttpClient client;
-    private String TAG = this.getClass().getSimpleName();
-    private AuthManager authManager;
     private CurrentClickerBean currentClickerBean;
-    private ProfileManager profilemanager;
 
     public void fetchNewsFeed(String lastNewsfeedId, String phone, String usertoken) {
         // TODO Auto-generated method stub
@@ -37,14 +33,13 @@ public class NewsFeedManager {
             userInputDetails.put("last_newsfeed_id", lastNewsfeedId);
 
 
-            client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,
                     "application/json"));
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        client.post(null, APIs.FETCHNEWSFEEDS, se, "application/json",
+        ClickinRestClient.post(null, APIs.FETCHNEWSFEEDS, se, "application/json",
                 new JsonHttpResponseHandler() {
 
                     @Override
@@ -304,8 +299,6 @@ public class NewsFeedManager {
 
 
     public void fetchFbFriends(String accessToken, String phone, String usertoken) {
-        profilemanager = ModelManager.getInstance().getProfileManager();
-        authManager = ModelManager.getInstance().getAuthorizationManager();
         JSONObject userInputDetails = new JSONObject();
         try {
             userInputDetails.put("phone_no", phone);
@@ -313,7 +306,6 @@ public class NewsFeedManager {
             userInputDetails.put("access_token", accessToken);
 
 
-            client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
 
@@ -321,7 +313,7 @@ public class NewsFeedManager {
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        client.post(null, APIs.FETCHFBFRIENDS, se, "application/json",
+        ClickinRestClient.post(null, APIs.FETCHFBFRIENDS, se, "application/json",
                 new JsonHttpResponseHandler() {
                     @Override
                     public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
@@ -341,7 +333,7 @@ public class NewsFeedManager {
                         try {
 
                             success = response.getBoolean("success");
-                            profilemanager.currentClickerListFB.clear();
+                            ModelManager.getInstance().getProfileManager().currentClickerListFB.clear();
                             if (success) {
                                 JSONArray list = response.getJSONArray("fbfriends");
                                 for (int i = 0; i < list.length(); i++) {
@@ -364,7 +356,7 @@ public class NewsFeedManager {
                                         currentClickerBean.setFollow(0);
                                     }
 
-                                    profilemanager.currentClickerListFB.add(currentClickerBean);
+                                    ModelManager.getInstance().getProfileManager().currentClickerListFB.add(currentClickerBean);
                                 }
                                 EventBus.getDefault().post("FetchFbFriend True");
                             } else {
@@ -392,7 +384,6 @@ public class NewsFeedManager {
             userInputDetails.put("type", type);
 
 
-            client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,
                     "application/json"));
@@ -401,7 +392,7 @@ public class NewsFeedManager {
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        client.post(null, APIs.SAVESTARCOMMENT, se, "application/json",
+        ClickinRestClient.post(null, APIs.SAVESTARCOMMENT, se, "application/json",
                 new JsonHttpResponseHandler() {
 
                     @Override
@@ -441,7 +432,6 @@ public class NewsFeedManager {
     }
 
     public void fetchCommentStars(String phone_no, String user_token, String lastId, String newsfeedId, String type) {
-        authManager = ModelManager.getInstance().getAuthorizationManager();
         JSONObject userInputDetails = new JSONObject();
         try {
             userInputDetails.put("phone_no", phone_no);
@@ -450,14 +440,13 @@ public class NewsFeedManager {
             userInputDetails.put("newsfeed_id", newsfeedId);
             userInputDetails.put("type", type);
 
-            client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
 
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        client.post(null, APIs.FETCHCOMMENTSTATUS, se, "application/json",
+        ClickinRestClient.post(null, APIs.FETCHCOMMENTSTATUS, se, "application/json",
                 new JsonHttpResponseHandler() {
 
                     @Override
@@ -530,21 +519,19 @@ public class NewsFeedManager {
 
 
     public void newFeedDelete(String phone_no, String user_token, String newsfeedId) {
-        authManager = ModelManager.getInstance().getAuthorizationManager();
         JSONObject userInputDetails = new JSONObject();
         try {
             userInputDetails.put("phone_no", phone_no);
             userInputDetails.put("user_token", user_token);
             userInputDetails.put("newsfeed_id", newsfeedId);
 
-            client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
 
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        client.post(null, APIs.DELETENEWSFEED, se, "application/json",
+        ClickinRestClient.post(null, APIs.DELETENEWSFEED, se, "application/json",
                 new JsonHttpResponseHandler() {
 
                     @Override
@@ -582,21 +569,19 @@ public class NewsFeedManager {
 
 
     public void reportInAppropriate(String phone_no, String user_token, String newsfeedId) {
-        authManager = ModelManager.getInstance().getAuthorizationManager();
         JSONObject userInputDetails = new JSONObject();
         try {
             userInputDetails.put("phone_no", phone_no);
             userInputDetails.put("user_token", user_token);
             userInputDetails.put("newsfeed_id", newsfeedId);
 
-            client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
 
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        client.post(null, APIs.REPORTINAPPROPRIATE, se, "application/json",
+        ClickinRestClient.post(null, APIs.REPORTINAPPROPRIATE, se, "application/json",
                 new JsonHttpResponseHandler() {
 
                     @Override
@@ -634,21 +619,19 @@ public class NewsFeedManager {
 
 
     public void unStarredNewsFeed(String phone_no, String user_token, String newsfeedId) {
-        authManager = ModelManager.getInstance().getAuthorizationManager();
         JSONObject userInputDetails = new JSONObject();
         try {
             userInputDetails.put("phone_no", phone_no);
             userInputDetails.put("user_token", user_token);
             userInputDetails.put("newsfeed_id", newsfeedId);
 
-            client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
 
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        client.post(null, APIs.UNSTARRENDNEWSFEED, se, "application/json",
+        ClickinRestClient.post(null, APIs.UNSTARRENDNEWSFEED, se, "application/json",
                 new JsonHttpResponseHandler() {
 
                     @Override
@@ -693,21 +676,20 @@ public class NewsFeedManager {
             userInputDetails.put("newsfeed_id", lastNewsfeedId);
 
 
-            client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,
                     "application/json"));
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        client.post(null, APIs.VIEWFEED, se, "application/json",
+        ClickinRestClient.post(null, APIs.VIEWFEED, se, "application/json",
                 new JsonHttpResponseHandler() {
 
                     @Override
                     public void onFailure(int statusCode, Throwable e,
                                           JSONObject errorResponse) {
                         super.onFailure(statusCode, e, errorResponse);
-                        userFeed.clear();
+                        PostFeed.clear();
                         if (errorResponse != null) {
 
                             EventBus.getDefault().post("NewsFeed False");
@@ -732,7 +714,7 @@ public class NewsFeedManager {
 							}*/
 
                             JSONArray newsfeedArray = response.getJSONArray("newsfeedArray");
-                            userFeed.clear();
+                            PostFeed.clear();
 
                             for (int i = 0; i < newsfeedArray.length(); i++) {
                                 NewsFeedBean allNewsFeed = new NewsFeedBean();
@@ -927,17 +909,11 @@ public class NewsFeedManager {
                                         allNewsFeed.setNewsFeedArray_senderDetail_user_pic(newsfeedArray.getJSONObject(i).getJSONObject("senderDetail").getString("user_pic"));
                                         allNewsFeed.setNewsFeedArray_senderDetail_phno(newsfeedArray.getJSONObject(i).getJSONObject("senderDetail").getString("phone_no"));
 
-                                        userFeed.add(allNewsFeed);
+                                        PostFeed.add(allNewsFeed);
 
                                     }
 
                                 }
-//                                else
-//                                {
-//                                    allNewsFeed.setNewsFeedArray_senderDetail_id("");
-//                                    allNewsFeed.setNewsFeedArray_senderDetail_name("");
-//                                    allNewsFeed.setNewsFeedArray_senderDetail_phno("");
-//                                }
 
 
                             }

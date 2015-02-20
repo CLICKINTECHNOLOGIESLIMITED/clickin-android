@@ -54,6 +54,8 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
        /* mLruCahe = new LruCache(context);
         picasso = new Picasso.Builder(context).memoryCache(mLruCahe).build();*/
 
+        Utils.trackMixpanel_superProperties((Activity) context,itemList.size(),"relationshipcount");//Track Relationship Count Through Mix panel
+//
     }
 //    ((ImageView)row.findViewById(R.id.iv_accept_card)).setTag(position);
 //    ((ImageView) row.findViewById(R.id.iv_accept_card)).setOnClickListener(new View.OnClickListener() {
@@ -67,9 +69,11 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
 //        }
 //    });
 
+
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         View row = convertView;
+
 
         relationManager = ModelManager.getInstance().getRelationManager();
             /*RecordHolder holder = null;*/
@@ -196,7 +200,9 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
                     Utils.launchBarDialog((Activity) context);
                     relationManager.updateStatus(itemList.get(position).getRelationshipId(), authManager.getPhoneNo(), authManager.getUsrToken(), "true");
                     itemList.get(position).setStatusAccepted("true");
+                    Utils.trackMixpanel(((Activity) context), "", "", "AcceptUserRequest", false);//Track AcceptUserRequest through mixpanel
                 }
+
             }
         });
 
@@ -222,7 +228,10 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
                 } else {
 
                 }
+                Utils.trackMixpanel(((Activity) context), "", "", "CheckMyPartnerProfile", false);//Track CheckMyPartnerProfile through mixpanel
             }
+
+
         });//ends
         delete.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -235,11 +244,11 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
                 Constants.itemPosition = position;
                 Utils.launchBarDialog((Activity) context);
                 if (Utils.isEmptyString(itemList.get(position).getStatusAccepted()) || Utils.isEmptyString(itemList.get(position).getStatusAccepted()) && itemList.get(position).getRequestInitiator().equalsIgnoreCase("true")) {
-
                     relationManager.updateStatus(itemList.get(position).getRelationshipId(), authManager.getPhoneNo(), authManager.getUsrToken(), "false");
 
+                    Utils.trackMixpanel(((Activity) context), "", "", "RejectUserRequest", false);//Track RejectUserRequest through mixpanel
                 } else {
-
+                    Utils.trackMixpanel(((Activity) context), "", "", "DeletePartner", false);//Track Delete Partner through mixpanel
                     relationManager.deleteRelationship(itemList.get(position).getRelationshipId(), authManager.getPhoneNo(), authManager.getUsrToken());
                 }
 
@@ -286,6 +295,7 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
                 button1.setBackgroundResource(R.drawable.owner_profile_eye_cross_icon);
                 itemList.get(position1).setmStatuspublic("false");
                 relationManager.changeUserVisibility(itemList.get(position1).getRelationshipId(), "false", authManager.getPhoneNo(), authManager.getUsrToken());
+                Utils.trackMixpanel(((Activity) context), "", "", "RelationshipPrivacyChanged", false);//Track RelationshipPrivacyChanged through mixpanel
                 dialog.dismiss();
 
             }
@@ -334,6 +344,7 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
                 button1.setBackgroundResource(R.drawable.owner_profile_eye_icon);
                 itemList.get(position1).setmStatuspublic("true");
                 relationManager.changeUserVisibility(itemList.get(position1).getRelationshipId(), "true", authManager.getPhoneNo(), authManager.getUsrToken());
+                Utils.trackMixpanel(((Activity) context), "", "", "RelationshipPrivacyChanged", false);//Track RelationshipPrivacyChanged through mixpanel
                 dialog.dismiss();
             }
         });

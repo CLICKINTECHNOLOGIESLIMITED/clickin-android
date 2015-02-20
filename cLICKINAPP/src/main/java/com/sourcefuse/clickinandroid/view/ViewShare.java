@@ -75,7 +75,8 @@ public class ViewShare extends Activity implements View.OnClickListener {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         //code- to handle uncaught exception
-        Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
+        if (Utils.mStartExceptionTrack)
+            Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
         setContentView(R.layout.view_share_screen);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
@@ -96,9 +97,9 @@ public class ViewShare extends Activity implements View.OnClickListener {
             public void onClick(View arg0) {
 
                 InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                if(shr_caption.getWindowToken() != null)
+                if (shr_caption.getWindowToken() != null)
                     imm.hideSoftInputFromWindow(shr_caption.getWindowToken(), 0);
-                if(shr_caption.getWindowToken() != null)
+                if (shr_caption.getWindowToken() != null)
                     imm.hideSoftInputFromWindow(shr_caption_trade.getWindowToken(), 0);
 
             }
@@ -289,6 +290,8 @@ public class ViewShare extends Activity implements View.OnClickListener {
 
             case R.id.shr_facebook:
                 //           Toast.makeText(this, "Will be implemented later on", Toast.LENGTH_SHORT).show();
+
+
                 if (Utils.isConnectingToInternet(ViewShare.this)) {
 
                     Session session = Session.getActiveSession();
@@ -382,6 +385,32 @@ public class ViewShare extends Activity implements View.OnClickListener {
                 i.setAction("SHARE");
                 startActivity(i);
 
+                if (!access_Token.equalsIgnoreCase("-")) {
+                    //To track through mixPanel.
+                    //Share data on facebook and chat.
+                    Utils.trackMixpanel(ViewShare.this, "Activity", "AppShareandFBshare", "RPageShareButtonClicked", false);
+
+                }
+                if (!Utils.isEmptyString(commentStr) && !commentStr.equalsIgnoreCase("Write your caption here...")) {
+                    //To track through mixPanel.
+                    //Share data with Comment
+
+                    Utils.trackMixpanel(ViewShare.this, "Activity", "ShareWithComment", "RPageShareButtonClicked", false);
+                }
+
+                if (!Utils.isEmptyString(mLocationCoordinates)) {
+                    //To track through mixPanel.
+                    //Share Location.
+                    Utils.trackMixpanel(ViewShare.this, "Activity", "LocationShared", "AttachButtonClicked", false);
+                } else if (!Utils.isEmptyString(audioID)) {
+                    //To track through mixPanel.
+                    //Share Audio.
+                    Utils.trackMixpanel(ViewShare.this, "Activity", "AudioShared", "AttachButtonClicked", false);
+                }
+
+                //To track through mixPanel.
+                //Share data without Comment
+                Utils.trackMixpanel(ViewShare.this, "Activity", "UserShares", "RPageShareButtonClicked",false);
                 break;
             case R.id.shr_caption:
 
@@ -397,9 +426,9 @@ public class ViewShare extends Activity implements View.OnClickListener {
             case R.id.linear_layout_share:
 
                 InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                if(shr_caption.getWindowToken() != null)
+                if (shr_caption.getWindowToken() != null)
                     imm.hideSoftInputFromWindow(shr_caption.getWindowToken(), 0);
-                if(shr_caption_trade.getWindowToken() != null)
+                if (shr_caption_trade.getWindowToken() != null)
                     imm.hideSoftInputFromWindow(shr_caption_trade.getWindowToken(), 0);
 
 
@@ -463,6 +492,21 @@ public class ViewShare extends Activity implements View.OnClickListener {
 
     @Override
     public void onBackPressed() {
+
+
+        if (!Utils.isEmptyString(mLocationCoordinates)) {
+            //To track through mixPanel.
+            //Location Shared Cancelled.
+            Utils.trackMixpanel(ViewShare.this, "Activity", "LocationSharingCancelled", "AttachButtonClicked", false);
+        } else if (!Utils.isEmptyString(audioID)) {
+            //To track through mixPanel.
+            //Audio Shared Cancelled.
+            Utils.trackMixpanel(ViewShare.this, "Activity", "AudioSharingCancelled", "AttachButtonClicked", false);
+        } else
+            //To track through mixPanel.
+            //Shared Cancelled.
+            Utils.trackMixpanel(ViewShare.this, "Activity", "ShareCancelled", "RPageShareButtonClicked", false);
+
         super.onBackPressed();
         finish();
         overridePendingTransition(0, R.anim.top_out);//akshit code for animation

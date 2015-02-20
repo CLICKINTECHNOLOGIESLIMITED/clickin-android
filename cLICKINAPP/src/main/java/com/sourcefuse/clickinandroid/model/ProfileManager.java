@@ -1,7 +1,6 @@
 package com.sourcefuse.clickinandroid.model;
 
 
-import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.sourcefuse.clickinandroid.model.bean.ContactBean;
 import com.sourcefuse.clickinandroid.model.bean.CurrentClickerBean;
@@ -38,8 +37,6 @@ public class ProfileManager {
     public ArrayList<FollowerFollowingBean> pfollowerList_other = new ArrayList<FollowerFollowingBean>();
     public ArrayList<FollowerFollowingBean> Replacement_other = new ArrayList<FollowerFollowingBean>();
     private StringEntity se = null;
-    private AsyncHttpClient client;
-    private AuthManager authManager;
     private FollowerFollowingBean followingList = null;
     private ArrayList<FollowerFollowingBean> followingArray = null;
     private FollowerFollowingBean followerList = null;
@@ -52,7 +49,6 @@ public class ProfileManager {
     public void setProfile(String fname, String lname, String phone,
                            String usertoken, String gender, String dob, String city,
                            String country, String email, String fbaccesstoken, String userpic, String profile_image_change) {
-        authManager = ModelManager.getInstance().getAuthorizationManager();
         JSONObject userInputDetails = new JSONObject();
         try {
 
@@ -81,7 +77,6 @@ public class ProfileManager {
             // userInputDetails.put("fb_access_token", "jh");
 
 
-            client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,
                     "application/json"));
@@ -89,7 +84,7 @@ public class ProfileManager {
             e1.printStackTrace();
 
         }
-        client.post(null, APIs.UPDATEPROFILE, se, "application/json",
+        ClickinRestClient.post(null, APIs.UPDATEPROFILE, se, "application/json",
                 new JsonHttpResponseHandler() {
                     boolean success = false;
 
@@ -100,7 +95,7 @@ public class ProfileManager {
 
                         if (errorResponse != null) {
                             try {
-                                authManager.setMessage(errorResponse.getString("message"));
+                                ModelManager.getInstance().getAuthorizationManager().setMessage(errorResponse.getString("message"));
                             } catch (JSONException e1) {
                                 // TODO Auto-generated catch block
                                 e1.printStackTrace();
@@ -123,11 +118,6 @@ public class ProfileManager {
                             success = response.getBoolean("success");
                             if (success) {
 
-                                // authManager =
-                                // ModelManager.getInstance().getAuthorizationManager();
-                                // authManager.setUserName(response.getString("user_name"));
-                                // authManager.setUserPic(response.getString("user_pic"));
-
                                 EventBus.getDefault().post("UpdateProfile True");
 
                             }
@@ -146,27 +136,17 @@ public class ProfileManager {
 
     public void getFollwer(String othersPhone, String phone, String usertoken) {
         // TODO Auto-generated method stub
-        authManager = ModelManager.getInstance().getAuthorizationManager();
-        try {
-            client = new AsyncHttpClient();
-            //client.addHeader("user-token", usertoken);
-            //client.addHeader("phone-no", phone);
 
-            client.addHeader("User-Token", usertoken);
-            client.addHeader("Phone-No", phone);
-        } catch (Exception e1) {
-            e1.printStackTrace();
-
-        }
 
         String str = null;
         if (!Utils.isEmptyString(othersPhone)) {
             str = othersPhone.substring(1);
         } else {
+            if(!Utils.isEmptyString(phone))
             str = phone.substring(1);
         }
 
-        client.get(APIs.GETUSERFOLLOWER + ":%2B" + str, new JsonHttpResponseHandler() {
+        ClickinRestClient.get(APIs.GETUSERFOLLOWER + ":%2B" + str, new JsonHttpResponseHandler() {
             boolean success = false;
 
             @Override
@@ -176,7 +156,7 @@ public class ProfileManager {
 
                 if (errorResponse != null) {
                     try {
-                        authManager.setMessage(errorResponse.getString("message"));
+                        ModelManager.getInstance().getAuthorizationManager().setMessage(errorResponse.getString("message"));
                     } catch (JSONException e1) {
 
                     }
@@ -378,7 +358,7 @@ public class ProfileManager {
                         followers.addAll(pfollowerList);
                         following.addAll(followingArray);
 
-                        EventBus.getDefault().postSticky("GetFollower True");
+                        EventBus.getDefault().post("GetFollower True");
 
                     }
                 } catch (JSONException e) {
@@ -393,18 +373,7 @@ public class ProfileManager {
 
     public void getFollwerOther(String othersPhone, String phone, String usertoken) {
         // TODO Auto-generated method stub
-        authManager = ModelManager.getInstance().getAuthorizationManager();
-        try {
-            client = new AsyncHttpClient();
-            //client.addHeader("user-token", usertoken);
-            //client.addHeader("phone-no", phone);
 
-            client.addHeader("User-Token", usertoken);
-            client.addHeader("Phone-No", phone);
-        } catch (Exception e1) {
-            e1.printStackTrace();
-
-        }
 
         String str = null;
         if (!Utils.isEmptyString(othersPhone)) {
@@ -413,7 +382,7 @@ public class ProfileManager {
             str = phone.substring(1);
         }
 
-        client.get(APIs.GETUSERFOLLOWER + ":%2B" + str, new JsonHttpResponseHandler() {
+        ClickinRestClient.get(APIs.GETUSERFOLLOWER + ":%2B" + str, new JsonHttpResponseHandler() {
             boolean success = false;
 
             @Override
@@ -423,7 +392,7 @@ public class ProfileManager {
 
                 if (errorResponse != null) {
                     try {
-                        authManager.setMessage(errorResponse.getString("message"));
+                        ModelManager.getInstance().getAuthorizationManager().setMessage(errorResponse.getString("message"));
                     } catch (JSONException e1) {
 
 
@@ -586,21 +555,10 @@ public class ProfileManager {
     public void getOthersProfile(String phone, String usertoken, String partner_phone) {
 
         // TODO Auto-generated method stub
-        authManager = ModelManager.getInstance().getAuthorizationManager();
-        try {
-            client = new AsyncHttpClient();
-            //client.addHeader("user_token", usertoken);
-            //client.addHeader("phone_no", phone);
-            client.addHeader("User-Token", usertoken);
-            client.addHeader("Phone-No", phone);
 
-        } catch (Exception e1) {
-            e1.printStackTrace();
-
-        }
 
         String ss = APIs.FETCHOTHERPROFILEINFO + ":" + partner_phone;
-        client.get(ss, new JsonHttpResponseHandler() {
+        ClickinRestClient.get(ss, new JsonHttpResponseHandler() {
             boolean success = false;
 
             @Override
@@ -610,7 +568,7 @@ public class ProfileManager {
 
                 if (errorResponse != null) {
                     try {
-                        authManager.setMessage(errorResponse
+                        ModelManager.getInstance().getAuthorizationManager().setMessage(errorResponse
                                 .getString("message"));
                     } catch (JSONException e1) {
                         // TODO Auto-generated catch block
@@ -641,7 +599,7 @@ public class ProfileManager {
 //							authManager.setUserPic(jobj.getString("user_pic"));
 //							authManager.setdOB(jobj.getString("dob"));
                         // triggerObservers("ProfileInfo True");
-                        getRelationShips(authManager.getPhoneNo(), authManager.getUsrToken());
+                        getRelationShips(ModelManager.getInstance().getAuthorizationManager().getPhoneNo(), ModelManager.getInstance().getAuthorizationManager().getUsrToken());
                     }
 
                 } catch (JSONException e) {
@@ -663,7 +621,6 @@ public class ProfileManager {
             userInputDetails.put("phone_no", phone);
             userInputDetails.put("user_token", usertoken);
 
-            client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
 
@@ -671,7 +628,7 @@ public class ProfileManager {
             e1.printStackTrace();
 
         }
-        client.post(null, APIs.GETRELATIONSHIPS, se, "application/json",
+        ClickinRestClient.post(null, APIs.GETRELATIONSHIPS, se, "application/json",
                 new JsonHttpResponseHandler() {
                     @Override
                     public void onFailure(int statusCode, Throwable e,

@@ -62,7 +62,8 @@ public class CurrentClickersView extends Activity implements OnClickListener {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         //code- to handle uncaught exception
-        Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
+        if (Utils.mStartExceptionTrack)
+            Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
         setContentView(R.layout.view_currentclickers);
         this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
@@ -137,6 +138,8 @@ public class CurrentClickersView extends Activity implements OnClickListener {
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.btn_phb) {
+            //To track through mixPanel.If Contacts are fetched from Phonebook.
+            Utils.trackMixpanel(this, "Activity", "FindFriendsThroughPhonebook", "LeftMenuFindFriendsButtonClicked", false);
             phonebook.setBackgroundResource(R.drawable.c_phonebook_pink);
             facebook.setBackgroundResource(R.drawable.c_fb_grey);
             if (profilemanager.currentClickerList.size() > 0) {
@@ -150,6 +153,8 @@ public class CurrentClickersView extends Activity implements OnClickListener {
             }
 
         } else if (i == R.id.btn_fb) {
+            //To track through mixPanel.If Contacts are fetched from Facebook.
+            Utils.trackMixpanel(this, "Activity", "FindFriendsThroughFacebook", "LeftMenuFindFriendsButtonClicked", false);
             phonebook.setBackgroundResource(R.drawable.c_phonebook_grey);
             facebook.setBackgroundResource(R.drawable.c_fb_pink);
             tempCurrentClickers.clear();

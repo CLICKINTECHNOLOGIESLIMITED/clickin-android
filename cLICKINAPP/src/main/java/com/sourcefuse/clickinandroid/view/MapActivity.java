@@ -70,7 +70,8 @@ public class MapActivity extends Activity implements ConnectionCallbacks, OnConn
         super.onCreate(savedInstanceState);
 
         //code- to handle uncaught exception
-        Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
+        if (Utils.mStartExceptionTrack)
+            Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
         setContentView(R.layout.layout_mapview);
 
@@ -147,7 +148,7 @@ public class MapActivity extends Activity implements ConnectionCallbacks, OnConn
                 try {
                     EditText myEditText = (EditText) findViewById(R.id.locationText);
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    if(myEditText.getWindowToken() != null)
+                    if (myEditText.getWindowToken() != null)
                         imm.hideSoftInputFromWindow(myEditText.getWindowToken(), 0);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -211,7 +212,7 @@ public class MapActivity extends Activity implements ConnectionCallbacks, OnConn
                 try {
                     EditText myEditText = (EditText) findViewById(R.id.locationText);
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    if(myEditText.getWindowToken() != null)
+                    if (myEditText.getWindowToken() != null)
                         imm.hideSoftInputFromWindow(myEditText.getWindowToken(), 0);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -359,6 +360,9 @@ public class MapActivity extends Activity implements ConnectionCallbacks, OnConn
 
     @Override
     public void onBackPressed() {
+        //Track Mixpanel
+        //if Location Shared Canceled
+        Utils.trackMixpanel(MapActivity.this,"Activity","LocationSharingCancelled","AttachButtonClicked",false);
         super.onBackPressed();
         overridePendingTransition(0, R.anim.top_out);
 
@@ -387,28 +391,29 @@ public class MapActivity extends Activity implements ConnectionCallbacks, OnConn
         @Override
         protected void onPostExecute(final List<Address> addresses) {
 
+            if (addresses != null) {
+                for (Address address : addresses) {
 
-            for (Address address : addresses) {
+                    LatLng temp = new LatLng(address.getLatitude(), address.getLongitude());
 
-                LatLng temp = new LatLng(address.getLatitude(), address.getLongitude());
-
-                String location = null;
-
-
-                if (!Utils.isEmptyString(address.getAddressLine(0)))
-                    location = address.getAddressLine(0);
-                if (!Utils.isEmptyString(address.getAddressLine(1)))
-                    location = location + " " + address.getAddressLine(1);
+                    String location = null;
 
 
-                if (location.contains("null"))
-                    location = location.replaceAll("null", "");
+                    if (!Utils.isEmptyString(address.getAddressLine(0)))
+                        location = address.getAddressLine(0);
+                    if (!Utils.isEmptyString(address.getAddressLine(1)))
+                        location = location + " " + address.getAddressLine(1);
 
-                EditText editText = (EditText) findViewById(R.id.locationText);
-                editText.setText("" + location);
+
+                    if (location.contains("null"))
+                        location = location.replaceAll("null", "");
+
+                    EditText editText = (EditText) findViewById(R.id.locationText);
+                    editText.setText("" + location);
+                }
+
+
             }
-
-
         }
 
     }
@@ -437,29 +442,31 @@ public class MapActivity extends Activity implements ConnectionCallbacks, OnConn
             searchLocations = new ArrayList<String>();
             searchcor = new ArrayList<LatLng>();
 
-            for (Address address : addresses) {
+            if (addresses != null) {
+                for (Address address : addresses) {
 
-                LatLng temp = new LatLng(address.getLatitude(), address.getLongitude());
+                    LatLng temp = new LatLng(address.getLatitude(), address.getLongitude());
 
-                String location = null;
+                    String location = null;
 
 
-                if (!Utils.isEmptyString(address.getAddressLine(0)))
-                    location = address.getAddressLine(0);
-                if (!Utils.isEmptyString(address.getAddressLine(1)))
-                    location = location + " " + address.getAddressLine(1);
+                    if (!Utils.isEmptyString(address.getAddressLine(0)))
+                        location = address.getAddressLine(0);
+                    if (!Utils.isEmptyString(address.getAddressLine(1)))
+                        location = location + " " + address.getAddressLine(1);
 
-                if (location.contains("null"))
-                    location = location.replaceAll("null", "");
-                if (!Utils.isEmptyString(location))
-                    searchLocations.add(location);
-                searchcor.add(temp);
+                    if (location.contains("null"))
+                        location = location.replaceAll("null", "");
+                    if (!Utils.isEmptyString(location))
+                        searchLocations.add(location);
+                    searchcor.add(temp);
+
+                }
+                adapter = new ArrayAdapter<String>(MapActivity.this, android.R.layout.simple_list_item_1, searchLocations);
+                location_list.setAdapter(adapter);
+
 
             }
-            adapter = new ArrayAdapter<String>(MapActivity.this, android.R.layout.simple_list_item_1, searchLocations);
-            location_list.setAdapter(adapter);
-
-
         }
 
     }

@@ -20,7 +20,7 @@ import java.io.File;
 public class VideoUtil {
     public static final int REQUEST_VIDEO_CAPTURED = 20;
     public static final int REQUEST_VIDEO_CAPTURED_FROM_GALLERY = 100;
-    private static final String VIDEO_RECORDER_FOLDER = "ClickIn/ClickinVideo";
+    private static final String VIDEO_RECORDER_FOLDER = "ClickIn/ClickinVideo/";
     public static String videofilePath = null;
     public static String name;
     private static Uri fileUri = null;
@@ -40,14 +40,22 @@ public class VideoUtil {
                                         int which) {
                         switch (which) {
                             case 0:
+
                                 Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
                                 photoPickerIntent.setType("video/*");
                                 contex.startActivityForResult(photoPickerIntent, REQUEST_VIDEO_CAPTURED_FROM_GALLERY);
+                                //To track through mixPanel.
+                                //Video Taken from Gallery.
+                                Utils.trackMixpanel(contex, "Activity", "ChooseVideoFromGallery", "AttachButtonClicked", false);
 
                                 break;
 
                             case 1:
+
                                 try {
+                                    //To track through mixPanel.
+                                    //Video Taken from Camera.
+                                    Utils.trackMixpanel(contex, "Activity", "RecordVideoFromCamera", "AttachButtonClicked", false);
                                     Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
                                     fileUri = getOutputMediaFileUri(contex);
                                     intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);

@@ -63,7 +63,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
     String path;
     private AuthManager authManager;
     private RelationManager relationManager;
-    private ChatManager chatmanager ;
+    private ChatManager chatmanager;
 
 
     public ChatRecordAdapter(Context context, int layoutResourceId,
@@ -85,7 +85,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
         chatmanager = ModelManager.getInstance().getChatManager();
 
 
-        if(currentChatList.size()>19 && chatmanager.chat_history_size.equalsIgnoreCase("true")) {//akshit code set visibility of load earlier ,only is chat records are greater then 20
+        if (currentChatList.size() > 19 && chatmanager.chat_history_size.equalsIgnoreCase("true")) {//akshit code set visibility of load earlier ,only is chat records are greater then 20
             ChatRecordView.load_earlier.setVisibility(View.VISIBLE);                             //also if chat fetched is greater then 20
         } else {
             ChatRecordView.load_earlier.setVisibility(View.GONE);
@@ -364,8 +364,8 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                             name = "You";
 
                         }
-                    }else{
-                        name="You"; //without sharing case, at sender side, it always you accept/reject
+                    } else {
+                        name = "You"; //without sharing case, at sender side, it always you accept/reject
                     }
                     ((TextView) row.findViewById(R.id.tv_acc_res_name)).setText(name);
                     ((TextView) row.findViewById(R.id.tv_acc_res_status)).setText("ACCEPTED!");
@@ -380,20 +380,20 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                     ((LinearLayout) row.findViewById(R.id.acc_rej_layout_second)).setVisibility(View.VISIBLE);
                     String name = " ";
                     //code to decide who is accepted the card- basis on card owner- importance while sharing card
-                    if (!Utils.isEmptyString(temp.sharingMedia)){
+                    if (!Utils.isEmptyString(temp.sharingMedia)) {
 
-                    if (temp.isMessageSender.equalsIgnoreCase("false")) {//check if not sender set to receiver name to receiver
+                        if (temp.isMessageSender.equalsIgnoreCase("false")) {//check if not sender set to receiver name to receiver
 
-                        //parnter accepted the card
-                        String[] splitted = relationManager.getPartnerName.split("\\s+");
-                        name = splitted[0];
+                            //parnter accepted the card
+                            String[] splitted = relationManager.getPartnerName.split("\\s+");
+                            name = splitted[0];
+                        } else {
+                            //it means you accepted the card
+                            name = "You";
+
+                        }
                     } else {
-                        //it means you accepted the card
-                        name = "You";
-
-                    }
-                }else{
-                        name="You"; //without sharing case, at sender side, it always you accept/reject
+                        name = "You"; //without sharing case, at sender side, it always you accept/reject
                     }
 
                     ((TextView) row.findViewById(R.id.tv_acc_res_name)).setText(name);
@@ -606,7 +606,6 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
             }
 
 
-
             // Click Action On Share ICon
             ((ImageView) row.findViewById(R.id.iv_type_two_share_icon_r)).setTag(position);
             ((ImageView) row.findViewById(R.id.iv_type_two_share_icon_r)).setOnClickListener(new View.OnClickListener() {
@@ -615,7 +614,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
                     int position = (Integer) v.getTag();
 
-                    sendShareValues(position,"true");//Clicked from sender side set flag ismessage sender to true
+                    sendShareValues(position, "true");//Clicked from sender side set flag ismessage sender to true
 
 
                 }
@@ -715,7 +714,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                  /* for map to set text location shared */
 
 
-                if (!(Utils.isEmptyString(temp.location_coordinates))) {
+                if (!(Utils.isEmptyString(temp.location_coordinates))) {//REceiver
                     row.findViewById(R.id.parent_clicks_area_share).setVisibility(View.VISIBLE);
                     if (!(Utils.isEmptyString(temp.sharingMedia))) {
                         ((LinearLayout) row.findViewById(R.id.parent_clicks_area_share)).setBackgroundColor(context.getResources().getColor(R.color.owner_relation_header_with_m));
@@ -905,6 +904,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                             ((ImageView) row.findViewById(R.id.tv_counter_card)).setImageResource(R.drawable.counterbtnx_deactive);
                             ((ImageView) row.findViewById(R.id.iv_accept_card)).setBackgroundResource(R.drawable.c_card_accepted_deactive);
                             ((ImageView) row.findViewById(R.id.iv_reject_card)).setBackgroundResource(R.drawable.c_card_reject_deactive);
+                            //To track through mixPanel.
+                            //Click To Reject TradeCard.
+                            Utils.trackMixpanel(context, "CardRejectedName", "" + temp.card_heading, "RPageTradeButtonClicked", false);
                             //akshit code ends for making button inactive
 
 
@@ -930,6 +932,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                             ((ImageView) row.findViewById(R.id.iv_accept_card)).setBackgroundResource(R.drawable.c_card_accepted_deactive);
                             ((ImageView) row.findViewById(R.id.iv_reject_card)).setBackgroundResource(R.drawable.c_card_reject_deactive);
                             //akshit code ends for making button inactive
+                            //To track through mixPanel.
+                            //Click To Accept TradeCard.
+                            Utils.trackMixpanel(context, "CardAcceptedName", "" + temp.card_heading, "RPageTradeButtonClicked", false);
 
 
                         }
@@ -979,7 +984,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                             name = splitted[0];
 
                         }
-                    }else{
+                    } else {
                         String[] splitted = relationManager.getPartnerName.split("\\s+");
                         name = splitted[0];
                     }
@@ -1050,6 +1055,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
                                 /* code to play sound */
                                 Utils.playSound((Activity) getContext(), R.raw.tradecard_rejected);
+                                //To track through mixPanel.
+                                //Click To Reject TradeCard.
+                                Utils.trackMixpanel(context, "CardRejectedName", "" + temp.card_heading, "RPageTradeButtonClicked", false);
                             }
                         }
                     });
@@ -1070,6 +1078,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
                                 /* code to play sound */
                                 Utils.playSound((Activity) getContext(), R.raw.tradecard_accepted);
+                                //To track through mixPanel.
+                                //Click To Accept TradeCard.
+                                Utils.trackMixpanel(context, "CardAcceptedName", "" + temp.card_heading, "RPageTradeButtonClicked", false);
                             }
 
 
@@ -1324,7 +1335,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 public void onClick(View v) {
 
                     int position = (Integer) v.getTag();
-                    sendShareValues(position,"false");//if click from receiver then ismessagesender flag false
+                    sendShareValues(position, "false");//if click from receiver then ismessagesender flag false
 
                 }
             });
@@ -1395,7 +1406,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
                     /* code to play sound */
                     Utils.playSound((Activity) getContext(), R.raw.message_sent);
-
+                    //To track through mixPanel.
+                    //Click To Reject Share
+                    Utils.trackMixpanel(context, "Activity", "ShareRequestRejected", "RPageShareButtonClicked", false);
 
                 }
             }
@@ -1451,6 +1464,9 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
                     /* code to play sound */
                     Utils.playSound((Activity) getContext(), R.raw.message_sent);
+                    //To track through mixPanel.
+                    //ClickIn To Accept TradeCard.
+                    Utils.trackMixpanel(context, "Activity", "ShareRequestAccepted", "RPageShareButtonClicked", false);
                 }
             }
         });
@@ -1551,7 +1567,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
     }
 
     //mukesh
-    private void sendShareValues(int index ,String is_sender) {
+    private void sendShareValues(int index, String is_sender) {
         ChatMessageBody item = ModelManager.getInstance().getChatManager().chatMessageList.get(index);
 
         Intent i = new Intent();

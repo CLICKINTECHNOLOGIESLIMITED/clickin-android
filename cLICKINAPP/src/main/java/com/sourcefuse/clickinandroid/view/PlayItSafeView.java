@@ -47,7 +47,8 @@ public class PlayItSafeView extends Activity implements View.OnClickListener, Te
 
 
         //code- to handle uncaught exception
-        Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
+        if (Utils.mStartExceptionTrack)
+            Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
 
         setContentView(R.layout.view_playitsafe);
@@ -82,9 +83,9 @@ public class PlayItSafeView extends Activity implements View.OnClickListener, Te
             public void onClick(View arg0) {
 
                 InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                if(password.getWindowToken() != null)
+                if (password.getWindowToken() != null)
                     imm.hideSoftInputFromWindow(password.getWindowToken(), 0);
-                if(rePassword.getWindowToken() != null)
+                if (rePassword.getWindowToken() != null)
                     imm.hideSoftInputFromWindow(rePassword.getWindowToken(), 0);
 
             }
@@ -137,7 +138,6 @@ public class PlayItSafeView extends Activity implements View.OnClickListener, Te
         if (message.equalsIgnoreCase("PlayItSafe True")) {
             //monika-code to fetch Qb id as we are not getting it while verifycode service
             authManager.signIn(authManager.getPhoneNo(), pwd, Utils.deviceId, Constants.DEVICETYPE);
-
 
         } else if (message.equalsIgnoreCase("PlayItSafe False")) {
             Utils.dismissBarDialog();

@@ -73,7 +73,8 @@ public class SettingView extends Activity implements View.OnClickListener, Compo
 
 
         //code- to handle uncaught exception
-        Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
+        if (Utils.mStartExceptionTrack)
+            Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
         setContentView(R.layout.view_setting);
         this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
@@ -123,7 +124,7 @@ public class SettingView extends Activity implements View.OnClickListener, Compo
             public void onClick(View arg0) {
                 TextView view = (TextView) findViewById(R.id.change_password);
                 InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                if(view.getWindowToken() != null)
+                if (view.getWindowToken() != null)
                     imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
 
@@ -159,6 +160,8 @@ public class SettingView extends Activity implements View.OnClickListener, Compo
                         try {
                             Utils.getRegId(SettingView.this);
                             // SettingManager.mNotification_Enable = true;
+                            //To track through mixPanel.If push notification is enabled by user.
+                            Utils.trackMixpanel(SettingView.this, "Activity", "PushNotificationsEnabled", "LeftMenuSettingsButtonClicked", false);
                             settingManager.enableDisablePushNotifications(authManager.getPhoneNo(), authManager.getUsrToken(), "true");
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -166,6 +169,8 @@ public class SettingView extends Activity implements View.OnClickListener, Compo
                     } else {
                         try {
                             //  SettingManager.mNotification_Enable = false;
+                            //To track through mixPanel.If push notification is disabled by user.
+                            Utils.trackMixpanel(SettingView.this, "Activity", "PushNotificationsDisabled", "LeftMenuSettingsButtonClicked", false);
                             settingManager.enableDisablePushNotifications(authManager.getPhoneNo(), authManager.getUsrToken(), "false");
                             Utils.Unregister(SettingView.this);
                         } catch (Exception e) {
@@ -173,6 +178,7 @@ public class SettingView extends Activity implements View.OnClickListener, Compo
                     }
                 }
             });
+
 
         } else {
             CheckBox checkBox = (CheckBox) findViewById(R.id.checkbox);
@@ -194,9 +200,12 @@ public class SettingView extends Activity implements View.OnClickListener, Compo
             mPushNotification.setChecked(true);
 
             if (SettingManager.mNotification_Enable) {
+
                 mPushNotification.setChecked(true);
+
             } else {
                 mPushNotification.setChecked(false);
+
             }
 
             mPushNotification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -206,7 +215,8 @@ public class SettingView extends Activity implements View.OnClickListener, Compo
                         try {
                             Utils.getRegId(SettingView.this);
                             settingManager.enableDisablePushNotifications(authManager.getPhoneNo(), authManager.getUsrToken(), "true");
-                            //SettingManager.mNotification_Enable = true;
+                            //To track through mixPanel.If push notification is enabled by user.
+                            Utils.trackMixpanel(SettingView.this, "Activity", "PushNotificationsEnabled", "LeftMenuSettingsButtonClicked", false);                            //SettingManager.mNotification_Enable = true;
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -214,7 +224,8 @@ public class SettingView extends Activity implements View.OnClickListener, Compo
                         try {
                             Utils.Unregister(SettingView.this);
                             settingManager.enableDisablePushNotifications(authManager.getPhoneNo(), authManager.getUsrToken(), "false");
-                            //SettingManager.mNotification_Enable = false;
+                            //To track through mixPanel.If push notification is Disabled by user.
+                            Utils.trackMixpanel(SettingView.this, "Activity", "PushNotificationsDisabled", "LeftMenuSettingsButtonClicked", false);                            //SettingManager.mNotification_Enable = false;
                         } catch (Exception e) {
 
                         }
@@ -417,10 +428,13 @@ public class SettingView extends Activity implements View.OnClickListener, Compo
                 break;
             case R.id.btn_logout_yes:
                 //   new MyPreference(getApplicationContext()).clearAllPreference();
+                //To track through mixPanel.If user logout from app.
+                Utils.trackMixpanel(this, "Activity", "Logout", "LeftMenuSettingsButtonClicked", false);
                 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.clear();
                 editor.apply();
+
                 ModelManager.getInstance().getSettingManager().changeLastSeenTime(
                         ModelManager.getInstance().getAuthorizationManager().getPhoneNo(),
                         ModelManager.getInstance().getAuthorizationManager().getUsrToken(), "yes");//akshit code to logout
@@ -440,6 +454,7 @@ public class SettingView extends Activity implements View.OnClickListener, Compo
                 overridePendingTransition(R.anim.slide_in_left, R.anim.top_out);
                 //  this.finishAndRemoveTask();
                 //ModelManager.getInstance().getNotificationManagerManager().;
+
                 try {
                     ModelManager.getInstance().getNotificationManagerManager().notificationData.clear();
                 } catch (Exception e) {
@@ -515,6 +530,8 @@ public class SettingView extends Activity implements View.OnClickListener, Compo
                         comment = "";
                     }
                     Utils.launchBarDialog(this);
+                    //To track through mixPanel.If User Reports any problem.
+                    Utils.trackMixpanel(SettingView.this, "Activity", "ReportProblemNotWorking", "LeftMenuSettingsButtonClicked", false);
                     settingManager.reportaproblem(mphone_no, muser_token, problem_type, spam_or_abuse_type, comment);
                 } else {
                     Utils.fromSignalDialog(this, AlertMessage.itsNotworking);
@@ -540,6 +557,8 @@ public class SettingView extends Activity implements View.OnClickListener, Compo
                         comment_general = "";
                     }
                     Utils.launchBarDialog(this);
+                    //To track through mixPanel.If user gives general feedback.
+                    Utils.trackMixpanel(this, "Activity", "ReportProblemGeneralFeedback", "LeftMenuSettingsButtonClicked", false);
                     settingManager.reportaproblem(mphone_no_general, muser_token_general, problem_type, spam_or_abuse_type_general, comment_general);
                 } else {
                     Utils.fromSignalDialog(this, AlertMessage.generalFeedback);

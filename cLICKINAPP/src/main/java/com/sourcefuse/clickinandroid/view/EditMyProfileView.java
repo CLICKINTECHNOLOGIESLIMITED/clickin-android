@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -43,7 +44,7 @@ public class EditMyProfileView extends ClickInBaseView implements View.OnClickLi
     /* test code prafull */
     public static final int MEDIA_TYPE_IMAGE = 1;
     private static final String TAG = EditMyProfileView.class.getSimpleName();
-    private static final String IMAGE_DIRECTORY_NAME = "Clickin";
+    private static final String IMAGE_DIRECTORY_NAME = "ClickIn/ClickinImages";
     String mChangePhoto = "no"; // value to check user change photo or not
     private Button clickToSave;
     private ImageView mySelfy, OpenGallery, OpenCamera;
@@ -85,6 +86,8 @@ public class EditMyProfileView extends ClickInBaseView implements View.OnClickLi
             return null;
         }
 
+
+        Log.e("path--->", "" + mediaFile.getAbsolutePath());
         return mediaFile;
     }
 
@@ -106,8 +109,10 @@ public class EditMyProfileView extends ClickInBaseView implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+//        ModelManager.getInstance().getAuthorizationManager().setMixpanelAPI(this); // set Context to MixPanel
         //code- to handle uncaught exception
-        Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
+        if (Utils.mStartExceptionTrack)
+            Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
         setContentView(R.layout.view_editprofile);
         addMenu(false);
@@ -264,6 +269,7 @@ public class EditMyProfileView extends ClickInBaseView implements View.OnClickLi
 
                         Utils.fromSignalDialog(EditMyProfileView.this, AlertMessage.vEmailid);
                     }
+
                 }
 
                 break;
@@ -272,15 +278,28 @@ public class EditMyProfileView extends ClickInBaseView implements View.OnClickLi
 
     @Override
     public void onDestroy() {
+
+//        ModelManager.getInstance().getAuthorizationManager().getMixpanelAPI().flush();  // send data to mixpanel server before destroy activity.
         super.onDestroy();
     }
 
 
     public String getRealPathFromURI(Uri uri) {
-        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
-        cursor.moveToFirst();
-        int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-        return cursor.getString(idx);
+        Cursor cursor = null;
+        String path = null;
+        try {
+            cursor = getContentResolver().query(uri, null, null, null, null);
+            cursor.moveToFirst();
+            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+            path = cursor.getString(idx);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cursor != null)
+                cursor.close();
+        }
+
+        return path;
     }
       /* test code prafull */
 

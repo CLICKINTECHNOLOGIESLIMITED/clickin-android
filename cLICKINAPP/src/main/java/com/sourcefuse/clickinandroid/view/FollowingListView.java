@@ -35,7 +35,8 @@ public class FollowingListView extends ClickInBaseView implements View.OnClickLi
         super.onCreate(savedInstanceState);
 
         //code- to handle uncaught exception
-        Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
+        if (Utils.mStartExceptionTrack)
+            Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
         setContentView(R.layout.view_followinglist);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
@@ -70,13 +71,25 @@ public class FollowingListView extends ClickInBaseView implements View.OnClickLi
 
     @Override
     public void onBackPressed() {
+
+        Utils.launchBarDialog(this);
+        if (mchangeinList) {
+
+            Intent intent = new Intent(this, UserProfileView.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.putExtra("isChangeInList", mchangeinList);
+            startActivity(intent);
+            finish();
+            overridePendingTransition(0, R.anim.top_out);
+        } else {
+
+            finish();
+            overridePendingTransition(0, R.anim.top_out);
+        }
         super.onBackPressed();
-        Intent intent = new Intent(FollowingListView.this, UserProfileView.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        intent.putExtra("isChangeInList", mchangeinList);
-        startActivity(intent);
-        overridePendingTransition(0, R.anim.top_out);
-        finish();
+        Utils.dismissBarDialog();
+
     }
 
     public void setlist() {

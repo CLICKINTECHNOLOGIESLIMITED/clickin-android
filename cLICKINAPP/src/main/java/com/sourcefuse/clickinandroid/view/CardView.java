@@ -43,8 +43,6 @@ public class CardView extends FragmentActivity {
     TabWidget tabWidget;
     String card;
     private ImageView mBackButton;
-    private ChatManager chatManager;
-    private AuthManager authManager;
     private TabBean bean;
     private Typeface typeface, typefaceBold;
 
@@ -55,6 +53,7 @@ public class CardView extends FragmentActivity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 //code- to handle uncaught exception
+        if (Utils.mStartExceptionTrack)
         Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
         bean = new TabBean();
@@ -62,10 +61,9 @@ public class CardView extends FragmentActivity {
         typeface = Typeface.createFromAsset(CardView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
         typefaceBold = Typeface.createFromAsset(CardView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_BOLD);
 
-        chatManager = ModelManager.getInstance().getChatManager();
-        authManager = ModelManager.getInstance().getAuthorizationManager();
         Utils.launchBarDialog(CardView.this);
-        chatManager.fetchCards(authManager.getPhoneNo(), authManager.getUsrToken());
+        ModelManager.getInstance().getChatManager().fetchCards(ModelManager.getInstance().getAuthorizationManager().getPhoneNo(),
+                ModelManager.getInstance().getAuthorizationManager().getUsrToken());
 
 
     }
@@ -77,8 +75,7 @@ public class CardView extends FragmentActivity {
         final LinearLayout l = (LinearLayout) findViewById(R.id.Linear_layout);
         tabWidget = (TabWidget) findViewById(android.R.id.tabs);
 
-        authManager = ModelManager.getInstance().getAuthorizationManager();//akshit code
-        ((TextView) findViewById(R.id.textView_clicks_tabhost)).setText(authManager.ourClicks);//akshit code
+        ((TextView) findViewById(R.id.textView_clicks_tabhost)).setText(ModelManager.getInstance().getAuthorizationManager().ourClicks);//akshit code
 
         final HorizontalScrollView horizontalScrollView = (HorizontalScrollView) findViewById(R.id.H_view);
         text = (TextView) findViewById(R.id.Layout_Tab_2);
@@ -95,10 +92,11 @@ public class CardView extends FragmentActivity {
         tabHost = (TabHost) findViewById(R.id.tabHost);
         tabHost.setup();
         // Adding Tabs
-        for (int i = 0; i < chatManager.tabArray.size(); i++) {
+        for (int i = 0; i < ModelManager.getInstance().getChatManager().tabArray.size(); i++) {
             TabHost.TabSpec spec1 = tabHost.newTabSpec("TAB" + i);
             spec1.setContent(R.id.Layout_Tab_2);
-            spec1.setIndicator(chatManager.tabArray.get(i).getCategoriesName());
+            spec1.setIndicator(ModelManager.getInstance().getChatManager().tabArray.get(i).getCategoriesName());
+
 
             tabHost.addTab(spec1);
             tabHost.setCurrentTab(0);
@@ -115,8 +113,12 @@ public class CardView extends FragmentActivity {
             public void onTabChanged(String s) {
 
                 int pos = tabHost.getCurrentTab();
-                bean.setTab_content(chatManager.tabArray.get(pos).getCategoriesName());
+                bean.setTab_content(ModelManager.getInstance().getChatManager().tabArray.get(pos).getCategoriesName());
                 card = bean.getTab_content();
+                //To track through mixPanel.
+                //Card Category Selected.
+                Utils.trackMixpanel(CardView.this, "CategorySelected", card, "RPageTradeButtonClicked", false);
+
                 tabHost.getTabWidget().getChildAt(pos);
                 setTabindicator();
                 setTabTextColor();
@@ -207,7 +209,7 @@ public class CardView extends FragmentActivity {
         setTabFont();
         TextView tv = (TextView) tabHost.getCurrentTabView().findViewById(android.R.id.title); //for Selected Tab
         tv.setTextColor(Color.parseColor("#40e0d0"));
-        bean.setTab_content(chatManager.tabArray.get(0).getCategoriesName());
+        bean.setTab_content(ModelManager.getInstance().getChatManager().tabArray.get(0).getCategoriesName());
         FragmentManager fm = getSupportFragmentManager();
         PartyCardFragment pf = new PartyCardFragment();
         fm.beginTransaction().replace(R.id.framelayout, pf).commit();
@@ -237,7 +239,6 @@ public class CardView extends FragmentActivity {
 
 
     public void onEventMainThread(String getMsg) {
-        authManager = ModelManager.getInstance().getAuthorizationManager();
         if (getMsg.equalsIgnoreCase("FetchCard True")) {
             setView();
             Utils.dismissBarDialog();

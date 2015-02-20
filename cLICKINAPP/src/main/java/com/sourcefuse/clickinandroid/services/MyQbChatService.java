@@ -40,7 +40,7 @@ import de.greenrobot.event.EventBus;
 public class MyQbChatService extends Service {
 
     public static final int MSG_DELIVERED = 1;
-    public static final int RELOAD_APP=2;
+    public static final int RELOAD_APP = 2;
     private final IBinder mBinder = new LocalBinder();
     Pattern p = Pattern.compile("[\\d]+_(.*?)@.*?");
     private NotificationManager mNM;
@@ -83,7 +83,8 @@ public class MyQbChatService extends Service {
                         });
                         break;
                     case RELOAD_APP:
-                        Intent i=new Intent(getApplicationContext(), ReloadApp.class);
+                        Intent i = new Intent(getApplicationContext(), ReloadApp.class);
+                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(i);
                         break;
 
@@ -200,10 +201,10 @@ public class MyQbChatService extends Service {
                 }
                 data.putString("sharingMedia", msgObject.sharingMedia);
                 data.putString("originalChatId", msgObject.originalMessageID);
-                if(Utils.isEmptyString(msgObject.shareComment)){
-                  //  msgObject.shareComment = "Write your caption here...";
-                    data.putString("caption","Write your caption here...");
-                }else {
+                if (Utils.isEmptyString(msgObject.shareComment)) {
+                    //  msgObject.shareComment = "Write your caption here...";
+                    data.putString("caption", "Write your caption here...");
+                } else {
                     data.putString("caption", msgObject.shareComment);
                 }
                 data.putString("isMessageSender", msgObject.isMessageSender);
@@ -222,8 +223,8 @@ public class MyQbChatService extends Service {
 
         msg.setData(data);
         msg.what = ChatThread.SEND_CHAT;
-        if(handler!=null)
-        handler.sendMessage(msg);
+        if (handler != null)
+            handler.sendMessage(msg);
     }
 
 
@@ -237,8 +238,8 @@ public class MyQbChatService extends Service {
         data.putString("partnerQBId", partnerQbId);
         msg.setData(data);
         msg.what = ChatThread.SEND_CHAT;
-        if(handler!=null)
-        handler.sendMessage(msg);
+        if (handler != null)
+            handler.sendMessage(msg);
     }
 
     @Override
@@ -305,8 +306,8 @@ public class MyQbChatService extends Service {
 
         msg.setData(data);
         msg.what = ChatThread.ADD_CHAT_LISTENERS;
-        if(handler!=null)
-        handler.sendMessage(msg);
+        if (handler != null)
+            handler.sendMessage(msg);
     }
 
     //function to send online status of partner
@@ -317,8 +318,8 @@ public class MyQbChatService extends Service {
         data.putInt("partnerQBId", partnerQBId);
         msg.setData(data);
         msg.what = ChatThread.CHECK_PRESENCE;
-        if(handler!=null)
-        handler.sendMessage(msg);
+        if (handler != null)
+            handler.sendMessage(msg);
     }
 
 
@@ -329,8 +330,8 @@ public class MyQbChatService extends Service {
 
         msg.setData(data);
         msg.what = ChatThread.CHAT_LOGOUT;
-        if(handler!=null)
-        handler.sendMessage(msg);
+        if (handler != null)
+            handler.sendMessage(msg);
     }
 
     public void onEventMainThread(String getMsg) {

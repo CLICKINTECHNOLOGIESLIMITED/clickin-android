@@ -40,7 +40,6 @@ import com.quickblox.module.users.model.QBUser;
 import com.sourcefuse.clickinandroid.dbhelper.ClickinDbHelper;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
-import com.sourcefuse.clickinandroid.model.RelationManager;
 import com.sourcefuse.clickinandroid.model.bean.ChatMessageBody;
 import com.sourcefuse.clickinandroid.model.bean.GetrelationshipsBean;
 import com.sourcefuse.clickinandroid.utils.Constants;
@@ -83,7 +82,6 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
     //list to maintain chat message to add in db
     ArrayList<ChatMessageBody> messageInDb;
     QBRoster chatRoster;
-    QBChatService chatService=null;
     QBSubscriptionListener subscriptionListener = new QBSubscriptionListener() {
         @Override
         public void subscriptionRequested(int userID) {
@@ -106,6 +104,7 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
             }
         }
     };
+    QBChatService chatService = null;
     int userId = 0;
     QBRosterListener rosterListener = new QBRosterListener() {
         @Override
@@ -156,9 +155,9 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
         authManager = ModelManager.getInstance().getAuthorizationManager();
 
         QBSettings.getInstance().fastConfigInit(Constants.CLICKIN_APP_ID, Constants.CLICKIN_AUTH_KEY, Constants.CLICKIN_AUTH_SECRET);
-//        QBSettings.getInstance().setServerApiDomain("apiclickin.quickblox.com");
-//        QBSettings.getInstance().setContentBucketName("qb-clickin");
-//        QBSettings.getInstance().setChatServerDomain("chatclickin.quickblox.com");
+        /*QBSettings.getInstance().setServerApiDomain("apiclickin.quickblox.com");
+        QBSettings.getInstance().setContentBucketName("qb-clickin");
+        QBSettings.getInstance().setChatServerDomain("chatclickin.quickblox.com");*/
         QBChatService.setDebugEnabled(true);
         messageInDb = new ArrayList<ChatMessageBody>();
     }
@@ -333,7 +332,7 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
                         }
                         break;
                     case CHAT_LOGOUT:
-                    //    logoutQB();
+                            logoutQB();
                         break;
                     case CHECK_PRESENCE:
                         Bundle data1 = msg.getData();
@@ -359,7 +358,7 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
 
             if (!QBChatService.isInitialized()) {
                 QBChatService.init(application.getApplicationContext());
-                chatService=QBChatService.getInstance();
+                chatService = QBChatService.getInstance();
             }
             mUser = new QBUser();
             authManager = ModelManager.getInstance().getAuthorizationManager();
@@ -380,20 +379,17 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
                 mUser.setPassword(userToken);
                 QBSession result = QBAuth.createSession(new QBUser(userId, userToken));
                 mUser.setId(result.getUserId());
-                if(chatService!=null) {
+                if (chatService != null) {
                     chatService.login(mUser);
                     chatService.startAutoSendPresence(5);
 
                     //monika-connection listener
                     chatService.addConnectionListener(this);
                     // if (chatRoster == null) {
-                    chatRoster =chatService.getRoster(QBRoster.SubscriptionMode.mutual, subscriptionListener);
+                    chatRoster = chatService.getRoster(QBRoster.SubscriptionMode.mutual, subscriptionListener);
                     chatRoster.addRosterListener(rosterListener);
-                }else{
-                    //need to reload app again
-                    android.os.Message msg = new android.os.Message();
-                    msg.what = MyQbChatService.RELOAD_APP;
-                    serviceHandler.sendMessage(msg);
+                } else {
+                 loginToChat();
                 }
                 //}
             } else {
@@ -536,7 +532,7 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
                         } else {//if comments are there
                             temp.shareComment = extraParamsObj.getString("comment");
                         }
-            }
+                    }
                 }
 
                 if (!Utils.isEmptyString(temp.clicks)) {// in case of shared accept reject- no clicks are there-monika
@@ -598,7 +594,7 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
 
     //monika-function to set message listeners for all accepted members
     private void registerListeners() {
-        if(chatService!=null) {
+        if (chatService != null) {
             if (chatService.isLoggedIn()) {
                 ArrayList<GetrelationshipsBean> clickInPartnerList = new ArrayList<GetrelationshipsBean>(ModelManager.getInstance().getRelationManager().acceptedList);
 
@@ -638,13 +634,13 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
                     }// for chatobject check
 
                 }//for loop end
-            }else{ //if chat is not logged in
+            } else { //if chat is not logged in
                 if (!chatService.isLoggedIn())
                     loginToChat();
             }
-        }else{
-        //if chatservice is not initialized and chatservice object is null
-            showDialog("Sign up again");
+        } else {
+            //if chatservice is not initialized and chatservice object is null
+          //  showDialog("Sign up again");
         }
     }
 

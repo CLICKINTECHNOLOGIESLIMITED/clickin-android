@@ -40,7 +40,6 @@ public class Card extends Activity implements View.OnClickListener, TextWatcher 
     boolean forCounter = false;
     TextView trd_clicks_top, trd_clicks_bottom, trone, trtwo, trthree, trfour, trfive;
     private TextView tv_about_message;
-    private AuthManager authManager;
     private String chatId = null;
     // String xyz_url = "https://s3.amazonaws.com/clickin-dev/cards/a/1080/39.jpg";
 
@@ -50,12 +49,12 @@ public class Card extends Activity implements View.OnClickListener, TextWatcher 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         //code- to handle uncaught exception
+        if (Utils.mStartExceptionTrack)
         Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
         setContentView(R.layout.card_click);
         Utils.launchBarDialog(Card.this);
-        authManager = ModelManager.getInstance().getAuthorizationManager();
-        ((TextView) findViewById(R.id.textView_clicks)).setText(authManager.ourClicks);
+        ((TextView) findViewById(R.id.textView_clicks)).setText(ModelManager.getInstance().getAuthorizationManager().ourClicks);
         trd_clicks_bottom = (TextView) findViewById(R.id.trd_clicks_bottom);
         trd_clicks_top = (TextView) findViewById(R.id.trd_clicks_top);
         tv_about_message = (TextView) findViewById(R.id.tv_about_message);
@@ -92,7 +91,6 @@ public class Card extends Activity implements View.OnClickListener, TextWatcher 
             }
         });
 
-        AuthManager authManager = ModelManager.getInstance().getAuthorizationManager();
         Intent intent = getIntent();
         if (null != intent) {
             if (intent.hasExtra("card_owner"))
@@ -120,7 +118,7 @@ public class Card extends Activity implements View.OnClickListener, TextWatcher 
 
                 card_originator = intent.getExtras().getString("card_originator");
                 String msg;
-                if (card_owner.equalsIgnoreCase(authManager.getQBId())) {
+                if (card_owner.equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getQBId())) {
                     msg = "HOW MANY CLICKS ARE YOU WILLING TO OFFER?";
                 } else {
                     msg = "HOW MANY CLICKS DO YOU WANT FOR IT?";
@@ -232,7 +230,7 @@ public class Card extends Activity implements View.OnClickListener, TextWatcher 
                 } else if (card_owner.equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getQBId())) {
                     //Loop- if user is card owner
                     int tempOurClicks = 0;
-                    tempOurClicks = Integer.parseInt(authManager.ourClicks);
+                    tempOurClicks = Integer.parseInt(ModelManager.getInstance().getAuthorizationManager().ourClicks);
                     int tempclicks = 0;
                     if (clicks.equalsIgnoreCase("05")) {
                         tempclicks = 5;
@@ -241,7 +239,7 @@ public class Card extends Activity implements View.OnClickListener, TextWatcher 
 
                     //now check whether it has enough clicks or not
 
-                    if (authManager.ourClicks.startsWith("-")) {
+                    if (ModelManager.getInstance().getAuthorizationManager().ourClicks.startsWith("-")) {
 
                         Utils.fromSignalDialog(Card.this, "You don't have enough clicks to play this card");
 
@@ -297,6 +295,13 @@ public class Card extends Activity implements View.OnClickListener, TextWatcher 
                         overridePendingTransition(0, R.anim.slide_out_finish_up);
                         /*code to play sound in case of trade cart */
                         Utils.playSound(Card.this, R.raw.message_sent);
+
+                        //To track through mixPanel.
+                        //Click send with tradecard.
+                        Utils.trackMixpanel(this, "PointsPlayed", "" + clicks, "RPageTradeButtonClicked", false);
+                        //To track through mixPanel.
+                        //Send card name
+                        Utils.trackMixpanel(this, "CardPlayedName", "" + cardTitle, "RPageTradeButtonClicked", false);
                     }
                     //loop- ends here if user is card owner
                 } else {//
@@ -347,6 +352,13 @@ public class Card extends Activity implements View.OnClickListener, TextWatcher 
                     overridePendingTransition(0, R.anim.slide_out_finish_up);
 
                             /*code to play sound in case of trade cart */
+
+                    //To track through mixPanel.
+                    //Click send with tradecard.
+                    Utils.trackMixpanel(this, "PointsPlayed", "" + clicks, "RPageTradeButtonClicked", false);
+                    //To track through mixPanel.
+                    //Send card name
+                    Utils.trackMixpanel(this, "CardPlayedName", "" + cardTitle, "RPageTradeButtonClicked", false);
                     Utils.playSound(Card.this, R.raw.message_sent);
 
                 }//loop ends here if user is not card owner

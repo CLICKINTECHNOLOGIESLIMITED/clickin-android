@@ -35,7 +35,6 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
     private Button getClickIn;
     private EditText phoneNo, cntry_cd;
     private ImageView conIcon;
-    private AuthManager authManager;
 
 
     @Override
@@ -45,7 +44,8 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
 
 
         //code- to handle uncaught exception
-        Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
+        if (Utils.mStartExceptionTrack)
+            Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
 
         setContentView(R.layout.view_addviacontactlist);
@@ -125,7 +125,6 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        authManager = ModelManager.getInstance().getAuthorizationManager();
 
         ((RelativeLayout) findViewById(R.id.rl_addvia_contact_action)).setOnClickListener(new View.OnClickListener() {
 
@@ -133,9 +132,9 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
             public void onClick(View arg0) {
 
                 InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                if(cntry_cd.getWindowToken() != null)
+                if (cntry_cd.getWindowToken() != null)
                     imm.hideSoftInputFromWindow(cntry_cd.getWindowToken(), 0);
-                if(phoneNo.getWindowToken() != null)
+                if (phoneNo.getWindowToken() != null)
                     imm.hideSoftInputFromWindow(phoneNo.getWindowToken(), 0);
 
             }
@@ -158,11 +157,10 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
                 overridePendingTransition(0, R.anim.top_out);
             }
         });
-        ProfileManager prfManager = ModelManager.getInstance().getProfileManager();
 
 
         //both the list can't be empty at a time, so fetch contact webservice again
-        if (prfManager.currentClickerList.size() == 0 && prfManager.spreadTheWorldList.size() == 0) {
+        if (ModelManager.getInstance().getProfileManager().currentClickerList.size() == 0 && ModelManager.getInstance().getProfileManager().spreadTheWorldList.size() == 0) {
             Utils.launchBarDialog(this);
             new LoadContacts().execute();
             //  new FetchContactFromPhone(this).getClickerList(authManager.getPhoneNo(), authManager.getUsrToken(), 1);
@@ -188,7 +186,9 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
                 String mPhNo;
                 String countryCode = cntry_cd.getText().toString().trim();
 
-
+                //To track through mixPanel.
+                //Signup AddPartner.
+                Utils.trackMixpanel(AddViaContactView.this, "", "", "SignUpAddAPartner", false);
                 if (phoneNo.getText().toString().length() >= 5) {
                     if (!(countryCode.contains("null"))) {
                         mPhNo = cntry_cd.getText().toString().trim() + phoneNo.getText().toString().trim();
@@ -199,9 +199,9 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
                     ProfileManager prfManager = ModelManager.getInstance().getProfileManager();
 
                     if (prfManager.currClickersPhoneNums.contains(mPhNo)) {
-                        authManager = ModelManager.getInstance().getAuthorizationManager();
                         Utils.launchBarDialog(this);
-                        authManager.sendNewRequest(authManager.getPhoneNo(), mPhNo, authManager.getUsrToken());
+                        ModelManager.getInstance().getAuthorizationManager().sendNewRequest(ModelManager.getInstance().getAuthorizationManager().getPhoneNo(), mPhNo,
+                                ModelManager.getInstance().getAuthorizationManager().getUsrToken());
                     } else {
 
                 /* send sms if not not register */
@@ -271,7 +271,6 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
     }
 
     public void onEventMainThread(String message) {
-        authManager = ModelManager.getInstance().getAuthorizationManager();
 
         if (message.equalsIgnoreCase("RequestSend True")) {
             Utils.dismissBarDialog();
@@ -295,7 +294,7 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
         } else if (message.equalsIgnoreCase("RequestSend False")) {
             Utils.dismissBarDialog();
 
-            Utils.fromSignalDialog(this, authManager.getMessage());
+            Utils.fromSignalDialog(this, ModelManager.getInstance().getAuthorizationManager().getMessage());
         } else if (message.equalsIgnoreCase("RequestSend Network Error")) {
             Utils.dismissBarDialog();
             Utils.fromSignalDialog(this, AlertMessage.connectionError);
@@ -359,7 +358,8 @@ public class AddViaContactView extends Activity implements View.OnClickListener,
 
         @Override
         protected void onPostExecute(Void voids) {
-            new FetchContactFromPhone(AddViaContactView.this).getClickerList(authManager.getPhoneNo(), authManager.getUsrToken(), 1);
+            new FetchContactFromPhone(AddViaContactView.this).getClickerList(ModelManager.getInstance().getAuthorizationManager().getPhoneNo(),
+                    ModelManager.getInstance().getAuthorizationManager().getUsrToken(), 1);
         }
     }
 // Ends

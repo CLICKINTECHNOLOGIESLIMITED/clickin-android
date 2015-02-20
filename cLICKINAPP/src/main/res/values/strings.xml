@@ -365,5 +365,6 @@
     <string name="privacy">PRIVACY POLICY</string>
     <string name="privacy_">&amp;</string>
 
-    <string name="application_crash">Your application got unexpectedly crash.Do you want to send report.</string>
+    <string name="application_crash">Your application got unexpectedly crash.Do you want to send report ?</string>
+    <string name="storage_issue">You don\'t have enough storage space.</string>
 </resources>

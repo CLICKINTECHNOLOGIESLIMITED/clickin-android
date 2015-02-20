@@ -53,7 +53,8 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //code- to handle uncaught exception
-        Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
+        if (Utils.mStartExceptionTrack)
+            Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
         this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
         typeface = Typeface.createFromAsset(JumpOtherProfileView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
@@ -153,6 +154,11 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
                 if (relationManager.profileRelationShipData.size() > 0 && !relationManager.profileRelationShipData.get(position).getPartner_id().equalsIgnoreCase(authManager.getUserId())) {
+
+                    //To track through mixPanel.
+                    //Click To other Partner Profile.
+                    Utils.trackMixpanel(JumpOtherProfileView.this, "", "", "CheckOthersPartnerProfile", false);
+
                     String phNo = relationManager.profileRelationShipData.get(position).getPhoneNo();
                     switchView(phNo);
                 } else {
@@ -196,6 +202,9 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
 
                 finish();
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                //To track through mixPanel.
+                //Click on Other User Followers
+                Utils.trackMixpanel(JumpOtherProfileView.this, "", "", "OtherUserFollowers", false);
                 break;
             case R.id.btn_following_other:
                 //Intent intentFollowing = new Intent(JumpOtherProfileView.this,FollowingListView.class);
@@ -207,16 +216,25 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
                 startActivity(intentFollowing);
                 finish();
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                //To track through mixPanel.
+                //Click on Other User Following
+                Utils.trackMixpanel(JumpOtherProfileView.this, "", "", "OtherUserFollowing", false);
+
+
                 break;
             case R.id.btn_follow:
                 authManager = ModelManager.getInstance().getAuthorizationManager();
                 relationManager = ModelManager.getInstance().getRelationManager();
                 relationManager.followUser(phForOtherUser, authManager.getPhoneNo(), authManager.getUsrToken());
+
                 break;
 
             case R.id.rl_add_someone:
                 if (Utils.isEmptyString(relationManager.getRelationStatus())) {
                     dialogClickwith();
+                    //To track through mixPanel.
+                    //Click to clickin with user.
+                    Utils.trackMixpanel(JumpOtherProfileView.this, "", "", "RequestToClickInOtherUserPartnerProfile", false);
                 }
                 break;
 
@@ -291,6 +309,9 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
             Utils.fromSignalDialog(this, AlertMessage.connectionError);
         } else if (message.equalsIgnoreCase("FollowUser True")) {
             relationManager = ModelManager.getInstance().getRelationManager();
+            //To track through mixPanel.
+            //Click to follow user
+            Utils.trackMixpanel(JumpOtherProfileView.this, "", "", "FollowUser", false);
             follow.setBackgroundResource(R.drawable.requested_otherprofile_new);
             //Utils.showToast(JumpOtherProfileView.this, relationManager.getStatusMsg());
         } else if (message.equalsIgnoreCase("FollowUser  false")) {

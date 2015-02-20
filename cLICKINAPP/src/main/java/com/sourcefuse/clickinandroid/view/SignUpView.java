@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.provider.Settings.Secure;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -40,7 +41,8 @@ public class SignUpView extends Activity implements TextWatcher, OnClickListener
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         //code- to handle uncaught exception
-        Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
+        if (Utils.mStartExceptionTrack)
+            Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
 
         setContentView(R.layout.view_signup);
@@ -50,6 +52,7 @@ public class SignUpView extends Activity implements TextWatcher, OnClickListener
         cntrycode = (EditText) findViewById(R.id.edt_code);
         phoneNo = (EditText) findViewById(R.id.edt_phoneno);
         phoneNo.addTextChangedListener(this);
+        cntrycode.addTextChangedListener(this);
         checkmeout.setOnClickListener(this);
         checkmeout.setEnabled(false);
         ((RelativeLayout) findViewById(R.id.rl_main_signup)).setOnClickListener(new OnClickListener() {
@@ -58,9 +61,9 @@ public class SignUpView extends Activity implements TextWatcher, OnClickListener
             public void onClick(View arg0) {
 
                 InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                if(cntrycode.getWindowToken() != null)
+                if (cntrycode.getWindowToken() != null)
                     imm.hideSoftInputFromWindow(cntrycode.getWindowToken(), 0);
-                if(phoneNo.getWindowToken() != null)
+                if (phoneNo.getWindowToken() != null)
                     imm.hideSoftInputFromWindow(phoneNo.getWindowToken(), 0);
 
             }
@@ -116,6 +119,8 @@ public class SignUpView extends Activity implements TextWatcher, OnClickListener
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
 
+
+
         if (phoneNo.getText().toString().length() >= 1) {
             checkmeout.setEnabled(true);
             checkmeout.setBackgroundResource(R.drawable.s_checkout_active);
@@ -124,6 +129,13 @@ public class SignUpView extends Activity implements TextWatcher, OnClickListener
             checkmeout.setBackgroundResource(R.drawable.s_checkout_inactive);
         }
 
+        Log.e("length of ",""+cntrycode.getText().toString().length());
+        if (cntrycode.getText().toString().length() == 2) {
+            //To track through mixPanel.
+            //Edit Country Code check Size is Greater than one.
+            Utils.trackMixpanel(SignUpView.this, "", "", "CountryCodeEdited", false);
+
+        }
     }
 
 
@@ -148,6 +160,12 @@ public class SignUpView extends Activity implements TextWatcher, OnClickListener
             Intent intent = new Intent(this, VerifyView.class);
             intent.putExtra("fromsignup", true);
             startActivity(intent);
+
+            //To track through mixPanel.
+            //Verify Entered UserPhone No.
+            Utils.trackMixpanel(SignUpView.this, "", "", "UserEnteredPhoneNumber", true);
+            Utils.trackMixpanel(SignUpView.this, "", "", "UserPhoneNumberSubmitted", true);
+
             finish();
         } else if (getMsg.equalsIgnoreCase("SignUp False")) {
             Utils.dismissBarDialog();

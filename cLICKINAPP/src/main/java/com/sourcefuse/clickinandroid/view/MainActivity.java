@@ -10,6 +10,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 
+import com.sourcefuse.clickinandroid.utils.UnCaughtExceptionHandler;
+import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
 
 import java.util.ArrayList;
@@ -28,6 +30,11 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
         viewPager = (ViewPager) findViewById(R.id.pager);
         bar = getActionBar();
         bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+
+        if (Utils.mStartExceptionTrack)
+            Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
+        
 
         for (int i = 1; i <= 30; i++) {
             Tab tab = bar.newTab();
