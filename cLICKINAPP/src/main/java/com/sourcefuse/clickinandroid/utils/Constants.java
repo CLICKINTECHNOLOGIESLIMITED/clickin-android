@@ -65,4 +65,12 @@ public class Constants {
     public static boolean mInAppNotification = false;
 
     public static final String MIX_PANEL_TOKEN = "34b90dcc1a3f069eec5baa3208229d4b";
+
+    //constants to filter notification type, to know which activity is to start
+    public static final int USERPROFILE_NOTF=1;
+    public static final int CHATRECORDVIEW_NOTF=2;
+    public static final int FOLLOWER_FOLLOWING_NOTF=3;
+    public static final int POSTVIEW_NOTF=4;
+    public static final int JUMPOTHERPROFILEVIEW_NOTF=5;
+    public static final int FEEDVIEW_NOTF=6;
 }

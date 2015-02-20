@@ -1,6 +1,8 @@
 package com.sourcefuse.clickinandroid.view;
 
 import android.app.Activity;
+import android.app.ActivityManager;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,13 +14,16 @@ import com.sourcefuse.clickinandroid.dbhelper.ClickinDbHelper;
 import com.sourcefuse.clickinandroid.model.ChatManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.PicassoManager;
+import com.sourcefuse.clickinandroid.model.bean.GetrelationshipsBean;
 import com.sourcefuse.clickinandroid.services.MyQbChatService;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.Constants;
+import com.sourcefuse.clickinandroid.utils.UnCaughtExceptionHandler;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import de.greenrobot.event.EventBus;
 
@@ -27,47 +32,56 @@ import de.greenrobot.event.EventBus;
  */
 public class ReloadApp extends Activity {
 
-    Bundle extras;
-    boolean mProfile = false, mRelation = false;
+   int notf_type=-1;
+    String mPartnerId=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        Utils.launchBarDialog(this);
-
-
-        ClickinDbHelper dbHelper = new ClickinDbHelper(ReloadApp.this);
-        try {
-            dbHelper.clearDB();  //clear db one applicatoin start from crashing
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        //code- to handle uncaught exception
+        Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
+      //  requestWindowFeature(Window.FEATURE_NO_TITLE);
 
 
         Log.e("in Reload app------>", "in Reload app------>");
-        extras = getIntent().getExtras();
-        if(extras.containsKey("Tp"))
-        {
-            Log.e("value of tp",""+extras.getString("Tp"));
+        Bundle extras = getIntent().getExtras();
+        if(extras!=null){
+            if(extras.containsKey("NOTIFICATION_TYPE"))
+                notf_type=extras.getInt("NOTIFICATION_TYPE");
+            if(extras.containsKey("pid"))
+                 mPartnerId = extras.getString("pid");
+
         }
 
-        if (!Utils.isEmptyString(ModelManager.getInstance().getAuthorizationManager().getUserId())) {  // process value if userid is not null
-            Log.e("case 1---->", "case 1---->");
-            mProfile = true;
-            mRelation = true;
-            processvalue();
-        } else {  // else signin again to get value as if needed.
+
+        if (!Utils.isEmptyString(ModelManager.getInstance().getAuthorizationManager().getUserId())) {
+         // if user id is not null, means app is running properly
+
+            processValue();
+        } else {  // else reload the app
+
             setContentView(R.layout.view_splash);
+            Utils.launchBarDialog(this);
+
+
+            ClickinDbHelper dbHelper = new ClickinDbHelper(ReloadApp.this);
+            try {
+                dbHelper.clearDB();  //clear db one application start from crashing
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+
             Log.e("case 2---->", "case 2---->");
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(ReloadApp.this);
             String myPhone = preferences.getString("myPhoneNo", null);
             String pwd = preferences.getString("pwd", null);
             String deviceId = preferences.getString("DeviceId", null);
-            if(!Utils.isEmptyString(myPhone) && !Utils.isEmptyString(pwd) && !Utils.isEmptyString(deviceId))
+            if (!Utils.isEmptyString(myPhone) && !Utils.isEmptyString(pwd) && !Utils.isEmptyString(deviceId))
                 ModelManager.getInstance().getAuthorizationManager().signIn(myPhone, pwd, deviceId, Constants.DEVICETYPE);
             else {
-                Intent intent = new Intent(ReloadApp.this,SplashView.class);
+                //means no way to reload the app, we have to ask user to sign in again
+                Intent intent = new Intent(ReloadApp.this, SplashView.class);
                 startActivity(intent);
                 finish();
             }
@@ -84,62 +98,61 @@ public class ReloadApp extends Activity {
         EventBus.getDefault().register(this);
     }
 
-    public void processvalue() {
+    public void processValue() {
 
+           Intent intent=new Intent();
+            switch (notf_type){
+                case Constants.USERPROFILE_NOTF:
+                    intent.putExtra("isChangeInList",true);
+                   intent.setClass(getApplicationContext(), UserProfileView.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
-        Intent data = new Intent();
-        data.putExtra("isChangeInList", true);
-        if (mProfile && mRelation) {
-            if (extras.containsKey("Tp")) {
+                    intent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+                    startActivity(intent);
+                    Utils.dismissBarDialog();
+                    finish();
+                    break;
+                case Constants.CHATRECORDVIEW_NOTF:
+                    if(mPartnerId!=null){
+                        int partnerIndex=getPartnerIndexInList(mPartnerId);
+                        if(partnerIndex!=-1){
+                            intent.setAction("UPDATE");
+                            intent.putExtra("partnerIndex",partnerIndex);
+                            intent.setClass(getApplicationContext(),ChatRecordView.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
-                Log.e("value of tp---->", "" + extras.getString("Tp"));
-                if (extras.getString("Tp").equalsIgnoreCase("CR") ||
-                        extras.getString("Tp").equalsIgnoreCase("CRA") || extras.getString("Tp").equalsIgnoreCase("RV") ||
-                        extras.getString("Tp").equalsIgnoreCase("CRR") || extras.getString("Tp").equalsIgnoreCase("RD")
-                        ) {
-                    data.setClass(getApplicationContext(), UserProfileView.class);
-                    data.putExtra("FromSignup", true);
-                } else if (extras.getString("Tp").equalsIgnoreCase("FR")) {  // case follow request
+                            intent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+                            startActivity(intent);
+                            Utils.dismissBarDialog();
+                            finish();
+                        }else{
+                            if(!Utils.isEmptyString( ModelManager.getInstance().getAuthorizationManager().getPhoneNo()))
+                            ModelManager.getInstance().getRelationManager().getRelationShips(
+                                    ModelManager.getInstance().getAuthorizationManager().getPhoneNo(),
+                                    ModelManager.getInstance().getAuthorizationManager().getUsrToken());
+                        }
+                    }
+                    break;
+                case Constants.FOLLOWER_FOLLOWING_NOTF:
+                    intent.putExtra("FromOwnProfile",true);
+                    intent.setClass(getApplicationContext(),FollowerList.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(intent);
+                    Utils.dismissBarDialog();
+                    finish();
+                    break;
+                case Constants.POSTVIEW_NOTF:
+                    //intent.setClass()
 
-                    data.setClass(getApplicationContext(), FollowerList.class);
-                    data.putExtra("FromOwnProfile", true);
+                default:
 
-                } else if (extras.getString("Tp").equalsIgnoreCase("clk") || extras.getString("Tp").equalsIgnoreCase("chat") ||
-                        extras.getString("Tp").equalsIgnoreCase("media") || extras.getString("Tp").equalsIgnoreCase("card")) {
-
-                    data.setClass(getApplicationContext(), ChatRecordView.class);
-                    String mPartnerId = extras.getString("pid");
-
-                    putChatData(data, mPartnerId);
-
-                } else if (extras.getString("Tp").equalsIgnoreCase("shr")) //case for share
-                {
-
-                    data.setClass(getApplicationContext(), FeedView.class);
-
-                } else if (extras.getString("Tp").equalsIgnoreCase("Upp")) //case for Profile Update
-                {
-                    data.setClass(getApplicationContext(), JumpOtherProfileView.class);
-                    data.putExtra("FromOwnProfile", true);
-                    data.putExtra("phNumber", extras.getString("phone_no"));
-                    PicassoManager.setPicasso(getApplicationContext());
-                    PicassoManager.clearCache();
-
-                } else if (extras.getString("Tp").equalsIgnoreCase("str") || extras.getString("Tp").equalsIgnoreCase("cmt")
-                        || extras.getString("Tp").equalsIgnoreCase("Rpt")) //case for feed star
-                {
-
-                    data.setClass(getApplicationContext(), PostView.class);
-                    data.putExtra("feedId", extras.getString("Nid"));
-
-
-                }
             }
-            data.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            startActivity(data);
-            finish();
-            Utils.dismissBarDialog();
-        }
+
+
+
 
     }
 
@@ -147,14 +160,14 @@ public class ReloadApp extends Activity {
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         //extras.clear();
-        extras = intent.getExtras();
+    //    extras = intent.getExtras();
 
-        if (!Utils.isEmptyString(ModelManager.getInstance().getAuthorizationManager().getUserId())) {// process value if userid is not null
+    /*    if (!Utils.isEmptyString(ModelManager.getInstance().getAuthorizationManager().getUserId())) {// process value if userid is not null
             Log.e("case 1 on new Intent---->","case 1 on new Intent---->");
             mProfile = true;
             mRelation = true;
             processvalue();
-        } else {// else signin again to get value as if needed.
+        } else { */// else signin again to get value as if needed.
             Log.e("case 2 on new Intent---->","case 2 on new Intent---->");
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(ReloadApp.this);
             String myPhone = preferences.getString("myPhoneNo", null);
@@ -167,10 +180,23 @@ public class ReloadApp extends Activity {
                 startActivity(intent1);
                 finish();
             }
-        }
+
     }
 
-    public void putChatData(Intent mIntent, String mPartnerId) {
+
+    //function to find index in accepted list
+    private int getPartnerIndexInList(String partnerId){
+        int index=-1;
+        for(GetrelationshipsBean temp:ModelManager.getInstance().getRelationManager().acceptedList){
+            index++;
+            if(temp.getPartner_id().equalsIgnoreCase(partnerId)){
+                return index;
+            }
+        }
+        return index;
+    }
+
+  /*  public void putChatData(Intent mIntent, String mPartnerId) {
 
 
         for (int i = 0; i < ModelManager.getInstance().getRelationManager().acceptedList.size(); i++) {
@@ -212,7 +238,7 @@ public class ReloadApp extends Activity {
         }
 
 
-    }
+    }*/
 
     @Override
     protected void onStop() {
@@ -232,18 +258,17 @@ public class ReloadApp extends Activity {
 
             ModelManager.getInstance().getAuthorizationManager().getProfileInfo("", ModelManager.getInstance().getAuthorizationManager().getPhoneNo(),
                     ModelManager.getInstance().getAuthorizationManager().getUsrToken());
+
+        }
+        if (message.equalsIgnoreCase("ProfileInfo True")) {
             ModelManager.getInstance().getRelationManager().getRelationShips(ModelManager.getInstance().getAuthorizationManager().getPhoneNo(),
                     ModelManager.getInstance().getAuthorizationManager().getUsrToken());
         }
-        if (message.equalsIgnoreCase("ProfileInfo True")) {
-            mProfile = true;
-            processvalue();
-        }
         if (message.equalsIgnoreCase("GetRelationShips True")) {
-            mRelation = true;
+    //        mRelation = true;
             Intent i = new Intent(this, MyQbChatService.class);  // start service again
             startService(i);
-            processvalue();
+            processValue();
         }
     }
 }

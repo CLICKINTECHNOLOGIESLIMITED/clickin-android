@@ -57,9 +57,10 @@ public class DialogActivity extends Activity {
                 emailIntent.putExtra(Intent.EXTRA_TEXT, "" + mInfo);
                 try {
                     startActivityForResult(Intent.createChooser(emailIntent, "Send mail..."), RESULT);
+                    finish();
 
                 } catch (android.content.ActivityNotFoundException ex) {
-
+                    finish();
                 }
             }
         });
@@ -84,5 +85,7 @@ public class DialogActivity extends Activity {
 
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
     }
+
 }

@@ -390,11 +390,16 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
                     chatRoster =chatService.getRoster(QBRoster.SubscriptionMode.mutual, subscriptionListener);
                     chatRoster.addRosterListener(rosterListener);
                 }else{
-                    showDialog("Please Sign in again");
+                    //need to reload app again
+                    android.os.Message msg = new android.os.Message();
+                    msg.what = MyQbChatService.RELOAD_APP;
+                    serviceHandler.sendMessage(msg);
                 }
                 //}
             } else {
-                showDialog("Please Sign in again");
+                android.os.Message msg = new android.os.Message();
+                msg.what = MyQbChatService.RELOAD_APP;
+                serviceHandler.sendMessage(msg);
             }
             // android.os.Message msg = new android.os.Message();
             //msg.what = 1;

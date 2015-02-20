@@ -282,11 +282,34 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
         Intent i = new Intent(this, MyQbChatService.class);
         bindService(i, mConnection, Context.BIND_AUTO_CREATE);
-        rId = getIntent().getExtras().getString("rId");
+
+
+
+        //check for values, if not set by parent class Clickinbase view, then set it using index
+        Bundle extras=getIntent().getExtras();
+        if(extras!=null){
+            if(extras.containsKey("partnerIndex")){
+                setValuesUsingIndex(extras.getInt("partnerIndex"));
+            }else{
+                partnerPic = extras.getString("partnerPic");
+                partnerName = extras.getString("partnerName");
+                partnerId = extras.getString("partnerId");
+
+                partnerPh = extras.getString("partnerPh");
+                relationListIndex = extras.getInt("relationListIndex");
+                rId = extras.getString("rId");
+                myClicks = extras.getString("myClicks");
+
+                userClicks = extras.getString("userClicks");
+                quickBlockId=extras.getString("quickId");
+            }
+
+        }
+
         //clear the message list always to initiate a new chat
         ModelManager.getInstance().getChatManager().chatMessageList.clear();
         setlist();
-
+        relationManager = ModelManager.getInstance().getRelationManager();
         addMenu(false);
         slidemenu.setTouchModeAbove(2);
 
@@ -367,31 +390,29 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
 
         attachBtn.setOnClickListener(this);
-        authManager = ModelManager.getInstance().getAuthorizationManager();
-        authManager.partnerQbId = getIntent().getExtras().getString("quickId");
-        partnerPic = getIntent().getExtras().getString("partnerPic");
-        partnerName = getIntent().getExtras().getString("partnerName");
+
+        ModelManager.getInstance().getAuthorizationManager().partnerQbId = quickBlockId;
+
         splitted = partnerName.split("\\s+");
         firstname = splitted[0].toUpperCase();
 
 
-        partnerId = getIntent().getExtras().getString("partnerId");
-        relationManager = ModelManager.getInstance().getRelationManager();
-        relationManager.getPartnerName = firstname;
+
+        ModelManager.getInstance().getRelationManager().getPartnerName = firstname;
 
 
-        authManager.ourClicks = getIntent().getExtras().getString("myClicks");
+        ModelManager.getInstance().getAuthorizationManager().ourClicks = myClicks;
 
-        relationManager.partnerClicks = getIntent().getExtras().getString("userClicks");
+        ModelManager.getInstance().getRelationManager().partnerClicks = userClicks;
 
-        myclicksView.setText("" + authManager.ourClicks);
-        partnerClicksView.setText("" + relationManager.partnerClicks);
+        myclicksView.setText("" +   ModelManager.getInstance().getAuthorizationManager().ourClicks);
+        partnerClicksView.setText("" +   ModelManager.getInstance().getRelationManager().partnerClicks);
 
-        partnerPh = getIntent().getExtras().getString("partnerPh");
-        relationListIndex = getIntent().getExtras().getInt("relationListIndex");
+
         chatManager = ModelManager.getInstance().getChatManager();
 
-
+        authManager=  ModelManager.getInstance().getAuthorizationManager();
+        relationManager=    ModelManager.getInstance().getRelationManager();
         profileName.setText("" + splitted[0]);
         try {
             Bitmap imageBitmap;
@@ -1033,31 +1054,53 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         chatText.setText("");//akshit code to Refresh Chat box text
 
 
-/* code to show dialog */
-        /* code to show dialog */
-        if (intent.getExtras().containsKey("mValue")) {
 
-            String mRelationShipId = relationManager.acceptedList.get(relationListIndex).getRelationshipId();
-
-
-            if (intent.getStringExtra("mValue").equalsIgnoreCase("one")) {
-
-                Utils.showOverlay(ChatRecordView.this);
-                authManager.reSetFlag(authManager.getPhoneNo(), authManager.getUsrToken(), mRelationShipId, "no", "no", relationListIndex);
-            } else if (intent.getStringExtra("mValue").equalsIgnoreCase("two")) {
-                authManager.reSetFlag(authManager.getPhoneNo(), authManager.getUsrToken(), mRelationShipId, "no", "null", relationListIndex);
-                Utils.showDialog(ChatRecordView.this);
-            }
-
-        }
 
 
         if (actionReq.equalsIgnoreCase("UPDATE")) {
-            //  Utils.launchBarDialog(this);
+
             if (myQbChatService == null) {
                 Intent i = new Intent(this, MyQbChatService.class);
                 bindService(i, mConnection, Context.BIND_AUTO_CREATE);
             }
+            //check for values, if not set by parent class Clickinbase view, then set it using index
+            Bundle extras=intent.getExtras();
+            if(extras!=null){
+                if(extras.containsKey("partnerIndex")){
+                    setValuesUsingIndex(extras.getInt("partnerIndex"));
+                }else{
+                    partnerPic =extras.getString("partnerPic");
+                    partnerName = extras.getString("partnerName");
+                    partnerId = extras.getString("partnerId");
+
+                    partnerPh = extras.getString("partnerPh");
+                    relationListIndex = extras.getInt("relationListIndex");
+                    rId = extras.getString("rId");
+                    myClicks = extras.getString("myClicks");
+                    quickBlockId=extras.getString("quickId");
+                    userClicks = extras.getString("userClicks");
+                }
+
+            }
+            /* code to show dialog */
+        /* code to show dialog */
+            if (extras!=null && extras.containsKey("mValue")) {
+
+                String mRelationShipId = relationManager.acceptedList.get(relationListIndex).getRelationshipId();
+
+
+                if (intent.getStringExtra("mValue").equalsIgnoreCase("one")) {
+
+                    Utils.showOverlay(ChatRecordView.this);
+                    authManager.reSetFlag(authManager.getPhoneNo(), authManager.getUsrToken(), mRelationShipId, "no", "no", relationListIndex);
+                } else if (intent.getStringExtra("mValue").equalsIgnoreCase("two")) {
+                    authManager.reSetFlag(authManager.getPhoneNo(), authManager.getUsrToken(), mRelationShipId, "no", "null", relationListIndex);
+                    Utils.showDialog(ChatRecordView.this);
+                }
+
+            }
+            //  Utils.launchBarDialog(this);
+
 
             updateValues(intent);
         } else if (actionReq.equalsIgnoreCase("CARD")) {
@@ -1973,10 +2016,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         thumurl = null;
         videofilePath = null;
         attachBtn.setImageDrawable(getResources().getDrawable(R.drawable.attachedfileiconx));
-        //save previous chat here
-        String temprId = intent.getExtras().getString("rId");
-        //     Utils.launchBarDialog(ChatRecordView.this);
-        rId = temprId;
+
         //clear the message list always to initiate a new chat
         ModelManager.getInstance().getChatManager().chatMessageList.clear();
         setlist();
@@ -1985,15 +2025,16 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
         if (bundle != null) {
             authManager = ModelManager.getInstance().getAuthorizationManager();
+            //access value directly from parent class
+            authManager.partnerQbId = quickBlockId;
 
-            authManager.partnerQbId = bundle.getString("quickId");
-            partnerPic = bundle.getString("partnerPic");
-            partnerName = bundle.getString("partnerName");
+            ModelManager.getInstance().getRelationManager().getPartnerName = firstname;
+
             String[] splitted = partnerName.split("\\s+");
             firstname = splitted[0].toUpperCase();
             relationManager.getPartnerName = firstname;
 
-            partnerId = bundle.getString("partnerId");
+
 
 
             //reset values of clicks
@@ -2001,19 +2042,19 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             authManager.ourClicks = null;
             RelationManager relationManager = ModelManager.getInstance().getRelationManager();
             relationManager.partnerClicks = null;
-            authManager.ourClicks = bundle.getString("myClicks");
+            authManager.ourClicks = myClicks;
 
-            relationManager.partnerClicks = bundle.getString("userClicks");
+            relationManager.partnerClicks = userClicks;
 
             myclicksView.setText("" + authManager.ourClicks);
             partnerClicksView.setText("" + relationManager.partnerClicks);
 
-            partnerPh = bundle.getString("partnerPh");
+
 
 // get Chat record From server
             chatManager = ModelManager.getInstance().getChatManager();
             chatManager.chatListFromServer.clear();
-            relationListIndex = bundle.getInt("relationListIndex");
+
             //chatManager.fetchChatRecord(rId, authManager.getPhoneNo(), authManager.getUsrToken(),"");
 
 
@@ -2255,6 +2296,29 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         }
     }
 
+    private void setValuesUsingIndex(int index){
+
+        if(ModelManager.getInstance().getRelationManager().acceptedList!=null &&
+                ModelManager.getInstance().getRelationManager().acceptedList.size()>index){
+            GetrelationshipsBean temp=ModelManager.getInstance().getRelationManager().acceptedList.get(index);
+            partnerName = temp.getPartnerName();
+            rId = temp.getRelationshipId();
+            partnerPic = temp.getPartnerPic();
+            quickBlockId = temp.getPartnerQBId();
+
+
+
+            ModelManager.getInstance().getAuthorizationManager().partnerQbId = temp.getPartnerQBId();
+
+
+            partnerId = temp.getPartner_id();
+            userClicks = temp.getClicks();
+            myClicks = temp.getUserClicks();
+            partnerPh = temp.getPhoneNo();
+            relationListIndex=index;
+
+        }
+    }
 
 }
 

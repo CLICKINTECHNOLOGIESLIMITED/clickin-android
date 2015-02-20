@@ -78,7 +78,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
     private RelationManager relationManager;
     private TextView searchInviteView;
     private LinearLayout theFeed, inviteF, findFriend, setting;
-    private String quickBlockId, partnerPic, partnerName, partnerId, myClicks, userClicks, partnerPh;
+    public String quickBlockId, partnerPic, partnerName, partnerId, myClicks, userClicks, partnerPh,rId;
     private SearchAdapter searchListadapter;
     private RelativeLayout imageMenuRefresh;
     private int relationListIndex;
@@ -430,7 +430,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
                 if (relationManager.acceptedList.size() > 0 && position >= 1) {
 //                    try {removed by akshit
                     partnerName = relationManager.acceptedList.get(position - 1).getPartnerName();
-                    String rId = relationManager.acceptedList.get(position - 1).getRelationshipId();
+                     rId = relationManager.acceptedList.get(position - 1).getRelationshipId();
                     partnerPic = relationManager.acceptedList.get(position - 1).getPartnerPic();
                     quickBlockId = relationManager.acceptedList.get(position - 1).getPartnerQBId();
 
@@ -1025,10 +1025,10 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         super.onBackPressed();
 
 
-        if(getCurrentFocus().getWindowToken() != null) { // check window token is null or not
+      /*  if(getCurrentFocus().getWindowToken() != null) { // check window token is null or not
             InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-        }
+        }*/
 
 
 
