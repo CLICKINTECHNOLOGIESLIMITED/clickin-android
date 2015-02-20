@@ -80,10 +80,10 @@ public class GcmIntentService extends IntentService {
 
 
                 }
-        /*        if (!Utils.isEmptyString(ModelManager.getInstance().getAuthorizationManager().getUsrToken()))
+                if (!Utils.isEmptyString(ModelManager.getInstance().getAuthorizationManager().getUsrToken()))
                     ModelManager.getInstance().getNotificationManagerManager().getNotification(getApplicationContext(),
                             "", ModelManager.getInstance().getAuthorizationManager().getPhoneNo(),
-                            ModelManager.getInstance().getAuthorizationManager().getUsrToken());*/
+                            ModelManager.getInstance().getAuthorizationManager().getUsrToken());
             }
         };
 

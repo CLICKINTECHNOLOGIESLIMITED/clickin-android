@@ -71,7 +71,7 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
     public static final String[] MONTHS = {"JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"};
     public static final int MEDIA_TYPE_IMAGE = 1;
     private static final int DATE_DIALOG_ID = 9990;
-    private static final String IMAGE_DIRECTORY_NAME = "ClickIn/ClickinImages";
+    private static final String IMAGE_DIRECTORY_NAME = "ClickIn/ClickinImages/";
     long diffrence_in_mills;
     long mills_in_17yrs;
     boolean mFillNatively = false, mFromFacebook = false;

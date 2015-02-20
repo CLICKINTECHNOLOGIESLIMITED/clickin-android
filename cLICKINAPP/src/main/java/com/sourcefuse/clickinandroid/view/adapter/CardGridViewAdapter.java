@@ -22,6 +22,7 @@ public class CardGridViewAdapter extends ArrayAdapter<CardBean> {
     int layoutResourceId;
     // String url = "https://s3.amazonaws.com/clickin-dev/cards/a/1080/39.jpg" ;
     private List item;
+
     int listsize = 0 ;
 
 
@@ -31,12 +32,12 @@ public class CardGridViewAdapter extends ArrayAdapter<CardBean> {
         this.context = context;
         this.item = item;
 
+
         listsize = item.size();
  }
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-
 
         CardBean card_items = null;
 
@@ -46,6 +47,7 @@ public class CardGridViewAdapter extends ArrayAdapter<CardBean> {
         }else {
             card_items = getItem(position-1);
         }
+
 
         RecordHolder holder = null;
      if (row == null) {
