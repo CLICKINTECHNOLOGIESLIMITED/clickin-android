@@ -152,9 +152,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         String mRelationShipId = relationManager.acceptedList.get(relationListIndex).getRelationshipId();
         String mNewUser = authManager.mIs_new_clickin_user;
 
-        //To track through mixPanel.
-        //Total Number of user clicks.
-//        Utils.trackMixpanel(ClickInBaseView.this, "TotalClicksSent", "" + userClicks, "RPageShareButtonClicked", false);
+
 
         String mValue;
         if (mNewUser != null && mNewUser.equalsIgnoreCase("yes") && mNewPrtner != null && mNewPrtner.equalsIgnoreCase("yes")) {
@@ -213,7 +211,13 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
          * Left Menu
          */
         slidemenu.setMenu(R.layout.menu_view);
+        /*
+         * Right Menu
+         */
+        slidemenu.setSecondaryMenu(R.layout.view_notification);
+
         leftMenuElements();
+        setNotificationList();
 
 
         /* set notification data prafull code */
@@ -258,7 +262,10 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 
 
                 if (slidemenu.isSecondaryMenuShowing()) {
-                    setNotificationList();
+                    if (notificationAdapter != null)
+                        notificationAdapter.notifyDataSetChanged();
+                    else
+                        setNotificationList();
 
                     ModelManager.getInstance().getAuthorizationManager().setNotificationCounter(0);
                     if (ModelManager.getInstance().getNotificationManagerManager().notificationData.size() == 0) {
@@ -284,10 +291,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 
             }
         });
-        /*
-         * Right Menu
-         */
-        slidemenu.setSecondaryMenu(R.layout.view_notification);
+
         //slidemenu.setSecondaryShadowDrawable(R.drawable.shadow);
         rightMenuElements();
 
@@ -905,7 +909,10 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 
         } else if (message.equalsIgnoreCase("Notification true") || message.equalsIgnoreCase("Notification error")) {
 
-            setNotificationList();
+            if (notificationAdapter != null)
+                notificationAdapter.notifyDataSetChanged();
+            else
+                setNotificationList();
             Utils.dismissBarDialog();
             notificationList.onRefreshComplete();
 

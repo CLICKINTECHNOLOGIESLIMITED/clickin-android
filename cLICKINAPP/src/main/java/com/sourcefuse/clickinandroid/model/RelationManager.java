@@ -76,9 +76,9 @@ public class RelationManager {
                     acceptedList.clear();
                     initiatorList.clear();
                     requestedList.clear();
-                    EventBus.getDefault().post("GetRelationShips False");
+                    EventBus.getDefault().postSticky("GetRelationShips False");
                 } else {
-                    EventBus.getDefault().post("GetRelationShips Network Error");
+                    EventBus.getDefault().postSticky("GetRelationShips Network Error");
                 }
             }
 
@@ -119,13 +119,13 @@ public class RelationManager {
                         getrelationshipsData.addAll(requestedList);
                         getrelationshipsData.addAll(acceptedList);
                         //getrelationshipsData.addAll(initiatorList);
-                        EventBus.getDefault().post("GetRelationShips True");
+                        EventBus.getDefault().postSticky("GetRelationShips True");
                     } else {
                         getrelationshipsData.clear();
                         acceptedList.clear();
                         initiatorList.clear();
                         requestedList.clear();
-                        EventBus.getDefault().post("GetRelationShips False");
+                        EventBus.getDefault().postSticky("GetRelationShips False");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

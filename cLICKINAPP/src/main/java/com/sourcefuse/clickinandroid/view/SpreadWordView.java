@@ -203,7 +203,8 @@ public class SpreadWordView extends Activity implements OnClickListener {
 
                     //To track through mixPanel.
                     //Click To Invite Friends
-                    Utils.trackMixpanel(SpreadWordView.this, "", "" + Utils.groupSms.size(), "FriendsInvited", false);
+//                    Utils.trackMixpanel(SpreadWordView.this, "", "" + Utils.groupSms.size(), "FriendsInvited", false);
+                    Utils.trackMixpanel_superProperties(SpreadWordView.this,Utils.groupSms.size(),"spreadwordview");
                     /* send sms if not not register */
                  /*  send sms for nexus 5 check build version*/
                  /* prafull code */

@@ -74,7 +74,7 @@ public class Utils {
 
     public static boolean DEBUG = true;
 
-    public static boolean mPlayChatSound = false;   // code to check sound in case of recive chat
+    public static boolean mPlayChatSound = true;   // code to check sound in case of recive chat
     public static String deviceId, PROJECT_NUMBER = "1058681021160";
 
     public static String mBasePath = String.valueOf(Environment.getExternalStorageDirectory());
@@ -90,7 +90,7 @@ public class Utils {
     public static ArrayList<String> groupSms = new ArrayList<String>();
     public static HashMap<String, ContactBean> contactMap = new HashMap<String, ContactBean>();
     public static String mName;
-    public static boolean mStartExceptionTrack = false;  // to stop exception data sending on server
+    public static boolean mStartExceptionTrack = true;  // to stop exception data sending on server
     static GoogleCloudMessaging gcm;
     static String regid;
     private static CustomProgressDialog barProgressDialog;
@@ -199,6 +199,7 @@ public class Utils {
         dismiss.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
+
                 dialog.dismiss();
 
             }
@@ -1050,7 +1051,7 @@ public class Utils {
         String tempPartnerClicksString = new String(partnerClicks);
 
         int tempPartnerClicks = Integer.parseInt(tempPartnerClicksString);
-        android.util.Log.e("Calculation of clicks In 0 ", "tempPartnerClicks" + tempPartnerClicks);
+
         int tempClicks;
         if (clicks.startsWith("+")) {
             tempClicks = convertToIntClicks(clicks.substring(1));
@@ -1492,7 +1493,7 @@ public class Utils {
 
 
                 jsonObject1.put("created", "" + getCurrentTimeStamp());
-                android.util.Log.e("date---------->", "" + getCurrentTimeStamp());
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -1531,9 +1532,12 @@ public class Utils {
             int clicks_tosend = Math.abs(value);//To convert Negative clicks to positive.
             mixpanelAPI.getPeople().identify("" + ModelManager.getInstance().getAuthorizationManager().getPhoneNo());
             mixpanelAPI.getPeople().increment("TotalClicksSent", (double) clicks_tosend);
-        } else {//for the case of relationship count .
+        } else if(Case.equalsIgnoreCase("relationshipcount")) {//for the case of relationship count .
             mixpanelAPI.getPeople().identify("" + ModelManager.getInstance().getAuthorizationManager().getPhoneNo());
             mixpanelAPI.getPeople().set("RelationShipCount", (double) value);
+        }else {//for the case of inviting friends ,through Spread a word
+            mixpanelAPI.getPeople().identify("" + ModelManager.getInstance().getAuthorizationManager().getPhoneNo());
+            mixpanelAPI.getPeople().increment("FriendsInvited", (double) value);
         }
 
         mixpanelAPI.flush();

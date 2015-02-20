@@ -781,7 +781,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                             //To track through mixPanel.
                             //user dragged clickbar to set click.
                             Utils.trackMixpanel(ChatRecordView.this, "Activity", "UserDraggedClickBar", "RPageShareButtonClicked", false);
-                            Utils.trackMixpanel(ChatRecordView.this, "ClicksSent", "" + seekValue, "RPageShareButtonClicked", false);
+                            Utils.trackMixpanel(ChatRecordView.this, "ClicksSent", "" + temp.clicks, "RPageShareButtonClicked", false);
                             //To track through mixPanel.
                             //Click msg send.
                             Utils.trackMixpanel(ChatRecordView.this, "Activity", "ClickMessageSent", "RPageShareButtonClicked", false);
@@ -1061,7 +1061,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 temp.textMsg = temp.clicks + "        " + chatString;
                 Utils.trackMixpanel(ChatRecordView.this, "Activity", "UserDraggedClickBar", "RPageShareButtonClicked", false);
                 Utils.trackMixpanel_superProperties(this, seekValue, "clicks");//Track Mix Panel To send,Clicks,To send Clicks Value in case of media
-                Utils.trackMixpanel(ChatRecordView.this, "ClicksSent", "" + seekValue, "RPageShareButtonClicked", false);
+                Utils.trackMixpanel(ChatRecordView.this, "ClicksSent", "" + temp.clicks, "RPageShareButtonClicked", false);
                 Utils.trackMixpanel(ChatRecordView.this, "Activity", "TextMessageSent", "RPageShareButtonClicked", false);
             } else {
                 temp.clicks = "no";
@@ -1760,14 +1760,14 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                         if (path != null)
                             ((ImageView) findViewById(R.id.iv_attach)).setImageURI(Uri.parse(path));
 
-                        Log.e("Uri---->", "" + path);
+
                         //akshit code to check wether image buton contains image or not;
                         if (view.getDrawable() != null && view.getDrawable().getConstantState() == getResources().getDrawable(R.drawable.r_footer_icon).getConstantState()) {
                             setVisibilityForSendButton();
 
-                            Log.e("case 1--", "case 1--");
+
                         } else {
-                            Log.e("case 2--", "case 2--");
+
                             setVisibilityForSend();
                         }
                         //ends
