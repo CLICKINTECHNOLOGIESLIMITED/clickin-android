@@ -29,6 +29,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.telephony.TelephonyManager;
 import android.util.*;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -1541,6 +1542,20 @@ public class Utils {
 
         mixpanelAPI.flush();
     }
-
+    public static void deletePhoto(String mPhoneNo, Context context) {
+        String RelationId = "";
+        for (GetrelationshipsBean mAcceptList : ModelManager.getInstance().getRelationManager().acceptedList) {
+            if (mPhoneNo.equalsIgnoreCase(mAcceptList.getPhoneNo())) {
+                RelationId = mAcceptList.getRelationshipId();
+            }
+        }
+        Log.e("RelationId ", "" + RelationId);
+        if (!Utils.isEmptyString(RelationId)) {
+            String mPath = Utils.mImagePath + RelationId + ".jpg";
+            Uri uri = Utils.getImageContentUri(context.getApplicationContext(), new File(mPath));
+            if (!Utils.isEmptyString("" + uri))
+                context.getContentResolver().delete(uri, null, null);
+        }
+    }
 }
 

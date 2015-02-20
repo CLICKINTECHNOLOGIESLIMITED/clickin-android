@@ -137,7 +137,7 @@ public class GcmIntentService extends IntentService {
                         PicassoManager.clearCache();
                         dataToBeSend.putInt("msg_type", Constants.JUMPOTHERPROFILEVIEW_NOTF);
                         dataToBeSend.putString("phone_no", extras.getString("phone_no"));
-                        deletePhoto(extras.getString("phone_no"));
+                        Utils.deletePhoto(extras.getString("phone_no"),getApplicationContext());
                         msg_type = Constants.JUMPOTHERPROFILEVIEW_NOTF;
                     } else if (extras.getString("Tp").equalsIgnoreCase("FR")) {  // case follow request
 
@@ -223,19 +223,6 @@ public class GcmIntentService extends IntentService {
         return false;
     }
 
-    private void deletePhoto(String mPhoneNo) {
-        String RelationId = "";
-        for (GetrelationshipsBean mAcceptList : ModelManager.getInstance().getRelationManager().acceptedList) {
-            if (mPhoneNo.equalsIgnoreCase(mAcceptList.getPhoneNo())) {
-                RelationId = mAcceptList.getRelationshipId();
-            }
-        }
-        Log.e("RelationId ", "" + RelationId);
-        if (!Utils.isEmptyString(RelationId)) {
-            String mPath = Utils.mImagePath + RelationId + ".jpg";
-            Uri uri = Utils.getImageContentUri(getApplicationContext(), new File(mPath));
-            getContentResolver().delete(uri, null, null);
-        }
-    }
+
 
 }
