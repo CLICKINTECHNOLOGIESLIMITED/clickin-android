@@ -9,7 +9,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.animation.Animation;
@@ -46,7 +45,7 @@ public class SplashView extends Activity implements View.OnClickListener {
 
 //code- to handle uncaught exception
 
-        if (Utils.mStartExceptionTrack)
+        if(Utils.mStartExceptionTrack)
             Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
 
@@ -158,11 +157,10 @@ public class SplashView extends Activity implements View.OnClickListener {
 
         } else if (getMsg.equalsIgnoreCase("ProfileInfo True")) {
             //save values of user in shared prefrence for later use
-            Intent i = new Intent(this, MyQbChatService.class);
-            startService(i);
+
             RelationManager relationManager = ModelManager.getInstance().getRelationManager();
             relationManager.getRelationShips(authManager.getPhoneNo(), authManager.getUsrToken());
-
+            // new ImageDownloadTask().execute();
 
 
         } else if (getMsg.equalsIgnoreCase("ProfileInfo False")) {
@@ -174,15 +172,28 @@ public class SplashView extends Activity implements View.OnClickListener {
             Utils.fromSignalDialogSplsh(this, AlertMessage.connectionError);
 
 
+        } else if (getMsg.equalsIgnoreCase("GetRelationShips False")) {
+            if (authManager == null)
+                authManager = ModelManager.getInstance().getAuthorizationManager();
+            if (authManager.getUserPic() != null)
+                new DownloadImage().execute(authManager.getUserPic());
+            else {
+                Utils.dismissBarDialog();
+                switchView();
+            }
+
         } else if (getMsg.equalsIgnoreCase("GetRelationShips Network Error")) {
             Utils.dismissBarDialog();
             Utils.fromSignalDialogSplsh(this, AlertMessage.connectionError);
 
-        } else if (getMsg.equalsIgnoreCase("GetrelationShips True") || getMsg.equalsIgnoreCase("GetRelationShips False")) {
+        } else if (getMsg.equalsIgnoreCase("GetrelationShips True")) {
+            Intent i = new Intent(this, MyQbChatService.class);
+            startService(i);
 
-
-            if (ModelManager.getInstance().getAuthorizationManager().getUserPic() != null)
-                new DownloadImage().execute(ModelManager.getInstance().getAuthorizationManager().getUserPic());
+            if (authManager == null)
+                authManager = ModelManager.getInstance().getAuthorizationManager();
+            if (authManager.getUserPic() != null)
+                new DownloadImage().execute(authManager.getUserPic());
             else {
                 Utils.dismissBarDialog();
                 switchView();
@@ -222,6 +233,7 @@ public class SplashView extends Activity implements View.OnClickListener {
     private void switchView() {
         Utils.dismissBarDialog();
         Intent intent = new Intent(this, UserProfileView.class);
+        //  intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();
     }

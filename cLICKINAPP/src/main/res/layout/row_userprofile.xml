@@ -52,7 +52,22 @@
                     android:layout_marginRight="-8dp"
                     android:adjustViewBounds="true"
                     android:scaleType="fitXY"
-                    android:src="@drawable/female_crt" />
+                     />
+
+                <LinearLayout
+                    android:layout_width="90dp"
+                    android:layout_height="90dp">
+
+                    <com.sourcefuse.clickinandroid.utils.FeedImageView
+                        android:id="@+id/iv_usr_pic_"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:layout_marginLeft="45dp"
+                        android:layout_marginRight="-8dp"
+                        android:adjustViewBounds="true"
+                        android:scaleType="fitXY"
+                        android:visibility="gone" />
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/btn_privacy"

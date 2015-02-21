@@ -29,6 +29,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.telephony.TelephonyManager;
 import android.util.*;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -80,6 +81,7 @@ public class Utils {
     public static String mBasePath = String.valueOf(Environment.getExternalStorageDirectory());
     public static String mVideoPath = mBasePath + "/ClickIn/ClickinVideo/";
     public static String mImagePath = mBasePath + "/ClickIn/ClickinImages/";
+    public static String mUserImagePath = mBasePath + "/ClickIn/ClickinImages/Partnerpic/";
     public static String mAudioPath = mBasePath + "/ClickIn/ClickinAudio/";
     public static boolean appSound;
     public static SharedPreferences prefrences;
@@ -90,7 +92,7 @@ public class Utils {
     public static ArrayList<String> groupSms = new ArrayList<String>();
     public static HashMap<String, ContactBean> contactMap = new HashMap<String, ContactBean>();
     public static String mName;
-    public static boolean mStartExceptionTrack = true;  // to stop exception data sending on server
+    public static boolean mStartExceptionTrack = false;  // to stop exception data sending on server
     static GoogleCloudMessaging gcm;
     static String regid;
     private static CustomProgressDialog barProgressDialog;
@@ -1266,6 +1268,8 @@ public class Utils {
             File file = new File(filePath);
             if (file.exists())
                 file.delete();
+            file.setWritable(true);
+            file.setReadable(true);
 
             FileOutputStream fileOutputStream = new FileOutputStream(filePath);
             BufferedOutputStream bos = new BufferedOutputStream(fileOutputStream);
@@ -1542,6 +1546,20 @@ public class Utils {
 
         mixpanelAPI.flush();
     }
-
+    public static void deletePhoto(String mPhoneNo, Context context) {
+        String RelationId = "";
+        for (GetrelationshipsBean mAcceptList : ModelManager.getInstance().getRelationManager().acceptedList) {
+            if (mPhoneNo.equalsIgnoreCase(mAcceptList.getPhoneNo())) {
+                RelationId = mAcceptList.getRelationshipId();
+            }
+        }
+        Log.e("RelationId ", "" + RelationId);
+        if (!Utils.isEmptyString(RelationId)) {
+            String mPath = Utils.mImagePath + RelationId + ".jpg";
+            Uri uri = Utils.getImageContentUri(context.getApplicationContext(), new File(mPath));
+            if (!Utils.isEmptyString("" + uri))
+                context.getContentResolver().delete(uri, null, null);
+        }
+    }
 }
 

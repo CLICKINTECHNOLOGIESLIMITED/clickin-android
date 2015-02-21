@@ -5,6 +5,8 @@ import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +18,7 @@ import android.widget.TextView;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.PicassoManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
+import com.sourcefuse.clickinandroid.model.bean.GetrelationshipsBean;
 import com.sourcefuse.clickinandroid.model.bean.NotificationBean;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.FeedView;
@@ -26,6 +29,7 @@ import com.sourcefuse.clickinandroid.view.PostView;
 import com.sourcefuse.clickinandroid.view.UserProfileView;
 import com.sourcefuse.clickinapp.R;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -146,7 +150,7 @@ public class NotificationAdapter extends ArrayAdapter<NotificationBean> {
                     for (int i = 0; i < relationManager.acceptedList.size(); i++) {
                         if (relationManager.acceptedList.get(i).getPartner_id().equalsIgnoreCase(item.update_user_id)) {
                             ph = relationManager.acceptedList.get(i).getPhoneNo();
-
+                            Utils.deletePhoto(ph, context);
                         }
                     }
 
@@ -184,6 +188,7 @@ public class NotificationAdapter extends ArrayAdapter<NotificationBean> {
         ImageView notificationType;
         RelativeLayout mNotificationLayout;
     }
+
 
 
 }

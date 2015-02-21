@@ -17,12 +17,15 @@ import android.util.Log;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.sourcefuse.clickinandroid.model.ModelManager;
+import com.sourcefuse.clickinandroid.model.PicassoManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
+import com.sourcefuse.clickinandroid.model.bean.GetrelationshipsBean;
 import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.ReloadApp;
 import com.sourcefuse.clickinapp.R;
 
+import java.io.File;
 import java.util.List;
 
 public class GcmIntentService extends IntentService {
@@ -96,7 +99,6 @@ public class GcmIntentService extends IntentService {
         mRelationManager = ModelManager.getInstance().getRelationManager();
 
 
-
         GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
         String messageType = gcm.getMessageType(intent);
 
@@ -132,8 +134,10 @@ public class GcmIntentService extends IntentService {
                         //    msg_type=Constants.FEEDVIEW_NOTF;
                     } else if (extras.getString("Tp").equalsIgnoreCase("Upp")) //case for Profile Update
                     {
+                        PicassoManager.clearCache();
                         dataToBeSend.putInt("msg_type", Constants.JUMPOTHERPROFILEVIEW_NOTF);
                         dataToBeSend.putString("phone_no", extras.getString("phone_no"));
+                        Utils.deletePhoto(extras.getString("phone_no"),getApplicationContext());
                         msg_type = Constants.JUMPOTHERPROFILEVIEW_NOTF;
                     } else if (extras.getString("Tp").equalsIgnoreCase("FR")) {  // case follow request
 
@@ -218,5 +222,7 @@ public class GcmIntentService extends IntentService {
         }
         return false;
     }
+
+
 
 }

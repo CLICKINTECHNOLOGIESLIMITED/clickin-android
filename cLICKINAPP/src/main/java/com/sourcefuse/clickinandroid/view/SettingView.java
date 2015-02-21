@@ -104,6 +104,7 @@ public class SettingView extends Activity implements View.OnClickListener, Compo
         findViewById(R.id.term_use_row).setOnClickListener(this);
         findViewById(R.id.spam_text).setOnClickListener(this);
         findViewById(R.id.edit_profile).setOnClickListener(this);
+
         findViewById(R.id.btn_logout_yes).setOnClickListener(this);
         findViewById(R.id.btn_logout_no).setOnClickListener(this);
         findViewById(R.id.save_password).setOnClickListener(this);
