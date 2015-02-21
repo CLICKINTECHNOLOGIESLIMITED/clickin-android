@@ -178,99 +178,26 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
 
                     case SEND_CHAT:
                         Bundle data = msg.getData();
-                        if (QBChatService.getInstance().isLoggedIn()) {
-                            int partnerQBId = Integer.parseInt(data.getString("partnerQBId"));
-                            QBPrivateChat chatObject = null;
-                            chatObject = QBChatService.getInstance().getPrivateChatManager().getChat(partnerQBId);
-                            if (chatObject == null)
-                                chatObject = QBChatService.getInstance().getPrivateChatManager().createChat(partnerQBId, ChatThread.this);
-                            QBChatMessage message = new QBChatMessage();
-                            switch (data.getInt("ChatType")) {
+                        if(chatService!=null) {
+                            if (chatService.isLoggedIn()) {
+                                int partnerQBId = Integer.parseInt(data.getString("partnerQBId"));
+                                QBPrivateChat chatObject = null;
+                                chatObject = chatService.getPrivateChatManager().getChat(partnerQBId);
+                                if (chatObject == null)
+                                    chatObject = chatService.getPrivateChatManager().createChat(partnerQBId, ChatThread.this);
+                                QBChatMessage message = new QBChatMessage();
+                                switch (data.getInt("ChatType")) {
 
-                                case Constants.CHAT_TYPE_NOFITICATION:
-                                    message.setProperty("isComposing", data.getString("isComposing"));
-                                    break;
+                                    case Constants.CHAT_TYPE_NOFITICATION:
+                                        message.setProperty("isComposing", data.getString("isComposing"));
+                                        break;
 
-                                case Constants.CHAT_TYPE_CARD:
-
-                                    message.setProperty("card_DB_ID", data.getString("card_DB_ID"));
-                                    message.setProperty("card_url", data.getString("card_url"));
-                                    message.setProperty("card_content", data.getString("card_content"));
-
-                                    message.setProperty("is_CustomCard", String.valueOf(data.getBoolean("is_CustomCard")));
-                                    message.setProperty("card_clicks", data.getString("clicks"));
-                                    message.setProperty("card_owner", data.getString("card_owner"));
-
-                                    message.setProperty("card_Accepted_Rejected", data.getString("accepted_Rejected"));
-                                    message.setProperty("card_heading", data.getString("card_heading"));
-                                    message.setProperty("card_id", data.getString("card_id"));
-                                    message.setProperty("card_Played_Countered", data.getString("card_Played_Countered"));
-                                    message.setProperty("card_originator", data.getString("card_originator"));
-
-                                    break;
-                                case Constants.CHAT_TYPE_IMAGE:
-
-                                    message.setProperty("fileID", data.getString("FileId"));
-                                    message.setProperty("imageRatio", data.getString("imageRatio"));
-
-                                    break;
-                                case Constants.CHAT_TYPE_AUDIO:
-
-                                    message.setProperty("audioID", data.getString("FileId"));
-
-                                    break;
-                                case Constants.CHAT_TYPE_VIDEO:
-
-                                    message.setProperty("videoThumbnail", data.getString("videoThumbnail"));
-                                    message.setProperty("videoID", data.getString("FileId"));
-
-                                    break;
-                                case Constants.CHAT_TYPE_LOCATION:
-
-                                    message.setProperty("location_coordinates", data.getString("location_coordinates"));
-                                    message.setProperty("imageRatio", data.getString("imageRatio"));
-                                    message.setProperty("locationID", data.getString("FileId"));
-
-                                    break;
-
-                                case Constants.CHAT_TYPE_SHARING:
-
-                                    message.setProperty("originalMessageID", data.getString("originalChatId"));
-                                    message.setProperty("isMessageSender", data.getString("isMessageSender"));
-                                    message.setProperty("messageSenderID", data.getString("messageSenderID"));
-                                    message.setProperty("shareStatus", data.getString("shareStatus"));
-                                    message.setProperty("sharingMedia", data.getString("sharingMedia"));
-                                    message.setProperty("isAccepted", data.getString("isAccepted"));
-                                    message.setProperty("facebookToken", data.getString("facebookToken"));
-                                    message.setProperty("comment", data.getString("caption"));
-
-                                    if (data.containsKey("imageRatio")) {
-
-                                        message.setProperty("imageRatio", data.getString("imageRatio"));
-                                        if (data.containsKey("location_coordinates")) {
-                                            message.setProperty("location_coordinates", data.getString("location_coordinates"));
-                                            message.setProperty("locationID", data.getString("FileId"));
-                                        } else
-                                            message.setProperty("fileID", data.getString("FileId"));
-                                        //message.setProperty("isFileUploading", data.getString("imageRatio"));
-
-                                    }
-                                    if (data.containsKey("videoThumbnail")) {
-                                        message.setProperty("videoThumbnail", data.getString("videoThumbnail"));
-                                        message.setProperty("videoID", data.getString("FileId"));
-                                    }
-                                    if (!data.containsKey("imageRatio") && !data.containsKey("videoThumbnail") && !Utils.isEmptyString(data.getString("FileId"))) {
-                                        message.setProperty("audioID", data.getString("FileId"));
-                                        //  message.setProperty("isAudioUploading", data.getString("FileId"));
-
-                                    }
-                                    if (data.containsKey("card_originator")) {
+                                    case Constants.CHAT_TYPE_CARD:
 
                                         message.setProperty("card_DB_ID", data.getString("card_DB_ID"));
                                         message.setProperty("card_url", data.getString("card_url"));
-
-
                                         message.setProperty("card_content", data.getString("card_content"));
+
                                         message.setProperty("is_CustomCard", String.valueOf(data.getBoolean("is_CustomCard")));
                                         message.setProperty("card_clicks", data.getString("clicks"));
                                         message.setProperty("card_owner", data.getString("card_owner"));
@@ -280,51 +207,128 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
                                         message.setProperty("card_id", data.getString("card_id"));
                                         message.setProperty("card_Played_Countered", data.getString("card_Played_Countered"));
                                         message.setProperty("card_originator", data.getString("card_originator"));
-                                    }
-                                    break;
-                                case Constants.CHAT_TYPE_DELIVERED:
-                                    message.setProperty("isDelivered", data.getString("isDelivered"));
-                                    message.setProperty("messageID", data.getString("messageID"));
-                                    break;
 
-                            }
+                                        break;
+                                    case Constants.CHAT_TYPE_IMAGE:
 
-                            //check for trade card and also when trade card is shared
-                            if (!data.containsKey("card_originator")) {
+                                        message.setProperty("fileID", data.getString("FileId"));
+                                        message.setProperty("imageRatio", data.getString("imageRatio"));
 
-                                if (data.containsKey("clicks"))
-                                    message.setProperty("clicks", data.getString("clicks"));
-                                //  message.setBody("");
+                                        break;
+                                    case Constants.CHAT_TYPE_AUDIO:
 
-                            }
+                                        message.setProperty("audioID", data.getString("FileId"));
 
-                            if (data.containsKey("textMsg"))
-                                message.setBody(data.getString("textMsg"));
+                                        break;
+                                    case Constants.CHAT_TYPE_VIDEO:
 
-                            //set the delivered notification property in msg
-                            if (!(data.getInt("ChatType") == Constants.CHAT_TYPE_NOFITICATION) &&
-                                    !(data.getInt("ChatType") == Constants.CHAT_TYPE_DELIVERED)) {
-                                message.setMarkable(true);
-                                message.setProperty("common_platform_id", data.getString("ChatId"));
+                                        message.setProperty("videoThumbnail", data.getString("videoThumbnail"));
+                                        message.setProperty("videoID", data.getString("FileId"));
 
-                            }
+                                        break;
+                                    case Constants.CHAT_TYPE_LOCATION:
 
-                            try {
-                                try {
-                                    chatObject.sendMessage(message);
-                                } catch (SmackException.NotConnectedException e) {
-                                    e.printStackTrace();
+                                        message.setProperty("location_coordinates", data.getString("location_coordinates"));
+                                        message.setProperty("imageRatio", data.getString("imageRatio"));
+                                        message.setProperty("locationID", data.getString("FileId"));
+
+                                        break;
+
+                                    case Constants.CHAT_TYPE_SHARING:
+
+                                        message.setProperty("originalMessageID", data.getString("originalChatId"));
+                                        message.setProperty("isMessageSender", data.getString("isMessageSender"));
+                                        message.setProperty("messageSenderID", data.getString("messageSenderID"));
+                                        message.setProperty("shareStatus", data.getString("shareStatus"));
+                                        message.setProperty("sharingMedia", data.getString("sharingMedia"));
+                                        message.setProperty("isAccepted", data.getString("isAccepted"));
+                                        message.setProperty("facebookToken", data.getString("facebookToken"));
+                                        message.setProperty("comment", data.getString("caption"));
+
+                                        if (data.containsKey("imageRatio")) {
+
+                                            message.setProperty("imageRatio", data.getString("imageRatio"));
+                                            if (data.containsKey("location_coordinates")) {
+                                                message.setProperty("location_coordinates", data.getString("location_coordinates"));
+                                                message.setProperty("locationID", data.getString("FileId"));
+                                            } else
+                                                message.setProperty("fileID", data.getString("FileId"));
+                                            //message.setProperty("isFileUploading", data.getString("imageRatio"));
+
+                                        }
+                                        if (data.containsKey("videoThumbnail")) {
+                                            message.setProperty("videoThumbnail", data.getString("videoThumbnail"));
+                                            message.setProperty("videoID", data.getString("FileId"));
+                                        }
+                                        if (!data.containsKey("imageRatio") && !data.containsKey("videoThumbnail") && !Utils.isEmptyString(data.getString("FileId"))) {
+                                            message.setProperty("audioID", data.getString("FileId"));
+                                            //  message.setProperty("isAudioUploading", data.getString("FileId"));
+
+                                        }
+                                        if (data.containsKey("card_originator")) {
+
+                                            message.setProperty("card_DB_ID", data.getString("card_DB_ID"));
+                                            message.setProperty("card_url", data.getString("card_url"));
+
+
+                                            message.setProperty("card_content", data.getString("card_content"));
+                                            message.setProperty("is_CustomCard", String.valueOf(data.getBoolean("is_CustomCard")));
+                                            message.setProperty("card_clicks", data.getString("clicks"));
+                                            message.setProperty("card_owner", data.getString("card_owner"));
+
+                                            message.setProperty("card_Accepted_Rejected", data.getString("accepted_Rejected"));
+                                            message.setProperty("card_heading", data.getString("card_heading"));
+                                            message.setProperty("card_id", data.getString("card_id"));
+                                            message.setProperty("card_Played_Countered", data.getString("card_Played_Countered"));
+                                            message.setProperty("card_originator", data.getString("card_originator"));
+                                        }
+                                        break;
+                                    case Constants.CHAT_TYPE_DELIVERED:
+                                        message.setProperty("isDelivered", data.getString("isDelivered"));
+                                        message.setProperty("messageID", data.getString("messageID"));
+                                        break;
+
                                 }
-                            } catch (XMPPException e) {
-                                e.printStackTrace();
-                                //loginToChat();
+
+                                //check for trade card and also when trade card is shared
+                                if (!data.containsKey("card_originator")) {
+
+                                    if (data.containsKey("clicks"))
+                                        message.setProperty("clicks", data.getString("clicks"));
+                                    //  message.setBody("");
+
+                                }
+
+                                if (data.containsKey("textMsg"))
+                                    message.setBody(data.getString("textMsg"));
+
+                                //set the delivered notification property in msg
+                                if (!(data.getInt("ChatType") == Constants.CHAT_TYPE_NOFITICATION) &&
+                                        !(data.getInt("ChatType") == Constants.CHAT_TYPE_DELIVERED)) {
+                                    message.setMarkable(true);
+                                    message.setProperty("common_platform_id", data.getString("ChatId"));
+
+                                }
+
+                                try {
+                                    try {
+                                        chatObject.sendMessage(message);
+                                    } catch (SmackException.NotConnectedException e) {
+                                        e.printStackTrace();
+                                    }
+                                } catch (XMPPException e) {
+                                    e.printStackTrace();
+                                    //loginToChat();
+                                }
+                            } else {
+                                loginToChat();
                             }
-                        } else {
+                        }else{
                             loginToChat();
                         }
                         break;
                     case ADD_CHAT_LISTENERS:
-                        if (QBChatService.getInstance().isLoggedIn()) {
+                        if (chatService.isLoggedIn()) {
                             registerListeners();
 
                         } else {
@@ -657,25 +661,27 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
 
     //monika-fucntion to log out from QB chat
     public void logoutQB() {
-        boolean isLoggedIn = QBChatService.getInstance().isLoggedIn();
-        if (!isLoggedIn) {
-            return;
+        if(chatService!=null) {
+            boolean isLoggedIn = chatService.isLoggedIn();
+            if (!isLoggedIn) {
+                return;
+            }
+
+            chatService.logout(new QBEntityCallbackImpl() {
+
+                @Override
+                public void onSuccess() {
+                    // success
+
+                    chatService.destroy();
+                }
+
+                @Override
+                public void onError(final List list) {
+
+                }
+            });
         }
-
-        QBChatService.getInstance().logout(new QBEntityCallbackImpl() {
-
-            @Override
-            public void onSuccess() {
-                // success
-
-                QBChatService.getInstance().destroy();
-            }
-
-            @Override
-            public void onError(final List list) {
-
-            }
-        });
     }
 
     //monika-save message in db
@@ -740,10 +746,12 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
     //monika-connection listener
     @Override
     public void connected(XMPPConnection xmppConnection) {
-        if (!QBChatService.getInstance().isLoggedIn())
-            loginToChat();
+        if(chatService!=null) {
+            if (!chatService.isLoggedIn())
+                loginToChat();
 
-        EventBus.getDefault().post("Connected Successfully");
+            EventBus.getDefault().post("Connected Successfully");
+        }
     }
 
     @Override
@@ -783,10 +791,13 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
 
     @Override
     public void reconnectionSuccessful() {
-        if (!QBChatService.getInstance().isLoggedIn())
-            loginToChat();
+        if(chatService!=null)
+        {
+            if (!chatService.isLoggedIn())
+                loginToChat();
 
-        EventBus.getDefault().post("Connected Successfully");
+            EventBus.getDefault().post("Connected Successfully");
+        }
     }
 
     @Override
@@ -922,24 +933,26 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
     //temp code to send Delivered chat message-monika
     private void sendDeliveredChatMsg(android.os.Message msg) {
         Bundle data = msg.getData();
-        if (QBChatService.getInstance().isLoggedIn()) {
-            int partnerQBId = Integer.parseInt(data.getString("partnerQBId"));
-            QBPrivateChat chatObject = null;
-            chatObject = QBChatService.getInstance().getPrivateChatManager().getChat(partnerQBId);
-            if (chatObject == null)
-                chatObject = QBChatService.getInstance().getPrivateChatManager().createChat(partnerQBId, ChatThread.this);
-            QBChatMessage message = new QBChatMessage();
-            message.setProperty("isDelivered", data.getString("isDelivered"));
-            message.setProperty("messageID", data.getString("messageID"));
+        if(chatService!=null) {
+            if (chatService.isLoggedIn()) {
+                int partnerQBId = Integer.parseInt(data.getString("partnerQBId"));
+                QBPrivateChat chatObject = null;
+                chatObject = chatService.getPrivateChatManager().getChat(partnerQBId);
+                if (chatObject == null)
+                    chatObject = chatService.getPrivateChatManager().createChat(partnerQBId, ChatThread.this);
+                QBChatMessage message = new QBChatMessage();
+                message.setProperty("isDelivered", data.getString("isDelivered"));
+                message.setProperty("messageID", data.getString("messageID"));
 
-            if (data.containsKey("textMsg"))
-                message.setBody(data.getString("textMsg"));
-            try {
-                chatObject.sendMessage(message);
-            } catch (XMPPException e) {
-                e.printStackTrace();
-            } catch (SmackException.NotConnectedException e) {
-                e.printStackTrace();
+                if (data.containsKey("textMsg"))
+                    message.setBody(data.getString("textMsg"));
+                try {
+                    chatObject.sendMessage(message);
+                } catch (XMPPException e) {
+                    e.printStackTrace();
+                } catch (SmackException.NotConnectedException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

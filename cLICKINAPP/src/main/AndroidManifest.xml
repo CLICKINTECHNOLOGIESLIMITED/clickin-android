@@ -200,7 +200,7 @@
             android:launchMode="standard"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.sourcefuse.clickinandroid.view.adapter.DeactivateAccountView"
+            android:name="com.sourcefuse.clickinandroid.view.DeactivateAccountView"
             android:launchMode="standard"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateHidden" />

@@ -616,14 +616,14 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
     }
 
-    @Override
-    public void onBackPressed() {
+  //  @Override
+/*    public void onBackPressed() {
         super.onBackPressed();
         finish();
         overridePendingTransition(0, R.anim.top_out);
 
 
-    }
+    }*/
 
     public void imageDialog() {
 

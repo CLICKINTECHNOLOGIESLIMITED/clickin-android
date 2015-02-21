@@ -48,6 +48,7 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
     private RelationManager relationManager;
     private boolean showpending = false;
 
+    private Dialog dialog;
     ImageLoader imageLoader = AppController.getInstance().getImageLoader();
 
     /*LruCache mLruCahe;
@@ -90,15 +91,14 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
         Uri mUri = Utils.getImageContentUri(context, new File(mContentUri));  //check file exist or not
 
         File file = new File(mContentUri);
-        Log.e("value of uri--->", "" + mUri);
-        Log.e("file.exists--->", "" + file.exists());
+
         if (!Utils.isEmptyString("" + mUri) && file.exists()) {
             usrimg.setImageURI(mUri); // if file exists set it by uri
         } else {
-            if(file.exists())
+            if (file.exists())
                 file.delete();
 
-            Log.e("User relation adapter ---> ", "" + itemList.get(position).getPartnerPic());
+
             iv_usr_pic_.setImageUrl(itemList.get(position).getPartnerPic(), imageLoader);
             iv_usr_pic_.setVisibility(View.VISIBLE);
             iv_usr_pic_.setResponseObserver(new FeedImageView.ResponseObserver() { // download image
@@ -108,11 +108,14 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
 
                 @Override
                 public void onSuccess(ImageLoader.ImageContainer loader) {
-                    Log.e("on success--->", "on success--->");
+
                     if (loader.getBitmap() != null) {
                         iv_usr_pic_.setVisibility(View.GONE);
                         String path = Utils.storeImage(loader.getBitmap(), finalMUserImageId, context);  // save image bitmap by chat id
-                        usrimg.setImageURI(Utils.getImageContentUri(context, new File(path))); // set image form uri once downloadedd
+                        if (!Utils.isEmptyString(path))
+                            usrimg.setImageURI(Utils.getImageContentUri(context, new File(path))); // set image form uri once downloadedd
+                        else
+                            fromSignalDialog((Activity) context, context.getResources().getString(R.string.application_crash));
 
                     }
                 }
@@ -281,13 +284,8 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
         dialog.setCancelable(false);
         TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
 
-//        Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "fonts/AvenirNextLTPro-MediumCn_0.otf");
-
-
         RelativeLayout relativeLayout = (RelativeLayout) view;
-        TextView button = (TextView) relativeLayout.getChildAt(1);
-
-//        msgI.setTypeface(tf);
+        TextView button = (TextView) relativeLayout.getChildAt(2);
         msgI.setText(str);
 
 
@@ -345,7 +343,7 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
 
 
         RelativeLayout relativeLayout = (RelativeLayout) view;
-        TextView button = (TextView) relativeLayout.getChildAt(1);
+        TextView button = (TextView) relativeLayout.getChildAt(2);
         skip.setTag(button);
 
         skip.setOnClickListener(new View.OnClickListener() {
@@ -370,6 +368,28 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
         });
         dialog.show();
     }
-// Ends
 
+    // Ends
+    public void fromSignalDialog(Activity activity, String str) {
+
+        dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.setContentView(R.layout.alert_check_dialogs);
+        dialog.setCancelable(false);
+        TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
+        msgI.setText(str);
+
+
+        Button dismiss = (Button) dialog.findViewById(R.id.coolio);
+        dismiss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                dialog.dismiss();
+
+            }
+        });
+        if (!dialog.isShowing())
+            dialog.show();
+    }
 }
