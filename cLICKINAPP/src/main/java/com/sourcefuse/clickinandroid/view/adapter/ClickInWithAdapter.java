@@ -139,7 +139,7 @@ public class ClickInWithAdapter extends BaseAdapter implements
                 if (!Utils.isEmptyString("" + mUri)) {
                     rholder.clickInUsrimg.setImageURI(mUri); // if file exists set it by uri
                 } else {
-                    Log.e("User relation adapter ---> ", "" + item1.get(position).getPartnerPic());
+
                     holder.iv_usr_pic_.setImageUrl(item1.get(position).getPartnerPic(), imageLoader);
                     holder.iv_usr_pic_.setResponseObserver(new FeedImageView.ResponseObserver() { // download image
                         @Override
@@ -148,7 +148,7 @@ public class ClickInWithAdapter extends BaseAdapter implements
 
                         @Override
                         public void onSuccess(ImageLoader.ImageContainer loader) {
-                            Log.e("on success--->", "on success--->");
+
                             if (loader.getBitmap() != null) {
                                 String path = Utils.storeImage(loader.getBitmap(), finalMUserImageId, context);  // save image bitmap by chat id
                                 rholder.clickInUsrimg.setImageURI(Utils.getImageContentUri(context, new File(path))); // set image form uri once downloadedd

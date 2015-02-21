@@ -780,7 +780,6 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                             temp.textMsg = temp.clicks + "        " + chatString;
 
 
-
                             //To track through mixPanel.
                             //user dragged clickbar to set click.
                             Utils.trackMixpanel(ChatRecordView.this, "Activity", "UserDraggedClickBar", "RPageShareButtonClicked", false);
@@ -1089,7 +1088,6 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         ShowValueinChat(temp);
         //To track through mixPanel.
         //No of clicks send with Media(Audio,Video,Image).
-
 
 
         // mImageCaptureUri=null;
@@ -1791,6 +1789,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                     Double longitude = data.getDoubleExtra("lng", 0.0);
                     mLocation_Coordinates = latitude + "," + longitude;
                     String url = "http://maps.google.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&markers=color%3ared|color%3ared|label%3aA|" + latitude + "," + longitude + "&zoom=15&size=650x400&sensor=true";
+
                     new DownloadImage().execute(url);
 
                     break;
@@ -2364,13 +2363,16 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 // Decode Bitmap
                 bitmap = BitmapFactory.decodeStream(input);
             } catch (Exception e) {
-//                e.printStackTrace();removed by akshit
+                e.printStackTrace();
+            } finally {
+                return bitmap;
             }
-            return bitmap;
+
         }
 
         @Override
         protected void onPostExecute(Bitmap result) {
+
             if (result != null) {
                 String newpath = Utils.mAudioPath;
                 Random rn = new Random();

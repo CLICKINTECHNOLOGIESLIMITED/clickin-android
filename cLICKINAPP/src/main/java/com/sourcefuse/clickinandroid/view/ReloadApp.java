@@ -172,7 +172,8 @@ public class ReloadApp extends Activity {
             case Constants.JUMPOTHERPROFILEVIEW_NOTF:
 
                 if (getIntent().getStringExtra("Tp").equalsIgnoreCase("Upp")) {
-                    Utils.deletePhoto(getIntent().getStringExtra("phone_no"),getApplicationContext());
+                    deletePhoto(getIntent().getStringExtra("phone_no"));
+
                 }
 
                 intent1.setClass(getApplicationContext(), JumpOtherProfileView.class);
@@ -200,7 +201,21 @@ public class ReloadApp extends Activity {
         RELOAD_APP=false;
 
     }
+    public void deletePhoto(String mPhoneNo) {
+        String RelationId = "";
+        for (GetrelationshipsBean mAcceptList : ModelManager.getInstance().getRelationManager().acceptedList) {
+            if (mPhoneNo.equalsIgnoreCase(mAcceptList.getPhoneNo())) {
+                RelationId = mAcceptList.getRelationshipId();
+            }
+        }
 
+        if (!Utils.isEmptyString(RelationId)) {
+            String mPath = Utils.mImagePath + RelationId + ".jpg";
+            Uri uri = Utils.getImageContentUri(getApplicationContext(), new File(mPath));
+            if (!Utils.isEmptyString("" + uri))
+                getContentResolver().delete(uri, null, null);
+        }
+    }
 
     //function to find index in accepted list
     private int getPartnerIndexInList(String partnerId) {
@@ -214,6 +229,7 @@ public class ReloadApp extends Activity {
         return index;
     }
 
+<<<<<<< HEAD
   /*  public void putChatData(intent1 mIntent, String mPartnerId) {
 
 
@@ -255,8 +271,9 @@ public class ReloadApp extends Activity {
             }
         }
 
+=======
+>>>>>>> de8005176f0e10827649f111b5206ef4ceb3c8e9
 
-    }*/
 
     @Override
     protected void onStop() {
