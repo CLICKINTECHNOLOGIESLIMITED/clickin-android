@@ -31,7 +31,6 @@ import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.MyCustomAnimation;
 import com.sourcefuse.clickinandroid.utils.UnCaughtExceptionHandler;
 import com.sourcefuse.clickinandroid.utils.Utils;
-import com.sourcefuse.clickinandroid.view.adapter.DeactivateAccountView;
 import com.sourcefuse.clickinapp.R;
 
 import de.greenrobot.event.EventBus;
