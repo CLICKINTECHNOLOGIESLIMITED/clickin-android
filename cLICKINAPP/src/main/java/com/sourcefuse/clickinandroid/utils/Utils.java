@@ -99,7 +99,7 @@ public class Utils {
     public static ArrayList<String> groupSms = new ArrayList<String>();
     public static HashMap<String, ContactBean> contactMap = new HashMap<String, ContactBean>();
     public static String mName;
-    public static boolean mStartExceptionTrack = false;  // to stop exception data sending on server
+    public static boolean mStartExceptionTrack = true;  // to stop exception data sending on server
     static GoogleCloudMessaging gcm;
     static String regid;
     private static CustomProgressDialog barProgressDialog;

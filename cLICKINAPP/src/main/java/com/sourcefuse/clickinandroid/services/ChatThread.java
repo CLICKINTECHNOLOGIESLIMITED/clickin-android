@@ -155,9 +155,9 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
         authManager = ModelManager.getInstance().getAuthorizationManager();
 
         QBSettings.getInstance().fastConfigInit(Constants.CLICKIN_APP_ID, Constants.CLICKIN_AUTH_KEY, Constants.CLICKIN_AUTH_SECRET);
-        /*QBSettings.getInstance().setServerApiDomain("apiclickin.quickblox.com");
-        QBSettings.getInstance().setContentBucketName("qb-clickin");
-        QBSettings.getInstance().setChatServerDomain("chatclickin.quickblox.com");*/
+       // QBSettings.getInstance().setServerApiDomain("apiclickin.quickblox.com");
+       // QBSettings.getInstance().setContentBucketName("qb-clickin");
+        //QBSettings.getInstance().setChatServerDomain("chatclickin.quickblox.com");
         QBChatService.setDebugEnabled(true);
         messageInDb = new ArrayList<ChatMessageBody>();
     }

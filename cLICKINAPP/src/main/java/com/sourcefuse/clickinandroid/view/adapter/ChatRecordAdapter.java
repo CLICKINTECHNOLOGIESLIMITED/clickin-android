@@ -92,11 +92,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
         chatmanager = ModelManager.getInstance().getChatManager();
 
 
-        if (currentChatList.size() > 19 && chatmanager.chat_history_size.equalsIgnoreCase("true")) {//akshit code set visibility of load earlier ,only is chat records are greater then 20
-            ChatRecordView.load_earlier.setVisibility(View.VISIBLE);                             //also if chat fetched is greater then 20
-        } else {
-            ChatRecordView.load_earlier.setVisibility(View.GONE);
-        }
+
 
         if (imageLoader == null)
             imageLoader = AppController.getInstance().getImageLoader();

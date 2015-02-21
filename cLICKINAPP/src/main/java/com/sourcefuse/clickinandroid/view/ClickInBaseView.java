@@ -460,6 +460,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 /* prafulll code to set counter to zero */
                     if (relationManager.acceptedList.get(position - 1).getUnreadMsg() != 0) {
                         relationManager.acceptedList.get(position - 1).setUnreadMsg(0);
+                        if(clickInadapter!=null)
                         clickInadapter.notifyDataSetChanged();
                     }
 /* prafulll code to set counter to zero */
@@ -839,6 +840,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 
         if (mTestString.contains("UpdateMessageCounter###")) { /* prafulll code to set counter to zero */
 
+            if(clickInadapter!=null)
             clickInadapter.notifyDataSetChanged();
         } else if (message.equalsIgnoreCase("SearchResult True")) {
 

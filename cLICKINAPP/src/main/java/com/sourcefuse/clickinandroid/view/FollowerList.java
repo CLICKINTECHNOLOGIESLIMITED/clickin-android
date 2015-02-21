@@ -95,12 +95,13 @@ public class FollowerList extends ClickInBaseView implements
             mFollowerListView.setVisibility(View.VISIBLE);
             mFollowerListEmpty.setVisibility(View.GONE);
 
-            adapter = new FollowerAdapter(this, R.layout.row_follower, profManager.followers);
-            int index = listView.getFirstVisiblePosition();
-            View v = listView.getChildAt(0);
-            int top = (v == null) ? 0 : v.getTop();
-            listView.setAdapter(adapter);
-            listView.setSelectionFromTop(index, top);
+                adapter = new FollowerAdapter(this, R.layout.row_follower, profManager.followers);
+                int index = listView.getFirstVisiblePosition();
+                View v = listView.getChildAt(0);
+                int top = (v == null) ? 0 : v.getTop();
+                listView.setAdapter(adapter);
+                listView.setSelectionFromTop(index, top);
+
         } else {
             if (fromOwnProfile) {
                 mFollowerListEmpty.setVisibility(View.VISIBLE);
@@ -142,15 +143,15 @@ public class FollowerList extends ClickInBaseView implements
         Utils.dismissBarDialog();
         authManager = ModelManager.getInstance().getAuthorizationManager();
         if (getMsg.equalsIgnoreCase("UnFollowUser true")) {
-
-
+            if(adapter != null)
             adapter.notifyDataSetChanged();
+
         } else if (getMsg.equalsIgnoreCase("UnFollowUser false")) {
 
         } else if (getMsg.equalsIgnoreCase("UnFollowUser Network Error")) {
             Utils.fromSignalDialog(FollowerList.this, AlertMessage.connectionError);
         } else if (getMsg.equalsIgnoreCase("FollowUser true")) {
-
+            if(adapter != null)
             adapter.notifyDataSetChanged();
         } else if (getMsg.equalsIgnoreCase("FollowUser false")) {
 
@@ -165,8 +166,7 @@ public class FollowerList extends ClickInBaseView implements
             Utils.dismissBarDialog();
             Utils.fromSignalDialog(FollowerList.this, AlertMessage.connectionError);
         } else if (getMsg.equalsIgnoreCase("followUpdateStatus True")) {
-
-
+            if(adapter != null)
             adapter.notifyDataSetChanged();
         } else if (getMsg.equalsIgnoreCase("followUpdateStatus False")) {
 
