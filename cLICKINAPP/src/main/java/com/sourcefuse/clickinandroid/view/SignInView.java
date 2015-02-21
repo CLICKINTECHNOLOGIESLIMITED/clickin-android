@@ -412,6 +412,8 @@ public class SignInView extends Activity implements View.OnClickListener, TextWa
                 InputStream input = new java.net.URL(imageURL).openStream();
                 // Decode Bitmap
                 bitmap = BitmapFactory.decodeStream(input);
+
+
             } catch (Exception e) {
                 e.printStackTrace();
             }

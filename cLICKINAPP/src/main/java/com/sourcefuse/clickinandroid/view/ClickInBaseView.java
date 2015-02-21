@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -129,6 +130,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         clickInadapter = new ClickInWithAdapter(ClickInBaseView.this, R.layout.row_clickin_with, relationManager.acceptedList);
         clickWithlistView.setAdapter(clickInadapter);
     }
+
 
     private void switchView(String rid, int relationListIndex) {
 

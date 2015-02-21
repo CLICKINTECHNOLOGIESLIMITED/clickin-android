@@ -1,10 +1,13 @@
 package com.sourcefuse.clickinandroid.model;
 
+import android.util.Log;
+
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.sourcefuse.clickinandroid.model.bean.CurrentClickerBean;
 import com.sourcefuse.clickinandroid.model.bean.FeedStarsBean;
 import com.sourcefuse.clickinandroid.model.bean.NewsFeedBean;
 import com.sourcefuse.clickinandroid.utils.APIs;
+import com.sourcefuse.clickinandroid.utils.Utils;
 
 import org.apache.http.entity.StringEntity;
 import org.apache.http.message.BasicHeader;
@@ -21,10 +24,11 @@ public class NewsFeedManager {
     public ArrayList<NewsFeedBean> userFeed = new ArrayList<NewsFeedBean>();
     public ArrayList<NewsFeedBean> PostFeed = new ArrayList<NewsFeedBean>(); // Used To View Feed
     public ArrayList<FeedStarsBean> feedStarsList = new ArrayList<FeedStarsBean>();
+    public Boolean mFlag = false;  // to set visibility of newfeed footer(load older newfeed)
     StringEntity se = null;
     private CurrentClickerBean currentClickerBean;
 
-    public void fetchNewsFeed(String lastNewsfeedId, String phone, String usertoken) {
+    public void fetchNewsFeed(final String lastNewsfeedId, String phone, String usertoken) {
         // TODO Auto-generated method stub
         JSONObject userInputDetails = new JSONObject();
         try {
@@ -39,6 +43,9 @@ public class NewsFeedManager {
         } catch (Exception e1) {
             e1.printStackTrace();
         }
+        if (Utils.isEmptyString(lastNewsfeedId))
+            userFeed.clear();
+
         ClickinRestClient.post(null, APIs.FETCHNEWSFEEDS, se, "application/json",
                 new JsonHttpResponseHandler() {
 
@@ -46,11 +53,13 @@ public class NewsFeedManager {
                     public void onFailure(int statusCode, Throwable e,
                                           JSONObject errorResponse) {
                         super.onFailure(statusCode, e, errorResponse);
-                        userFeed.clear();
+                       // userFeed.clear();
                         if (errorResponse != null) {
 
+                            Log.e("user dont have notification--->","user dont have notification--->");
                             EventBus.getDefault().post("NewsFeed False");
                         } else {
+                            Log.e("user dont have notification---> 1","user dont have notification---> 1");
                             EventBus.getDefault().post("NewsFeed Network Error");
                         }
                     }
@@ -71,7 +80,10 @@ public class NewsFeedManager {
 							}*/
 
                             JSONArray newsfeedArray = response.getJSONArray("newsfeedArray");
-                            userFeed.clear();
+
+
+                            if (newsfeedArray.length() > 24)
+                                mFlag = true;
 
                             for (int i = 0; i < newsfeedArray.length(); i++) {
                                 NewsFeedBean allNewsFeed = new NewsFeedBean();
@@ -267,6 +279,7 @@ public class NewsFeedManager {
                                         allNewsFeed.setNewsFeedArray_senderDetail_phno(newsfeedArray.getJSONObject(i).getJSONObject("senderDetail").getString("phone_no"));
 
                                         userFeed.add(allNewsFeed);
+                                        Log.e("userFeed size--->", "" + userFeed.size());
 
                                     }
 
@@ -286,6 +299,7 @@ public class NewsFeedManager {
                             }
                         } catch (JSONException e) {
                             EventBus.getDefault().post("NewsFeed False");
+                            Log.e("new feed false-->", "new feed false-->");
                             e.printStackTrace();
                         }
 
