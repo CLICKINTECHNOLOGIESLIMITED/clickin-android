@@ -45,9 +45,11 @@ public class AppController extends Application {
         return this.mImageLoader;
     }
 
+
     public LruBitmapCache getLruBitmapCache() {
         if (mLruBitmapCache == null)
             mLruBitmapCache = new LruBitmapCache();
+
         return this.mLruBitmapCache;
     }
 

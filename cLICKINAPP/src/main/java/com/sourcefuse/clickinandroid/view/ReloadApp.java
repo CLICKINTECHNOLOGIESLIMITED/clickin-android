@@ -171,7 +171,8 @@ public class ReloadApp extends Activity {
             case Constants.JUMPOTHERPROFILEVIEW_NOTF:
 
                 if (getIntent().getStringExtra("Tp").equalsIgnoreCase("Upp")) {
-                    Utils.deletePhoto(getIntent().getStringExtra("phone_no"),getApplicationContext());
+                    deletePhoto(getIntent().getStringExtra("phone_no"));
+
                 }
 
                 intent.setClass(getApplicationContext(), JumpOtherProfileView.class);
@@ -199,7 +200,21 @@ public class ReloadApp extends Activity {
 
 
     }
+    public void deletePhoto(String mPhoneNo) {
+        String RelationId = "";
+        for (GetrelationshipsBean mAcceptList : ModelManager.getInstance().getRelationManager().acceptedList) {
+            if (mPhoneNo.equalsIgnoreCase(mAcceptList.getPhoneNo())) {
+                RelationId = mAcceptList.getRelationshipId();
+            }
+        }
 
+        if (!Utils.isEmptyString(RelationId)) {
+            String mPath = Utils.mImagePath + RelationId + ".jpg";
+            Uri uri = Utils.getImageContentUri(getApplicationContext(), new File(mPath));
+            if (!Utils.isEmptyString("" + uri))
+                getContentResolver().delete(uri, null, null);
+        }
+    }
 
     //function to find index in accepted list
     private int getPartnerIndexInList(String partnerId) {
@@ -213,49 +228,7 @@ public class ReloadApp extends Activity {
         return index;
     }
 
-  /*  public void putChatData(Intent mIntent, String mPartnerId) {
 
-
-        for (int i = 0; i < ModelManager.getInstance().getRelationManager().acceptedList.size(); i++) {
-
-            if (ModelManager.getInstance().getRelationManager().acceptedList.get(i).getPartner_id().equalsIgnoreCase(mPartnerId)) {
-                mIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                mIntent.setAction("UPDATE");
-                mIntent.putExtra("quickId", ModelManager.getInstance().getRelationManager().acceptedList.get(i).getPartnerQBId());
-
-                mIntent.putExtra("partnerPic", ModelManager.getInstance().getRelationManager().acceptedList.get(i).getPartnerPic());
-
-
-                mIntent.putExtra("partnerName", ModelManager.getInstance().getRelationManager().acceptedList.get(i).getPartnerName());
-
-
-                mIntent.putExtra("rId", ModelManager.getInstance().getRelationManager().acceptedList.get(i).getRelationshipId());
-
-
-                mIntent.putExtra("partnerId", ModelManager.getInstance().getRelationManager().acceptedList.get(i).getPartner_id());
-
-
-                mIntent.putExtra("myClicks", ModelManager.getInstance().getRelationManager().acceptedList.get(i).getUserClicks());
-
-
-                mIntent.putExtra("userClicks", ModelManager.getInstance().getRelationManager().acceptedList.get(i).getClicks());
-
-
-                mIntent.putExtra("partnerPh", ModelManager.getInstance().getRelationManager().acceptedList.get(i).getPhoneNo());
-
-
-                mIntent.putExtra("relationListIndex", i);
-
-
-                ChatManager chatManager = ModelManager.getInstance().getChatManager();
-                chatManager.setrelationshipId(ModelManager.getInstance().getRelationManager().acceptedList.get(i).getRelationshipId());
-
-
-            }
-        }
-
-
-    }*/
 
     @Override
     protected void onStop() {

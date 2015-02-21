@@ -3,6 +3,7 @@ package com.sourcefuse.clickinandroid.view.adapter;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -20,7 +21,9 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -68,7 +71,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
     private AuthManager authManager;
     private RelationManager relationManager;
     private ChatManager chatmanager;
-
+    private Dialog dialog;
 
     public ChatRecordAdapter(Context context, int layoutResourceId,
                              ArrayList<ChatMessageBody> chatList) {
@@ -175,7 +178,10 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                         public void onSuccess(ImageLoader.ImageContainer loader) {
                             if (loader.getBitmap() != null) {
                                 String path = Utils.storeImage(loader.getBitmap(), chatIdForImage, context);  // save image bitmap by chat id
-                                image_attached.setImageURI(Utils.getImageContentUri(context, new File(path))); // set image form uri once downloadedd
+                                if (!Utils.isEmptyString(path))
+                                    image_attached.setImageURI(Utils.getImageContentUri(context, new File(path))); // set image form uri once downloadedd
+                                else
+                                    fromSignalDialog((Activity) context, context.getResources().getString(R.string.application_crash));
                                 progressBar.setVisibility(View.GONE);
                                 mTempLayout.setVisibility(View.GONE);
                             }
@@ -299,7 +305,10 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                         public void onSuccess(ImageLoader.ImageContainer loader) {
                             if (loader.getBitmap() != null) {
                                 String path = Utils.storeImage(loader.getBitmap(), chatIdForImage, context);
-                                image_attached.setImageURI(Utils.getImageContentUri(context, new File(path)));
+                                if (!Utils.isEmptyString(path))
+                                    image_attached.setImageURI(Utils.getImageContentUri(context, new File(path)));
+                                else
+                                    fromSignalDialog((Activity) context, context.getResources().getString(R.string.application_crash));
                                 progressBar.setVisibility(View.GONE);
                                 /*mTempLayout.setVisibility(View.GONE);*/
                                 play_buttom.setVisibility(View.VISIBLE);
@@ -704,7 +713,10 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                         public void onSuccess(ImageLoader.ImageContainer loader) {
                             if (loader.getBitmap() != null) {
                                 String path = Utils.storeImage(loader.getBitmap(), chatIdForImage, context);
-                                image_attached.setImageURI(Utils.getImageContentUri(context, new File(path)));
+                                if (!Utils.isEmptyString(path))
+                                    image_attached.setImageURI(Utils.getImageContentUri(context, new File(path)));
+                                else
+                                    fromSignalDialog((Activity) context, context.getResources().getString(R.string.application_crash));
                                 progressBar.setVisibility(View.GONE);
                                 mTempLayout.setVisibility(View.GONE);
                             }
@@ -808,7 +820,10 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                         public void onSuccess(ImageLoader.ImageContainer loader) {
                             if (loader.getBitmap() != null) {
                                 String path = Utils.storeImage(loader.getBitmap(), chatIdForImage, context);
-                                image_attached.setImageURI(Utils.getImageContentUri(context, new File(path)));
+                                if (!Utils.isEmptyString(path))
+                                    image_attached.setImageURI(Utils.getImageContentUri(context, new File(path)));
+                                else
+                                    fromSignalDialog((Activity) context, context.getResources().getString(R.string.application_crash));
                                 progressBar.setVisibility(View.GONE);
 
                                 play_buttom.setVisibility(View.VISIBLE);
@@ -1684,7 +1699,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
                 output.close();
                 input.close();
             } catch (Exception e) {
-                Log.e("Exception---->", "" + e.toString());
+
             }
             return null;
         }
@@ -1707,7 +1722,7 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
 
             } catch (Exception e) {
                 e.printStackTrace();
-                Log.e("Exception---->", "" + e.toString());
+
             } finally {
                 try {
                     if (output != null) {
@@ -1767,5 +1782,28 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
             prgDialog.dismiss();
         }
 
+    }
+
+    public void fromSignalDialog(Activity activity, String str) {
+
+        dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.setContentView(R.layout.alert_check_dialogs);
+        dialog.setCancelable(false);
+        TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
+        msgI.setText(str);
+
+
+        Button dismiss = (Button) dialog.findViewById(R.id.coolio);
+        dismiss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                dialog.dismiss();
+
+            }
+        });
+        if (!dialog.isShowing())
+            dialog.show();
     }
 }

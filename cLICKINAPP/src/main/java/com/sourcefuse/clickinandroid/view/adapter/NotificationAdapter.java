@@ -21,6 +21,7 @@ import com.sourcefuse.clickinandroid.model.RelationManager;
 import com.sourcefuse.clickinandroid.model.bean.GetrelationshipsBean;
 import com.sourcefuse.clickinandroid.model.bean.NotificationBean;
 import com.sourcefuse.clickinandroid.utils.Utils;
+import com.sourcefuse.clickinandroid.view.ClickInBaseView;
 import com.sourcefuse.clickinandroid.view.FeedView;
 import com.sourcefuse.clickinandroid.view.FollowerList;
 import com.sourcefuse.clickinandroid.view.FollowingListView;
@@ -150,7 +151,7 @@ public class NotificationAdapter extends ArrayAdapter<NotificationBean> {
                     for (int i = 0; i < relationManager.acceptedList.size(); i++) {
                         if (relationManager.acceptedList.get(i).getPartner_id().equalsIgnoreCase(item.update_user_id)) {
                             ph = relationManager.acceptedList.get(i).getPhoneNo();
-                            Utils.deletePhoto(ph, context);
+                            deletePhoto(relationManager.acceptedList.get(i).getRelationshipId());
                         }
                     }
 
@@ -189,6 +190,15 @@ public class NotificationAdapter extends ArrayAdapter<NotificationBean> {
         RelativeLayout mNotificationLayout;
     }
 
+    public void deletePhoto(String RelationId) {
 
+        if (!Utils.isEmptyString(RelationId)) {
+            String mPath = Utils.mImagePath + RelationId + ".jpg";
+            Uri uri = Utils.getImageContentUri(context, new File(mPath));
+
+            if (!Utils.isEmptyString("" + uri))
+                context.getContentResolver().delete(uri, null, null);
+        }
+    }
 
 }

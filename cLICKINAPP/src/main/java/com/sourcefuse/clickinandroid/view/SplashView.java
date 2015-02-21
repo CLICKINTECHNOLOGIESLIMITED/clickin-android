@@ -241,10 +241,13 @@ public class SplashView extends Activity implements View.OnClickListener {
 
             Bitmap bitmap = null;
             try {
+                Log.e("download image--->","download image--->");
                 // Download Image from URL
                 InputStream input = new java.net.URL(imageURL).openStream();
                 // Decode Bitmap
+                Log.e("download image---> 1","download image--->1");
                 bitmap = BitmapFactory.decodeStream(input);
+                Log.e("download image---> 2","download image--->2");
             } catch (Exception e) {
                 e.printStackTrace();
             }

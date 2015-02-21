@@ -7,25 +7,32 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.PowerManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+import android.widget.ImageView;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.PicassoManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
 import com.sourcefuse.clickinandroid.model.bean.GetrelationshipsBean;
+import com.sourcefuse.clickinandroid.utils.AppController;
 import com.sourcefuse.clickinandroid.utils.Constants;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.ReloadApp;
 import com.sourcefuse.clickinapp.R;
 
 import java.io.File;
+import java.io.InputStream;
+import java.lang.ref.WeakReference;
 import java.util.List;
 
 public class GcmIntentService extends IntentService {
@@ -137,7 +144,7 @@ public class GcmIntentService extends IntentService {
                         PicassoManager.clearCache();
                         dataToBeSend.putInt("msg_type", Constants.JUMPOTHERPROFILEVIEW_NOTF);
                         dataToBeSend.putString("phone_no", extras.getString("phone_no"));
-                        Utils.deletePhoto(extras.getString("phone_no"),getApplicationContext());
+                        deletePhoto(extras.getString("phone_no"));
                         msg_type = Constants.JUMPOTHERPROFILEVIEW_NOTF;
                     } else if (extras.getString("Tp").equalsIgnoreCase("FR")) {  // case follow request
 
@@ -222,7 +229,41 @@ public class GcmIntentService extends IntentService {
         }
         return false;
     }
+    public void deletePhoto(String mPhoneNo) {
 
+        /*new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Bitmap bitmap = null;
+                try {
+                    // Download Image from URL
+                    InputStream input = new java.net.URL(" ").openStream();
+                    // Decode Bitmap
+                    bitmap = BitmapFactory.decodeStream(input);
+                    if(bitmap != null)
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });*/
+        String RelationId = "";
+        for (GetrelationshipsBean mAcceptList : ModelManager.getInstance().getRelationManager().acceptedList) {
+            if (mPhoneNo.equalsIgnoreCase(mAcceptList.getPhoneNo())) {
+                RelationId = mAcceptList.getRelationshipId();
+                AppController.getInstance().getRequestQueue().getCache().clear();
+                AppController.getInstance().getRequestQueue().getCache().remove(mAcceptList.getPartnerPic());
+                AppController.getInstance().getRequestQueue().getCache().invalidate(mAcceptList.getPartnerPic(),true);
+            }
+        }
+
+        if (!Utils.isEmptyString(RelationId)) {
+            String mPath = Utils.mImagePath + RelationId + ".jpg";
+            Uri uri = Utils.getImageContentUri(getApplicationContext(), new File(mPath));
+            if (!Utils.isEmptyString("" + uri))
+                getContentResolver().delete(uri, null, null);
+        }
+    }
 
 
 }
