@@ -21,7 +21,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
-import com.sourcefuse.clickinandroid.model.PicassoManager;
 import com.sourcefuse.clickinandroid.model.ProfileManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
 import com.sourcefuse.clickinandroid.model.bean.GetrelationshipsBean;
@@ -195,31 +194,34 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
 
         privacy.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                authManager = ModelManager.getInstance().getAuthorizationManager();
-                relationManager = ModelManager.getInstance().getRelationManager();
+                if(Utils.isConnectingToInternet((Activity)context)) {
+                    authManager = ModelManager.getInstance().getAuthorizationManager();
+                    relationManager = ModelManager.getInstance().getRelationManager();
 
 
-                RelativeLayout layout = (RelativeLayout) v.getParent();
+                    RelativeLayout layout = (RelativeLayout) v.getParent();
 
 
-                int position = (Integer) v.getTag();
+                    int position = (Integer) v.getTag();
 
 
-                if (itemList.get(position).getStatusAccepted().equalsIgnoreCase("true") && itemList.get(position).getmStatuspublic().equalsIgnoreCase("true")) {
+                    if (itemList.get(position).getStatusAccepted().equalsIgnoreCase("true") && itemList.get(position).getmStatuspublic().equalsIgnoreCase("true")) {
 
-                    relationDialog(AlertMessage.PUBLICMSG + itemList.get(position).getPartnerName() + " private?", position, layout);//request normal dialog to custom dialog
+                        relationDialog(AlertMessage.PUBLICMSG + itemList.get(position).getPartnerName() + " private?", position, layout);//request normal dialog to custom dialog
 
-                } else if (itemList.get(position).getStatusAccepted().equalsIgnoreCase("true") && (itemList.get(position).getmStatuspublic().equalsIgnoreCase("false") || Utils.isEmptyString(itemList.get(position).getmStatuspublic()))) {
+                    } else if (itemList.get(position).getStatusAccepted().equalsIgnoreCase("true") && (itemList.get(position).getmStatuspublic().equalsIgnoreCase("false") || Utils.isEmptyString(itemList.get(position).getmStatuspublic()))) {
 
-                    relationDialogprivate(AlertMessage.PRIVATE + itemList.get(position).getPartnerName() + " public?", position, layout);//replace Normal Dialog to custom dialog
-                } else if (Utils.isEmptyString(itemList.get(position).getStatusAccepted()) && itemList.get(position).getRequestInitiator().equalsIgnoreCase("true")) {
-                } else if (Utils.isEmptyString(itemList.get(position).getStatusAccepted())) {
-                    Utils.launchBarDialog((Activity) context);
-                    relationManager.updateStatus(itemList.get(position).getRelationshipId(), authManager.getPhoneNo(), authManager.getUsrToken(), "true");
-                    itemList.get(position).setStatusAccepted("true");
-                    Utils.trackMixpanel(((Activity) context), "", "", "AcceptUserRequest", false);//Track AcceptUserRequest through mixpanel
+                        relationDialogprivate(AlertMessage.PRIVATE + itemList.get(position).getPartnerName() + " public?", position, layout);//replace Normal Dialog to custom dialog
+                    } else if (Utils.isEmptyString(itemList.get(position).getStatusAccepted()) && itemList.get(position).getRequestInitiator().equalsIgnoreCase("true")) {
+                    } else if (Utils.isEmptyString(itemList.get(position).getStatusAccepted())) {
+                        Utils.launchBarDialog((Activity) context);
+                        relationManager.updateStatus(itemList.get(position).getRelationshipId(), authManager.getPhoneNo(), authManager.getUsrToken(), "true");
+                        itemList.get(position).setStatusAccepted("true");
+                        Utils.trackMixpanel(((Activity) context), "", "", "AcceptUserRequest", false);//Track AcceptUserRequest through mixpanel
+                    }
+                }else {
+                    Utils.fromSignalDialog((Activity)context,AlertMessage.connectionError);
                 }
-
             }
         });
 
@@ -230,23 +232,27 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
             public void onClick(View v) {
 
                 int pos = (Integer) v.getTag();
-                if (itemList.get(pos).getStatusAccepted() == "true") {
+                if (Utils.isConnectingToInternet((Activity)context)) {
+                    if (itemList.get(pos).getStatusAccepted() == "true") {
 
-                    relationManager = ModelManager.getInstance().getRelationManager();
-                    String partnerId = relationManager.getrelationshipsData.get(pos).getPartner_id();
+                        relationManager = ModelManager.getInstance().getRelationManager();
+                        String partnerId = relationManager.getrelationshipsData.get(pos).getPartner_id();
 
-                    Intent intent = new Intent(context, JumpOtherProfileView.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.putExtra("PartnerId", partnerId);
-                    intent.putExtra("FromOwnProfile", true);
-                    intent.putExtra("phNumber", itemList.get(position).getPhoneNo());
-                    ((Activity) context).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
-                    context.startActivity(intent);
+                        Intent intent = new Intent(context, JumpOtherProfileView.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra("PartnerId", partnerId);
+                        intent.putExtra("FromOwnProfile", true);
+                        intent.putExtra("phNumber", itemList.get(position).getPhoneNo());
+                        ((Activity) context).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+                        context.startActivity(intent);
 
-                } else {
+                    } else {
 
+                    }
+                    Utils.trackMixpanel(((Activity) context), "", "", "CheckMyPartnerProfile", false);//Track CheckMyPartnerProfile through mixpanel
+                }else {
+                    Utils.fromSignalDialog((Activity)context,AlertMessage.connectionError);
                 }
-                Utils.trackMixpanel(((Activity) context), "", "", "CheckMyPartnerProfile", false);//Track CheckMyPartnerProfile through mixpanel
             }
 
 
@@ -254,22 +260,25 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
         delete.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
+                if(Utils.isConnectingToInternet((Activity)context)) {
 
-                int position = (Integer) v.getTag();
+                    int position = (Integer) v.getTag();
 
-                authManager = ModelManager.getInstance().getAuthorizationManager();
-                relationManager = ModelManager.getInstance().getRelationManager();
-                Constants.itemPosition = position;
-                Utils.launchBarDialog((Activity) context);
-                if (Utils.isEmptyString(itemList.get(position).getStatusAccepted()) || Utils.isEmptyString(itemList.get(position).getStatusAccepted()) && itemList.get(position).getRequestInitiator().equalsIgnoreCase("true")) {
-                    relationManager.updateStatus(itemList.get(position).getRelationshipId(), authManager.getPhoneNo(), authManager.getUsrToken(), "false");
+                    authManager = ModelManager.getInstance().getAuthorizationManager();
+                    relationManager = ModelManager.getInstance().getRelationManager();
+                    Constants.itemPosition = position;
+                    Utils.launchBarDialog((Activity) context);
+                    if (Utils.isEmptyString(itemList.get(position).getStatusAccepted()) || Utils.isEmptyString(itemList.get(position).getStatusAccepted()) && itemList.get(position).getRequestInitiator().equalsIgnoreCase("true")) {
+                        relationManager.updateStatus(itemList.get(position).getRelationshipId(), authManager.getPhoneNo(), authManager.getUsrToken(), "false");
 
-                    Utils.trackMixpanel(((Activity) context), "", "", "RejectUserRequest", false);//Track RejectUserRequest through mixpanel
-                } else {
-                    Utils.trackMixpanel(((Activity) context), "", "", "DeletePartner", false);//Track Delete Partner through mixpanel
-                    relationManager.deleteRelationship(itemList.get(position).getRelationshipId(), authManager.getPhoneNo(), authManager.getUsrToken());
+                        Utils.trackMixpanel(((Activity) context), "", "", "RejectUserRequest", false);//Track RejectUserRequest through mixpanel
+                    } else {
+                        Utils.trackMixpanel(((Activity) context), "", "", "DeletePartner", false);//Track Delete Partner through mixpanel
+                        relationManager.deleteRelationship(itemList.get(position).getRelationshipId(), authManager.getPhoneNo(), authManager.getUsrToken());
+                    }
+                }else{
+                    Utils.fromSignalDialog((Activity)context,AlertMessage.connectionError);
                 }
-
 
             }
         });

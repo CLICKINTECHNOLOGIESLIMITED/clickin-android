@@ -916,18 +916,21 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 break;
 
             case R.id.iv_partner_pix:
-                Intent viewProfile = new Intent(ChatRecordView.this, JumpOtherProfileView.class);
-                //  viewProfile.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                viewProfile.putExtra("FromOwnProfile", true);
-                viewProfile.putExtra("phNumber", partnerPh);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
-                startActivity(viewProfile);
+                if(Utils.isConnectingToInternet(ChatRecordView.this)) {
+                    Intent viewProfile = new Intent(ChatRecordView.this, JumpOtherProfileView.class);
+                    //  viewProfile.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    viewProfile.putExtra("FromOwnProfile", true);
+                    viewProfile.putExtra("phNumber", partnerPh);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+                    startActivity(viewProfile);
 
-                //To track through mixPanel.
-                //click on partner pic.
-                Utils.trackMixpanel(this, "", "", "RPageCheckMyPartnerProfile", false);
-                break;
-
+                    //To track through mixPanel.
+                    //click on partner pic.
+                    Utils.trackMixpanel(this, "", "", "RPageCheckMyPartnerProfile", false);
+                    break;
+                }else {
+                    Utils.fromSignalDialog(ChatRecordView.this,AlertMessage.connectionError);
+                }
 
         }
     }
