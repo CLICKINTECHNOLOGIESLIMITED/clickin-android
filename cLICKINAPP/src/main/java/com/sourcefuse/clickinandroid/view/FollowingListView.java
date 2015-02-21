@@ -160,6 +160,7 @@ public class FollowingListView extends ClickInBaseView implements View.OnClickLi
             Utils.fromSignalDialog(this, AlertMessage.connectionError);
             //Utils.showAlert(FollowingListView.this, AlertMessage.connectionError);
         } else if (getMsg.equalsIgnoreCase("update")) {
+            if(adapter!=null)
             adapter.notifyDataSetChanged();
 
         }

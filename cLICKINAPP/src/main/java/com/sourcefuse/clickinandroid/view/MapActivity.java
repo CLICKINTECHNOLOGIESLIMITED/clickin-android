@@ -208,7 +208,9 @@ public class MapActivity extends Activity implements ConnectionCallbacks, OnConn
                 mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
                 searchLocations.clear();
                 searchcor.clear();
-                adapter.notifyDataSetChanged();
+                if(adapter!=null) {
+                    adapter.notifyDataSetChanged();
+                }
                 try {
                     EditText myEditText = (EditText) findViewById(R.id.locationText);
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);

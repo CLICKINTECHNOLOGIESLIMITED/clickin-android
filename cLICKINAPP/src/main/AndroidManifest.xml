@@ -172,11 +172,6 @@
             android:windowSoftInputMode="adjustNothing|stateHidden" />
 
         <activity
-            android:name="com.sourcefuse.clickinandroid.view.ImageViewer"
-            android:launchMode="standard"
-            android:screenOrientation="portrait" />
-
-        <activity
             android:name="com.sourcefuse.clickinandroid.view.SettingView"
             android:launchMode="standard"
             android:screenOrientation="portrait" />
@@ -188,7 +183,6 @@
 
         <activity
             android:name="com.sourcefuse.clickinandroid.view.Card"
-
             android:screenOrientation="portrait" />
 
         <activity
