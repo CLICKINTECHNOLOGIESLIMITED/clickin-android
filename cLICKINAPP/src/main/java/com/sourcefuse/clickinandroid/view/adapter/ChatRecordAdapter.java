@@ -50,7 +50,6 @@ import com.squareup.picasso.Picasso;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
@@ -87,13 +86,6 @@ public class ChatRecordAdapter extends ArrayAdapter<ChatMessageBody> {
         RelativeLayout parentChatLayout = (RelativeLayout) row.findViewById(R.id.chat_parent_layout);
         relationManager = ModelManager.getInstance().getRelationManager();
         chatmanager = ModelManager.getInstance().getChatManager();
-
-
-        if (currentChatList.size() > 19 && chatmanager.chat_history_size.equalsIgnoreCase("true")) {//akshit code set visibility of load earlier ,only is chat records are greater then 20
-            ChatRecordView.load_earlier.setVisibility(View.VISIBLE);                             //also if chat fetched is greater then 20
-        } else {
-            ChatRecordView.load_earlier.setVisibility(View.GONE);
-        }
 
         if (imageLoader == null)
             imageLoader = AppController.getInstance().getImageLoader();
