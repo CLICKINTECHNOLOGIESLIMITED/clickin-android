@@ -8,11 +8,9 @@ import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -26,7 +24,6 @@ import android.widget.TextView;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ClickInNotificationManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
-import com.sourcefuse.clickinandroid.model.PicassoManager;
 import com.sourcefuse.clickinandroid.model.ProfileManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
 import com.sourcefuse.clickinandroid.services.MyQbChatService;
@@ -424,7 +421,11 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         } else if (message.equalsIgnoreCase("updateStatus true")) {
             relationManager.getRelationShips(authManager.getPhoneNo(), authManager.getUsrToken());
 
-        } else if (message.equalsIgnoreCase("UserVisible true")) {
+        }else if(message.equalsIgnoreCase("updateStatus error")){
+            Utils.dismissBarDialog();
+            Utils.fromSignalDialog(this, AlertMessage.connectionError);
+        }
+        else if (message.equalsIgnoreCase("UserVisible true")) {
 
 
         } else if (message.equalsIgnoreCase("GetrelationShips True")) {
@@ -456,6 +457,8 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
             Utils.dismissBarDialog();
             Utils.fromSignalDialog(this, AlertMessage.connectionError);
         } else if (message.equalsIgnoreCase("UserVisible Network Error")) {
+            Utils.dismissBarDialog();
+            Utils.fromSignalDialog(this, AlertMessage.connectionError);
 
         } else if (message.equalsIgnoreCase("UserVisible true on error")) {
 
