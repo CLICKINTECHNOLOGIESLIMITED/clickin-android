@@ -101,15 +101,16 @@ public class FeedCommentsView extends Activity {
                     feedStarsBean.setUserPic(authMgr.getUserPic());
                     feedStarsBean.setComment(comment.getText().toString());
                     feedList.add(feedStarsBean);
-                    if (adapter == null) {
-                        adapter = new FeedsCommentsAdapter(FeedCommentsView.this, R.layout.view_feeds_comments_row, feedList);
-                        list.setAdapter(adapter);
-                        list.setSelection(list.getCount());
-                    } else {
-                        adapter.notifyDataSetChanged();
-                        list.setSelection(list.getCount());
+                    if(feedList.size() >0 ) {//should not set the adapter if list size is 0
+                        if (adapter == null) {
+                            adapter = new FeedsCommentsAdapter(FeedCommentsView.this, R.layout.view_feeds_comments_row, feedList);
+                            list.setAdapter(adapter);
+                            list.setSelection(list.getCount());
+                        } else {
+                            adapter.notifyDataSetChanged();
+                            list.setSelection(list.getCount());
+                        }
                     }
-
                     if (comment.getWindowToken() != null)
                         imm.hideSoftInputFromWindow(comment.getWindowToken(), 0);
 

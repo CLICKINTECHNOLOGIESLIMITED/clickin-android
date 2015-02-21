@@ -18,9 +18,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
-import com.sourcefuse.clickinandroid.model.ProfileManager;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.FetchContactFromPhone;
 import com.sourcefuse.clickinandroid.utils.UnCaughtExceptionHandler;
@@ -181,10 +179,10 @@ public class AddSomeoneView extends Activity implements TextWatcher {
         //akshit code end
 
 
-        //   if (Utils.itData.size() != 0) {
+           if (Utils.itData.size() != 0) {//should not set the adapter if list size is 0
         adapter = new ContactAdapter(this, R.layout.row_contacts, Utils.itData);
         listView.setAdapter(adapter);
-        // }
+         }
     }
 
 
@@ -242,9 +240,10 @@ public class AddSomeoneView extends Activity implements TextWatcher {
 
         if (message.equalsIgnoreCase("CheckFriend True")) {
             Utils.dismissBarDialog();
-            adapter = new ContactAdapter(this, R.layout.row_contacts, Utils.itData);
-            listView.setAdapter(adapter);
-
+            if (Utils.itData.size() != 0) {//should not set the adapter if list size is 0
+                adapter = new ContactAdapter(this, R.layout.row_contacts, Utils.itData);
+                listView.setAdapter(adapter);
+            }
         } else if (message.equalsIgnoreCase("CheckFriend False")) {
             Utils.dismissBarDialog();
             //  Utils.showAlert(this,authManager.getMessage());
