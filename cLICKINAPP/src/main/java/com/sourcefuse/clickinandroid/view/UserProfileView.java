@@ -8,11 +8,9 @@ import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -26,7 +24,6 @@ import android.widget.TextView;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ClickInNotificationManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
-import com.sourcefuse.clickinandroid.model.PicassoManager;
 import com.sourcefuse.clickinandroid.model.ProfileManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
 import com.sourcefuse.clickinandroid.services.MyQbChatService;
@@ -105,11 +102,10 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         setContentView(R.layout.view_userprofile);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         addMenu(true);
-        this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
 
-        if (PicassoManager.getPicasso() == null) {
-            PicassoManager.setPicasso(this);
-        }
+
+
 
 
         authManager = ModelManager.getInstance().getAuthorizationManager();
@@ -425,7 +421,11 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         } else if (message.equalsIgnoreCase("updateStatus true")) {
             relationManager.getRelationShips(authManager.getPhoneNo(), authManager.getUsrToken());
 
-        } else if (message.equalsIgnoreCase("UserVisible true")) {
+        }else if(message.equalsIgnoreCase("updateStatus error")){
+            Utils.dismissBarDialog();
+            Utils.fromSignalDialog(this, AlertMessage.connectionError);
+        }
+        else if (message.equalsIgnoreCase("UserVisible true")) {
 
 
         } else if (message.equalsIgnoreCase("GetrelationShips True")) {
@@ -440,6 +440,8 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
                 }
             }, 10000);
             setLeftMenuList();
+            if(adapter != null)
+                adapter.notifyDataSetChanged();;
             setlist();
         } else if (message.equalsIgnoreCase("ProfileInfo True")) {
             //monika-start service in case of sign up only, else it will be done from sign in
@@ -455,6 +457,8 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
             Utils.dismissBarDialog();
             Utils.fromSignalDialog(this, AlertMessage.connectionError);
         } else if (message.equalsIgnoreCase("UserVisible Network Error")) {
+            Utils.dismissBarDialog();
+            Utils.fromSignalDialog(this, AlertMessage.connectionError);
 
         } else if (message.equalsIgnoreCase("UserVisible true on error")) {
 

@@ -18,7 +18,6 @@ import android.widget.TextView;
 
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
-import com.sourcefuse.clickinandroid.model.PicassoManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.Constants;
@@ -153,15 +152,20 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-                if (relationManager.profileRelationShipData.size() > 0 && !relationManager.profileRelationShipData.get(position).getPartner_id().equalsIgnoreCase(authManager.getUserId())) {
 
-                    //To track through mixPanel.
-                    //Click To other Partner Profile.
-                    Utils.trackMixpanel(JumpOtherProfileView.this, "", "", "CheckOthersPartnerProfile", false);
+                if(Utils.isConnectingToInternet(JumpOtherProfileView.this)) {
+                    if (relationManager.profileRelationShipData.size() > 0 && !relationManager.profileRelationShipData.get(position).getPartner_id().equalsIgnoreCase(authManager.getUserId())) {
 
-                    String phNo = relationManager.profileRelationShipData.get(position).getPhoneNo();
-                    switchView(phNo);
-                } else {
+                        //To track through mixPanel.
+                        //Click To other Partner Profile.
+                        Utils.trackMixpanel(JumpOtherProfileView.this, "", "", "CheckOthersPartnerProfile", false);
+
+                        String phNo = relationManager.profileRelationShipData.get(position).getPhoneNo();
+                        switchView(phNo);
+                    } else {
+                    }
+                }else {
+                    Utils.fromSignalDialog(JumpOtherProfileView.this,AlertMessage.connectionError);
                 }
             }
         });
@@ -286,12 +290,12 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
 
         } else if (message.equalsIgnoreCase("ProfileInfo False")) {
             Utils.dismissBarDialog();
-        } else if (message.equalsIgnoreCase("ProfileInfoNetwork Error")) {
-            Utils.fromSignalDialog(this, AlertMessage.connectionError);
-        } else if (message.equalsIgnoreCase("Fetchprofilerelationships True") || message.equalsIgnoreCase("GetRelationShips False") || message.equalsIgnoreCase("GetRelationShips Network Error")) {
+            finish();
+        } else if (message.equalsIgnoreCase("ProfileInfo Network Error")) {
+            Utils.fromSignalDialogfinish(JumpOtherProfileView.this,AlertMessage.connectionError);
+        } else if (message.equalsIgnoreCase("Fetchprofilerelationships True") || message.equalsIgnoreCase("GetRelationShips False")
+                ) {
 
-            //
-            //akshit code
             if (Utils.isEmptyString(relationManager.getRelationStatus())) {
                 clickwithHead.setVisibility(View.GONE);
                 clickwithNameHead.setText("CLICK WITH\n" + authManager.getTmpUserName());
@@ -304,10 +308,14 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
             }
             setlist();
             Utils.dismissBarDialog();
-        } else if (message.equalsIgnoreCase("Fetchprofilerelationships False")) {
+        }else if(message.equalsIgnoreCase("GetRelationShips Network Error")){
+            Utils.dismissBarDialog();
+            Utils.fromSignalDialogfinish(JumpOtherProfileView.this,AlertMessage.connectionError);
+        }
+        else if (message.equalsIgnoreCase("Fetchprofilerelationships False")) {
             Utils.dismissBarDialog();
         } else if (message.equalsIgnoreCase("Fetchprofilerelationships Network Error")) {
-            Utils.fromSignalDialog(this, AlertMessage.connectionError);
+            Utils.fromSignalDialogfinish(JumpOtherProfileView.this,AlertMessage.connectionError);
         } else if (message.equalsIgnoreCase("FollowUser True")) {
             relationManager = ModelManager.getInstance().getRelationManager();
             //To track through mixPanel.
@@ -453,9 +461,7 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
 
                     try {
                         if (!authManager.getTmpUserPic().equalsIgnoreCase("")) {
-                            /*Picasso.with(this)*/
-
-                            PicassoManager.getPicasso()
+                            Picasso.with(this)
                                     .load(authManager.getTmpUserPic())
                                     .skipMemoryCache()
                                     .error(R.drawable.male_user).into(userimage);
@@ -468,8 +474,7 @@ public class JumpOtherProfileView extends ClickInBaseView implements View.OnClic
                 } else {
                     try {
                         if (!authManager.getTmpUserPic().equalsIgnoreCase("")) {
-                            //Picasso.with(this)
-                            PicassoManager.getPicasso()
+                            Picasso.with(this)
                                     .load(authManager.getTmpUserPic())
                                     .skipMemoryCache()
                                     .error(R.drawable.female_user).into(userimage);

@@ -40,6 +40,7 @@ public class DialogActivity extends Activity {
         TextView Ok = (TextView) dialog.findViewById(R.id.ok);
         TextView Message = (TextView) dialog.findViewById(R.id.alert_msg_dialog);
         TextView Cancel = (TextView) dialog.findViewById(R.id.cancel);
+        Ok.setText("Report");
         Message.setText(getString(R.string.application_crash));
         dialog.show();
 

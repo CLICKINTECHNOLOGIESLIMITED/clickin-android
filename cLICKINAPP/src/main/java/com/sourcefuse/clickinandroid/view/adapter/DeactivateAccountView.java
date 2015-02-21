@@ -22,6 +22,7 @@ import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.SettingManager;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.MyPreference;
+import com.sourcefuse.clickinandroid.utils.UnCaughtExceptionHandler;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.SplashView;
 import com.sourcefuse.clickinapp.R;
@@ -46,6 +47,9 @@ public class DeactivateAccountView extends Activity implements View.OnClickListe
 //        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);//akshit code to prevent auto pop-up for keyboard
         setContentView(R.layout.view_deactivate_account);
         this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+
+        if (Utils.mStartExceptionTrack)
+            Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
 
         backarrow = (ImageView) findViewById(R.id.iv_back_noti);

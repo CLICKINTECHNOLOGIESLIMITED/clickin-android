@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -129,6 +130,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         clickInadapter = new ClickInWithAdapter(ClickInBaseView.this, R.layout.row_clickin_with, relationManager.acceptedList);
         clickWithlistView.setAdapter(clickInadapter);
     }
+
 
     private void switchView(String rid, int relationListIndex) {
 
@@ -458,6 +460,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 /* prafulll code to set counter to zero */
                     if (relationManager.acceptedList.get(position - 1).getUnreadMsg() != 0) {
                         relationManager.acceptedList.get(position - 1).setUnreadMsg(0);
+                        if(clickInadapter!=null)
                         clickInadapter.notifyDataSetChanged();
                     }
 /* prafulll code to set counter to zero */
@@ -837,6 +840,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 
         if (mTestString.contains("UpdateMessageCounter###")) { /* prafulll code to set counter to zero */
 
+            if(clickInadapter!=null)
             clickInadapter.notifyDataSetChanged();
         } else if (message.equalsIgnoreCase("SearchResult True")) {
 

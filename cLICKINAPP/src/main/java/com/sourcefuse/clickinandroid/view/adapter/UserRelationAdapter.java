@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,18 +17,22 @@ import android.widget.ImageView.ScaleType;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
-import com.sourcefuse.clickinandroid.model.PicassoManager;
 import com.sourcefuse.clickinandroid.model.ProfileManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
 import com.sourcefuse.clickinandroid.model.bean.GetrelationshipsBean;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
+import com.sourcefuse.clickinandroid.utils.AppController;
 import com.sourcefuse.clickinandroid.utils.Constants;
+import com.sourcefuse.clickinandroid.utils.FeedImageView;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.JumpOtherProfileView;
 import com.sourcefuse.clickinapp.R;
 
+import java.io.File;
 import java.util.List;
 
 public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
@@ -41,6 +47,8 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
     private RelationManager relationManager;
     private boolean showpending = false;
 
+    private Dialog dialog;
+    ImageLoader imageLoader = AppController.getInstance().getImageLoader();
 
     /*LruCache mLruCahe;
     Picasso picasso;*/
@@ -50,24 +58,8 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
         itemList = item;
         this.layoutResourceId = layoutResourceId;
         this.context = context;
-
-       /* mLruCahe = new LruCache(context);
-        picasso = new Picasso.Builder(context).memoryCache(mLruCahe).build();*/
-
-        Utils.trackMixpanel_superProperties((Activity) context,itemList.size(),"relationshipcount");//Track Relationship Count Through Mix panel
-//
+        Utils.trackMixpanel_superProperties((Activity) context, itemList.size(), "relationshipcount");//Track Relationship Count Through Mix panel
     }
-//    ((ImageView)row.findViewById(R.id.iv_accept_card)).setTag(position);
-//    ((ImageView) row.findViewById(R.id.iv_accept_card)).setOnClickListener(new View.OnClickListener() {
-//        @Override
-//        public void onClick(View v) {
-//            //Card ACCEPT Action
-//            int position = (Integer) v.getTag();
-//            sendUpdateCardValues(position, "accepted", "ACCEPTED!");
-//
-//
-//        }
-//    });
 
 
     @Override
@@ -76,23 +68,62 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
 
 
         relationManager = ModelManager.getInstance().getRelationManager();
-            /*RecordHolder holder = null;*/
-           /* if (row == null) {*/
         LayoutInflater inflater = ((Activity) context).getLayoutInflater();
         row = inflater.inflate(layoutResourceId, parent, false);
-                  /*holder = new RecordHolder();*/
         final TextView usr_name = (TextView) row.findViewById(R.id.tv_usr_name);
         TextView pending = (TextView) row.findViewById(R.id.tv_pending);
         final ImageView usrimg = (ImageView) row.findViewById(R.id.iv_usr_pic);
+        final FeedImageView iv_usr_pic_ = (FeedImageView) row.findViewById(R.id.iv_usr_pic_);
 
         View whiteview = (View) row.findViewById(R.id.v_whiteview);
         View devider = (View) row.findViewById(R.id.v_devider);
         ImageView btm_divider = (ImageView) row.findViewById(R.id.btm_divider);
         TextView delete = (TextView) row.findViewById(R.id.btn_delete_item);
-
         usrimg.setScaleType(ScaleType.FIT_XY);
+        if (imageLoader == null)
+            imageLoader = AppController.getInstance().getImageLoader();
 
 
+        final String finalMUserImageId = itemList.get(position).getRelationshipId();
+
+        String mContentUri = Utils.mImagePath + finalMUserImageId + ".jpg";
+        Uri mUri = Utils.getImageContentUri(context, new File(mContentUri));  //check file exist or not
+
+        File file = new File(mContentUri);
+
+<<<<<<< HEAD
+=======
+
+>>>>>>> de8005176f0e10827649f111b5206ef4ceb3c8e9
+        if (!Utils.isEmptyString("" + mUri) && file.exists()) {
+            usrimg.setImageURI(mUri); // if file exists set it by uri
+        } else {
+            if (file.exists())
+                file.delete();
+
+
+            iv_usr_pic_.setImageUrl(itemList.get(position).getPartnerPic(), imageLoader);
+            iv_usr_pic_.setVisibility(View.VISIBLE);
+            iv_usr_pic_.setResponseObserver(new FeedImageView.ResponseObserver() { // download image
+                @Override
+                public void onError(VolleyError volleyError) {
+                }
+
+                @Override
+                public void onSuccess(ImageLoader.ImageContainer loader) {
+
+                    if (loader.getBitmap() != null) {
+                        iv_usr_pic_.setVisibility(View.GONE);
+                        String path = Utils.storeImage(loader.getBitmap(), finalMUserImageId, context);  // save image bitmap by chat id
+                        if (!Utils.isEmptyString(path))
+                            usrimg.setImageURI(Utils.getImageContentUri(context, new File(path))); // set image form uri once downloadedd
+                        else
+                            fromSignalDialog((Activity) context, context.getResources().getString(R.string.application_crash));
+
+                    }
+                }
+            });
+        }
 
             /*}*/
         privacy = (TextView) row.findViewById(R.id.btn_privacy);
@@ -161,50 +192,39 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
         showpending = false;
 
 
-        if (!itemList.get(position).getPartnerPic().equalsIgnoreCase("")) {
-            try {
-
-                //Picasso.with(context)
-                PicassoManager.getPicasso().load(itemList.get(position).getPartnerPic())
-                        .into(usrimg);
-
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                // usrimg.setImageResource(R.drawable.male_user);
-            }
-        } else {
-            usrimg.setImageResource(R.drawable.male_user);
-        }
         privacy.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                authManager = ModelManager.getInstance().getAuthorizationManager();
-                relationManager = ModelManager.getInstance().getRelationManager();
+                if(Utils.isConnectingToInternet((Activity)context)) {
+                    authManager = ModelManager.getInstance().getAuthorizationManager();
+                    relationManager = ModelManager.getInstance().getRelationManager();
 
 
-                RelativeLayout layout = (RelativeLayout) v.getParent();
+                    RelativeLayout layout = (RelativeLayout) v.getParent();
 
 
-                int position = (Integer) v.getTag();
+                    int position = (Integer) v.getTag();
 
 
-                if (itemList.get(position).getStatusAccepted().equalsIgnoreCase("true") && itemList.get(position).getmStatuspublic().equalsIgnoreCase("true")) {
+                    if (itemList.get(position).getStatusAccepted().equalsIgnoreCase("true") && itemList.get(position).getmStatuspublic().equalsIgnoreCase("true")) {
 
-                    relationDialog(AlertMessage.PUBLICMSG + itemList.get(position).getPartnerName() + " private?", position, layout);//request normal dialog to custom dialog
+                        relationDialog(AlertMessage.PUBLICMSG + itemList.get(position).getPartnerName() + " private?", position, layout);//request normal dialog to custom dialog
 
-                } else if (itemList.get(position).getStatusAccepted().equalsIgnoreCase("true") && (itemList.get(position).getmStatuspublic().equalsIgnoreCase("false") || Utils.isEmptyString(itemList.get(position).getmStatuspublic()))) {
+                    } else if (itemList.get(position).getStatusAccepted().equalsIgnoreCase("true") && (itemList.get(position).getmStatuspublic().equalsIgnoreCase("false") || Utils.isEmptyString(itemList.get(position).getmStatuspublic()))) {
 
-                    relationDialogprivate(AlertMessage.PRIVATE + itemList.get(position).getPartnerName() + " public?", position, layout);//replace Normal Dialog to custom dialog
-                } else if (Utils.isEmptyString(itemList.get(position).getStatusAccepted()) && itemList.get(position).getRequestInitiator().equalsIgnoreCase("true")) {
-                } else if (Utils.isEmptyString(itemList.get(position).getStatusAccepted())) {
-                    Utils.launchBarDialog((Activity) context);
-                    relationManager.updateStatus(itemList.get(position).getRelationshipId(), authManager.getPhoneNo(), authManager.getUsrToken(), "true");
-                    itemList.get(position).setStatusAccepted("true");
-                    Utils.trackMixpanel(((Activity) context), "", "", "AcceptUserRequest", false);//Track AcceptUserRequest through mixpanel
+                        relationDialogprivate(AlertMessage.PRIVATE + itemList.get(position).getPartnerName() + " public?", position, layout);//replace Normal Dialog to custom dialog
+                    } else if (Utils.isEmptyString(itemList.get(position).getStatusAccepted()) && itemList.get(position).getRequestInitiator().equalsIgnoreCase("true")) {
+                    } else if (Utils.isEmptyString(itemList.get(position).getStatusAccepted())) {
+                        Utils.launchBarDialog((Activity) context);
+                        relationManager.updateStatus(itemList.get(position).getRelationshipId(), authManager.getPhoneNo(), authManager.getUsrToken(), "true");
+                        itemList.get(position).setStatusAccepted("true");
+                        Utils.trackMixpanel(((Activity) context), "", "", "AcceptUserRequest", false);//Track AcceptUserRequest through mixpanel
+                    }
+                }else {
+                    Utils.fromSignalDialog((Activity)context,AlertMessage.connectionError);
                 }
-
             }
         });
+
 
         //akshit Code For clickin
         usrimg.setTag(position);
@@ -212,23 +232,27 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
             public void onClick(View v) {
 
                 int pos = (Integer) v.getTag();
-                if (itemList.get(pos).getStatusAccepted() == "true") {
+                if (Utils.isConnectingToInternet((Activity)context)) {
+                    if (itemList.get(pos).getStatusAccepted() == "true") {
 
-                    relationManager = ModelManager.getInstance().getRelationManager();
-                    String partnerId = relationManager.getrelationshipsData.get(pos).getPartner_id();
+                        relationManager = ModelManager.getInstance().getRelationManager();
+                        String partnerId = relationManager.getrelationshipsData.get(pos).getPartner_id();
 
-                    Intent intent = new Intent(context, JumpOtherProfileView.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.putExtra("PartnerId", partnerId);
-                    intent.putExtra("FromOwnProfile", true);
-                    intent.putExtra("phNumber", itemList.get(position).getPhoneNo());
-                    ((Activity) context).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
-                    context.startActivity(intent);
+                        Intent intent = new Intent(context, JumpOtherProfileView.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra("PartnerId", partnerId);
+                        intent.putExtra("FromOwnProfile", true);
+                        intent.putExtra("phNumber", itemList.get(position).getPhoneNo());
+                        ((Activity) context).overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+                        context.startActivity(intent);
 
-                } else {
+                    } else {
 
+                    }
+                    Utils.trackMixpanel(((Activity) context), "", "", "CheckMyPartnerProfile", false);//Track CheckMyPartnerProfile through mixpanel
+                }else {
+                    Utils.fromSignalDialog((Activity)context,AlertMessage.connectionError);
                 }
-                Utils.trackMixpanel(((Activity) context), "", "", "CheckMyPartnerProfile", false);//Track CheckMyPartnerProfile through mixpanel
             }
 
 
@@ -236,22 +260,25 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
         delete.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
+                if(Utils.isConnectingToInternet((Activity)context)) {
 
-                int position = (Integer) v.getTag();
+                    int position = (Integer) v.getTag();
 
-                authManager = ModelManager.getInstance().getAuthorizationManager();
-                relationManager = ModelManager.getInstance().getRelationManager();
-                Constants.itemPosition = position;
-                Utils.launchBarDialog((Activity) context);
-                if (Utils.isEmptyString(itemList.get(position).getStatusAccepted()) || Utils.isEmptyString(itemList.get(position).getStatusAccepted()) && itemList.get(position).getRequestInitiator().equalsIgnoreCase("true")) {
-                    relationManager.updateStatus(itemList.get(position).getRelationshipId(), authManager.getPhoneNo(), authManager.getUsrToken(), "false");
+                    authManager = ModelManager.getInstance().getAuthorizationManager();
+                    relationManager = ModelManager.getInstance().getRelationManager();
+                    Constants.itemPosition = position;
+                    Utils.launchBarDialog((Activity) context);
+                    if (Utils.isEmptyString(itemList.get(position).getStatusAccepted()) || Utils.isEmptyString(itemList.get(position).getStatusAccepted()) && itemList.get(position).getRequestInitiator().equalsIgnoreCase("true")) {
+                        relationManager.updateStatus(itemList.get(position).getRelationshipId(), authManager.getPhoneNo(), authManager.getUsrToken(), "false");
 
-                    Utils.trackMixpanel(((Activity) context), "", "", "RejectUserRequest", false);//Track RejectUserRequest through mixpanel
-                } else {
-                    Utils.trackMixpanel(((Activity) context), "", "", "DeletePartner", false);//Track Delete Partner through mixpanel
-                    relationManager.deleteRelationship(itemList.get(position).getRelationshipId(), authManager.getPhoneNo(), authManager.getUsrToken());
+                        Utils.trackMixpanel(((Activity) context), "", "", "RejectUserRequest", false);//Track RejectUserRequest through mixpanel
+                    } else {
+                        Utils.trackMixpanel(((Activity) context), "", "", "DeletePartner", false);//Track Delete Partner through mixpanel
+                        relationManager.deleteRelationship(itemList.get(position).getRelationshipId(), authManager.getPhoneNo(), authManager.getUsrToken());
+                    }
+                }else{
+                    Utils.fromSignalDialog((Activity)context,AlertMessage.connectionError);
                 }
-
 
             }
         });
@@ -270,13 +297,8 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
         dialog.setCancelable(false);
         TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
 
-//        Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "fonts/AvenirNextLTPro-MediumCn_0.otf");
-
-
         RelativeLayout relativeLayout = (RelativeLayout) view;
-        TextView button = (TextView) relativeLayout.getChildAt(1);
-
-//        msgI.setTypeface(tf);
+        TextView button = (TextView) relativeLayout.getChildAt(2);
         msgI.setText(str);
 
 
@@ -334,7 +356,7 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
 
 
         RelativeLayout relativeLayout = (RelativeLayout) view;
-        TextView button = (TextView) relativeLayout.getChildAt(1);
+        TextView button = (TextView) relativeLayout.getChildAt(2);
         skip.setTag(button);
 
         skip.setOnClickListener(new View.OnClickListener() {
@@ -359,6 +381,28 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
         });
         dialog.show();
     }
-// Ends
 
+    // Ends
+    public void fromSignalDialog(Activity activity, String str) {
+
+        dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.setContentView(R.layout.alert_check_dialogs);
+        dialog.setCancelable(false);
+        TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
+        msgI.setText(str);
+
+
+        Button dismiss = (Button) dialog.findViewById(R.id.coolio);
+        dismiss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                dialog.dismiss();
+
+            }
+        });
+        if (!dialog.isShowing())
+            dialog.show();
+    }
 }

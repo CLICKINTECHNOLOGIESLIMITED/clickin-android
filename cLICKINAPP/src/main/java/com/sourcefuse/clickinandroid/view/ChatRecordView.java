@@ -24,7 +24,6 @@ import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -102,7 +101,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     public static String rId = "";
     //flag to start and stop thread to check online status
     public static boolean CHECK_ONLINE_STATUS_FLAG = false;
-    public static TextView load_earlier;
+    public  TextView load_earlier;
     public MyQbChatService myQbChatService;
     int myvalue = 0, min = -10;//akshit ,To set my value initially to zero for send paper rocket condition
     String chatString = "";
@@ -110,7 +109,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     int maxValue = 20; // Double of range
     int initialProgresss = maxValue / 2;
     //private QBPrivateChat chatObject;
-    String firstname;
+    String firstname="";
     String[] splitted;
     TextView send_text;
     //chatId-unquie to chat msg- use to track delivery status
@@ -393,8 +392,10 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
         ModelManager.getInstance().getAuthorizationManager().partnerQbId = quickBlockId;
 
-        splitted = partnerName.split("\\s+");
-        firstname = splitted[0].toUpperCase();
+        if(!Utils.isEmptyString(partnerName)) {
+            splitted = partnerName.split("\\s+");
+            firstname = splitted[0].toUpperCase();
+        }
 
 
         ModelManager.getInstance().getRelationManager().getPartnerName = firstname;
@@ -553,11 +554,13 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             }
         });
 
+        if(ModelManager.getInstance().getChatManager().chatMessageList.size()>0) {
+            adapter = new ChatRecordAdapter(this, R.layout.view_chat_demo, ModelManager.getInstance().getChatManager().chatMessageList);
 
-        adapter = new ChatRecordAdapter(this, R.layout.view_chat_demo, ModelManager.getInstance().getChatManager().chatMessageList);
+            chatListView.setAdapter(adapter);
+            chatListView.setSelection(ModelManager.getInstance().getChatManager().chatMessageList.size() - 1);//akshit code
+        }
 
-        chatListView.setAdapter(adapter);
-        chatListView.setSelection(ModelManager.getInstance().getChatManager().chatMessageList.size() - 1);//akshit code
 
 
         //code to check online of offline status
@@ -612,14 +615,14 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
     }
 
-    @Override
-    public void onBackPressed() {
+  //  @Override
+/*    public void onBackPressed() {
         super.onBackPressed();
         finish();
         overridePendingTransition(0, R.anim.top_out);
 
 
-    }
+    }*/
 
     public void imageDialog() {
 
@@ -777,7 +780,6 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                             temp.textMsg = temp.clicks + "        " + chatString;
 
 
-
                             //To track through mixPanel.
                             //user dragged clickbar to set click.
                             Utils.trackMixpanel(ChatRecordView.this, "Activity", "UserDraggedClickBar", "RPageShareButtonClicked", false);
@@ -914,18 +916,21 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 break;
 
             case R.id.iv_partner_pix:
-                Intent viewProfile = new Intent(ChatRecordView.this, JumpOtherProfileView.class);
-                //  viewProfile.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                viewProfile.putExtra("FromOwnProfile", true);
-                viewProfile.putExtra("phNumber", partnerPh);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
-                startActivity(viewProfile);
+                if(Utils.isConnectingToInternet(ChatRecordView.this)) {
+                    Intent viewProfile = new Intent(ChatRecordView.this, JumpOtherProfileView.class);
+                    //  viewProfile.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    viewProfile.putExtra("FromOwnProfile", true);
+                    viewProfile.putExtra("phNumber", partnerPh);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+                    startActivity(viewProfile);
 
-                //To track through mixPanel.
-                //click on partner pic.
-                Utils.trackMixpanel(this, "", "", "RPageCheckMyPartnerProfile", false);
-                break;
-
+                    //To track through mixPanel.
+                    //click on partner pic.
+                    Utils.trackMixpanel(this, "", "", "RPageCheckMyPartnerProfile", false);
+                    break;
+                }else {
+                    Utils.fromSignalDialog(ChatRecordView.this,AlertMessage.connectionError);
+                }
 
         }
     }
@@ -976,15 +981,17 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         ArrayList<ChatMessageBody> tempChatList = ModelManager.getInstance().getChatManager().chatMessageList;
         tempChatList.add(obj);
 
-        if (adapter == null) {
-            adapter = new ChatRecordAdapter(this, R.layout.view_chat_demo, tempChatList);
+        if(tempChatList.size()>0) {
+            if (adapter == null) {
+                adapter = new ChatRecordAdapter(this, R.layout.view_chat_demo, tempChatList);
 //            if(tempChatList.size()<20){
 //                load_earlier.setVisibility(View.GONE);
 //            }
-            chatListView.setAdapter(adapter);
-            chatListView.setSelection(tempChatList.size());//akshit code
-        } else {
-            adapter.notifyDataSetChanged();
+                chatListView.setAdapter(adapter);
+                chatListView.setSelection(tempChatList.size() - 1);//akshit code
+            } else {
+                adapter.notifyDataSetChanged();
+            }
         }
         //  return obj;
         //  createRecordForHistory(obj);
@@ -1084,7 +1091,6 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         ShowValueinChat(temp);
         //To track through mixPanel.
         //No of clicks send with Media(Audio,Video,Image).
-
 
 
         // mImageCaptureUri=null;
@@ -1445,8 +1451,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             ModelManager.getInstance().getRelationManager().acceptedList.get(relationListIndex).setUnreadMsg(0); // prafull code to set unreaed msg counter to 0 when open from recent app
         }
 
-        if (clickInadapter != null)        // notify dataset changed of clickin with list
-            clickInadapter.notifyDataSetChanged();
+
 
 
         //set the flag value to true again -monika
@@ -1464,8 +1469,12 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         if (message.equalsIgnoreCase("FecthChat True")) {
             Utils.dismissBarDialog();
 
-//            load_earlier.setVisibility(View.VISIBLE);
-//            chatListView.onRefreshComplete();
+            if (ModelManager.getInstance().getChatManager().chatMessageList.size() > 19 && ModelManager.getInstance().getChatManager().chat_history_size.equalsIgnoreCase("true")) {
+                //akshit code set visibility of load earlier ,only is chat records are greater then 20
+                load_earlier.setVisibility(View.VISIBLE);                             //also if chat fetched is greater then 20
+            } else {
+                load_earlier.setVisibility(View.GONE);
+            }
 
             if (ModelManager.getInstance().getChatManager().chatMessageList.size() != 0) {
                 if (adapter == null) {
@@ -1783,6 +1792,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                     Double longitude = data.getDoubleExtra("lng", 0.0);
                     mLocation_Coordinates = latitude + "," + longitude;
                     String url = "http://maps.google.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&markers=color%3ared|color%3ared|label%3aA|" + latitude + "," + longitude + "&zoom=15&size=650x400&sensor=true";
+
                     new DownloadImage().execute(url);
 
                     break;
@@ -2161,9 +2171,11 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             });
         }
         adapter = null;
-        adapter = new ChatRecordAdapter(this, R.layout.view_chat_demo, chatManager.chatMessageList);
-        chatListView.setAdapter(adapter);
-        chatListView.setSelection(chatManager.chatMessageList.size());
+        if(chatManager.chatMessageList.size()>0) {
+            adapter = new ChatRecordAdapter(this, R.layout.view_chat_demo, chatManager.chatMessageList);
+            chatListView.setAdapter(adapter);
+            chatListView.setSelection(chatManager.chatMessageList.size()-1);
+        }
         new Handler().postDelayed(new Runnable() {
 
             @Override
@@ -2354,13 +2366,16 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 // Decode Bitmap
                 bitmap = BitmapFactory.decodeStream(input);
             } catch (Exception e) {
-//                e.printStackTrace();removed by akshit
+                e.printStackTrace();
+            } finally {
+                return bitmap;
             }
-            return bitmap;
+
         }
 
         @Override
         protected void onPostExecute(Bitmap result) {
+
             if (result != null) {
                 String newpath = Utils.mAudioPath;
                 Random rn = new Random();

@@ -24,11 +24,13 @@ import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.net.http.AndroidHttpClient;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.telephony.TelephonyManager;
 import android.util.*;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -49,6 +51,10 @@ import com.sourcefuse.clickinandroid.model.bean.ContactBean;
 import com.sourcefuse.clickinandroid.model.bean.GetrelationshipsBean;
 import com.sourcefuse.clickinapp.R;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.methods.HttpGet;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -58,7 +64,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.ref.WeakReference;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -80,6 +88,7 @@ public class Utils {
     public static String mBasePath = String.valueOf(Environment.getExternalStorageDirectory());
     public static String mVideoPath = mBasePath + "/ClickIn/ClickinVideo/";
     public static String mImagePath = mBasePath + "/ClickIn/ClickinImages/";
+    public static String mUserImagePath = mBasePath + "/ClickIn/ClickinImages/Partnerpic/";
     public static String mAudioPath = mBasePath + "/ClickIn/ClickinAudio/";
     public static boolean appSound;
     public static SharedPreferences prefrences;
@@ -268,6 +277,28 @@ public class Utils {
                 }
 
             }
+        });
+        dialog.show();
+    }
+    public static void fromSignalDialogfinish(final Activity activity, String str) {
+
+        dialog = new Dialog(activity);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.setContentView(R.layout.alert_check_dialogs);
+        dialog.setCancelable(false);
+        TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
+        msgI.setText(str);
+
+
+        Button dismiss = (Button) dialog.findViewById(R.id.coolio);
+        dismiss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                dialog.dismiss();
+
+                   activity.finish();
+                 }
         });
         dialog.show();
     }
@@ -1266,6 +1297,8 @@ public class Utils {
             File file = new File(filePath);
             if (file.exists())
                 file.delete();
+            file.setWritable(true);
+            file.setReadable(true);
 
             FileOutputStream fileOutputStream = new FileOutputStream(filePath);
             BufferedOutputStream bos = new BufferedOutputStream(fileOutputStream);
@@ -1541,6 +1574,45 @@ public class Utils {
         }
 
         mixpanelAPI.flush();
+    }
+
+    public static Bitmap downloadBitmap(String url) {
+        final AndroidHttpClient client = AndroidHttpClient.newInstance("Android");
+        final HttpGet getRequest = new HttpGet(url);
+        try {
+            HttpResponse response = client.execute(getRequest);
+            final int statusCode = response.getStatusLine().getStatusCode();
+            if (statusCode != HttpStatus.SC_OK) {
+                Log.w("ImageDownloader", "Error " + statusCode
+                        + " while retrieving bitmap from " + url);
+                return null;
+            }
+
+            final HttpEntity entity = response.getEntity();
+            if (entity != null) {
+                InputStream inputStream = null;
+                try {
+                    inputStream = entity.getContent();
+                    final Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                    return bitmap;
+                } finally {
+                    if (inputStream != null) {
+                        inputStream.close();
+                    }
+                    entity.consumeContent();
+                }
+            }
+        } catch (Exception e) {
+            // Could provide a more explicit error message for IOException or
+            // IllegalStateException
+            getRequest.abort();
+            Log.w("ImageDownloader", "Error while retrieving bitmap from " + url);
+        } finally {
+            if (client != null) {
+                client.close();
+            }
+        }
+        return null;
     }
 
 }

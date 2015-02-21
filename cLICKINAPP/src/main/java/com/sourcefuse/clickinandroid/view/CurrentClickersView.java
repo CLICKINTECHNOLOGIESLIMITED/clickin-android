@@ -118,13 +118,15 @@ public class CurrentClickersView extends Activity implements OnClickListener {
 
     public void setlist() {
 
-        adapter = new CurrentClickersAdapter(CurrentClickersView.this, R.layout.row_currentclickerslist, tempCurrentClickers);
+        if(tempCurrentClickers.size()>0) {//should not set the adapter if list size is 0
+            adapter = new CurrentClickersAdapter(CurrentClickersView.this, R.layout.row_currentclickerslist, tempCurrentClickers);
 
-        int index = listView.getFirstVisiblePosition();
-        View v = listView.getChildAt(0);
-        int top = (v == null) ? 0 : v.getTop();
-        listView.setAdapter(adapter);
-        listView.setSelectionFromTop(index, top);
+            int index = listView.getFirstVisiblePosition();
+            View v = listView.getChildAt(0);
+            int top = (v == null) ? 0 : v.getTop();
+            listView.setAdapter(adapter);
+            listView.setSelectionFromTop(index, top);
+        }
     }
 
     @Override
@@ -159,10 +161,12 @@ public class CurrentClickersView extends Activity implements OnClickListener {
             facebook.setBackgroundResource(R.drawable.c_fb_pink);
             tempCurrentClickers.clear();
 
-            if (adapter == null)
-                adapter = new CurrentClickersAdapter(CurrentClickersView.this, R.layout.row_currentclickerslist, tempCurrentClickers);
+            if(tempCurrentClickers.size()>0) {//should not set the adapter if list size is 0
+                if (adapter == null)
+                    adapter = new CurrentClickersAdapter(CurrentClickersView.this, R.layout.row_currentclickerslist, tempCurrentClickers);
 
-            adapter.notifyDataSetChanged();
+                         adapter.notifyDataSetChanged();
+            }
             if (profilemanager.currentClickerListFB.size() != 0) {
                 tempCurrentClickers = profilemanager.currentClickerListFB;
                 setlist();
