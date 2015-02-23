@@ -57,7 +57,8 @@ public class NewsFeedManager {
                         if (errorResponse != null) {
 
                             Log.e("user dont have notification--->","user dont have notification--->");
-                            EventBus.getDefault().post("NewsFeed False");
+                            mFlag=false;
+                            EventBus.getDefault().post("NewsFeed False"); //it means only that user has no more newsfeed
                         } else {
                             Log.e("user dont have notification---> 1","user dont have notification---> 1");
                             EventBus.getDefault().post("NewsFeed Network Error");
@@ -81,9 +82,11 @@ public class NewsFeedManager {
 
                             JSONArray newsfeedArray = response.getJSONArray("newsfeedArray");
 
-
-                            if (newsfeedArray.length() > 24)
+                            int length=newsfeedArray.length();
+                            if (newsfeedArray.length()>24)
                                 mFlag = true;
+                            else
+                                mFlag=false;
 
                             for (int i = 0; i < newsfeedArray.length(); i++) {
                                 NewsFeedBean allNewsFeed = new NewsFeedBean();

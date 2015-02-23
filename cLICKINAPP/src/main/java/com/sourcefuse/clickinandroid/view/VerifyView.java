@@ -287,6 +287,7 @@ public class VerifyView extends Activity implements OnClickListener,
                 send.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        authManager.reSendVerifyCode(authManager.getPhoneNo(), authManager.getUsrToken());
                         Utils.fromSignalertDialogDammit(VerifyView.this);
                     }
                 });

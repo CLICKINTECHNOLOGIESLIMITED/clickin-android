@@ -1,4 +1,4 @@
-package com.sourcefuse.clickinandroid.view.adapter;
+package com.sourcefuse.clickinandroid.view;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -24,7 +24,6 @@ import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.MyPreference;
 import com.sourcefuse.clickinandroid.utils.UnCaughtExceptionHandler;
 import com.sourcefuse.clickinandroid.utils.Utils;
-import com.sourcefuse.clickinandroid.view.SplashView;
 import com.sourcefuse.clickinapp.R;
 
 import de.greenrobot.event.EventBus;

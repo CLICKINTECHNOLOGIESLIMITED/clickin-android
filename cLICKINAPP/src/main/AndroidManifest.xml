@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.sourcefuse.clickinapp"
     android:largeHeap="true"
-    android:versionCode="7"
+    android:versionCode="9"
     android:versionName="1.0">
 
     <uses-sdk
@@ -71,7 +71,7 @@
 
         <activity
             android:name="com.sourcefuse.clickinandroid.view.ReloadApp"
-            android:launchMode="standard"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
         <activity
@@ -179,6 +179,7 @@
         <activity
             android:name="com.sourcefuse.clickinandroid.view.EditMyProfileView"
             android:launchMode="standard"
+            android:windowSoftInputMode="stateHidden"
             android:screenOrientation="portrait" />
 
         <activity

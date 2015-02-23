@@ -151,6 +151,7 @@ public class Card extends Activity implements View.OnClickListener, TextWatcher 
                         @Override
                         public void onError() {
                             Utils.dismissBarDialog();
+                            Utils.fromSignalDialog(Card.this,AlertMessage.connectionError);
                         }
                     });
         } catch (Exception e) {

@@ -320,6 +320,11 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         View header = inflater.inflate(R.layout.list_header_chat, null);
 
         load_earlier = (TextView) header.findViewById(R.id.load_earlier);
+        if(chatManager.chatMessageList.size()>19){
+            load_earlier.setVisibility(View.VISIBLE);
+        }else{
+            load_earlier.setVisibility(View.GONE);
+        }
         load_earlier.setOnClickListener(this);
         chatListView.addHeaderView(header);
 
@@ -615,14 +620,14 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
     }
 
-  //  @Override
-/*    public void onBackPressed() {
-        super.onBackPressed();
-        finish();
-        overridePendingTransition(0, R.anim.top_out);
+    @Override
+    public void onBackPressed() {
+      //  super.onBackPressed();
+        //finish();
+        //overridePendingTransition(0, R.anim.top_out);
 
 
-    }*/
+    }
 
     public void imageDialog() {
 
@@ -984,9 +989,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         if(tempChatList.size()>0) {
             if (adapter == null) {
                 adapter = new ChatRecordAdapter(this, R.layout.view_chat_demo, tempChatList);
-//            if(tempChatList.size()<20){
-//                load_earlier.setVisibility(View.GONE);
-//            }
+
                 chatListView.setAdapter(adapter);
                 chatListView.setSelection(tempChatList.size() - 1);//akshit code
             } else {
@@ -1111,7 +1114,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        load_earlier.setVisibility(View.GONE);
+
         typingtext.setText("");
         typingtext.setVisibility(View.GONE);
         relationManager = ModelManager.getInstance().getRelationManager();
@@ -1331,6 +1334,11 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             createRecordForHistory(temp);
 
         }
+        if(chatManager.chatMessageList.size()>19){
+            load_earlier.setVisibility(View.VISIBLE);
+        }else{
+            load_earlier.setVisibility(View.GONE);
+        }
     }
 
     private void hideAttachView() {
@@ -1355,12 +1363,18 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         // TODO Auto-generated method stub
         if (s.toString().trim().length() > 0) {//akshit to trim the space while showing send button
             setVisibilityForSend();//akshit code
-            myQbChatService.sendTypeNotification("YES", ModelManager.getInstance().getAuthorizationManager().partnerQbId);
+            if(myQbChatService!=null){
+                myQbChatService.sendTypeNotification("YES", ModelManager.getInstance().getAuthorizationManager().partnerQbId);
+            }
 
         } else {
             setVisibilityForSendButton();//akshit code if length is 0
-            if (chatText.hasFocus())//akshit code to check focus on edit box.if not focused then isComposing will not appear.
-                myQbChatService.sendTypeNotification("NO", ModelManager.getInstance().getAuthorizationManager().partnerQbId);
+            if (chatText.hasFocus()){
+                //akshit code to check focus on edit box.if not focused then isComposing will not appear.
+                if(myQbChatService!=null)
+                    myQbChatService.sendTypeNotification("NO", ModelManager.getInstance().getAuthorizationManager().partnerQbId);
+
+            }
 
         }
 
@@ -1479,9 +1493,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             if (ModelManager.getInstance().getChatManager().chatMessageList.size() != 0) {
                 if (adapter == null) {
                     adapter = new ChatRecordAdapter(this, R.layout.view_chat_demo, ModelManager.getInstance().getChatManager().chatMessageList);
-//
-//                    if(chatManager.chatMessageList.size()<20)
-//                        load_earlier.setVisibility(View.GONE);
+
                     chatListView.setAdapter(adapter);
                     chatListView.setSelection(ModelManager.getInstance().getChatManager().chatMessageList.size());
 
@@ -1498,18 +1510,14 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                                 chatListView.setSelection(listsize - chatListSize);//akshit code
 //                                chatListView.getRefreshableView().setSelection((listsize - chatListSize));
                             }
-//                            if(chatListSize < 20){
-//                                load_earlier.setVisibility(View.GONE);
-//                            }
+
                         }
                     });
                 }
             }
 
         } else if (message.equalsIgnoreCase("No chat history found")) {
-//               chat_history = "false" ;
-//                load_earlier.setVisibility(View.GONE);
-//                 chat_history_present="no";
+
 
         } else if (message.equalsIgnoreCase("FecthChat False")) {
 //            chatListView.onRefreshComplete();
@@ -1530,9 +1538,15 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 myclicksView.setText("" + ModelManager.getInstance().getAuthorizationManager().ourClicks);
                 partnerClicksView.setText("" + ModelManager.getInstance().getRelationManager().partnerClicks);
             }
+            if (ModelManager.getInstance().getChatManager().chatMessageList.size()>0) {
+                if (adapter != null)
+                    adapter.notifyDataSetChanged();
+                else {
+                    adapter = new ChatRecordAdapter(this, R.layout.view_chat_demo, ModelManager.getInstance().getChatManager().chatMessageList);
 
-
-            adapter.notifyDataSetChanged();
+                    chatListView.setAdapter(adapter);
+                }
+            }
             //  new DBTask().execute(rId);
         } else if (message.equalsIgnoreCase("Composing YES")) {
             typingtext.setVisibility(View.VISIBLE);
