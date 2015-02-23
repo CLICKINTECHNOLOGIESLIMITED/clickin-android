@@ -262,6 +262,14 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
             public void onOpened() {
 
 
+                try {
+                    InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                }catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+
                 if (slidemenu.isSecondaryMenuShowing()) {
                     if (notificationAdapter != null)
                         notificationAdapter.notifyDataSetChanged();
@@ -279,7 +287,6 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
                     }else {
                         Utils.fromSignalDialog(ClickInBaseView.this,AlertMessage.connectionError);
                     }
-
                     final Handler handler = new Handler();
                     handler.postDelayed(new Runnable() { // put delay of 500 millisecond so that adapter get set first.
                         @Override
@@ -1023,9 +1030,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         hideSearchlist.setVisibility(View.GONE);
         searchList.setVisibility(View.GONE);
 
-        InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (getCurrentFocus() != null && getCurrentFocus().getWindowToken() != null)
-            inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+
 
 
     }

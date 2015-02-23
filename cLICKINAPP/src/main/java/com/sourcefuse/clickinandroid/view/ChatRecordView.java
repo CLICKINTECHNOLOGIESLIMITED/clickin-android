@@ -1538,13 +1538,14 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 myclicksView.setText("" + ModelManager.getInstance().getAuthorizationManager().ourClicks);
                 partnerClicksView.setText("" + ModelManager.getInstance().getRelationManager().partnerClicks);
             }
+            if (ModelManager.getInstance().getChatManager().chatMessageList.size()>0) {
+                if (adapter != null)
+                    adapter.notifyDataSetChanged();
+                else {
+                    adapter = new ChatRecordAdapter(this, R.layout.view_chat_demo, ModelManager.getInstance().getChatManager().chatMessageList);
 
-            if(adapter!=null)
-            adapter.notifyDataSetChanged();
-            else{
-                adapter = new ChatRecordAdapter(this, R.layout.view_chat_demo, ModelManager.getInstance().getChatManager().chatMessageList);
-
-                chatListView.setAdapter(adapter);
+                    chatListView.setAdapter(adapter);
+                }
             }
             //  new DBTask().execute(rId);
         } else if (message.equalsIgnoreCase("Composing YES")) {

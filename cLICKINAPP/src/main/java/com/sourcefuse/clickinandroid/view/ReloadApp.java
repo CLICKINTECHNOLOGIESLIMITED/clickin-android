@@ -4,7 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.os.Bundle;
+import android.os.*;
+import android.os.Process;
 import android.preference.PreferenceManager;
 
 import com.sourcefuse.clickinandroid.dbhelper.ClickinDbHelper;
@@ -56,7 +57,7 @@ public class ReloadApp extends Activity {
             processValue();
 
         } else {  // else reload the app
-            RELOAD_APP=true;
+           RELOAD_APP=true;
 
             setContentView(R.layout.view_splash);
             Utils.launchBarDialog(this);
@@ -83,6 +84,10 @@ public class ReloadApp extends Activity {
                 startActivity(intent);
                 finish();
             }
+
+
+
+
         }
     }
 
@@ -97,8 +102,8 @@ public class ReloadApp extends Activity {
     public void processValue() {
 
         Intent intent1 = new Intent();
-        if(RELOAD_APP)
-            intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+     //   if(RELOAD_APP)
+       //     intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         switch (notf_type) {
             case Constants.USERPROFILE_NOTF:
 
@@ -108,7 +113,7 @@ public class ReloadApp extends Activity {
                 //   intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                  intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                // intent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
-            //    intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent1.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent1);
                 Utils.dismissBarDialog();
                 finish();
@@ -120,10 +125,10 @@ public class ReloadApp extends Activity {
                         intent1.setAction("UPDATE");
                         intent1.putExtra("partnerIndex", partnerIndex);
                         intent1.setClass(this, ChatRecordView.class);
-                            intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                      //    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                         //   intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            intent1.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
-                   //     intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                      //  intent1.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                         startActivity(intent1);
                         Utils.dismissBarDialog();
                         finish();
@@ -138,8 +143,8 @@ public class ReloadApp extends Activity {
             case Constants.FOLLOWER_FOLLOWING_NOTF:
                 intent1.putExtra("FromOwnProfile", true);
                 intent1.setClass(getApplicationContext(), FollowerList.class);
-                //   intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                 intent1.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                   intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+               //  intent1.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 intent1.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent1);
                 Utils.dismissBarDialog();
@@ -178,7 +183,7 @@ public class ReloadApp extends Activity {
                 intent1.setClass(getApplicationContext(), JumpOtherProfileView.class);
                 intent1.putExtra("FromOwnProfile", true);
                 intent1.putExtra("phNumber", getIntent().getExtras().getString("phone_no"));
-                //   intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                   intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 // intent1.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 // intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent1.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
@@ -228,6 +233,52 @@ public class ReloadApp extends Activity {
         return index;
     }
 
+<<<<<<< HEAD
+=======
+
+  /*  public void putChatData(intent1 mIntent, String mPartnerId) {
+
+
+        for (int i = 0; i < ModelManager.getInstance().getRelationManager().acceptedList.size(); i++) {
+
+            if (ModelManager.getInstance().getRelationManager().acceptedList.get(i).getPartner_id().equalsIgnoreCase(mPartnerId)) {
+                mIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                mIntent.setAction("UPDATE");
+                mIntent.putExtra("quickId", ModelManager.getInstance().getRelationManager().acceptedList.get(i).getPartnerQBId());
+
+                mIntent.putExtra("partnerPic", ModelManager.getInstance().getRelationManager().acceptedList.get(i).getPartnerPic());
+
+
+                mIntent.putExtra("partnerName", ModelManager.getInstance().getRelationManager().acceptedList.get(i).getPartnerName());
+
+
+                mIntent.putExtra("rId", ModelManager.getInstance().getRelationManager().acceptedList.get(i).getRelationshipId());
+
+
+                mIntent.putExtra("partnerId", ModelManager.getInstance().getRelationManager().acceptedList.get(i).getPartner_id());
+
+
+                mIntent.putExtra("myClicks", ModelManager.getInstance().getRelationManager().acceptedList.get(i).getUserClicks());
+
+
+                mIntent.putExtra("userClicks", ModelManager.getInstance().getRelationManager().acceptedList.get(i).getClicks());
+
+
+                mIntent.putExtra("partnerPh", ModelManager.getInstance().getRelationManager().acceptedList.get(i).getPhoneNo());
+
+
+                mIntent.putExtra("relationListIndex", i);
+
+
+                ChatManager chatManager = ModelManager.getInstance().getChatManager();
+                chatManager.setrelationshipId(ModelManager.getInstance().getRelationManager().acceptedList.get(i).getRelationshipId());
+
+
+            }
+        }*/
+
+
+>>>>>>> e10ff1c19e77aabab7eb8b2a3c986284045c2510
 
 
     @Override
