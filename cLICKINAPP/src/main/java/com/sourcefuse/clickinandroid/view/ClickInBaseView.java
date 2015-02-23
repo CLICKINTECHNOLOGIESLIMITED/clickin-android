@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -270,11 +269,15 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
                         setNotificationList();
 
                     ModelManager.getInstance().getAuthorizationManager().setNotificationCounter(0);
-                    if (ModelManager.getInstance().getNotificationManagerManager().notificationData.size() == 0) {
-                        Utils.launchBarDialog(ClickInBaseView.this);
-                        mLastchatID = "";
-                        ModelManager.getInstance().getNotificationManagerManager().getNotification(getApplicationContext(), "", ModelManager.getInstance().getAuthorizationManager().getPhoneNo(),
-                                ModelManager.getInstance().getAuthorizationManager().getUsrToken());
+                    if(Utils.isConnectingToInternet(ClickInBaseView.this)) {
+                        if (ModelManager.getInstance().getNotificationManagerManager().notificationData.size() == 0) {
+                            Utils.launchBarDialog(ClickInBaseView.this);
+                            mLastchatID = "";
+                            ModelManager.getInstance().getNotificationManagerManager().getNotification(getApplicationContext(), "", ModelManager.getInstance().getAuthorizationManager().getPhoneNo(),
+                                    ModelManager.getInstance().getAuthorizationManager().getUsrToken());
+                        }
+                    }else {
+                        Utils.fromSignalDialog(ClickInBaseView.this,AlertMessage.connectionError);
                     }
 
                     final Handler handler = new Handler();

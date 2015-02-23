@@ -320,6 +320,11 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         View header = inflater.inflate(R.layout.list_header_chat, null);
 
         load_earlier = (TextView) header.findViewById(R.id.load_earlier);
+        if(chatManager.chatMessageList.size()>19){
+            load_earlier.setVisibility(View.VISIBLE);
+        }else{
+            load_earlier.setVisibility(View.GONE);
+        }
         load_earlier.setOnClickListener(this);
         chatListView.addHeaderView(header);
 
@@ -938,7 +943,12 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     //monika- function to show chat in listview
     private void ShowValueinChat(ChatMessageBody obj) {
 
-
+//
+//        if(chatManager.chatMessageList.size()>19){
+//            load_earlier.setVisibility(View.VISIBLE);
+//        }else{
+//            load_earlier.setVisibility(View.GONE);
+//        }
         AuthManager authManager = ModelManager.getInstance().getAuthorizationManager();
         RelationManager relationManager = ModelManager.getInstance().getRelationManager();
 
@@ -1111,7 +1121,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        load_earlier.setVisibility(View.GONE);
+
+
         typingtext.setText("");
         typingtext.setVisibility(View.GONE);
         relationManager = ModelManager.getInstance().getRelationManager();
@@ -1329,7 +1340,12 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 myQbChatService.sendMessage(objToSend);
 
             createRecordForHistory(temp);
+        }
 
+        if(chatManager.chatMessageList.size()>19){
+            load_earlier.setVisibility(View.VISIBLE);
+        }else{
+            load_earlier.setVisibility(View.GONE);
         }
     }
 

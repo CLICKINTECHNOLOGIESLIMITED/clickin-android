@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -91,10 +90,7 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
 
         File file = new File(mContentUri);
 
-<<<<<<< HEAD
-=======
 
->>>>>>> de8005176f0e10827649f111b5206ef4ceb3c8e9
         if (!Utils.isEmptyString("" + mUri) && file.exists()) {
             usrimg.setImageURI(mUri); // if file exists set it by uri
         } else {
