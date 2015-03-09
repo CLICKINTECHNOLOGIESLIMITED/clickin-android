@@ -140,6 +140,11 @@ public class AddSomeoneView extends Activity implements TextWatcher {
         ((ImageView) findViewById(R.id.iv_keypad)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (search_phbook.getWindowToken() != null) {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(search_phbook.getWindowToken(), 0);
+                }
+
                 Intent intent = new Intent(AddSomeoneView.this, AddViaNumberView.class);
                 intent.putExtra("fromsignup", getIntent().getBooleanExtra("fromsignup", false));
                 startActivity(intent);

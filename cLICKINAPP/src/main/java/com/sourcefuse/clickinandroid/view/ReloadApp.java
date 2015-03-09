@@ -126,10 +126,10 @@ public class ReloadApp extends Activity {
                         intent1.setAction("UPDATE");
                         intent1.putExtra("partnerIndex", partnerIndex);
                         intent1.setClass(this, ChatRecordView.class);
-                            intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                          intent1.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                         //   intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            intent1.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
-                        intent1.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                      //  intent1.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                         startActivity(intent1);
                         Utils.dismissBarDialog();
                         finish();

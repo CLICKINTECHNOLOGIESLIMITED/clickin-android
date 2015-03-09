@@ -42,14 +42,13 @@ public class DeactivateAccountView extends Activity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //code- to handle uncaught exception
-        if (Utils.mStartExceptionTrack)
-            Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
-
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 //        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);//akshit code to prevent auto pop-up for keyboard
         setContentView(R.layout.view_deactivate_account);
         this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+
+        if (Utils.mStartExceptionTrack)
+            Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
 
         backarrow = (ImageView) findViewById(R.id.iv_back_noti);

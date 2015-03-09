@@ -112,6 +112,11 @@ public class AddViaNumberView extends Activity implements View.OnClickListener, 
             case R.id.btn_get_click_via_no:
                 //To track through mixPanel.
                 //Signup AddPartner.
+                if (edtPhoneNo.getWindowToken() != null) {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(edtPhoneNo.getWindowToken(), 0);
+                }
+
                 Utils.trackMixpanel(AddViaNumberView.this, "", "", "SignUpAddAPartner", false);
                 if (Utils.isCountryCodeValid(edtCountryCode.getText().toString())) {
                     if (Utils.isPhoneValid(edtPhoneNo.getText().toString()) && (edtPhoneNo.getText().toString().length() >= 5) && !((EditText) findViewById(R.id.edt_cntry_cd)).getText().toString().equalsIgnoreCase("+(null)")) {
