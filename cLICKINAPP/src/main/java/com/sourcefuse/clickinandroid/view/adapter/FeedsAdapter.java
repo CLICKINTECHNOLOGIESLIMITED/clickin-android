@@ -197,8 +197,7 @@ public class FeedsAdapter extends ArrayAdapter<NewsFeedBean> implements
                             if (eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().length() > 30) {
 
                                 holder.clickedInMessage.setText(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().trim().substring(0, 30));
-                                holder.clickedInMessageLong.setText(eachNewsFeed.get(position)
-                                        .getNewsFeedArray_chatDetail_message().trim().substring(30, (eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().length()-1)));
+                                holder.clickedInMessageLong.setText(eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().trim().substring(30, (eachNewsFeed.get(position).getNewsFeedArray_chatDetail_message().length()-1)));
                                 holder.clickedInMessageLong.setVisibility(VISIBLE);
                             } else {
                                 holder.clickedInMessageLong.setVisibility(GONE);

@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.bean.ChatMessageBody;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
@@ -145,7 +144,6 @@ public class Card extends Activity implements View.OnClickListener, TextWatcher 
                             trd_clicks_top.setVisibility(View.VISIBLE);
                             trd_clicks_bottom.setVisibility(View.VISIBLE);
                             Utils.dismissBarDialog();
-
                         }
 
                         @Override
