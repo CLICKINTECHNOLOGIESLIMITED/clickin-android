@@ -461,6 +461,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
 
+                Utils.trackMixpanel(ChatRecordView.this,"Activity" ,"UserDraggedClickBar","UserDraggedClickBar",false);
+
 
             }
 
@@ -787,11 +789,14 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
                             //To track through mixPanel.
                             //user dragged clickbar to set click.
-                            Utils.trackMixpanel(ChatRecordView.this, "Activity", "UserDraggedClickBar", "RPageShareButtonClicked", false);
-                            Utils.trackMixpanel(ChatRecordView.this, "ClicksSent", "" + temp.clicks, "RPageShareButtonClicked", false);
+//                            Utils.trackMixpanel(ChatRecordView.this, "Activity", "UserDraggedClickBar", "UserDraggedClickBar", false);
+
+                            Utils.trackMixpanel(ChatRecordView.this, "ClicksSent", "" + temp.clicks, "RPageSendButtonClicked", false);
+
                             //To track through mixPanel.
                             //Click msg send.
-                            Utils.trackMixpanel(ChatRecordView.this, "Activity", "ClickMessageSent", "RPageShareButtonClicked", false);
+                            Utils.trackMixpanel(ChatRecordView.this, "Activity", "ClickMessageSent", "RPageSendButtonClicked", false);
+
                             Utils.trackMixpanel_superProperties(this, seekValue, "clicks");//Track Mix Panel To send,Clicks,To send Clicks Value
 
                             /* code to play sound in case of clicks prafull*/
@@ -801,10 +806,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                             //To track through mixPanel.
                             //Trade card button clicked.
 
-                            Utils.trackMixpanel(ChatRecordView.this, "Activity", "TextMessageSent", "RPageShareButtonClicked", false);
+                            Utils.trackMixpanel(ChatRecordView.this, "Activity", "TextMessageSent", "RPageSendButtonClicked", false);
 
-                            /* code to play sound in case of Text prafull*/
-                            /*Utils.playSound(ChatRecordView.this, R.raw.message_sent);*/
 
                         }
                         temp.partnerQbId = ModelManager.getInstance().getAuthorizationManager().partnerQbId;
@@ -832,7 +835,8 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                         sendMsgToQB(path);
                         //To track through mixPanel.
                         //Image send.
-                        Utils.trackMixpanel(ChatRecordView.this, "Activity", "MediaSent", "RPageShareButtonClicked", false);
+                        Utils.trackMixpanel(ChatRecordView.this, "Activity", "MediaSent", "RPageSendButtonClicked", false);
+
 
                         /* code to play sound in case of image prafull*/
                        /* Utils.playSound(ChatRecordView.this, R.raw.message_sent);*/
@@ -844,7 +848,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                         //To track through mixPanel.
                         //Audio Send.
 
-                        Utils.trackMixpanel(ChatRecordView.this, "Activity", "MediaSent", "RPageShareButtonClicked", false);
+                        Utils.trackMixpanel(ChatRecordView.this, "Activity", "MediaSent", "RPageSendButtonClicked", false);
 
                         /* code to play sound in case of audio prafull*/
                         /*Utils.playSound(ChatRecordView.this, R.raw.message_sent);*/
@@ -855,7 +859,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                         //To track through mixPanel.
                         //Video Send.
 
-                        Utils.trackMixpanel(ChatRecordView.this, "Activity", "MediaSent", "RPageShareButtonClicked", false);
+                        Utils.trackMixpanel(ChatRecordView.this, "Activity", "MediaSent", "RPageSendButtonClicked", false);
 
                         /* code to play sound in case of video prafull*/
                         /*Utils.playSound(ChatRecordView.this, R.raw.message_sent);*/
@@ -1069,10 +1073,23 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             if (isClicks()) {
                 temp.clicks = Utils.convertClicks(String.valueOf(seekValue)).trim();
                 temp.textMsg = temp.clicks + "        " + chatString;
-                Utils.trackMixpanel(ChatRecordView.this, "Activity", "UserDraggedClickBar", "RPageShareButtonClicked", false);
+//                Utils.trackMixpanel(ChatRecordView.this, "Activity", "UserDraggedClickBar", "UserDraggedClickBar", false);
                 Utils.trackMixpanel_superProperties(this, seekValue, "clicks");//Track Mix Panel To send,Clicks,To send Clicks Value in case of media
-                Utils.trackMixpanel(ChatRecordView.this, "ClicksSent", "" + temp.clicks, "RPageShareButtonClicked", false);
-                Utils.trackMixpanel(ChatRecordView.this, "Activity", "TextMessageSent", "RPageShareButtonClicked", false);
+                Utils.trackMixpanel(ChatRecordView.this, "ClicksSent", "" + temp.clicks, "RPageSendButtonClicked", false);
+//                Utils.trackMixpanel(ChatRecordView.this, "Activity", "TextMessageSent", "RPageSendButtonClicked", false);
+
+                switch (CHAT_TYPE){
+                    case Constants.CHAT_TYPE_IMAGE:
+                        Utils.trackMixpanel(ChatRecordView.this,"ClicksWithPhoto",""+temp.clicks,"UserDraggedClickBar",false);
+                        break;
+                    case Constants.CHAT_TYPE_AUDIO:
+                        Utils.trackMixpanel(ChatRecordView.this,"ClicksWithAudio",""+temp.clicks,"UserDraggedClickBar",false);
+
+                        break;
+                    case Constants.CHAT_TYPE_VIDEO:
+                        Utils.trackMixpanel(ChatRecordView.this,"ClicksWithVideo",""+temp.clicks,"UserDraggedClickBar",false);
+                        break;
+                }
             } else {
                 temp.clicks = "no";
                 temp.textMsg = chatString;
