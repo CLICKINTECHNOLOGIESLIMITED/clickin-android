@@ -4,8 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.os.*;
-import android.os.Process;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 
 import com.sourcefuse.clickinandroid.dbhelper.ClickinDbHelper;
@@ -232,53 +231,6 @@ public class ReloadApp extends Activity {
         }
         return index;
     }
-
-<<<<<<< HEAD
-=======
-
-  /*  public void putChatData(intent1 mIntent, String mPartnerId) {
-
-
-        for (int i = 0; i < ModelManager.getInstance().getRelationManager().acceptedList.size(); i++) {
-
-            if (ModelManager.getInstance().getRelationManager().acceptedList.get(i).getPartner_id().equalsIgnoreCase(mPartnerId)) {
-                mIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                mIntent.setAction("UPDATE");
-                mIntent.putExtra("quickId", ModelManager.getInstance().getRelationManager().acceptedList.get(i).getPartnerQBId());
-
-                mIntent.putExtra("partnerPic", ModelManager.getInstance().getRelationManager().acceptedList.get(i).getPartnerPic());
-
-
-                mIntent.putExtra("partnerName", ModelManager.getInstance().getRelationManager().acceptedList.get(i).getPartnerName());
-
-
-                mIntent.putExtra("rId", ModelManager.getInstance().getRelationManager().acceptedList.get(i).getRelationshipId());
-
-
-                mIntent.putExtra("partnerId", ModelManager.getInstance().getRelationManager().acceptedList.get(i).getPartner_id());
-
-
-                mIntent.putExtra("myClicks", ModelManager.getInstance().getRelationManager().acceptedList.get(i).getUserClicks());
-
-
-                mIntent.putExtra("userClicks", ModelManager.getInstance().getRelationManager().acceptedList.get(i).getClicks());
-
-
-                mIntent.putExtra("partnerPh", ModelManager.getInstance().getRelationManager().acceptedList.get(i).getPhoneNo());
-
-
-                mIntent.putExtra("relationListIndex", i);
-
-
-                ChatManager chatManager = ModelManager.getInstance().getChatManager();
-                chatManager.setrelationshipId(ModelManager.getInstance().getRelationManager().acceptedList.get(i).getRelationshipId());
-
-
-            }
-        }*/
-
-
->>>>>>> e10ff1c19e77aabab7eb8b2a3c986284045c2510
 
 
     @Override
