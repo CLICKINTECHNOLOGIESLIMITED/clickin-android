@@ -4,7 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.os.Bundle;
+import android.os.*;
+import android.os.Process;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
@@ -57,7 +58,7 @@ public class ReloadApp extends Activity {
             processValue();
 
         } else {  // else reload the app
-            RELOAD_APP=true;
+           RELOAD_APP=true;
 
             setContentView(R.layout.view_splash);
             Utils.launchBarDialog(this);
@@ -84,6 +85,10 @@ public class ReloadApp extends Activity {
                 startActivity(intent);
                 finish();
             }
+
+
+
+
         }
     }
 
@@ -98,8 +103,8 @@ public class ReloadApp extends Activity {
     public void processValue() {
 
         Intent intent1 = new Intent();
-        if(RELOAD_APP)
-            intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+     //   if(RELOAD_APP)
+       //     intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         switch (notf_type) {
             case Constants.USERPROFILE_NOTF:
 
@@ -109,7 +114,7 @@ public class ReloadApp extends Activity {
                 //   intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                  intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                // intent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
-            //    intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                intent1.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent1);
                 Utils.dismissBarDialog();
                 finish();
@@ -122,9 +127,9 @@ public class ReloadApp extends Activity {
                         intent1.putExtra("partnerIndex", partnerIndex);
                         intent1.setClass(this, ChatRecordView.class);
                             intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                      //    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                          intent1.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
-                   //     intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                        intent1.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                         startActivity(intent1);
                         Utils.dismissBarDialog();
                         finish();
@@ -139,8 +144,8 @@ public class ReloadApp extends Activity {
             case Constants.FOLLOWER_FOLLOWING_NOTF:
                 intent1.putExtra("FromOwnProfile", true);
                 intent1.setClass(getApplicationContext(), FollowerList.class);
-                //   intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                 intent1.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                   intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+               //  intent1.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 intent1.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent1);
                 Utils.dismissBarDialog();
@@ -179,7 +184,7 @@ public class ReloadApp extends Activity {
                 intent1.setClass(getApplicationContext(), JumpOtherProfileView.class);
                 intent1.putExtra("FromOwnProfile", true);
                 intent1.putExtra("phNumber", getIntent().getExtras().getString("phone_no"));
-                //   intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                   intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 // intent1.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 // intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent1.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
@@ -229,7 +234,7 @@ public class ReloadApp extends Activity {
         return index;
     }
 
-<<<<<<< HEAD
+
   /*  public void putChatData(intent1 mIntent, String mPartnerId) {
 
 
@@ -269,10 +274,9 @@ public class ReloadApp extends Activity {
 
 
             }
-        }
+        }*/
 
-=======
->>>>>>> de8005176f0e10827649f111b5206ef4ceb3c8e9
+
 
 
     @Override

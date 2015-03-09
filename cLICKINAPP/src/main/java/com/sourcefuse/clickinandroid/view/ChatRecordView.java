@@ -615,14 +615,14 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
     }
 
-  //  @Override
-/*    public void onBackPressed() {
-        super.onBackPressed();
-        finish();
-        overridePendingTransition(0, R.anim.top_out);
+    @Override
+   public void onBackPressed() {
+      //  super.onBackPressed();
+      //  finish();
+        //overridePendingTransition(0, R.anim.top_out);
 
 
-    }*/
+    }
 
     public void imageDialog() {
 
@@ -1117,7 +1117,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         relationManager = ModelManager.getInstance().getRelationManager();
         authManager = ModelManager.getInstance().getAuthorizationManager();
         String actionReq = intent.getAction();
-        chatText.setText("");//akshit code to Refresh Chat box text
+        chatText.setText(" ");//akshit code to Refresh Chat box text
 
         if (actionReq.equalsIgnoreCase("UPDATE")) {
 
@@ -1355,12 +1355,18 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
         // TODO Auto-generated method stub
         if (s.toString().trim().length() > 0) {//akshit to trim the space while showing send button
             setVisibilityForSend();//akshit code
-            myQbChatService.sendTypeNotification("YES", ModelManager.getInstance().getAuthorizationManager().partnerQbId);
+             if(myQbChatService!=null){
+                myQbChatService.sendTypeNotification("YES", ModelManager.getInstance().getAuthorizationManager().partnerQbId);
+            }
 
         } else {
             setVisibilityForSendButton();//akshit code if length is 0
-            if (chatText.hasFocus())//akshit code to check focus on edit box.if not focused then isComposing will not appear.
+            if (chatText.hasFocus()){
+            //akshit code to check focus on edit box.if not focused then isComposing will not appear.
+                if(myQbChatService!=null)
                 myQbChatService.sendTypeNotification("NO", ModelManager.getInstance().getAuthorizationManager().partnerQbId);
+
+            }
 
         }
 

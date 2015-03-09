@@ -91,10 +91,7 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
 
         File file = new File(mContentUri);
 
-<<<<<<< HEAD
-=======
 
->>>>>>> de8005176f0e10827649f111b5206ef4ceb3c8e9
         if (!Utils.isEmptyString("" + mUri) && file.exists()) {
             usrimg.setImageURI(mUri); // if file exists set it by uri
         } else {
