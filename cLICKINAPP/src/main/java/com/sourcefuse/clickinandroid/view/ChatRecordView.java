@@ -621,16 +621,10 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     }
 
     @Override
-<<<<<<< HEAD
+
    public void onBackPressed() {
       //  super.onBackPressed();
       //  finish();
-=======
-    public void onBackPressed() {
-      //  super.onBackPressed();
-        //finish();
->>>>>>> e10ff1c19e77aabab7eb8b2a3c986284045c2510
-        //overridePendingTransition(0, R.anim.top_out);
 
 
     }
@@ -1364,39 +1358,34 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
     }
 
+
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
         // TODO Auto-generated method stub
         if (s.toString().trim().length() > 0) {//akshit to trim the space while showing send button
             setVisibilityForSend();//akshit code
-<<<<<<< HEAD
-             if(myQbChatService!=null){
-=======
+
             if(myQbChatService!=null){
->>>>>>> e10ff1c19e77aabab7eb8b2a3c986284045c2510
+
                 myQbChatService.sendTypeNotification("YES", ModelManager.getInstance().getAuthorizationManager().partnerQbId);
             }
 
         } else {
             setVisibilityForSendButton();//akshit code if length is 0
             if (chatText.hasFocus()){
-<<<<<<< HEAD
-            //akshit code to check focus on edit box.if not focused then isComposing will not appear.
-                if(myQbChatService!=null)
-                myQbChatService.sendTypeNotification("NO", ModelManager.getInstance().getAuthorizationManager().partnerQbId);
-=======
+
                 //akshit code to check focus on edit box.if not focused then isComposing will not appear.
                 if(myQbChatService!=null)
                     myQbChatService.sendTypeNotification("NO", ModelManager.getInstance().getAuthorizationManager().partnerQbId);
 
             }
->>>>>>> e10ff1c19e77aabab7eb8b2a3c986284045c2510
+
 
             }
 
         }
 
-    }
+
 
     @Override
     public void afterTextChanged(Editable s) {
