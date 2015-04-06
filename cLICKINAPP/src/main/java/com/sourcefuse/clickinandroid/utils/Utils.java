@@ -99,7 +99,7 @@ public class Utils {
     public static ArrayList<String> groupSms = new ArrayList<String>();
     public static HashMap<String, ContactBean> contactMap = new HashMap<String, ContactBean>();
     public static String mName;
-    public static boolean mStartExceptionTrack = false;  // to stop exception data sending on server
+    public static boolean mStartExceptionTrack = true;  // to stop exception data sending on server
     static GoogleCloudMessaging gcm;
     static String regid;
     private static CustomProgressDialog barProgressDialog;
@@ -1505,7 +1505,7 @@ public class Utils {
         });
     }
 
-    // track User actions through mixPanel.
+   // track User actions through mixPanel.
     public static void trackMixpanel(Context context, String mKey, String mValue, String mEvent, boolean mSetProfile) {
 
         MixpanelAPI mixpanelAPI = MixpanelAPI.getInstance(context, Constants.MIX_PANEL_TOKEN);
@@ -1518,14 +1518,14 @@ public class Utils {
                 if (!Utils.isEmptyString(ModelManager.getInstance().getAuthorizationManager().getPhoneNo()))
                     jsonObject1.put("phone", "" + ModelManager.getInstance().getAuthorizationManager().getPhoneNo());
                 if (!Utils.isEmptyString(ModelManager.getInstance().getAuthorizationManager().getUserName()))
-                    jsonObject1.put("name", "" + ModelManager.getInstance().getAuthorizationManager().getUserName());
-                if (!Utils.isEmptyString(ModelManager.getInstance().getAuthorizationManager().getEmailId()))
+                    jsonObject1.put("$name", "" + ModelManager.getInstance().getAuthorizationManager().getUserName());
+                /*if (!Utils.isEmptyString(ModelManager.getInstance().getAuthorizationManager().getEmailId()))
                     jsonObject1.put("email", "" + ModelManager.getInstance().getAuthorizationManager().getEmailId());
                 if (!Utils.isEmptyString(ModelManager.getInstance().getAuthorizationManager().getGender()))
-                    jsonObject1.put("Gender", "" + ModelManager.getInstance().getAuthorizationManager().getGender());
+                    jsonObject1.put("Gender", "" + ModelManager.getInstance().getAuthorizationManager().getGender());*/
 
 
-                jsonObject1.put("created", "" + getCurrentTimeStamp());
+                //jsonObject1.put("created", "" + getCurrentTimeStamp());
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -1546,7 +1546,6 @@ public class Utils {
         mixpanelAPI.flush();
 
     }
-
     private int pxlToDp(int pixel, Context mContext) {
 
         final float scale = mContext.getResources().getDisplayMetrics().density;
@@ -1554,7 +1553,7 @@ public class Utils {
         return dp;
     }
 
-    //Method To Track mixpanel Super properties ,clicks & relationship count
+   //Method To Track mixpanel Super properties ,clicks & relationship count
     public static void trackMixpanel_superProperties(Context context, int value, String Case) {
 
         MixpanelAPI mixpanelAPI = MixpanelAPI.getInstance(context, Constants.MIX_PANEL_TOKEN);
@@ -1565,17 +1564,43 @@ public class Utils {
             int clicks_tosend = Math.abs(value);//To convert Negative clicks to positive.
             mixpanelAPI.getPeople().identify("" + ModelManager.getInstance().getAuthorizationManager().getPhoneNo());
             mixpanelAPI.getPeople().increment("TotalClicksSent", (double) clicks_tosend);
-        } else if(Case.equalsIgnoreCase("relationshipcount")) {//for the case of relationship count .
+        } else if (Case.equalsIgnoreCase("relationshipcount")) {//for the case of relationship count .
             mixpanelAPI.getPeople().identify("" + ModelManager.getInstance().getAuthorizationManager().getPhoneNo());
             mixpanelAPI.getPeople().set("RelationShipCount", (double) value);
-        }else {//for the case of inviting friends ,through Spread a word
+
+
+        } else if (Case.equalsIgnoreCase("name")) {
+             /*
+            * to set profile info
+            * */
+
+            JSONObject jsonObject1 = new JSONObject();
+            try {
+                if (!Utils.isEmptyString(ModelManager.getInstance().getAuthorizationManager().getPhoneNo()))
+                    jsonObject1.put("phone", "" + ModelManager.getInstance().getAuthorizationManager().getPhoneNo());
+                if (!Utils.isEmptyString(ModelManager.getInstance().getAuthorizationManager().getUserName()))
+                    jsonObject1.put("$name", "" + ModelManager.getInstance().getAuthorizationManager().getUserName());
+                /*if (!Utils.isEmptyString(ModelManager.getInstance().getAuthorizationManager().getEmailId()))
+                    jsonObject1.put("email", "" + ModelManager.getInstance().getAuthorizationManager().getEmailId());
+                if (!Utils.isEmptyString(ModelManager.getInstance().getAuthorizationManager().getGender()))
+                    jsonObject1.put("Gender", "" + ModelManager.getInstance().getAuthorizationManager().getGender());*/
+
+
+                //jsonObject1.put("created", "" + getCurrentTimeStamp());
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            mixpanelAPI.getPeople().identify("" + ModelManager.getInstance().getAuthorizationManager().getPhoneNo());
+            mixpanelAPI.getPeople().set(jsonObject1);
+        } else {//for the case of inviting friends ,through Spread a word
             mixpanelAPI.getPeople().identify("" + ModelManager.getInstance().getAuthorizationManager().getPhoneNo());
             mixpanelAPI.getPeople().increment("FriendsInvited", (double) value);
         }
 
         mixpanelAPI.flush();
     }
-
     public static Bitmap downloadBitmap(String url) {
         final AndroidHttpClient client = AndroidHttpClient.newInstance("Android");
         final HttpGet getRequest = new HttpGet(url);

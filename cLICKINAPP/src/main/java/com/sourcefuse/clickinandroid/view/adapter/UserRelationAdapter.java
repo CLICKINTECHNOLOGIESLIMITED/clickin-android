@@ -58,6 +58,7 @@ public class UserRelationAdapter extends ArrayAdapter<GetrelationshipsBean> {
         this.layoutResourceId = layoutResourceId;
         this.context = context;
         Utils.trackMixpanel_superProperties((Activity) context, itemList.size(), "relationshipcount");//Track Relationship Count Through Mix panel
+        Utils.trackMixpanel_superProperties((Activity) context, itemList.size(), "name");//Update profile
     }
 
 

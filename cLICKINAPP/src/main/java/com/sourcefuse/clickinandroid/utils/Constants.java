@@ -57,7 +57,7 @@ public class Constants {
     public static final String MSG_SENT = "SENT";
     public static final String MSG_DELIVERED = "DELIVERED";
     public static final int START_MAP = 200;
-    public static final String MIX_PANEL_TOKEN = "34b90dcc1a3f069eec5baa3208229d4b";
+    public static final String MIX_PANEL_TOKEN = "157eabd1c58d5e7ed4fadf1c3328eec4";
     //constants to filter notification type, to know which activity is to start
     public static final int USERPROFILE_NOTF = 1;
     public static final int CHATRECORDVIEW_NOTF = 2;

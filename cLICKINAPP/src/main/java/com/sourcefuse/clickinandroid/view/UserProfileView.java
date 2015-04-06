@@ -21,6 +21,7 @@ import android.widget.ImageView.ScaleType;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.mixpanel.android.mpmetrics.MixpanelAPI;
 import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ClickInNotificationManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
@@ -29,6 +30,7 @@ import com.sourcefuse.clickinandroid.model.RelationManager;
 import com.sourcefuse.clickinandroid.services.MyQbChatService;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.Constants;
+import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinandroid.utils.UnCaughtExceptionHandler;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.adapter.SimpleSectionedListAdapter1;
@@ -99,6 +101,15 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         if (Utils.mStartExceptionTrack)
             Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
+        //code to receive push notifications from mixpanel
+        MixpanelAPI mMixpanel = MixpanelAPI.getInstance(this, Constants.MIX_PANEL_TOKEN);
+        MixpanelAPI.People people = mMixpanel.getPeople();
+      Log.e("Mixpanel id",ModelManager.getInstance().getAuthorizationManager().getPhoneNo());
+        if(!Utils.isEmptyString(ModelManager.getInstance().getAuthorizationManager().getPhoneNo()))
+        mMixpanel.identify("" + ModelManager.getInstance().getAuthorizationManager().getPhoneNo());
+        people.identify("" + ModelManager.getInstance().getAuthorizationManager().getPhoneNo());
+        people.initPushHandling(Utils.PROJECT_NUMBER);
+
         setContentView(R.layout.view_userprofile);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         addMenu(true);
@@ -111,6 +122,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         authManager = ModelManager.getInstance().getAuthorizationManager();
         typefaceMedium = Typeface.createFromAsset(getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
         typefaceBold = Typeface.createFromAsset(getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_BOLD);
+
 
         following = (TextView) findViewById(R.id.btn_following);
         follower = (TextView) findViewById(R.id.btn_follower);

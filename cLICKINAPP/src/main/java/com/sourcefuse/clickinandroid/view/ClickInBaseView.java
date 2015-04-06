@@ -106,7 +106,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         header.findViewById(R.id.iv_open_left_menu).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Utils.trackMixpanel(ClickInBaseView.this, "", "", "LeftMenuOpened", false);////To track through mixPanel,if Left Menu is opened.
+                Utils.trackMixpanel(ClickInBaseView.this, "", "", "LeftMenuOpened", true);////To track through mixPanel,if Left Menu is opened.
                 slidemenu.showMenu();
             }
         });
@@ -125,7 +125,7 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
     @SuppressWarnings("static-access")
     public void setLeftMenuList() {
 
-
+        Utils.trackMixpanel_superProperties(ClickInBaseView.this, 0, "name");//Update profile
         clickInadapter = new ClickInWithAdapter(ClickInBaseView.this, R.layout.row_clickin_with, relationManager.acceptedList);
         clickWithlistView.setAdapter(clickInadapter);
     }

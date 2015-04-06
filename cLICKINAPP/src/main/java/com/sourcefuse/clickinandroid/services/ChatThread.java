@@ -381,7 +381,8 @@ public class ChatThread extends Thread implements QBMessageListener, ConnectionL
             if (!Utils.isEmptyString(userId) && !Utils.isEmptyString(userToken)) {
                 mUser.setLogin(userId);
                 mUser.setPassword(userToken);
-                QBSession result = QBAuth.createSession(new QBUser(userId, userToken));
+                final QBUser user=new QBUser(userId, userToken);
+                QBSession result = QBAuth.createSession(user);
                 mUser.setId(result.getUserId());
                 if (chatService != null) {
                     chatService.login(mUser);

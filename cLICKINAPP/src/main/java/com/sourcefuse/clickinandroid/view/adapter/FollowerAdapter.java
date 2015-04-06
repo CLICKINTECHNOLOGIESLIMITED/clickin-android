@@ -238,6 +238,7 @@ public class FollowerAdapter extends ArrayAdapter<FollowerFollowingBean> {
 
 /* condition for reject request   */
                 if (profileManager.followers.size() > position && profileManager.followRequesed.size() > position) {
+                    Utils.launchBarDialog((FollowerList) getContext());
                     authManager = ModelManager.getInstance().getAuthorizationManager();
                     relationManager = ModelManager.getInstance().getRelationManager();
                     relationManager.followupdatestatus(profileManager.followers.get(position).getrFollowerId(), "false", authManager.getPhoneNo(), authManager.getUsrToken());

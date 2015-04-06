@@ -1,12 +1,15 @@
 package com.sourcefuse.clickinandroid.view;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Telephony;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
@@ -204,21 +207,14 @@ public class AddViaNumberView extends Activity implements View.OnClickListener, 
 
             } catch (Exception e) {
                 try {
-                    String defaultSmsPackageName = Telephony.Sms.getDefaultSmsPackage(AddViaNumberView.this); //Need to change the build to API 19
 
-                    Intent sendIntent = new Intent(Intent.ACTION_SEND);
-                    sendIntent.setType("text/plain");
-                    sendIntent.putExtra("address", mPhNo);
-                    sendIntent.putExtra(Intent.ACTION_ATTACH_DATA, Uri.parse(mPhNo));
-                    sendIntent.putExtra(Intent.EXTRA_TEXT, Constants.SEND_REQUEST_WITH_SMS_MESSAGE);
-                    if (defaultSmsPackageName != null)//Can be null in case that there is no default, then the user would be able to choose any app that support this intent.
-                    {
-                        sendIntent.setPackage(defaultSmsPackageName);
-                    }
-                    sendIntent.putExtra("exit_on_sent", true);
-                    startActivity(sendIntent);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+                        sentSmsUsingPackage(mPhNo);
+                    else
+                        sendSms(mPhNo);
                 } catch (Exception e1) {
                     e1.printStackTrace();
+                    Log.e("Exception occur--->","Exception occur--->");
                 }
             }
 
@@ -233,7 +229,30 @@ public class AddViaNumberView extends Activity implements View.OnClickListener, 
         }
     }
 
+    private void sendSms(String mPhNo) {
+        Intent smsIntent = new Intent(android.content.Intent.ACTION_VIEW);
+        smsIntent.setType("vnd.android-dir/mms-sms");
+        smsIntent.putExtra("address", mPhNo);
+        smsIntent.putExtra("sms_body", Constants.SEND_REQUEST_WITH_SMS_MESSAGE);
+        startActivity(smsIntent);
+    }
 
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    private void sentSmsUsingPackage(String mPhNo) {
+        String defaultSmsPackageName = Telephony.Sms.getDefaultSmsPackage(AddViaNumberView.this); //Need to change the build to API 19
+
+        Intent sendIntent = new Intent(Intent.ACTION_SEND);
+        sendIntent.setType("text/plain");
+        sendIntent.putExtra("address", mPhNo);
+        sendIntent.putExtra(Intent.ACTION_ATTACH_DATA, Uri.parse(mPhNo));
+        sendIntent.putExtra(Intent.EXTRA_TEXT, Constants.SEND_REQUEST_WITH_SMS_MESSAGE);
+        if (defaultSmsPackageName != null)//Can be null in case that there is no default, then the user would be able to choose any app that support this intent.
+        {
+            sendIntent.setPackage(defaultSmsPackageName);
+        }
+        sendIntent.putExtra("exit_on_sent", true);
+        startActivityForResult(sendIntent, Constants.SMS_SEND);
+    }
     @Override
     public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
 

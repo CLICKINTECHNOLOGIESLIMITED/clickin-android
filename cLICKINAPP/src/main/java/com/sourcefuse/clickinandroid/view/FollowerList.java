@@ -140,11 +140,12 @@ public class FollowerList extends ClickInBaseView implements
 
     public void onEventMainThread(String getMsg) {
         super.onEventMainThread(getMsg);
-        Utils.dismissBarDialog();
+
         authManager = ModelManager.getInstance().getAuthorizationManager();
         if (getMsg.equalsIgnoreCase("UnFollowUser true")) {
             if(adapter != null)
             adapter.notifyDataSetChanged();
+            Utils.dismissBarDialog();
 
         } else if (getMsg.equalsIgnoreCase("UnFollowUser false")) {
 
@@ -153,13 +154,15 @@ public class FollowerList extends ClickInBaseView implements
         } else if (getMsg.equalsIgnoreCase("FollowUser true")) {
             if(adapter != null)
             adapter.notifyDataSetChanged();
+            Utils.dismissBarDialog();
         } else if (getMsg.equalsIgnoreCase("FollowUser false")) {
 
         } else if (getMsg.equalsIgnoreCase("FollowUser Network Error")) {
             Utils.fromSignalDialog(FollowerList.this, AlertMessage.connectionError);
         } else if (getMsg.equalsIgnoreCase("GetFollower True")) {
-            Utils.dismissBarDialog();
+
             setlist();
+            Utils.dismissBarDialog();
         } else if (getMsg.equalsIgnoreCase("GetFollower False")) {
             Utils.dismissBarDialog();
         } else if (getMsg.equalsIgnoreCase("GetFollower Network Error")) {
@@ -168,6 +171,7 @@ public class FollowerList extends ClickInBaseView implements
         } else if (getMsg.equalsIgnoreCase("followUpdateStatus True")) {
             if(adapter != null)
             adapter.notifyDataSetChanged();
+            Utils.dismissBarDialog();
         } else if (getMsg.equalsIgnoreCase("followUpdateStatus False")) {
 
         } else if (getMsg.equalsIgnoreCase("followUpdateStatus Network Error")) {

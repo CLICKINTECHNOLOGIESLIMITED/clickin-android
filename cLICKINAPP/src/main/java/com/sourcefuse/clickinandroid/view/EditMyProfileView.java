@@ -482,6 +482,8 @@ public class EditMyProfileView extends ClickInBaseView implements View.OnClickLi
             authManager.setUserCountry(userCountry);
             authManager.setEditProfileFlag(true);
             authManager.setMenuUserInfoFlag(true);
+            Utils.trackMixpanel_superProperties(EditMyProfileView.this, 0, "name");//Update profile
+
 
             if (authManager.getmResizeBitmap() == null) {
                 authManager.setUserbitmap(authManager.getUserbitmap());

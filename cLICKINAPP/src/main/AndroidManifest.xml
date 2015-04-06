@@ -2,13 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.sourcefuse.clickinapp"
     android:largeHeap="true"
-    android:versionCode="9"
+    android:versionCode="13"
     android:versionName="1.0">
 
     <uses-sdk
         android:minSdkVersion="11"
         android:targetSdkVersion="19" />
-
+    <uses-permission android:name="com.sourcefuse.clickinapp.permission.C2D_MESSAGE" />
 
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission
@@ -225,6 +225,16 @@
                 <category android:name="com.sourcefuse.clickin" />
             </intent-filter>
         </receiver>
+
+        <receiver android:name="com.mixpanel.android.mpmetrics.GCMReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+                <category android:name="com.sourcefuse.clickinapp" />
+            </intent-filter>
+        </receiver>
+
 
         <service
             android:name="com.sourcefuse.clickinandroid.pushnotification.GcmIntentService"

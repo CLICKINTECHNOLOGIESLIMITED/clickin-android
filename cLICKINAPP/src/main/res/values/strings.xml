@@ -367,4 +367,6 @@
 
     <string name="application_crash">Unfortunately,Clickin\' has stopped</string>
     <string name="storage_issue">You don\'t have enough storage space.</string>
+
+    <string name="dont_have_contacts">You Don\'t Have Any Contacts</string>
 </resources>

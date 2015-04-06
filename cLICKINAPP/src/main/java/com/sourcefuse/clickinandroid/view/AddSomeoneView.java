@@ -45,8 +45,8 @@ public class AddSomeoneView extends Activity implements TextWatcher {
         if (Utils.mStartExceptionTrack)
             Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
-        setContentView(R.layout.view_addsomeone);
         this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+        setContentView(R.layout.view_addsomeone);
         search_phbook = (EditText) findViewById(R.id.edt_search_ph);
         listView = (ListView) findViewById(R.id.list_contact);
         showContactlist = (RelativeLayout) findViewById(R.id.rr_con_list);
@@ -208,12 +208,17 @@ public class AddSomeoneView extends Activity implements TextWatcher {
 
     }
 
-    @Override
+   @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
 
         if (search_phbook.getText().toString().length() > 0) {
             showContactlist.setVisibility(View.VISIBLE);
-            AddSomeoneView.this.adapter.filter(search_phbook.getText().toString());
+            if (adapter != null) {//if there are no contact in the list,
+
+                adapter.filter(search_phbook.getText().toString());
+            } else {
+                Toast.makeText(getApplicationContext(), getString(R.string.dont_have_contacts), Toast.LENGTH_SHORT).show();
+            }
         } else {
             showContactlist.setVisibility(View.GONE);
         }

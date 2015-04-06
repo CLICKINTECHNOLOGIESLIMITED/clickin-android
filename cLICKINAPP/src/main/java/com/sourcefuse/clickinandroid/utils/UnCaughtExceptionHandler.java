@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Process;
 
 import com.sourcefuse.clickinandroid.view.DialogActivity;
+import com.sourcefuse.clickinapp.BuildConfig;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -35,7 +36,7 @@ public class UnCaughtExceptionHandler implements
         /* Information When Application Got Crashed.*/
         String mInfo = "BRAND ====>" + Build.BRAND + "\nDevice ====>" + Build.DEVICE + "\nModel ====>" + Build.MODEL +
                 "\nId ====>" + Build.ID + "\nProduct ====>" + Build.PRODUCT + "\nSDK ====>" +
-                Build.VERSION.SDK + "\nRelease ====>" + Build.VERSION.RELEASE + "\nIncremental ====>" +
+                Build.VERSION.SDK + "\nRelease ====>" + Build.VERSION.RELEASE + "\nIncremental ====>" + "app version==>"+ BuildConfig.VERSION_CODE+
                 Build.VERSION.INCREMENTAL + "\nMANUFACTURER ====>" + Build.MANUFACTURER + "\nActivity ====>" + myContext + "\nException ====>" + stackTrace.toString();
 
 

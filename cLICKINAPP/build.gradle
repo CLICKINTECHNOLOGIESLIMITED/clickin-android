@@ -4,7 +4,7 @@ repositories {
     }
 }
 allprojects {
-    tasks.withType(Compile) {
+    tasks.withType(JavaCompile) {
         options.compilerArgs << "-Xlint:deprecation"
     }
 }
@@ -24,13 +24,13 @@ android {
     }
 
     defaultConfig {
-        minSdkVersion 9
+        minSdkVersion 19
         targetSdkVersion 19
     }
 
     buildTypes {
         release {
-            runProguard false
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
@@ -45,7 +45,7 @@ dependencies {
     compile project(':library')
 
     compile files('libs/volley.jar')
-    compile files('libs/googleanalyticsaervicesandroid_3.02.zip')
+   // compile files('libs/googleanalyticsaervicesandroid_3.02.zip')
     compile files('libs/mail.jar')
     compile files('libs/activation.jar')
     compile files('libs/additionnal.jar')
