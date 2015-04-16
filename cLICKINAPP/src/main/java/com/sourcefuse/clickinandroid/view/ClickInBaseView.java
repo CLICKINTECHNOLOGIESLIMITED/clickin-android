@@ -2,21 +2,26 @@ package com.sourcefuse.clickinandroid.view;
 
 
 import android.app.Activity;
+import android.app.ActivityManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Typeface;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
@@ -24,108 +29,173 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.sourcefuse.clickinandroid.model.AuthManager;
-import com.sourcefuse.clickinandroid.model.ClickInNotificationManager;
+import com.sourcefuse.clickinandroid.model.ChatManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.NewsFeedManager;
 import com.sourcefuse.clickinandroid.model.RelationManager;
+import com.sourcefuse.clickinandroid.model.bean.NotificationBean;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.Constants;
+import com.sourcefuse.clickinandroid.utils.UnCaughtExceptionHandler;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.adapter.ClickInWithAdapter;
 import com.sourcefuse.clickinandroid.view.adapter.NotificationAdapter;
 import com.sourcefuse.clickinandroid.view.adapter.SearchAdapter;
-import com.sourcefuse.clickinandroid.view.adapter.SimpleSectionedListAdapter1;
 import com.sourcefuse.clickinapp.R;
 import com.squareup.picasso.Picasso;
 
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
+import java.io.File;
+import java.util.List;
 
 import de.greenrobot.event.EventBus;
+import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
 public class ClickInBaseView extends Activity implements TextWatcher, SlidingMenu.OnOpenListener, SlidingMenu.OnCloseListener {
 
 
+    public StickyListHeadersListView clickWithlistView;
+    public ListView searchList;
+    public ClickInWithAdapter clickInadapter;
+    public Boolean stopSearch = true;
+    public EditText edt_search;
+    //Right Menu.....
+    public NewsFeedManager newsFeedManager;
+    public SlidingMenu slidemenu;
+    public String quickBlockId, partnerPic, partnerName, partnerId, myClicks, userClicks, partnerPh, rId;
+    String mLastchatID = "";
+    View header;
     /// Left Menu
     private TextView userName;
-    private ImageView userPic,hideSearchlist;
+    private ImageView userPic, hideSearchlist;
     private AuthManager authManager;
     private RelationManager relationManager;
-    private ClickInNotificationManager notificationMngr;
-    private Typeface typeface;
-    private Button searchInviteView;
+    private TextView searchInviteView;
     private LinearLayout theFeed, inviteF, findFriend, setting;
-    public ListView clickWithlistView, searchList;
-    public ClickInWithAdapter clickInadapter;
-    private String quickBlockId, partnerPic, partnerName,partnerId,myClicks,userClicks,partnerPh;
-    public Boolean stopSearch = true;
-    private EditText edt_search;
+
+
     private SearchAdapter searchListadapter;
     private RelativeLayout imageMenuRefresh;
-
-    //Right Menu.....
-    public ListView notificationList;
+    private int relationListIndex;
     private ImageView backArrowRightSide;
-    public NotificationAdapter notificationAdapter;
-    public NewsFeedManager newsFeedManager;
-    private Bitmap imageBitmap = null;
-    SlidingMenu slidemenu;
+    private ChatManager chatManager;
+    private PullToRefreshListView notificationList;
+    private NotificationAdapter notificationAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.view_baseview);
-        Log.e("ClickInBaseView1", "onCreate");
-
         authManager = ModelManager.getInstance().getAuthorizationManager();
+        //code- to handle uncaught exception
+        if (Utils.mStartExceptionTrack)
+            Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(ClickInBaseView.this));
+    }
+
+    @Override
+    public void setContentView(int layoutResID) {  // prafull code for comman header
+        super.setContentView(layoutResID);
+        header = getLayoutInflater().inflate(R.layout.view_baseview, null);
+        ((ViewGroup) ((ViewGroup) findViewById(android.R.id.content)).getChildAt(0)).addView(header, 1);
+        header.findViewById(R.id.iv_open_left_menu).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Utils.trackMixpanel(ClickInBaseView.this, "", "", "LeftMenuOpened", true);////To track through mixPanel,if Left Menu is opened.
+                slidemenu.showMenu();
+            }
+        });
+
+        header.findViewById(R.id.iv_open_right_menu).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                slidemenu.showSecondaryMenu();
+            }
+        });
 
     }
+
 
     @SuppressWarnings("static-access")
     public void setLeftMenuList() {
+
+        Utils.trackMixpanel_superProperties(ClickInBaseView.this, 0, "name");//Update profile
         clickInadapter = new ClickInWithAdapter(ClickInBaseView.this, R.layout.row_clickin_with, relationManager.acceptedList);
-        String[] mHeaderNames = {"CLICKIN"};
-        String[] mHeaderNames2 = {"WITH"};
-        Integer[] mHeaderPositions = {0};
-
-        ArrayList<SimpleSectionedListAdapter1.Section> sections = new ArrayList<SimpleSectionedListAdapter1.Section>();
-        SimpleSectionedListAdapter1 simpleSectionedGridAdapter ;
-
-        sections.add(new SimpleSectionedListAdapter1.Section(mHeaderPositions[0], mHeaderNames[0], mHeaderNames2[0]));
-        simpleSectionedGridAdapter = new SimpleSectionedListAdapter1(ClickInBaseView.this, clickInadapter, R.layout.header_clickwith, R.id.tv_clickintx, R.id.tv_with);
-        simpleSectionedGridAdapter.setSections(sections.toArray(new SimpleSectionedListAdapter1.Section[0]));
-        clickWithlistView.setAdapter(simpleSectionedGridAdapter);
+        clickWithlistView.setAdapter(clickInadapter);
     }
 
-    private void switchView(String rid) {
 
+    private void switchView(String rid, int relationListIndex) {
+
+        relationManager = ModelManager.getInstance().getRelationManager();
+        /*Intent intent = new Intent();*/
         Intent intent = new Intent(ClickInBaseView.this, ChatRecordView.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.setAction("UPDATE");
         intent.putExtra("quickId", quickBlockId);
         intent.putExtra("partnerPic", partnerPic);
         intent.putExtra("partnerName", partnerName);
         intent.putExtra("rId", rid);
         intent.putExtra("partnerId", partnerId);
+
         intent.putExtra("myClicks", myClicks);
         intent.putExtra("userClicks", userClicks);
         intent.putExtra("partnerPh", partnerPh);
+        intent.putExtra("relationListIndex", relationListIndex);
+
+        String mNewPrtner = relationManager.acceptedList.get(relationListIndex).mIs_new_partner;
+        String mRelationShipId = relationManager.acceptedList.get(relationListIndex).getRelationshipId();
+        String mNewUser = authManager.mIs_new_clickin_user;
 
 
 
+        String mValue;
+        if (mNewUser != null && mNewUser.equalsIgnoreCase("yes") && mNewPrtner != null && mNewPrtner.equalsIgnoreCase("yes")) {
+            mValue = "one";
 
-        startActivity(intent);
+        } else if (mNewPrtner != null && mNewPrtner.equalsIgnoreCase("yes")) {
+            mValue = "two";
+
+        } else {
+            mValue = "none";
+        }
+
+
+        intent.putExtra("mValue", mValue);
+
+        chatManager = ModelManager.getInstance().getChatManager();
+        chatManager.setrelationshipId(rid);
+
+
+        ActivityManager am = (ActivityManager) this.getSystemService(ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
+        ComponentName componentInfo = taskInfo.get(0).topActivity;
+        String className = componentInfo.getClassName();
+        if (className.equalsIgnoreCase("com.sourcefuse.clickinandroid.view.ChatRecordView")) {
+            startActivity(intent);
+
+                  /* for animation prafull */
+
+            this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+            slidemenu.showContent();
+            //  slidemenu.showContent(true);
+        } else {
+            startActivity(intent);
+                  /* for animation prafull */
+
+            this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+            // slidemenu.showContent(true);
+        }
+
 
     }
     /// Left Menu End
-
-
-
-
-
 
 
     public void addMenu(boolean setData) {
@@ -142,7 +212,41 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
          * Left Menu
          */
         slidemenu.setMenu(R.layout.menu_view);
+        /*
+         * Right Menu
+         */
+        slidemenu.setSecondaryMenu(R.layout.view_notification);
+
         leftMenuElements();
+        setNotificationList();
+
+
+        /* set notification data prafull code */
+
+        if (authManager == null)
+            authManager = ModelManager.getInstance().getAuthorizationManager();
+        TextView mNotificationText = (TextView) header.findViewById(R.id.iv_open_right_menu);
+        if (authManager.getNotificationCounter() > 0) {
+
+            String mValue = "";
+            int mNotificationValue = authManager.getNotificationCounter();
+
+            if (mNotificationValue > 99) {
+                mValue = "99+";
+
+            } else {
+                mValue = String.valueOf(mNotificationValue);
+
+
+            }
+            mNotificationText.setText("" + mValue);
+            mNotificationText.setTextColor(Color.parseColor("#39cad4"));
+        } else {
+
+            mNotificationText.setText("0");
+            mNotificationText.setTextColor(Color.parseColor("#000000"));
+        }
+
 
         if (setData) {
             getMenuListData();
@@ -153,15 +257,74 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 
         slidemenu.setOnCloseListener(ClickInBaseView.this);
         slidemenu.setOnOpenListener(ClickInBaseView.this);
-        
-        /*
-         * Right Menu
-         */
-        slidemenu.setSecondaryMenu(R.layout.view_notification);
+        slidemenu.setOnOpenedListener(new SlidingMenu.OnOpenedListener() {
+            @Override
+            public void onOpened() {
+
+
+                try {
+                    InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                }catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+
+                if (slidemenu.isSecondaryMenuShowing()) {
+                    if (notificationAdapter != null)
+                        notificationAdapter.notifyDataSetChanged();
+                    else
+                        setNotificationList();
+
+                    ModelManager.getInstance().getAuthorizationManager().setNotificationCounter(0);
+                    if(Utils.isConnectingToInternet(ClickInBaseView.this)) {
+                        if (ModelManager.getInstance().getNotificationManagerManager().notificationData.size() == 0) {
+                            Utils.launchBarDialog(ClickInBaseView.this);
+                            mLastchatID = "";
+                            ModelManager.getInstance().getNotificationManagerManager().getNotification(getApplicationContext(), "", ModelManager.getInstance().getAuthorizationManager().getPhoneNo(),
+                                    ModelManager.getInstance().getAuthorizationManager().getUsrToken());
+                        }
+                    }else {
+                        Utils.fromSignalDialog(ClickInBaseView.this,AlertMessage.connectionError);
+                    }
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() { // put delay of 500 millisecond so that adapter get set first.
+                        @Override
+                        public void run() {
+
+                            for (NotificationBean bean : ModelManager.getInstance().getNotificationManagerManager().notificationData)
+                                bean.setIs_read("true");
+
+                        }
+                    }, 500);
+
+
+                }
+
+            }
+        });
+
         //slidemenu.setSecondaryShadowDrawable(R.drawable.shadow);
         rightMenuElements();
-        setNotificationList();
 
+
+        slidemenu.setOnClosedListener(new SlidingMenu.OnClosedListener() {
+            @Override
+            public void onClosed() {
+
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (edt_search.getWindowToken() != null)
+                    imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
+
+            }
+        });
+        slidemenu.findViewById(R.id.btn_clear).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                edt_search.setText("");
+
+            }
+        });
 
     }
 
@@ -169,14 +332,59 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
     public void leftMenuElements() {
         authManager = ModelManager.getInstance().getAuthorizationManager();
         relationManager = ModelManager.getInstance().getRelationManager();
-        typeface = Typeface.createFromAsset(ClickInBaseView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
         edt_search = (EditText) slidemenu.findViewById(R.id.edt_search);
         searchList = (ListView) slidemenu.findViewById(R.id.search_list);
+
+
+        edt_search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+
+
+                //praful code
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+
+                    Utils.trackMixpanel(ClickInBaseView.this, "", "", "UserSearched", false);//Track event for MixPanel,if user searched from left slide menu
+                    if (!(edt_search.getText().toString().length() > 0)) {
+                        hideSearchlist.setVisibility(View.GONE);
+                        searchList.setVisibility(View.GONE);
+
+                        InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        if (getCurrentFocus() != null && getCurrentFocus().getWindowToken() != null)
+                            inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+
+                    }
+                    String search_date = edt_search.getText().toString();
+                    if (!Utils.isEmptyString(search_date) && search_date.length() > 0) {
+                        slidemenu.findViewById(R.id.btn_clear).setVisibility(View.GONE);
+                        slidemenu.findViewById(R.id.btn_progressBar).setVisibility(View.VISIBLE);
+                    } else {
+                        slidemenu.findViewById(R.id.btn_clear).setVisibility(View.GONE);
+                        slidemenu.findViewById(R.id.btn_progressBar).setVisibility(View.GONE);
+                    }
+                    if (edt_search.getText().toString().length() > 0) {
+                        hideSearchlist.setVisibility(View.VISIBLE);
+                        searchList.setVisibility(View.VISIBLE);
+                        stopSearch = true;
+                        if (stopSearch) {
+                            stopSearch = false;
+                            relationManager = ModelManager.getInstance().getRelationManager();
+                            authManager = ModelManager.getInstance().getAuthorizationManager();
+                            relationManager.fetchusersbyname(edt_search.getText().toString(), authManager.getPhoneNo(), authManager.getUsrToken());
+                        }
+                    }
+                    handled = true;
+                }
+                return handled;
+            }
+        });
+
+
         hideSearchlist = (ImageView) slidemenu.findViewById(R.id.iv_hide_searchlist);
 
-        clickWithlistView = (ListView) slidemenu.findViewById(R.id.click_with_list_menu);
-        clickWithlistView.setDivider(getResources().getDrawable(R.drawable.list_divider));
-        clickWithlistView.setDividerHeight(2);
+        clickWithlistView = (StickyListHeadersListView) slidemenu.findViewById(R.id.click_with_list_menu);
+        clickWithlistView.setDivider(null);
         // Adding  header And footer
         View headerView = ((LayoutInflater) ClickInBaseView.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.menu_header, null, false);
         View footerView = ((LayoutInflater) ClickInBaseView.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.menu_footer, null, false);
@@ -195,105 +403,80 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         inviteF = (LinearLayout) footerView.findViewById(R.id.ll_invite);
         findFriend = (LinearLayout) footerView.findViewById(R.id.ll_friend);
         setting = (LinearLayout) footerView.findViewById(R.id.ll_setting);
-        searchInviteView = (Button) searchfooter.findViewById(R.id.btn_invite_view);
-
+        searchInviteView = (TextView) searchfooter.findViewById(R.id.btn_invite_view);
 
 
         userName.setText(authManager.getUserName());
         userPic.setScaleType(ScaleType.FIT_XY);
-     /*   Picasso.with(ClickInBaseView.this).load(authManager.getUserPic())
-                .placeholder(R.drawable.default_profile)
-                .error(R.drawable.default_profile)
-                .into(userPic);*/
-        String dtails = "";
+
+
+        //prafull code to set image bitmap
         try {
-            try {
+            String mUserImagePath = null;
+            Uri mUserImageUri = null;
+            Bitmap imagebitmap1 = authManager.getUserbitmap();
 
-                if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().matches("girl")) {
-                    dtails = "Female";
-                } else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().matches("guy")) {
-                    dtails = "Male";
-                }
-            }catch (Exception e){}
+            boolean userpic = Utils.isEmptyString(authManager.getUserPic());
+            if (authManager.getUserImageUri() != null)
+                mUserImagePath = "" + authManager.getUserImageUri().toString();
+            if (!Utils.isEmptyString(mUserImagePath))
+                mUserImageUri = Utils.getImageContentUri(ClickInBaseView.this, new File(mUserImagePath));
 
-        }catch (Exception e){}
 
-        try {
-            Uri tempUri=authManager.getUserImageUri();
-            if(tempUri!=null){
-                imageBitmap = Utils.decodeUri(tempUri, this);
-                if(imageBitmap!=null)
-                    userPic.setImageBitmap(imageBitmap);
-                else{
-                    try{
-                        if(dtails.equalsIgnoreCase("Male")){
-                            Picasso.with(this)
-                                    .load(authManager.getUserPic())
-                                    .skipMemoryCache()
-                                    .placeholder(R.drawable.default_profile)
-                                    .error(R.drawable.male_user)
-                                    .into(userPic);
-                        }else if(dtails.equalsIgnoreCase("Female")) {
-                            Picasso.with(this)
-                                    .load(authManager.getUserPic())
-                                    .skipMemoryCache()
-                                    .placeholder(R.drawable.default_profile)
-                                    .error(R.drawable.female_user)
-                                    .into(userPic);
-                        }
+            if (!Utils.isEmptyString("" + mUserImageUri))
+                userPic.setImageURI(mUserImageUri);
+            else if (imagebitmap1 != null)
+                userPic.setImageBitmap(imagebitmap1);
+            else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl") && !userpic)
+                Picasso.with(ClickInBaseView.this).load(authManager.getUserPic()).error(R.drawable.female_user).into(userPic);
+            else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("guy") && !userpic)
+                Picasso.with(ClickInBaseView.this).load(authManager.getUserPic()).error(R.drawable.male_user).into(userPic);
+            else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl"))
+                userPic.setImageResource(R.drawable.female_user);
+            else
+                userPic.setImageResource(R.drawable.male_user);
 
-                    }catch(Exception e){
-                        e.printStackTrace();
-                    }
-                }
+        } catch (Exception e) {
 
-            }else{
-                try{
-                    if(dtails.equalsIgnoreCase("Male")){
-                        Picasso.with(this)
-                                .load(authManager.getUserPic())
-                                .skipMemoryCache()
-                                .placeholder(R.drawable.default_profile)
-                                .error(R.drawable.male_user)
-                                .into(userPic);
-                    }else if(dtails.equalsIgnoreCase("Female")) {
-                        Picasso.with(this)
-                                .load(authManager.getUserPic())
-                                .skipMemoryCache()
-                                .placeholder(R.drawable.default_profile)
-                                .error(R.drawable.female_user)
-                                .into(userPic);
-                    }
-
-                }catch(Exception e){
-                    e.printStackTrace();
-                }
-
-            }
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            userPic.setImageResource(R.drawable.male_user);
         }
+
         edt_search.addTextChangedListener(this);
 
         clickWithlistView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-                if (relationManager.acceptedList.size() > 0 && position>=2) {
-                    try {
-                        partnerName = relationManager.acceptedList.get(position - 2).getPartnerName();
-                        String rId = relationManager.acceptedList.get(position - 2).getRelationshipId();
-                        partnerPic = relationManager.acceptedList.get(position - 2).getPartnerPic();
-                        quickBlockId = relationManager.acceptedList.get(position - 2).getPartnerQBId();
-                        partnerId = relationManager.acceptedList.get(position - 2).getPartner_id();
-                        myClicks = relationManager.acceptedList.get(position - 2).getClicks();
-                        userClicks = relationManager.acceptedList.get(position - 2).getUserClicks();
-                        partnerPh = relationManager.acceptedList.get(position - 2).getPhoneNo();
-                        Log.e("", "position--In..> " + rId);
-                        switchView(rId);
 
-                    } catch (Exception e) {
+                if (relationManager.acceptedList.size() > 0 && position >= 1) {
+//                    try {removed by akshit
+                    partnerName = relationManager.acceptedList.get(position - 1).getPartnerName();
+
+                    rId = relationManager.acceptedList.get(position - 1).getRelationshipId();
+
+                    partnerPic = relationManager.acceptedList.get(position - 1).getPartnerPic();
+                    quickBlockId = relationManager.acceptedList.get(position - 1).getPartnerQBId();
+
+
+                    ModelManager.getInstance().getAuthorizationManager().partnerQbId = quickBlockId;
+
+
+                    partnerId = relationManager.acceptedList.get(position - 1).getPartner_id();
+                    userClicks = relationManager.acceptedList.get(position - 1).getClicks();
+                    myClicks = relationManager.acceptedList.get(position - 1).getUserClicks();
+                    partnerPh = relationManager.acceptedList.get(position - 1).getPhoneNo();
+
+                    relationListIndex = (position - 1);
+
+/* prafulll code to set counter to zero */
+                    if (relationManager.acceptedList.get(position - 1).getUnreadMsg() != 0) {
+                        relationManager.acceptedList.get(position - 1).setUnreadMsg(0);
+                        if(clickInadapter!=null)
+                        clickInadapter.notifyDataSetChanged();
                     }
+/* prafulll code to set counter to zero */
+                    //Track event for MixPanel,If Partner name is clicked from left menu.
+                    Utils.trackMixpanel(ClickInBaseView.this, "", "", "LeftMenuPartnerButtonClicked", false);
+                    switchView(rId, relationListIndex);
                 }
             }
         });
@@ -301,13 +484,21 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         searchInviteView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
+
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+
+                if (edt_search.getWindowToken() != null)
+                    imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
+
                 Intent intent = new Intent(ClickInBaseView.this, AddSomeoneView.class);
+                intent.putExtra("fromsignup", false);
                 startActivity(intent);
             }
         });
         hideSearchlist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
+
                 searchList.setVisibility(View.GONE);
                 hideSearchlist.setVisibility(View.GONE);
                 edt_search.setText("");
@@ -317,63 +508,132 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         findFriend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
+
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (edt_search.getWindowToken() != null)
+                    imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
+
                 Intent intent = new Intent(ClickInBaseView.this, CurrentClickersView.class);
                 intent.putExtra("FromMenu", true);
                 startActivity(intent);
+
+                        /* code for animation prafull*/
+
+
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+
+
             }
         });
 
         inviteF.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
+
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (edt_search.getWindowToken() != null)
+                    imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
+
                 Intent intent = new Intent(ClickInBaseView.this, SpreadWordView.class);
+                intent.putExtra("fromProfile", true);
                 startActivity(intent);
+
+                        /* code for animation prafull*/
+
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+                //To track through mixPanel. if Invite Button is clicked from Left Menu.
+                Utils.trackMixpanel(ClickInBaseView.this, "", "", "LeftMenuInviteButtonClicked", false);
             }
         });
         theFeed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
 
-//                newsFeedManager = ModelManager.getInstance().getNewsFeedManager();
-//               // newsFeedManager.fetchNewsFeed(lastNewsfeedId, phone, usertoken);
-//                newsFeedManager.fetchNewsFeed("",authManager.getPhoneNo(), authManager.getUsrToken());
-//                Utils.launchBarDialog(ClickInBaseView.this);
+
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (edt_search.getWindowToken() != null)
+                    imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
 
                 Intent intent = new Intent(ClickInBaseView.this, FeedView.class);
                 startActivity(intent);
+
+                        /* code for animation prafull*/
+
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
             }
         });
 
         imageMenuRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                Log.e("","00000000-userPic"+slidemenu);
+
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (edt_search.getWindowToken() != null)
+                    imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
+
+
                 Intent intent = new Intent(ClickInBaseView.this, UserProfileView.class);
-                startActivity(intent);
-               // slidemenu.animate();
-              //  slidemenu.showMenu(true);
-                /*slidemenu.showMenu(true);
-                slidemenu.showMenu();
-                authManager = ModelManager.getInstance().getAuthorizationManager();
-                authManager.getProfileInfo("",authManager.getPhoneNo(),authManager.getUsrToken());*/
+                intent.putExtra("isChangeInList", true);
+                intent.putExtra("updatephoto", Constants.mInAppNotification);
+                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+                List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
+
+                ComponentName componentInfo = taskInfo.get(0).topActivity;
+                String className = componentInfo.getClassName();
+                if (className.equalsIgnoreCase("com.sourcefuse.clickinandroid.view.UserProfileView")) {
+                    startActivity(intent);
+                    slidemenu.showContent();
+
+                              /* code for animation prafull*/
+
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+                } else {
+                    startActivity(intent);
+                              /* code for animation prafull*/
+
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+                }
+                Constants.mInAppNotification = false;
+
+                Utils.trackMixpanel(ClickInBaseView.this, "", "", "OwnProfileOpened", false);//To track through mixPanel,If Own Profile is opened from left menu
+
             }
         });
 
         setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                Log.e("","00000000-SettingView Intent");
+
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (edt_search.getWindowToken() != null)
+                    imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
+
+
                 Intent intent = new Intent(ClickInBaseView.this, SettingView.class);
                 startActivity(intent);
+
+                        /* code for animation prafull*/
+
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
             }
         });
 
         searchInviteView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
+
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (edt_search.getWindowToken() != null)
+                    imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
+
                 Intent intent = new Intent(ClickInBaseView.this, AddSomeoneView.class);
                 intent.putExtra("FromOwnProfile", true);
                 startActivity(intent);
+
+                        /* code for animation prafull*/
+
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
                 searchList.setVisibility(View.GONE);
                 hideSearchlist.setVisibility(View.GONE);
                 edt_search.setText("");
@@ -385,24 +645,29 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 
             @SuppressWarnings("static-access")
             @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+            public void onItemClick(AdapterView<?> arg0, View view, int position, long id) {
                 if (relationManager.fetchUsersByNameData.size() > 0) {
-                    try {
-                        Log.e("searchList", "searchList Click-->" + position);
-                       /* authManager = ModelManager.getInstance().getAuthorizationManager();
-                        String partnerPhone = relationManager.fetchUsersByNameData.get(position).getPhoneNo();
-                        Log.e("searchList", "searchList Click-->" + partnerPhone);
-                        authManager.sendNewRequest(authManager.getPhoneNo(), partnerPhone, authManager.getUsrToken());*/
-                        String partnerPhone = relationManager.fetchUsersByNameData.get(position).getPhoneNo();
-                        Intent intent = new Intent(ClickInBaseView.this, JumpOtherProfileView.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        intent.putExtra("FromOwnProfile", true);
-                        intent.putExtra("phNumber", partnerPhone);
-                        startActivity(intent);
-                        hideSearchlist.setVisibility(View.GONE);
-                        searchList.setVisibility(View.GONE);
-                    } catch (Exception e) {
-                    }
+
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    if (edt_search.getWindowToken() != null)
+                        imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
+
+
+                    String partnerPhone = relationManager.fetchUsersByNameData.get(position).getPhoneNo();
+                    Intent intent = new Intent(ClickInBaseView.this, JumpOtherProfileView.class);
+                    intent.putExtra("FromOwnProfile", true);
+                    intent.putExtra("phNumber", partnerPhone);
+                    startActivity(intent);
+
+                        /* code for animation prafull*/
+
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+                    hideSearchlist.setVisibility(View.GONE);
+                    searchList.setVisibility(View.GONE);
+                    findViewById(R.id.btn_clear).setVisibility(View.GONE);
+                    findViewById(R.id.btn_progressBar).setVisibility(View.GONE);
+                    ((EditText) findViewById(R.id.edt_search)).setText("");
+
                 }
             }
         });
@@ -413,33 +678,62 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
     public void rightMenuElements() {
 
         authManager = ModelManager.getInstance().getAuthorizationManager();
-        notificationMngr = ModelManager.getInstance().getNotificationManagerManager();
-        typeface = Typeface.createFromAsset(ClickInBaseView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
-        notificationList = (ListView) slidemenu.findViewById(R.id.list_click_notification);
+
+
         backArrowRightSide = (ImageView) slidemenu.findViewById(R.id.iv_back_right);
+
+        //akshit Code starts for closing secondary menu
         backArrowRightSide.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                slidemenu.showSecondaryMenu(false);
+                if (slidemenu.isSecondaryMenuShowing() || slidemenu.isMenuShowing()) {
+                    slidemenu.toggle();
+                }
             }
+        });
+        //akshit code ends
+    }
+
+
+    public void setNotificationList() { //akshit code ,Implementation of Pull to refresh library.
+
+        notificationAdapter = new NotificationAdapter(ClickInBaseView.this, R.layout.row_notification, ModelManager.getInstance().getNotificationManagerManager().notificationData);
+        notificationList = (PullToRefreshListView) slidemenu.findViewById(R.id.list_click_notification);
+        notificationList.setMode(PullToRefreshBase.Mode.BOTH);
+        notificationList.setAdapter(notificationAdapter);
+
+        if (!Utils.isEmptyString(mLastchatID)) {
+            notificationList.getRefreshableView().setSelection(ModelManager.getInstance().getNotificationManagerManager().notificationData.size());
+        }
+
+        notificationList.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
+            @Override
+            public void onPullDownToRefresh(PullToRefreshBase<ListView> listViewPullToRefreshBase) {
+//                mFirstid = notificationMngr.notificationData.get(0)._id;
+                mLastchatID = "";
+                ModelManager.getInstance().getNotificationManagerManager().getNotification(getApplicationContext(), "", authManager.getPhoneNo(), authManager.getUsrToken());
+
+            }
+
+
+            @Override
+            public void onPullUpToRefresh(PullToRefreshBase<ListView> listViewPullToRefreshBase) {
+                mLastchatID="";
+                if(ModelManager.getInstance().getNotificationManagerManager().notificationData.size()>0) {
+                    String mLastId = ModelManager.getInstance().getNotificationManagerManager().notificationData.get(ModelManager.getInstance().getNotificationManagerManager().notificationData.size() - 1)._id;
+                    mLastchatID = mLastId;
+                }
+                ModelManager.getInstance().getNotificationManagerManager().getNotification(getApplicationContext(), mLastchatID, authManager.getPhoneNo(), authManager.getUsrToken());
+            }
+
+
         });
 
     }
 
-
-    public void setNotificationList() {
-
-        notificationMngr = ModelManager.getInstance().getNotificationManagerManager();
-        Log.e("NotificationList", "Size" + notificationMngr.notificationData.size());
-        notificationAdapter = new NotificationAdapter(ClickInBaseView.this, R.layout.row_notification, notificationMngr.notificationData);
-        notificationList.setAdapter(notificationAdapter);
-
-    }
-
-
     @Override
     protected void onStart() {
         super.onStart();
-        if(EventBus.getDefault().isRegistered(this)){
+        if (EventBus.getDefault().isRegistered(this)) {
 
             EventBus.getDefault().unregister(this);
         }
@@ -451,27 +745,9 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
     @Override
     protected void onStop() {
         super.onStop();
-        Log.e("2", "onStopClickInBaseView");
+
 
         EventBus.getDefault().unregister(this);
-
-
-
-       /* if (new MyPreference(getApplicationContext()).isLogin()) {
-
-            Log.e("ClickInBaseView1", "MyPreference");
-            if (ModelManager.getInstance() == null) {
-                Log.e("ClickInBaseView1", "getInstance");
-                authManager = ModelManager.getInstance().getAuthorizationManager();
-                authManager.setUsrToken(new MyPreference(ClickInBaseView.this).getToken());
-                authManager.setPhoneNo(new MyPreference(ClickInBaseView.this).getmyPhoneNo());
-                Intent intent = new Intent(ClickInBaseView.this, UserProfileView.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                //this.finish();
-            }
-
-        }*/
 
 
     }
@@ -479,7 +755,6 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 
     @Override
     public void afterTextChanged(Editable s) {
-
 
 
     }
@@ -493,26 +768,19 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-        Log.e("00000", "00000000000");
-        if (!(edt_search.getText().toString().length() > 0)) {
-            hideSearchlist.setVisibility(View.GONE);
-            searchList.setVisibility(View.GONE);
-            try {
-                InputMethodManager inputManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-                inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
-            }catch (Exception e){}
-        }
 
-            if (edt_search.getText().toString().length() > 2) {
-                hideSearchlist.setVisibility(View.VISIBLE);
-                searchList.setVisibility(View.VISIBLE);
-                stopSearch = true;
-                if(stopSearch) {
-                    stopSearch = false;
-                relationManager = ModelManager.getInstance().getRelationManager();
-                authManager = ModelManager.getInstance().getAuthorizationManager();
-                relationManager.fetchusersbyname(edt_search.getText().toString(), authManager.getPhoneNo(), authManager.getUsrToken());
-            }
+        String search_date = edt_search.getText().toString();
+        if (!Utils.isEmptyString(search_date) && search_date.length() < 3) {
+            slidemenu.findViewById(R.id.btn_clear).setVisibility(View.VISIBLE);
+            slidemenu.findViewById(R.id.btn_progressBar).setVisibility(View.GONE);
+        } else if (!Utils.isEmptyString(search_date) && search_date.length() > 2) {
+
+        } else {
+            slidemenu.findViewById(R.id.btn_clear).setVisibility(View.GONE);
+            slidemenu.findViewById(R.id.btn_progressBar).setVisibility(View.GONE);
+        }
+        if (edt_search.getText().toString().length() > 2) {
+
         }
 
 
@@ -523,8 +791,8 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         authManager = ModelManager.getInstance().getAuthorizationManager();
         relationManager = ModelManager.getInstance().getRelationManager();
         setLeftMenuList();
-        notificationMngr = ModelManager.getInstance().getNotificationManagerManager();
-        notificationMngr.getNotification("", authManager.getPhoneNo(), authManager.getUsrToken());
+
+
     }
 
     public void setMenuListData() {
@@ -532,55 +800,187 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
         relationManager = ModelManager.getInstance().getRelationManager();
         userName.setText(authManager.getUserName());
         userPic.setScaleType(ScaleType.FIT_XY);
-        Picasso.with(ClickInBaseView.this).load(authManager.getUserPic())
-                .placeholder(R.drawable.default_profile)
-                .error(R.drawable.default_profile)
-                .into(userPic);
+
+        String mUserImagePath = null;
+        Uri mUserImageUri = null;
+        Bitmap imagebitmap1 = authManager.getUserbitmap();
+
+        boolean userpic = Utils.isEmptyString(authManager.getUserPic());
+        /* to set downloaded image from server*/
+        try {
+
+
+            if (authManager.getUserImageUri() != null)
+                mUserImagePath = "" + authManager.getUserImageUri().toString();
+            if (!Utils.isEmptyString(mUserImagePath))
+                mUserImageUri = Utils.getImageContentUri(ClickInBaseView.this, new File(mUserImagePath));
+
+
+            if (!Utils.isEmptyString("" + mUserImageUri))
+                userPic.setImageURI(mUserImageUri);
+            else if (imagebitmap1 != null)
+                userPic.setImageBitmap(imagebitmap1);
+            else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl") && !userpic)
+                Picasso.with(ClickInBaseView.this).load(authManager.getUserPic()).error(R.drawable.female_user).into(userPic);
+            else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("guy") && !userpic)
+                Picasso.with(ClickInBaseView.this).load(authManager.getUserPic()).error(R.drawable.male_user).into(userPic);
+            else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl"))
+                userPic.setImageResource(R.drawable.female_user);
+            else
+                userPic.setImageResource(R.drawable.male_user);
+
+        } catch (Exception e) {
+
+            userPic.setImageResource(R.drawable.male_user);
+        }
+
+
         setLeftMenuList();
     }
 
+    protected void onResume() {
+        super.onResume();
 
+        if (clickInadapter != null)
+            clickInadapter.notifyDataSetChanged();
 
+        EventBus.getDefault().post("update Counter");
+    }
 
     public void onEventMainThread(String message) {
-        Log.d("onEventMainThread", "onEventMainThread->" );
         authManager = ModelManager.getInstance().getAuthorizationManager();
-        if (message.equalsIgnoreCase("SearchResult True")) {
+        String mTestString = new String(message);
+
+        if (mTestString.contains("UpdateMessageCounter###")) { /* prafulll code to set counter to zero */
+
+            if(clickInadapter!=null)
+            clickInadapter.notifyDataSetChanged();
+        } else if (message.equalsIgnoreCase("SearchResult True")) {
+
             stopSearch = true;
             Utils.dismissBarDialog();
-            Log.d("1", "message aya->" + message);
+            slidemenu.findViewById(R.id.btn_clear).setVisibility(View.VISIBLE);
+            slidemenu.findViewById(R.id.btn_progressBar).setVisibility(View.GONE);
+
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (edt_search.getWindowToken() != null)
+                imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
+
+
             searchList.setVisibility(View.VISIBLE);
             setSearchList();
         } else if (message.equalsIgnoreCase("SearchResult False")) {
             stopSearch = true;
             Utils.dismissBarDialog();
-            Utils.showAlert(ClickInBaseView.this, authManager.getMessage());
-            Log.d("2", "message->" + message);
+            slidemenu.findViewById(R.id.btn_clear).setVisibility(View.VISIBLE);
+            slidemenu.findViewById(R.id.btn_progressBar).setVisibility(View.GONE);
+
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (edt_search.getWindowToken() != null)
+                imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
+
+            searchList.setVisibility(View.VISIBLE);
+            setSearchList();
+
+
         } else if (message.equalsIgnoreCase("SearchResult Error")) {
             stopSearch = true;
             Utils.dismissBarDialog();
-            Utils.showAlert(ClickInBaseView.this, AlertMessage.connectionError);
-            Log.d("3", "message->" + message);
-        }else if (message.equalsIgnoreCase("NewsFeed  True")) {
+            Utils.fromSignalDialog(ClickInBaseView.this, AlertMessage.connectionError);
+
+        } else if (message.equalsIgnoreCase("NewsFeed  True")) {
             Utils.dismissBarDialog();
-            Log.d("1", "message aya->" + message);
+
+
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (edt_search.getWindowToken() != null)
+                imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
+
             Intent intent = new Intent(ClickInBaseView.this, FeedView.class);
             startActivity(intent);
-        } else if (message.equalsIgnoreCase("NewsFeed False")) {
-            Log.d("2", "message->" + message);
+
+                  /* code for animation prafull*/
+
+            this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+        }  //akshit code
+        else if (message.equalsIgnoreCase("NewsFeed False")) {
+
             stopSearch = true;
             Utils.dismissBarDialog();
-            newsFeedManager.userFeed.clear();
-//            Utils.showAlert(ClickInBaseView.this, authManager.getMessage());
-            Intent intent = new Intent(ClickInBaseView.this, FeedView.class);
+            newsFeedManager = ModelManager.getInstance().getNewsFeedManager();
+            if (newsFeedManager.userFeed != null)
+                newsFeedManager.userFeed.clear();
 
-            startActivity(intent);
-            Log.d("2", "message->" + message);
+
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (edt_search.getWindowToken() != null)
+                imm.hideSoftInputFromWindow(edt_search.getWindowToken(), 0);
+
+
+            //ends
+
         } else if (message.equalsIgnoreCase("NewsFeed Error")) {
             stopSearch = true;
             Utils.dismissBarDialog();
-            Utils.showAlert(ClickInBaseView.this, AlertMessage.connectionError);
-            Log.d("3", "message->" + message);
+            Utils.fromSignalDialog(ClickInBaseView.this, AlertMessage.connectionError);
+
+        } else if (message.equalsIgnoreCase("Notification true") || message.equalsIgnoreCase("Notification error")) {
+
+            if (notificationAdapter != null)
+                notificationAdapter.notifyDataSetChanged();
+            else
+                setNotificationList();
+            Utils.dismissBarDialog();
+            notificationList.onRefreshComplete();
+
+        } else if (message.equalsIgnoreCase("Update DB Message")) {
+            //temp code
+            Toast.makeText(this, "Message received for other partner", Toast.LENGTH_SHORT).show();
+        } else if (message.equalsIgnoreCase("update Counter")) { // prafull code for notification update andrid
+            TextView mNotificationText = (TextView) findViewById(R.id.iv_open_right_menu);
+
+
+            if (ModelManager.getInstance().getAuthorizationManager().getNotificationCounter() > 0) {
+
+                String mValue = "";
+                int mNotificationValue = ModelManager.getInstance().getAuthorizationManager().getNotificationCounter();
+
+                if (mNotificationValue > 99) {
+                    mValue = "99+";
+                } else {
+                    mValue = String.valueOf(mNotificationValue);
+                }
+
+
+                if (!slidemenu.isSecondaryMenuShowing()) {//akshit code to hit notification ,on opening secondary menu
+                    if (!mNotificationText.getText().toString().equalsIgnoreCase("" + mNotificationValue))
+                        Utils.playSound(ClickInBaseView.this, R.raw.notification_inapp);
+
+                    mNotificationText.setText("" + mValue);
+                    mNotificationText.setTextColor(Color.parseColor("#39cad4"));
+                    ModelManager.getInstance().getNotificationManagerManager().getNotification(this, "",
+                            ModelManager.getInstance().getAuthorizationManager().getPhoneNo(),
+                            ModelManager.getInstance().getAuthorizationManager().getUsrToken());
+
+                } else {
+                    ModelManager.getInstance().getAuthorizationManager().setNotificationCounter(0);
+                    mNotificationText.setText("0");
+                    mNotificationText.setTextColor(Color.parseColor("#000000"));
+                }
+
+
+            } else {
+
+                mNotificationText.setText("0");
+                mNotificationText.setTextColor(Color.parseColor("#000000"));
+
+
+            }
+
+
+        } else if (message.equalsIgnoreCase("updatephoto")) {
+
+            ModelManager.getInstance().getAuthorizationManager().getProfileInfo("", authManager.getPhoneNo(), authManager.getUsrToken());
         }
 
     }
@@ -594,159 +994,72 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 
     @Override
     public void onOpen() {
-        Log.e("y", "if onOpen");
+
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
         authManager = ModelManager.getInstance().getAuthorizationManager();
-        String dtails = "";
+
+        String mUserImagePath = null;
+        Uri mUserImageUri = null;
+        Bitmap imagebitmap1 = authManager.getUserbitmap();
+        userName.setText("" + authManager.getUserName());//akshit code
         try {
-            try {
 
-                if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().matches("girl")) {
-                    dtails = "Female";
-                } else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().matches("guy")) {
-                    dtails = "Male";
-                }
-            }catch (Exception e){}
+            boolean userpic = Utils.isEmptyString(authManager.getUserPic());
+            if (authManager.getUserImageUri() != null)
+                mUserImagePath = "" + authManager.getUserImageUri().toString();
+            if (!Utils.isEmptyString(mUserImagePath))
+                mUserImageUri = Utils.getImageContentUri(ClickInBaseView.this, new File(mUserImagePath));
 
-        }catch (Exception e){}
 
-        if(authManager.isMenuUserInfoFlag()) {
-            Log.e("Inside if" ,"THis time Control is in If <><><><><><><><><");
-            userName.setText(authManager.getUserName());
-            userPic.setScaleType(ScaleType.FIT_XY);
+            if (!Utils.isEmptyString("" + mUserImageUri))
+                userPic.setImageURI(mUserImageUri);
+            else if (imagebitmap1 != null)
+                userPic.setImageBitmap(imagebitmap1);
+            else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl") && !userpic)
+                Picasso.with(ClickInBaseView.this).load(authManager.getUserPic()).error(R.drawable.female_user).into(userPic);
+            else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("guy") && !userpic)
+                Picasso.with(ClickInBaseView.this).load(authManager.getUserPic()).error(R.drawable.male_user).into(userPic);
+            else if (!Utils.isEmptyString(authManager.getGender()) && authManager.getGender().equalsIgnoreCase("girl"))
+                userPic.setImageResource(R.drawable.female_user);
+            else
+                userPic.setImageResource(R.drawable.male_user);
 
-            try {
-                Uri tempUri=authManager.getUserImageUri();
-                if(tempUri!=null){
-                    imageBitmap = Utils.decodeUri(tempUri, this);
-                    if(imageBitmap!=null)
-                        userPic.setImageBitmap(imageBitmap);
-                    else{
-                        try{
-                            if(dtails.equalsIgnoreCase("Male")){
-                                Picasso.with(this)
-                                        .load(authManager.getUserPic())
-                                        .skipMemoryCache()
-                                        .placeholder(R.drawable.default_profile)
-                                        .error(R.drawable.male_user)
-                                        .into(userPic);
-                            }else if(dtails.equalsIgnoreCase("Female")) {
-                                Picasso.with(this)
-                                        .load(authManager.getUserPic())
-                                        .skipMemoryCache()
-                                        .placeholder(R.drawable.default_profile)
-                                        .error(R.drawable.female_user)
-                                        .into(userPic);
-                            }
+        } catch (Exception e) {
 
-                        }catch(Exception e){
-                            e.printStackTrace();
-                        }
-                    }
-
-                }else{
-                    try{
-                        if(dtails.equalsIgnoreCase("Male")){
-                            Picasso.with(this)
-                                    .load(authManager.getUserPic())
-                                    .skipMemoryCache()
-                                    .placeholder(R.drawable.default_profile)
-                                    .error(R.drawable.male_user)
-                                    .into(userPic);
-                        }else if(dtails.equalsIgnoreCase("Female")) {
-                            Picasso.with(this)
-                                    .load(authManager.getUserPic())
-                                    .skipMemoryCache()
-                                    .placeholder(R.drawable.default_profile)
-                                    .error(R.drawable.female_user)
-                                    .into(userPic);
-                        }
-
-                    }catch(Exception e){
-                        e.printStackTrace();
-                    }
-
-                }
-
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-            authManager.setMenuUserInfoFlag(false);
-        }else{
-            Log.e("Inside Else " ,"THis time control is in Else <><><><><><><><><><>");
-            try {
-                Uri tempUri=authManager.getUserImageUri();
-                if(tempUri!=null){
-                    imageBitmap = Utils.decodeUri(tempUri, this);
-                    if(imageBitmap!=null)
-                        userPic.setImageBitmap(imageBitmap);
-                    else{
-                        try{
-                            if(dtails.equalsIgnoreCase("Male")){
-                                Picasso.with(this)
-                                        .load(authManager.getUserPic())
-                                        .skipMemoryCache()
-                                        .placeholder(R.drawable.default_profile)
-                                        .error(R.drawable.male_user)
-                                        .into(userPic);
-                            }else if(dtails.equalsIgnoreCase("Female")) {
-                                Picasso.with(this)
-                                        .load(authManager.getUserPic())
-                                        .skipMemoryCache()
-                                        .placeholder(R.drawable.default_profile)
-                                        .error(R.drawable.female_user)
-                                        .into(userPic);
-                            }
-
-                        }catch(Exception e){
-                            e.printStackTrace();
-                        }
-                    }
-
-                }else{
-                    try{
-                        if(dtails.equalsIgnoreCase("Male")){
-                            Picasso.with(this)
-                                    .load(authManager.getUserPic())
-                                    .skipMemoryCache()
-                                    .placeholder(R.drawable.default_profile)
-                                    .error(R.drawable.male_user)
-                                    .into(userPic);
-                        }else if(dtails.equalsIgnoreCase("Female")) {
-                            Picasso.with(this)
-                                    .load(authManager.getUserPic())
-                                    .skipMemoryCache()
-                                    .placeholder(R.drawable.default_profile)
-                                    .error(R.drawable.female_user)
-                                    .into(userPic);
-                        }
-
-                    }catch(Exception e){
-                        e.printStackTrace();
-                    }
-
-                }
-
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
+            userPic.setImageResource(R.drawable.male_user);
         }
-        try {
-        edt_search.setText("");
-            hideSearchlist.setVisibility(View.GONE);
-            searchList.setVisibility(View.GONE);
 
-                InputMethodManager inputManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-                inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
-            }catch (Exception e){}
+        edt_search.setText("");
+        hideSearchlist.setVisibility(View.GONE);
+        searchList.setVisibility(View.GONE);
+
 
 
 
     }
 
+
+    public void onDestroy() {
+        super.onDestroy();
+
+    }
+
     @Override
     public void onClose() {
-        Log.e("y", "if onClose");
 
+
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        super.onBackPressed();
+
+
+        if (getCurrentFocus() != null && getCurrentFocus().getWindowToken() != null) { // check window token is null or not
+            InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
 
     }
 

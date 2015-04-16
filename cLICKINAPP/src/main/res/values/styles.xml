@@ -60,14 +60,28 @@
     </style>
 
     <style name="tabTheme" parent="android:style/Theme">
-    <item name="android:tabWidgetStyle">@style/Widget.TabWidget</item>
+        <item name="android:tabWidgetStyle">@style/Widget.TabWidget</item>
     </style>
 
     <style name="Widget.TabWidget" parent="android:Theme">
         <item name="android:tabStripEnabled">false</item>
     </style>
     <!--<style name="Theme.Transparent" parent="android:Theme">-->
-        <!--<item name="android:windowIsTranslucent">true</item>-->
-        <!--<item name="android:windowBackground">@android:color/transparent</item>-->
-        <!--<item name="android:windowNoTitle">true</item></style>-->
+    <!--<item name="android:windowIsTranslucent">true</item>-->
+    <!--<item name="android:windowBackground">@android:color/transparent</item>-->
+    <!--<item name="android:windowNoTitle">true</item></style>-->
+
+
+    <style name="MyTheme" parent="RoboTheme">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@drawable/white_pattern_bg</item>
+        <item name="android:adjustViewBounds">true</item>
+        <item name="android:y">@dimen/abc_action_bar_default_height</item>
+
+    </style>
+
+    <style name="Theme.Shelves" parent="android:Theme">
+        <item name="android:windowBackground">@drawable/white_pattern_bg</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
 </resources>

@@ -9,6 +9,68 @@ import java.util.ArrayList;
  */
 public class NewsFeedBean {
 
+    private String newsfeedArray_id;
+    private String newsfeedArray_user_id;
+    private String newsfeedArray_newsfeed_msg;
+    private String newsfeedArray_read;
+    private int newsfeedArray_stars_count;
+    private int newsfeedArray_comments_count;
+    private String newsfeedArray_user_starred;
+    private String newsfeedArray_user_commented;
+    private String newsfeedArray_created;
+    private String newsfeedArray_modified;
+    private String newsFeedArray_follower_user_id_$id;
+    private String newsFeedArray_follower_user_id_user_id;
+    private String newsFeedArray_chatDetail_QB_id;
+    private String newsFeedArray_chatDetail_id;
+    private JSONArray newsFeedArray_chatDetail_cards;
+    private String newsFeedArray_chatDetail_chatId;
+    private String newsFeedArray_chatDetail_clicks = "0";
+    private String newsFeedArray_chatDetail_comments_count;
+    private String newsFeedArray_chatDetail_content;
+    private String newsFeedArray_chatDetail_delieveredChatId;
+    private String newsFeedArray_chatDetail_imageRatio;
+    private String newsFeedArray_chatDetail_isDelievered;
+    private String newsFeedArray_chatDetail_location_coordinates;
+    private String newsFeedArray_chatDetail_message = "";
+    private String newsFeedArray_chatDetail_relationshipId;
+    private String newsFeedArray_chatDetail_senderUserToken;
+    private String newsFeedArray_chatDetail_sentOn;
+    private String newsFeedArray_chatDetail_sharedMessage;
+    private String newsFeedArray_chatDetail_stars_count;
+    private String newsFeedArray_chatDetail_type;
+    private String newsFeedArray_chatDetail_userId;
+    private String newsFeedArray_chatDetail_video_thumb;
+    private String newsFeedArray_chatDetail_created_sec;
+    private String newsFeedArray_chatDetail_created_usec;
+    private String newsFeedArray_chatDetail_modified_sec;
+    private String newsFeedArray_chatDetail_modified_usec;
+    private String newsFeedArray_senderDetail_id;
+    private String newsFeedArray_senderDetail_name;
+    private String newsFeedArray_senderDetail_user_pic;
+    private String newsFeedArray_senderDetail_phno;
+    private String newsFeedArray_receiverDetail_id;
+    private String newsFeedArray_receiverDetail_name;
+    private String newsFeedArray_receiverDetail_user_pic;
+    private String newsFeedArray_receiverDetail_phno;
+    private String newsFeedArray_commentArray_id;
+    private String newsFeedArray_commentArray_chat_id;
+    private String newsFeedArray_commentArray_newsfeed_id;
+    private String newsFeedArray_commentArray_type;
+    private String newsFeedArray_commentArray_comment;
+    private String newsFeedArray_commentArray_user_id;
+    private String newsFeedArray_commentArray_user_name;
+    private String newsFeedArray_commentArray_user_pic;
+    private String newsFeedArray_commentArray_modified_sec;
+    private String newsFeedArray_commentArray_modified_usec;
+    private String newsFeedArray_commentArray_created_sec;
+    private String newsFeedArray_commentArray_created_usec;
+    private String newsFeedArray_starredArray_id;
+    private String newsFeedArray_starredArray_user_name;
+    private ArrayList<NewsFeedBean> followerList;
+    private ArrayList<NewsFeedBean> commentArrayList;
+    private ArrayList<NewsFeedBean> starredArrayList;
+
     public String getNewsfeedArray_id() {
         return newsfeedArray_id;
     }
@@ -457,55 +519,6 @@ public class NewsFeedBean {
         this.newsFeedArray_starredArray_user_name = newsFeedArray_starredArray_user_name;
     }
 
-    private String newsfeedArray_id;
-    private String newsfeedArray_user_id;
-    private String newsfeedArray_newsfeed_msg;
-    private String newsfeedArray_read;
-    private int newsfeedArray_stars_count;
-    private int newsfeedArray_comments_count;
-    private String newsfeedArray_user_starred;
-    private String newsfeedArray_user_commented;
-    private String newsfeedArray_created;
-    private String newsfeedArray_modified;
-    private String newsFeedArray_follower_user_id_$id;
-    private String newsFeedArray_follower_user_id_user_id;
-    private String newsFeedArray_chatDetail_QB_id;
-    private String newsFeedArray_chatDetail_id;
-    private JSONArray newsFeedArray_chatDetail_cards;
-    private String newsFeedArray_chatDetail_chatId;
-    private String newsFeedArray_chatDetail_clicks="0";
-    private String newsFeedArray_chatDetail_comments_count;
-    private String newsFeedArray_chatDetail_content;
-    private String newsFeedArray_chatDetail_delieveredChatId;
-    private String newsFeedArray_chatDetail_imageRatio;
-    private String newsFeedArray_chatDetail_isDelievered;
-    private String newsFeedArray_chatDetail_location_coordinates;
-    private String newsFeedArray_chatDetail_message="";
-    private String newsFeedArray_chatDetail_relationshipId;
-    private String newsFeedArray_chatDetail_senderUserToken;
-    private String newsFeedArray_chatDetail_sentOn;
-    private String newsFeedArray_chatDetail_sharedMessage;
-    private String newsFeedArray_chatDetail_stars_count;
-    private String newsFeedArray_chatDetail_type;
-    private String newsFeedArray_chatDetail_userId;
-    private String newsFeedArray_chatDetail_video_thumb;
-    private String newsFeedArray_chatDetail_created_sec;
-    private String newsFeedArray_chatDetail_created_usec;
-    private String newsFeedArray_chatDetail_modified_sec;
-    private String newsFeedArray_chatDetail_modified_usec;
-    private String newsFeedArray_senderDetail_id;
-    private String newsFeedArray_senderDetail_name;
-    private String newsFeedArray_senderDetail_user_pic;
-    private String newsFeedArray_senderDetail_phno;
-    private String newsFeedArray_receiverDetail_id;
-    private String newsFeedArray_receiverDetail_name;
-    private String newsFeedArray_receiverDetail_user_pic;
-    private String newsFeedArray_receiverDetail_phno;
-    private String newsFeedArray_commentArray_id;
-    private String newsFeedArray_commentArray_chat_id;
-    private String newsFeedArray_commentArray_newsfeed_id;
-
-
     public String getNewsFeedArray_senderDetail_phno() {
         return newsFeedArray_senderDetail_phno;
     }
@@ -513,6 +526,7 @@ public class NewsFeedBean {
     public void setNewsFeedArray_senderDetail_phno(String newsFeedArray_senderDetail_phno) {
         this.newsFeedArray_senderDetail_phno = newsFeedArray_senderDetail_phno;
     }
+
     public String getNewsFeedArray_receiverDetail_phno() {
         return newsFeedArray_receiverDetail_phno;
     }
@@ -521,21 +535,6 @@ public class NewsFeedBean {
         this.newsFeedArray_receiverDetail_phno = newsFeedArray_receiverDetail_phno;
     }
 
-    private String newsFeedArray_commentArray_type;
-    private String newsFeedArray_commentArray_comment;
-    private String newsFeedArray_commentArray_user_id;
-    private String newsFeedArray_commentArray_user_name;
-
-
-    private String newsFeedArray_commentArray_user_pic;
-    private String newsFeedArray_commentArray_modified_sec;
-    private String newsFeedArray_commentArray_modified_usec;
-    private String newsFeedArray_commentArray_created_sec;
-    private String newsFeedArray_commentArray_created_usec;
-    private String newsFeedArray_starredArray_id;
-    private String newsFeedArray_starredArray_user_name;
-    private ArrayList<NewsFeedBean> followerList;
-
     public ArrayList<NewsFeedBean> getCommentArrayList() {
         return commentArrayList;
     }
@@ -543,9 +542,6 @@ public class NewsFeedBean {
     public void setCommentArrayList(ArrayList<NewsFeedBean> commentArrayList) {
         this.commentArrayList = commentArrayList;
     }
-
-    private ArrayList<NewsFeedBean> commentArrayList;
-    private ArrayList<NewsFeedBean> starredArrayList;
 
     public ArrayList<NewsFeedBean> getFollowerList() {
         return followerList;

@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="joda-time-2.5">
+    <CLASSES>
+      <root url="jar:///monika/latestworkingCLickin/cLICKINAPP/libs/joda-time-2.5.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

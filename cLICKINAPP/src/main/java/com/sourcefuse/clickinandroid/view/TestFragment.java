@@ -14,16 +14,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.RelativeLayout.LayoutParams;
+import android.widget.TextView;
 
-import com.sourcefuse.clickinandroid.utils.Log;
+import com.sourcefuse.clickinandroid.utils.UnCaughtExceptionHandler;
+import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
 
 public final class TestFragment extends Fragment {
 
-    static int imageS=0;
+    static int imageS = 0;
     Activity _activity;
+
+    TextView mPrivacyText, mTermText;
+
     public static TestFragment newInstance(int imageS) {
         TestFragment fragment = new TestFragment();
 
@@ -31,97 +34,92 @@ public final class TestFragment extends Fragment {
         args.putInt("img", imageS);
         fragment.setArguments(args);
         return fragment;
-
-//		pathimage=imageUrl;
-//		couponN=couponName;
-//		pointsR= pointsRequired;
-//		couponId =i;
-//		return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        _activity =super.getActivity();
-        if(getArguments() != null) {
+        //code- to handle uncaught exception
+        if (Utils.mStartExceptionTrack)
+            Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(getActivity()));
+        _activity = super.getActivity();
+        if (getArguments() != null) {
             imageS = getArguments().getInt("img");
         }
-        //fragVal = getArguments() != null ? getArguments().getInt("val") : 1;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        RelativeLayout mainlayout =new RelativeLayout(getActivity());
-        mainlayout.setLayoutParams(new LayoutParams
-                (LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+
+        View view = inflater.inflate(R.layout.fragment, container, false);
 
 
+        ImageView mImageView = (ImageView) view.findViewById(R.id.main_image);
+        ImageView loginButton = (ImageView) view.findViewById(R.id.login);
+        mImageView.setBackground(getActivity().getResources().getDrawable(imageS));
 
-        ImageView img = new ImageView(getActivity());
-        img.setImageDrawable(getActivity().getResources().getDrawable(imageS));
-        img.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        mainlayout.addView(img);
-        if(imageS== R.drawable.sixth_page)
-        {
+        mTermText = (TextView) view.findViewById(R.id.term_);
+        mPrivacyText = (TextView) view.findViewById(R.id.privacy_text);
+        mTermText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), TermUseView.class);
+                intent.putExtra("fromsplash", true);
+                startActivity(intent);
+            }
+        });
+        mPrivacyText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), PrivacyView.class);
+                intent.putExtra("fromsplash", true);
+                startActivity(intent);
+            }
+        });
 
-            ImageView clickHereToSignup = new ImageView(getActivity());
-            clickHereToSignup.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.signup_btn));
-            clickHereToSignup.setId(2);
-            LayoutParams params = new LayoutParams(
-                    LayoutParams.WRAP_CONTENT,
-                    LayoutParams.WRAP_CONTENT
-            );
-            params.setMargins(pxlToDp(113), pxlToDp(258), 0, 0);
-            clickHereToSignup.setLayoutParams(params);
-            mainlayout.addView(clickHereToSignup);
+        if (imageS == R.drawable.sixth_page) {
 
-            clickHereToSignup.setOnClickListener(new View.OnClickListener() {
+            view.findViewById(R.id.term_text).setVisibility(View.VISIBLE);
+            view.findViewById(R.id.privacy_layout).setVisibility(View.VISIBLE);
+
+            ImageView mClickHereToSignup = (ImageView) view.findViewById(R.id.clicktosignup);
+            mClickHereToSignup.setVisibility(View.VISIBLE);
+            loginButton.setVisibility(View.VISIBLE);
+            mClickHereToSignup.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Log.e("ClickHereToSignUp Clicked","true");
 
-                    Intent signup = new Intent(getActivity(),SignUpView.class);
+                    Intent signup = new Intent(getActivity(), SignUpView.class);
                     getActivity().startActivity(signup);
                     getActivity().finish();
-
+                    //To track through mixPanel.
+                    //Click To Signup
+                    Utils.trackMixpanel(getActivity(), "", "", "SignUpButtonClicked", false);
                     coverFlowChecked();
-
                 }
-
-
             });
-
-            ImageView loginButton = new ImageView(getActivity());
-            loginButton.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.coverflow_login));
-            loginButton.setId(3);
-            LayoutParams params1 = new LayoutParams(
-                    LayoutParams.WRAP_CONTENT,
-                    LayoutParams.WRAP_CONTENT
-            );
-            params1.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-            params1.setMargins(pxlToDp(120), 0, 0, pxlToDp(9));
-            loginButton.setLayoutParams(params1);
 
             loginButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Log.e("Login Clicked","true");
-                    Intent signIn = new Intent(getActivity(),SignInView.class);
+                    Intent signIn = new Intent(getActivity(), SignInView.class);
                     getActivity().startActivity(signIn);
                     coverFlowChecked();
+                    //To track through mixPanel.
+                    //Click To SignIn.
+                    Utils.trackMixpanel(getActivity(), "", "", "SignInButtonClicked", false);
                     getActivity().finish();
                 }
             });
 
-
-            mainlayout.addView(loginButton);
-
-
+        } else {
+            view.findViewById(R.id.term_text).setVisibility(View.GONE);
+            view.findViewById(R.id.privacy_layout).setVisibility(View.GONE);
+            view.findViewById(R.id.clicktosignup).setVisibility(View.GONE);
         }
 
 
-
-        return mainlayout;
+        return view;
     }
 
     private void coverFlowChecked() {

@@ -1,53 +1,74 @@
-
+repositories {
+    maven {
+        url "https://mint.splunk.com/gradle/"
+    }
+}
 allprojects {
-    tasks.withType(Compile) {
+    tasks.withType(JavaCompile) {
         options.compilerArgs << "-Xlint:deprecation"
     }
 }
 
-
 apply plugin: 'android'
+
 
 android {
     compileSdkVersion 19
-    buildToolsVersion "19.1.0"
+
+    buildToolsVersion '19.1.0'
+
+
+    packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
 
     defaultConfig {
-        minSdkVersion 8
+        minSdkVersion 15
         targetSdkVersion 19
     }
 
     buildTypes {
         release {
-            runProguard false
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
 }
 
 dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':cropper')
     compile project(':slider_library')
     compile project(':facebookSDK')
     compile project(':library_header')
     compile project(':library')
+
+    compile files('libs/volley.jar')
+   // compile files('libs/googleanalyticsaervicesandroid_3.02.zip')
+    compile files('libs/mail.jar')
+    compile files('libs/activation.jar')
+    compile files('libs/additionnal.jar')
 //    compile project(':library_pull')
     compile 'com.navercorp.pulltorefresh:library:3.2.0@aar'
     compile 'com.android.support:support-v4:20.0.0'
     compile 'com.android.support:appcompat-v7:20.0.0'
-    compile files('libs/quickblox-android-1.2.4.jar')
-    compile files('libs/picasso-2.2.0.jar')
-    compile files('libs/android-async-http-1.4.4.jar')
+
+
     compile 'de.greenrobot:eventbus:2.2.0'
     compile 'com.google.android.gms:play-services:3.1+'
     compile 'com.viewpagerindicator:library:2.4.1@aar'
-    compile files('libs/java-json.jar')
+    compile "com.splunk.mint:mint:4.0.7"
 
-//    repositories {
-//        mavenCentral()
-//    }
-//    compile 'com.github.chrisbanes.actionbarpulltorefresh:library:+'
+    compile "com.mixpanel.android:mixpanel-android:4.5.3"
 
-//    compile 'com.github.chrisbanes.actionbarpulltorefresh:extra-abc:+'
 
 }
+
+
+
+
+
+
+
+

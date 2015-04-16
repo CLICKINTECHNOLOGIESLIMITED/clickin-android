@@ -1,12 +1,11 @@
 package com.sourcefuse.clickinandroid.model;
 
+import android.graphics.Bitmap;
 import android.net.Uri;
 
-import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.quickblox.module.chat.xmpp.QBPrivateChat;
+import com.quickblox.module.chat.QBPrivateChat;
 import com.sourcefuse.clickinandroid.utils.APIs;
-import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinandroid.utils.Utils;
 
 import org.apache.http.entity.StringEntity;
@@ -15,573 +14,102 @@ import org.apache.http.protocol.HTTP;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Observable;
-
 import de.greenrobot.event.EventBus;
 
-public class AuthManager extends Observable implements AuthManagerI {
-    StringEntity se = null;
-    AsyncHttpClient client;
+
+//praful code
+  /* resize bit map*/
+
+public class AuthManager {
     private static final String TAG = AuthManager.class.getSimpleName();
-    private AuthManager authManager;
-
-
-
-    @Override
-    public void signIn(String username, String password, String deviceToken,
-                       String deviceType) {
-        authManager = ModelManager.getInstance().getAuthorizationManager();
-        JSONObject userInputDetails = new JSONObject();
-        try {
-
-            boolean retval = username.contains("@");
-            if(retval){
-                userInputDetails.put("email", username);
-            }else{
-                userInputDetails.put("phone_no", username);
-            }
-
-            userInputDetails.put("device_token", deviceToken);
-            userInputDetails.put("password", password);
-            userInputDetails.put("device_type", deviceType);
-
-            client = new AsyncHttpClient();
-            se = new StringEntity(userInputDetails.toString());
-            se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,
-                    "application/json"));
-        } catch (Exception e1) {
-            e1.printStackTrace();
-        }
-        Log.e("SIGNIN url",APIs.SIGNIN);
-        client.post(null, APIs.SIGNIN, se, "application/json",
-                new JsonHttpResponseHandler() {
-
-                    @Override
-                    public void onFailure(int statusCode, Throwable e,
-                                          JSONObject errorResponse) {
-                        super.onFailure(statusCode, e, errorResponse);
-                        if (errorResponse != null) {
-                            Log.e("errorResponse", "->" + errorResponse);
-                            try {
-                                authManager.setMessage(errorResponse.getString("message"));
-                            } catch (JSONException e1) {
-                            }
-                            EventBus.getDefault().post("SignIn False");
-                        } else {
-                            EventBus.getDefault().post("SignIn Network Error");
-                        }
-
-                    }
-
-                    @Override
-                    public void onSuccess(int statusCode, org.apache.http.Header[] headers, JSONObject response) {
-                        super.onSuccess(statusCode, headers, response);
-                        boolean state = false;
-                        try {
-                            System.out.println("response  SIGNIN->" + response);
-                            state = response.getBoolean("success");
-                            if (state) {
-
-                                if (response.has("phone_no")) {
-                                    authManager.setPhoneNo(response.getString("phone_no"));
-                                }
-                                if (response.has("message")) {
-                                    authManager.setMessage(response.getString("message"));
-                                }
-                                if (response.has("device_registered")) {
-                                    authManager.setDeviceRegistered(response.getBoolean("device_registered"));
-                                }
-                                if (response.has("QB_id")) {
-                                    authManager.setQBId(response.getString("QB_id"));
-                                }
-                                if (response.has("user_id")) {
-                                    authManager.setUserId(response.getString("user_id"));
-                                }
-                                if (response.has("user_name")) {
-                                    authManager.setUserName(response.getString("user_name"));
-                                }
-                                if (response.has("user_pic")) {
-                                    authManager.setUserPic(response.getString("user_pic"));
-                                }
-                                if (response.has("user_token")) {
-                                    authManager.setUsrToken(response.getString("user_token"));
-                                }
-
-                            }
-                            EventBus.getDefault().post("SignIn True");
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-
-                }
-        );
-
-    }
-
-    @Override
-    public void signUpAuth(String phone, String deviceToken) {
-        JSONObject userInputDetails = new JSONObject();
-        authManager = ModelManager.getInstance().getAuthorizationManager();
-        try {
-            userInputDetails.put("phone_no", phone);
-            userInputDetails.put("device_token", deviceToken);
-
-            client = new AsyncHttpClient();
-            se = new StringEntity(userInputDetails.toString());
-            se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-        } catch (Exception e1) {
-            e1.printStackTrace();
-        }
-        client.post(null, APIs.CREATEUSER, se, "application/json", new JsonHttpResponseHandler() {
-            @Override
-            public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
-                super.onFailure(statusCode, e, errorResponse);
-                System.out.println("errorResponse--> " + errorResponse);
-                if (errorResponse != null) {
-                    try {
-                        authManager.setMessage(errorResponse.getString("message"));
-                    } catch (JSONException e1) {
-                        e1.printStackTrace();
-                    }
-                    EventBus.getDefault().post("SignUp False");
-                } else {
-                    EventBus.getDefault().post("SignUp Network Error");
-                }
-            }
-
-            @Override
-            public void onSuccess(int statusCode, org.apache.http.Header[] headers, JSONObject response) {
-                super.onSuccess(statusCode, headers, response);
-                boolean state = false;
-                try {
-                    System.out.println("response--> " + response);
-                    state = response.getBoolean("success");
-                    if (state) {
-                        EventBus.getDefault().post("SignUp True");
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-
-        });
-    }
-
-    @Override
-    public void getVerifyCode(String phone, String deviceToken, String vCode,
-                              String deviceType) {
-        authManager = ModelManager.getInstance().getAuthorizationManager();
-        JSONObject inputDetails = new JSONObject();
-        try {
-            inputDetails.put("phone_no", phone);
-            inputDetails.put("vcode", vCode);
-            inputDetails.put("device_token", deviceToken);
-            inputDetails.put("device_type", deviceType);
-
-            System.out.println("inputDetails--> " + inputDetails);
-            client = new AsyncHttpClient();
-            se = new StringEntity(inputDetails.toString());
-            se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-        } catch (Exception e1) {
-            e1.printStackTrace();
-        }
-        client.post(null, APIs.VERIFYCODE, se, "application/json",
-                new JsonHttpResponseHandler() {
-
-                    @Override
-                    public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
-                        super.onFailure(statusCode, e, errorResponse);
-                        Log.e("Auth", "errorResponse--> " + errorResponse);
-                        if (errorResponse != null) {
-                            try {
-                                authManager.setMessage(errorResponse.getString("message"));
-                            } catch (JSONException e1) {
-                                // TODO Auto-generated catch block
-                                e1.printStackTrace();
-                            }
-                            EventBus.getDefault().post("Verify False");
-                        } else {
-                            EventBus.getDefault().post("Verify Network Error");
-                        }
-                    }
-
-                    @Override
-                    public void onSuccess(int statusCode,
-                                          org.apache.http.Header[] headers,
-                                          JSONObject response) {
-                        super.onSuccess(statusCode, headers, response);
-                        boolean state = false;
-                        try {
-                            System.out.println("response--> " + response);
-                            state = response.getBoolean("success");
-                            if (state) {
-                                if (response.has("QB_id"))
-                                    authManager.setQBId(response.getString("QB_id"));
-                                if (response.has("user_id"))
-                                    authManager.setUserId(response.getString("user_id"));
-                                if (response.has("user_token"))
-                                    authManager.setUsrToken(response.getString("user_token"));
-                                Log.e("getUsrToken--", "" + authManager.getUsrToken());
-                                EventBus.getDefault().post("Verify True");
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-
-                }
-        );
-
-    }
-
-    @Override
-    public void playItSafeAuth(String password, String phone, String email,
-                               String urserToken) {
-        authManager = ModelManager.getInstance().getAuthorizationManager();
-        JSONObject inputDetails = new JSONObject();
-        try {
-            inputDetails.put("phone_no", phone);
-            inputDetails.put("user_token", urserToken);
-            inputDetails.put("email", email);
-            inputDetails.put("password", password);
-
-            client = new AsyncHttpClient();
-            se = new StringEntity(inputDetails.toString());
-            se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,
-                    "application/json"));
-        } catch (Exception e1) {
-            e1.printStackTrace();
-        }
-        client.post(null, APIs.INSERTEMAIL, se, "application/json",
-                new JsonHttpResponseHandler() {
-                    @Override
-                    public void onFailure(int statusCode, Throwable e,
-                                          JSONObject errorResponse) {
-                        super.onFailure(statusCode, e, errorResponse);
-                        System.out.println("errorResponse--> " + errorResponse);
-                        if (errorResponse != null) {
-                            try {
-                                authManager.setMessage(errorResponse
-                                        .getString("message"));
-                            } catch (JSONException e1) {
-                                // TODO Auto-generated catch block
-                                e1.printStackTrace();
-                            }
-                            EventBus.getDefault().post("PlayItSafe False");
-                        } else {
-                            EventBus.getDefault().post("PlayItSafe Network Error");
-                        }
-
-                    }
-
-                    @Override
-                    public void onSuccess(int statusCode,
-                                          org.apache.http.Header[] headers,
-                                          JSONObject response) {
-                        super.onSuccess(statusCode, headers, response);
-                        boolean state = false;
-                        try {
-                            System.out.println("response-INSERTEMAIL--> " + response);
-                            state = response.getBoolean("success");
-                            if (state) {
-
-                                EventBus.getDefault().post("PlayItSafe True");
-                            }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-
-                }
-        );
-
-    }
-
-    @Override
-    public void reSendVerifyCode(String phone, String deviceToken) {
-        // TODO Auto-generated method stub
-
-        authManager = ModelManager.getInstance().getAuthorizationManager();
-        JSONObject inputDetails = new JSONObject();
-        try {
-            inputDetails.put("phone_no", phone);
-            inputDetails.put("device_token", deviceToken);
-
-            client = new AsyncHttpClient();
-            se = new StringEntity(inputDetails.toString());
-            se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            Log.e("", "inputDetails-->" + inputDetails);
-        } catch (Exception e1) {
-            e1.printStackTrace();
-        }
-        client.post(null, APIs.RESENDVERIFYCODE, se, "application/json", new JsonHttpResponseHandler() {
-            @Override
-            public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
-                super.onFailure(statusCode, e, errorResponse);
-                Log.e("Auth", "errorResponse--> " + errorResponse);
-                if (errorResponse != null) {
-                    try {
-                        authManager.setMessage(errorResponse.getString("message"));
-                    } catch (JSONException e1) {
-                        // TODO Auto-generated catch block
-                        e1.printStackTrace();
-                    }
-                    EventBus.getDefault().post("ReSendVerifyCode False");
-                } else {
-                    EventBus.getDefault().post("ReSendVerifyCode Network Error");
-                }
-
-            }
-
-            @Override
-            public void onSuccess(int statusCode,
-                                  org.apache.http.Header[] headers,
-                                  JSONObject response) {
-                super.onSuccess(statusCode, headers, response);
-                boolean state = false;
-                try {
-                    System.out.println("response-INSERTEMAIL--> " + response);
-                    state = response.getBoolean("success");
-                    if (state) {
-                        EventBus.getDefault().post("ReSendVerifyCode True");
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-
-        });
-
-    }
-
-    private void triggerObservers(String success) {
-
-        setChanged();
-        notifyObservers(success);
-    }
-
-    @Override
-    public void sendNewRequest(String phone, String partner, String usertoken) {
-        // TODO Auto-generated method stub
-
-        authManager = ModelManager.getInstance().getAuthorizationManager();
-        JSONObject inputDetails = new JSONObject();
-        try {
-            inputDetails.put("phone_no", phone);
-            inputDetails.put("partner_phone_no", partner);
-            inputDetails.put("user_token", usertoken);
-            client = new AsyncHttpClient();
-            se = new StringEntity(inputDetails.toString());
-            se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,
-                    "application/json"));
-            Log.e("", "inputDetails-->" + inputDetails);
-        } catch (Exception e1) {
-            e1.printStackTrace();
-        }
-        client.post(null, APIs.NEWREQUEST, se, "application/json",
-                new JsonHttpResponseHandler() {
-                    @Override
-                    public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
-                        super.onFailure(statusCode, e, errorResponse);
-                        System.out.println("errorResponse--> " + errorResponse);
-                        if (errorResponse != null) {
-                            try {
-                                authManager.setMessage(errorResponse.getString("message"));
-                            } catch (JSONException e1) {
-                                // TODO Auto-generated catch block
-                                e1.printStackTrace();
-                            }
-                            EventBus.getDefault().post("RequestSend False");
-                        } else {
-                            EventBus.getDefault().post("RequestSend Network Error");
-                        }
-
-                    }
-
-                    @Override
-                    public void onSuccess(int statusCode,
-                                          org.apache.http.Header[] headers,
-                                          JSONObject response) {
-                        super.onSuccess(statusCode, headers, response);
-                        boolean state = false;
-                        try {
-                            System.out.println("response-INSERTEMAIL--> "
-                                    + response);
-                            state = response.getBoolean("success");
-                            if (state) {
-                                EventBus.getDefault().post("RequestSend True");
-                            }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-
-                }
-        );
-
-    }
-
-    @Override
-    public void getProfileInfo(final String othersphone, String phone, String usertoken) {
-        // TODO Auto-generated method stub
-        authManager = ModelManager.getInstance().getAuthorizationManager();
-        String str = null;
-        try {
-            client = new AsyncHttpClient();
-            //for development
-            client.addHeader("user_token", usertoken);
-            client.addHeader("phone_no", phone);
-
-            //for prod
-          //  client.addHeader("User-Token", usertoken);
-            //client.addHeader("Phone-No", phone);
-            Log.e("usertoken-phone_no-othersphone-->", "" + usertoken + "-" + phone + "-" + othersphone);
-
-
-        if (!Utils.isEmptyString(othersphone)) {
-            str = othersphone.substring(1);
-        } else {
-            str = phone.substring(1);
-        }
-        } catch (Exception e1) {
-            e1.printStackTrace();
-        }
-
-        client.get(APIs.FETCHPROFILEINFO + "%2B" + str, new JsonHttpResponseHandler() {
-            boolean success = false;
-
-            @Override
-            public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
-                super.onFailure(statusCode, e, errorResponse);
-                System.out.println("errorResponse--> " + errorResponse);
-                if (errorResponse != null) {
-                    try {
-                        authManager.setMessage(errorResponse.getString("message"));
-                    } catch (JSONException e1) {
-                    }
-
-                    EventBus.getDefault().post("ProfileInfo False");
-                } else {
-                    EventBus.getDefault().post("ProfileInfo Network Error");
-                }
-
-            }
-
-            @SuppressWarnings("unused")
-            @Override
-            public void onSuccess(int statusCode,
-                                  org.apache.http.Header[] headers, JSONObject response) {
-                super.onSuccess(statusCode, headers, response);
-                try {
-                    Log.e(TAG, "response--> " + response);
-                    success = response.getBoolean("success");
-                    if (success) {
-
-                        if (!Utils.isEmptyString(othersphone)) {
-                            JSONObject jobj = new JSONObject(response.getString("user"));
-                            if (jobj.has("gender"))
-                                authManager.setTmpGender(jobj.getString("gender"));
-                            else
-                                authManager.setTmpGender("guy");
-                            if (jobj.has("follower"))
-                                authManager.setTmpFollower(jobj.getString("follower"));
-                            if (jobj.has("following"))
-                                authManager.setTmpFollowing(jobj.getString("following"));
-                            if (jobj.has("is_following"))
-                                authManager.setTmpIsFollowing(jobj.getInt("is_following"));
-                            if (jobj.has("name"))
-                                authManager.setTmpUserName(jobj.getString("name"));
-                            if (jobj.has("user_pic"))
-                                authManager.setTmpUserPic(jobj.getString("user_pic"));
-                            if (jobj.has("dob"))
-                                authManager.setTmpDOB(jobj.getString("dob"));
-                            if (jobj.has("is_following_requested"))
-                                authManager.setTmpIsFollowingRequested(jobj.getInt("is_following_requested"));
-
-                        } else {
-                            JSONObject jobj = new JSONObject(response.getString("user"));
-                            if (jobj.has("gender")) {
-                                authManager.setGender(jobj.getString("gender"));
-                            } else {
-                                authManager.setGender("guy");
-                            }
-                            if (jobj.has("follower"))
-                                authManager.setFollower(jobj.getString("follower"));
-                            if (jobj.has("following"))
-                                authManager.setFollowing(jobj.getString("following"));
-                            if (jobj.has("is_following"))
-                                authManager.setIsFollowing(jobj.getString("is_following"));
-                            if (jobj.has("name"))
-                                authManager.setUserName(jobj.getString("name"));
-                            if (jobj.has("user_pic"))
-                                authManager.setUserPic(jobj.getString("user_pic"));
-                            if (jobj.has("dob"))
-                                authManager.setdOB(jobj.getString("dob"));
-                            if (jobj.has("city"))
-                                authManager.setUserCity(jobj.getString("city"));
-                            if (jobj.has("country"))
-                                authManager.setUserCountry(jobj.getString("country"));
-                            if (jobj.has("email"))
-                                authManager.setEmailId(jobj.getString("email"));
-                        }
-
-                        EventBus.getDefault().post("ProfileInfo True");
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-
-        });
-
-    }
-
-    public Boolean deviceRegistered;
+    public String ourClicks = null;
+    //to track with which user we are in chat currently
+    public String partnerQbId = null;
+    public String mIs_new_clickin_user = null;
+    StringEntity se = null;
+    //values stored in Authmanager
+    private Boolean isDeviceRegistered;
     private String message;
     private String phoneNo;
     private String QBId;
+    //    private String is_new_clickin_user = "";
     private String usrToken;
     private String userId;
-    private String userName;
+    private String userName = null;
+    private String userPic;
+    private String emailId = null;
+    private String follower;
+    private String following;
+    private String isFollowing;
+    private String gender = null;
+    private String dOB;
+    private String deviceRegistereId;
+    private String userCity;
+    private String userCountry;
+    private Uri userImageUri = null;
+    private Bitmap userbitmap = null;
+    private Bitmap mResizeBitmap;
+    private Bitmap mOrginalBitmap;
+    private String tmpCity;
+    private String tmpCountry;
+    private String tmpFollowId;
+    private int tmpIsFollowingRequested;
+    private boolean editProfileFlag = false;
+    private String tmpQBId;
+    private String tmpUserId;
+    private String tmpUserName;
+    private String tmpUserPic = "";
+    private String tmpFollower = "0";
+    private String tmpFollowing = "0";
+    private int tmpIsFollowing;
+    private String tmpGender = "";
+    private String tmpDOB;
+    private String countrycode;
+    private boolean menuUserInfoFlag = false;
+    // private QBPrivateChat qBPrivateChatReal;
+    private QBPrivateChat qBPrivateChat;
+    private String mLatLan;
+    /* for notification counter */
+    private int mNotificationCounter;
+
+
+    public String getLatLan() {
+        return mLatLan;
+    }
+
+    public void setLatLan(String mLatLan) {
+        this.mLatLan = mLatLan;
+    }
+
+    public int getNotificationCounter() {
+        return mNotificationCounter;
+    }
+
+    public void setNotificationCounter(int mNotificationCounter) {
+        this.mNotificationCounter = mNotificationCounter;
+    }
+
 
     public String getDeviceRegistereId() {
         return deviceRegistereId;
     }
 
-    public void setDeviceRegistereId(String deviceRegistereId) {
-        this.deviceRegistereId = deviceRegistereId;
+    public void setDeviceRegistereId(String deviceRegistereId1) {
+        this.deviceRegistereId = deviceRegistereId1;
     }
 
-    private String userPic;
-    private String emailId;
-    private String follower;
+//
+//    public String getIs_new_clickin_user() {
+//        return is_new_clickin_user;
+//    }
+//
+//    public void setIs_new_clickin_user(String is_new_clickin_user) {
+//        this.is_new_clickin_user = is_new_clickin_user;
+//    }
 
     public String getUserCity() {
         return userCity;
     }
-
-
-    private String following;
-    private String isFollowing;
-    private String gender;
-    private String dOB;
-    private String deviceRegistereId;
-    private String userCity;
-    private String userCountry;
-    private Uri userImageUri=null;
-
 
     public void setUserCity(String userCity) {
         this.userCity = userCity;
@@ -596,17 +124,17 @@ public class AuthManager extends Observable implements AuthManagerI {
     }
 
     /**
-     * @return the deviceRegistered
+     * @return the isDeviceRegistered
      */
     public Boolean getDeviceRegistered() {
-        return deviceRegistered;
+        return isDeviceRegistered;
     }
 
     /**
-     * @param deviceRegistered the deviceRegistered to set
+     * @param isDeviceRegistered the isDeviceRegistered to set
      */
-    public void setDeviceRegistered(Boolean deviceRegistered) {
-        this.deviceRegistered = deviceRegistered;
+    public void setDeviceRegistered(Boolean isDeviceRegistered) {
+        this.isDeviceRegistered = isDeviceRegistered;
     }
 
     /**
@@ -791,16 +319,13 @@ public class AuthManager extends Observable implements AuthManagerI {
         this.dOB = dOB;
     }
 
+    public String getCountrycode() {
+        return countrycode;
+    }
 
-    private String tmpQBId;
-    private String tmpUserId;
-    private String tmpUserName;
-    private String tmpUserPic;
-    private String tmpFollower;
-    private String tmpFollowing;
-    private int tmpIsFollowing;
-    private String tmpGender;
-    private String tmpDOB;
+    public void setCountrycode(String countrycode) {
+        this.countrycode = countrycode;
+    }
 
     public boolean isEditProfileFlag() {
         return editProfileFlag;
@@ -810,13 +335,6 @@ public class AuthManager extends Observable implements AuthManagerI {
         this.editProfileFlag = editProfileFlag;
     }
 
-    private String tmpCity;
-    private String tmpCountry;
-    private String tmpFollowId;
-    private int tmpIsFollowingRequested;
-
-    private boolean editProfileFlag = false;
-
     public boolean isMenuUserInfoFlag() {
         return menuUserInfoFlag;
     }
@@ -824,9 +342,6 @@ public class AuthManager extends Observable implements AuthManagerI {
     public void setMenuUserInfoFlag(boolean menuUserInfoFlag) {
         this.menuUserInfoFlag = menuUserInfoFlag;
     }
-
-    private boolean menuUserInfoFlag = false;
-
 
     /**
      * @return the tmpQBId
@@ -913,7 +428,7 @@ public class AuthManager extends Observable implements AuthManagerI {
     }
 
     /**
-     * @return the tmpIsFollowing
+     * @return the tmpIsFollowin
      */
     public int getTmpIsFollowing() {
         return tmpIsFollowing;
@@ -1010,24 +525,641 @@ public class AuthManager extends Observable implements AuthManagerI {
         this.tmpIsFollowingRequested = tmpIsFollowingRequested;
     }
 
-
-   // private QBPrivateChat qBPrivateChatReal;
-    private QBPrivateChat qBPrivateChat;
-
     public QBPrivateChat getqBPrivateChat() {
 
-        return qBPrivateChat ;
+        return qBPrivateChat;
     }
 
     public void setqBPrivateChat(QBPrivateChat qBPrivateChat) {
         this.qBPrivateChat = qBPrivateChat;
     }
 
-    public void setUserImageUri(Uri uri){
-        this.userImageUri=uri;
-    }
-
-    public Uri getUserImageUri(){
+    public Uri getUserImageUri() {
         return this.userImageUri;
     }
+
+    public void setUserImageUri(Uri uri) {
+        this.userImageUri = uri;
+    }
+
+    public Bitmap getUserbitmap() {
+        return this.userbitmap;
+    }
+
+    public void setUserbitmap(Bitmap userbitmap) {
+        this.userbitmap = userbitmap;
+    }
+
+
+      /* resize bit map*/
+
+    public Bitmap getmResizeBitmap() {
+        return mResizeBitmap;
+    }
+
+    public void setmResizeBitmap(Bitmap mResizeBitmap) {
+        this.mResizeBitmap = mResizeBitmap;
+    }
+
+    public Bitmap getOrginalBitmap() {
+        return mOrginalBitmap;
+    }
+
+    public void setOrginalBitmap(Bitmap mOrginalBitmap) {
+        this.mOrginalBitmap = mOrginalBitmap;
+    }
+
+
+    public void signIn(String username, String password, String deviceToken, String deviceType) {
+
+        JSONObject userInputDetails = new JSONObject();
+        try {
+
+            boolean retval = username.contains("@");
+            if (retval) {
+                userInputDetails.put("email", username);
+            } else {
+                userInputDetails.put("phone_no", username);
+            }
+            userInputDetails.put("device_token", deviceToken);
+            userInputDetails.put("password", password);
+            userInputDetails.put("device_type", deviceType);
+
+            se = new StringEntity(userInputDetails.toString());
+            se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+        } catch (Exception e1) {
+            e1.printStackTrace();
+
+        }
+
+
+        ClickinRestClient.post(null, APIs.SIGNIN, se, "application/json",
+                new JsonHttpResponseHandler() {
+
+                    @Override
+                    public void onFailure(int statusCode, Throwable e,
+                                          JSONObject errorResponse) {
+                        super.onFailure(statusCode, e, errorResponse);
+                        if (errorResponse != null) {
+
+                            try {
+                                ModelManager.getInstance().getAuthorizationManager().setMessage(errorResponse.getString("message"));
+                            } catch (JSONException e1) {
+                            }
+
+                            EventBus.getDefault().postSticky("SignIn False");
+                        } else {
+                            EventBus.getDefault().postSticky("SignIn Network Error");
+                        }
+
+                    }
+
+                    @Override
+                    public void onSuccess(int statusCode, org.apache.http.Header[] headers, JSONObject response) {
+                        super.onSuccess(statusCode, headers, response);
+                        boolean state = false;
+                        try {
+
+                            AuthManager authManager = ModelManager.getInstance().getAuthorizationManager();
+                            state = response.getBoolean("success");
+                            if (state) {
+
+                                if (response.has("phone_no")) {
+                                    authManager.setPhoneNo(response.getString("phone_no"));
+                                }
+                                if (response.has("message")) {
+                                    authManager.setMessage(response.getString("message"));
+                                }
+                                if (response.has("device_registered")) {
+                                    authManager.setDeviceRegistered(response.getBoolean("device_registered"));
+                                }
+                                if (response.has("QB_id")) {
+                                    authManager.setQBId(response.getString("QB_id"));
+                                }
+                                if (response.has("user_id")) {
+                                    authManager.setUserId(response.getString("user_id"));
+                                }
+                                if (response.has("user_name")) {
+                                    authManager.setUserName(response.getString("user_name"));
+                                }
+                                if (response.has("user_pic")) {
+                                    authManager.setUserPic(response.getString("user_pic"));
+                                }
+                                if (response.has("user_token")) {
+                                    authManager.setUsrToken(response.getString("user_token"));
+                                }
+
+                            }
+                            EventBus.getDefault().postSticky("SignIn True");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                }
+
+        );
+
+    }
+
+
+    public void signUpAuth(String phone, String deviceToken) {
+        JSONObject userInputDetails = new JSONObject();
+        try {
+            userInputDetails.put("phone_no", phone);
+            userInputDetails.put("device_token", deviceToken);
+
+            se = new StringEntity(userInputDetails.toString());
+            se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        ClickinRestClient.post(null, APIs.CREATEUSER, se, "application/json", new JsonHttpResponseHandler() {
+            @Override
+            public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
+                super.onFailure(statusCode, e, errorResponse);
+
+                if (errorResponse != null) {
+                    try {
+                        ModelManager.getInstance().getAuthorizationManager().setMessage(errorResponse.getString("message"));
+                    } catch (JSONException e1) {
+                        e1.printStackTrace();
+                    }
+                    EventBus.getDefault().post("SignUp False");
+                } else {
+                    EventBus.getDefault().post("SignUp Network Error");
+                }
+            }
+
+            @Override
+            public void onSuccess(int statusCode, org.apache.http.Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                boolean state = false;
+                try {
+
+                    state = response.getBoolean("success");
+                    if (state) {
+                        EventBus.getDefault().post("SignUp True");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+        });
+    }
+
+
+    public void getVerifyCode(String phone, String deviceToken, String vCode,
+                              String deviceType) {
+        JSONObject inputDetails = new JSONObject();
+        try {
+            inputDetails.put("phone_no", phone);
+            inputDetails.put("vcode", vCode);
+            inputDetails.put("device_token", deviceToken);
+            inputDetails.put("device_type", deviceType);
+
+
+            se = new StringEntity(inputDetails.toString());
+            se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        ClickinRestClient.post(null, APIs.VERIFYCODE, se, "application/json",
+                new JsonHttpResponseHandler() {
+
+                    @Override
+                    public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
+                        super.onFailure(statusCode, e, errorResponse);
+
+                        if (errorResponse != null) {
+                            try {
+                                ModelManager.getInstance().getAuthorizationManager().setMessage(errorResponse.getString("message"));
+                            } catch (JSONException e1) {
+                                // TODO Auto-generated catch block
+                                e1.printStackTrace();
+                            }
+                            EventBus.getDefault().post("Verify False");
+                        } else {
+                            EventBus.getDefault().post("Verify Network Error");
+                        }
+                    }
+
+                    @Override
+                    public void onSuccess(int statusCode,
+                                          org.apache.http.Header[] headers,
+                                          JSONObject response) {
+                        super.onSuccess(statusCode, headers, response);
+                        boolean state = false;
+                        try {
+
+                            AuthManager authManager = ModelManager.getInstance().getAuthorizationManager();
+                            state = response.getBoolean("success");
+                            if (state) {
+                                if (response.has("QB_id"))
+                                    authManager.setQBId(response.getString("QB_id"));
+                                if (response.has("user_id"))
+                                    authManager.setUserId(response.getString("user_id"));
+                                if (response.has("user_token"))
+                                    authManager.setUsrToken(response.getString("user_token"));
+
+                                EventBus.getDefault().post("Verify True");
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                }
+        );
+
+    }
+
+
+    public void playItSafeAuth(String password, String phone, String email,
+                               String urserToken) {
+        JSONObject inputDetails = new JSONObject();
+        try {
+            inputDetails.put("phone_no", phone);
+            inputDetails.put("user_token", urserToken);
+            inputDetails.put("email", email);
+            inputDetails.put("password", password);
+
+            se = new StringEntity(inputDetails.toString());
+            se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,
+                    "application/json"));
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        ClickinRestClient.post(null, APIs.INSERTEMAIL, se, "application/json",
+                new JsonHttpResponseHandler() {
+                    @Override
+                    public void onFailure(int statusCode, Throwable e,
+                                          JSONObject errorResponse) {
+                        super.onFailure(statusCode, e, errorResponse);
+
+                        if (errorResponse != null) {
+                            try {
+                                ModelManager.getInstance().getAuthorizationManager().setMessage(errorResponse
+                                        .getString("message"));
+                            } catch (JSONException e1) {
+                                // TODO Auto-generated catch block
+                                e1.printStackTrace();
+                            }
+                            EventBus.getDefault().post("PlayItSafe False");
+                        } else {
+                            EventBus.getDefault().post("PlayItSafe Network Error");
+                        }
+
+                    }
+
+                    @Override
+                    public void onSuccess(int statusCode,
+                                          org.apache.http.Header[] headers,
+                                          JSONObject response) {
+                        super.onSuccess(statusCode, headers, response);
+                        boolean state = false;
+                        try {
+
+                            state = response.getBoolean("success");
+                            if (state) {
+
+                                EventBus.getDefault().post("PlayItSafe True");
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                }
+        );
+
+    }
+
+
+    public void reSendVerifyCode(String phone, String deviceToken) {
+        // TODO Auto-generated method stub
+
+        JSONObject inputDetails = new JSONObject();
+        try {
+            inputDetails.put("phone_no", phone);
+            inputDetails.put("device_token", deviceToken);
+
+            se = new StringEntity(inputDetails.toString());
+            se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        ClickinRestClient.post(null, APIs.RESENDVERIFYCODE, se, "application/json", new JsonHttpResponseHandler() {
+            @Override
+            public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
+                super.onFailure(statusCode, e, errorResponse);
+
+                if (errorResponse != null) {
+                    try {
+                        ModelManager.getInstance().getAuthorizationManager().setMessage(errorResponse.getString("message"));
+                    } catch (JSONException e1) {
+                        // TODO Auto-generated catch block
+                        e1.printStackTrace();
+                    }
+                    EventBus.getDefault().post("ReSendVerifyCode False");
+                } else {
+                    EventBus.getDefault().post("ReSendVerifyCode Network Error");
+                }
+
+            }
+
+            @Override
+            public void onSuccess(int statusCode,
+                                  org.apache.http.Header[] headers,
+                                  JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                boolean state = false;
+                try {
+
+                    state = response.getBoolean("success");
+                    if (state) {
+                        EventBus.getDefault().post("ReSendVerifyCode True");
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+        });
+
+    }
+
+
+    public void sendNewRequest(String phone, String partner, String usertoken) {
+        // TODO Auto-generated method stub
+
+        JSONObject inputDetails = new JSONObject();
+        try {
+            inputDetails.put("phone_no", phone);
+            inputDetails.put("partner_phone_no", partner);
+            inputDetails.put("user_token", usertoken);
+            se = new StringEntity(inputDetails.toString());
+            se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,
+                    "application/json"));
+
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        ClickinRestClient.post(null, APIs.NEWREQUEST, se, "application/json",
+                new JsonHttpResponseHandler() {
+                    @Override
+                    public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
+                        super.onFailure(statusCode, e, errorResponse);
+
+                        if (errorResponse != null) {
+                            try {
+                                ModelManager.getInstance().getAuthorizationManager().setMessage(errorResponse.getString("message"));
+                            } catch (JSONException e1) {
+                                // TODO Auto-generated catch block
+                                e1.printStackTrace();
+                            }
+                            EventBus.getDefault().post("RequestSend False");
+                        } else {
+                            EventBus.getDefault().post("RequestSend Network Error");
+                        }
+
+                    }
+
+                    @Override
+                    public void onSuccess(int statusCode,
+                                          org.apache.http.Header[] headers,
+                                          JSONObject response) {
+                        super.onSuccess(statusCode, headers, response);
+                        boolean state = false;
+                        try {
+
+                            state = response.getBoolean("success");
+                            if (state) {
+                                EventBus.getDefault().post("RequestSend True");
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                }
+        );
+
+    }
+
+    public void getProfileInfo(final String othersphone, String phone, String usertoken) {
+        // TODO Auto-generated method stub
+        String str = null;
+        try {
+            if (!Utils.isEmptyString(othersphone)) {
+                str = othersphone.substring(1);
+            } else {
+                str = phone.substring(1);
+            }
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+
+        ClickinRestClient.get(APIs.FETCHPROFILEINFO + "%2B" + str, new JsonHttpResponseHandler() {
+            boolean success = false;
+
+            @Override
+            public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
+                super.onFailure(statusCode, e, errorResponse);
+
+                if (errorResponse != null) {
+                    try {
+                        ModelManager.getInstance().getAuthorizationManager().setMessage(errorResponse.getString("message"));
+                    } catch (JSONException e1) {
+                    }
+
+                    EventBus.getDefault().post("ProfileInfo False");
+                } else {
+                    EventBus.getDefault().post("ProfileInfo Network Error");
+                }
+
+            }
+
+            @SuppressWarnings("unused")
+            @Override
+            public void onSuccess(int statusCode,
+                                  org.apache.http.Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                try {
+
+
+                    success = response.getBoolean("success");
+                    if (success) {
+
+
+                        AuthManager authManager = ModelManager.getInstance().getAuthorizationManager();
+                        if (!Utils.isEmptyString(othersphone)) {
+                            JSONObject jobj = new JSONObject(response.getString("user"));
+                            if (jobj.has("gender"))
+                                authManager.setTmpGender(jobj.getString("gender"));
+
+                            else
+                                authManager.setTmpGender("");
+
+
+                            if (jobj.has("follower"))
+                                authManager.setTmpFollower(jobj.getString("follower"));
+                            else
+                                authManager.setTmpFollower("");
+                            if (jobj.has("following"))
+                                authManager.setTmpFollowing(jobj.getString("following"));
+                            else
+                                authManager.setTmpFollowing("");
+
+                            if (jobj.has("is_following"))
+                                authManager.setTmpIsFollowing(jobj.getInt("is_following"));
+                            else
+                                authManager.setTmpIsFollowing(0);
+                            if (jobj.has("name"))
+                                authManager.setTmpUserName(jobj.getString("name"));
+                            else
+                                authManager.setTmpUserName("");
+                            if (jobj.has("user_pic"))
+                                authManager.setTmpUserPic(jobj.getString("user_pic"));
+                            else
+                                authManager.setTmpUserPic("");
+                            if (jobj.has("dob"))
+                                authManager.setTmpDOB(jobj.getString("dob"));
+                            else
+                                authManager.setTmpDOB("");
+                            if (jobj.has("is_following_requested"))
+                                authManager.setTmpIsFollowingRequested(jobj.getInt("is_following_requested"));
+                            else
+                                authManager.setTmpIsFollowingRequested(0);
+
+                            //akshit code for setting otheruser City and country
+                            if (jobj.has("city"))
+                                authManager.setTmpCity(jobj.getString("city"));
+                            else
+                                authManager.setTmpCity(jobj.getString(""));
+
+                            if (jobj.has("country"))
+                                authManager.setTmpCountry(jobj.getString("country"));
+                            else
+                                authManager.setTmpCountry(jobj.getString(""));
+                            //ends
+                            //Code to check if user has logged in first time
+//                            if(jobj.has("is_new_clickin_user"))
+//                                authManager.setIs_new_clickin_user(jobj.getString("is_new_clickin_user"));
+//                            else
+//                                authManager.setIs_new_clickin_user("yes");
+
+                        } else {
+                            JSONObject jobj = new JSONObject(response.getString("user"));
+                            if (jobj.has("gender"))
+                                authManager.setGender(jobj.getString("gender"));
+                            if (jobj.has("follower"))
+                                authManager.setFollower(jobj.getString("follower"));
+                            if (jobj.has("following"))
+                                authManager.setFollowing(jobj.getString("following"));
+                            if (jobj.has("is_following"))
+                                authManager.setIsFollowing(jobj.getString("is_following"));
+                            if (jobj.has("name"))
+                                authManager.setUserName(jobj.getString("name"));
+                            if (jobj.has("user_pic"))
+                                authManager.setUserPic(jobj.getString("user_pic"));
+                            if (jobj.has("dob"))
+                                authManager.setdOB(jobj.getString("dob"));
+                            if (jobj.has("city"))
+                                authManager.setUserCity(jobj.getString("city"));
+                            if (jobj.has("country"))
+                                authManager.setUserCountry(jobj.getString("country"));
+                            if (jobj.has("email"))
+                                authManager.setEmailId(jobj.getString("email"));
+                            if (jobj.has("is_enable_push_notification"))
+                                SettingManager.mNotification_Enable = Boolean.parseBoolean(jobj.getString("is_enable_push_notification"));
+                            if (jobj.has("is_new_clickin_user"))
+                                authManager.mIs_new_clickin_user = jobj.getString("is_new_clickin_user");
+                            else
+                                authManager.mIs_new_clickin_user = null;
+                        }
+
+                        EventBus.getDefault().post("ProfileInfo True");
+                    }
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+        });
+
+    }
+
+
+    public void reSetFlag(String phone, String user_token, String relationship_id, final String is_new_partner, final String is_new_clickin_user, final int mPosition) {
+        // TODO Auto-generated method stub
+
+        JSONObject inputDetails = new JSONObject();
+        try {
+            inputDetails.put("phone_no", phone);
+            inputDetails.put("user_token", user_token);
+            inputDetails.put("relationship_id", relationship_id);
+            inputDetails.put("is_new_partner", is_new_partner);
+            inputDetails.put("is_new_clickin_user", is_new_clickin_user);
+
+            se = new StringEntity(inputDetails.toString());
+            se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        ClickinRestClient.post(null, APIs.RESETFLAGS, se, "application/json", new JsonHttpResponseHandler() {
+            @Override
+            public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
+                super.onFailure(statusCode, e, errorResponse);
+
+                if (errorResponse != null) {
+                    EventBus.getDefault().post("ReSetFlag False");
+                } else {
+                    EventBus.getDefault().post("ReSetFlag Network Error");
+                }
+
+            }
+
+            @Override
+            public void onSuccess(int statusCode,
+                                  org.apache.http.Header[] headers,
+                                  JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                boolean state = false;
+                try {
+
+                    state = response.getBoolean("success");
+                    if (state) {
+                        EventBus.getDefault().post("ReSetFlag True");
+                    }
+
+                    ModelManager.getInstance().getAuthorizationManager().mIs_new_clickin_user = is_new_clickin_user;
+                    ModelManager.getInstance().getRelationManager().acceptedList.get(mPosition).mIs_new_partner = is_new_partner;
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+        });
+
+    }
+
+
 }

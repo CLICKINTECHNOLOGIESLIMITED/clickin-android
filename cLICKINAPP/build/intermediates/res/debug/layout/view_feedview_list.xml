@@ -1,8 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@drawable/r_owner_profile_bg">
 
     <RelativeLayout
         android:id="@+id/rr_header"
@@ -10,14 +9,6 @@
         android:layout_height="wrap_content"
         android:background="@drawable/owner_profile_hedder">
 
-        <ImageView
-            android:id="@+id/left_menu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="12dp"
-            android:background="@drawable/owner_profile_top_icon" />
 
         <TextView
             android:id="@+id/tv_profile_txt"
@@ -30,26 +21,6 @@
             android:textSize="20sp"
             android:textStyle="bold" />
 
-        <RelativeLayout
-            android:id="@+id/right_notification"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="1dp"
-            android:background="@drawable/owner_profile_hedder_icon">
-        <TextView
-            android:id="@+id/notification_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-           android:layout_centerInParent="true"
-
-            android:text="0"
-            android:textColor="@color/signup_contry_code"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            />
-        </RelativeLayout>
 
     </RelativeLayout>
 
@@ -63,6 +34,7 @@
         android:visibility="gone">
 
         <ImageView
+            android:id="@+id/image_no_feed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -70,21 +42,22 @@
             android:src="@drawable/no_feeds_image" />
     </RelativeLayout>
 
-    <com.sourcefuse.clickinandroid.view.adapter.PinnedSecListViewForFeed
+    <se.emilsjolander.stickylistheaders.StickyListHeadersListView
         android:id="@+id/list1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/transparent"
+        android:layout_below="@+id/rr_header"
+        android:background="@color/white"
+        android:cacheColorHint="@color/transparent"
         android:choiceMode="singleChoice"
+        android:clickable="false"
         android:drawSelectorOnTop="true"
         android:fadingEdgeLength="0dp"
         android:focusable="false"
         android:gravity="center"
-        android:layout_below="@+id/rr_header"
-        android:visibility="visible"
         android:listSelector="@color/transparent"
-        android:clickable="false"
-        android:cacheColorHint="@color/transparent"/>
+        android:visibility="visible" />
 
 
-</RelativeLayout><!-- From: file:/home/monika/gitcodeClickin/cLICKINAPP/src/main/res/layout/view_feedview_list.xml -->
+
+</RelativeLayout><!-- From: file:/monika/latestworkingCLickin/cLICKINAPP/src/main/res/layout/view_feedview_list.xml -->

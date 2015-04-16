@@ -2,13 +2,13 @@ package com.sourcefuse.clickinandroid.view;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
@@ -16,154 +16,269 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import com.sourcefuse.clickinandroid.utils.Constants;
+import com.sourcefuse.clickinandroid.model.ModelManager;
+import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.FetchContactFromPhone;
+import com.sourcefuse.clickinandroid.utils.UnCaughtExceptionHandler;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.adapter.ContactAdapter;
 import com.sourcefuse.clickinapp.R;
 
 import de.greenrobot.event.EventBus;
 
-public class AddSomeoneView extends Activity implements View.OnClickListener,
-		TextWatcher {
-    private static final String TAG = SignInView.class.getSimpleName();
-	private Button do_latter;
-	private EditText search_phbook;
-	private ListView listView;
-	private ContactAdapter adapter;
-	private RelativeLayout showContactlist;
-	private ImageView keyIcon;
-    private boolean mFrom = false;
-    private Typeface typefaceBold;
+public class AddSomeoneView extends Activity implements TextWatcher {
+
+    boolean FromOwnProfile;
+    private EditText search_phbook;
+    private ListView listView;
+    private ContactAdapter adapter;
+    private RelativeLayout showContactlist;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        //code- to handle uncaught exception
+        if (Utils.mStartExceptionTrack)
+            Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
+
+        this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+        setContentView(R.layout.view_addsomeone);
+        search_phbook = (EditText) findViewById(R.id.edt_search_ph);
+        listView = (ListView) findViewById(R.id.list_contact);
+        showContactlist = (RelativeLayout) findViewById(R.id.rr_con_list);
+        search_phbook.addTextChangedListener(this);
+
+        listView.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+
+                if (search_phbook.getWindowToken() != null) {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(search_phbook.getWindowToken(), 0);
+                }
 
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.view_addsomeone);
-		this.overridePendingTransition(R.anim.slide_in_right ,R.anim.slide_out_right);
-        typefaceBold = Typeface.createFromAsset(AddSomeoneView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_BOLD);
+                Intent intent = new Intent(AddSomeoneView.this, AddViaContactView.class);
+                intent.putExtra("fromsignup", getIntent().getBooleanExtra("fromsignup", false));
+                intent.putExtra("ConName", Utils.itData.get(position).getConName());
 
-		do_latter = (Button) findViewById(R.id.btn_do_itlatter);
-		search_phbook = (EditText) findViewById(R.id.edt_search_ph);
-
-		keyIcon = (ImageView) findViewById(R.id.iv_keypad);
-		listView = (ListView) findViewById(R.id.list_contact);
-
-		showContactlist = (RelativeLayout) findViewById(R.id.rr_con_list);
-        search_phbook.setTypeface(typefaceBold);
-		search_phbook.addTextChangedListener(this);
-		do_latter.setOnClickListener(this);
-		keyIcon.setOnClickListener(this);
-
-        new FetchContactFromPhone(this).readContacts();
-		adapter = new ContactAdapter(this, R.layout.row_contacts,Utils.itData);
-		listView.setAdapter(adapter);
-		
-		
-		listView.setOnItemClickListener(new OnItemClickListener()
-		{
-			@Override public void onItemClick(AdapterView<?> arg0, View arg1,int position, long arg3)
-			{ 
-				
-				Intent intent = new Intent(AddSomeoneView.this,AddViaContactView.class);
-				intent.putExtra("ConName", Utils.itData.get(position).getConName());
-				intent.putExtra("ConNumber", Utils.itData.get(position).getConNumber());
-				if(!Utils.isEmptyString(Utils.itData.get(position).getConUri())){
-					intent.putExtra("ConUri", Utils.itData.get(position).getConUri());
-				}else{
-					intent.putExtra("ConUri", "");	
-				}
-				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				startActivity(intent);
-				//finish();
-			}
-		});
+                //Monika- we need to append counntry code if it doesn't with contact num
+                String phNum = Utils.itData.get(position).getConNumber();
+               /* if (!(phNum.contains("+"))) {
+                    if (!Utils.isEmptyString(authManager.getCountrycode())) {
+                        phNum = authManager.getCountrycode() + phNum;
+                    }
+                }*/
 
 
+                intent.putExtra("ConNumber", phNum);
+                if (!Utils.isEmptyString(Utils.itData.get(position).getConUri())) {
+                    intent.putExtra("ConUri", Utils.itData.get(position).getConUri());
+                } else {
+                    intent.putExtra("ConUri", "");
+                }
+                startActivity(intent);
+            }
+        });
 
-        mFrom = getIntent().getExtras().getBoolean("FromOwnProfile");
-        if(mFrom){
-            do_latter.setVisibility(View.GONE);
-        }else{
-            do_latter.setVisibility(View.VISIBLE);
+        ((RelativeLayout) findViewById(R.id.btn_add_someone_action)).setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+
+                if (search_phbook.getWindowToken() != null) {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(search_phbook.getWindowToken(), 0);
+                }
+
+            }
+
+        });
+
+
+        // akshit code starts
+
+        Bundle data = getIntent().getExtras();
+        if (data != null) {
+            if (data.containsKey("FromOwnProfile")) {
+                boolean mFrom = data.getBoolean("FromOwnProfile");
+                if (mFrom) {
+                    ((Button) findViewById(R.id.btn_do_itlatter)).setVisibility(View.GONE);
+                    ((Button) findViewById(R.id.btn_been_invited)).setVisibility(View.GONE);
+                    ((TextView) findViewById(R.id.edt_text)).setVisibility(View.GONE);
+                    ((RelativeLayout) findViewById(R.id.rl_back)).setVisibility(View.GONE);
+                    ((TextView) findViewById(R.id.btn_back)).setVisibility(View.GONE);
+                    ((TextView) findViewById(R.id.title_text_bottom)).setVisibility(View.GONE);
+                    ((TextView) findViewById(R.id.title_text_top)).setVisibility(View.GONE);
+                    findViewById(R.id.iv_topicon).setVisibility(View.GONE);
+                    findViewById(R.id.iv_image_top).setVisibility(View.VISIBLE);
+
+                } else {
+                    ((Button) findViewById(R.id.btn_do_itlatter)).setVisibility(View.VISIBLE);
+                    ((Button) findViewById(R.id.btn_been_invited)).setVisibility(View.VISIBLE);
+                    ((TextView) findViewById(R.id.edt_text)).setVisibility(View.VISIBLE);
+                    ((RelativeLayout) findViewById(R.id.rl_back)).setVisibility(View.GONE);
+                    ((TextView) findViewById(R.id.btn_back)).setVisibility(View.GONE);
+                }
+            }
         }
 
-
-	}
-
+        //akshit code ends
 
 
+        ((TextView) findViewById(R.id.btn_back)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
-	@Override
-	public void afterTextChanged(Editable s) {
-	}
+        ((ImageView) findViewById(R.id.iv_keypad)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (search_phbook.getWindowToken() != null) {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(search_phbook.getWindowToken(), 0);
+                }
 
-	@Override
-	public void beforeTextChanged(CharSequence s, int start, int count,
-			int after) {
-
-	}
-
-	@Override
-	public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-		if (search_phbook.getText().toString().length() > 0) {
-			showContactlist.setVisibility(View.VISIBLE);
-			AddSomeoneView.this.adapter.filter(search_phbook.getText().toString());
-		} else {
-			showContactlist.setVisibility(View.GONE);
-		}
-	}
-
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.btn_do_itlatter:
-			 Intent clickersView = new Intent(AddSomeoneView.this,CurrentClickersView.class);
-             clickersView.putExtra("FromSignup", true);
-             clickersView.putExtra("FromMenu", false);
-			 startActivity(clickersView);
-           finish();
-			break;
-		case R.id.iv_keypad:
-			 Intent intent = new Intent(AddSomeoneView.this,AddViaNumberView.class);
-			 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			 startActivity(intent);
-			 //finish();
-			break;
-		}
-	}
+                Intent intent = new Intent(AddSomeoneView.this, AddViaNumberView.class);
+                intent.putExtra("fromsignup", getIntent().getBooleanExtra("fromsignup", false));
+                startActivity(intent);
+            }
+        });
 
 
+        ((Button) findViewById(R.id.btn_do_itlatter)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent clickersView = new Intent(AddSomeoneView.this, UserProfileView.class);
+                clickersView.putExtra("FromSignup", true);
+                startActivity(clickersView);
+                //To track through mixPanel.
+                //Skip Adding Partner from Signup
+                Utils.trackMixpanel(AddSomeoneView.this, "", "", "SignUpSkipAddingPartner", false);
+                finish();
+            }
+        });
+
+        //akshit code for invited button
+        ((Button) findViewById(R.id.btn_been_invited)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent clickersView = new Intent(AddSomeoneView.this, UserProfileView.class);
+                clickersView.putExtra("FromSignup", true);
+                startActivity(clickersView);
+                //To track through mixPanel.
+                //Skip Adding Partner from Signup
+                Utils.trackMixpanel(AddSomeoneView.this, "", "", "SignUpSkipAddingPartner", false);
+                finish();
+
+            }
+        });
+        //akshit code end
+
+
+           if (Utils.itData.size() != 0) {//should not set the adapter if list size is 0
+        adapter = new ContactAdapter(this, R.layout.row_contacts, Utils.itData);
+        listView.setAdapter(adapter);
+         }
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        overridePendingTransition(0, R.anim.top_out);
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count,
+                                  int after) {
+
+    }
+
+   @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        if (search_phbook.getText().toString().length() > 0) {
+            showContactlist.setVisibility(View.VISIBLE);
+            if (adapter != null) {//if there are no contact in the list,
+
+                adapter.filter(search_phbook.getText().toString());
+            } else {
+                Toast.makeText(getApplicationContext(), getString(R.string.dont_have_contacts), Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            showContactlist.setVisibility(View.GONE);
+        }
+    }
 
     @Override
     public void onStart() {
         super.onStart();
-        if (EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().unregister(this);
-        }
+        search_phbook.setText("");
         EventBus.getDefault().register(this);
+        if (Utils.itData.size() == 0) {
+            Utils.launchBarDialog(this);
+            //monika- readcontacts in background and then call fetchcontact
+            new LoadContacts().execute();
+            // new FetchContactFromPhone(this).getClickerList(authManager.getPhoneNo(), authManager.getUsrToken(), 1);
+        }
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        if(EventBus.getDefault().isRegistered(this)){
+        if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this);
         }
     }
 
-    public void onEventMainThread(String getMsg){
-        Log.d(TAG, "onEventMainThread->"+getMsg);
-        if (getMsg.equalsIgnoreCase("SearchResult true")) {
+    public void onEventMainThread(String message) {
+
+
+        if (message.equalsIgnoreCase("CheckFriend True")) {
+            Utils.dismissBarDialog();
+            if (Utils.itData.size() != 0) {//should not set the adapter if list size is 0
+                adapter = new ContactAdapter(this, R.layout.row_contacts, Utils.itData);
+                listView.setAdapter(adapter);
+            }
+        } else if (message.equalsIgnoreCase("CheckFriend False")) {
+            Utils.dismissBarDialog();
+            //  Utils.showAlert(this,authManager.getMessage());
+            //   Utils.fromSignalDialog(this, authManager.getMessage());
+
+        } else if (message.equalsIgnoreCase("CheckFriend Network Error")) {
+            Utils.dismissBarDialog();
+            //    Utils.showAlert(this, AlertMessage.connectionError);
+            Utils.fromSignalDialog(this, AlertMessage.connectionError);
         }
     }
 
+    private class LoadContacts extends AsyncTask<Void, Void, Void> {
 
-	
+        @Override
+        protected Void doInBackground(Void... voids) {
+            new FetchContactFromPhone(AddSomeoneView.this).readContacts();
+            return null;
+        }
 
-
+        @Override
+        protected void onPostExecute(Void voids) {
+            new FetchContactFromPhone(AddSomeoneView.this).getClickerList(ModelManager.getInstance().getAuthorizationManager().getPhoneNo(),
+                    ModelManager.getInstance().getAuthorizationManager().getUsrToken(), 1);
+        }
+    }
 }

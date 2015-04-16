@@ -2,32 +2,35 @@ package com.sourcefuse.clickinandroid.view;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Typeface;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,21 +44,38 @@ import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.ProfileManager;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.Constants;
+import com.sourcefuse.clickinandroid.utils.FetchContactFromPhone;
+import com.sourcefuse.clickinandroid.utils.UnCaughtExceptionHandler;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
 
+import org.joda.time.DateTime;
+import org.joda.time.Period;
+import org.joda.time.format.PeriodFormatter;
+import org.joda.time.format.PeriodFormatterBuilder;
+
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
 
 import de.greenrobot.event.EventBus;
 
-public class ProfileView extends Activity implements View.OnClickListener, TextWatcher {
-    private String TAG = this.getClass().getSimpleName();
-
+public class ProfileView extends Activity implements OnClickListener, TextWatcher {
     public static final String[] MONTHS = {"JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"};
-
+    public static final int MEDIA_TYPE_IMAGE = 1;
+    private static final int DATE_DIALOG_ID = 9990;
+    private static final String IMAGE_DIRECTORY_NAME = "ClickIn/ClickinImages/";
+    long diffrence_in_mills;
+    long mills_in_17yrs;
+    boolean mFillNatively = false, mFromFacebook = false;
+    private String TAG = this.getClass().getSimpleName();
     private EditText fname, lname, city, country, email;
     private TextView tvDate, tvMonth, tvYear;
     private LinearLayout datepicker;
@@ -63,36 +83,135 @@ public class ProfileView extends Activity implements View.OnClickListener, TextW
     private Uri mImageCaptureUri;
     private DatePicker dpResult;
     private ImageView profileimg;
-    private Dialog dialog;
-
-    private static final int DATE_DIALOG_ID = 9990;
     private Bitmap bitmapImage;
     private int year;
     private int month;
     private int day;
-
     private int mCurrentyear;
-    private int mCurrentmonth;
-    private int mCurrentday;
-
     private String gender_var = "";
-    public static Activity act;
-    public static Context context;
     private AuthManager authManager;
     private ProfileManager profileManager;
-    private String usrtoken;
-    private Typeface typeface;
+    private Uri userImageUri;
+    private SimpleDateFormat mSimpleDateFormat;
+    private int age;
+    private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
+
+        public void onDateSet(DatePicker view, int selectedYear,
+                              int selectedMonth, int selectedDay) {
+            year = selectedYear;
+            month = selectedMonth;
+            day = selectedDay;
+
+            tvDate.setText("" + day);
+            tvMonth.setText("" + MONTHS[month]);
+            tvYear.setText("" + year);
+            dpResult.init(year, month, day, null);
+
+            Date start_date = null;
+            String date = day + "/" + month + "/" + year;
+            long time = 0;
+            mSimpleDateFormat = new SimpleDateFormat("dd/MM/yy");
+            PeriodFormatter mPeriodFormat = new PeriodFormatterBuilder().appendYears()
+                    .appendSuffix(" year(s) ").appendMonths().appendSuffix(" month(s) ")
+                    .appendDays().appendSuffix(" day(s) ").printZeroNever().toFormatter();
+
+            try {
+                start_date = mSimpleDateFormat.parse(date.toString());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                time = mSimpleDateFormat.parse(date.toString()).getTime();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            long present = System.currentTimeMillis();
+            diffrence_in_mills = Math.abs(time - present);
+
+      /* code for age prafull */
+
+            age = getAge(selectedYear, selectedMonth, selectedDay);
+//            DateTime start  = new DateTime(start_date);
+//            DateTime end = new DateTime(new Date());
+//
+//            diffrence_in_mills = end.getMillis() - start.getMillis();
+            long MILLISECONDS_IN_YEAR = (long) 1000 * 60 * 60 * 24 * 365;
+            mills_in_17yrs = 17 * MILLISECONDS_IN_YEAR;
+//            periods_years = Years.yearsBetween(start,end);
+
+
+        }
+    };
+    //Methods for Facebook
+    private Session.StatusCallback callback = new Session.StatusCallback() {
+        @Override
+        public void call(Session session, SessionState state,
+                         Exception exception) {
+            onSessionStateChange(session, state, exception);
+        }
+    };
+
+    public static Uri getOutputMediaFileUri(int type) {
+        return Uri.fromFile(getOutputMediaFile(type));
+    }
+
+    private static File getOutputMediaFile(int type) {
+
+        // External sdcard location
+        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), IMAGE_DIRECTORY_NAME);
+
+        // Create the storage directory if it does not exist
+        if (!mediaStorageDir.exists()) {
+            if (!mediaStorageDir.mkdirs()) {
+
+                return null;
+            }
+        }
+
+        // Create a media file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss",
+                Locale.getDefault()).format(new Date());
+        File mediaFile;
+        if (type == MEDIA_TYPE_IMAGE) {
+            mediaFile = new File(mediaStorageDir.getPath() + File.separator
+                    + "IMG_" + timeStamp + ".jpg");
+        } else {
+            return null;
+        }
+
+        return mediaFile;
+    }
+
+    public static Bitmap getBitmapFromCameraData(Intent data, Context context) {
+        Uri selectedImage = data.getData();
+        String[] filePathColumn =
+                {
+                        MediaStore.Images.Media.DATA
+                };
+        Cursor cursor = context.getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+        cursor.moveToFirst();
+        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+        String picturePath = cursor.getString(columnIndex);
+        cursor.close();
+        return BitmapFactory.decodeFile(picturePath);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+
+        //code- to handle uncaught exception
+        if (Utils.mStartExceptionTrack)
+            Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
+
+
         setContentView(R.layout.view_profile);
         this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
-        act = this;
-        Utils.acty = this;
-        context = this;
-        typeface = Typeface.createFromAsset(ProfileView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
+
 
         done = (Button) findViewById(R.id.btn_done);
         guy = (Button) findViewById(R.id.btn_guy);
@@ -114,6 +233,7 @@ public class ProfileView extends Activity implements View.OnClickListener, TextW
         //city.addTextChangedListener(this);
         //country.addTextChangedListener(this);
 
+
         done.setOnClickListener(this);
         guy.setOnClickListener(this);
         girl.setOnClickListener(this);
@@ -134,17 +254,34 @@ public class ProfileView extends Activity implements View.OnClickListener, TextW
         setCurrentDateOnView();
         authManager = ModelManager.getInstance().getAuthorizationManager();
 
-        fname.setTypeface(typeface);
-        lname.setTypeface(typeface);
-        city.setTypeface(typeface);
-        country.setTypeface(typeface);
-        email.setTypeface(typeface);
 
-        tvDate.setTypeface(typeface);
-        tvMonth.setTypeface(typeface);
-        tvYear.setTypeface(typeface);
+        // akshit code for closing keypad if touched anywhere outside
+        ((RelativeLayout) findViewById(R.id.relative_layout_root_profile)).setOnClickListener(new OnClickListener() {
 
+            @Override
+            public void onClick(View arg0) {
 
+                InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                if (fname.getWindowToken() != null)
+                    imm.hideSoftInputFromWindow(fname.getWindowToken(), 0);
+                if (lname.getWindowToken() != null)
+                    imm.hideSoftInputFromWindow(lname.getWindowToken(), 0);
+                if (city.getWindowToken() != null)
+                    imm.hideSoftInputFromWindow(city.getWindowToken(), 0);
+                if (country.getWindowToken() != null)
+                    imm.hideSoftInputFromWindow(country.getWindowToken(), 0);
+                if (email.getWindowToken() != null)
+                    imm.hideSoftInputFromWindow(email.getWindowToken(), 0);
+                if (guy.getWindowToken() != null)
+                    imm.hideSoftInputFromWindow(guy.getWindowToken(), 0);
+                if (girl.getWindowToken() != null)
+                    imm.hideSoftInputFromWindow(girl.getWindowToken(), 0);
+
+            }
+
+        });
+        new LoadContacts().execute();
+//ends
     }
 
     @Override
@@ -164,8 +301,12 @@ public class ProfileView extends Activity implements View.OnClickListener, TextW
                 && lname.getText().toString().length() > 1
                 && email.getText().toString().length() > 1 && Utils.isEmailValid(email.getText().toString()) && ((mCurrentyear - year) <= 17)) {
             done.setBackgroundResource(R.drawable.c_next_active);
+            //To track through mixPanel.
+            //Fill User Profile Natively(Manually).
+            mFillNatively = true;
+
         } else {
-            done.setBackgroundResource(R.drawable.c_next_inactive);
+            done.setBackgroundResource(R.drawable.c_next_active);
         }
 
     }
@@ -173,9 +314,7 @@ public class ProfileView extends Activity implements View.OnClickListener, TextW
     @Override
     public void onStart() {
         super.onStart();
-        if (EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().unregister(this);
-        }
+
         EventBus.getDefault().register(this);
     }
 
@@ -188,34 +327,38 @@ public class ProfileView extends Activity implements View.OnClickListener, TextW
     }
 
     public void onEventMainThread(String message) {
-        Log.d(TAG, "onEventMainThread->" + message);
-        Log.e("message ->", "-- " + message);
         if (message.equalsIgnoreCase("UpdateProfile True")) {
             Utils.dismissBarDialog();
             bitmapImage = null;
-            //Log.e("Utils.DeleteImage","Utils.DeleteImage--->"+	Utils.DeleteImage(mImageCaptureUri,ProfileView.this));
             switchView();
-            Log.d("1", "message->" + message);
+
+            if (mFromFacebook && mFillNatively) {
+                Utils.trackMixpanel(ProfileView.this, "", "", "FillProfileInfoThroughFacebook", true);
+                Utils.trackMixpanel(ProfileView.this, "", "", "FillProfileInfoNatively", true);
+            } else if (mFromFacebook)
+                Utils.trackMixpanel(ProfileView.this, "", "", "FillProfileInfoThroughFacebook", true);
+            else if (mFillNatively)
+                Utils.trackMixpanel(ProfileView.this, "", "", "FillProfileInfoNatively", true);
+
         } else if (message.equalsIgnoreCase("UpdateProfile False")) {
             Utils.dismissBarDialog();
-            Utils.showAlert(ProfileView.this, authManager.getMessage());
-            Log.d("2", "message->" + message);
+            Utils.fromSignalDialog(this, authManager.getMessage());
+            //Utils.showAlert(ProfileView.this, authManager.getMessage());
         } else if (message.equalsIgnoreCase("UpdateProfile Network Error")) {
             Utils.dismissBarDialog();
-            Utils.showAlert(act, AlertMessage.connectionError);
-            Log.d("3", "message->" + message);
+            Utils.fromSignalDialog(this, AlertMessage.connectionError);
+            //alertDialog(AlertMessage.connectionError);
+            //Utils.showAlert(this, AlertMessage.connectionError);
         }
 
     }
 
-
     private void switchView() {
         Intent intent = new Intent(ProfileView.this, PlayItSafeView.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("fromsignup", getIntent().getBooleanExtra("fromsignup", false));
         startActivity(intent);
-        this.finish();
+        finish();
     }
-
 
     @SuppressWarnings("deprecation")
     @Override
@@ -223,35 +366,96 @@ public class ProfileView extends Activity implements View.OnClickListener, TextW
         authManager = ModelManager.getInstance().getAuthorizationManager();
         switch (v.getId()) {
             case R.id.btn_done:
-                usrtoken = authManager.getUsrToken();
-
-                Log.e("", "---getUsrToken-----" + authManager.getUsrToken());
+                String name = fname.getText().toString() + " " + lname.getText().toString();
+                Bitmap bitmap;
                 if (updateProfileValidation()) {
+                    authManager.setUserName(name);
 
+
+                    //akshit code start to set default pics for male,female and if no gender
                     if (bitmapImage == null) {
                         try {
-                            bitmapImage = BitmapFactory.decodeResource(context.getResources(), R.drawable.default_profile);
+                            if (gender_var.equalsIgnoreCase("guy")) {
+                                bitmapImage = BitmapFactory.decodeResource(getResources(), R.drawable.male_user);
+                            } else if (gender_var.equalsIgnoreCase("girl")) {
+                                bitmapImage = BitmapFactory.decodeResource(getResources(), R.drawable.female_user);
+
+                            } else {
+                                bitmapImage = BitmapFactory.decodeResource(getResources(), R.drawable.male_user);
+                            }
+
+//                            ImageView im = (ImageView) findViewById(R.id.iv_profile_img);
+//                            bitmap = Bitmap.createBitmap(im.getWidth(), im.getHeight(), Bitmap.Config.ARGB_8888);
+//                            Canvas c = new Canvas(bitmap);
+//                            im.getDrawable().draw(c);
                         } catch (Exception e) {
                         }
-                    }
-                    if (Utils.isEmailValid(email.getText().toString())) {
-                        Utils.launchBarDialog(ProfileView.this);
-                        authManager.setEmailId(email.getText().toString());
-                        profileManager = ModelManager.getInstance().getProfileManager();
-                        profileManager.setProfile(fname.getText().toString(), lname.getText().toString(), authManager.getPhoneNo(),
-                                authManager.getUsrToken(), gender_var, "" + day + month + year, city.getText().toString(), country.getText().toString(), email.getText().toString(), "", Utils.encodeTobase64(bitmapImage));
+                        if (Utils.isEmailValid(email.getText().toString())) {
+                            Utils.launchBarDialog(ProfileView.this);
+                            authManager.setEmailId(email.getText().toString());
+                            profileManager = ModelManager.getInstance().getProfileManager();
+                            String cityStr = "";
+                            String countryStr = "";
+                            if (city.getText() != null) {
+                                cityStr = city.getText().toString();
+                            }
+
+                            if (country.getText() != null) {
+                                countryStr = country.getText().toString();
+                            }
+                            ModelManager.getInstance().getAuthorizationManager().setUserName("" + fname.getText().toString() + " " + lname.getText().toString());
+                            ModelManager.getInstance().getAuthorizationManager().setEmailId(email.getText().toString());
+
+                            profileManager.setProfile(fname.getText().toString(), lname.getText().toString(), authManager.getPhoneNo(),
+                                    authManager.getUsrToken(), gender_var, "" + day + month + year, cityStr, countryStr, email.getText().toString(), "", Utils.encodeTobase64(bitmapImage), "no");
+                        } else {
+                            Utils.fromSignalDialog(this, AlertMessage.vEmailid);
+                            //alertDialog(AlertMessage.vEmailid);
+                            //Utils.showAlert(ProfileView.this, AlertMessage.vEmailid);
+                        }
                     } else {
-                        Utils.showAlert(ProfileView.this, AlertMessage.vEmailid);
+                        ImageView im = (ImageView) findViewById(R.id.iv_profile_img);
+
+                        bitmap = Bitmap.createBitmap(im.getWidth(), im.getHeight(), Bitmap.Config.ARGB_8888);
+                        Canvas c = new Canvas(bitmap);
+                        if (im.getDrawable() != null)
+                            im.getDrawable().draw(c);
+
+                        if (Utils.isEmailValid(email.getText().toString())) {
+                            Utils.launchBarDialog(ProfileView.this);
+                            authManager.setEmailId(email.getText().toString());
+                            profileManager = ModelManager.getInstance().getProfileManager();
+                            String cityStr = "";
+                            String countryStr = "";
+                            if (city.getText() != null) {
+                                cityStr = city.getText().toString();
+                            }
+
+                            if (country.getText() != null) {
+                                countryStr = country.getText().toString();
+                            }
+                            ModelManager.getInstance().getAuthorizationManager().setUserName("" + fname.getText().toString() + " " + lname.getText().toString());
+                            ModelManager.getInstance().getAuthorizationManager().setEmailId(email.getText().toString());
+                            profileManager.setProfile(fname.getText().toString(), lname.getText().toString(), authManager.getPhoneNo(),
+                                    authManager.getUsrToken(), gender_var, "" + day + month + year, cityStr, countryStr, email.getText().toString(), "", Utils.encodeTobase64(bitmap), "no");
+                        } else {
+
+                            Utils.fromSignalDialog(this, AlertMessage.vEmailid);
+                            //Utils.showAlert(ProfileView.this, AlertMessage.vEmailid);
+                        }
+
                     }
                 }
                 break;
             case R.id.btn_guy:
-                gender_var = "1";
+                gender_var = "guy";
+                authManager.setGender("guy");
                 guy.setBackgroundResource(R.drawable.c_pink_guy);
                 girl.setBackgroundResource(R.drawable.c_grey_girl);
                 break;
             case R.id.btn_girl_btn:
-                gender_var = "0";
+                gender_var = "girl";
+                authManager.setGender("girl");
                 guy.setBackgroundResource(R.drawable.c_grey_guy);
                 girl.setBackgroundResource(R.drawable.c_pink_girl);
                 break;
@@ -266,8 +470,11 @@ public class ProfileView extends Activity implements View.OnClickListener, TextW
             /*
              * Connect With FB only session is create in this Activity
 			 */
+                //To track through mixPanel.
+                //Fill User Information through facebook.
+                /*Utils.trackMixpanel(ProfileView.this, "", "", "FillProfileInfoThroughFacebook", true);*/
 
-                //Boolean isInternetPresent = isConnectingToInternet();
+
                 if (Utils.isConnectingToInternet(ProfileView.this)) {
 
                     Session session = Session.getActiveSession();
@@ -293,22 +500,12 @@ public class ProfileView extends Activity implements View.OnClickListener, TextW
         }
     }
 
-
-    //Methods for Facebook
-    private Session.StatusCallback callback = new Session.StatusCallback() {
-        @Override
-        public void call(Session session, SessionState state,
-                         Exception exception) {
-            onSessionStateChange(session, state, exception);
-        }
-    };
-
     private void onSessionStateChange(Session session, SessionState state,
                                       Exception exception) {
         if (state.isOpened()) {
             GetFBData(session);
         } else if (state.isClosed()) {
-            System.out.println("Logged out...");
+
         }
     }
 
@@ -319,15 +516,13 @@ public class ProfileView extends Activity implements View.OnClickListener, TextW
         //User email, name, gender, DOB, Profile Pic, Access token
 
         final String access_Token = session.getAccessToken();
-        Log.d(TAG, access_Token);
         Request request = Request.newMeRequest(session, new Request.GraphUserCallback() {
             @Override
             public void onCompleted(GraphUser user, Response response) {
-                if (user != null) {
 
-                    Log.e(TAG, String.valueOf(user));
+                if (user != null) {
+                    mFromFacebook = true;
                     try {
-                        Log.d("user email", user.getInnerJSONObject().getString("email"));
                         email.setText(user.getInnerJSONObject().getString("email"));
                     } catch (Exception e1) {
                         // TODO Auto-generated catch block
@@ -336,11 +531,11 @@ public class ProfileView extends Activity implements View.OnClickListener, TextW
 
                     try {
                         if (user.getProperty("gender").equals("male")) {
-                            gender_var = "1";
+                            gender_var = "guy";
                             guy.setBackgroundResource(R.drawable.c_pink_guy);
                             girl.setBackgroundResource(R.drawable.c_grey_girl);
                         } else {
-                            gender_var = "0";
+                            gender_var = "girl";
                             guy.setBackgroundResource(R.drawable.c_grey_guy);
                             girl.setBackgroundResource(R.drawable.c_pink_girl);
                         }
@@ -352,7 +547,6 @@ public class ProfileView extends Activity implements View.OnClickListener, TextW
 
                     try {
 
-                        Log.d(TAG, user.getLocation().getProperty("name").toString());
                         String userLocationName = user.getLocation().getProperty("name").toString();
 
                         String[] citynCountry = userLocationName.split(",");
@@ -375,12 +569,14 @@ public class ProfileView extends Activity implements View.OnClickListener, TextW
 
 
                     try {
-                        Log.e("dob", user.getBirthday());
 
                         String[] dob = user.getBirthday().split("/");
                         year = Integer.valueOf(dob[2]);
                         month = Integer.valueOf(dob[0]);
                         day = Integer.valueOf(dob[1]);
+
+                        age = getAge(year, month, day);
+
 
                         tvDate.setText("" + day);
                         tvMonth.setText("" + MONTHS[month - 1]);
@@ -396,22 +592,17 @@ public class ProfileView extends Activity implements View.OnClickListener, TextW
 
 
                         LoadImage task = new LoadImage();
-                        task.execute(new String[]{"https://graph.facebook.com/" + user.getId() + "/picture?type=large"});
+                        String url = "https://graph.facebook.com/" + user.getId() + "/picture?type=large";
+                        //      authManager.setUserPic(url);
+                        task.execute(url);
 
 
-                        //						Picasso.with(ProfileView.this).load("https://graph.facebook.com/"+user.getId()+"/picture?type=large")
-                        //						.placeholder(R.drawable.default_profile)
-                        //						.resize(300,300)
-                        //						.error(R.drawable.default_profile)
-                        //						.into(profileimg);
-                        //						//userdata.put("profile_image","https://graph.facebook.com/"+user.getId()+"/picture?type=large");
                     } catch (Exception e) {
                         // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
 
                 } else {
-                    Log.i("Facebook::: ", "Logged out...");
                 }
 
             }
@@ -420,6 +611,365 @@ public class ProfileView extends Activity implements View.OnClickListener, TextW
         Request.executeBatchAsync(request);
     }
 
+    public void imageDialog() {
+
+        final Dialog mdialog = new Dialog(ProfileView.this);
+        mdialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        mdialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        mdialog.setContentView(R.layout.alert_take_picture);
+        Button cancel = (Button) mdialog.findViewById(R.id.dialog_cancel);
+        TextView textcamera = (TextView) mdialog.findViewById(R.id.take_picture);
+        TextView textgallery = (TextView) mdialog.findViewById(R.id.from_gallery);
+        textcamera.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                mImageCaptureUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
+                intent.putExtra("return-data", true);
+                intent.putExtra("android.intent.extras.CAMERA_FACING", 1);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
+
+                // start the image capture Intent
+                startActivityForResult(intent, Constants.CAMERA_REQUEST);
+
+                mdialog.dismiss();
+            }
+        });
+        textgallery.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(pickPhoto, Constants.SELECT_PICTURE);
+                mdialog.dismiss();
+            }
+        });
+
+        cancel.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mdialog.dismiss();
+            }
+        });
+        mdialog.show();
+    }
+
+    public String getRealPathFromURI(Uri uri) {
+        Cursor cursor = null;
+        String path = null;
+        try {
+            cursor = getContentResolver().query(uri, null, null, null, null);
+            cursor.moveToFirst();
+            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+            path = cursor.getString(idx);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (cursor != null)
+                cursor.close();
+        }
+
+        return path;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        try {
+            super.onActivityResult(requestCode, resultCode, data);
+            try {
+                Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
+            } catch (Exception e) {
+            }
+
+            if (resultCode == RESULT_OK) {
+                switch (requestCode) {
+                    case Constants.CAMERA_REQUEST:
+//                        mImageCaptureUri = data.getData();
+//                        bitmapImage = Utils.decodeUri(mImageCaptureUri, ProfileView.this);
+//                        profileimg.setImageBitmap(bitmapImage);
+/*test code akshit */
+                        Bitmap bitmap = BitmapFactory.decodeFile(mImageCaptureUri.getPath(), new BitmapFactory.Options());
+                        BitmapFactory.Options bmpFactoryOptions = new BitmapFactory.Options();
+                        Bitmap bitmap1;
+                        bmpFactoryOptions.inSampleSize = 2;
+                        bmpFactoryOptions.outWidth = bitmap.getWidth();
+                        bmpFactoryOptions.outHeight = bitmap.getHeight();
+                        bmpFactoryOptions.inJustDecodeBounds = false;
+                        bitmapImage = BitmapFactory.decodeFile(mImageCaptureUri.getPath(), bmpFactoryOptions);
+
+                        try {
+                            ExifInterface ei = new ExifInterface(mImageCaptureUri.getPath());
+                            int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+
+                            int angle = 0;
+
+                            if (orientation == ExifInterface.ORIENTATION_ROTATE_90) {
+                                angle = 90;
+                            } else if (orientation == ExifInterface.ORIENTATION_ROTATE_180) {
+                                angle = 180;
+                            } else if (orientation == ExifInterface.ORIENTATION_ROTATE_270) {
+                                angle = 270;
+                            }
+                            Matrix mat = new Matrix();
+                            mat.postRotate(angle);
+                              /*bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), mat, true);*/
+
+
+                                          /*Bitmap resized;
+                                          if (bitmapImage.getWidth() >= bitmapImage.getHeight()) {
+
+                                                resized = Bitmap.createBitmap(
+                                                                                     bitmapImage,
+                                                                                     bitmapImage.getWidth() / 2 - bitmapImage.getHeight() / 2,
+                                                                                     0,
+                                                                                     bitmapImage.getHeight(),
+                                                                                     bitmapImage.getHeight(), mat, true
+                                                );
+
+                                          } else {
+
+                                                resized = Bitmap.createBitmap(
+                                                                                     bitmapImage,
+                                                                                     0,
+                                                                                     bitmapImage.getHeight() / 2 - bitmapImage.getWidth() / 2,
+                                                                                     bitmapImage.getWidth(),
+                                                                                     bitmapImage.getWidth(), mat, true
+                                                );
+                                          }*/
+
+
+                            Bitmap resize;
+                            resize = Bitmap.createBitmap(bitmapImage, 0, 0, bitmapImage.getWidth(), bitmapImage.getHeight(), mat, true);
+                            if (resize != null) {
+
+                                try {
+                                    authManager.setOrginalBitmap(resize);
+                                    Intent intent = new Intent(ProfileView.this, CropView.class);
+                                    intent.putExtra("from", "fromcamera");
+                                    intent.putExtra("uri", mImageCaptureUri.toString());
+                                    startActivityForResult(intent, Constants.CROP_PICTURE);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                                          /*bitmapImage.recycle();
+                                          profileimg.setImageBitmap(resized);
+                                          userImageUri = mImageCaptureUri;
+                                          mImageCaptureUri = null;*/
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    case Constants.SELECT_PICTURE:
+
+
+                        Bitmap bitmap12 = getBitmapFromCameraData(data, getApplicationContext());
+
+
+                 /*    pick image from gallery  */
+                        BitmapFactory.Options bmpFactoryOptions1 = new BitmapFactory.Options();
+                        Bitmap bitmap11;
+                        bmpFactoryOptions1.inSampleSize = 2;
+                        bmpFactoryOptions1.outWidth = bitmap12.getWidth();
+                        bmpFactoryOptions1.outHeight = bitmap12.getHeight();
+                        bmpFactoryOptions1.inJustDecodeBounds = false;
+                        bitmapImage = BitmapFactory.decodeFile(getRealPathFromURI(data.getData()), bmpFactoryOptions1);
+
+                                    /*bitmapImage = getBitmapFromCameraData(data, getApplicationContext());*/
+
+/*test code akshit */
+                 /*    pick image from gallery  */
+
+
+                        try {
+                            ExifInterface ei = new ExifInterface(getRealPathFromURI(data.getData()));
+                            int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+
+                            int angle = 0;
+
+                            if (orientation == ExifInterface.ORIENTATION_ROTATE_90) {
+                                angle = 90;
+                            } else if (orientation == ExifInterface.ORIENTATION_ROTATE_180) {
+                                angle = 180;
+                            } else if (orientation == ExifInterface.ORIENTATION_ROTATE_270) {
+                                angle = 270;
+                            }
+                            Matrix mat = new Matrix();
+                            mat.postRotate(angle);
+
+
+
+                              /*bitmap1 = Bitmap.createBitmap(bitmap1, 0, 0, bitmap1.getWidth(), bitmap1.getHeight(), mat, true);*/
+
+                            bitmapImage = Bitmap.createBitmap(bitmapImage, 0, 0, bitmapImage.getWidth(), bitmapImage.getHeight(), mat, true);
+
+                            userImageUri = data.getData();
+                            if (bitmapImage != null) {
+                                try {
+                                    authManager.setOrginalBitmap(null);
+                                    authManager.setOrginalBitmap(bitmapImage);
+                                    Intent intent = new Intent(ProfileView.this, CropView.class);
+                                    intent.putExtra("from", "fromgallery");
+                                    intent.putExtra("uri", userImageUri.toString());
+                                    startActivityForResult(intent, Constants.CROP_PICTURE);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+
+                  /*      pick image from gallery    */
+
+
+                                          /*Bitmap resized1;
+                                          if (bitmapImage.getWidth() >= bitmapImage.getHeight()) {
+
+                                                resized1 = Bitmap.createBitmap(
+                                                                                      bitmapImage,
+                                                                                      bitmapImage.getWidth() / 2 - bitmapImage.getHeight() / 2,
+                                                                                      0,
+                                                                                      bitmapImage.getHeight(),
+                                                                                      bitmapImage.getHeight(), mat, true
+                                                );
+
+                                          } else {
+
+                                                resized1 = Bitmap.createBitmap(
+                                                                                      bitmapImage,
+                                                                                      0,
+                                                                                      bitmapImage.getHeight() / 2 - bitmapImage.getWidth() / 2,
+                                                                                      bitmapImage.getWidth(),
+                                                                                      bitmapImage.getWidth(), mat, true
+                                                );
+                                          }
+                                          bitmapImage.recycle();
+
+                                          profileimg.setImageBitmap(resized1);
+
+                                          userImageUri = data.getData();*/
+                            //  authManager.setUserbitmap(resized1);
+
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        break;
+
+
+                    case Constants.CROP_PICTURE:
+
+                        if (data.getStringExtra("retake").equalsIgnoreCase("camare")) {
+                            Intent intent1 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                            mImageCaptureUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE);
+                            intent1.putExtra("return-data", true);
+                            intent1.putExtra(MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
+                            startActivityForResult(intent1, Constants.CAMERA_REQUEST);
+                        } else if (data.getStringExtra("retake").equalsIgnoreCase("gallery")) {
+                            Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                            startActivityForResult(pickPhoto, Constants.SELECT_PICTURE);
+                        } else if (authManager.getmResizeBitmap() != null) {
+                            profileimg.setImageBitmap(authManager.getmResizeBitmap());
+
+                            authManager.setUserbitmap(authManager.getmResizeBitmap());
+                            authManager.setOrginalBitmap(null);
+                            authManager.setmResizeBitmap(null);
+
+                                     /*Bitmap imageBitmap = authManager.getmResizeBitmap();
+                                          authManager.setUserbitmap(authManager.getmResizeBitmap());
+                                          authManager.setOrginalBitmap(null);
+                                          authManager.setmResizeBitmap(null);*/
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+        } catch (Exception e) {
+        } catch (Error e) {
+        }
+    }
+
+    // display current date
+    @SuppressLint("NewApi")
+    public void setCurrentDateOnView() {
+        Calendar c = Calendar.getInstance();
+        year = c.get(Calendar.YEAR);
+        month = c.get(Calendar.MONTH);
+        day = c.get(Calendar.DAY_OF_MONTH);
+        mCurrentyear = year;
+        tvDate.setText("" + day);
+        tvMonth.setText("" + MONTHS[month]);
+        tvYear.setText("" + year);
+        dpResult.init(year, month, day, null);
+
+    }
+
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        switch (id) {
+            case DATE_DIALOG_ID:
+                // set date picker as current date
+                DatePickerDialog dialog = new DatePickerDialog(this, datePickerListener, year, month, day);
+                dialog.getDatePicker().setMaxDate(new Date().getTime());
+                return dialog;
+            //return new DatePickerDialog(this, datePickerListener, year, month, day);
+        }
+        return null;
+    }
+
+    public int getAge(int _year, int _month, int _day) {
+
+        GregorianCalendar cal = new GregorianCalendar();
+        int y, m, d, a;
+
+        y = cal.get(Calendar.YEAR);
+        m = cal.get(Calendar.MONTH);
+        d = cal.get(Calendar.DAY_OF_MONTH);
+        cal.set(_year, _month, _day);
+        a = y - cal.get(Calendar.YEAR);
+        if ((m < cal.get(Calendar.MONTH)) || ((m == cal.get(Calendar.MONTH)) && (d < cal.get(Calendar.DAY_OF_MONTH)))) {
+            --a;
+        }
+
+        return a > 0 ? a : 0;
+    }
+
+/* code for age prafull */
+
+    public boolean updateProfileValidation() {
+        if (fname.getText().toString().length() < 1) {
+            Utils.fromSignalDialog(this, AlertMessage.fname);
+            // Utils.showAlert(ProfileView.this, AlertMessage.fname);
+            return false;
+        } else if (lname.getText().toString().length() < 1) {
+            Utils.fromSignalDialog(this, AlertMessage.lname);
+            // Utils.showAlert(ProfileView.this, AlertMessage.lname);
+            return false;
+        } else if (email.getText().toString().length() < 1) {
+            Utils.fromSignalDialog(this, AlertMessage.emailid);
+            //   Utils.showAlert(ProfileView.this, AlertMessage.emailid);
+            return false;
+        } else if ((mCurrentyear - year) == 0) {
+            Utils.fromSignalDialog(this, AlertMessage.ageValid);
+            // Utils.showAlert(ProfileView.this, AlertMessage.ageValid);
+            return false;
+        }  // else if (periods_years.isLessThan(Years.years(17))) {
+        else if (age < 17) {
+            Utils.fromSignalDialog(this, AlertMessage.UDERAGEMSGII);
+            //   Utils.showAlert(ProfileView.this, AlertMessage.UDERAGEMSGII);
+            return false;
+        }
+        return true;
+    }
+
+    private Period calcDiff(Date startDate, Date endDate) {
+        DateTime START_DT = (startDate == null) ? null : new DateTime(startDate);
+        DateTime END_DT = (endDate == null) ? null : new DateTime(endDate);
+
+        Period period = new Period(START_DT, END_DT);
+
+        return period;
+    }
 
     private class LoadImage extends AsyncTask<String, Void, String> {
 
@@ -465,172 +1015,17 @@ public class ProfileView extends Activity implements View.OnClickListener, TextW
         }
     }
 
+    private class LoadContacts extends AsyncTask<Void, Void, Void> {
 
-    // get dialog for image . camera or gallery
-    public void imageDialog() {
-        String[] addPhoto;
-        addPhoto = new String[]{"Camera", "Gallery"};
-        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setTitle("Select Option");
+        @Override
+        protected Void doInBackground(Void... voids) {
+            new FetchContactFromPhone(ProfileView.this).readContacts();
+            return null;
+        }
 
-        dialog.setItems(addPhoto, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int id) {
-                if (id == 0) {
-                    Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                    cameraIntent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
-                    try {
-                        cameraIntent.putExtra("return-data", true);
-                        startActivityForResult(cameraIntent, Constants.CAMERA_REQUEST);
-                    } catch (ActivityNotFoundException e) {
-                    }
-                    dialog.dismiss();
-                } else if (id == 1) {
-
-                    Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(pickPhoto, Constants.SELECT_PICTURE);
-
-					/*Intent intent = new Intent();
-					intent.setType("image*//*");
-					intent.setAction(Intent.ACTION_GET_CONTENT);
-					startActivityForResult(Intent.createChooser(intent, "Select Picture"),Constants.SELECT_PICTURE);*/
-                    dialog.dismiss();
-                }
-            }
-        });
-
-        dialog.setNeutralButton("Cancel",
-                new android.content.DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        dialog.dismiss();
-                    }
-                }
-        );
-        dialog.show();
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        try {
-            super.onActivityResult(requestCode, resultCode, data);
-            try {
-                Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
-            } catch (Exception e) {
-            }
-
-            if (resultCode == RESULT_OK) {
-                switch (requestCode) {
-                    case Constants.CAMERA_REQUEST:
-                        mImageCaptureUri = data.getData();
-                        bitmapImage = Utils.decodeUri(mImageCaptureUri, ProfileView.this);
-                        profileimg.setImageBitmap(bitmapImage);
-                        break;
-                    case Constants.SELECT_PICTURE:
-                        mImageCaptureUri = data.getData();
-                        bitmapImage = Utils.decodeUri(mImageCaptureUri, ProfileView.this);
-                        profileimg.setImageBitmap(bitmapImage);
-                    default:
-                        break;
-                }
-            }
-        } catch (Exception e) {
-            Log.d(TAG, "" + e);
-        } catch (Error e) {
-            Log.d(TAG, "" + e);
+        @Override
+        protected void onPostExecute(Void voids) {
+            new FetchContactFromPhone(ProfileView.this).getClickerList(authManager.getPhoneNo(), authManager.getUsrToken(), 1);
         }
     }
-
-    // display current date
-    @SuppressLint("NewApi")
-    public void setCurrentDateOnView() {
-        final Calendar c = Calendar.getInstance();
-        year = c.get(Calendar.YEAR);
-        month = c.get(Calendar.MONTH);
-        day = c.get(Calendar.DAY_OF_MONTH);
-
-        mCurrentyear = year;
-
-        // String monthname=c.getDisplayName(Calendar.MONTH, Calendar.LONG,
-        // Locale.getDefault());
-        tvDate.setText("" + day);
-        tvMonth.setText("" + MONTHS[month]);
-        tvYear.setText("" + year);
-        dpResult.init(year, month, day, null);
-
-    }
-
-    @Override
-    protected Dialog onCreateDialog(int id) {
-        switch (id) {
-            case DATE_DIALOG_ID:
-                // set date picker as current date
-                return new DatePickerDialog(this, datePickerListener, year, month, day);
-        }
-        return null;
-    }
-
-    private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
-
-        public void onDateSet(DatePicker view, int selectedYear,
-                              int selectedMonth, int selectedDay) {
-            year = selectedYear;
-            month = selectedMonth;
-            day = selectedDay;
-            tvDate.setText("" + day);
-            tvMonth.setText("" + MONTHS[month]);
-            tvYear.setText("" + year);
-            dpResult.init(year, month, day, null);
-
-        }
-    };
-
-    public boolean updateProfileValidation() {
-        Log.e(TAG, "mCurrentyear" + mCurrentyear + "  year " + year);
-        if (fname.getText().toString().length() < 1) {
-            Utils.showAlert(ProfileView.this, AlertMessage.fname);
-            return false;
-        } else if (lname.getText().toString().length() < 1) {
-            Utils.showAlert(ProfileView.this, AlertMessage.lname);
-            return false;
-        } else if (email.getText().toString().length() < 1) {
-            Utils.showAlert(ProfileView.this, AlertMessage.emailid);
-            return false;
-        } else if ((mCurrentyear - year) == 0) {
-            Log.e(TAG, "mCurrentyear" + mCurrentyear + "  year " + year);
-            Utils.showAlert(ProfileView.this, AlertMessage.ageValid);
-            return false;
-        } else if ((mCurrentyear - year) <= 17) {
-            Log.e(TAG, "mCurrentyear" + mCurrentyear + "  year " + year);
-            Utils.showAlert(ProfileView.this, AlertMessage.UDERAGEMSGII);
-            return false;
-        }
-        return true;
-    }
-
-    public void alertDialog(String msgStrI, String msgStrII) {
-        dialog = new Dialog(ProfileView.this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.getWindow().setBackgroundDrawableResource(
-                android.R.color.transparent);
-        dialog.setContentView(R.layout.alert_nocheck);
-
-        TextView msgI = (TextView) dialog.findViewById(R.id.alert_msgI);
-        TextView msgII = (TextView) dialog.findViewById(R.id.alert_msgII);
-        msgI.setText(msgStrI);
-        msgII.setText(msgStrII);
-
-        // dialog.setCancelable(true);
-        Button dismiss = (Button) dialog.findViewById(R.id.coolio);
-        dismiss.setBackgroundResource(R.drawable.try_again);
-        dismiss.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
-    }
-
 }

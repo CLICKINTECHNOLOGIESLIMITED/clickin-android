@@ -1,11 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="2" >
-
-    <dataSet config="main" >
-        <source path="/home/monika/gitcodeClickin/slider_library/src/main/assets" />
-    </dataSet>
-    <dataSet config="release" >
-        <source path="/home/monika/gitcodeClickin/slider_library/src/release/assets" />
-    </dataSet>
-
-</merger>
+<merger version="3"><dataSet config="main"><source path="/monika/latestworkingCLickin/slider_library/src/main/assets"><file name="crashlytics-build.properties" path="/monika/latestworkingCLickin/slider_library/src/main/assets/crashlytics-build.properties"/></source></dataSet><dataSet config="release"><source path="/monika/latestworkingCLickin/slider_library/src/release/assets"/></dataSet></merger>

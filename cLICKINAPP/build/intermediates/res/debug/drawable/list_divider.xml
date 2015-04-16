@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <inset xmlns:android="http://schemas.android.com/apk/res/android"
     android:insetLeft="5dp"
-    android:insetRight="10dp" >
+    android:insetRight="10dp">
 
     <shape>
         <solid android:color="@color/appclr" />
 
-        <corners android:radius="2.0dip" />
+        <corners android:radius="1.0dip" />
     </shape>
 
-</inset><!-- From: file:/home/monika/gitcodeClickin/cLICKINAPP/src/main/res/drawable/list_divider.xml -->
+</inset><!-- From: file:/monika/latestworkingCLickin/cLICKINAPP/src/main/res/drawable/list_divider.xml -->

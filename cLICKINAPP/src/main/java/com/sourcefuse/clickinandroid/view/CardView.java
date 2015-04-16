@@ -2,12 +2,11 @@ package com.sourcefuse.clickinandroid.view;
 
 import android.annotation.TargetApi;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.HorizontalScrollView;
@@ -24,6 +23,8 @@ import com.sourcefuse.clickinandroid.model.ChatManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.bean.TabBean;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
+import com.sourcefuse.clickinandroid.utils.Constants;
+import com.sourcefuse.clickinandroid.utils.UnCaughtExceptionHandler;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
 
@@ -35,19 +36,15 @@ import de.greenrobot.event.EventBus;
 
 
 @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
-public class CardView extends FragmentActivity{
+public class CardView extends FragmentActivity {
     private static final String TAG = CardView.class.getSimpleName();
-    private ViewPager viewPager;
-    //private TabsPagerAdapter mAdapter;
-    //private ActionBar actionBar;
-
-    private ImageView mBackButton;
     public TabHost tabHost;
-    public TextView text ;
-    private ChatManager chatManager;
-    private AuthManager authManager;
+    public TextView text;
+    TabWidget tabWidget;
+    String card;
+    private ImageView mBackButton;
     private TabBean bean;
-    String card ;
+    private Typeface typeface, typefaceBold;
 
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     @Override
@@ -55,43 +52,30 @@ public class CardView extends FragmentActivity{
 
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+//code- to handle uncaught exception
+        if (Utils.mStartExceptionTrack)
+        Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
         bean = new TabBean();
 
-        chatManager = ModelManager.getInstance().getChatManager();
-        authManager = ModelManager.getInstance().getAuthorizationManager();
-        chatManager.fetchCards(authManager.getPhoneNo(),authManager.getUsrToken());
+        typeface = Typeface.createFromAsset(CardView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
+        typefaceBold = Typeface.createFromAsset(CardView.this.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_BOLD);
+
+        Utils.launchBarDialog(CardView.this);
+        ModelManager.getInstance().getChatManager().fetchCards(ModelManager.getInstance().getAuthorizationManager().getPhoneNo(),
+                ModelManager.getInstance().getAuthorizationManager().getUsrToken());
+
 
     }
 
-    //    public class MyTabFactory implements TabHost.TabContentFactory {
-//
-//        Context context;
-//        public MyTabFactory(Context context) {
-//            this.context = context;
-//        }
-//
-//        public View createTabContent(String tag) {
-//            View v = new View(context);
-//            v.setMinimumWidth(0);
-//            v.setMinimumHeight(0);
-//            return v;
-//        }
-//    }
-    private  void  setView(){
+
+    private void setView() {
         setContentView(R.layout.view_tabhost2);
-
         mBackButton = (ImageView) findViewById(R.id.iv_back_trade);
-     //   viewPager = (ViewPager) findViewById(R.id.pager);
-        //actionBar = getActionBar();
+        final LinearLayout l = (LinearLayout) findViewById(R.id.Linear_layout);
+        tabWidget = (TabWidget) findViewById(android.R.id.tabs);
 
-//        tabadapter = new TabsPagerAdapter1(getApplicationContext(),getSupportFragmentManager(),card);
-//        viewPager.setAdapter(tabadapter);
-//        viewPager.setCurrentItem(0);
-
-
-        final LinearLayout l = (LinearLayout)findViewById(R.id.Linear_layout);
-        final TabWidget tabWidget = (TabWidget)findViewById(android.R.id.tabs);
+        ((TextView) findViewById(R.id.textView_clicks_tabhost)).setText(ModelManager.getInstance().getAuthorizationManager().ourClicks);//akshit code
 
         final HorizontalScrollView horizontalScrollView = (HorizontalScrollView) findViewById(R.id.H_view);
         text = (TextView) findViewById(R.id.Layout_Tab_2);
@@ -104,166 +88,133 @@ public class CardView extends FragmentActivity{
         });
 
 
-
-        tabHost = (TabHost)findViewById(R.id.tabHost);
+// akshit code for adding tabs from tab array
+        tabHost = (TabHost) findViewById(R.id.tabHost);
         tabHost.setup();
         // Adding Tabs
-        for (int i =0;i<chatManager.tabArray.size(); i++) {
-
-            //actionBar.addTab(actionBar.newTab().setText(chatManager.tabArray.get(i).getCategoriesName())
-            //      .setTabListener(this));
-
+        for (int i = 0; i < ModelManager.getInstance().getChatManager().tabArray.size(); i++) {
             TabHost.TabSpec spec1 = tabHost.newTabSpec("TAB" + i);
             spec1.setContent(R.id.Layout_Tab_2);
-            spec1.setIndicator(chatManager.tabArray.get(i).getCategoriesName());
+            spec1.setIndicator(ModelManager.getInstance().getChatManager().tabArray.get(i).getCategoriesName());
+
 
             tabHost.addTab(spec1);
             tabHost.setCurrentTab(0);
             tabHost.getTabWidget().setStripEnabled(false);
-//            Typeface localTypeface1 = Typeface.createFromAsset(getAssets(),
-//                    "fonts/AvenirNextLTPro-BoldCn_0.otf");
+            setabColor();
             settabStartup();
-            //setTbWidth();
-           // setTabTextSize();
 
-
-           setabColor();
         }
 
 
-
-
-
+//akshit code On tab change listner..
         tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
             public void onTabChanged(String s) {
 
                 int pos = tabHost.getCurrentTab();
-                bean.setTab_content(chatManager.tabArray.get(pos).getCategoriesName());
+                bean.setTab_content(ModelManager.getInstance().getChatManager().tabArray.get(pos).getCategoriesName());
                 card = bean.getTab_content();
+                //To track through mixPanel.
+                //Card Category Selected.
+                Utils.trackMixpanel(CardView.this, "CategorySelected", card, "RPageTradeButtonClicked", false);
+
                 tabHost.getTabWidget().getChildAt(pos);
-                //tabHost.getCurrentTabView().setBackgroundResource();
-               // tabdrawable();
-                 setTabTextColor();
-               if(card.equals("Custom")){
+                setTabindicator();
+                setTabTextColor();
+                setTabFont();
+                if (card.equals("Custom")) {
 
-                   FragmentManager fm = getSupportFragmentManager();
-                   FragmentCustomTab cfm = new FragmentCustomTab();
-                   fm.beginTransaction().replace(R.id.framelayout,cfm ).commit();
+                    FragmentManager fm = getSupportFragmentManager();
+                    FragmentCustomTab cfm = new FragmentCustomTab();
+                    fm.beginTransaction().replace(R.id.framelayout, cfm).commit();
 
-               }else {
-                   FragmentManager fm = getSupportFragmentManager();
-//                android.support.v4.app.FragmentTransaction transaction = fm.beginTransaction();
-                   PartyCardFragment pf = new PartyCardFragment();
-                   fm.beginTransaction().replace(R.id.framelayout, pf).commit();
-               }
+                } else {
+                    FragmentManager fm = getSupportFragmentManager();
+//                  android.support.v4.app.FragmentTransaction transaction = fm.beginTransaction();
+                    PartyCardFragment pf = new PartyCardFragment();
+                    fm.beginTransaction().replace(R.id.framelayout, pf).commit();
+                }
 
             }
 
 
         });
-
-
-        /**
-         * on swiping the viewpager make respective tab selected
-//         * */
-//        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-//
-//            @Override
-//            public void onPageSelected(int pos) {
-//                // on changing the page
-//                // make respected tab selected
-//                // main.scrollTo(l.getLeft(),0);
-//
-//                tabHost.setCurrentTab(pos);
-//            }
-//
-//            @Override
-//            public void onPageScrolled(int pos, float positionOffset, int positionOffsetPixels) {
-//
-//                View tabview = tabHost.getTabWidget().getChildAt(pos);
-//                if(tabview!=null){
-//                    final int width = horizontalScrollView.getWidth();
-//                    final int scrollposition = tabview.getLeft()-(width - tabview.getWidth())/2 ;
-//                    horizontalScrollView.smoothScrollTo(scrollposition, 0);
-//                }
-//                else{
-//                    horizontalScrollView.scrollBy(positionOffsetPixels, 0);
-//
-//                }
-//
-//            }
-//            @Override
-//            public void onPageScrollStateChanged(int arg0) {
-//            }
-//        });
-
 
         mBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 finish();
-                overridePendingTransition(R.anim.slide_in_finish_up,R.anim.slide_out_finish_up);
+                overridePendingTransition(0, R.anim.slide_out_finish_up);
             }
         });
     }
 
 
-//    private void setTbWidth() {
-//        for(int i=0;i<tabHost.getTabWidget().getChildCount();i++)
-//        {
-//            tabHost.getTabWidget().getChildAt(i).getLayoutParams().width = 145 ;
-//
-//        }
-//    }
+    // akshit code for setting tab background color on selection
+    private void setTabTextColor() {
 
-    private void tabdrawable(){
 
         for (int i = 0; i < tabHost.getTabWidget().getChildCount(); i++) {
             TextView tv = (TextView) tabHost.getTabWidget().getChildAt(i).findViewById(android.R.id.title);
-
+            tv.setTextColor(Color.parseColor("#999999"));
         }
 
         TextView tv = (TextView) tabHost.getCurrentTabView().findViewById(android.R.id.title);
-        tv.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.tab_underline_selector);
+        tv.setTextColor(Color.parseColor("#39cad4"));
+
+        // tv.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.tabbottomline);
+
+    }
+
+    // akshit code for setting tab underline
+    private void setTabindicator() {
+
+        int pos = tabHost.getCurrentTab();
+        for (int i = 0; i < tabHost.getTabWidget().getChildCount(); i++) {
+            View tab = tabWidget.getChildAt(i);
+            tab.setBackgroundDrawable(getResources().getDrawable(R.drawable.tab_bottom_line_unselected));
+
+        }
+        View tab = tabWidget.getChildAt(pos);
+        tab.setBackgroundDrawable(getResources().getDrawable(R.drawable.tab_underline));
 
 
     }
-    private void setTabTextColor(){
 
-
-        for (int i = 0; i < tabHost.getTabWidget().getChildCount(); i++) {
-                    TextView tv = (TextView) tabHost.getTabWidget().getChildAt(i).findViewById(android.R.id.title);
-                    tv.setTextColor(Color.parseColor("#999999"));
-                }
-
-                    TextView tv = (TextView) tabHost.getCurrentTabView().findViewById(android.R.id.title);
-                    tv.setTextColor(Color.parseColor("#39cad4"));
-
-                   // tv.setCompoundDrawablesWithIntrinsicBounds(0,0,0,R.drawable.tabbottomline);
-
-
-
-        }
+    //akshit code for setting tab color
     private void setabColor() {
 
-        for(int i=0;i<tabHost.getTabWidget().getChildCount();i++)
-        {
+        for (int i = 0; i < tabHost.getTabWidget().getChildCount(); i++) {
             tabHost.getTabWidget().getChildAt(i).setBackgroundColor(Color.parseColor("#f4f4f4"));
         }
+    }
 
+    //akshit to set Tabfont on select
+    private void setTabFont() {
+
+        for (int i = 0; i < tabHost.getTabWidget().getChildCount(); i++) {
+            TextView tv = (TextView) tabHost.getTabWidget().getChildAt(i).findViewById(android.R.id.title);
+            tv.setTypeface(typeface);
+        }
+
+        TextView tv = (TextView) tabHost.getCurrentTabView().findViewById(android.R.id.title);
+        tv.setTypeface(typefaceBold);
 
     }
 
+    //akshit code for setting first tab selected by default
     private void settabStartup() {
-        //tabHost.getTabWidget().setBackgroundDrawable( getResources().getDrawable(R.drawable.underline));
         setTabTextColor();
+        setTabFont();
         TextView tv = (TextView) tabHost.getCurrentTabView().findViewById(android.R.id.title); //for Selected Tab
         tv.setTextColor(Color.parseColor("#40e0d0"));
-        bean.setTab_content(chatManager.tabArray.get(0).getCategoriesName());
+        bean.setTab_content(ModelManager.getInstance().getChatManager().tabArray.get(0).getCategoriesName());
         FragmentManager fm = getSupportFragmentManager();
         PartyCardFragment pf = new PartyCardFragment();
-        fm.beginTransaction().replace(R.id.framelayout,pf).commit();
+        fm.beginTransaction().replace(R.id.framelayout, pf).commit();
+
+        setTabindicator();
     }
 
     @Override
@@ -288,19 +239,25 @@ public class CardView extends FragmentActivity{
 
 
     public void onEventMainThread(String getMsg) {
-        Log.d(TAG, "onEventMainThread->" + getMsg);
-        authManager = ModelManager.getInstance().getAuthorizationManager();
         if (getMsg.equalsIgnoreCase("FetchCard True")) {
             setView();
+            Utils.dismissBarDialog();
         } else if (getMsg.equalsIgnoreCase("FetchCard False")) {
             Utils.dismissBarDialog();
 
         } else if (getMsg.equalsIgnoreCase("FetchCard Network Error")) {
             Utils.dismissBarDialog();
-            Utils.showAlert(CardView.this, AlertMessage.connectionError);
+            Utils.fromSignalDialog(this, AlertMessage.connectionError);
+            //Utils.showAlert(CardView.this, AlertMessage.connectionError);
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        overridePendingTransition(0, R.anim.slide_out_finish_up);
+    }
 }
 
 

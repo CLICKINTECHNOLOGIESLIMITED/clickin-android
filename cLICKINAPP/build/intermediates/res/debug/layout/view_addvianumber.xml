@@ -1,14 +1,55 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:geekui="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rl_addvia_no_action"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/white_pattern_bg">
+    android:background="@drawable/enterdigitmainbg">
+
+    <!--<LinearLayout-->
+    <!--android:id="@+id/iv_topicon"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_centerHorizontal="true"-->
+    <!--android:background="@drawable/c_header_bg"-->
+    <!--android:orientation="vertical"-->
+    <!--android:weightSum="2">-->
+
+    <!--&lt;!&ndash;<com.sourcefuse.clickinandroid.utils.ClickInTextView&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_centerHorizontal="true"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_gravity="center"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_marginLeft="2dp"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_weight="1"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:gravity="bottom"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:text="ADD SOMEONE"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:textColor="@color/screen_header"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:textSize="43sp"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:textStyle="bold"&ndash;&gt;-->
+    <!--&lt;!&ndash;geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />&ndash;&gt;-->
+
+    <!--&lt;!&ndash;<com.sourcefuse.clickinandroid.utils.ClickInTextView&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_centerHorizontal="true"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_gravity="top"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_marginTop="-20dp"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_weight="1"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:gravity="top"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:paddingLeft="28dp"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:text="TO CLICK WITH"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:textColor="@color/screen_header"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:textSize="43sp"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:textStyle="bold"&ndash;&gt;-->
+    <!--&lt;!&ndash;geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />&ndash;&gt;-->
+    <!--</>-->
 
     <ImageView
         android:id="@+id/iv_topicon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/add_someone" />
+        android:background="@drawable/addtosomeone" />
 
     <RelativeLayout
         android:id="@+id/linearLayout1"
@@ -18,53 +59,80 @@
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="18dp"
         android:background="@drawable/white_border"
         android:padding="15dp">
 
-        <TextView
-            android:id="@+id/edt_text_cntry_cd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="2dp"
-            android:text="@string/txt_cntrycode"
-            android:textColor="@color/topshade"
-            android:textSize="15sp"></TextView>
 
         <LinearLayout
+
             android:id="@+id/ll_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/edt_text_cntry_cd"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:weightSum="2">
 
-            <EditText
-                android:id="@+id/edt_cntry_cd"
-                android:layout_width="50dp"
-                android:layout_height="45dp"
-                android:background="@color/dark_gray"
-                android:ems="10"
-                android:maxLength="3"
-                android:padding="10dp"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:textStyle="bold"></EditText>
+            <LinearLayout
+                android:layout_width="80dp"
+                android:layout_height="fill_parent"
+                android:layout_marginTop="5dp"
+                android:orientation="vertical"
+                android:weightSum="2">
 
-            <EditText
-                android:id="@+id/edt_get_ph_no"
-                android:layout_width="wrap_content"
-                android:layout_height="45dp"
-                android:layout_marginLeft="4dp"
-                android:background="@color/dark_gray"
-                android:ems="10"
-                android:inputType="phone"
-                android:padding="10dp"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:textStyle="bold">
+                <TextView
+                    android:id="@+id/edt_text_cntry_cd"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="2dp"
+                    android:singleLine="true"
+                    android:text="@string/txt_cntrycode"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="10sp"></TextView>
 
-                <requestFocus />
-            </EditText>
+
+                <com.sourcefuse.clickinandroid.utils.ClickInEditBox
+                    android:id="@+id/edt_cntry_cd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:background="@color/background_grey"
+                    android:ems="4"
+                    android:inputType="phone"
+                    android:maxLines="1"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginTop="21.2dp"
+                android:orientation="horizontal">
+
+                <com.sourcefuse.clickinandroid.utils.ClickInEditBox
+                    android:id="@+id/edt_get_ph_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:layout_marginLeft="4dp"
+                    android:background="@color/background_grey"
+                    android:ems="10"
+                    android:hint="Phone Number"
+                    android:inputType="phone"
+                    android:maxLines="1"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/dark_gray"
+                    android:textSize="16sp"
+                    android:textStyle="bold">
+
+                    <requestFocus />
+                </com.sourcefuse.clickinandroid.utils.ClickInEditBox>
+            </LinearLayout>
+
+
         </LinearLayout>
 
         <RelativeLayout
@@ -81,19 +149,38 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/get_click_in_dark" />
+
+                android:background="@drawable/c_getclicin_deactive" />
         </RelativeLayout>
     </RelativeLayout>
 
-    <Button
-        android:id="@+id/btn_go_back_num"
+    <RelativeLayout
+        android:id="@+id/rl_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/c_back_footer"
-        android:text="BACK"
-        android:textColor="@color/white"
-        android:textStyle="bold" />
+        android:layout_marginTop="400dp"
+        android:background="@drawable/c_back_footer">
 
-</RelativeLayout><!-- From: file:/home/monika/gitcodeClickin/cLICKINAPP/src/main/res/layout/view_addvianumber.xml -->
+        <TextView
+            android:id="@+id/btn_go_back_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/c_back"
+            android:gravity="bottom" />
+        <!--<Button-->
+        <!--android:id="@+id/btn_go_back_num"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"       -->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:background="@drawable/c_back"-->
+        <!--android:layout_marginTop="5dp"-->
+        <!--android:gravity="center"-->
+        <!---->
+        <!--android:textColor="@color/white"-->
+        <!--android:textStyle="bold" />-->
+    </RelativeLayout>
+</RelativeLayout><!-- From: file:/monika/latestworkingCLickin/cLICKINAPP/src/main/res/layout/view_addvianumber.xml -->

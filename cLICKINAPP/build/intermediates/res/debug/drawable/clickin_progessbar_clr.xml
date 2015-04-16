@@ -3,16 +3,16 @@
     android:fromDegrees="0"
     android:pivotX="50%"
     android:pivotY="50%"
-    android:toDegrees="360" >
+    android:toDegrees="360">
 
     <shape
         android:innerRadiusRatio="4"
         android:shape="ring"
         android:thicknessRatio="10"
-        android:useLevel="false" >
+        android:useLevel="false">
         <size
-            android:height="30dip"
-            android:width="30dip" />
+            android:width="30dip"
+            android:height="30dip" />
 
         <gradient
             android:angle="0"
@@ -22,4 +22,4 @@
             android:useLevel="false" />
     </shape>
 
-</rotate><!-- From: file:/home/monika/gitcodeClickin/cLICKINAPP/src/main/res/drawable/clickin_progessbar_clr.xml -->
+</rotate><!-- From: file:/monika/latestworkingCLickin/cLICKINAPP/src/main/res/drawable/clickin_progessbar_clr.xml -->

@@ -8,6 +8,19 @@ public class CardBean {
 
     private String categoriesName;
     private String categoriesActive;
+    private String card_Id;
+    private String cardUrl;
+    private String cardDescription;
+    private String cardTitle;
+    private String cardActive;
+
+    public String getCard_Id() {
+        return card_Id;
+    }
+
+    public void setCard_Id(String card_Id) {
+        this.card_Id = card_Id;
+    }
 
     public String getCategoriesName() {
         return categoriesName;
@@ -24,12 +37,6 @@ public class CardBean {
     public void setCategoriesActive(String categoriesActive) {
         this.categoriesActive = categoriesActive;
     }
-
-
-    private String cardUrl;
-    private String cardDescription;
-    private String cardTitle;
-    private String cardActive;
 
     public String getCardDescription() {
         return cardDescription;

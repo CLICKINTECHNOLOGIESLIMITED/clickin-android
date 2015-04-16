@@ -1,10 +1,11 @@
 package com.sourcefuse.clickinandroid.model;
 
-import com.loopj.android.http.AsyncHttpClient;
+import android.content.Context;
+
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.sourcefuse.clickinandroid.model.bean.NotificationBean;
 import com.sourcefuse.clickinandroid.utils.APIs;
-import com.sourcefuse.clickinandroid.utils.Log;
+import com.sourcefuse.clickinandroid.utils.Utils;
 
 import org.apache.http.entity.StringEntity;
 import org.apache.http.message.BasicHeader;
@@ -18,19 +19,18 @@ import java.util.ArrayList;
 import de.greenrobot.event.EventBus;
 
 
-
-
 /**
  * Created by mukesh on 3/7/14.
  */
 public class ClickInNotificationManager implements NotificationManagerI {
     StringEntity se = null;
-    AsyncHttpClient client;
 
     private ArrayList<NotificationBean> notificationArray = null;
     private NotificationBean ntificationBeanList = null;
+
     @Override
-    public void getNotification(String lastNotificationId, String phone,String usertoken) {
+    public void getNotification(Context context, final String lastNotificationId, String phone, String usertoken) {
+
 
         JSONObject userInputDetails = new JSONObject();
         try {
@@ -38,37 +38,46 @@ public class ClickInNotificationManager implements NotificationManagerI {
             userInputDetails.put("user_token", usertoken);
             userInputDetails.put("last_notification_id", lastNotificationId);
 
-            client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
-            se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,"application/json"));
-            Log.e("Input Data", "FETCHNOTIFICATIONS-->" + userInputDetails);
+            se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        client.post(null, APIs.FETCHNOTIFICATIONS, se, "application/json",
+        ClickinRestClient.post(context, APIs.FETCHNOTIFICATIONS, se, "application/json",
                 new JsonHttpResponseHandler() {
 
                     @Override
                     public void onFailure(int statusCode, Throwable e,
                                           JSONObject errorResponse) {
                         super.onFailure(statusCode, e, errorResponse);
-                        if (errorResponse != null) {
-                            Log.e("errorResponse", "->" + errorResponse);
-                            EventBus.getDefault().post("Notification false");
-                        } else {
-                            EventBus.getDefault().post("Notification error");
+
+                        try {
+                            if (errorResponse != null && errorResponse.has("message")) {
+                                if (errorResponse.getString("message").equalsIgnoreCase("User don't have any notification.")) {
+//                                    notificationData.clear(); // to clear notification list as no notification is available
+                                    EventBus.getDefault().post("Notification error");
+                                }
+                            }
+                            if (errorResponse != null) {
+
+                                EventBus.getDefault().post("Notification false");
+                            }
+                        } catch (JSONException e1) {
+                            e1.printStackTrace();
                         }
+
+
                     }
 
                     @Override
-                    public void onSuccess(int statusCode,
-                                          org.apache.http.Header[] headers,
-                                          JSONObject response) {
+                    public void onSuccess(int statusCode, org.apache.http.Header[] headers, JSONObject response) {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            System.out.println("response Notification ->" + response);
+
                             state = response.getBoolean("success");
+//                            notificationData.clear(); // to clear notification list as we featch all data
                             if (state) {
 
                                 JSONArray list = response.getJSONArray("notificationArray");
@@ -78,16 +87,47 @@ public class ClickInNotificationManager implements NotificationManagerI {
                                     JSONObject data = list.getJSONObject(i);
                                     ntificationBeanList.setNotificationMsg(data.getString("notification_msg"));
                                     ntificationBeanList.setNotificationType(data.getString("type"));
+                                    ntificationBeanList._id = data.getString("_id");
+                                    ntificationBeanList.mUser_id = data.getString("user_id");
+                                    ntificationBeanList.setIs_read(data.getString("read"));
+                                    if (data.getString("read").equalsIgnoreCase("false")) {
+                                        int i1 = ModelManager.getInstance().getAuthorizationManager().getNotificationCounter();
+                                        ModelManager.getInstance().getAuthorizationManager().setNotificationCounter(i1 + 1);
+                                    }
+                                    if (data.has("newsfeed_id"))
+                                        ntificationBeanList.newsfeed_id = data.getString("newsfeed_id");
+                                    if (data.has("update_user_id"))
+                                        ntificationBeanList.update_user_id = data.getString("update_user_id");
 
                                     notificationArray.add(ntificationBeanList);
                                 }
 
-                                notificationData.addAll(notificationArray);
+
+                                if (Utils.isEmptyString(lastNotificationId)) {
+                                    if (notificationData.size() > 0) {
+                                        for (int j = 0; j < notificationData.size(); j++) {  // compare last notification with new one to get only
+                                            for (int i = 0; i < notificationArray.size(); i++) {
+                                                if (notificationArray.get(i)._id.equalsIgnoreCase(notificationData.get(j)._id)) {
+                                                    notificationArray.remove(i);
+                                                }
+                                            }
+                                        }
+
+                                        notificationData.addAll(0, notificationArray); // add new notification in notification list at top.
+                                    } else {
+                                        notificationData.addAll(notificationArray);
+                                    }
 
 
+                                } else {
+
+                                    notificationData.addAll(notificationArray);
+
+                                }
 
 
                                 EventBus.getDefault().post("Notification true");
+                                EventBus.getDefault().post("update Counter");
 
                             }
 
@@ -97,7 +137,9 @@ public class ClickInNotificationManager implements NotificationManagerI {
 
                     }
 
-                });
+                }
+        );
+
 
     }
 

@@ -19,6 +19,7 @@ public class CurrentClickerBean {
     public void setFollow(int follow) {
         this.follow = follow;
     }
+
     public String getName() {
         return name;
     }
@@ -42,6 +43,7 @@ public class CurrentClickerBean {
     public void setGetClickerPhone(String getClickerPhone) {
         this.getClickerPhone = getClickerPhone;
     }
+
     public int getExists() {
         return exists;
     }
@@ -49,8 +51,6 @@ public class CurrentClickerBean {
     public void setExists(int exists) {
         this.exists = exists;
     }
-
-
 
 
 }

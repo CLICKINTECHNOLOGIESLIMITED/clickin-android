@@ -10,12 +10,9 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.view.KeyEvent;
 import android.view.Window;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -23,112 +20,93 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.sourcefuse.clickinandroid.utils.Log;
+import com.sourcefuse.clickinandroid.utils.UnCaughtExceptionHandler;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by mukesh on 17/7/14.
  */
 
-    public class MapView extends FragmentActivity implements LocationListener {
+public class MapView extends FragmentActivity implements LocationListener {
     private static final String TAG = ChatRecordView.class.getSimpleName();
+    LatLng latLng;
+    String coordinates = null;
     private GoogleMap googleMap;
     private EditText searchLocation;
-    MarkerOptions markerOptions;
-    LatLng latLng;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.view_mapview);
 
-      //  http://maps.google.com/maps/api/staticmap?center=28.6189112,77.3786174&markers=color%3ared|color%3ared|label%3aA|28.6189112,77.3786174&zoom=15&size=500x180&sensor=true
-        //http://maps.google.com/maps/api/staticmap?center=28.6189112,77.3786174&zoom=15&size=500x180&sensor=true
+        //code- to handle uncaught exception
+        if (Utils.mStartExceptionTrack)
+            Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
+
+        setContentView(R.layout.view_mapview);
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            coordinates = bundle.getString("coordinates");
+            String args[] = coordinates.split(",", 2);
+            Double lat = Double.parseDouble(args[0]);
+            if (lat != 0.0)
+                new Geo().execute(coordinates);
+
+
+        }
+
         searchLocation = (EditText) findViewById(R.id.edt_location_search);
         searchLocation.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
-//            map =  ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
-        // Getting Google Play availability status
+
         int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getBaseContext());
-
-        // Showing status
-        if (status != ConnectionResult.SUCCESS) { // Google Play Services are not available
-
+        if (status != ConnectionResult.SUCCESS) {
             int requestCode = 10;
             Dialog dialog = GooglePlayServicesUtil.getErrorDialog(status, this, requestCode);
             dialog.show();
-
-        } else { // Google Play Services are available
-
-            // Getting reference to the SupportMapFragment of activity_main.xml
+        } else {
             SupportMapFragment fm = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-
-            // Getting GoogleMap object from the fragment
             googleMap = fm.getMap();
 
-            // Enabling MyLocation Layer of Google Map
-            googleMap.setMyLocationEnabled(true);
+            if (coordinates == null) {
+                // Enabling MyLocation Layer of Google Map
+                googleMap.setMyLocationEnabled(true);
+                LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+                Criteria criteria = new Criteria();
+                String provider = locationManager.getBestProvider(criteria, true);
+                Location location = locationManager.getLastKnownLocation(provider);
+                if (location != null) {
+                    onLocationChanged(location);
+                }
+                locationManager.requestLocationUpdates(provider, 20000, 0, this);
+            } else {
 
-            // Getting LocationManager object from System Service LOCATION_SERVICE
-            LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+                double latitude = Double.parseDouble(coordinates.substring(0, coordinates.indexOf(",")));
+                double longitude = Double.parseDouble(coordinates.substring(coordinates.indexOf(",") + 1));
+                LatLng latLng = new LatLng(latitude, longitude);
+                googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                googleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+                Marker markerOptions = googleMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).draggable(true).visible(true));
 
-            // Creating a criteria object to retrieve provider
-            Criteria criteria = new Criteria();
-
-            // Getting the name of the best provider
-            String provider = locationManager.getBestProvider(criteria, true);
-
-            // Getting Current Location
-            Location location = locationManager.getLastKnownLocation(provider);
-
-            if (location != null) {
-                onLocationChanged(location);
             }
-            locationManager.requestLocationUpdates(provider, 20000, 0, this);
         }
 
-        searchLocation.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                   if(!Utils.isEmptyString(searchLocation.getText().toString())){
-                       new GeocoderTask().execute(searchLocation.getText().toString());
-                   }
-                    return true;
-                }
-                return false;
-            }
-        });
 
     }
 
     @Override
     public void onLocationChanged(Location location) {
-
-
-        // Getting latitude of the current location
         double latitude = location.getLatitude();
-
-        // Getting longitude of the current location
         double longitude = location.getLongitude();
-
-        // Creating a LatLng object for the current location
         LatLng latLng = new LatLng(latitude, longitude);
-
-        // Showing the current location in Google Map
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-
-        // Zoom in the Google Map
         googleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
-
-        // Setting latitude and longitude in the TextView tv_location
-        Log.e(TAG, "Latitude:" + latitude + ", Longitude:" + longitude);
-
-
     }
 
     @Override
@@ -147,86 +125,57 @@ import java.util.List;
     }
 
 
-    // An AsyncTask class for accessing the GeoCoding Web Service
-    private class GeocoderTask extends AsyncTask<String, Void, List<Address>> {
+    private class Geo extends AsyncTask<String, Void, List<Address>> {
 
         @Override
         protected List<Address> doInBackground(String... locationName) {
-            // Creating an instance of Geocoder class
-            Geocoder geocoder = new Geocoder(getBaseContext());
+
+            Geocoder geocoder = new Geocoder(getBaseContext(), Locale.getDefault());
             List<Address> addresses = null;
 
+
             try {
-                // Getting a maximum of 3 Address that matches the input text
-                addresses = geocoder.getFromLocationName(locationName[0], 3);
+                String arg[] = locationName[0].split(",", 2);
+                final Double lat = Double.parseDouble(arg[0]);
+                final Double lng = Double.parseDouble(arg[1]);
+
+                addresses = geocoder.getFromLocation(lat, lng, 1);
             } catch (IOException e) {
                 e.printStackTrace();
+
             }
             return addresses;
         }
 
         @Override
-        protected void onPostExecute(List<Address> addresses) {
+        protected void onPostExecute(final List<Address> addresses) {
 
-            if (addresses == null || addresses.size() == 0) {
-                Toast.makeText(getBaseContext(), "No Location found", Toast.LENGTH_SHORT).show();
+
+            for (Address address : addresses) {
+
+                LatLng temp = new LatLng(address.getLatitude(), address.getLongitude());
+
+                String location = null;
+
+
+                if (!Utils.isEmptyString(address.getAddressLine(0)))
+                    location = address.getAddressLine(0);
+                if (!Utils.isEmptyString(address.getAddressLine(1)))
+                    location = location + " " + address.getAddressLine(1);
+
+
+                if (location.contains("null"))
+                    location = location.replaceAll("null", "");
+
+                EditText editText = (EditText) findViewById(R.id.edt_location_search);
+                editText.setText("" + location);
             }
 
-            // Clears all the existing markers on the map
-            googleMap.clear();
 
-            // Adding Markers on Google Map for each matching address
-            for (int i = 0; i < addresses.size(); i++) {
-
-                Address address = (Address) addresses.get(i);
-
-                // Creating an instance of GeoPoint, to display in Google Map
-                latLng = new LatLng(address.getLatitude(), address.getLongitude());
-
-                String addressText = String.format("%s, %s",
-                        address.getMaxAddressLineIndex() > 0 ? address.getAddressLine(0) : "",
-                        address.getCountryName());
-
-                markerOptions = new MarkerOptions();
-                markerOptions.position(latLng);
-                markerOptions.title(addressText);
-
-                googleMap.addMarker(markerOptions);
-
-                // Locate the first location
-                if (i == 0)
-                    googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-            }
         }
 
     }
+
+
 }
 
-/*
-
-
-
-    Intent intent=new Intent(MainActivity.this,SecondActivity.class);
-    startActivityForResult(intent, 2);// Activity is started with requestCode 2
-
-
- protected void onActivityResult(int requestCode, int resultCode, Intent data)
-       {
-                 super.onActivityResult(requestCode, resultCode, data);
-
-                  // check if the request code is same as what is passed  here it is 2
-                   if(requestCode==2)
-                         {
-                            String message=data.getStringExtra("MESSAGE");
-                            textView1.setText(message);
-
-                         }
-
-     }
-
-    Intent intent=new Intent();
-intent.putExtra("MESSAGE",message);
-
-        setResult(2,intent);
-
-        finish();*/

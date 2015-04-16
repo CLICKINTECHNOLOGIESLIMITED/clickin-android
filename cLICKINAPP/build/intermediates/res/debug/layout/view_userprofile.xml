@@ -1,53 +1,22 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/rl_usr_profile"
+    android:id="@+id/rl_usr_profile_"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/white_pattern_bg">
+    android:background="@drawable/enterdigitmainbg">
 
-    <RelativeLayout
-        android:id="@+id/rr_header"
-        android:layout_width="match_parent"
+    <include
+        android:id="@+id/include_header"
+        layout="@layout/clickin_header"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/owner_profile_hedder">
 
-        <ImageView
-            android:id="@+id/iv_menu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="7dp"
-            android:paddingBottom="5dp"
-            android:paddingRight="50dp"
-            android:paddingTop="5dp"
-            android:src="@drawable/owner_profile_top_icon" />
+        />
 
-        <TextView
-            android:id="@+id/tv_profile_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:text="@string/txt_profile"
-            android:textColor="@color/owner_profile_header_b"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <ImageView
-            android:id="@+id/iv_notification"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="1dp"
-            android:paddingLeft="50dp"
-            android:src="@drawable/owner_profile_hedder_icon" />
-    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/rr_header"
+        android:layout_below="@+id/include_header"
         android:layout_marginTop="5dp"
         android:orientation="horizontal"
         android:weightSum="2">
@@ -79,10 +48,10 @@
                         android:layout_marginLeft="10dp"
                         android:paddingBottom="2dp"
                         android:paddingTop="5dp"
-                        android:text="Jacob smith"
                         android:textColor="@color/owner_profile_name_b"
                         android:textSize="20sp"
                         android:textStyle="bold" />
+
 
                     <ImageView
                         android:id="@+id/iv_usr_icon"
@@ -90,7 +59,8 @@
                         android:layout_height="150dp"
                         android:layout_below="@+id/tv_name"
                         android:layout_marginLeft="10dp"
-                        android:background="@drawable/female_crt" />
+                        android:adjustViewBounds="true"
+                        android:scaleType="fitXY" />
 
                     <TextView
                         android:id="@+id/tv_user_details"
@@ -99,39 +69,40 @@
                         android:layout_below="@+id/iv_usr_icon"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="8dp"
-                        android:text="Jacob smith"
+                        android:paddingBottom="15dp"
+                        android:singleLine="false"
                         android:textColor="@color/owner_profile_address_m"
                         android:textSize="16sp" />
 
 
                 </RelativeLayout>
 
-                <Button
+                <TextView
                     android:id="@+id/btn_edit_profile"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignBottom="@+id/rl_uig"
                     android:layout_alignParentRight="true"
-                    android:layout_marginBottom="40dp"
+                    android:layout_marginBottom="45dp"
                     android:background="@drawable/owner_profile_icon" />
             </RelativeLayout>
 
-            <Button
+            <TextView
                 android:id="@+id/btn_follower"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/rr_profile_pic"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="16dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="7dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="16dp"
                 android:background="@drawable/owner_follower_btn"
                 android:gravity="center"
                 android:text="@string/txt_follower"
                 android:textColor="@color/profile_parter_nmae_b"
-                android:textSize="20sp" />
+                android:textSize="16sp" />
 
-            <Button
+            <TextView
                 android:id="@+id/btn_following"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -143,7 +114,7 @@
                 android:gravity="center"
                 android:text="@string/txt_following"
                 android:textColor="@color/profile_name_b"
-                android:textSize="20sp" />
+                android:textSize="16sp" />
         </RelativeLayout>
 
         <LinearLayout
@@ -160,25 +131,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
+                android:choiceMode="singleChoice"
                 android:clipToPadding="false"
+                android:divider="@null"
+                android:fadingEdge="none"
                 android:footerDividersEnabled="false"
+                android:listSelector="#00000000"
                 android:overScrollFooter="@color/transparent"
+                android:overScrollMode="never"
                 android:scrollbarStyle="outsideInset"
-                android:scrollbars="none" />
+                android:scrollbars="none"
+                android:transcriptMode="alwaysScroll" />
 
-            <!--<se.emilsjolander.stickylistheaders.StickyListHeadersListView
-                android:id="@+id/list_click_with_profile"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:clipToPadding="false"
-                android:footerDividersEnabled="false"
-                android:overScrollFooter="@android:color/transparent"
-                android:scrollbarStyle="outsideInset"
-                android:scrollbars="none"/>-->
 
         </LinearLayout>
     </LinearLayout>
 
 
-</RelativeLayout><!-- From: file:/home/monika/gitcodeClickin/cLICKINAPP/src/main/res/layout/view_userprofile.xml -->
+</RelativeLayout><!-- From: file:/monika/latestworkingCLickin/cLICKINAPP/src/main/res/layout/view_userprofile.xml -->

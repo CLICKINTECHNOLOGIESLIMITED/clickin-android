@@ -114,7 +114,7 @@ public class NativeAppCallContentProvider extends ContentProvider {
 
             return ParcelFileDescriptor.open(file, ParcelFileDescriptor.MODE_READ_ONLY);
         } catch (FileNotFoundException exception) {
-            Log.e(TAG, "Got unexpected exception:" + exception);
+            android.util.Log.e(TAG, "Got unexpected exception:" + exception);
             throw exception;
         }
     }

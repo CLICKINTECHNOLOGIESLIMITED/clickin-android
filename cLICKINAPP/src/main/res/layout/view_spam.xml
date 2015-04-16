@@ -1,10 +1,11 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:mySwitch="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:geekui="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/relative_layout_root_spam"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical">
+
 
     <RelativeLayout
         android:layout_width="fill_parent"
@@ -26,7 +27,8 @@
                 android:paddingBottom="5dp"
                 android:paddingRight="30dp"
                 android:paddingTop="5dp"
-                android:src="@drawable/back_arrow" />
+                android:src="@drawable/back_arrow"
+                android:visibility="gone" />
 
 
             <ImageView
@@ -50,7 +52,7 @@
             android:layout_centerHorizontal="true"
             android:background="@drawable/blue_bg">
 
-            <TextView
+            <com.sourcefuse.clickinandroid.utils.ClickInTextView
                 android:id="@+id/tv_profile_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -60,222 +62,268 @@
                 android:text="@string/txt_setting"
                 android:textColor="@color/white"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
         </RelativeLayout>
     </RelativeLayout>
 
-
-    <TextView
-        android:id="@+id/spam_header_text"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:gravity="center_horizontal"
-        android:paddingBottom="5dp"
-        android:paddingTop="10dp"
-        android:text="Spam or Abuse"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:textStyle="bold" />
-
     <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="2dp"
-        android:background="@color/white"
-        android:orientation="horizontal"
-        android:paddingBottom="5dp"
-        android:paddingLeft="20dp"
-        android:paddingTop="20dp">
+        android:id="@+id/linear_layout_text"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
 
-        <TextView
-            android:id="@+id/report_text"
-            android:layout_width="wrap_content"
+        android:layout_marginTop="55dp"
+        android:orientation="vertical"
+        android:weightSum="2">
+
+        <com.sourcefuse.clickinandroid.utils.ClickInTextView
+            android:id="@+id/spam_header_text"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Report something. "
+            android:background="@color/white"
+            android:gravity="center_horizontal"
+            android:paddingBottom="5dp"
+            android:paddingTop="10dp"
+            android:text="Spam or Abuse"
+            android:textColor="@color/black"
             android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/spam_chose_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Choose One"
-            android:textColor="@color/dark_gray"
-            android:textSize="20sp" />
-    </LinearLayout>
-
-    <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:alwaysDrawnWithCache="false"
-        android:background="@drawable/r_owner_profile_bg"
-        android:fadingEdgeLength="0dp"
-        android:overScrollMode="never"
-        android:paddingTop="2dp"
-        android:scrollbarAlwaysDrawVerticalTrack="false"
-        android:scrollbars="none">
+            android:textStyle="bold"
+            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginBottom="2dp"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:paddingBottom="5dp"
+            android:paddingLeft="20dp"
+            android:paddingTop="5dp">
 
-            <RadioGroup
-                android:id="@+id/rbg_spam"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
+            <com.sourcefuse.clickinandroid.utils.ClickInTextView
+                android:id="@+id/report_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Report something. "
+                android:textSize="20sp"
+                android:textStyle="bold"
+                geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
 
-                <RadioButton
-                    android:id="@+id/spam_radio_one"
-                    android:layout_width="fill_parent"
-                    android:layout_height="40dp"
-                    android:background="@color/white"
-                    android:button="@drawable/radio_button_drawable"
-                    android:checked="true"
-                    android:padding="10dp"
-                    android:text="@string/spam_msg_one"
-                    android:textColor="@color/black"
-                    android:textSize="15sp" />
-
-
-                <RadioButton
-                    android:id="@+id/spam_radio_two"
-                    style="@style/whitebackground"
-                    android:layout_width="fill_parent"
-                    android:layout_height="40dp"
-                    android:button="@drawable/radio_button_drawable"
-                    android:padding="10dp"
-                    android:text="@string/spam_msg_two"
-                    android:textColor="@color/black"
-                    android:textSize="15sp" />
+            <com.sourcefuse.clickinandroid.utils.ClickInTextView
+                android:id="@+id/spam_chose_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Choose One"
+                android:textColor="@color/dark_gray"
+                android:textSize="20sp"
+                geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
+        </LinearLayout>
 
 
-                <RadioButton
-                    android:id="@+id/spam_radio_three"
-                    style="@style/whitebackground"
-                    android:layout_width="fill_parent"
-                    android:layout_height="40dp"
-                    android:button="@drawable/radio_button_drawable"
-                    android:padding="10dp"
-                    android:text="@string/spam_msg_three"
-                    android:textColor="@color/black"
-                    android:textSize="15sp" />
+    </LinearLayout>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="135dp">
 
-                <RadioButton
-                    android:id="@+id/spam_radio_four"
-                    style="@style/whitebackground"
-                    android:layout_width="fill_parent"
-                    android:layout_height="40dp"
-                    android:button="@drawable/radio_button_drawable"
-                    android:padding="10dp"
-                    android:text="@string/spam_msg_four"
-                    android:textColor="@color/black"
-                    android:textSize="15sp" />
+        <ScrollView
+            android:id="@+id/scroll_view_spam"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
 
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:alwaysDrawnWithCache="false"
+            android:background="@drawable/r_owner_profile_bg"
+            android:fadingEdgeLength="0dp"
+            android:overScrollMode="never"
+            android:paddingTop="2dp"
+            android:scrollbarAlwaysDrawVerticalTrack="false"
+            android:scrollbars="none">
 
-                <RadioButton
-                    android:id="@+id/spam_radio_five"
-                    style="@style/whitebackground"
-                    android:layout_width="fill_parent"
-                    android:layout_height="40dp"
-                    android:button="@drawable/radio_button_drawable"
-                    android:padding="10dp"
-                    android:text="@string/spam_msg_five"
-                    android:textColor="@color/black"
-                    android:textSize="15sp" />
-
-
-                <RadioButton
-                    android:id="@+id/spam_radio_six"
-                    style="@style/whitebackground"
-                    android:layout_width="fill_parent"
-                    android:layout_height="40dp"
-                    android:button="@drawable/radio_button_drawable"
-                    android:padding="10dp"
-                    android:text="@string/spam_msg_six"
-                    android:textColor="@color/black"
-                    android:textSize="15sp" />
-
-
-                <RadioButton
-                    android:id="@+id/spam_radio_seven"
-                    style="@style/whitebackground"
-                    android:layout_width="fill_parent"
-                    android:layout_height="40dp"
-                    android:button="@drawable/radio_button_drawable"
-                    android:padding="10dp"
-                    android:text="@string/spam_msg_seven"
-                    android:textColor="@color/black"
-                    android:textSize="15sp" />
-
-
-                <RadioButton
-                    android:id="@+id/spam_radio_eight"
-                    style="@style/whitebackground"
-                    android:layout_width="fill_parent"
-                    android:layout_height="40dp"
-                    android:button="@drawable/radio_button_drawable"
-                    android:padding="10dp"
-                    android:text="@string/spam_msg_eight"
-                    android:textColor="@color/black"
-                    android:textSize="15sp" />
-
-
-                <RadioButton
-                    android:id="@+id/spam_radio_nine"
-                    style="@style/whitebackground"
-                    android:layout_width="fill_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginBottom="2dp"
-                    android:button="@drawable/radio_button_drawable"
-                    android:padding="10dp"
-                    android:text="@string/spam_msg_nine"
-                    android:textColor="@color/black"
-                    android:textSize="15sp" />
-
-
-            </RadioGroup>
 
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
                 android:orientation="vertical">
 
-                <EditText
-                    android:id="@+id/spam_edit_txt"
+                <RadioGroup
+                    android:id="@+id/rbg_spam"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/box"
-                    android:focusableInTouchMode="true"
-                    android:gravity="top"
-                    android:hint="@string/spam_edit_hint"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="7dp"
-                    android:textColor="@color/dark_gray"
-                    android:textSize="18sp" />
+                    android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/btn_report"
+                    <com.sourcefuse.clickinandroid.utils.ClickInRadioButton
+                        android:id="@+id/spam_radio_one"
+                        android:layout_width="fill_parent"
+                        android:layout_height="40dp"
+                        android:background="@color/white"
+                        android:button="@drawable/radio_button_drawable"
+                        android:checked="true"
+                        android:padding="10dp"
+                        android:text="@string/spam_msg_one"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
+
+
+                    <com.sourcefuse.clickinandroid.utils.ClickInRadioButton
+                        android:id="@+id/spam_radio_two"
+                        style="@style/whitebackground"
+                        android:layout_width="fill_parent"
+                        android:layout_height="40dp"
+                        android:button="@drawable/radio_button_drawable"
+                        android:padding="10dp"
+                        android:text="@string/spam_msg_two"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
+
+
+                    <com.sourcefuse.clickinandroid.utils.ClickInRadioButton
+                        android:id="@+id/spam_radio_three"
+                        style="@style/whitebackground"
+                        android:layout_width="fill_parent"
+                        android:layout_height="40dp"
+                        android:button="@drawable/radio_button_drawable"
+                        android:padding="10dp"
+                        android:text="@string/spam_msg_three"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
+
+
+                    <com.sourcefuse.clickinandroid.utils.ClickInRadioButton
+                        android:id="@+id/spam_radio_four"
+                        style="@style/whitebackground"
+                        android:layout_width="fill_parent"
+                        android:layout_height="40dp"
+                        android:button="@drawable/radio_button_drawable"
+                        android:padding="10dp"
+                        android:text="@string/spam_msg_four"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
+
+
+                    <com.sourcefuse.clickinandroid.utils.ClickInRadioButton
+                        android:id="@+id/spam_radio_five"
+                        style="@style/whitebackground"
+                        android:layout_width="fill_parent"
+                        android:layout_height="40dp"
+                        android:button="@drawable/radio_button_drawable"
+                        android:padding="10dp"
+                        android:text="@string/spam_msg_five"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
+
+
+                    <com.sourcefuse.clickinandroid.utils.ClickInRadioButton
+                        android:id="@+id/spam_radio_six"
+                        style="@style/whitebackground"
+                        android:layout_width="fill_parent"
+                        android:layout_height="40dp"
+                        android:button="@drawable/radio_button_drawable"
+                        android:padding="10dp"
+                        android:text="@string/spam_msg_six"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
+
+
+                    <com.sourcefuse.clickinandroid.utils.ClickInRadioButton
+                        android:id="@+id/spam_radio_seven"
+                        style="@style/whitebackground"
+                        android:layout_width="fill_parent"
+                        android:layout_height="40dp"
+                        android:button="@drawable/radio_button_drawable"
+                        android:padding="10dp"
+                        android:text="@string/spam_msg_seven"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
+
+
+                    <com.sourcefuse.clickinandroid.utils.ClickInRadioButton
+                        android:id="@+id/spam_radio_eight"
+                        style="@style/whitebackground"
+                        android:layout_width="fill_parent"
+                        android:layout_height="40dp"
+                        android:button="@drawable/radio_button_drawable"
+                        android:padding="10dp"
+                        android:text="@string/spam_msg_eight"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
+
+
+                    <com.sourcefuse.clickinandroid.utils.ClickInRadioButton
+                        android:id="@+id/spam_radio_nine"
+                        style="@style/whitebackground"
+                        android:layout_width="fill_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginBottom="2dp"
+                        android:button="@drawable/radio_button_drawable"
+                        android:padding="10dp"
+                        android:text="@string/spam_msg_nine"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
+
+
+                </RadioGroup>
+
+                <RelativeLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/active_yes_btn"
-                    android:gravity="center"
-                    android:text="REPORT"
-                    android:textColor="@color/white"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+                    <com.sourcefuse.clickinandroid.utils.ClickInEditBox
+                        android:id="@+id/spam_edit_txt"
+                        android:layout_width="fill_parent"
+                        android:layout_height="150dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/box"
+                        android:cursorVisible="false"
+                        android:focusableInTouchMode="true"
+                        android:gravity="top"
+                        android:hint="@string/spam_edit_hint"
+                        android:imeOptions="actionDone"
+                        android:inputType="textNoSuggestions|textMultiLine"
+                        android:lines="8"
+                        android:maxLines="20"
+                        android:paddingBottom="25dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="7dp"
+                        android:scrollbars="vertical"
+                        android:singleLine="false"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/search_txt"
+                        android:textSize="18sp"
+                        geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
+
+                    <com.sourcefuse.clickinandroid.utils.ClickInTextView
+                        android:id="@+id/btn_report"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below="@+id/spam_edit_txt"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/active_yes_btn"
+                        android:gravity="center"
+                        android:text="REPORT"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
+                </RelativeLayout>
             </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
-</LinearLayout>
+
+        </ScrollView>
+    </RelativeLayout>
+</RelativeLayout>

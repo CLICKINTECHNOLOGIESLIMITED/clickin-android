@@ -1,8 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
-    >
+    android:background="@color/notification_background">
 
     <RelativeLayout
         android:id="@+id/rl_header"
@@ -19,34 +18,42 @@
             android:layout_centerVertical="true"
             android:text="@string/txt_notification"
             android:textColor="@color/white"
-            android:textSize="20sp"
-            />
+            android:textSize="20sp" />
 
         <ImageView
             android:id="@+id/iv_back_right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_alignBottom="@+id/tv_notification_txt"
+            android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
+            android:layout_marginBottom="2dp"
+
+            android:layout_marginLeft="20dp"
             android:layout_marginRight="15dp"
             android:background="@drawable/back_arrow"
-
-            android:paddingLeft="0dp"
-            android:layout_marginBottom="2dp"
-            android:layout_marginLeft="20dp"
-            android:layout_alignBottom="@+id/tv_notification_txt"
             android:clickable="true"
+            android:paddingLeft="0dp"
 
             />
 
     </RelativeLayout>
 
-    <ListView
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/rl_header"
+        android:background="@drawable/c_noti_line" />
+
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
         android:id="@+id/list_click_notification"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rl_header"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/divider"
         android:divider="@drawable/c_noti_line"
         android:dividerHeight="1dp"
+        android:overScrollMode="never"
         android:scrollbars="none" />
 </RelativeLayout>

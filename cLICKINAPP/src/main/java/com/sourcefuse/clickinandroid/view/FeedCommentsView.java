@@ -3,6 +3,8 @@ package com.sourcefuse.clickinandroid.view;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -17,15 +19,11 @@ import com.sourcefuse.clickinandroid.model.NewsFeedManager;
 import com.sourcefuse.clickinandroid.model.bean.FeedStarsBean;
 import com.sourcefuse.clickinandroid.utils.AlertMessage;
 import com.sourcefuse.clickinandroid.utils.Constants;
+import com.sourcefuse.clickinandroid.utils.UnCaughtExceptionHandler;
 import com.sourcefuse.clickinandroid.utils.Utils;
-import com.sourcefuse.clickinandroid.view.adapter.FeedsAdapter;
 import com.sourcefuse.clickinandroid.view.adapter.FeedsCommentsAdapter;
-import com.sourcefuse.clickinandroid.view.adapter.FeedsStarsAdapter;
-import com.sourcefuse.clickinandroid.view.adapter.SimpleSectionedListAdapter2.Section;
 import com.sourcefuse.clickinapp.R;
 
-import java.lang.reflect.Array;
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -36,13 +34,7 @@ import de.greenrobot.event.EventBus;
  * Created by charunigam on 10/10/14.
  */
 public class FeedCommentsView extends Activity {
-    private ListView list;
-    private ArrayList<Section> sections = new ArrayList<Section>();
-
-    private NewsFeedManager newsFeedManager;
-    private AuthManager authMgr;
-
-    ImageView menu,send_btn;
+    ImageView menu, send_btn;
     String news_feedId;
     boolean send = false;
     FeedsCommentsAdapter adapter;
@@ -50,37 +42,46 @@ public class FeedCommentsView extends Activity {
     EditText comment;
     InputMethodManager imm;
     int comment_count;
+    private ListView list;
+    private NewsFeedManager newsFeedManager;
+    private AuthManager authMgr;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+//code- to handle uncaught exception
+        if (Utils.mStartExceptionTrack)
+            Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
         setContentView(R.layout.view_feeds_comments);
-        this.overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_right);
+        this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
         Bundle bundle = getIntent().getExtras();
-        if(bundle!=null)
-        {
-           news_feedId = bundle.getString("news_feed_id");
-           comment_count = bundle.getInt("comment_count");
+        if (bundle != null) {
+            news_feedId = bundle.getString("news_feed_id");
+            comment_count = bundle.getInt("comment_count");
         }
-        imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
         newsFeedManager = ModelManager.getInstance().getNewsFeedManager();
         authMgr = ModelManager.getInstance().getAuthorizationManager();
-        feedList =  newsFeedManager.feedStarsList;
+        feedList = newsFeedManager.feedStarsList;
 
         menu = (ImageView) findViewById(R.id.iv_menu);
         list = (ListView) findViewById(R.id.stars_list);
-        send_btn = (ImageView)findViewById(R.id.send_comment);
-        comment = (EditText)findViewById(R.id.comment_edit);
+        send_btn = (ImageView) findViewById(R.id.send_comment);
+        comment = (EditText) findViewById(R.id.comment_edit);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
+        send_btn.setEnabled(false);
 
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
-                imm.hideSoftInputFromWindow(comment.getWindowToken(), 0);
-                if(send) {
+                if (comment.getWindowToken() != null)
+                    imm.hideSoftInputFromWindow(comment.getWindowToken(), 0);
+                if (send) {
                     Constants.comments = true;
                     newsFeedManager.fetchNewsFeed("", ModelManager.getInstance().getAuthorizationManager().getPhoneNo(), ModelManager.getInstance().getAuthorizationManager().getUsrToken());
                 }
@@ -89,36 +90,63 @@ public class FeedCommentsView extends Activity {
         send_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                send = true;
+                if (!comment.getText().toString().trim().equalsIgnoreCase("")) {
 
-                FeedStarsBean feedStarsBean = new FeedStarsBean();
-                feedStarsBean.setUserName(authMgr.getUserName());
-                feedStarsBean.setUserId(authMgr.getUserId());
-                feedStarsBean.setcreated_sec(String.valueOf(Calendar.getInstance(TimeZone.getDefault()).getTimeInMillis()));
-                feedStarsBean.setUserPic(authMgr.getUserPic());
-                feedStarsBean.setComment(comment.getText().toString());
-                feedList.add(feedStarsBean);
-                if(adapter==null)
-                {
-                    adapter = new FeedsCommentsAdapter(FeedCommentsView.this, R.layout.view_feeds_comments_row, feedList);
-                    list.setAdapter(adapter);
+                    send = true;
+
+                    FeedStarsBean feedStarsBean = new FeedStarsBean();
+                    feedStarsBean.setUserName(authMgr.getUserName());
+                    feedStarsBean.setUserId(authMgr.getUserId());
+                    feedStarsBean.setcreated_sec(String.valueOf(Calendar.getInstance(TimeZone.getDefault()).getTimeInMillis()));
+                    feedStarsBean.setUserPic(authMgr.getUserPic());
+                    feedStarsBean.setComment(comment.getText().toString());
+                    feedList.add(feedStarsBean);
+                    if(feedList.size() >0 ) {//should not set the adapter if list size is 0
+                        if (adapter == null) {
+                            adapter = new FeedsCommentsAdapter(FeedCommentsView.this, R.layout.view_feeds_comments_row, feedList);
+                            list.setAdapter(adapter);
+                            list.setSelection(list.getCount());
+                        } else {
+                            adapter.notifyDataSetChanged();
+                            list.setSelection(list.getCount());
+                        }
+                    }
+                    if (comment.getWindowToken() != null)
+                        imm.hideSoftInputFromWindow(comment.getWindowToken(), 0);
+
+                    newsFeedManager.saveStarComment(authMgr.getPhoneNo(), authMgr.getUsrToken(), news_feedId, comment.getText().toString(), "comment");
+                    comment.setText("");
                 }
-                else
-                    adapter.notifyDataSetChanged();
 
-                imm.hideSoftInputFromWindow(comment.getWindowToken(), 0);
-
-                newsFeedManager.saveStarComment(authMgr.getPhoneNo(),authMgr.getUsrToken(),news_feedId,comment.getText().toString(),"comment");
-                comment.setText("");
             }
         });
 
+        comment.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!s.toString().trim().equalsIgnoreCase(""))
+                    send_btn.setEnabled(true);
+                else
+                    send_btn.setEnabled(false);
+            }
+        });
 
         Utils.launchBarDialog(FeedCommentsView.this);
 
-            newsFeedManager.fetchCommentStars(authMgr.getPhoneNo(), authMgr.getUsrToken(), "", news_feedId, "comment");
+        newsFeedManager.fetchCommentStars(authMgr.getPhoneNo(), authMgr.getUsrToken(), "", news_feedId, "comment");
 
     }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -135,23 +163,27 @@ public class FeedCommentsView extends Activity {
             EventBus.getDefault().unregister(this);
         }
     }
+
     public void onEventMainThread(String message) {
-//        android.util.Log.d("Clickin", "onEventMainThread->" + message);
 
         if (message.equalsIgnoreCase("FetchCommentStatus True")) {
-            if(feedList.size()>comment_count)
-                Constants.comments=true;
+            if (feedList.size() > comment_count)
+                Constants.comments = true;
             adapter = new FeedsCommentsAdapter(this, R.layout.view_feeds_comments_row, feedList);
             list.setAdapter(adapter);
             Utils.dismissBarDialog();
-//            android.util.Log.d("1", "message->" + message);
         } else if (message.equalsIgnoreCase("FetchCommentStatus False")) {
             Utils.dismissBarDialog();
-//            android.util.Log.d("2", "message->" + message);
-        } else if (message.equalsIgnoreCase("FetchCommentStatus Networkchat Error")) {
-            Utils.showAlert(FeedCommentsView.this, AlertMessage.connectionError);
-//            android.util.Log.d("3", "message->" + message);
+        } else if (message.equalsIgnoreCase("FetchCommentStatus Network Error")) {
+            Utils.fromSignalDialog(FeedCommentsView.this, AlertMessage.connectionError);
 
         }
+    }
+
+    //akshit code.
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(0, R.anim.top_out);//akshit code for animation
     }
 }

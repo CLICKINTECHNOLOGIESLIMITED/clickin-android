@@ -6,6 +6,7 @@
     <color name="send_green">#8da656</color>
     <color name="text_color_gray">#BDBDBD</color>
     <color name="text_color">#323233</color>
+    <color name="background_grey">#E6E6E6</color>
     <color name="dark_gray">#A4A4A4</color>
     <color name="light_gray">#E6E6E6</color>
     <color name="hint_gray">#EFF8FB</color>
@@ -25,16 +26,26 @@
     <color name="black_opacity">#D8000000</color>
     <color name="tab_color_black_background">#50000000</color>
     <color name="topshade">#0B0B61</color>
+    <color name="search_text_color">#364566</color>
+
+    <color name="background_color">#f5f5f5</color>
+    <color name="notification_background">#364566</color>
     <color name="appclr">#06163A</color>
     <color name="empty_edt">#64718f</color>
     <color name="fill_edt">#00b0c7</color>
     <color name="empt_edt">#f0f0f0</color>
     <color name="profile_usr_name">#01DFD7</color>
+    <color name="click_default_btn">#39cad4</color>
+    <color name="screen_header">#00B0C7</color>
     <color name="usr_name">#F5A9D0</color>
     <color name="clickin_with_list">#E0ECF8</color>
     <color name="white_with_transparent">#CCFFFFFF</color>
     <color name="sign_hint">#cccccc</color>
     <color name="singn_forg">#808080</color>
+    <color name="signin_color">#808080</color>
+    <color name="text_color_share">#687d9b</color>
+
+    <color name="signin_hint">#cccccc</color>
     <color name="signup_contry_code">#364566</color>
     <color name="signup_contry_code_txt">#808080</color>
     <color name="search_txt">#999999</color>
@@ -48,16 +59,20 @@
     <color name="card_click_color">#fafafa</color>
     <color name="card_click_color_pressed">#333333</color>
     <color name="defult_hint_clr">#808080</color>
-    <color name="phone_no_clr">#364566</color>
+    <color name="phone_no_clr">#999999</color>
     <color name="chat_notification">#f29691</color>
+    <color name="menu_footer">#64718f</color>
+    <color name="sahred_text_background">#cdcccc</color>
 
-<color name="lightest_gray">#F6F6F6</color>
+    <color name="noti_unread">#64718f</color>
+
+    <color name="lightest_gray">#F6F6F6</color>
 
     <color name="strip_color_tab">#ffffff</color>
 
 
     <color name="edit_profile_clr">#E6E6E6</color>
-
+    <color name="menu_footer_color">#00b0c7</color>
     <color name="feed_senderuser">#01DFD7</color>
     <color name="feed_clickin">#F29691</color>
 
@@ -74,9 +89,15 @@
     <color name="owner_profile_header_b">#fefefe</color>
     <color name="owner_profile_name_b">#f29691</color>
     <color name="owner_profile_address_m">#727271</color>
+    <color name="Pop_upcolor">#fd9697</color>
     <!--List-->
     <color name="owner_relation_header_clickin_b">#b3b3b3</color>
     <color name="owner_relation_header_with_m">#b3b3b3</color>
     <color name="owner_relation_partner_name">#39cad4</color>
 
+
+    <color name="profile_border">#364566</color>
+    <color name="some_back">#4d5b7b</color>
+    <color name="click_in">#5d6a88</color>
+    <color name="color_">#cbcbcb</color>
 </resources>

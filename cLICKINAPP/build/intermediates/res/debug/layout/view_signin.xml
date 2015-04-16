@@ -1,11 +1,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:geekui="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/relative_layout_root_signin"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/white_pattern_bg">
+    android:background="@drawable/enterdigitmainbg">
 
     <RelativeLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/relative_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
@@ -20,11 +21,12 @@
             <com.sourcefuse.clickinandroid.utils.ClickInTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:gravity="center_horizontal"
                 android:text="SIGN IN"
-                android:textColor="@color/profile_usr_name"
+                android:textColor="@color/screen_header"
                 android:textSize="60sp"
                 android:textStyle="bold"
                 geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
@@ -34,86 +36,102 @@
 
         <RelativeLayout
             android:id="@+id/linearLayout1"
-            android:layout_width="wrap_content"
+            android:layout_width="305dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/iv_topicon"
             android:layout_centerHorizontal="true"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="19dp"
             android:background="@drawable/white_border"
             android:padding="15dp">
 
-            <EditText
+            <com.sourcefuse.clickinandroid.utils.ClickInEditBox
                 android:id="@+id/edt_email_phoneno"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
+                android:layout_marginLeft="1dp"
                 android:background="@drawable/input_field"
+                android:ems="15"
                 android:hint="@string/hint_email_no"
-                android:inputType="text"
+                android:imeOptions="actionNext"
+                android:inputType="text|textNoSuggestions"
                 android:paddingLeft="10dp"
-                android:text="+919878492556"
+                android:text="@string/plus"
                 android:textColor="@color/signup_contry_code"
-                android:textColorHint="@color/singn_forg"
+                android:textColorHint="@color/sign_hint"
                 android:textSize="16sp"
-                android:textStyle="bold"></EditText>
+                android:textStyle="bold"
+                geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"></com.sourcefuse.clickinandroid.utils.ClickInEditBox>
 
-            <EditText
+
+            <com.sourcefuse.clickinandroid.utils.ClickInEditBox
                 android:id="@+id/edt_passwd"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_below="@+id/edt_email_phoneno"
-                android:layout_marginTop="5dp"
+                android:layout_marginLeft="1dp"
+                android:layout_marginTop="7dp"
                 android:background="@drawable/input_field"
+                android:ems="15"
                 android:hint="@string/hint_pwd"
-                android:inputType="textPassword"
+                android:imeOptions="actionDone"
+                android:inputType="textPassword|textNoSuggestions"
                 android:paddingLeft="10dp"
-                android:text="aaaaaaaa"
+                android:text=""
                 android:textColor="@color/signup_contry_code"
-                android:textColorHint="@color/singn_forg"
+                android:textColorHint="@color/sign_hint"
                 android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
         </RelativeLayout>
 
-        <Button
-            android:id="@+id/btn_get_clickin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/linearLayout1"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/c_getclicin_deactive" />
 
         <RelativeLayout
             android:id="@+id/ll_search"
-            android:layout_width="wrap_content"
+            android:layout_width="305dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/btn_get_clickin"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="5dp">
+            android:layout_below="@+id/btn_get_clickin_signin"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp">
 
-            <TextView
+            <com.sourcefuse.clickinandroid.utils.ClickInTextView
                 android:id="@+id/tv_forgot_pwd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
+                android:layout_marginLeft="-10dp"
                 android:padding="10dp"
                 android:text="@string/txt_forget_pwd"
-                android:textColor="@color/singn_forg"
-                android:textStyle="bold" />
+                android:textColor="@color/signin_color"
+                android:textStyle="bold"
+                geekui:customFont="AvenirNextLTPro-MediumCn_0.otf"
 
-            <TextView
+                />
+
+
+            <com.sourcefuse.clickinandroid.utils.ClickInTextView
                 android:id="@+id/tv_signup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:gravity="center_vertical|center"
+                android:layout_marginRight="-8dp"
+                android:gravity="right"
                 android:padding="10dp"
                 android:text="@string/txt_signup"
-                android:textColor="@color/singn_forg"
-                android:textStyle="bold" />
+                android:textColor="@color/signin_color"
+                android:textStyle="bold"
+                geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
         </RelativeLayout>
+
+        <Button
+            android:id="@+id/btn_get_clickin_signin"
+            android:layout_width="310dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/linearLayout1"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="39dp"
+            android:background="@drawable/c_getclicin_active" />
     </RelativeLayout>
 
-</RelativeLayout><!-- From: file:/home/monika/gitcodeClickin/cLICKINAPP/src/main/res/layout/view_signin.xml -->
+</RelativeLayout><!-- From: file:/monika/latestworkingCLickin/cLICKINAPP/src/main/res/layout/view_signin.xml -->

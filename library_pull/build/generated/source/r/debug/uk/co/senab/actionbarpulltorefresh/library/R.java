@@ -9,15 +9,13 @@ package uk.co.senab.actionbarpulltorefresh.library;
 
 public final class R {
     public static final class attr {
-        /**  A drawable to use as the background of the Header View 
-         <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+        /** <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
 <p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
 "<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
          */
         public static int ptrHeaderBackground=0x7f010001;
-        /**  The height of the Header View 
-         <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+        /** <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
 <p>May be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
 Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
@@ -28,28 +26,24 @@ in (inches), mm (millimeters).
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
         public static int ptrHeaderStyle=0x7f010000;
-        /**  The Text Appearance of the Header View's Title text 
-         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
         public static int ptrHeaderTitleTextAppearance=0x7f010003;
-        /**  The color that the Progress Bar should be tinted with 
-         <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+        /** <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
 <p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
 "<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
          */
         public static int ptrProgressBarColor=0x7f010004;
-        /**  The height of the Progress Bar 
-         <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+        /** <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
 <p>May be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
 Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
 in (inches), mm (millimeters).
          */
         public static int ptrProgressBarHeight=0x7f010006;
-        /**  The style of the Progress Bar 
-         <p>Must be one or more (separated by '|') of the following constant values.</p>
+        /** <p>Must be one or more (separated by '|') of the following constant values.</p>
 <table>
 <colgroup align="left" />
 <colgroup align="left" />
@@ -60,31 +54,26 @@ in (inches), mm (millimeters).
 </table>
          */
         public static int ptrProgressBarStyle=0x7f010005;
-        /**  Text to show to prompt the user is pull (or keep pulling) 
-         <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+        /** <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
 <p>May be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
          */
         public static int ptrPullText=0x7f010007;
-        /**  Text to show to tell the user that a refresh is currently in progress 
-         <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+        /** <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
 <p>May be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
          */
         public static int ptrRefreshingText=0x7f010008;
-        /**  Text to show to tell the user has scrolled enough to refresh 
-         <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+        /** <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
 <p>May be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
          */
         public static int ptrReleaseText=0x7f010009;
-        /**  indeterminate progressbar style 
-         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
         public static int ptrSmoothProgressBarStyle=0x7f01000a;
-        /**  The class to use as a View's View Delegate. Can be relative path from app's package name 
-         <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+        /** <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
 <p>May be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
          */
@@ -216,6 +205,7 @@ containing a value of this type.
     public static final class color {
         public static int default_progress_bar_color=0x7f040000;
         public static int spb_default_color=0x7f040001;
+        public static int transparent=0x7f040002;
     }
     public static final class dimen {
         public static int ptr_progress_bar_stroke_width=0x7f060000;
@@ -257,16 +247,16 @@ containing a value of this type.
            <colgroup align="left" />
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #PullToRefreshHeader_ptrHeaderBackground uk.co.senab.actionbarpulltorefresh.library:ptrHeaderBackground}</code></td><td> A drawable to use as the background of the Header View </td></tr>
-           <tr><td><code>{@link #PullToRefreshHeader_ptrHeaderHeight uk.co.senab.actionbarpulltorefresh.library:ptrHeaderHeight}</code></td><td> The height of the Header View </td></tr>
-           <tr><td><code>{@link #PullToRefreshHeader_ptrHeaderTitleTextAppearance uk.co.senab.actionbarpulltorefresh.library:ptrHeaderTitleTextAppearance}</code></td><td> The Text Appearance of the Header View's Title text </td></tr>
-           <tr><td><code>{@link #PullToRefreshHeader_ptrProgressBarColor uk.co.senab.actionbarpulltorefresh.library:ptrProgressBarColor}</code></td><td> The color that the Progress Bar should be tinted with </td></tr>
-           <tr><td><code>{@link #PullToRefreshHeader_ptrProgressBarHeight uk.co.senab.actionbarpulltorefresh.library:ptrProgressBarHeight}</code></td><td> The height of the Progress Bar </td></tr>
-           <tr><td><code>{@link #PullToRefreshHeader_ptrProgressBarStyle uk.co.senab.actionbarpulltorefresh.library:ptrProgressBarStyle}</code></td><td> The style of the Progress Bar </td></tr>
-           <tr><td><code>{@link #PullToRefreshHeader_ptrPullText uk.co.senab.actionbarpulltorefresh.library:ptrPullText}</code></td><td> Text to show to prompt the user is pull (or keep pulling) </td></tr>
-           <tr><td><code>{@link #PullToRefreshHeader_ptrRefreshingText uk.co.senab.actionbarpulltorefresh.library:ptrRefreshingText}</code></td><td> Text to show to tell the user that a refresh is currently in progress </td></tr>
-           <tr><td><code>{@link #PullToRefreshHeader_ptrReleaseText uk.co.senab.actionbarpulltorefresh.library:ptrReleaseText}</code></td><td> Text to show to tell the user has scrolled enough to refresh </td></tr>
-           <tr><td><code>{@link #PullToRefreshHeader_ptrSmoothProgressBarStyle uk.co.senab.actionbarpulltorefresh.library:ptrSmoothProgressBarStyle}</code></td><td> indeterminate progressbar style </td></tr>
+           <tr><td><code>{@link #PullToRefreshHeader_ptrHeaderBackground uk.co.senab.actionbarpulltorefresh.library:ptrHeaderBackground}</code></td><td></td></tr>
+           <tr><td><code>{@link #PullToRefreshHeader_ptrHeaderHeight uk.co.senab.actionbarpulltorefresh.library:ptrHeaderHeight}</code></td><td></td></tr>
+           <tr><td><code>{@link #PullToRefreshHeader_ptrHeaderTitleTextAppearance uk.co.senab.actionbarpulltorefresh.library:ptrHeaderTitleTextAppearance}</code></td><td></td></tr>
+           <tr><td><code>{@link #PullToRefreshHeader_ptrProgressBarColor uk.co.senab.actionbarpulltorefresh.library:ptrProgressBarColor}</code></td><td></td></tr>
+           <tr><td><code>{@link #PullToRefreshHeader_ptrProgressBarHeight uk.co.senab.actionbarpulltorefresh.library:ptrProgressBarHeight}</code></td><td></td></tr>
+           <tr><td><code>{@link #PullToRefreshHeader_ptrProgressBarStyle uk.co.senab.actionbarpulltorefresh.library:ptrProgressBarStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #PullToRefreshHeader_ptrPullText uk.co.senab.actionbarpulltorefresh.library:ptrPullText}</code></td><td></td></tr>
+           <tr><td><code>{@link #PullToRefreshHeader_ptrRefreshingText uk.co.senab.actionbarpulltorefresh.library:ptrRefreshingText}</code></td><td></td></tr>
+           <tr><td><code>{@link #PullToRefreshHeader_ptrReleaseText uk.co.senab.actionbarpulltorefresh.library:ptrReleaseText}</code></td><td></td></tr>
+           <tr><td><code>{@link #PullToRefreshHeader_ptrSmoothProgressBarStyle uk.co.senab.actionbarpulltorefresh.library:ptrSmoothProgressBarStyle}</code></td><td></td></tr>
            </table>
            @see #PullToRefreshHeader_ptrHeaderBackground
            @see #PullToRefreshHeader_ptrHeaderHeight
@@ -285,23 +275,20 @@ containing a value of this type.
             0x7f010009, 0x7f01000a
         };
         /**
-          <p>
-          @attr description
-           A drawable to use as the background of the Header View 
+          <p>This symbol is the offset where the {@link uk.co.senab.actionbarpulltorefresh.library.R.attr#ptrHeaderBackground}
+          attribute's value can be found in the {@link #PullToRefreshHeader} array.
 
 
           <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
 <p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
 "<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
-          <p>This is a private symbol.
           @attr name uk.co.senab.actionbarpulltorefresh.library:ptrHeaderBackground
         */
         public static final int PullToRefreshHeader_ptrHeaderBackground = 0;
         /**
-          <p>
-          @attr description
-           The height of the Header View 
+          <p>This symbol is the offset where the {@link uk.co.senab.actionbarpulltorefresh.library.R.attr#ptrHeaderHeight}
+          attribute's value can be found in the {@link #PullToRefreshHeader} array.
 
 
           <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
@@ -309,40 +296,34 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 <p>May be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
 Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
 in (inches), mm (millimeters).
-          <p>This is a private symbol.
           @attr name uk.co.senab.actionbarpulltorefresh.library:ptrHeaderHeight
         */
         public static final int PullToRefreshHeader_ptrHeaderHeight = 1;
         /**
-          <p>
-          @attr description
-           The Text Appearance of the Header View's Title text 
+          <p>This symbol is the offset where the {@link uk.co.senab.actionbarpulltorefresh.library.R.attr#ptrHeaderTitleTextAppearance}
+          attribute's value can be found in the {@link #PullToRefreshHeader} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          <p>This is a private symbol.
           @attr name uk.co.senab.actionbarpulltorefresh.library:ptrHeaderTitleTextAppearance
         */
         public static final int PullToRefreshHeader_ptrHeaderTitleTextAppearance = 2;
         /**
-          <p>
-          @attr description
-           The color that the Progress Bar should be tinted with 
+          <p>This symbol is the offset where the {@link uk.co.senab.actionbarpulltorefresh.library.R.attr#ptrProgressBarColor}
+          attribute's value can be found in the {@link #PullToRefreshHeader} array.
 
 
           <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
 <p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
 "<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
-          <p>This is a private symbol.
           @attr name uk.co.senab.actionbarpulltorefresh.library:ptrProgressBarColor
         */
         public static final int PullToRefreshHeader_ptrProgressBarColor = 3;
         /**
-          <p>
-          @attr description
-           The height of the Progress Bar 
+          <p>This symbol is the offset where the {@link uk.co.senab.actionbarpulltorefresh.library.R.attr#ptrProgressBarHeight}
+          attribute's value can be found in the {@link #PullToRefreshHeader} array.
 
 
           <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
@@ -350,14 +331,12 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 <p>May be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
 Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
 in (inches), mm (millimeters).
-          <p>This is a private symbol.
           @attr name uk.co.senab.actionbarpulltorefresh.library:ptrProgressBarHeight
         */
         public static final int PullToRefreshHeader_ptrProgressBarHeight = 5;
         /**
-          <p>
-          @attr description
-           The style of the Progress Bar 
+          <p>This symbol is the offset where the {@link uk.co.senab.actionbarpulltorefresh.library.R.attr#ptrProgressBarStyle}
+          attribute's value can be found in the {@link #PullToRefreshHeader} array.
 
 
           <p>Must be one or more (separated by '|') of the following constant values.</p>
@@ -369,58 +348,49 @@ in (inches), mm (millimeters).
 <tr><td><code>inside</code></td><td>0x0</td><td></td></tr>
 <tr><td><code>outside</code></td><td>0x1</td><td></td></tr>
 </table>
-          <p>This is a private symbol.
           @attr name uk.co.senab.actionbarpulltorefresh.library:ptrProgressBarStyle
         */
         public static final int PullToRefreshHeader_ptrProgressBarStyle = 4;
         /**
-          <p>
-          @attr description
-           Text to show to prompt the user is pull (or keep pulling) 
+          <p>This symbol is the offset where the {@link uk.co.senab.actionbarpulltorefresh.library.R.attr#ptrPullText}
+          attribute's value can be found in the {@link #PullToRefreshHeader} array.
 
 
           <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
 <p>May be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
-          <p>This is a private symbol.
           @attr name uk.co.senab.actionbarpulltorefresh.library:ptrPullText
         */
         public static final int PullToRefreshHeader_ptrPullText = 6;
         /**
-          <p>
-          @attr description
-           Text to show to tell the user that a refresh is currently in progress 
+          <p>This symbol is the offset where the {@link uk.co.senab.actionbarpulltorefresh.library.R.attr#ptrRefreshingText}
+          attribute's value can be found in the {@link #PullToRefreshHeader} array.
 
 
           <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
 <p>May be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
-          <p>This is a private symbol.
           @attr name uk.co.senab.actionbarpulltorefresh.library:ptrRefreshingText
         */
         public static final int PullToRefreshHeader_ptrRefreshingText = 7;
         /**
-          <p>
-          @attr description
-           Text to show to tell the user has scrolled enough to refresh 
+          <p>This symbol is the offset where the {@link uk.co.senab.actionbarpulltorefresh.library.R.attr#ptrReleaseText}
+          attribute's value can be found in the {@link #PullToRefreshHeader} array.
 
 
           <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
 <p>May be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
-          <p>This is a private symbol.
           @attr name uk.co.senab.actionbarpulltorefresh.library:ptrReleaseText
         */
         public static final int PullToRefreshHeader_ptrReleaseText = 8;
         /**
-          <p>
-          @attr description
-           indeterminate progressbar style 
+          <p>This symbol is the offset where the {@link uk.co.senab.actionbarpulltorefresh.library.R.attr#ptrSmoothProgressBarStyle}
+          attribute's value can be found in the {@link #PullToRefreshHeader} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
-          <p>This is a private symbol.
           @attr name uk.co.senab.actionbarpulltorefresh.library:ptrSmoothProgressBarStyle
         */
         public static final int PullToRefreshHeader_ptrSmoothProgressBarStyle = 9;
@@ -430,7 +400,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
            <colgroup align="left" />
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #PullToRefreshView_ptrViewDelegateClass uk.co.senab.actionbarpulltorefresh.library:ptrViewDelegateClass}</code></td><td> The class to use as a View's View Delegate.</td></tr>
+           <tr><td><code>{@link #PullToRefreshView_ptrViewDelegateClass uk.co.senab.actionbarpulltorefresh.library:ptrViewDelegateClass}</code></td><td></td></tr>
            </table>
            @see #PullToRefreshView_ptrViewDelegateClass
          */
@@ -438,15 +408,13 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
             0x7f01000b
         };
         /**
-          <p>
-          @attr description
-           The class to use as a View's View Delegate. Can be relative path from app's package name 
+          <p>This symbol is the offset where the {@link uk.co.senab.actionbarpulltorefresh.library.R.attr#ptrViewDelegateClass}
+          attribute's value can be found in the {@link #PullToRefreshView} array.
 
 
           <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
 <p>May be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
-          <p>This is a private symbol.
           @attr name uk.co.senab.actionbarpulltorefresh.library:ptrViewDelegateClass
         */
         public static final int PullToRefreshView_ptrViewDelegateClass = 0;

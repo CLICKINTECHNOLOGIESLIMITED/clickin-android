@@ -27,6 +27,25 @@
             android:layout_below="@+id/tv_usr_name"
             android:layout_centerHorizontal="true"
             android:src="@drawable/female_crt" />
+
+        <View
+            android:id="@+id/v_devider"
+            android:layout_width="wrap_content"
+            android:layout_height="18dp"
+            android:layout_below="@+id/iv_usr_pic"
+            android:background="@color/transparent"
+            android:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/btm_divider"
+            android:layout_width="fill_parent"
+            android:layout_height="3dp"
+            android:layout_below="@+id/v_devider"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="3dp"
+            android:background="@color/edit_profile_clr"
+            android:visibility="visible" />
     </RelativeLayout>
 
-</RelativeLayout><!-- From: file:/home/monika/gitcodeClickin/cLICKINAPP/src/main/res/layout/row_othersprofile.xml -->
+</RelativeLayout><!-- From: file:/monika/latestworkingCLickin/cLICKINAPP/src/main/res/layout/row_othersprofile.xml -->

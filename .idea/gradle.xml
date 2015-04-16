@@ -7,14 +7,14 @@
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/cLICKINAPP" />
-            <option value="$PROJECT_DIR$/cropper" />
-            <option value="$PROJECT_DIR$/facebookSDK" />
-            <option value="$PROJECT_DIR$/library" />
-            <option value="$PROJECT_DIR$/library_header" />
-            <option value="$PROJECT_DIR$/library_pull" />
-            <option value="$PROJECT_DIR$/slider_library" />
+            <option value="/monika/latestworkingCLickin" />
+            <option value="/monika/latestworkingCLickin/cLICKINAPP" />
+            <option value="/monika/latestworkingCLickin/cropper" />
+            <option value="/monika/latestworkingCLickin/facebookSDK" />
+            <option value="/monika/latestworkingCLickin/library" />
+            <option value="/monika/latestworkingCLickin/library_header" />
+            <option value="/monika/latestworkingCLickin/library_pull" />
+            <option value="/monika/latestworkingCLickin/slider_library" />
           </set>
         </option>
       </GradleProjectSettings>

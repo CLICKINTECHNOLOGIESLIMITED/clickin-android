@@ -254,7 +254,7 @@ public class PullToRefreshAttacher {
 
     final boolean onInterceptTouchEvent(MotionEvent event) {
         if (DEBUG) {
-            Log.d(LOG_TAG, "onInterceptTouchEvent: " + event.toString());
+            android.util.Log.d(LOG_TAG, "onInterceptTouchEvent: " + event.toString());
         }
 
         // If we're not enabled or currently refreshing don't handle any touch
@@ -304,7 +304,7 @@ public class PullToRefreshAttacher {
             }
         }
 
-        if (DEBUG) Log.d(LOG_TAG, "onInterceptTouchEvent. Returning " + mIsBeingDragged);
+        if (DEBUG) android.util.Log.d(LOG_TAG, "onInterceptTouchEvent. Returning " + mIsBeingDragged);
 
         return mIsBeingDragged;
     }
@@ -316,7 +316,7 @@ public class PullToRefreshAttacher {
             final int viewLeft = mViewLocationResult[0], viewTop = mViewLocationResult[1];
             mRect.set(viewLeft, viewTop, viewLeft + view.getWidth(), viewTop + view.getHeight());
 
-            if (DEBUG) Log.d(LOG_TAG, "isViewBeingDragged. View Rect: " + mRect.toString());
+            if (DEBUG) android.util.Log.d(LOG_TAG, "isViewBeingDragged. View Rect: " + mRect.toString());
 
             final int rawX = (int) event.getRawX(), rawY = (int) event.getRawY();
             if (mRect.contains(rawX, rawY)) {
@@ -333,7 +333,7 @@ public class PullToRefreshAttacher {
 
     final boolean onTouchEvent(MotionEvent event) {
         if (DEBUG) {
-            Log.d(LOG_TAG, "onTouchEvent: " + event.toString());
+            android.util.Log.d(LOG_TAG, "onTouchEvent: " + event.toString());
         }
 
         // Record whether our handling is started from ACTION_DOWN
@@ -415,7 +415,7 @@ public class PullToRefreshAttacher {
 
     void onPullStarted(float y) {
         if (DEBUG) {
-            Log.d(LOG_TAG, "onPullStarted");
+            android.util.Log.d(LOG_TAG, "onPullStarted");
         }
         showHeaderView();
         mPullBeginY = y;
@@ -423,7 +423,7 @@ public class PullToRefreshAttacher {
 
     void onPull(View view, float y) {
         if (DEBUG) {
-            Log.d(LOG_TAG, "onPull");
+            android.util.Log.d(LOG_TAG, "onPull");
         }
 
         final float pxScrollForRefresh = getScrollNeededForRefresh(view);
@@ -442,7 +442,7 @@ public class PullToRefreshAttacher {
 
     void onPullEnded() {
         if (DEBUG) {
-            Log.d(LOG_TAG, "onPullEnded");
+            android.util.Log.d(LOG_TAG, "onPullEnded");
         }
         if (!mIsRefreshing) {
             reset(true);
@@ -508,7 +508,7 @@ public class PullToRefreshAttacher {
     private void setRefreshingInt(View view, boolean refreshing, boolean fromTouch) {
         if (isDestroyed()) return;
 
-        if (DEBUG) Log.d(LOG_TAG, "setRefreshingInt: " + refreshing);
+        if (DEBUG) android.util.Log.d(LOG_TAG, "setRefreshingInt: " + refreshing);
         // Check to see if we need to do anything
         if (mIsRefreshing == refreshing) {
             return;

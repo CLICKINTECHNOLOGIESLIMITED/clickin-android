@@ -1,12 +1,12 @@
 package com.sourcefuse.clickinandroid.model;
 
-import com.loopj.android.http.AsyncHttpClient;
+import android.util.Log;
+
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.sourcefuse.clickinandroid.model.bean.CurrentClickerBean;
 import com.sourcefuse.clickinandroid.model.bean.FeedStarsBean;
 import com.sourcefuse.clickinandroid.model.bean.NewsFeedBean;
 import com.sourcefuse.clickinandroid.utils.APIs;
-import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinandroid.utils.Utils;
 
 import org.apache.http.entity.StringEntity;
@@ -17,20 +17,18 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Observable;
 
 import de.greenrobot.event.EventBus;
 
-public class NewsFeedManager extends Observable implements NewsFeedManagerI {
-    private String TAG = this.getClass().getSimpleName();
+public class NewsFeedManager {
+    public ArrayList<NewsFeedBean> userFeed = new ArrayList<NewsFeedBean>();
+    public ArrayList<NewsFeedBean> PostFeed = new ArrayList<NewsFeedBean>(); // Used To View Feed
+    public ArrayList<FeedStarsBean> feedStarsList = new ArrayList<FeedStarsBean>();
+    public Boolean mFlag = false;  // to set visibility of newfeed footer(load older newfeed)
     StringEntity se = null;
-    AsyncHttpClient client;
-    private AuthManager authManager;
-    private CurrentClickerBean  currentClickerBean;
-    private ProfileManager profilemanager;
+    private CurrentClickerBean currentClickerBean;
 
-    @Override
-    public void fetchNewsFeed(String lastNewsfeedId, String phone,String usertoken) {
+    public void fetchNewsFeed(final String lastNewsfeedId, String phone, String usertoken) {
         // TODO Auto-generated method stub
         JSONObject userInputDetails = new JSONObject();
         try {
@@ -39,26 +37,30 @@ public class NewsFeedManager extends Observable implements NewsFeedManagerI {
             userInputDetails.put("last_newsfeed_id", lastNewsfeedId);
 
 
-            System.out.println(userInputDetails);
-            client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,
                     "application/json"));
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        client.post(null, APIs.FETCHNEWSFEEDS, se, "application/json",
+        if (Utils.isEmptyString(lastNewsfeedId))
+            userFeed.clear();
+
+        ClickinRestClient.post(null, APIs.FETCHNEWSFEEDS, se, "application/json",
                 new JsonHttpResponseHandler() {
 
                     @Override
                     public void onFailure(int statusCode, Throwable e,
                                           JSONObject errorResponse) {
                         super.onFailure(statusCode, e, errorResponse);
-                        userFeed.clear();
+                       // userFeed.clear();
                         if (errorResponse != null) {
-                            Log.e("errorResponse", "->" + errorResponse);
-                            EventBus.getDefault().post("NewsFeed False");
+
+                            Log.e("user dont have notification--->","user dont have notification--->");
+                            mFlag=false;
+                            EventBus.getDefault().post("NewsFeed False"); //it means only that user has no more newsfeed
                         } else {
+                            Log.e("user dont have notification---> 1","user dont have notification---> 1");
                             EventBus.getDefault().post("NewsFeed Network Error");
                         }
                     }
@@ -70,8 +72,8 @@ public class NewsFeedManager extends Observable implements NewsFeedManagerI {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            Utils.clickCustomLog(response.toString());
-                            Log.e(TAG,"response  News Feed->" + response);
+
+
                             state = response.getBoolean("success");
                             /*if (state) {
 
@@ -79,8 +81,13 @@ public class NewsFeedManager extends Observable implements NewsFeedManagerI {
 							}*/
 
                             JSONArray newsfeedArray = response.getJSONArray("newsfeedArray");
-                            userFeed.clear();
-                            Log.e("FeedSize-InManager before getting data", String.valueOf(userFeed.size()));
+
+                            int length=newsfeedArray.length();
+                            if (newsfeedArray.length()>24)
+                                mFlag = true;
+                            else
+                                mFlag=false;
+
                             for (int i = 0; i < newsfeedArray.length(); i++) {
                                 NewsFeedBean allNewsFeed = new NewsFeedBean();
 
@@ -117,49 +124,49 @@ public class NewsFeedManager extends Observable implements NewsFeedManagerI {
                                 chatDetail
                                  */
 //                                if (!Utils.isEmptyString(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").toString())) {
-                                if(!newsfeedArray.getJSONObject(i).isNull("chatDetail")){
-                                    Log.e("parsing","inside chatdetail");
-JSONObject chatObj = newsfeedArray.getJSONObject(i).getJSONObject("chatDetail");
-                                    if(chatObj.has("QB_id"))
+                                if (!newsfeedArray.getJSONObject(i).isNull("chatDetail")) {
+
+                                    JSONObject chatObj = newsfeedArray.getJSONObject(i).getJSONObject("chatDetail");
+                                    if (chatObj.has("QB_id"))
                                         allNewsFeed.setNewsFeedArray_chatDetail_QB_id(chatObj.getString("QB_id"));
-                                if (newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").has("QB_id"))
-                                    allNewsFeed.setNewsFeedArray_chatDetail_QB_id(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getString("QB_id"));
+                                    if (newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").has("QB_id"))
+                                        allNewsFeed.setNewsFeedArray_chatDetail_QB_id(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getString("QB_id"));
 
-                                if (newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").has("_id"))
-                                    allNewsFeed.setNewsFeedArray_chatDetail_id(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getString("_id"));
+                                    if (newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").has("_id"))
+                                        allNewsFeed.setNewsFeedArray_chatDetail_id(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getString("_id"));
 
-                                    if(!newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").isNull("cards")) {
-                                         if (newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").has("cards"))
-                                         allNewsFeed.setNewsFeedArray_chatDetail_cards(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getJSONArray("cards"));
+                                    if (!newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").isNull("cards")) {
+                                        if (newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").has("cards"))
+                                            allNewsFeed.setNewsFeedArray_chatDetail_cards(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getJSONArray("cards"));
                                     }
-                                if (newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").has("chatId"))
-                                    allNewsFeed.setNewsFeedArray_chatDetail_chatId(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getString("chatId"));
+                                    if (newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").has("chatId"))
+                                        allNewsFeed.setNewsFeedArray_chatDetail_chatId(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getString("chatId"));
 
-                                if (newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").has("clicks"))
-                                    allNewsFeed.setNewsFeedArray_chatDetail_clicks(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getString("clicks"));
-
-
-                                if (newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").has("comments_count"))
-                                    allNewsFeed.setNewsFeedArray_chatDetail_comments_count(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getString("comments_count"));
-
-                                if (newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").has("content"))
-                                    allNewsFeed.setNewsFeedArray_chatDetail_content(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getString("content"));
-
-                                if (newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getJSONObject("created").has("sec"))
-                                    allNewsFeed.setNewsFeedArray_chatDetail_created_sec(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getJSONObject("created").getString("sec"));
-
-                                if (newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getJSONObject("created").has("usec"))
-                                    allNewsFeed.setNewsFeedArray_chatDetail_created_usec(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getJSONObject("created").getString("usec"));
-
-                                if (!newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").isNull("deliveredChatID")) {
-                                    allNewsFeed.setNewsFeedArray_chatDetail_delieveredChatId(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getString("delieveredChatId"));
-                                } else {
-                                    allNewsFeed.setNewsFeedArray_chatDetail_delieveredChatId("");
-                                }
+                                    if (newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").has("clicks"))
+                                        allNewsFeed.setNewsFeedArray_chatDetail_clicks(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getString("clicks"));
 
 
-                                if(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").has("imageRatio"))
-                                    allNewsFeed.setNewsFeedArray_chatDetail_imageRatio(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getString("imageRatio"));
+                                    if (newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").has("comments_count"))
+                                        allNewsFeed.setNewsFeedArray_chatDetail_comments_count(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getString("comments_count"));
+
+                                    if (newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").has("content"))
+                                        allNewsFeed.setNewsFeedArray_chatDetail_content(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getString("content"));
+
+                                    if (newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getJSONObject("created").has("sec"))
+                                        allNewsFeed.setNewsFeedArray_chatDetail_created_sec(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getJSONObject("created").getString("sec"));
+
+                                    if (newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getJSONObject("created").has("usec"))
+                                        allNewsFeed.setNewsFeedArray_chatDetail_created_usec(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getJSONObject("created").getString("usec"));
+
+                                    if (!newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").isNull("deliveredChatID")) {
+                                        allNewsFeed.setNewsFeedArray_chatDetail_delieveredChatId(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getString("delieveredChatId"));
+                                    } else {
+                                        allNewsFeed.setNewsFeedArray_chatDetail_delieveredChatId("");
+                                    }
+
+
+                                    if (newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").has("imageRatio"))
+                                        allNewsFeed.setNewsFeedArray_chatDetail_imageRatio(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getString("imageRatio"));
 
                                     if (newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").has("isDelivered"))
                                         allNewsFeed.setNewsFeedArray_chatDetail_isDelievered(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getString("isDelivered"));
@@ -204,18 +211,22 @@ JSONObject chatObj = newsfeedArray.getJSONObject(i).getJSONObject("chatDetail");
                                 /*
                                 Comment Array
                                  */
-                                if(!newsfeedArray.getJSONObject(i).isNull("commentArray")) {
+                                if (!newsfeedArray.getJSONObject(i).isNull("commentArray")) {
                                     JSONArray commentArray = newsfeedArray.getJSONObject(i).getJSONArray("commentArray");
                                     ArrayList<NewsFeedBean> eachCommentArray = new ArrayList<NewsFeedBean>();
-//                                    Log.e("CommentArray", String.valueOf(commentArray.length()) + newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getString("_id"));
+
                                     for (int l = 0; l < commentArray.length(); l++) {
                                         NewsFeedBean commentUserData = new NewsFeedBean();
-                                        Log.e("DataNumber", String.valueOf(l));
+                                        String comment = "";
+
                                         commentUserData.setNewsFeedArray_commentArray_id(commentArray.getJSONObject(l).getString("_id"));
                                         commentUserData.setNewsFeedArray_commentArray_chat_id(commentArray.getJSONObject(l).getString("chat_id"));
                                         commentUserData.setNewsFeedArray_commentArray_newsfeed_id(commentArray.getJSONObject(l).getString("newsfeed_id"));
                                         commentUserData.setNewsFeedArray_commentArray_type(commentArray.getJSONObject(l).getString("type"));
+//                                        comment = commentArray.getJSONObject(l).getString("comment");
+//                                        if(!Utils.isEmptyString(comment))
                                         commentUserData.setNewsFeedArray_commentArray_comment(commentArray.getJSONObject(l).getString("comment"));
+
                                         commentUserData.setNewsFeedArray_commentArray_user_id(commentArray.getJSONObject(l).getString("user_id"));
                                         commentUserData.setNewsFeedArray_commentArray_user_name(commentArray.getJSONObject(l).getString("user_name"));
                                         commentUserData.setNewsFeedArray_commentArray_user_pic(commentArray.getJSONObject(l).getString("user_pic"));
@@ -231,32 +242,30 @@ JSONObject chatObj = newsfeedArray.getJSONObject(i).getJSONObject("chatDetail");
                                 /*
                                 Starred Array
                                  */
-                                if(!newsfeedArray.getJSONObject(i).isNull("starredArray")) {
+                                if (!newsfeedArray.getJSONObject(i).isNull("starredArray")) {
                                     JSONArray starredArray = newsfeedArray.getJSONObject(i).getJSONArray("starredArray");
                                     ArrayList<NewsFeedBean> eachStarredArray = new ArrayList<NewsFeedBean>();
                                     for (int k = 0; k < starredArray.length(); k++) {
                                         NewsFeedBean starredUserData = new NewsFeedBean();
                                         starredUserData.setNewsFeedArray_starredArray_id(starredArray.getJSONObject(k).getString("_id"));
                                         starredUserData.setNewsFeedArray_starredArray_user_name(starredArray.getJSONObject(k).getString("user_name"));
-                                        Log.e("user_name", starredArray.getJSONObject(k).getString("user_name"));
+
                                         eachStarredArray.add(starredUserData);
                                     }
                                     allNewsFeed.setStarredArrayList(eachStarredArray);
                                 }
-                                    allNewsFeed.setNewsfeedArray_created(newsfeedArray.getJSONObject(i).getString("created"));
-                                    allNewsFeed.setNewsfeedArray_modified(newsfeedArray.getJSONObject(i).getString("modified"));
+                                allNewsFeed.setNewsfeedArray_created(newsfeedArray.getJSONObject(i).getString("created"));
+                                allNewsFeed.setNewsfeedArray_modified(newsfeedArray.getJSONObject(i).getString("modified"));
 
                                 /*
                                 Reciever Details
                                  */
-                                if(!newsfeedArray.getJSONObject(i).isNull("receiverDetail")) {
+                                if (!newsfeedArray.getJSONObject(i).isNull("receiverDetail")) {
                                     allNewsFeed.setNewsFeedArray_receiverDetail_id(newsfeedArray.getJSONObject(i).getJSONObject("receiverDetail").getString("_id"));
                                     allNewsFeed.setNewsFeedArray_receiverDetail_name(newsfeedArray.getJSONObject(i).getJSONObject("receiverDetail").getString("name"));
                                     allNewsFeed.setNewsFeedArray_receiverDetail_user_pic(newsfeedArray.getJSONObject(i).getJSONObject("receiverDetail").getString("user_pic"));
                                     allNewsFeed.setNewsFeedArray_receiverDetail_phno(newsfeedArray.getJSONObject(i).getJSONObject("receiverDetail").getString("phone_no"));
-                                }
-                                else
-                                {
+                                } else {
                                     allNewsFeed.setNewsFeedArray_receiverDetail_id("");
                                     allNewsFeed.setNewsFeedArray_receiverDetail_name("");
                                     allNewsFeed.setNewsFeedArray_receiverDetail_phno("");
@@ -264,16 +273,17 @@ JSONObject chatObj = newsfeedArray.getJSONObject(i).getJSONObject("chatDetail");
                                  /*
                                 Sender Details
                                  */
-                                if(!newsfeedArray.getJSONObject(i).isNull("senderDetail")) {
-                                    Log.e("sender id",newsfeedArray.getJSONObject(i).getJSONObject("senderDetail").getString("_id"));
-                                    if(!newsfeedArray.getJSONObject(i).getJSONObject("senderDetail").getString("_id").equalsIgnoreCase("null")) {
+                                if (!newsfeedArray.getJSONObject(i).isNull("senderDetail")) {
+
+                                    if (!newsfeedArray.getJSONObject(i).getJSONObject("senderDetail").getString("_id").equalsIgnoreCase("null")) {
                                         allNewsFeed.setNewsFeedArray_senderDetail_id(newsfeedArray.getJSONObject(i).getJSONObject("senderDetail").getString("_id"));
                                         allNewsFeed.setNewsFeedArray_senderDetail_name(newsfeedArray.getJSONObject(i).getJSONObject("senderDetail").getString("name"));
                                         allNewsFeed.setNewsFeedArray_senderDetail_user_pic(newsfeedArray.getJSONObject(i).getJSONObject("senderDetail").getString("user_pic"));
                                         allNewsFeed.setNewsFeedArray_senderDetail_phno(newsfeedArray.getJSONObject(i).getJSONObject("senderDetail").getString("phone_no"));
 
                                         userFeed.add(allNewsFeed);
-                                        Log.e("userFeed",""+userFeed.size());
+                                        Log.e("userFeed size--->", "" + userFeed.size());
+
                                     }
 
                                 }
@@ -286,16 +296,16 @@ JSONObject chatObj = newsfeedArray.getJSONObject(i).getJSONObject("chatDetail");
 
 
                             }
-                            Log.e("FeedSize-InManager", String.valueOf(userFeed.size()));
+
                             if (state) {
                                 EventBus.getDefault().post("NewsFeed True");
                             }
                         } catch (JSONException e) {
                             EventBus.getDefault().post("NewsFeed False");
+                            Log.e("new feed false-->", "new feed false-->");
                             e.printStackTrace();
                         }
 
-                        //Log.i("Id",userFeed.get(0).getFollowerList().get(1).getNewsFeedArray_follower_user_id_$id());
 
                     }
 
@@ -305,10 +315,7 @@ JSONObject chatObj = newsfeedArray.getJSONObject(i).getJSONObject("chatDetail");
     }
 
 
-    @Override
     public void fetchFbFriends(String accessToken, String phone, String usertoken) {
-        profilemanager = ModelManager.getInstance().getProfileManager();
-        authManager = ModelManager.getInstance().getAuthorizationManager();
         JSONObject userInputDetails = new JSONObject();
         try {
             userInputDetails.put("phone_no", phone);
@@ -316,34 +323,34 @@ JSONObject chatObj = newsfeedArray.getJSONObject(i).getJSONObject("chatDetail");
             userInputDetails.put("access_token", accessToken);
 
 
-            client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
-            se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,"application/json"));
-            Log.e("suserInputDetailse-CHANGEVISIBILITY-> ", "" + userInputDetails);
+            se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+
 
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        client.post(null, APIs.FETCHFBFRIENDS, se, "application/json",
+        ClickinRestClient.post(null, APIs.FETCHFBFRIENDS, se, "application/json",
                 new JsonHttpResponseHandler() {
                     @Override
                     public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
                         super.onFailure(statusCode, e, errorResponse);
-                        System.out.println("errorResponse--> " + errorResponse);
+
                         if (errorResponse != null) {
                             EventBus.getDefault().post("FetchFbFriend false");
                         } else {
                             EventBus.getDefault().post("FetchFbFriend Network Error");
                         }
                     }
+
                     @Override
                     public void onSuccess(int statusCode, org.apache.http.Header[] headers, JSONObject response) {
                         super.onSuccess(statusCode, headers, response);
                         boolean success = false;
                         try {
-                            System.out.println("response--> " + response);
+
                             success = response.getBoolean("success");
-                            profilemanager.currentClickerList.clear();
+                            ModelManager.getInstance().getProfileManager().currentClickerListFB.clear();
                             if (success) {
                                 JSONArray list = response.getJSONArray("fbfriends");
                                 for (int i = 0; i < list.length(); i++) {
@@ -353,22 +360,24 @@ JSONObject chatObj = newsfeedArray.getJSONObject(i).getJSONObject("chatDetail");
                                     currentClickerBean.setName(data.getString("fb_name"));
                                     currentClickerBean.setGetClickerPhone(data.getString("phone_no"));
 
-                                    String picUrl= null;
-                                    picUrl =  (data.getString("fb_user_pic_url")).replace("http:", "https:");
+                                    String picUrl = null;
+                                    picUrl = (data.getString("fb_user_pic_url")).replace("http:", "https:");
                                     currentClickerBean.setClickerPix(picUrl);
-                                    if(data.has("follow_status")) {
+                                    if (data.has("follow_status")) {
                                         if (data.getString("follow_status").matches("pending")) {
                                             currentClickerBean.setFollow(1);
                                         } else {
                                             currentClickerBean.setFollow(0);
                                         }
-                                    }else{
+                                    } else {
                                         currentClickerBean.setFollow(0);
                                     }
 
-                                    profilemanager.currentClickerList.add(currentClickerBean);
+                                    ModelManager.getInstance().getProfileManager().currentClickerListFB.add(currentClickerBean);
                                 }
                                 EventBus.getDefault().post("FetchFbFriend True");
+                            } else {
+                                EventBus.getDefault().post("FetchFbFriend false");
                             }
 
                         } catch (JSONException e) {
@@ -381,8 +390,8 @@ JSONObject chatObj = newsfeedArray.getJSONObject(i).getJSONObject("chatDetail");
         );
     }
 
-    @Override
-    public void saveStarComment(String phone,String user_token, String newsfeedsId,  String comment, String type) {
+
+    public void saveStarComment(String phone, String user_token, String newsfeedsId, String comment, String type) {
         JSONObject userInputDetails = new JSONObject();
         try {
             userInputDetails.put("phone_no", phone);
@@ -392,16 +401,15 @@ JSONObject chatObj = newsfeedArray.getJSONObject(i).getJSONObject("chatDetail");
             userInputDetails.put("type", type);
 
 
-            client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,
                     "application/json"));
 
-            System.out.println(userInputDetails);
+
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        client.post(null, APIs.SAVESTARCOMMENT, se, "application/json",
+        ClickinRestClient.post(null, APIs.SAVESTARCOMMENT, se, "application/json",
                 new JsonHttpResponseHandler() {
 
                     @Override
@@ -410,7 +418,7 @@ JSONObject chatObj = newsfeedArray.getJSONObject(i).getJSONObject("chatDetail");
                         super.onFailure(statusCode, e, errorResponse);
 
                         if (errorResponse != null) {
-                            Log.e("errorResponse", "->" + errorResponse);
+
                             EventBus.getDefault().post("SaveStarComment False");
                         } else {
                             EventBus.getDefault().post("SaveStarComment Network Error");
@@ -424,13 +432,11 @@ JSONObject chatObj = newsfeedArray.getJSONObject(i).getJSONObject("chatDetail");
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            Log.e(TAG, "response SaveStarComment ->" + response);
-                           state = response.getBoolean("success");
+
+                            state = response.getBoolean("success");
                             if (state) {
                                 EventBus.getDefault().post("SaveStarComment True");
-                            }
-                            else
-                            {
+                            } else {
                                 EventBus.getDefault().post("SaveStarComment False");
                             }
                         } catch (JSONException e) {
@@ -438,11 +444,11 @@ JSONObject chatObj = newsfeedArray.getJSONObject(i).getJSONObject("chatDetail");
                             e.printStackTrace();
                         }
                     }
-                });
+                }
+        );
     }
 
-    public void fetchCommentStars(String phone_no, String user_token, String lastId, String newsfeedId,String type) {
-        authManager = ModelManager.getInstance().getAuthorizationManager();
+    public void fetchCommentStars(String phone_no, String user_token, String lastId, String newsfeedId, String type) {
         JSONObject userInputDetails = new JSONObject();
         try {
             userInputDetails.put("phone_no", phone_no);
@@ -451,14 +457,13 @@ JSONObject chatObj = newsfeedArray.getJSONObject(i).getJSONObject("chatDetail");
             userInputDetails.put("newsfeed_id", newsfeedId);
             userInputDetails.put("type", type);
 
-            client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            Log.e(TAG, "FetchCommentStatus-->" + userInputDetails);
+
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        client.post(null, APIs.FETCHCOMMENTSTATUS, se, "application/json",
+        ClickinRestClient.post(null, APIs.FETCHCOMMENTSTATUS, se, "application/json",
                 new JsonHttpResponseHandler() {
 
                     @Override
@@ -477,7 +482,7 @@ JSONObject chatObj = newsfeedArray.getJSONObject(i).getJSONObject("chatDetail");
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            Log.e(TAG, "response FetchCommentStatus ->" + response);
+
                             state = response.getBoolean("success");
                             JSONArray recordsArray = response.getJSONArray("records");
                             feedStarsList.clear();
@@ -492,24 +497,25 @@ JSONObject chatObj = newsfeedArray.getJSONObject(i).getJSONObject("chatDetail");
                                 feedStars.setUserName(recordsArray.getJSONObject(i).getString("user_name"));
                                 feedStars.setUserPic(recordsArray.getJSONObject(i).getString("user_pic"));
                                 if (recordsArray.getJSONObject(i).getJSONObject("modified").has("sec"))
-                                    Log.e("sec",recordsArray.getJSONObject(i).getJSONObject("modified").getString("sec"));
+
                                     feedStars.setcreated_sec(recordsArray.getJSONObject(i).getJSONObject("modified").getString("sec"));
 
                                 if (recordsArray.getJSONObject(i).getJSONObject("modified").has("usec"))
                                     feedStars.setcreated_usec(recordsArray.getJSONObject(i).getJSONObject("modified").getString("usec"));
-                                if(!recordsArray.getJSONObject(i).isNull("is_user_in_relation"))
+                                if (!recordsArray.getJSONObject(i).isNull("is_user_in_relation"))
                                     feedStars.setIs_user_in_relation(recordsArray.getJSONObject(i).getInt("is_user_in_relation"));
-                                if(!recordsArray.getJSONObject(i).isNull("is_user_follower"))
+                                if (!recordsArray.getJSONObject(i).isNull("is_user_follower"))
                                     feedStars.setIs_user_follower(recordsArray.getJSONObject(i).getInt("is_user_follower"));
-                                if(!recordsArray.getJSONObject(i).isNull("is_user_follower_acceptance"))
+                                if (!recordsArray.getJSONObject(i).isNull("is_user_follower_acceptance"))
                                     feedStars.setIs_user_follower_acceptance(recordsArray.getJSONObject(i).getString("is_user_follower_acceptance"));
-                                if(!recordsArray.getJSONObject(i).isNull("is_user_following_acceptance"))
+                                if (!recordsArray.getJSONObject(i).isNull("is_user_following_acceptance"))
                                     feedStars.setIs_user_following_acceptance(recordsArray.getJSONObject(i).getString("is_user_following_acceptance"));
-                                if(!recordsArray.getJSONObject(i).isNull("is_user_following"))
+                                if (!recordsArray.getJSONObject(i).isNull("is_user_following"))
                                     feedStars.setIs_user_following(recordsArray.getJSONObject(i).getInt("is_user_following"));
-                                if(!recordsArray.getJSONObject(i).isNull("is_user_in_relation_acceptance"))
+                                if (!recordsArray.getJSONObject(i).isNull("is_user_in_relation_acceptance"))
+
                                     feedStars.setIs_user_in_relation_acceptance(recordsArray.getJSONObject(i).getString("is_user_in_relation_acceptance"));
-                                if(!recordsArray.getJSONObject(i).isNull("comment"))
+                                if (!recordsArray.getJSONObject(i).isNull("comment"))
                                     feedStars.setComment(recordsArray.getJSONObject(i).getString("comment"));
                                 feedStarsList.add(feedStars);
                             }
@@ -530,21 +536,19 @@ JSONObject chatObj = newsfeedArray.getJSONObject(i).getJSONObject("chatDetail");
 
 
     public void newFeedDelete(String phone_no, String user_token, String newsfeedId) {
-        authManager = ModelManager.getInstance().getAuthorizationManager();
         JSONObject userInputDetails = new JSONObject();
         try {
             userInputDetails.put("phone_no", phone_no);
             userInputDetails.put("user_token", user_token);
             userInputDetails.put("newsfeed_id", newsfeedId);
 
-                    client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            Log.e(TAG, "NewsFeedDelete-->" + userInputDetails);
+
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        client.post(null, APIs.DELETENEWSFEED, se, "application/json",
+        ClickinRestClient.post(null, APIs.DELETENEWSFEED, se, "application/json",
                 new JsonHttpResponseHandler() {
 
                     @Override
@@ -562,7 +566,7 @@ JSONObject chatObj = newsfeedArray.getJSONObject(i).getJSONObject("chatDetail");
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            Log.e(TAG, "response NewsFeedDelete ->" + response);
+
                             state = response.getBoolean("success");
                             if (state) {
 
@@ -581,23 +585,20 @@ JSONObject chatObj = newsfeedArray.getJSONObject(i).getJSONObject("chatDetail");
     }
 
 
-
     public void reportInAppropriate(String phone_no, String user_token, String newsfeedId) {
-        authManager = ModelManager.getInstance().getAuthorizationManager();
         JSONObject userInputDetails = new JSONObject();
         try {
             userInputDetails.put("phone_no", phone_no);
             userInputDetails.put("user_token", user_token);
             userInputDetails.put("newsfeed_id", newsfeedId);
 
-                    client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            Log.e(TAG, "ReportInAppReporte-->" + userInputDetails);
+
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        client.post(null, APIs.REPORTINAPPROPRIATE, se, "application/json",
+        ClickinRestClient.post(null, APIs.REPORTINAPPROPRIATE, se, "application/json",
                 new JsonHttpResponseHandler() {
 
                     @Override
@@ -615,7 +616,7 @@ JSONObject chatObj = newsfeedArray.getJSONObject(i).getJSONObject("chatDetail");
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            Log.e(TAG, "response ReportInAppReporte ->" + response);
+
                             state = response.getBoolean("success");
                             if (state) {
 
@@ -635,21 +636,19 @@ JSONObject chatObj = newsfeedArray.getJSONObject(i).getJSONObject("chatDetail");
 
 
     public void unStarredNewsFeed(String phone_no, String user_token, String newsfeedId) {
-        authManager = ModelManager.getInstance().getAuthorizationManager();
         JSONObject userInputDetails = new JSONObject();
         try {
             userInputDetails.put("phone_no", phone_no);
             userInputDetails.put("user_token", user_token);
             userInputDetails.put("newsfeed_id", newsfeedId);
 
-            client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            Log.e(TAG, "UnStarredNewsFeed-->" + userInputDetails);
+
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        client.post(null, APIs.UNSTARRENDNEWSFEED, se, "application/json",
+        ClickinRestClient.post(null, APIs.UNSTARRENDNEWSFEED, se, "application/json",
                 new JsonHttpResponseHandler() {
 
                     @Override
@@ -667,7 +666,7 @@ JSONObject chatObj = newsfeedArray.getJSONObject(i).getJSONObject("chatDetail");
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            Log.e(TAG, "response UnStarredNewsFeed ->" + response);
+
                             state = response.getBoolean("success");
                             if (state) {
 
@@ -685,10 +684,272 @@ JSONObject chatObj = newsfeedArray.getJSONObject(i).getJSONObject("chatDetail");
     }
 
 
+    public void ViewNewsFeed(String lastNewsfeedId, String phone, String usertoken) {
+        // TODO Auto-generated method stub
+        JSONObject userInputDetails = new JSONObject();
+        try {
+            userInputDetails.put("phone_no", phone);
+            userInputDetails.put("user_token", usertoken);
+            userInputDetails.put("newsfeed_id", lastNewsfeedId);
 
-    private void triggerObservers(String success) {
 
-        setChanged();
-        notifyObservers(success);
+            se = new StringEntity(userInputDetails.toString());
+            se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE,
+                    "application/json"));
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        ClickinRestClient.post(null, APIs.VIEWFEED, se, "application/json",
+                new JsonHttpResponseHandler() {
+
+                    @Override
+                    public void onFailure(int statusCode, Throwable e,
+                                          JSONObject errorResponse) {
+                        super.onFailure(statusCode, e, errorResponse);
+                        PostFeed.clear();
+                        if (errorResponse != null) {
+
+                            EventBus.getDefault().post("NewsFeed False");
+                        } else {
+                            EventBus.getDefault().post("NewsFeed Network Error");
+                        }
+                    }
+
+                    @Override
+                    public void onSuccess(int statusCode,
+                                          org.apache.http.Header[] headers,
+                                          JSONObject response) {
+                        super.onSuccess(statusCode, headers, response);
+                        boolean state = false;
+                        try {
+
+
+                            state = response.getBoolean("success");
+                            /*if (state) {
+
+								triggerObservers("News Feed True");
+							}*/
+
+                            JSONArray newsfeedArray = response.getJSONArray("newsfeedArray");
+                            PostFeed.clear();
+
+                            for (int i = 0; i < newsfeedArray.length(); i++) {
+                                NewsFeedBean allNewsFeed = new NewsFeedBean();
+
+                                allNewsFeed.setNewsfeedArray_id(newsfeedArray.getJSONObject(i).getString("_id"));
+                                allNewsFeed.setNewsfeedArray_user_id(newsfeedArray.getJSONObject(i).getString("user_id"));
+                                allNewsFeed.setNewsfeedArray_newsfeed_msg(newsfeedArray.getJSONObject(i).getString("newsfeed_msg"));
+                                allNewsFeed.setNewsfeedArray_read(newsfeedArray.getJSONObject(i).getString("read"));
+                                /*
+                                Follower_user_id Array
+                                 */
+                                JSONArray followerUserId = newsfeedArray.getJSONObject(i).getJSONArray("follower_user_id");
+                                ArrayList<NewsFeedBean> followerArray = new ArrayList<NewsFeedBean>();
+                                for (int j = 0; j < followerUserId.length(); j++) {
+                                    NewsFeedBean followerUserData = new NewsFeedBean();
+                                    followerUserData.setNewsFeedArray_follower_user_id_$id(followerUserId.getJSONObject(j).getJSONObject("_id").getString("$id"));
+                                    followerUserData.setNewsFeedArray_follower_user_id_user_id(followerUserId.getJSONObject(j).getString("user_id"));
+                                    followerArray.add(followerUserData);
+                                }
+                                allNewsFeed.setFollowerList(followerArray);
+
+                                if (newsfeedArray.getJSONObject(i).has("stars_count"))
+                                    allNewsFeed.setNewsfeedArray_stars_count(newsfeedArray.getJSONObject(i).getInt("stars_count"));
+
+                                if (newsfeedArray.getJSONObject(i).has("comments_count"))
+                                    allNewsFeed.setNewsfeedArray_comments_count(newsfeedArray.getJSONObject(i).getInt("comments_count"));
+
+                                if (newsfeedArray.getJSONObject(i).has("user_starred"))
+                                    allNewsFeed.setNewsfeedArray_user_starred(newsfeedArray.getJSONObject(i).getString("user_starred"));
+
+                                if (newsfeedArray.getJSONObject(i).has("user_commented"))
+                                    allNewsFeed.setNewsfeedArray_user_commented(newsfeedArray.getJSONObject(i).getString("user_commented"));
+
+                                /*
+                                chatDetail
+                                 */
+//                                if (!Utils.isEmptyString(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").toString())) {
+                                if (!newsfeedArray.getJSONObject(i).isNull("chatDetail")) {
+
+                                    JSONObject chatObj = newsfeedArray.getJSONObject(i).getJSONObject("chatDetail");
+                                    if (chatObj.has("QB_id"))
+                                        allNewsFeed.setNewsFeedArray_chatDetail_QB_id(chatObj.getString("QB_id"));
+                                    if (newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").has("QB_id"))
+                                        allNewsFeed.setNewsFeedArray_chatDetail_QB_id(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getString("QB_id"));
+
+                                    if (newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").has("_id"))
+                                        allNewsFeed.setNewsFeedArray_chatDetail_id(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getString("_id"));
+
+                                    if (!newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").isNull("cards")) {
+                                        if (newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").has("cards"))
+                                            allNewsFeed.setNewsFeedArray_chatDetail_cards(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getJSONArray("cards"));
+                                    }
+                                    if (newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").has("chatId"))
+                                        allNewsFeed.setNewsFeedArray_chatDetail_chatId(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getString("chatId"));
+
+                                    if (newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").has("clicks"))
+                                        allNewsFeed.setNewsFeedArray_chatDetail_clicks(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getString("clicks"));
+
+
+                                    if (newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").has("comments_count"))
+                                        allNewsFeed.setNewsFeedArray_chatDetail_comments_count(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getString("comments_count"));
+
+                                    if (newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").has("content"))
+                                        allNewsFeed.setNewsFeedArray_chatDetail_content(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getString("content"));
+
+                                    if (newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getJSONObject("created").has("sec"))
+                                        allNewsFeed.setNewsFeedArray_chatDetail_created_sec(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getJSONObject("created").getString("sec"));
+
+                                    if (newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getJSONObject("created").has("usec"))
+                                        allNewsFeed.setNewsFeedArray_chatDetail_created_usec(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getJSONObject("created").getString("usec"));
+
+                                    if (!newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").isNull("deliveredChatID")) {
+                                        allNewsFeed.setNewsFeedArray_chatDetail_delieveredChatId(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getString("delieveredChatId"));
+                                    } else {
+                                        allNewsFeed.setNewsFeedArray_chatDetail_delieveredChatId("");
+                                    }
+
+
+                                    if (newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").has("imageRatio"))
+                                        allNewsFeed.setNewsFeedArray_chatDetail_imageRatio(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getString("imageRatio"));
+
+                                    if (newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").has("isDelivered"))
+                                        allNewsFeed.setNewsFeedArray_chatDetail_isDelievered(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getString("isDelivered"));
+
+                                    if (newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").has("location_coordinates"))
+                                        allNewsFeed.setNewsFeedArray_chatDetail_location_coordinates(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getString("location_coordinates"));
+
+                                    if (newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").has("message"))
+                                        allNewsFeed.setNewsFeedArray_chatDetail_message(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getString("message"));
+
+                                    if (newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getJSONObject("modified").has("sec"))
+                                        allNewsFeed.setNewsFeedArray_chatDetail_modified_sec(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getJSONObject("modified").getString("sec"));
+
+                                    if (newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getJSONObject("modified").has("usec"))
+                                        allNewsFeed.setNewsFeedArray_chatDetail_modified_usec(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getJSONObject("modified").getString("usec"));
+
+                                    if (newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").has("relationshipId"))
+                                        allNewsFeed.setNewsFeedArray_chatDetail_relationshipId(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getString("relationshipId"));
+
+                                    if (newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").has("senderUserToken"))
+                                        allNewsFeed.setNewsFeedArray_chatDetail_senderUserToken(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getString("senderUserToken"));
+
+                                    if (newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").has("sentOn"))
+                                        allNewsFeed.setNewsFeedArray_chatDetail_sentOn(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getString("sentOn"));
+
+                                    if (newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").has("sharedMessage"))
+                                        allNewsFeed.setNewsFeedArray_chatDetail_sharedMessage(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getString("sharedMessage"));
+
+                                    if (newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").has("stars_count"))
+                                        allNewsFeed.setNewsFeedArray_chatDetail_stars_count(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getString("stars_count"));
+
+                                    if (newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").has("type"))
+                                        allNewsFeed.setNewsFeedArray_chatDetail_type(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getString("type"));
+
+                                    if (newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").has("userId"))
+                                        allNewsFeed.setNewsFeedArray_chatDetail_userId(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getString("userId"));
+
+                                    if (newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").has("video_thumb"))
+                                        allNewsFeed.setNewsFeedArray_chatDetail_video_thumb(newsfeedArray.getJSONObject(i).getJSONObject("chatDetail").getString("video_thumb"));
+                                }
+
+                                /*
+                                Comment Array
+                                 */
+                                if (!newsfeedArray.getJSONObject(i).isNull("commentArray")) {
+                                    JSONArray commentArray = newsfeedArray.getJSONObject(i).getJSONArray("commentArray");
+                                    ArrayList<NewsFeedBean> eachCommentArray = new ArrayList<NewsFeedBean>();
+
+                                    for (int l = 0; l < commentArray.length(); l++) {
+                                        NewsFeedBean commentUserData = new NewsFeedBean();
+                                        String comment = "";
+
+                                        commentUserData.setNewsFeedArray_commentArray_id(commentArray.getJSONObject(l).getString("_id"));
+                                        commentUserData.setNewsFeedArray_commentArray_chat_id(commentArray.getJSONObject(l).getString("chat_id"));
+                                        commentUserData.setNewsFeedArray_commentArray_newsfeed_id(commentArray.getJSONObject(l).getString("newsfeed_id"));
+                                        commentUserData.setNewsFeedArray_commentArray_type(commentArray.getJSONObject(l).getString("type"));
+//                                        comment = commentArray.getJSONObject(l).getString("comment");
+//                                        if(!Utils.isEmptyString(comment))
+                                        commentUserData.setNewsFeedArray_commentArray_comment(commentArray.getJSONObject(l).getString("comment"));
+
+                                        commentUserData.setNewsFeedArray_commentArray_user_id(commentArray.getJSONObject(l).getString("user_id"));
+                                        commentUserData.setNewsFeedArray_commentArray_user_name(commentArray.getJSONObject(l).getString("user_name"));
+                                        commentUserData.setNewsFeedArray_commentArray_user_pic(commentArray.getJSONObject(l).getString("user_pic"));
+                                        commentUserData.setNewsFeedArray_commentArray_modified_sec(commentArray.getJSONObject(l).getJSONObject("modified").getString("sec"));
+                                        commentUserData.setNewsFeedArray_commentArray_modified_usec(commentArray.getJSONObject(l).getJSONObject("modified").getString("usec"));
+                                        commentUserData.setNewsFeedArray_commentArray_created_sec(commentArray.getJSONObject(l).getJSONObject("created").getString("sec"));
+                                        commentUserData.setNewsFeedArray_commentArray_created_usec(commentArray.getJSONObject(l).getJSONObject("created").getString("usec"));
+
+                                        eachCommentArray.add(commentUserData);
+                                    }
+                                    allNewsFeed.setCommentArrayList(eachCommentArray);
+                                }
+                                /*
+                                Starred Array
+                                 */
+                                if (!newsfeedArray.getJSONObject(i).isNull("starredArray")) {
+                                    JSONArray starredArray = newsfeedArray.getJSONObject(i).getJSONArray("starredArray");
+                                    ArrayList<NewsFeedBean> eachStarredArray = new ArrayList<NewsFeedBean>();
+                                    for (int k = 0; k < starredArray.length(); k++) {
+                                        NewsFeedBean starredUserData = new NewsFeedBean();
+                                        starredUserData.setNewsFeedArray_starredArray_id(starredArray.getJSONObject(k).getString("_id"));
+                                        starredUserData.setNewsFeedArray_starredArray_user_name(starredArray.getJSONObject(k).getString("user_name"));
+
+                                        eachStarredArray.add(starredUserData);
+                                    }
+                                    allNewsFeed.setStarredArrayList(eachStarredArray);
+                                }
+                                allNewsFeed.setNewsfeedArray_created(newsfeedArray.getJSONObject(i).getString("created"));
+                                allNewsFeed.setNewsfeedArray_modified(newsfeedArray.getJSONObject(i).getString("modified"));
+
+                                /*
+                                Reciever Details
+                                 */
+                                if (!newsfeedArray.getJSONObject(i).isNull("receiverDetail")) {
+                                    allNewsFeed.setNewsFeedArray_receiverDetail_id(newsfeedArray.getJSONObject(i).getJSONObject("receiverDetail").getString("_id"));
+                                    allNewsFeed.setNewsFeedArray_receiverDetail_name(newsfeedArray.getJSONObject(i).getJSONObject("receiverDetail").getString("name"));
+                                    allNewsFeed.setNewsFeedArray_receiverDetail_user_pic(newsfeedArray.getJSONObject(i).getJSONObject("receiverDetail").getString("user_pic"));
+                                    allNewsFeed.setNewsFeedArray_receiverDetail_phno(newsfeedArray.getJSONObject(i).getJSONObject("receiverDetail").getString("phone_no"));
+                                } else {
+                                    allNewsFeed.setNewsFeedArray_receiverDetail_id("");
+                                    allNewsFeed.setNewsFeedArray_receiverDetail_name("");
+                                    allNewsFeed.setNewsFeedArray_receiverDetail_phno("");
+                                }
+                                 /*
+                                Sender Details
+                                 */
+                                if (!newsfeedArray.getJSONObject(i).isNull("senderDetail")) {
+
+                                    if (!newsfeedArray.getJSONObject(i).getJSONObject("senderDetail").getString("_id").equalsIgnoreCase("null")) {
+                                        allNewsFeed.setNewsFeedArray_senderDetail_id(newsfeedArray.getJSONObject(i).getJSONObject("senderDetail").getString("_id"));
+                                        allNewsFeed.setNewsFeedArray_senderDetail_name(newsfeedArray.getJSONObject(i).getJSONObject("senderDetail").getString("name"));
+                                        allNewsFeed.setNewsFeedArray_senderDetail_user_pic(newsfeedArray.getJSONObject(i).getJSONObject("senderDetail").getString("user_pic"));
+                                        allNewsFeed.setNewsFeedArray_senderDetail_phno(newsfeedArray.getJSONObject(i).getJSONObject("senderDetail").getString("phone_no"));
+
+                                        PostFeed.add(allNewsFeed);
+
+                                    }
+
+                                }
+
+
+                            }
+
+                            if (state) {
+                                EventBus.getDefault().post("NewsFeed True");
+                            }
+                        } catch (JSONException e) {
+                            EventBus.getDefault().post("NewsFeed False");
+                            e.printStackTrace();
+                        }
+
+
+                    }
+
+                }
+        );
+
     }
+
+
 }

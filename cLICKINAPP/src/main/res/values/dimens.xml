@@ -1,10 +1,9 @@
 <resources>
 
     <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
+
     <dimen name="slidingmenu_offset">60dp</dimen>
-    <dimen name="list_padding">10dp</dimen>
+
     <dimen name="shadow_width">15dp</dimen>
 
     <integer name="num_cols">1</integer>
@@ -15,18 +14,5 @@
     <dimen name="feed_margin_bw_imagenname">8dp</dimen>
     <dimen name="feed_image_height">278dp</dimen>
     <dimen name="default_circle_indicator_radius">4dp</dimen>
-
-    <!--Owner Profile-->
-
-    <!--Owner Profile-->
-    <dimen name="owner_profile_header_font">5sp</dimen>
-    <dimen name="owner_profile_name_font">5sp</dimen>
-    <dimen name="owner_profile_address_font">5sp</dimen>
-    <!--List-->
-    <dimen name="owner_relation_header_clickin_font">5sp</dimen>
-    <dimen name="owner_relation_header_with_font">5sp</dimen>
-    <dimen name="owner_relation_partner_name_font">5sp</dimen>
-
-
 
 </resources>

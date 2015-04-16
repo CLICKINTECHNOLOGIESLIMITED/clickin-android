@@ -18,4 +18,4 @@
     <item android:drawable="@drawable/com_facebook_picker_list_pressed"  />
     <item android:drawable="@drawable/com_facebook_picker_list_longpressed"  />
 </transition>
-<!-- From: file:/home/monika/gitcodeClickin/facebookSDK/src/main/res/drawable/com_facebook_picker_list_selector_background_transition.xml --><!-- From: file:/home/monika/gitcodeClickin/cLICKINAPP/build/intermediates/exploded-aar/gitcodeClickin/facebookSDK/unspecified/res/drawable/com_facebook_picker_list_selector_background_transition.xml -->
+<!-- From: file:/monika/latestworkingCLickin/facebookSDK/src/main/res/drawable/com_facebook_picker_list_selector_background_transition.xml --><!-- From: file:/monika/latestworkingCLickin/cLICKINAPP/build/intermediates/exploded-aar/latestworkingCLickin/facebookSDK/unspecified/res/drawable/com_facebook_picker_list_selector_background_transition.xml -->

@@ -162,7 +162,7 @@ public class AppLinkData {
                                 appLinkData.argumentBundle.putString(ARGUMENTS_TAPTIME_KEY, Long.toString(tapTimeUtc));
                             }
                         } catch (JSONException e) {
-                            Log.d(TAG, "Unable to put tap time in AppLinkData.arguments");
+                            android.util.Log.d(TAG, "Unable to put tap time in AppLinkData.arguments");
                         }
                     }
 
@@ -175,7 +175,7 @@ public class AppLinkData {
                                 appLinkData.argumentBundle.putString(ARGUMENTS_NATIVE_CLASS_KEY, appLinkClassName);
                             }
                         } catch (JSONException e) {
-                            Log.d(TAG, "Unable to put tap time in AppLinkData.arguments");
+                            android.util.Log.d(TAG, "Unable to put tap time in AppLinkData.arguments");
                         }
                     }
 
@@ -188,7 +188,7 @@ public class AppLinkData {
                                 appLinkData.argumentBundle.putString(ARGUMENTS_NATIVE_URL, appLinkUrl);
                             }
                         } catch (JSONException e) {
-                            Log.d(TAG, "Unable to put tap time in AppLinkData.arguments");
+                            android.util.Log.d(TAG, "Unable to put tap time in AppLinkData.arguments");
                         }
                     }
                 }
@@ -286,9 +286,9 @@ public class AppLinkData {
                 return appLinkData;
             }
         } catch (JSONException e) {
-            Log.d(TAG, "Unable to parse AppLink JSON", e);
+            android.util.Log.d(TAG, "Unable to parse AppLink JSON", e);
         } catch (FacebookException e) {
-            Log.d(TAG, "Unable to parse AppLink JSON", e);
+            android.util.Log.d(TAG, "Unable to parse AppLink JSON", e);
         }
 
         return null;

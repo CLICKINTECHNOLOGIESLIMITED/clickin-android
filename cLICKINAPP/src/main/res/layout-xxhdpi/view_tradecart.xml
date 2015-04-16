@@ -1,0 +1,378 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:geekui="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/linear_layout_root_viewtradecard"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/c_trans"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/rr_header"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@drawable/backbtnbgstrip">
+
+
+            <LinearLayout
+                android:id="@+id/Linear_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:orientation="horizontal">
+
+
+                <com.sourcefuse.clickinandroid.utils.ClickInTextView
+                    android:id="@+id/textView_clicks"
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="1dp"
+                    android:layout_marginRight="2dp"
+                    android:ellipsize="end"
+                    android:gravity="right"
+                    android:singleLine="true"
+                    android:text="4333"
+                    android:textColor="@color/chat_notification"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
+
+                <ImageView
+                    android:id="@+id/iv_notification"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="4dp"
+                    android:src="@drawable/trade_heart" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/m_back"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="8dp"
+                android:src="@drawable/trade_back"
+                android:visibility="gone" />
+
+
+            <!--<LinearLayout-->
+            <!--android:id="@+id/linear_layout_back"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:background="@drawable/trade_back">-->
+
+            <!--&lt;!&ndash;<ImageView&ndash;&gt;-->
+            <!--&lt;!&ndash;android:id="@+id/m_back"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_height="match_parent"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_alignParentLeft="true"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_marginLeft="3dp"&ndash;&gt;-->
+
+            <!--&lt;!&ndash;android:src="@drawable/back_arrow" />&ndash;&gt;-->
+
+            <!--&lt;!&ndash;<com.sourcefuse.clickinandroid.utils.ClickInTextView&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_width="30dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_height="30dp"&ndash;&gt;-->
+
+            <!--&lt;!&ndash;android:id="@+id/textView1"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:gravity="center"&ndash;&gt;-->
+
+            <!--&lt;!&ndash;android:layout_marginRight="2dp"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:textStyle="bold"&ndash;&gt;-->
+            <!--&lt;!&ndash;geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:layout_gravity="center"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:textColor="#E0E0E0"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:text="BACK"&ndash;&gt;-->
+            <!--&lt;!&ndash;android:textSize="10sp">&ndash;&gt;-->
+
+            <!--&lt;!&ndash;</com.sourcefuse.clickinandroid.utils.ClickInTextView>&ndash;&gt;-->
+
+            <!--</LinearLayout>-->
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/iv_profile"
+            android:layout_width="210dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="70dp"
+            android:background="@drawable/blue_bg">
+
+            <com.sourcefuse.clickinandroid.utils.ClickInTextView
+                android:id="@+id/tv_profile_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="TRADE"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="390dp"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:paddingBottom="25dp"
+            android:paddingTop="12dp"
+
+            >
+
+            <RelativeLayout
+                android:id="@+id/rr_send"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+
+                <ImageView
+                    android:id="@+id/trade_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/c_pinkxhdpi" />
+
+                <TextView
+                    android:id="@+id/trd_clicks_top"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="27dp"
+                    android:layout_marginTop="2.7dp"
+                    android:text=" 0"
+                    android:textColor="@color/white"
+                    android:textSize="39sp"
+                    android:textStyle="bold" />
+
+
+                <TextView
+                    android:id="@+id/trd_clicks_bottom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/trade_image"
+                    android:layout_alignRight="@+id/trade_image"
+                    android:layout_marginBottom="5.3dp"
+                    android:layout_marginRight="63dp"
+                    android:text="0 "
+                    android:textColor="@color/white"
+                    android:textSize="39sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/card_heading"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="40dp"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:paddingRight="5dp"
+                    android:textColor="@color/white"
+                    android:textSize="28sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/card_text12"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginRight="3dp"
+                    android:background="@drawable/c_white"
+                    android:clickable="true"
+                    android:cursorVisible="false"
+                    android:ems="5"
+                    android:gravity="center"
+                    android:hint="\nENTER YOUR TEXT \n HERE"
+                    android:inputType="textMultiLine|textCapWords"
+                    android:minLines="5"
+                    android:singleLine="false"
+                    android:textColor="@color/sign_hint"
+                    android:textColorHint="@color/sign_hint"
+                    android:textStyle="bold"
+
+
+                    />
+            </RelativeLayout>
+
+            <!--<EditText-->
+            <!--android:id="@+id/card_text12"-->
+            <!--android:layout_width="200dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerInParent="true"-->
+            <!--android:background="@drawable/c_white"-->
+            <!--android:gravity="center"-->
+            <!---->
+            <!--android:lines="5"-->
+            <!--android:maxLength="50"-->
+            <!--android:textStyle="bold"-->
+            <!--android:scrollbars="vertical"-->
+            <!--android:inputType="textMultiLine"-->
+            <!--android:hint="ENTER YOUR TEXT \n HERE"-->
+
+            <!--android:singleLine="false"-->
+            <!--android:clickable="true"/>-->
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical"
+        android:weightSum="2">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:orientation="vertical"
+            android:weightSum="1">
+
+            <com.sourcefuse.clickinandroid.utils.ClickInTextView
+                android:id="@+id/custom_card_msg_t"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/btn_layout"
+                android:layout_gravity="top"
+                android:layout_marginLeft="25dp"
+                android:gravity="top"
+                android:text="@string/trade_hint"
+                android:textColor="@color/black"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
+
+
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="2dp"
+                android:layout_weight="0.3"
+                android:orientation="horizontal"
+                android:weightSum="6">
+
+                <com.sourcefuse.clickinandroid.utils.ClickInTextView
+                    android:id="@+id/btn_one"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:layout_marginRight="9dp"
+                    android:layout_toLeftOf="@+id/btn_two"
+                    android:background="@drawable/tab_number_background"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:text="5"
+                    android:textColor="@drawable/card_text_color_state"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
+
+
+                <com.sourcefuse.clickinandroid.utils.ClickInTextView
+                    android:id="@+id/btn_two"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:layout_marginRight="9dp"
+                    android:layout_toLeftOf="@+id/btn_three"
+                    android:background="@drawable/tab_number_background"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:text="10"
+                    android:textColor="@drawable/card_text_color_state"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
+
+                <com.sourcefuse.clickinandroid.utils.ClickInTextView
+                    android:id="@+id/btn_three"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:layout_marginRight="9dp"
+                    android:layout_toLeftOf="@+id/btn_four"
+                    android:background="@drawable/tab_number_background"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:text="15"
+                    android:textColor="@drawable/card_text_color_state"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
+
+                <com.sourcefuse.clickinandroid.utils.ClickInTextView
+                    android:id="@+id/btn_four"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:layout_marginRight="9dp"
+                    android:layout_toLeftOf="@+id/btn_five"
+                    android:background="@drawable/tab_number_background"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:text="20"
+                    android:textColor="@drawable/card_text_color_state"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
+
+                <com.sourcefuse.clickinandroid.utils.ClickInTextView
+                    android:id="@+id/btn_five"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:layout_marginRight="9dp"
+                    android:layout_toLeftOf="@+id/btn_play"
+                    android:background="@drawable/tab_number_background"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:text="25"
+                    android:textColor="@drawable/card_text_color_state"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
+
+                <ImageView
+                    android:id="@+id/btn_play"
+                    android:layout_width="wrap_content"
+                    android:layout_height="31dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="-5dp"
+                    android:layout_marginTop="7dp"
+                    android:background="@drawable/play_button" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

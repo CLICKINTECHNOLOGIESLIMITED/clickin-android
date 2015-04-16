@@ -32,55 +32,33 @@ public class PinnedSecListViewForFeed extends AutoScrollListView {
 
     // -- inner classes
 
-    /**
-     * List adapter to be implemented for being used with PinnedSectionListView
-     * adapter.
-     */
-    public static interface PinnedSectionListAdapter extends ListAdapter {
-        /**
-         * This method shall return 'true' if views of given type has to be
-         * pinned.
-         */
-        boolean isItemViewTypePinned(int position);
-    }
-
-    /** Wrapper class for pinned section view and its position in the list. */
-    static class PinnedSection {
-        public View view;
-        public int position;
-        public long id;
-    }
-
-    // -- class fields
-
     // fields used for handling touch events
     private final Rect mTouchRect = new Rect();
     private final PointF mTouchPoint = new PointF();
-    private int mTouchSlop;
-    private View mTouchTarget;
-    private MotionEvent mDownEvent;
 
-    // fields used for drawing shadow under a pinned section
-    private GradientDrawable mShadowDrawable;
-    private int mSectionsDistanceY;
-    private int mShadowHeight;
-
-    /** Delegating listener, can be null. */
-    OnScrollListener mDelegateOnScrollListener;
-
-    /** Shadow for being recycled, can be null. */
-    PinnedSection mRecycleSection;
-
-    /** shadow instance with a pinned view, can be null. */
-    PinnedSection mPinnedSection;
-
+    // -- class fields
     /**
-     * Pinned view Y-translation. We use it to stick pinned view to the next
-     * section.
+     * Default change observer.
      */
-    int mTranslateY;
+    private final DataSetObserver mDataSetObserver = new DataSetObserver() {
+        @Override
+        public void onChanged() {
+            recreatePinnedShadow();
+        }
 
-    /** Scroll listener which does the magic */
+
+        @Override
+        public void onInvalidated() {
+            recreatePinnedShadow();
+        }
+    };
+    /**
+     * Delegating listener, can be null.
+     */
+    OnScrollListener mDelegateOnScrollListener;
+    /**
+     * Scroll listener which does the magic
+     */
     private final OnScrollListener mOnScrollListener = new OnScrollListener() {
 
         @Override
@@ -126,24 +104,30 @@ public class PinnedSecListViewForFeed extends AutoScrollListView {
                     destroyPinnedShadow();
                 }
             }
-        };
-
-    };
-
-    /** Default change observer. */
-    private final DataSetObserver mDataSetObserver = new DataSetObserver() {
-        @Override
-        public void onChanged() {
-            recreatePinnedShadow();
-        };
-
-        @Override
-        public void onInvalidated() {
-            recreatePinnedShadow();
         }
-    };
 
-    // -- constructors
+
+    };
+    /**
+     * Shadow for being recycled, can be null.
+     */
+    PinnedSection mRecycleSection;
+    /**
+     * shadow instance with a pinned view, can be null.
+     */
+    PinnedSection mPinnedSection;
+    /**
+     * Pinned view Y-translation. We use it to stick pinned view to the next
+     * section.
+     */
+    int mTranslateY;
+    private int mTouchSlop;
+    private View mTouchTarget;
+    private MotionEvent mDownEvent;
+    // fields used for drawing shadow under a pinned section
+    private GradientDrawable mShadowDrawable;
+    private int mSectionsDistanceY;
+    private int mShadowHeight;
 
     public PinnedSecListViewForFeed(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -155,13 +139,20 @@ public class PinnedSecListViewForFeed extends AutoScrollListView {
         initView();
     }
 
+    // -- constructors
+
+    public static boolean isItemViewTypePinned(ListAdapter adapter, int position) {
+        if (adapter instanceof HeaderViewListAdapter) {
+            adapter = ((HeaderViewListAdapter) adapter).getWrappedAdapter();
+        }
+        return ((PinnedSectionListAdapter) adapter).isItemViewTypePinned(position);
+    }
+
     private void initView() {
         setOnScrollListener(mOnScrollListener);
         mTouchSlop = ViewConfiguration.get(getContext()).getScaledTouchSlop();
         initShadow(true);
     }
-
-    // -- public API methods
 
     public void setShadowVisible(boolean visible) {
         initShadow(visible);
@@ -171,12 +162,12 @@ public class PinnedSecListViewForFeed extends AutoScrollListView {
         }
     }
 
-    // -- pinned section drawing methods
+    // -- public API methods
 
     public void initShadow(boolean visible) {
         if (visible) {
             if (mShadowDrawable == null) {
-                mShadowDrawable = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, new int[] { Color.parseColor("#ffa0a0a0"), Color.parseColor("#50a0a0a0"), Color.parseColor("#00a0a0a0") });
+                mShadowDrawable = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, new int[]{Color.parseColor("#ffa0a0a0"), Color.parseColor("#50a0a0a0"), Color.parseColor("#00a0a0a0")});
                 mShadowHeight = (int) (8 * getResources().getDisplayMetrics().density);
             }
         } else {
@@ -187,7 +178,11 @@ public class PinnedSecListViewForFeed extends AutoScrollListView {
         }
     }
 
-    /** Create shadow wrapper with a pinned view for a view at given position */
+    // -- pinned section drawing methods
+
+    /**
+     * Create shadow wrapper with a pinned view for a view at given position
+     */
     void createPinnedShadow(int position) {
 
         // try to recycle shadow
@@ -233,7 +228,9 @@ public class PinnedSecListViewForFeed extends AutoScrollListView {
         mPinnedSection = pinnedShadow;
     }
 
-    /** Destroy shadow wrapper for currently pinned view */
+    /**
+     * Destroy shadow wrapper for currently pinned view
+     */
     void destroyPinnedShadow() {
         if (mPinnedSection != null) {
             // keep shadow for being recycled later
@@ -242,7 +239,9 @@ public class PinnedSecListViewForFeed extends AutoScrollListView {
         }
     }
 
-    /** Makes sure we have an actual pinned shadow for given position. */
+    /**
+     * Makes sure we have an actual pinned shadow for given position.
+     */
     void ensureShadowForPosition(int sectionPosition, int firstVisibleItem, int visibleItemCount) {
         if (visibleItemCount < 2) { // no need for creating shadow at all, we
             // have a single visible item
@@ -418,8 +417,6 @@ public class PinnedSecListViewForFeed extends AutoScrollListView {
         }
     }
 
-    // -- touch handling methods
-
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
 
@@ -477,6 +474,8 @@ public class PinnedSecListViewForFeed extends AutoScrollListView {
         return super.dispatchTouchEvent(ev);
     }
 
+    // -- touch handling methods
+
     private boolean isPinnedViewTouched(View view, float x, float y) {
         view.getHitRect(mTouchRect);
 
@@ -516,18 +515,32 @@ public class PinnedSecListViewForFeed extends AutoScrollListView {
         return false;
     }
 
-    public static boolean isItemViewTypePinned(ListAdapter adapter, int position) {
-        if (adapter instanceof HeaderViewListAdapter) {
-            adapter = ((HeaderViewListAdapter) adapter).getWrappedAdapter();
-        }
-        return ((PinnedSectionListAdapter) adapter).isItemViewTypePinned(position);
-    }
-
     private PinnedSectionListAdapter getPinnedAdapter() {
         PinnedSectionListAdapter adapter;
         if (getAdapter() instanceof WrapperListAdapter)
-            adapter= (PinnedSectionListAdapter) ((WrapperListAdapter)getAdapter()).getWrappedAdapter();
+            adapter = (PinnedSectionListAdapter) ((WrapperListAdapter) getAdapter()).getWrappedAdapter();
         else adapter = (PinnedSectionListAdapter) getAdapter();
         return adapter;
+    }
+
+    /**
+     * List adapter to be implemented for being used with PinnedSectionListView
+     * adapter.
+     */
+    public static interface PinnedSectionListAdapter extends ListAdapter {
+        /**
+         * This method shall return 'true' if views of given type has to be
+         * pinned.
+         */
+        boolean isItemViewTypePinned(int position);
+    }
+
+    /**
+     * Wrapper class for pinned section view and its position in the list.
+     */
+    static class PinnedSection {
+        public View view;
+        public int position;
+        public long id;
     }
 }

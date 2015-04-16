@@ -19,4 +19,4 @@
     android:duration="@android:integer/config_longAnimTime"
     android:fromYDelta="0"
     android:toYDelta="-100%p" />
-<!-- From: file:/Users/NBP/git/Android-PullToRefresh/library/res/anim/slide_out_to_top.xml --><!-- From: file:/home/monika/gitcodeClickin/cLICKINAPP/build/intermediates/exploded-aar/com.navercorp.pulltorefresh/library/3.2.0/res/anim/slide_out_to_top.xml -->
+<!-- From: file:/Users/NBP/git/Android-PullToRefresh/library/res/anim/slide_out_to_top.xml --><!-- From: file:/monika/latestworkingCLickin/cLICKINAPP/build/intermediates/exploded-aar/com.navercorp.pulltorefresh/library/3.2.0/res/anim/slide_out_to_top.xml -->

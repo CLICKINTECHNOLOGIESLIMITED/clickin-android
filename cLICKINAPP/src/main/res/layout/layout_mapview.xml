@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:geekui="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rl_usr_profile"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <fragment
+            android:id="@+id/map"
+            class="com.google.android.gms.maps.MapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            />
+
+        <RelativeLayout
+            android:id="@+id/may_search_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/search_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/white"
+                android:orientation="horizontal">
+
+                <com.sourcefuse.clickinandroid.utils.ClickInEditBox
+                    android:id="@+id/locationText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="13dp"
+                    android:layout_marginTop="13dp"
+                    android:layout_weight="1"
+                    android:background="@color/white"
+                    android:ems="10"
+                    android:gravity="center_vertical"
+                    android:hint="Google"
+                    android:inputType="text"
+                    android:paddingLeft="10dp"
+                    android:singleLine="false"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black"
+                    geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
+
+                <com.sourcefuse.clickinandroid.utils.ClickInTextView
+                    android:id="@+id/searchButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/c_go_orange"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="GO"
+                    android:textColor="@color/white"
+                    android:textSize="20dp"
+                    geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
+
+                />
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/location_list"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/search_layout"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@color/white"
+                android:scrollbars="none" />
+
+
+            <com.sourcefuse.clickinandroid.utils.ClickInTextView
+                android:id="@+id/markerImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:adjustViewBounds="true"
+                android:background="@color/search_text_color"
+                android:paddingBottom="5dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="5dp"
+                android:text="SHARE LOCATION"
+                android:textColor="@color/white"
+                android:textSize="18dp"
+                geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
+
+        </RelativeLayout>
+    </FrameLayout>
+</LinearLayout>

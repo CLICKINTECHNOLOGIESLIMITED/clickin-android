@@ -1,8 +1,5 @@
 package com.sourcefuse.clickinandroid.view.adapter;
 
-import java.util.Arrays;
-import java.util.Comparator;
-
 import android.content.Context;
 import android.database.DataSetObserver;
 import android.graphics.Typeface;
@@ -17,46 +14,29 @@ import android.widget.TextView;
 
 import com.sourcefuse.clickinandroid.utils.Constants;
 
+import java.util.Arrays;
+import java.util.Comparator;
+
 import dev.dworks.libs.astickyheader.ui.PinnedSectionListView.PinnedSectionListAdapter;
 
 
-
-public class SimpleSectionedListAdapter1 extends BaseAdapter implements PinnedSectionListAdapter{
+public class SimpleSectionedListAdapter1 extends BaseAdapter implements PinnedSectionListAdapter {
+    Context mContext;
     private boolean mValid = true;
     private int mSectionResourceId;
     private LayoutInflater mLayoutInflater;
     private ListAdapter mBaseAdapter;
     private SparseArray<Section> mSections = new SparseArray<Section>();
-	private int mHeaderTextViewResId;
-	private int mHeaderTextViewResId1;
-	private Typeface typeface;
-
-	Context mContext;
-	
-    public static class Section {
-        int firstPosition;
-        int sectionedPosition;
-        CharSequence title;
-        CharSequence title2;
-        
-        public Section(int firstPosition, CharSequence title,CharSequence title2) {
-            this.firstPosition = firstPosition;
-            this.title = title;
-            this.title2 =title2;
-            
-        }
-
-        public CharSequence getTitle() {
-            return title;
-        }
-    }
+    private int mHeaderTextViewResId;
+    private int mHeaderTextViewResId1;
+    private Typeface typeface;
 
     public SimpleSectionedListAdapter1(Context context, BaseAdapter baseAdapter, int sectionResourceId, int headerTextViewResId, int header1) {
         mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        mContext =context;
+        mContext = context;
         mSectionResourceId = sectionResourceId;
         mHeaderTextViewResId = headerTextViewResId;
-        
+
         mHeaderTextViewResId1 = header1;
         mBaseAdapter = baseAdapter;
         mBaseAdapter.registerDataSetObserver(new DataSetObserver() {
@@ -74,7 +54,6 @@ public class SimpleSectionedListAdapter1 extends BaseAdapter implements PinnedSe
         });
     }
 
-    
     public void setSections(Section[] sections) {
         mSections.clear();
 
@@ -169,7 +148,7 @@ public class SimpleSectionedListAdapter1 extends BaseAdapter implements PinnedSe
 
     @Override
     public boolean areAllItemsEnabled() {
-    	return mBaseAdapter.areAllItemsEnabled();
+        return mBaseAdapter.areAllItemsEnabled();
     }
 
     @Override
@@ -185,23 +164,21 @@ public class SimpleSectionedListAdapter1 extends BaseAdapter implements PinnedSe
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (isSectionHeaderPosition(position)) {
-        	TextView view,view1;
-        	if(null == convertView){
-        		convertView = mLayoutInflater.inflate(mSectionResourceId, parent, false);
-        	}
-        	else{
-        		if(null == convertView.findViewById(mHeaderTextViewResId)){
-        			convertView = mLayoutInflater.inflate(mSectionResourceId, parent, false);	
-        		}
-        		
-        	}
-        	typeface = Typeface.createFromAsset(mContext.getAssets(),Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
+            TextView view, view1;
+            if (null == convertView) {
+                convertView = mLayoutInflater.inflate(mSectionResourceId, parent, false);
+            } else {
+                if (null == convertView.findViewById(mHeaderTextViewResId)) {
+                    convertView = mLayoutInflater.inflate(mSectionResourceId, parent, false);
+                }
+
+            }
+            typeface = Typeface.createFromAsset(mContext.getAssets(), Constants.FONT_FILE_PATH_AVENIRNEXTLTPRO_MEDIUMCN);
             view = (TextView) convertView.findViewById(mHeaderTextViewResId);
-            view1 = (TextView)convertView.findViewById(mHeaderTextViewResId1);
-            view.setTypeface(typeface, typeface.BOLD);
-    		view1.setTypeface(typeface);
-            
-           
+            view1 = (TextView) convertView.findViewById(mHeaderTextViewResId1);
+            view1.setTypeface(typeface);
+
+
             view.setText(mSections.get(position).title);
             view1.setText(mSections.get(position).title2);
             return convertView;
@@ -211,8 +188,26 @@ public class SimpleSectionedListAdapter1 extends BaseAdapter implements PinnedSe
         }
     }
 
-	@Override
-	public boolean isItemViewTypePinned(int position) {
-		return isSectionHeaderPosition(position);
-	}
+    @Override
+    public boolean isItemViewTypePinned(int position) {
+        return isSectionHeaderPosition(position);
+    }
+
+    public static class Section {
+        int firstPosition;
+        int sectionedPosition;
+        CharSequence title;
+        CharSequence title2;
+
+        public Section(int firstPosition, CharSequence title, CharSequence title2) {
+            this.firstPosition = firstPosition;
+            this.title = title;
+            this.title2 = title2;
+
+        }
+
+        public CharSequence getTitle() {
+            return title;
+        }
+    }
 }

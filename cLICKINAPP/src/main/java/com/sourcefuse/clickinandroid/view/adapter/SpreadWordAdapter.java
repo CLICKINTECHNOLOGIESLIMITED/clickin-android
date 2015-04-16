@@ -20,7 +20,6 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 
-
 public class SpreadWordAdapter extends ArrayAdapter<ContactBean> {
     Context context;
     int layoutResourceId;
@@ -49,43 +48,48 @@ public class SpreadWordAdapter extends ArrayAdapter<ContactBean> {
             row.setTag(holder);
         } else {
             holder = (RecordHolder) row.getTag();
-           
-        }
 
+        }
 
 
         Bitmap bitmap = null;
-		final RecordHolder rholder = (RecordHolder) row.getTag();
-        if(item.isChecked()){
+        final RecordHolder rholder = (RecordHolder) row.getTag();
+        if (item.isChecked()) {
             rholder.follow.setBackgroundResource(R.drawable.check);
-        }else{
+        } else {
             rholder.follow.setBackgroundResource(R.drawable.uncheck);
         }
-		try {
-			if(!Utils.isEmptyString(item.getConUri()))
-			/*bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(),Uri.parse(item.getConUri()));
-			holder.usrimg.setImageBitmap(bitmap);*/
-                Picasso.with(context).load(item.getConUri())
+        try {
+            if (!Utils.isEmptyString(item.getConUri())) {
+            /*bitmap = MediaStore.Images.Media.getBitmap(context.getContentResolver(),Uri.parse(item.getConUri()));
+            holder.usrimg.setImageBitmap(bitmap);*/
+                Picasso.with(context).
+                        load(item.getConUri())
                         .placeholder(R.drawable.default_profile)
                         .error(R.drawable.default_profile)
                         .into(rholder.usrimg);
+            } else {
+                rholder.usrimg.setImageResource(R.drawable.default_profile);
 
-		}catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		rholder.clickers.setText(item.getConName());
-        
-	
+
+            }
+
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        rholder.clickers.setText(item.getConName());
+
+
         holder.follow.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                if(item.isChecked()){
+                if (item.isChecked()) {
                     rholder.follow.setBackgroundResource(R.drawable.uncheck);
                     item.setChecked(false);
-                    if(Utils.groupSms.size()>0)
-                    Utils.groupSms.remove(item.getConNumber());
+                    if (Utils.groupSms.size() > 0)
+                        Utils.groupSms.remove(item.getConNumber());
 
-                }else{
+                } else {
                     rholder.follow.setBackgroundResource(R.drawable.check);
                     item.setChecked(true);
                     Utils.groupSms.add(item.getConNumber());
@@ -93,7 +97,7 @@ public class SpreadWordAdapter extends ArrayAdapter<ContactBean> {
 
             }
         });
-        
+
         return row;
     }
 

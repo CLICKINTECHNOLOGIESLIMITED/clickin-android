@@ -14,9 +14,9 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.sourcefuse.clickinandroid.model.AuthManager;
 import com.sourcefuse.clickinandroid.model.ModelManager;
 import com.sourcefuse.clickinandroid.model.ProfileManager;
-import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinandroid.view.JumpOtherProfileView;
 import com.sourcefuse.clickinandroid.view.UserProfileView;
@@ -30,6 +30,8 @@ import java.util.Comparator;
  * Created by chandra on 3/7/14.
  */
 public class SimpleSectionedListAdapter2 extends BaseAdapter implements PinnedSecListViewForFeed.PinnedSectionListAdapter {
+    Context mContext;
+    Activity activity;
     private boolean mValid = true;
     private int mSectionResourceId;
     private LayoutInflater mLayoutInflater;
@@ -39,46 +41,16 @@ public class SimpleSectionedListAdapter2 extends BaseAdapter implements PinnedSe
     private int mHeaderTextViewResId1;
     private int mHeaderImageViewResId;
     private int feedTimeResId;
-    Context mContext;
-    Activity activity;
 
-    public static class Section {
-        int firstPosition;
-        int sectionedPosition;
-        CharSequence senderName;
-        CharSequence recieverName;
-        String senderImages;
-        String recieverImages;
-        CharSequence senderId;
-        CharSequence receiverId;
-        String senderPhNo,rcvrPhNo;
-
-        String timeOfFeed;
-        public Section(int firstPosition, CharSequence title,CharSequence title2,String urlOfImage,String recieverImages,String timeOfFeed,String senderId, String receiverId,String senderPhNo,String rcvrPhNo) {
-            this.firstPosition = firstPosition;
-            this.senderName = title;
-            this.recieverName =title2;
-            this.senderImages = urlOfImage;
-            this.timeOfFeed = timeOfFeed;
-            this.recieverImages = recieverImages;
-            this.senderId = senderId;
-            this.receiverId=receiverId;
-            this.senderPhNo=senderPhNo;
-            this.rcvrPhNo=rcvrPhNo;
-        }
-
-
-    }
-
-    public SimpleSectionedListAdapter2(Activity context, BaseAdapter baseAdapter, int sectionResourceId, int headerTextViewResId, int headerImageViewResId, int header1,int feedId) {
+    public SimpleSectionedListAdapter2(Activity context, BaseAdapter baseAdapter, int sectionResourceId, int headerTextViewResId, int headerImageViewResId, int header1, int feedId) {
         mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        mContext =context;
+        mContext = context;
         mSectionResourceId = sectionResourceId;
         mHeaderTextViewResId = headerTextViewResId;
         mHeaderImageViewResId = headerImageViewResId;
         mHeaderTextViewResId1 = header1;
         mBaseAdapter = baseAdapter;
-        feedTimeResId=feedId;
+        feedTimeResId = feedId;
 
 
         mBaseAdapter.registerDataSetObserver(new DataSetObserver() {
@@ -146,6 +118,7 @@ public class SimpleSectionedListAdapter2 extends BaseAdapter implements PinnedSe
         return sectionedPosition + offset;
     }
 
+
     public boolean isSectionHeaderPosition(int position) {
         return mSections.get(position) != null;
     }
@@ -207,51 +180,91 @@ public class SimpleSectionedListAdapter2 extends BaseAdapter implements PinnedSe
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         if (isSectionHeaderPosition(position)) {
-            final TextView view,view1;
+            final TextView view, view1;
             TextView feed_time;
             ImageView doubleArrow;
             ImageView imageview;
-            if(null == convertView){
+            if (null == convertView) {
                 convertView = mLayoutInflater.inflate(mSectionResourceId, parent, false);
-            }
-            else{
-                if(null == convertView.findViewById(mHeaderTextViewResId)){
+            } else {
+                if (null == convertView.findViewById(mHeaderTextViewResId)) {
                     convertView = mLayoutInflater.inflate(mSectionResourceId, parent, false);
                 }
 
             }
             view = (TextView) convertView.findViewById(mHeaderTextViewResId);
-            view1 = (TextView)convertView.findViewById(mHeaderTextViewResId1);
-            feed_time = (TextView)convertView.findViewById(feedTimeResId);
-            imageview=(ImageView)convertView.findViewById(mHeaderImageViewResId);
-            doubleArrow = (ImageView)convertView.findViewById(R.id.doubleArrow);
+            view1 = (TextView) convertView.findViewById(mHeaderTextViewResId1);
+            feed_time = (TextView) convertView.findViewById(feedTimeResId);
+            imageview = (ImageView) convertView.findViewById(mHeaderImageViewResId);
+            doubleArrow = (ImageView) convertView.findViewById(R.id.doubleArrow);
             imageview.setScaleType(ImageView.ScaleType.FIT_XY);
 
             ProfileManager prMgr = ModelManager.getInstance().getProfileManager();
-            if(mSections.get(position)!=null)
-                if((mSections.get(position).senderId)!=null){
+            if (mSections.get(position) != null)
+                if ((mSections.get(position).senderId) != null) {
 //                    if((mSections.get(position).receiverId)!=null){
-                        if (mSections.get(position).senderName.toString().equalsIgnoreCase("null"))
-                            mSections.get(position).senderName = "";
+                    if (mSections.get(position).senderName.toString().equalsIgnoreCase("null"))
+                        mSections.get(position).senderName = "";
 
-                        if ((mSections.get(position).recieverName) != null) {
-                            if (mSections.get(position).recieverName.toString().equalsIgnoreCase("null"))
-                                mSections.get(position).recieverName = "";
-                        }
-                    if(mSections.get(position).senderId.toString().equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getUserId()))
-                    {
+                    if ((mSections.get(position).recieverName) != null) {
+                        if (mSections.get(position).recieverName.toString().equalsIgnoreCase("null"))
+                            mSections.get(position).recieverName = "";
+                    }
+                    AuthManager authManager = ModelManager.getInstance().getAuthorizationManager();
+                    if (mSections.get(position).senderId.toString().equalsIgnoreCase(authManager.getUserId())) {
                         view.setText(mSections.get(position).senderName);
                         view1.setText(mSections.get(position).recieverName);
-                        Picasso.with(mContext).load(mSections.get(position).senderImages).placeholder(R.drawable.dcontact).into(imageview);
+
                         doubleArrow.setImageResource(R.drawable.arrow);
-                    }
-                    else {
+                        if (authManager.getGender() != null) {
+                            if (authManager.getGender().matches("guy")) {
+
+                                try {
+                                    if (!mSections.get(position).senderImages.toString().equalsIgnoreCase("")) {
+                                        Picasso.with(mContext)
+                                                .load(mSections.get(position).senderImages)
+                                                .error(R.drawable.male_user).into(imageview);
+
+                                    } else {
+                                        imageview.setImageResource(R.drawable.male_user);
+                                    }
+                                } catch (Exception e) {
+                                    imageview.setImageResource(R.drawable.male_user);
+                                }
+                            } else {
+                                try {
+                                    if (!mSections.get(position).senderImages.toString().equalsIgnoreCase("")) {
+                                        Picasso.with(mContext)
+                                                .load(mSections.get(position).senderImages)
+                                                .error(R.drawable.female_user).into(imageview);
+                                    } else {
+                                        imageview.setImageResource(R.drawable.female_user);
+                                    }
+                                } catch (Exception e) {
+                                    imageview.setImageResource(R.drawable.female_user);
+                                }
+                            }
+                        } else {
+                            imageview.setImageResource(R.drawable.male_user);
+                        }
+
+                    } else {
                         if (prMgr.following != null) {
                             for (int i = 0; i < prMgr.following.size(); i++) {
                                 if ((mSections.get(position).senderId).toString().equalsIgnoreCase(prMgr.following.get(i).getFolloweeId())) {
                                     view.setText(mSections.get(position).senderName);
                                     view1.setText(mSections.get(position).recieverName);
-                                    Picasso.with(mContext).load(mSections.get(position).senderImages).placeholder(R.drawable.dcontact).into(imageview);
+                                    try {
+                                        if (!mSections.get(position).senderImages.toString().equalsIgnoreCase("")) {
+                                            Picasso.with(mContext)
+                                                    .load(mSections.get(position).senderImages)
+                                                    .error(R.drawable.male_user).into(imageview);
+                                        } else {
+                                            imageview.setImageResource(R.drawable.male_user);
+                                        }
+                                    } catch (Exception e) {
+                                        imageview.setImageResource(R.drawable.male_user);
+                                    }
                                     doubleArrow.setImageResource(R.drawable.arrow);
                                     break;
                                 } else {
@@ -261,6 +274,17 @@ public class SimpleSectionedListAdapter2 extends BaseAdapter implements PinnedSe
                                     view.setText(mSections.get(position).recieverName);
                                     view1.setText(mSections.get(position).senderName);
                                     Picasso.with(mContext).load(mSections.get(position).recieverImages).placeholder(R.drawable.dcontact).into(imageview);
+                                    try {
+                                        if (!mSections.get(position).recieverImages.toString().equalsIgnoreCase("")) {
+                                            Picasso.with(mContext)
+                                                    .load(mSections.get(position).recieverImages)
+                                                    .error(R.drawable.male_user).into(imageview);
+                                        } else {
+                                            imageview.setImageResource(R.drawable.male_user);
+                                        }
+                                    } catch (Exception e) {
+                                        imageview.setImageResource(R.drawable.male_user);
+                                    }
 //                                        break;
 //                                    }
                                 }
@@ -268,40 +292,37 @@ public class SimpleSectionedListAdapter2 extends BaseAdapter implements PinnedSe
                         } else {
                             view.setText(mSections.get(position).senderName);
                             view1.setText(mSections.get(position).recieverName);
-                            Picasso.with(mContext).load(mSections.get(position).senderImages).placeholder(R.drawable.dcontact).into(imageview);
+                            try {
+                                if (!mSections.get(position).senderImages.toString().equalsIgnoreCase("")) {
+                                    Picasso.with(mContext)
+                                            .load(mSections.get(position).senderImages)
+                                            .error(R.drawable.male_user).into(imageview);
+                                } else {
+                                    imageview.setImageResource(R.drawable.male_user);
+                                }
+                            } catch (Exception e) {
+                                imageview.setImageResource(R.drawable.male_user);
+                            }
                             doubleArrow.setImageResource(R.drawable.arrow);
                         }
                     }
-//                    if ((mSections.get(position).senderId).toString().equalsIgnoreCase(ModelManager.getInstance().getAuthorizationManager().getUserId())) {
-//
-//                        view.setText(mSections.get(position).senderName);
-//                        view1.setText(mSections.get(position).recieverName);
-//                        Picasso.with(mContext).load(mSections.get(position).senderImages).placeholder(R.drawable.ic_launcher).into(imageview);
-//                        doubleArrow.setImageResource(R.drawable.arrow);
-//                    } else {
-//                        doubleArrow.setImageResource(R.drawable.flip_arow);
-//                        view.setText(mSections.get(position).recieverName);
-//                        view1.setText(mSections.get(position).senderName);
-//                        Picasso.with(mContext).load(mSections.get(position).recieverImages).placeholder(R.drawable.ic_launcher).into(imageview);
-//                    }
-//                    }
+
                 }
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String phNo;
-                    if(view.getText().toString().trim().equalsIgnoreCase(mSections.get(position).senderName.toString()))
-                    {
+                    String phNo, name;
+                    if (view.getText().toString().trim().equalsIgnoreCase(mSections.get(position).senderName.toString())) {
                         phNo = mSections.get(position).senderPhNo;
-                    }
-                    else
-                    {
+                    } else {
                         phNo = mSections.get(position).rcvrPhNo;
                     }
-                    Intent viewProfile = new Intent(mContext, JumpOtherProfileView.class);
-                    viewProfile.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    Intent viewProfile = null;
+
+                    viewProfile = new Intent(mContext, UserProfileView.class);
                     viewProfile.putExtra("FromOwnProfile", true);
-                    viewProfile.putExtra("phNumber",phNo);
+                    viewProfile.putExtra("phNumber", phNo);
+                    viewProfile.putExtra("name", view.getText().toString());
 
                     mContext.startActivity(viewProfile);
                 }
@@ -310,28 +331,30 @@ public class SimpleSectionedListAdapter2 extends BaseAdapter implements PinnedSe
                 @Override
                 public void onClick(View v) {
                     String phNo;
-                    if(view1.getText().toString().trim().equalsIgnoreCase(mSections.get(position).senderName.toString()))
-                    {
+                    if (view1.getText().toString().trim().equalsIgnoreCase(mSections.get(position).senderName.toString())) {
                         phNo = mSections.get(position).senderPhNo;
-                    }
-                    else
-                    {
+                    } else {
                         phNo = mSections.get(position).rcvrPhNo;
                     }
-                    Intent viewProfile = new Intent(mContext, JumpOtherProfileView.class);
+                    Intent viewProfile = null;
+
+                    viewProfile = new Intent(mContext, JumpOtherProfileView.class);
                     viewProfile.putExtra("FromOwnProfile", true);
-                    viewProfile.putExtra("phNumber",phNo);
+                    viewProfile.putExtra("phNumber", phNo);
+                    viewProfile.putExtra("name", view1.getText().toString());
+//                    }
+
+                    viewProfile.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     mContext.startActivity(viewProfile);
                 }
             });
-            if(mSections.get(position).timeOfFeed!=null) {
-                Log.e("timeOfFeed=", mSections.get(position).timeOfFeed);
+            if (mSections.get(position).timeOfFeed != null) {
                 feed_time.setText(Utils.getLocalDate(mSections.get(position).timeOfFeed));
             }
-            if((mSections.get(position).senderId)==null)
+            if ((mSections.get(position).senderId) == null)
                 return null;
             else
-            return convertView;
+                return convertView;
 
         } else {
             return mBaseAdapter.getView(sectionedPositionToPosition(position), convertView, parent);
@@ -342,5 +365,34 @@ public class SimpleSectionedListAdapter2 extends BaseAdapter implements PinnedSe
     @Override
     public boolean isItemViewTypePinned(int position) {
         return isSectionHeaderPosition(position);
+    }
+
+    public static class Section {
+        int firstPosition;
+        int sectionedPosition;
+        CharSequence senderName;
+        CharSequence recieverName;
+        String senderImages;
+        String recieverImages;
+        CharSequence senderId;
+        CharSequence receiverId;
+        String senderPhNo, rcvrPhNo;
+
+        String timeOfFeed;
+
+        public Section(int firstPosition, CharSequence title, CharSequence title2, String urlOfImage, String recieverImages, String timeOfFeed, String senderId, String receiverId, String senderPhNo, String rcvrPhNo) {
+            this.firstPosition = firstPosition;
+            this.senderName = title;
+            this.recieverName = title2;
+            this.senderImages = urlOfImage;
+            this.timeOfFeed = timeOfFeed;
+            this.recieverImages = recieverImages;
+            this.senderId = senderId;
+            this.receiverId = receiverId;
+            this.senderPhNo = senderPhNo;
+            this.rcvrPhNo = rcvrPhNo;
+        }
+
+
     }
 }

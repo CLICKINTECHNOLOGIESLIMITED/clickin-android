@@ -1,99 +1,264 @@
 package com.sourcefuse.clickinandroid.pushnotification;
 
 
+import android.app.ActivityManager;
 import android.app.IntentService;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.RingtoneManager;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.SystemClock;
+import android.os.Handler;
+import android.os.PowerManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+import android.widget.ImageView;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
-import com.sourcefuse.clickinandroid.model.AuthManager;
-import com.sourcefuse.clickinandroid.view.UserProfileView;
+import com.sourcefuse.clickinandroid.model.ModelManager;
+import com.sourcefuse.clickinandroid.model.PicassoManager;
+import com.sourcefuse.clickinandroid.model.RelationManager;
+import com.sourcefuse.clickinandroid.model.bean.GetrelationshipsBean;
+import com.sourcefuse.clickinandroid.utils.AppController;
+import com.sourcefuse.clickinandroid.utils.Constants;
+import com.sourcefuse.clickinandroid.utils.Utils;
+import com.sourcefuse.clickinandroid.view.ReloadApp;
 import com.sourcefuse.clickinapp.R;
 
+import java.io.File;
+import java.io.InputStream;
+import java.lang.ref.WeakReference;
+import java.util.List;
 
 public class GcmIntentService extends IntentService {
-    private static final String TAG = AuthManager.class.getSimpleName();
-    public static final int NOTIFICATION_ID = 1;
+    public static int NOTIFICATION_ID = 1;
+    RelationManager mRelationManager;
+    Handler handler;
+    String feedId = null;
+    int msg_type = -1; //to determine which webservice needs to be hit to update data-monika
     private NotificationManager mNotificationManager;
-    NotificationCompat.Builder builder;
 
     public GcmIntentService() {
         super("GcmIntentService");
-        Log.e(" In GcmIntentService.....", "In GcmIntentService");
+        handler = new Handler() {
+            public void handleMessage(android.os.Message msg) {
+                Bundle data = msg.getData();
+                switch (msg.what) {
+
+                    case Constants.USERPROFILE_NOTF:
+                        if (!Utils.isEmptyString(ModelManager.getInstance().getAuthorizationManager().getUsrToken()))
+                            ModelManager.getInstance().getRelationManager().getRelationShips(
+                                    ModelManager.getInstance().getAuthorizationManager().getPhoneNo(),
+                                    ModelManager.getInstance().getAuthorizationManager().getUsrToken());
+                        break;
+                    case Constants.FEEDVIEW_NOTF:
+                        if (!Utils.isEmptyString(ModelManager.getInstance().getAuthorizationManager().getUsrToken()))
+                            ModelManager.getInstance().getNewsFeedManager().fetchNewsFeed("",
+                                    ModelManager.getInstance().getAuthorizationManager().getPhoneNo(),
+                                    ModelManager.getInstance().getAuthorizationManager().getUsrToken());
+                        break;
+                    case Constants.POSTVIEW_NOTF:
+                        if (!Utils.isEmptyString(ModelManager.getInstance().getAuthorizationManager().getUsrToken())) {
+                            ModelManager.getInstance().getProfileManager().getFollwer("",
+                                    ModelManager.getInstance().getAuthorizationManager().getPhoneNo(),
+                                    ModelManager.getInstance().getAuthorizationManager().getUsrToken());
+                            String feedId = null;
+                            if (data.containsKey("FeedId"))
+                                feedId = data.getString("FeedId");
+                            if (!Utils.isEmptyString(feedId))
+                                ModelManager.getInstance().getNewsFeedManager().ViewNewsFeed(feedId,
+                                        ModelManager.getInstance().getAuthorizationManager().getPhoneNo(),
+                                        ModelManager.getInstance().getAuthorizationManager().getUsrToken());
+                        }
+
+                        break;
+                    case Constants.FOLLOWER_FOLLOWING_NOTF:
+
+                        if (!Utils.isEmptyString(ModelManager.getInstance().getAuthorizationManager().getUsrToken()))
+                            ModelManager.getInstance().getProfileManager().getFollwer(
+                                    "",
+                                    ModelManager.getInstance().getAuthorizationManager().getPhoneNo(),
+                                    ModelManager.getInstance().getAuthorizationManager().getUsrToken());
+
+                        break;
+                    case Constants.JUMPOTHERPROFILEVIEW_NOTF:
+
+
+                }
+                if (!Utils.isEmptyString(ModelManager.getInstance().getAuthorizationManager().getUsrToken()))
+                    ModelManager.getInstance().getNotificationManagerManager().getNotification(getApplicationContext(),
+                            "", ModelManager.getInstance().getAuthorizationManager().getPhoneNo(),
+                            ModelManager.getInstance().getAuthorizationManager().getUsrToken());
+            }
+        };
 
     }
 
     @Override
     protected void onHandleIntent(Intent intent) {
         Bundle extras = intent.getExtras();
+        // EventBus.getDefault().post("update Counter");
+        mRelationManager = ModelManager.getInstance().getRelationManager();
+
+
         GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
-        // The getMessageType() intent parameter must be the intent you received
-        // in your BroadcastReceiver.
         String messageType = gcm.getMessageType(intent);
-        //sendNotification("Clic");
-        //x	Toast.makeText(getApplicationContext(), messageType, Toast.LENGTH_LONG).show();
-//8287982999
+
+
         if (!extras.isEmpty()) {
-            if (GoogleCloudMessaging.MESSAGE_TYPE_SEND_ERROR.equals(messageType)) {
-                //sendNotification("Send error: " + intent.getExtras().toString(), "");
-                Log.e("error occured", intent.getExtras().toString());
-            } else if (GoogleCloudMessaging.MESSAGE_TYPE_DELETED.equals(messageType)) {
-               // sendNotification("Deleted messages on server: " + intent.getExtras().toString(), "");
-                Log.e("error occured", intent.getExtras().toString());
-                // If it's a regular GCM message, do some work.
-            } else if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)) {
+            if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)) {
+                if (extras.containsKey("Tp")) {
+                    Bundle dataToBeSend = new Bundle();
+                    String extraKey = extras.getString("Tp");
+                    if (extraKey.equalsIgnoreCase("CR") ||
+                            extraKey.equalsIgnoreCase("CRA") || extraKey.equalsIgnoreCase("RV") ||
+                            extraKey.equalsIgnoreCase("CRR")
+                            ) {
+                        dataToBeSend.putInt("msg_type", Constants.USERPROFILE_NOTF);
 
-                Log.i("working", "Completed work @ " + SystemClock.elapsedRealtime());
-                Log.e("error occured", intent.getExtras().toString());
-                // Post notification of received message.
-               /* try {
-                    String quizId = null;
-                    String msg = null;
 
-                    msg = intent.getExtras().getString("message");
-                    JSONObject jsonData = new JSONObject(intent.getExtras().getString("extra"));
-                    Log.e("MKKKK", "" + intent.getExtras() + "" + jsonData);
-                    if (jsonData.has("success"))
-                        if (jsonData.getBoolean("success") == true) {
+                    }else if(extraKey.equalsIgnoreCase("RD")){ //if relationship delete, then don't update relationship list here
+                        dataToBeSend.putInt("msg_type", Constants.RELATIONSHIP_DELETE);
+                    }
+                    else if (extraKey.equalsIgnoreCase("clk") ||
+                            extraKey.equalsIgnoreCase("chat") ||
+                            extraKey.equalsIgnoreCase("media") ||
+                            extraKey.equalsIgnoreCase("card")) {  // case follow request
+                        dataToBeSend.putInt("msg_type", Constants.CHATRECORDVIEW_NOTF);
+                        //   msg_type=Constants.CHATRECORDVIEW_NOTF;
+                    } else if (extras.getString("Tp").equalsIgnoreCase("str") || extras.getString("Tp").equalsIgnoreCase("cmt")
+                            || extras.getString("Tp").equalsIgnoreCase("Rpt")) //case for feed star
+                    {
+                        dataToBeSend.putInt("msg_type", Constants.POSTVIEW_NOTF);
+                        dataToBeSend.putString("FeedId", extras.getString("Nid"));
+                        // feedId=extras.getString("Nid");
+                        //msg_type=Constants.POSTVIEW_NOTF;
+                    } else if (extras.getString("Tp").equalsIgnoreCase("shr")) //case for share
+                    {
+                        dataToBeSend.putInt("msg_type", Constants.FEEDVIEW_NOTF);
+                        //    msg_type=Constants.FEEDVIEW_NOTF;
+                    } else if (extras.getString("Tp").equalsIgnoreCase("Upp")) //case for Profile Update
+                    {
+                        PicassoManager.clearCache();
+                        dataToBeSend.putInt("msg_type", Constants.JUMPOTHERPROFILEVIEW_NOTF);
+                        dataToBeSend.putString("phone_no", extras.getString("phone_no"));
+                        deletePhoto(extras.getString("phone_no"));
+                        msg_type = Constants.JUMPOTHERPROFILEVIEW_NOTF;
+                    } else if (extras.getString("Tp").equalsIgnoreCase("FR")) {  // case follow request
 
-                            quizId = jsonData.getString("id");
-                            sendNotification(msg, quizId);
-                        }
-                    Log.i("jsonData", "" + jsonData);
-                } catch (Exception e) {
+                        dataToBeSend.putInt("msg_type", Constants.FOLLOWER_FOLLOWING_NOTF);
 
-                }*/
+                        //  msg_type=Constants.FOLLOWER_FOLLOWING_NOTF;
+                    }
+
+                    //common for all- monika
+                    sendNotification(intent, extras.getString("chat_message"), dataToBeSend);
+
+                }
             }
 
+            GcmBroadcastReceiver.completeWakefulIntent(intent);
         }
-
-        GcmBroadcastReceiver.completeWakefulIntent(intent);
     }
 
 
-    private void sendNotification(String msg) {
-        mNotificationManager = (NotificationManager)
-                this.getSystemService(Context.NOTIFICATION_SERVICE);
+    private void sendNotification(Intent intent, String msg, Bundle data) {
+    /* code to fetch notifiacation */
 
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0,new Intent(this, UserProfileView.class), 0);
-        Log.e("recive", msg);
+        mNotificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+        PendingIntent contentIntent = null;
+        if (intent != null) {
+            intent.setClass(getApplicationContext(), ReloadApp.class);
+            intent.putExtra("NOTIFICATION_TYPE", data.getInt("msg_type"));
+            //     intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+            contentIntent = PendingIntent.getActivity(this, NOTIFICATION_ID, intent, PendingIntent.FLAG_ONE_SHOT);
+        }
+
+
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
                         .setSmallIcon(R.drawable.app_icon)
-                        .setContentTitle("ClickIn")
-                        .setStyle(new NotificationCompat.BigTextStyle()
-                                .bigText(msg))
-                        .setContentText(msg);
-
+                        .setContentTitle("Clickin'")
+                        .setStyle(new NotificationCompat.BigTextStyle().bigText(msg))
+                        .setContentText(msg)
+                        .setNumber(NOTIFICATION_ID)
+                        .setSound(soundUri).setVibrate(new long[]{0, 100, 200, 300});
         mBuilder.setContentIntent(contentIntent);
         mBuilder.setAutoCancel(true);
-        mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+
+        NOTIFICATION_ID = NOTIFICATION_ID + 1;
+
+        PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+        boolean isScreenOn = pm.isScreenOn();  // check screen state to show notification
+
+
+        int msg_type= data.getInt("msg_type");
+        if (!isAppOnForeground(getApplicationContext()) || !isScreenOn) {
+            mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+            if(msg_type==Constants.RELATIONSHIP_DELETE)
+                msg_type =Constants.USERPROFILE_NOTF;
+        }
+
+
+        android.os.Message msg1 = new android.os.Message();
+        msg1.what = msg_type;
+        if(msg1.what!=Constants.RELATIONSHIP_DELETE)  //if relationship delete, then don't update relationship list now,so
+            handler.sendMessage(msg1);                             //it will not effect chat window
+
+
+        //   }
+        //      android.os.Message msg1 = new android.os.Message();
+        //    msg1.what = 2;
+        //  handler.sendMessage(msg1);
+
     }
+
+
+    private boolean isAppOnForeground(Context context) { // check application state
+        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningAppProcessInfo> appProcesses = activityManager.getRunningAppProcesses();
+        if (appProcesses == null) {
+            return false;
+        }
+
+
+        final String packageName = context.getPackageName();
+        for (ActivityManager.RunningAppProcessInfo appProcess : appProcesses) {
+
+            if (appProcess.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND && appProcess.processName.equals(packageName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public void deletePhoto(String mPhoneNo) {
+
+        String RelationId = "";
+        for (GetrelationshipsBean mAcceptList : ModelManager.getInstance().getRelationManager().acceptedList) {
+            if (mPhoneNo.equalsIgnoreCase(mAcceptList.getPhoneNo())) {
+                RelationId = mAcceptList.getRelationshipId();
+                AppController.getInstance().getRequestQueue().getCache().clear();
+                AppController.getInstance().getRequestQueue().getCache().remove(mAcceptList.getPartnerPic());
+                AppController.getInstance().getRequestQueue().getCache().invalidate(mAcceptList.getPartnerPic(),true);
+            }
+        }
+
+        if (!Utils.isEmptyString(RelationId)) {
+            String mPath = Utils.mImagePath + RelationId + ".jpg";
+            Uri uri = Utils.getImageContentUri(getApplicationContext(), new File(mPath));
+            if (!Utils.isEmptyString("" + uri))
+                getContentResolver().delete(uri, null, null);
+        }
+    }
+
 
 }

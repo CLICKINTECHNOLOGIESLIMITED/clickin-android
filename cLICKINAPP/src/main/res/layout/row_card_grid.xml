@@ -1,9 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:geekui="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/c_card_bg"
+    android:background="@drawable/tradecardbg"
     android:orientation="vertical"
     android:padding="5dp"
     android:weightSum="2">
@@ -36,8 +35,8 @@
         android:text="Hug all night long"
         android:textColor="@color/white"
         android:textSize="11sp"
-        geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
 
     <!--<ImageView
         android:id="@+id/card_image_url"

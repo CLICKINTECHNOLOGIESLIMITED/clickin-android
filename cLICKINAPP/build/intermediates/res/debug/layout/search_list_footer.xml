@@ -1,20 +1,21 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:geekui="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rl_usr_profile"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="10dp">
 
 
-    <TextView
+    <com.sourcefuse.clickinandroid.utils.ClickInTextView
         android:id="@+id/tv_search_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
         android:padding="5dp"
         android:text="@string/search_message"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
 
-    <Button
+    <TextView
         android:id="@+id/btn_invite_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -22,4 +23,4 @@
         android:layout_marginLeft="5dp"
         android:background="@drawable/invite_btn" />
 
-</RelativeLayout><!-- From: file:/home/monika/gitcodeClickin/cLICKINAPP/src/main/res/layout/search_list_footer.xml -->
+</RelativeLayout><!-- From: file:/monika/latestworkingCLickin/cLICKINAPP/src/main/res/layout/search_list_footer.xml -->

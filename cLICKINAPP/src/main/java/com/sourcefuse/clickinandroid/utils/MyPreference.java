@@ -21,7 +21,6 @@ public class MyPreference {
     }
 
 
-
     public String getmyPhoneNo() {
         return mPreferences.getString(this.myPhoneNo, "");
     }
@@ -31,8 +30,6 @@ public class MyPreference {
         editor.putString(this.myPhoneNo, myPhoneNo);
         editor.commit();
     }
-
-
 
 
     public String getToken() {
@@ -46,19 +43,16 @@ public class MyPreference {
     }
 
 
-
     public boolean isLogin() {
-        if(!Utils.isEmptyString(getToken()) && ModelManager.getInstanceModelManager()){
-            return true;
-        }else{
-            return false;
-        }
+        return !Utils.isEmptyString(getToken()) && ModelManager.getInstanceModelManager();
 
     }
 
     // execute at signup time.
     public void clearAllPreference() {
         setToken("");
+        setmyPhoneNo("");
+
     }
 
 

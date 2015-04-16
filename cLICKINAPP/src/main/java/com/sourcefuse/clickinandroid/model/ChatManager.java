@@ -1,11 +1,10 @@
 package com.sourcefuse.clickinandroid.model;
 
-import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.sourcefuse.clickinandroid.model.bean.CardBean;
+import com.sourcefuse.clickinandroid.model.bean.ChatMessageBody;
 import com.sourcefuse.clickinandroid.model.bean.ChatRecordBeen;
 import com.sourcefuse.clickinandroid.utils.APIs;
-import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinandroid.utils.Utils;
 
 import org.apache.http.entity.StringEntity;
@@ -18,23 +17,35 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Observable;
 
 import de.greenrobot.event.EventBus;
 
-public class ChatManager extends Observable implements ChatManagerI {
+public class ChatManager {
     private static final String TAG = ChatManager.class.getSimpleName();
-    StringEntity se = null;
-    AsyncHttpClient client;
-    private AuthManager authManager;
-    private ChatManager chatManager;
     public ArrayList<CardBean> tabArray = new ArrayList<CardBean>();
+    public ArrayList<ChatMessageBody> chatListFromServer = new ArrayList<ChatMessageBody>();
+    public ArrayList<ChatMessageBody> refreshivechatList = new ArrayList<ChatMessageBody>();
+    public HashMap<String, ArrayList<CardBean>> categories = new HashMap<String, ArrayList<CardBean>>();
+    public ArrayList<CardBean> all = new ArrayList<CardBean>();
+    //this list to maintain current chat list to view in chat record view
+    public ArrayList<ChatMessageBody> chatMessageList = new ArrayList<ChatMessageBody>();
+    public String chat_history_size = "true";
+    StringEntity se = null;
+    ArrayList<ArrayList<CardBean>> lists = new ArrayList<ArrayList<CardBean>>();
     private CardBean cardBean = null;
-
     private ChatRecordBeen chatRecordBeen = null;
-
     private int myTotalClick = 0;
-    private int partnerTotalClick =0 ;
+    private String relationshipId;
+    private int partnerTotalClick = 0;
+
+    public String getRelationshipId() {
+        return relationshipId;
+    }
+
+    public void setrelationshipId(String relationshipId) {
+        this.relationshipId = relationshipId;
+    }
+
 
     public int getMyTotalClick() {
         return myTotalClick;
@@ -42,7 +53,7 @@ public class ChatManager extends Observable implements ChatManagerI {
 
     public void setMyTotalClick(int myTotalClick) {
 
-        myTotalClick = getMyTotalClick() +myTotalClick;
+        myTotalClick = getMyTotalClick() + myTotalClick;
         this.myTotalClick = myTotalClick;
     }
 
@@ -51,50 +62,52 @@ public class ChatManager extends Observable implements ChatManagerI {
     }
 
     public void setPartnerTotalClick(int partnerTotalClick) {
-        partnerTotalClick = getPartnerTotalClick() +partnerTotalClick;
+        partnerTotalClick = getPartnerTotalClick() + partnerTotalClick;
         this.partnerTotalClick = partnerTotalClick;
     }
 
 
+    public void fetchChatRecord(String relationshipId, String phone, String usertoken, String chatId) {
 
 
-
-
-    public HashMap<String, ArrayList<CardBean>> categories = new HashMap<String, ArrayList<CardBean>>();
-    ArrayList<ArrayList<CardBean>> lists = new ArrayList<ArrayList<CardBean>>();
-    public ArrayList<CardBean> all = new ArrayList<CardBean>();
-
-    @Override
-    public void fetchChatRecord(String relationshipId, String phone,String usertoken,String chatId) {
-
-
-        chatManager = ModelManager.getInstance().getChatManager();
         // TODO Auto-generated method stub
         JSONObject userInputDetails = new JSONObject();
         try {
             userInputDetails.put("phone_no", phone);
             userInputDetails.put("user_token", usertoken);
             userInputDetails.put("relationship_id", relationshipId);
-            if(!Utils.isEmptyString(chatId)){
+            if (!Utils.isEmptyString(chatId)) {
                 userInputDetails.put("last_chat_id", chatId);
             }
 
-            client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            Log.e(TAG, "userInputDetails-->" + userInputDetails);
+
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        client.post(null, APIs.FETCHCHATRECORDS, se, "application/json",
+        ClickinRestClient.post(null, APIs.FETCHCHATRECORDS, se, "application/json",
                 new JsonHttpResponseHandler() {
 
                     @Override
                     public void onFailure(int statusCode, Throwable e,
                                           JSONObject errorResponse) {
                         super.onFailure(statusCode, e, errorResponse);
+
                         if (errorResponse != null) {
-                            Log.e("errorResponse", "->" + errorResponse);
+                            if (errorResponse.has("message")) {
+                                try {
+                                    if (errorResponse.getString("message").equalsIgnoreCase("No chat history found")) {
+                                        EventBus.getDefault().post("No chat history found");
+                                    }
+                                } catch (JSONException e1) {
+                                    e1.printStackTrace();
+                                }
+                                {
+
+                                }
+                            }
+
                             EventBus.getDefault().post("FecthChat False");
                         } else {
                             EventBus.getDefault().post("FecthChat Network Error");
@@ -107,58 +120,165 @@ public class ChatManager extends Observable implements ChatManagerI {
                                           JSONObject response) {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
+                        ChatMessageBody temp = null;
+                        JSONObject chatObj = null;
                         try {
-                            Log.e(TAG,"response FecthChat ->" + response);
                             state = response.getBoolean("success");
                             if (state) {
-                                Utils.clickCustomLog(response.toString());
-                                JSONArray list = response.getJSONArray("chats");
-                                for (int i = 0; i < list.length(); i++) {
-                                    chatRecordBeen = new ChatRecordBeen();
-                                    JSONObject data = list.getJSONObject(i);
-                                    JSONObject chatObj = data.getJSONObject("Chat");
 
-                                    if (chatObj.has("receiverQB_id"))
-                                        chatRecordBeen.setRecieverQbId(chatObj.getString("receiverQB_id"));
-                                    if (chatObj.has("sharedMessage"))
-                                        chatRecordBeen.setSharedMessage(chatObj.getString("sharedMessage"));
-                                    if (chatObj.has("video_thumb"))
-                                        chatRecordBeen.setVideo_thumb(chatObj.getString("video_thumb"));
-                                    if (chatObj.has("QB_id"))
-                                        chatRecordBeen.setSenderQbId(chatObj.getString("QB_id"));
-                                    if (chatObj.has("senderUserToken"))
-                                        chatRecordBeen.setSenderUserToken(chatObj.getString("senderUserToken"));
-                                    if (chatObj.has("type"))
-                                        chatRecordBeen.setChatType(chatObj.getString("type"));
-                                    if (chatObj.has("message"))
-                                        chatRecordBeen.setChatText(chatObj.getString("message"));
-                                   // if (chatObj.has("content"))
-                                       // chatRecordBeen.setchatObj.getString("content");
-                                    if (chatObj.has("relationshipId"))
-                                        chatRecordBeen.setRelationshipId(chatObj.getString("relationshipId"));
-                                    if (chatObj.has("_id"))
-                                        chatRecordBeen.set_id(chatObj.getString("_id"));
-                                    if (chatObj.has("userId"))
-                                        chatRecordBeen.setUserId(chatObj.getString("userId"));
-                                    if (chatObj.has("location_coordinates"))
-                                        chatRecordBeen.setLocation_coordinates(chatObj.getString("location_coordinates"));
-                                    if (chatObj.has("clicks"))
-                                        chatRecordBeen.setClicks(chatObj.getString("clicks"));
-                                    if (chatObj.has("isDelivered"))
-                                        chatRecordBeen.setIsDelivered(chatObj.getString("isDelivered"));
-                                    if (chatObj.has("imageRatio"))
-                                        chatRecordBeen.setImageRatio(chatObj.getString("imageRatio"));
-                                    if (chatObj.has("chatId"))
-                                        chatRecordBeen.setChatId(chatObj.getString("chatId"));
-                                    if (chatObj.has("cards"))
-                                        chatRecordBeen.setCards(chatObj.getString("cards"));
-                                    if (chatObj.has("sentOn"))
-                                        chatRecordBeen.setTimeStamp(chatObj.getString("sentOn"));
-                                    chatManager.chatListFromServer.add(chatRecordBeen);
+                                refreshivechatList.clear();
+
+                                JSONArray list = response.getJSONArray("chats");
+
+                                for (int i = 0; i < list.length(); i++) {
+                                    try {
+                                        temp = new ChatMessageBody();
+                                        JSONObject data = list.getJSONObject(i);
+                                        chatObj = data.getJSONObject("Chat");
+
+                                        // if (chatObj.has("receiverQB_id"))
+                                        //   temp.re(chatObj.getString("receiverQB_id"));
+                                        if (chatObj.has("sharedMessage"))
+                                            temp.sharedMessage = chatObj.getString("sharedMessage");
+                                        if (chatObj.has("video_thumb"))
+                                            temp.video_thumb = chatObj.getString("video_thumb");
+                                        if (chatObj.has("QB_id"))
+                                            temp.senderQbId = chatObj.getString("QB_id");
+                                        if (chatObj.has("senderUserToken"))
+                                            temp.senderUserToken = chatObj.getString("senderUserToken");
+                                        if (chatObj.has("type"))
+                                            temp.chatType = Integer.parseInt(chatObj.getString("type"));
+                                        if (chatObj.has("message"))
+                                            temp.textMsg = chatObj.getString("message");
+                                        if (chatObj.has("content"))
+                                            temp.content_url = chatObj.getString("content");
+                                        if (chatObj.has("relationshipId"))
+                                            temp.relationshipId = chatObj.getString("relationshipId");
+                                        if (chatObj.has("_id"))
+                                            temp._id = chatObj.getString("_id");
+                                        if (chatObj.has("userId"))
+                                            temp.userId = chatObj.getString("userId");
+                                        if (chatObj.has("location_coordinates"))
+                                            temp.location_coordinates = chatObj.getString("location_coordinates");
+                                        if (chatObj.has("clicks")) {
+                                            temp.clicks = chatObj.getString("clicks");
+                                            if (Utils.isEmptyString(temp.clicks))
+                                                temp.clicks = "no";
+                                        }
+
+                                        if (chatObj.has("chatId")) {
+                                            temp.chatId = chatObj.getString("chatId");
+
+
+                                        }
+                                        if (chatObj.has("isDelivered")) {
+                                            temp.isDelivered = chatObj.getString("isDelivered");
+                                            if (temp.isDelivered.equalsIgnoreCase("yes")) {
+                                                temp.deliveredChatID = temp.chatId; //if deliveredChatId exists, it means delivered-monika
+                                                //we have to do this to match live chat params
+                                            }
+                                        }
+                                        if (chatObj.has("imageRatio"))
+                                            temp.imageRatio = chatObj.getString("imageRatio");
+
+
+                                        // temp.cardchatObj.getString("cards"));
+                                        if (chatObj.has("sentOn"))
+                                            temp.sentOn = chatObj.getString("sentOn");
+                                        JSONArray cards = chatObj.getJSONArray("cards");
+                                        if (cards != null) {
+                                            temp.card_id = (String) cards.get(0);
+                                            temp.card_heading = (String) cards.get(1);
+                                            temp.card_content = (String) cards.get(2);
+                                            temp.card_url = (String) cards.get(3);
+                                            temp.clicks = (String) cards.get(4);
+                                            temp.card_Accepted_Rejected = (String) cards.get(5);
+                                            temp.card_originator = (String) cards.get(6);
+                                            temp.is_CustomCard = Boolean.valueOf((String) cards.get(7));
+                                            temp.card_DB_ID = (String) cards.get(8);
+                                            temp.card_Played_Countered = (String) cards.get(9);
+
+
+                                            //this param is added new, in history might be it not come
+                                            if (cards.length() > 10) {
+                                                temp.card_owner = (String) cards.get(10);
+                                                if (Utils.isEmptyString(temp.card_owner))
+                                                    temp.card_owner = "";
+                                            } else {
+                                                temp.card_owner = "";
+                                            }
+                                        }
+
+                                        //code to fetch share array, if exists-monika
+                                        JSONArray sharedMessage = chatObj.getJSONArray("sharedMessage");
+                                        if (sharedMessage != null) {
+                                            temp.originalMessageID = (String) sharedMessage.get(0);
+                                            temp.shareStatus = (String) sharedMessage.get(1);
+                                            temp.senderQbId = (String) sharedMessage.get(2);
+                                            temp.isAccepted = (String) sharedMessage.get(3);
+                                            temp.isMessageSender = (String) sharedMessage.get(4);
+                                            temp.shareComment = (String) sharedMessage.get(5);
+                                            temp.sharingMedia = (String) sharedMessage.get(6);
+
+                                            temp.facebookToken = (String) sharedMessage.get(7);
+
+                                        }
+
+                                        refreshivechatList.add(temp);
+                                    } catch (JSONException e) { //specially for cards array
+                                        e.printStackTrace();
+                                        try {
+                                            JSONArray sharedMessage = chatObj.getJSONArray("sharedMessage");
+                                            if (sharedMessage != null) {
+                                                temp.originalMessageID = (String) sharedMessage.get(0);
+                                                temp.shareStatus = (String) sharedMessage.get(1);
+                                                temp.senderQbId = (String) sharedMessage.get(2);
+                                                temp.isAccepted = (String) sharedMessage.get(3);
+                                                temp.isMessageSender = (String) sharedMessage.get(4);
+                                                temp.shareComment = (String) sharedMessage.get(5);
+                                                temp.sharingMedia = (String) sharedMessage.get(6);
+
+                                                temp.facebookToken = (String) sharedMessage.get(7);
+
+                                            }
+                                        } catch (Exception e1) {
+                                            //   e1.printStackTrace();
+                                            //                        refreshivechatList.add(temp);
+                                        }
+
+                                        refreshivechatList.add(temp);
+                                    }
                                 }
+
+                                ModelManager.getInstance().getChatManager().chatMessageList.addAll(0, refreshivechatList);
+
+                                //akshit code to find the size of new records fetched
+                                int size_of_list = refreshivechatList.size();
+                                if (size_of_list < 20) {
+                                    chat_history_size = "false";
+                                } else {
+                                    chat_history_size = "true";
+                                }
+
                                 EventBus.getDefault().post("FecthChat True");
-                            }else{
+                            } else {
                                 EventBus.getDefault().post("FecthChat False");
+                                if (response != null) {
+                                    if (response.has("message")) {//akshit Code to Fetch message if NO more History
+                                        try {
+                                            if (response.getString("message").equalsIgnoreCase("No chat history found")) {
+                                                EventBus.getDefault().post("No chat history found");
+                                            }
+                                        } catch (JSONException e1) {
+                                            e1.printStackTrace();
+                                        }
+                                        {
+
+                                        }
+                                    }
+
+                                    EventBus.getDefault().post("FecthChat False");
+                                }
                             }
 
                         } catch (JSONException e) {
@@ -172,25 +292,17 @@ public class ChatManager extends Observable implements ChatManagerI {
 
     }
 
-    @Override
+
     public void fetchCards(String phone, String usertoken) {
 
-        try {
-            client = new AsyncHttpClient();
-            client.addHeader("user_token", usertoken);
-            client.addHeader("phone_no", phone);
-            Log.e("usertoken-phone_no-othersphone-->", "" + usertoken + "-" + phone);
-        } catch (Exception e1) {
-            e1.printStackTrace();
-        }
 
-        client.get(APIs.FETCHCARDS, new JsonHttpResponseHandler() {
+        ClickinRestClient.get(APIs.FETCHCARDS, new JsonHttpResponseHandler() {
             boolean success = false;
 
             @Override
             public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
                 super.onFailure(statusCode, e, errorResponse);
-                System.out.println("errorResponse--> " + errorResponse);
+
                 if (errorResponse != null) {
 
                     EventBus.getDefault().post("FetchCard False");
@@ -206,8 +318,8 @@ public class ChatManager extends Observable implements ChatManagerI {
                                   org.apache.http.Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 try {
-                    Log.e("", "response--> " + response);
-                    Utils.clickCustomLog(response.toString());
+
+
                     success = response.getBoolean("success");
 
                     tabArray.clear();
@@ -225,10 +337,9 @@ public class ChatManager extends Observable implements ChatManagerI {
 
                             //  lists.add(new ArrayList<CardBean>());
                             categories.put(categoryObj.getString("name"), new ArrayList<CardBean>());
-                            Log.e(TAG,"Catagories Values" +categories);
+
 
                         }
-
 
 
                         JSONArray cardList = response.getJSONArray("cards");
@@ -245,10 +356,12 @@ public class ChatManager extends Observable implements ChatManagerI {
 
                                 cardBean = new CardBean();
                                 cardBean.setCardUrl(cardObject.getString("image"));
+                                cardBean.setCard_Id(cardObject.getString("_id"));
                                 cardBean.setCardActive(cardObject.getString("active"));
                                 cardBean.setCardDescription(cardObject.getString("description"));
                                 cardBean.setCardTitle(cardObject.getString("title"));
-                                ls.add(cardBean);
+                                if (ls != null)
+                                    ls.add(cardBean);
 
                             }
 
@@ -268,8 +381,7 @@ public class ChatManager extends Observable implements ChatManagerI {
 
     }
 
-    public void chatShare(String phone_no, String user_token, String relationshipId, String chatId, String media, String fbAccessToken, String twitterAccessToken, String twitterAccessTokenSecret, String googlePlusAccessToken, String comment) {
-        authManager = ModelManager.getInstance().getAuthorizationManager();
+    public void chatShare(String phone_no, String user_token, String relationshipId, String chatId, String media, String fbAccessToken, String comment, String accepted) {
         JSONObject userInputDetails = new JSONObject();
         try {
             userInputDetails.put("phone_no", phone_no);
@@ -278,24 +390,24 @@ public class ChatManager extends Observable implements ChatManagerI {
             userInputDetails.put("chat_id", chatId);
             userInputDetails.put("media", media);
             userInputDetails.put("fb_access_token", fbAccessToken);
-            userInputDetails.put("twitter_access_token", twitterAccessToken);
-            userInputDetails.put("twitter_access_token_secret", twitterAccessTokenSecret);
-            userInputDetails.put("googleplus_access_token", googlePlusAccessToken);
             userInputDetails.put("comment", comment);
+            userInputDetails.put("accepted", accepted);
 
-            client = new AsyncHttpClient();
+
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            Log.e(TAG, "ChatShare-->" + userInputDetails);
+
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        client.post(null, APIs.CHATSHARE, se, "application/json",
+        ClickinRestClient.post(null, APIs.CHATSHARE, se, "application/json",
                 new JsonHttpResponseHandler() {
 
                     @Override
                     public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
                         super.onFailure(statusCode, e, errorResponse);
+
+
                         if (errorResponse != null) {
                             EventBus.getDefault().post("ChatShare False");
                         } else {
@@ -308,7 +420,7 @@ public class ChatManager extends Observable implements ChatManagerI {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            Log.e(TAG, "response ChatShare ->" + response);
+
                             state = response.getBoolean("success");
                             if (state) {
 
@@ -326,7 +438,6 @@ public class ChatManager extends Observable implements ChatManagerI {
     }
 
     public void sharingAction(String phone_no, String user_token, String sharingId, String status) {
-        authManager = ModelManager.getInstance().getAuthorizationManager();
         JSONObject userInputDetails = new JSONObject();
         try {
             userInputDetails.put("phone_no", phone_no);
@@ -334,14 +445,13 @@ public class ChatManager extends Observable implements ChatManagerI {
             userInputDetails.put("sharing_id", sharingId);
             userInputDetails.put("status", status);
 
-            client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            Log.e(TAG, "ShareAction-->" + userInputDetails);
+
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        client.post(null, APIs.SHARINGACTION, se, "application/json",
+        ClickinRestClient.post(null, APIs.SHARINGACTION, se, "application/json",
                 new JsonHttpResponseHandler() {
 
                     @Override
@@ -359,7 +469,7 @@ public class ChatManager extends Observable implements ChatManagerI {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            Log.e(TAG, "response ShareAction ->" + response);
+
                             state = response.getBoolean("success");
                             if (state) {
 
@@ -377,21 +487,19 @@ public class ChatManager extends Observable implements ChatManagerI {
     }
 
     public void savecards(String phone_no, String user_token, String title) {
-        authManager = ModelManager.getInstance().getAuthorizationManager();
         JSONObject userInputDetails = new JSONObject();
         try {
             userInputDetails.put("phone_no", phone_no);
             userInputDetails.put("user_token", user_token);
             userInputDetails.put("title", title);
 
-                    client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            Log.e(TAG, "ShareCards-->" + userInputDetails);
+
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        client.post(null, APIs.SAVECARDS, se, "application/json",
+        ClickinRestClient.post(null, APIs.SAVECARDS, se, "application/json",
                 new JsonHttpResponseHandler() {
 
                     @Override
@@ -409,7 +517,7 @@ public class ChatManager extends Observable implements ChatManagerI {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            Log.e(TAG, "response ShareCards ->" + response);
+
                             state = response.getBoolean("success");
                             if (state) {
 
@@ -427,21 +535,19 @@ public class ChatManager extends Observable implements ChatManagerI {
     }
 
     public void getUnReadMessageCount(String phone_no, String user_token, String relationshipId) {
-        authManager = ModelManager.getInstance().getAuthorizationManager();
         JSONObject userInputDetails = new JSONObject();
         try {
             userInputDetails.put("phone_no", phone_no);
             userInputDetails.put("user_token", user_token);
             userInputDetails.put("relationship_id", relationshipId);
 
-            client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            Log.e(TAG, "GetUnReadMessageCount-->" + userInputDetails);
+
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        client.post(null, APIs.GETUNREADMESSAGECOUNT, se, "application/json",
+        ClickinRestClient.post(null, APIs.GETUNREADMESSAGECOUNT, se, "application/json",
                 new JsonHttpResponseHandler() {
 
                     @Override
@@ -459,7 +565,7 @@ public class ChatManager extends Observable implements ChatManagerI {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            Log.e(TAG, "response GetUnReadMessageCount ->" + response);
+
                             state = response.getBoolean("success");
                             if (state) {
 
@@ -478,21 +584,19 @@ public class ChatManager extends Observable implements ChatManagerI {
 
 
     public void resetUnReadMessageCount(String phone_no, String user_token, String relationshipId) {
-        authManager = ModelManager.getInstance().getAuthorizationManager();
         JSONObject userInputDetails = new JSONObject();
         try {
             userInputDetails.put("phone_no", phone_no);
             userInputDetails.put("user_token", user_token);
             userInputDetails.put("relationship_id", relationshipId);
 
-            client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            Log.e(TAG, "ResetUnReadMessageCount-->" + userInputDetails);
+
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        client.post(null, APIs.RESETUNREADMESSAGECOUNT, se, "application/json",
+        ClickinRestClient.post(null, APIs.RESETUNREADMESSAGECOUNT, se, "application/json",
                 new JsonHttpResponseHandler() {
 
                     @Override
@@ -510,7 +614,7 @@ public class ChatManager extends Observable implements ChatManagerI {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            Log.e(TAG, "response ResetUnReadMessageCount ->" + response);
+
                             state = response.getBoolean("success");
                             if (state) {
 
@@ -528,20 +632,18 @@ public class ChatManager extends Observable implements ChatManagerI {
     }
 
     public void resetBadgeCount(String phone_no, String user_token) {
-        authManager = ModelManager.getInstance().getAuthorizationManager();
         JSONObject userInputDetails = new JSONObject();
         try {
             userInputDetails.put("phone_no", phone_no);
             userInputDetails.put("user_token", user_token);
 
-            client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            Log.e(TAG, "ResetBadgeCount-->" + userInputDetails);
+
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        client.post(null, APIs.RESETBADGECOUNT, se, "application/json",
+        ClickinRestClient.post(null, APIs.RESETBADGECOUNT, se, "application/json",
                 new JsonHttpResponseHandler() {
 
                     @Override
@@ -559,7 +661,7 @@ public class ChatManager extends Observable implements ChatManagerI {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            Log.e(TAG, "response ResetBadgeCount ->" + response);
+
                             state = response.getBoolean("success");
                             if (state) {
 

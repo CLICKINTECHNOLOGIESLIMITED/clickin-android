@@ -26,46 +26,46 @@
         android:textSize="20sp"
         android:visibility="gone" />
 
-<!--<View-->
-    <!--android:layout_width="fill_parent"-->
-    <!--android:layout_height="2dp"-->
-    <!--android:background="@color/dark_gray"-->
-    <!--android:layout_below="@+id/tv_heading_followers"-->
-    <!--android:id="@+id/view"-->
-    <!--android:layout_marginLeft="5dp"-->
-    <!--android:layout_marginRight="5dp"></View>-->
+    <View
+        android:id="@+id/view"
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:layout_below="@+id/tv_heading_followers"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@color/light_gray"></View>
+
     <RelativeLayout
         android:id="@+id/rl_layout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        
-        android:background="@color/white"
+        android:layout_below="@+id/view"
         android:layout_marginBottom="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="5dp" >
+        android:background="@color/white"
+        android:padding="5dp">
 
         <ImageView
             android:id="@+id/iv_usr"
             android:layout_width="60dp"
             android:layout_height="60dp"
 
-            android:background="@drawable/dcontact" />
+            />
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/iv_usr">
+            android:layout_toRightOf="@+id/iv_usr"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv_clickers_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="5dp"
+                android:textColor="@color/profile_name_b"
                 android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="@color/profile_name_b"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_clickers_comment"
@@ -75,23 +75,21 @@
                 android:layout_toRightOf="@+id/iv_usr"
                 android:paddingLeft="5dp"
 
-                android:textSize="16sp"
-               />
+                android:textSize="16sp" />
 
-            </LinearLayout>
-
+        </LinearLayout>
 
 
-       <TextView
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
+        <TextView
+            android:id="@+id/time_comments"
+            android:layout_width="wrap_content"
 
-           android:id="@+id/time_comments"
-           android:textColor="@color/dark_gray"
-           android:textSize="12sp"
-           android:layout_alignParentRight="true"
-           android:padding="5dp"/>
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:padding="5dp"
+            android:textColor="@color/dark_gray"
+            android:textSize="12sp" />
 
     </RelativeLayout>
 
-</RelativeLayout><!-- From: file:/home/monika/gitcodeClickin/cLICKINAPP/src/main/res/layout/view_feeds_comments_row.xml -->
+</RelativeLayout><!-- From: file:/monika/latestworkingCLickin/cLICKINAPP/src/main/res/layout/view_feeds_comments_row.xml -->

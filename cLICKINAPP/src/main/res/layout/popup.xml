@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:geekui="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/popup_view"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <com.sourcefuse.clickinandroid.utils.ClickInTextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="+ 25 C"
+        android:textColor="@color/Pop_upcolor"
+        android:textSize="29dp"
+        android:textStyle="bold"
+        geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
+
+    <com.sourcefuse.clickinandroid.utils.ClickInTextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:gravity="center"
+        android:text="@string/popup_text"
+        android:textSize="18dp"
+        geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
+
+    <com.sourcefuse.clickinandroid.utils.ClickInTextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:background="@color/some_back"
+        android:gravity="center"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:text="@string/popup_button"
+        android:textColor="@color/white"
+        android:textSize="21dp"
+        android:textStyle="bold"
+        geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
+</LinearLayout>

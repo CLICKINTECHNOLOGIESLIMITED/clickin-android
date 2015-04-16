@@ -1,9 +1,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:geekui="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 
-    <TextView
+    <com.sourcefuse.clickinandroid.utils.ClickInTextView
         android:id="@+id/tv_heading_rfollowers"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -12,9 +13,10 @@
         android:text="@string/txt_follower"
         android:textColor="@color/dark_gray"
         android:textSize="20sp"
-        android:visibility="gone" />
+        android:visibility="gone"
+        geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
 
-    <TextView
+    <com.sourcefuse.clickinandroid.utils.ClickInTextView
         android:id="@+id/tv_heading_followers"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -24,7 +26,8 @@
         android:text="@string/txt_follower"
         android:textColor="@color/dark_gray"
         android:textSize="20sp"
-        android:visibility="gone" />
+        android:visibility="gone"
+        geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
 
 
     <RelativeLayout
@@ -37,29 +40,32 @@
         <ImageView
             android:id="@+id/iv_usr"
             android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:background="@drawable/dcontact" />
+            android:layout_height="60dp" />
 
-        <TextView
+        <com.sourcefuse.clickinandroid.utils.ClickInTextView
             android:id="@+id/tv_clickers_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/iv_usr"
+            android:ellipsize="end"
+            android:ems="8"
             android:padding="5dp"
-            android:text="Bregenja"
+            android:singleLine="true"
+            android:text="Bregenja hauddydhdydhdydhdauanjdubdsdggu"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
 
 
-        <Button
+        <TextView
             android:id="@+id/btn_actions"
-            android:layout_width="100dp"
-            android:layout_height="35dp"
+            android:layout_width="90dp"
+            android:layout_height="25dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="5dp"
-            android:background="@drawable/follow_pink" />
+            android:layout_marginRight="15dp"
+            android:background="@drawable/c_owner_follow_btn" />
 
         <LinearLayout
             android:id="@+id/rl_resect_accept"
@@ -67,31 +73,37 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="5dp"
+            android:layout_marginRight="12dp"
             android:background="@color/white"
             android:orientation="horizontal"
             android:visibility="gone">
 
             <Button
                 android:id="@+id/btn_f_accept"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
-                android:background="@drawable/check" />
+                android:background="@drawable/c_owner_blue_tick" />
 
             <Button
                 android:id="@+id/btn_f_resect"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
-                android:background="@drawable/owner_side_icon_cross" />
+                android:background="@drawable/c_owner_grey_corss" />
         </LinearLayout>
 
     </RelativeLayout>
 
+    <ImageView
+        android:id="@+id/divider_"
+        android:layout_width="fill_parent"
+        android:layout_height="5dp"
+        android:layout_below="@+id/rl_layout"
+        android:background="@android:color/transparent" />
 
 </RelativeLayout>

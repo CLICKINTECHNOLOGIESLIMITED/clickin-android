@@ -1,5 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
     android:orientation="horizontal">
@@ -9,58 +9,53 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_alignParentLeft="true"
-        android:background="@drawable/dcontact" />
+        android:background="@drawable/default_profile" />
 
-      <LinearLayout
-    android:layout_width="85dp"
-    android:layout_height="match_parent"
-          android:orientation="vertical"
-          android:id="@+id/ll"
-          android:weightSum="2">
+    <LinearLayout
+        android:id="@+id/ll"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="2">
 
-          <TextView
-              android:id="@+id/tv_contact_name"
-              android:layout_width="85dp"
-              android:layout_height="30dp"
-              android:layout_centerVertical="true"
-              android:gravity="left"
-              android:layout_toRightOf="@+id/iv_contactImage"
-              android:padding="5dp"
-              android:text="Bregenja"
-              android:textSize="18sp"
-              android:textStyle="bold"
-              android:layout_marginLeft="5dp"/>
+        <TextView
+            android:id="@+id/tv_contact_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/iv_contactImage"
+            android:gravity="left"
+            android:padding="5dp"
+            android:text="Bregenja"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
-          <TextView
-              android:id="@+id/tv_contact_number"
-              android:layout_width="85dp"
-              android:layout_height="30dp"
-              android:layout_centerVertical="true"
-              android:layout_toRightOf="@+id/iv_contactImage"
-              android:padding="5dp"
-              android:text="+919876543210"
-              android:textSize="10sp"
-
-              android:gravity="top"
-              android:layout_marginTop="-10dp"
-              android:layout_marginLeft="6dp"
-              />
+        <TextView
+            android:id="@+id/tv_contact_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="6dp"
+            android:layout_marginTop="-10dp"
+            android:layout_toRightOf="@+id/iv_contactImage"
+            android:gravity="top"
+            android:maxLines="1"
+            android:padding="5dp"
+            android:textSize="10sp" />
 
 
     </LinearLayout>
     <!--<TextView-->
-        <!--android:id="@+id/tv_contact_name"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_centerVertical="true"-->
-        <!--android:layout_toRightOf="@+id/iv_contactImage"-->
-        <!--android:padding="5dp"-->
-        <!--android:text="Bregenja"-->
-        <!--android:textSize="18sp"-->
-        <!--android:textStyle="bold" />-->
-
-
-
+    <!--android:id="@+id/tv_contact_name"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_centerVertical="true"-->
+    <!--android:layout_toRightOf="@+id/iv_contactImage"-->
+    <!--android:padding="5dp"-->
+    <!--android:text="Bregenja"-->
+    <!--android:textSize="18sp"-->
+    <!--android:textStyle="bold" />-->
 
 
 </LinearLayout>

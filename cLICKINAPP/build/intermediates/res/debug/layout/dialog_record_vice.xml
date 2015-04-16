@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/dialog_blue_bg">
+    android:background="@drawable/alert_border">
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="5dp"
-            android:background="@drawable/vice_record" />
+            android:background="@drawable/ic_holdrecordvoiceicon" />
 
         <TextView
             android:id="@+id/txt_hold_to_record"
@@ -26,8 +26,8 @@
             android:layout_margin="10dp"
             android:gravity="center_horizontal"
             android:text="@string/txt_hold_to_record"
-            android:textColor="@color/white"
-            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
 
@@ -37,8 +37,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/txt_hold_to_record"
             android:layout_centerHorizontal="true"
-
-            android:background="@drawable/got_it" />
+            android:background="@drawable/got_it"
+            android:visibility="gone" />
     </RelativeLayout>
 
-</RelativeLayout><!-- From: file:/home/monika/gitcodeClickin/cLICKINAPP/src/main/res/layout/dialog_record_vice.xml -->
+</RelativeLayout><!-- From: file:/monika/latestworkingCLickin/cLICKINAPP/src/main/res/layout/dialog_record_vice.xml -->

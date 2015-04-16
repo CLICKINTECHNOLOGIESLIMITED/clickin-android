@@ -2,213 +2,211 @@ package com.sourcefuse.clickinandroid.model.bean;
 
 public class GetrelationshipsBean {
 
-	private String partner_id;
-	private String statusAccepted;
-	private String userClicks;
-	private String clicks;
-	private String phoneNo;
-	private String partnerPic;
-	private String relationshipId;
-	private String requestInitiator;
-	private String partnerQBId;
-	private String deleted;
-	private String lastChatId;
-	
+    public String mLastSeenTime = null;
+    public String mIs_new_partner = null;
+    private String partner_id;
+    private String statusAccepted;
+    private String userClicks;
+    private String clicks;
+    private String phoneNo;
+    private String partnerPic;
+    private String relationshipId;
+    private String requestInitiator;
+    private String partnerQBId;
+    private String deleted;
+    private String lastChatId;
+    private String mStatuspublic;
+    private String partnerName;
+    private int mUnreadMsg;
 
-	/**
-	 * @return the partner_id
-	 */
-	public String getPartner_id() {
-		return partner_id;
-	}
+    public int getUnreadMsg() {
+        return mUnreadMsg;
+    }
 
-	/**
-	 * @param partner_id
-	 *            the partner_id to set
-	 */
-	public void setPartner_id(String partner_id) {
-		this.partner_id = partner_id;
-	}
+    public void setUnreadMsg(int mUnreadMsg) {
+        this.mUnreadMsg = mUnreadMsg;
+    }
 
-	/**
-	 * @return the statusAccepted
-	 */
-	public String getStatusAccepted() {
-		return statusAccepted;
-	}
+    /**
+     * @return the partner_id
+     */
+    public String getPartner_id() {
+        return partner_id;
+    }
 
-	/**
-	 * @param statusAccepted
-	 *            the statusAccepted to set
-	 */
-	public void setStatusAccepted(String statusAccepted) {
-		this.statusAccepted = statusAccepted;
-	}
+    /**
+     * @param partner_id the partner_id to set
+     */
+    public void setPartner_id(String partner_id) {
+        this.partner_id = partner_id;
+    }
 
-	/**
-	 * @return the userClicks
-	 */
-	public String getUserClicks() {
-		return userClicks;
-	}
+    /**
+     * @return the statusAccepted
+     */
+    public String getStatusAccepted() {
+        return statusAccepted;
+    }
 
-	/**
-	 * @param userClicks
-	 *            the userClicks to set
-	 */
-	public void setUserClicks(String userClicks) {
-		this.userClicks = userClicks;
-	}
+    /**
+     * @param statusAccepted the statusAccepted to set
+     */
+    public void setStatusAccepted(String statusAccepted) {
+        this.statusAccepted = statusAccepted;
+    }
 
-	/**
-	 * @return the clicks
-	 */
-	public String getClicks() {
-		return clicks;
-	}
+    /**
+     * @return the userClicks
+     */
+    public String getUserClicks() {
+        return userClicks;
+    }
 
-	/**
-	 * @param clicks
-	 *            the clicks to set
-	 */
-	public void setClicks(String clicks) {
-		this.clicks = clicks;
-	}
+    /**
+     * @param userClicks the userClicks to set
+     */
+    public void setUserClicks(String userClicks) {
+        this.userClicks = userClicks;
+    }
 
-	/**
-	 * @return the phoneNo
-	 */
-	public String getPhoneNo() {
-		return phoneNo;
-	}
+    /**
+     * @return the clicks
+     */
+    public String getClicks() {
+        return clicks;
+    }
 
-	/**
-	 * @param phoneNo
-	 *            the phoneNo to set
-	 */
-	public void setPhoneNo(String phoneNo) {
-		this.phoneNo = phoneNo;
-	}
+    /**
+     * @param clicks the clicks to set
+     */
+    public void setClicks(String clicks) {
+        this.clicks = clicks;
+    }
 
-	/**
-	 * @return the partnerPic
-	 */
-	public String getPartnerPic() {
-		return partnerPic;
-	}
+    /**
+     * @return the phoneNo
+     */
+    public String getPhoneNo() {
+        return phoneNo;
+    }
 
-	/**
-	 * @param partnerPic
-	 *            the partnerPic to set
-	 */
-	public void setPartnerPic(String partnerPic) {
-		this.partnerPic = partnerPic;
-	}
+    /**
+     * @param phoneNo the phoneNo to set
+     */
+    public void setPhoneNo(String phoneNo) {
+        this.phoneNo = phoneNo;
+    }
 
-	/**
-	 * @return the requestInitiator
-	 */
-	public String getRequestInitiator() {
-		return requestInitiator;
-	}
+    /**
+     * @return the partnerPic
+     */
+    public String getPartnerPic() {
+        return partnerPic;
+    }
 
-	/**
-	 * @param requestInitiator
-	 *            the requestInitiator to set
-	 */
-	public void setRequestInitiator(String requestInitiator) {
-		this.requestInitiator = requestInitiator;
-	}
+    /**
+     * @param partnerPic the partnerPic to set
+     */
+    public void setPartnerPic(String partnerPic) {
+        this.partnerPic = partnerPic;
+    }
 
-	/**
-	 * @return the mStatuspublic
-	 */
-	public String getmStatuspublic() {
-		return mStatuspublic;
-	}
+    /**
+     * @return the requestInitiator
+     */
+    public String getRequestInitiator() {
+        return requestInitiator;
+    }
 
-	/**
-	 * @param mStatuspublic
-	 *            the mStatuspublic to set
-	 */
-	public void setmStatuspublic(String mStatuspublic) {
-		this.mStatuspublic = mStatuspublic;
-	}
+    /**
+     * @param requestInitiator the requestInitiator to set
+     */
+    public void setRequestInitiator(String requestInitiator) {
+        this.requestInitiator = requestInitiator;
+    }
 
-	/**
-	 * @return the deleted
-	 */
-	public String getDeleted() {
-		return deleted;
-	}
+    /**
+     * @return the mStatuspublic
+     */
+    public String getmStatuspublic() {
+        return mStatuspublic;
+    }
 
-	/**
-	 * @param deleted the deleted to set
-	 */
-	public void setDeleted(String deleted) {
-		this.deleted = deleted;
-	}
+    /**
+     * @param mStatuspublic the mStatuspublic to set
+     */
+    public void setmStatuspublic(String mStatuspublic) {
+        this.mStatuspublic = mStatuspublic;
+    }
 
-	/**
-	 * @return the lastChatId
-	 */
-	public String getLastChatId() {
-		return lastChatId;
-	}
+    /**
+     * @return the deleted
+     */
+    public String getDeleted() {
+        return deleted;
+    }
 
-	/**
-	 * @param lastChatId the lastChatId to set
-	 */
-	public void setLastChatId(String lastChatId) {
-		this.lastChatId = lastChatId;
-	}
+    /**
+     * @param deleted the deleted to set
+     */
+    public void setDeleted(String deleted) {
+        this.deleted = deleted;
+    }
 
-	/**
-	 * @return the partnerName
-	 */
-	public String getPartnerName() {
-		return partnerName;
-	}
+    /**
+     * @return the lastChatId
+     */
+    public String getLastChatId() {
+        return lastChatId;
+    }
 
-	/**
-	 * @param partnerName
-	 *            the partnerName to set
-	 */
-	public void setPartnerName(String partnerName) {
-		this.partnerName = partnerName;
-	}
+    /**
+     * @param lastChatId the lastChatId to set
+     */
+    public void setLastChatId(String lastChatId) {
+        this.lastChatId = lastChatId;
+    }
 
-	private String mStatuspublic;
-	private String partnerName;
+    /**
+     * @return the partnerName
+     */
+    public String getPartnerName() {
+        return partnerName;
+    }
 
-	/**
-	 * @return the partnerQBId
-	 */
-	public String getPartnerQBId() {
-		return partnerQBId;
-	}
+    /**
+     * @param partnerName the partnerName to set
+     */
+    public void setPartnerName(String partnerName) {
+        this.partnerName = partnerName;
+    }
 
-	/**
-	 * @param partnerQBId
-	 *            the partnerQBId to set
-	 */
-	public void setPartnerQBId(String partnerQBId) {
-		this.partnerQBId = partnerQBId;
-	}
+    /**
+     * @return the partnerQBId
+     */
+    public String getPartnerQBId() {
+        return partnerQBId;
+    }
 
-	/**
-	 * @return the relationshipId
-	 */
-	public String getRelationshipId() {
-		return relationshipId;
-	}
+    /**
+     * @param partnerQBId the partnerQBId to set
+     */
+    public void setPartnerQBId(String partnerQBId) {
+        this.partnerQBId = partnerQBId;
+    }
 
-	/**
-	 * @param relationshipId
-	 *            the relationshipId to set
-	 */
-	public void setRelationshipId(String relationshipId) {
-		this.relationshipId = relationshipId;
-	}
+    /**
+     * @return the relationshipId
+     */
+    public String getRelationshipId() {
+        return relationshipId;
+    }
+
+    /**
+     * @param relationshipId the relationshipId to set
+     */
+    public void setRelationshipId(String relationshipId) {
+        this.relationshipId = relationshipId;
+    }
 
 }

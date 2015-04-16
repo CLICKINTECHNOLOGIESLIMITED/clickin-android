@@ -25,57 +25,57 @@
                 android:paddingBottom="5dp"
                 android:paddingRight="30dp"
                 android:paddingTop="5dp"
-                android:src="@drawable/back_arrow" />
+                android:src="@drawable/back_arrow"
+                android:visibility="gone" />
 
 
             <!--<ImageView-->
-                <!--android:id="@+id/iv_notification"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:visibility="gone"-->
-                <!--android:layout_alignParentRight="true"-->
-                <!--android:layout_marginRight="10dp"-->
-                <!--android:layout_marginTop="6dp"-->
-                <!--android:paddingLeft="50dp"-->
-                <!--android:src="@drawable/chat" />-->
+            <!--android:id="@+id/iv_notification"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:visibility="gone"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_marginRight="10dp"-->
+            <!--android:layout_marginTop="6dp"-->
+            <!--android:paddingLeft="50dp"-->
+            <!--android:src="@drawable/chat" />-->
             <LinearLayout
                 android:id="@+id/Linear_layout1"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:orientation="horizontal"
                 android:layout_alignParentRight="true"
-                android:paddingLeft="40dp">
+                android:orientation="horizontal"
+                android:paddingBottom="2dp"
+                android:paddingRight="10dp">
 
 
                 <com.sourcefuse.clickinandroid.utils.ClickInTextView
-                    android:layout_width="30dp"
+                    android:id="@+id/textView_clicks_tabhost"
+                    android:layout_width="50dp"
                     android:layout_height="30dp"
-
-                    android:id="@+id/textView"
-                    android:gravity="center_horizontal|right"
-                    android:layout_marginBottom="-3dp"
-                    android:layout_marginRight="2dp"
-                    android:textStyle="bold"
-                    geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
                     android:layout_gravity="center"
-
-                    android:text="43"
-                    android:textSize="20sp"
+                    android:layout_marginBottom="-3dp"
+                    android:layout_marginRight="4dp"
+                    android:ellipsize="end"
+                    android:gravity="right"
+                    android:singleLine="true"
+                    android:text="4333"
                     android:textColor="@color/chat_notification"
-                    />
+                    android:textSize="19sp"
+                    android:textStyle="bold"
+                    geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
 
                 <ImageView
                     android:id="@+id/iv_notification"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:layout_gravity="center"
                     android:layout_alignParentRight="true"
-                    android:src="@drawable/r_click_icon"
-                    />
+                    android:layout_gravity="center"
+
+                    android:src="@drawable/r_click_icon" />
             </LinearLayout>
 
         </RelativeLayout>
-
 
 
         <RelativeLayout
@@ -83,7 +83,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="60dp"
             android:background="@drawable/blue_bg">
 
             <com.sourcefuse.clickinandroid.utils.ClickInTextView
@@ -92,28 +92,29 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
                 android:text="TRADE"
                 android:textColor="@color/white"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
         </RelativeLayout>
 
     </RelativeLayout>
+
     <HorizontalScrollView
+        android:id="@+id/H_view"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:id="@+id/H_view"
         android:scrollbars="none"
 
         >
 
 
         <LinearLayout
+            android:id="@+id/Linear_layout"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_weight="0.78"
-            android:id="@+id/Linear_layout"
             android:baselineAligned="false">
 
             <TabHost
@@ -128,16 +129,15 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:baselineAligned="false">
+                    android:baselineAligned="false"
+                    android:orientation="vertical">
 
                     <TabWidget
                         android:id="@android:id/tabs"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
 
-                        >
-                    </TabWidget>
+                        ></TabWidget>
 
                     <FrameLayout
                         android:id="@android:id/tabcontent"
@@ -151,9 +151,8 @@
                             android:id="@+id/Layout_Tab_2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textStyle="bold"
                             android:gravity="bottom"
-
+                            android:textStyle="bold"
                             geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"
 
 
@@ -176,14 +175,17 @@
         </LinearLayout>
     </HorizontalScrollView>
 
-        <FrameLayout
+    <FrameLayout
         android:id="@+id/framelayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent"></FrameLayout>
 
 
-
-      </FrameLayout>
+    <!--<ImageView-->
+    <!--android:id="@+id/imageview_underline"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_below="@+id/Layout_Tab_2"-->
+    <!--android:background="@drawable/tabbottomline"/>-->
 </LinearLayout>
-<!-- From: file:/home/monika/gitcodeClickin/cLICKINAPP/src/main/res/layout/view_tabhost2.xml -->
+<!-- From: file:/monika/latestworkingCLickin/cLICKINAPP/src/main/res/layout/view_tabhost2.xml -->

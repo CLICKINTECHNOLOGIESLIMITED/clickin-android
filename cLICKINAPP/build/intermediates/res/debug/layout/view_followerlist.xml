@@ -1,40 +1,21 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:geekui="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/white_pattern_bg">
+    android:background="@drawable/enterdigitmainbg">
 
     <RelativeLayout
         android:id="@+id/rr_header"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:background="@color/appclr">
+        android:background="@color/appclr" />
 
-        <ImageView
-            android:id="@+id/iv_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="5dp"
-            android:background="@drawable/back_arrow"
-            android:padding="5dp" />
-
-        <ImageView
-            android:id="@+id/iv_notification_list"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="5dp"
-            android:background="@drawable/chat" />
-    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/rl_followerdata"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rr_header"
-        android:visibility="gone">
+        android:layout_below="@+id/rr_header">
 
 
         <ListView
@@ -44,8 +25,13 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="5dp"
-            android:dividerHeight="2dp"
-            android:scrollbars="none" />
+            android:choiceMode="singleChoice"
+            android:divider="@null"
+            android:fadingEdge="none"
+            android:listSelector="#00000000"
+            android:overScrollMode="never"
+            android:scrollbars="none"
+            android:transcriptMode="alwaysScroll" />
     </RelativeLayout>
 
 
@@ -59,18 +45,19 @@
         android:gravity="center_vertical"
         android:visibility="gone">
 
-        <TextView
+        <com.sourcefuse.clickinandroid.utils.ClickInTextView
             android:id="@+id/tv_follower_msgI"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:gravity="center_horizontal"
             android:text="@string/tv_follower_empty_msgone"
-            android:textColor="@color/appclr"
+            android:textColor="@color/signup_contry_code"
             android:textSize="25sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
 
-        <TextView
+        <com.sourcefuse.clickinandroid.utils.ClickInTextView
             android:id="@+id/tv_follower_msgII"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -78,9 +65,10 @@
             android:layout_centerHorizontal="true"
             android:gravity="center_horizontal"
             android:text="@string/tv_follower_empty_msgtwo"
-            android:textColor="@color/appclr"
+            android:textColor="@color/follower_list_user_txt"
             android:textSize="15sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
     </RelativeLayout>
 
 
@@ -92,15 +80,17 @@
         android:layout_centerHorizontal="true"
         android:background="@drawable/blue_bg">
 
-        <TextView
+        <com.sourcefuse.clickinandroid.utils.ClickInTextView
             android:id="@+id/tv_profile_txt_wer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
+            android:layout_marginTop="12dp"
             android:text="@string/txt_follower"
+            android:textAllCaps="true"
             android:textColor="@color/white"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textSize="18sp"
+            android:textStyle="bold"
+            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
     </RelativeLayout>
-</RelativeLayout><!-- From: file:/home/monika/gitcodeClickin/cLICKINAPP/src/main/res/layout/view_followerlist.xml -->
+</RelativeLayout><!-- From: file:/monika/latestworkingCLickin/cLICKINAPP/src/main/res/layout/view_followerlist.xml -->

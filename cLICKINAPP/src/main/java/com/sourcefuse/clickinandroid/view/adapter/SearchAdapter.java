@@ -23,18 +23,20 @@ import java.util.List;
 public class SearchAdapter extends ArrayAdapter<FetchUsersByNameBean> {
     Context context;
     int layoutResourceId;
+    List<FetchUsersByNameBean> item;
 
     public SearchAdapter(Context context, int layoutResourceId,
-                           List<FetchUsersByNameBean> item) {
-        super(context, layoutResourceId, item);
+                         List<FetchUsersByNameBean> item1) {
+        super(context, layoutResourceId, item1);
         this.layoutResourceId = layoutResourceId;
         this.context = context;
+        this.item = item1;
 
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final FetchUsersByNameBean item = getItem(position);
+
         View row = convertView;
         RecordHolder holder = null;
         if (row == null) {
@@ -53,25 +55,38 @@ public class SearchAdapter extends ArrayAdapter<FetchUsersByNameBean> {
         }
 
         RecordHolder rholder = (RecordHolder) row.getTag();
-        if(!Utils.isEmptyString(item.getCity()) && !Utils.isEmptyString(item.getCountry())) {
-            holder.user_address.setText(item.getCity()+","+item.getCountry());
-        }else if (Utils.isEmptyString(item.getCity())) {
-            holder.user_address.setText(item.getCity());
-        }else if (Utils.isEmptyString(item.getCountry())) {
-            holder.user_address.setText(item.getCountry());
+        if (!Utils.isEmptyString(item.get(position).getCity()) && !Utils.isEmptyString(item.get(position).getCountry())) {
+            holder.user_address.setText(item.get(position).getCity() + "," + item.get(position).getCountry());
+        } else if (Utils.isEmptyString(item.get(position).getCity())) {
+            holder.user_address.setText(item.get(position).getCity());
+        } else if (Utils.isEmptyString(item.get(position).getCountry())) {
+            holder.user_address.setText(item.get(position).getCountry());
+        } else {
         }
 
-        rholder.usr_name.setText(item.getName());
-        Picasso.with(context).load(item.getUserPic())
-                .placeholder(R.drawable.default_profile)
-                .error(R.drawable.default_profile)
-                .into(rholder.usrimg);
+        rholder.usr_name.setText(item.get(position).getName());
+        if (!Utils.isEmptyString(item.get(position).getUserPic()) && !item.get(position).getUserPic().equalsIgnoreCase("")) {
+            try {
+                Picasso.with(context).load(item.get(position).getUserPic())
+                        .error(R.drawable.male_user)
+                        .into(rholder.usrimg);
+            } catch (Exception e) {
+                holder.usrimg.setImageResource(R.drawable.male_user);
+            }
+        } else {
+            holder.usrimg.setImageResource(R.drawable.male_user);
+        }
+
+        if ((item.size() - 1) == position)
+            row.findViewById(R.id.divider).setVisibility(View.GONE);
+        else
+            row.findViewById(R.id.divider).setVisibility(View.VISIBLE);
 
         return row;
     }
 
     static class RecordHolder {
-        TextView usr_name,user_address;
+        TextView usr_name, user_address;
         ImageView usrimg;
 
 

@@ -5,21 +5,21 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.WakefulBroadcastReceiver;
-import android.util.Log;
+
+import com.sourcefuse.clickinandroid.model.SettingManager;
 
 public class GcmBroadcastReceiver extends WakefulBroadcastReceiver {
-	
-	
+
+
     @Override
     public void onReceive(Context context, Intent intent) {
-       
-    	// Explicitly specify that GcmMessageHandler will handle the intent.
-    	Log.e("mbroad cast reciver", "in broad cast reciver");
-        ComponentName comp = new ComponentName(context.getPackageName(),
-        		GcmIntentService.class.getName());
-        
-        // Start the service, keeping the device awake while it is launching.
-        startWakefulService(context, (intent.setComponent(comp)));
-        setResultCode(Activity.RESULT_OK);
+
+
+        if (SettingManager.mNotification_Enable) {
+
+            ComponentName comp = new ComponentName(context.getPackageName(), GcmIntentService.class.getName());
+            startWakefulService(context, (intent.setComponent(comp)));
+            setResultCode(Activity.RESULT_OK);
+        }
     }
 }

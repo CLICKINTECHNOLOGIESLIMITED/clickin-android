@@ -3,33 +3,14 @@
     android:id="@+id/rl_usr_profile"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/white_pattern_bg">
+    android:background="@drawable/enterdigitmainbg">
 
     <RelativeLayout
         android:id="@+id/rr_header"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:background="@color/appclr">
+        android:background="@color/appclr" />
 
-        <ImageView
-            android:id="@+id/iv_menu_other"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/menu_icon"
-            android:padding="10dp" />
-
-        <ImageView
-            android:id="@+id/iv_notification_other"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="5dp"
-            android:background="@drawable/chat" />
-    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -60,7 +41,7 @@
                     android:paddingBottom="2dp"
                     android:paddingLeft="5dp"
                     android:paddingTop="5dp"
-                    android:text="Jacob smith"
+
                     android:textColor="@color/profile_name_b"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -68,10 +49,9 @@
                 <ImageView
                     android:id="@+id/iv_usr_icon"
                     android:layout_width="150dp"
-                    android:layout_height="120dp"
+                    android:layout_height="150dp"
                     android:layout_below="@+id/tv_name_other"
-                    android:layout_marginLeft="5dp"
-                    android:src="@drawable/female_crt" />
+                    android:layout_marginLeft="10dp" />
 
                 <TextView
                     android:id="@+id/tv_user_details_other"
@@ -80,7 +60,7 @@
                     android:layout_below="@+id/iv_usr_icon"
                     android:layout_marginLeft="5dp"
                     android:padding="5dp"
-                    android:text="Jacob smith"
+
                     android:textColor="@color/profile_details"
                     android:textSize="14sp" />
 
@@ -92,7 +72,7 @@
                     android:visibility="gone" />
             </RelativeLayout>
 
-            <Button
+            <TextView
                 android:id="@+id/btn_follower_other"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -100,32 +80,43 @@
                 android:layout_marginBottom="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/light_grey_bg"
+                android:background="@drawable/light_grey_bg_new"
                 android:gravity="center"
-                android:text="@string/txt_follower"
                 android:textColor="@color/profile_parter_nmae_b"
                 android:textSize="20sp" />
 
-            <Button
+            <TextView
                 android:id="@+id/btn_following_other"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/btn_follower_other"
                 android:layout_marginBottom="10dp"
                 android:layout_marginLeft="10dp"
-                android:background="@drawable/light_grey_bg"
+                android:background="@drawable/light_grey_bg_new"
                 android:gravity="center"
-                android:text="@string/txt_following"
                 android:textColor="@color/profile_name_b"
                 android:textSize="20sp" />
 
-            <Button
+
+            <TextView
                 android:id="@+id/btn_follow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/btn_following_other"
                 android:layout_marginLeft="10dp"
-                android:background="@drawable/follow" />
+                android:background="@drawable/follow_other_profile"
+                android:gravity="center" />
+
+
+            <!--<Button-->
+            <!--android:id="@+id/btn_follow"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_below="@+id/btn_following_other"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:gravity="center"-->
+
+            <!--android:background="@drawable/follow" />-->
         </RelativeLayout>
 
         <LinearLayout
@@ -146,7 +137,8 @@
                 android:layout_marginBottom="10dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
-                android:background="@drawable/clickwith_bg">
+                android:background="@drawable/clickwith_bg"
+                android:visibility="visible">
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -198,25 +190,28 @@
                     android:orientation="horizontal"
                     android:visibility="gone">
 
-                    <TextView
+                    <com.sourcefuse.clickinandroid.utils.ClickInTextView
                         android:id="@+id/tv_clickintx"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingBottom="2dp"
                         android:paddingTop="5dp"
-                        android:text="@string/txt_clickINtxt"
-                        android:textColor="@color/profile_details"
-                        android:textSize="20sp" />
+                        android:text="CLICKIN' "
+                        android:textColor="@color/dark_gray"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
 
-                    <TextView
+                    <com.sourcefuse.clickinandroid.utils.ClickInTextView
                         android:id="@+id/tv_with"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingBottom="2dp"
                         android:paddingTop="5dp"
                         android:text="@string/txt_with"
-                        android:textColor="@color/profile_details"
-                        android:textSize="20sp" />
+                        android:textColor="@color/owner_relation_header_with_m"
+                        android:textSize="18sp"
+                        geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
                 </LinearLayout>
 
                 <View
@@ -225,7 +220,7 @@
                     android:layout_height="1dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
-                    android:background="@color/sign_hint"
+                    android:background="@drawable/owner_profile_side_line"
                     android:visibility="gone" />
 
                 <ListView
@@ -233,6 +228,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
+                    android:divider="@color/transparent"
                     android:scrollbars="none" />
             </LinearLayout>
 
@@ -255,9 +251,10 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:text="@string/txt_profile"
+            android:textAllCaps="true"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
     </RelativeLayout>
 
-</RelativeLayout><!-- From: file:/home/monika/gitcodeClickin/cLICKINAPP/src/main/res/layout/view_othersprofile.xml -->
+</RelativeLayout><!-- From: file:/monika/latestworkingCLickin/cLICKINAPP/src/main/res/layout/view_othersprofile.xml -->

@@ -1,0 +1,64 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:geekui="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_blue_bg">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="25dp">
+
+        <com.sourcefuse.clickinandroid.utils.ClickInTextView
+            android:id="@+id/alert_msgI"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_horizontal"
+            android:text="@string/txt_wesentyoucode"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
+
+        <!--<com.sourcefuse.clickinandroid.utils.ClickInTextView-->
+        <!--android:id="@+id/alert_msgII"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/alert_msgI"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_centerInParent="true"-->
+        <!--android:gravity="center_horizontal"-->
+        <!--android:text="just to make sure you didnt \nwrong number us"-->
+        <!--android:textColor="@color/white"-->
+        <!--geekui:customFont="AvenirNextLTPro-BoldCn_0.otf"-->
+        <!--android:textSize="14sp" />-->
+
+        <Button
+            android:id="@+id/coolio"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/alert_msgI"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/blue_btn"
+            android:text="Skip"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/coolio1"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/alert_msgI"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/pink_btn"
+            android:text="Ok"
+            android:textColor="@color/white"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+</RelativeLayout>

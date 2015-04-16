@@ -5,11 +5,13 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.view.Window;
 
+
 import com.sourcefuse.clickinandroid.utils.CustomCirclePageIndicator;
+import com.sourcefuse.clickinandroid.utils.UnCaughtExceptionHandler;
+import com.sourcefuse.clickinandroid.utils.Utils;
 import com.sourcefuse.clickinapp.R;
 import com.viewpagerindicator.PageIndicator;
 
@@ -22,43 +24,41 @@ import java.util.TimerTask;
  */
 public class CoverFlow extends FragmentActivity {
 
-
     ViewPager mPager;
-    PageIndicator mIndicator;
-    TestFragmentAdapter mAdapter;
-    FragmentManager fragmentManager;
-    TestFragmentAdapter adapter;
-    Timer timer;
-    MyTimerTask myTimerTask;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.cover_flow);
 
-        try{
+        if (Utils.mStartExceptionTrack)
+            Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
+
+        try {
             SharedPreferences sharedPreferences = PreferenceManager
                     .getDefaultSharedPreferences(getApplicationContext());
             Boolean coverFlow = sharedPreferences.getBoolean("coverFlow", false);
 
-            if(coverFlow){
-                Intent splashView = new Intent(CoverFlow.this,SplashView.class);
+            if (coverFlow) {
+                Intent splashView = new Intent(CoverFlow.this, SplashView.class);
                 startActivity(splashView);
                 finish();
             }
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
 
-        mAdapter = new TestFragmentAdapter(getSupportFragmentManager());
+        TestFragmentAdapter mAdapter = new TestFragmentAdapter(getSupportFragmentManager());
 
-        mPager = (ViewPager)findViewById(R.id.pager);
+        mPager = (ViewPager) findViewById(R.id.pager);
         mPager.setAdapter(mAdapter);
 
-        mIndicator = (CustomCirclePageIndicator)findViewById(R.id.indicator);
+        PageIndicator mIndicator = (CustomCirclePageIndicator) findViewById(R.id.indicator);
         mIndicator.setViewPager(mPager);
-        timer = new Timer();
-        myTimerTask = new MyTimerTask();
+        Timer timer = new Timer();
+        MyTimerTask myTimerTask = new MyTimerTask();
         timer.schedule(myTimerTask, 3000, 3000);
 
     }

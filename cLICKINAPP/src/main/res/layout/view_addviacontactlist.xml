@@ -1,25 +1,68 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:id="@+id/rl_addvia_contact_action"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/white_pattern_bg">
+    android:background="@drawable/enterdigitmainbg">
+
+    <!--<LinearLayout-->
+    <!--android:id="@+id/iv_topicon"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_centerHorizontal="true"-->
+    <!--android:background="@drawable/c_header_bg"-->
+    <!--android:orientation="vertical"-->
+    <!--android:weightSum="2">-->
+
+    <!--<com.sourcefuse.clickinandroid.utils.ClickInTextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_centerHorizontal="true"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:layout_marginBottom="5dp"-->
+    <!--android:layout_weight="1"-->
+    <!--android:gravity="center"-->
+    <!--android:text="ADD SOMEONE"-->
+    <!--android:textColor="@color/screen_header"-->
+    <!--android:textSize="43sp"-->
+    <!--android:textStyle="bold"-->
+    <!--geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />-->
+
+    <!--<com.sourcefuse.clickinandroid.utils.ClickInTextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_centerHorizontal="true"-->
+    <!--android:layout_gravity="top"-->
+    <!--android:layout_marginBottom="10dp"-->
+    <!--android:layout_marginLeft="24dp"-->
+    <!--android:layout_marginTop="-50dp"-->
+    <!--android:layout_weight="1"-->
+    <!--android:gravity="center"-->
+    <!--android:text="TO CLICK WITH"-->
+    <!--android:textColor="@color/screen_header"-->
+    <!--android:textSize="43sp"-->
+    <!--android:textStyle="bold"-->
+    <!--geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />-->
+
+    <!--</LinearLayout>-->
+
 
     <ImageView
         android:id="@+id/iv_topicon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/add_someone" />
+        android:background="@drawable/addtosomeone" />
 
     <RelativeLayout
         android:id="@+id/linearLayout1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/iv_topicon"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/white_border"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="18dp"
+        android:background="@drawable/alert_border_partner"
         android:padding="15dp">
 
         <RelativeLayout
@@ -38,64 +81,79 @@
 
             <TextView
                 android:id="@+id/tv_contact_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:layout_centerHorizontal="true"
                 android:layout_marginBottom="2dp"
                 android:layout_toRightOf="@+id/iv_contact_icon"
+                android:background="@drawable/search_bg"
                 android:paddingLeft="10dp"
+                android:paddingTop="15dp"
                 android:text="mahendra"
-                android:textColor="@color/dark_gray"
+                android:textColor="@color/black"
                 android:textSize="15sp"
                 android:textStyle="bold"></TextView>
 
-            <Button
-                android:id="@+id/btn_close"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:background="@drawable/close_btn" />
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/edt_text_cntry_cd"
+        <LinearLayout
+            android:id="@+id/ll2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/rr_contact_iv"
-            android:layout_marginBottom="2dp"
-            android:text="@string/txt_cntrycode"
-            android:textColor="@color/dark_gray"
-            android:textSize="10sp"></TextView>
+            android:orientation="vertical"
+            android:weightSum="1">
+
+            <TextView
+                android:id="@+id/edt_text_cntry_cd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rr_contact_iv"
+                android:layout_marginBottom="2dp"
+                android:layout_weight="23.50"
+                android:text="@string/txt_cntrycode"
+                android:textColor="@color/dark_gray"
+                android:textSize="10sp"></TextView>
+
+
+            <EditText
+                android:id="@+id/edt_cntry_cd"
+                android:layout_width="fill_parent"
+                android:layout_height="45dp"
+                android:background="@color/background_grey"
+                android:ems="10"
+                android:inputType="textNoSuggestions"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"></EditText>
+
+
+        </LinearLayout>
+
 
         <LinearLayout
             android:id="@+id/ll_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/edt_text_cntry_cd"
+            android:layout_marginTop="86dp"
+            android:layout_toRightOf="@id/ll2"
             android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/edt_cntry_cd"
-                android:layout_width="50dp"
-                android:layout_height="45dp"
-                android:background="@color/dark_gray"
-                android:ems="10"
-                android:padding="10dp"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:textStyle="bold"></EditText>
 
             <EditText
                 android:id="@+id/edt_phone_no"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:layout_marginLeft="4dp"
-                android:background="@color/dark_gray"
-                android:ems="10"
-                android:inputType="phone"
+                android:background="@color/background_grey"
+                android:ems="12"
+                android:hint="Phone Number"
+                android:inputType="phone|textNoSuggestions"
                 android:padding="10dp"
                 android:textColor="@color/black"
+                android:textColorHint="@color/dark_gray"
                 android:textSize="16sp"
                 android:textStyle="bold">
 
@@ -103,33 +161,45 @@
             </EditText>
         </LinearLayout>
 
-        <RelativeLayout
-            android:id="@+id/rr_con_list"
-            android:layout_width="wrap_content"
+
+        <Button
+            android:id="@+id/btn_get_clickIn"
+            android:layout_width="310dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/ll_search"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="5dp">
+            android:layout_marginTop="20dp"
+            android:background="@drawable/c_getclicin_deactive" />
 
-            <Button
-                android:id="@+id/btn_get_clickIn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/get_click_in_dark" />
-        </RelativeLayout>
     </RelativeLayout>
 
-    <Button
-        android:id="@+id/btn_go_back"
+    <RelativeLayout
+        android:id="@+id/rl_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/c_back_footer"
-        android:text="BACK"
-        android:textColor="@color/white"
-        android:textStyle="bold" />
+        android:layout_marginTop="400dp"
+        android:background="@drawable/c_back_footer">
 
+        <TextView
+            android:id="@+id/btn_go_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/c_back"
+            android:gravity="bottom" />
+        <!--<Button-->
+        <!--android:id="@+id/btn_go_back_num"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"       -->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:background="@drawable/c_back"-->
+        <!--android:layout_marginTop="5dp"-->
+        <!--android:gravity="center"-->
+        <!---->
+        <!--android:textColor="@color/white"-->
+        <!--android:textStyle="bold" />-->
+    </RelativeLayout>
 </RelativeLayout>

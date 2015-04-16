@@ -7,6 +7,11 @@ public class FetchFbFriendsBean {
 
 
     private String fbId;
+    private String fbName;
+    private String fbPhone;
+    private String fId;
+    private String fbImage;
+    private String fbStatus;
 
     public String getFbId() {
         return fbId;
@@ -55,13 +60,6 @@ public class FetchFbFriendsBean {
     public void setFbStatus(String fbStatus) {
         this.fbStatus = fbStatus;
     }
-
-    private String fbName;
-    private String fbPhone;
-    private String fId;
-    private String fbImage;
-    private String  fbStatus;
-
 
 
 }

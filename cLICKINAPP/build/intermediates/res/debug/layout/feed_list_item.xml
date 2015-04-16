@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:geekui="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -6,199 +7,312 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/feed_image_layout">
 
-        <ImageView
-            android:id="@+id/feed_image"
-            android:layout_width="@dimen/feed_image_height"
-            android:layout_height="@dimen/feed_image_height"
-            android:layout_centerHorizontal="true"
-            android:scaleType="centerCrop"
-            android:src="@drawable/female_crt"
-            android:visibility="gone"/>
-
-        <LinearLayout
+        <View
+            android:id="@+id/view_top"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/audio"
-            android:visibility="gone"
-            android:id="@+id/audio_layout">
-        <Button
-            android:id="@+id/feed_audio_button"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/play"
-           android:layout_gravity="center_vertical"/>
-        </LinearLayout>
+            android:layout_height="1dp"
+            android:layout_marginBottom="5dp"
+            android:background="@color/light_gray"></View>
+
         <RelativeLayout
-            android:layout_width="fill_parent"
+            android:id="@+id/feed_image_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/view_top">
 
-            android:visibility="gone"
-            android:id="@+id/video_layout">
             <ImageView
+                android:id="@+id/feed_image"
                 android:layout_width="@dimen/feed_image_height"
                 android:layout_height="@dimen/feed_image_height"
                 android:layout_centerHorizontal="true"
-                android:background="@color/black"
-                android:id="@+id/video_thumb"/>
-            <Button
-                android:id="@+id/feed_video_button"
+                android:scaleType="centerCrop"
+                android:src="@drawable/female_crt"
+                android:visibility="gone" />
+
+            <ProgressBar
+                android:id="@+id/LoadImage"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@drawable/play"
                 android:layout_centerInParent="true"
-              />
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-android:layout_centerHorizontal="true"
-            android:background="@color/light_gray"
-            android:visibility="visible"
-            android:id="@+id/card_layout">
+                android:adjustViewBounds="true"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/audio_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/audio"
+                android:visibility="gone">
+
+                <Button
+                    android:id="@+id/feed_audio_button"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="15dp"
+                    android:background="@drawable/play_vedio" />
+            </LinearLayout>
+
             <RelativeLayout
-                android:layout_width="150dp"
-                android:layout_height="200dp"
-                android:layout_marginLeft="10dp"
-                android:background="@drawable/card"
-                android:visibility="visible"
-                android:id="@+id/cards_relative">
+                android:id="@+id/video_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/video_thumb"
+                    android:layout_width="@dimen/feed_image_height"
+                    android:layout_height="@dimen/feed_image_height"
+                    android:layout_centerHorizontal="true"
+                    android:background="@color/black" />
+
+                <Button
+                    android:id="@+id/feed_video_button"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/play_vedio" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/card_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/light_gray"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:visibility="visible">
+
                 <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
+                    android:id="@+id/cards_relative"
+                    android:layout_width="150dp"
+                    android:layout_height="200dp"
                     android:layout_margin="10dp"
-                    >
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:text="0"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:id="@+id/card_count_1"
-                    android:layout_centerVertical="true"/>
-                    <ImageView
+                    android:background="@drawable/tradecardbg_blank"
+                    android:gravity="center"
+                    android:visibility="visible">
+
+                    <LinearLayout
+                        android:id="@+id/upper_relative"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/c_clicks_heart"
-                        android:layout_toRightOf="@+id/card_count_1"
-                        android:layout_marginLeft="2dp"/>
-                    </RelativeLayout>
+                        android:layout_margin="5dp"
+                        android:gravity="center_vertical">
 
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_margin="5dp"
-                    android:layout_alignParentRight="true">
+                        <TextView
+                            android:id="@+id/card_count_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginTop="-1dp"
+                            android:text="0"
+                            android:textColor="@color/white"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <!--<ImageView-->
+                        <!--android:id="@+id/clicks_heart_top"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_marginLeft="2dp"-->
+                        <!--android:src="@drawable/c_clicks_heart"-->
+                        <!--android:visibility="visible"/>-->
+                    </LinearLayout>
+
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:id="@+id/card_title"
+                        android:layout_width="110dp"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/white"
-                        android:text="0"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        android:id="@+id/card_count_2"
-                        />
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/c_clicks_heart"
-                        android:layout_toRightOf="@+id/card_count_2"
-                        android:layout_marginLeft="2dp"/>
-                </RelativeLayout>
-                </RelativeLayout>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/white"
+                        android:layout_below="@+id/upper_relative"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="32dp"
+                        android:gravity="center"
+                        android:lines="2"
 
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:id="@+id/card_status"
-                android:layout_toRightOf="@+id/cards_relative"
-                android:padding="20dp"/>
-            <View
-                android:layout_width="200dp"
-                android:layout_height="2dp"
-                android:background="@color/dark_gray"
-                android:layout_below="@+id/card_status"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_toRightOf="@+id/cards_relative"></View>
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/accepted_btn"
-                android:layout_below="@+id/card_status"
-                android:padding="10dp"
-                android:layout_toRightOf="@+id/cards_relative"/>
+                        android:textAllCaps="true"
+                        android:textColor="@color/feed_senderuser"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:visibility="visible" />
+
+                    <TextView
+                        android:id="@+id/custom_message"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/upper_relative"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="28dp"
+                        android:gravity="center"
+                        android:lines="5"
+                        android:textColor="@color/white"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/card_msg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_above="@+id/lower_relative"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:gravity="center_horizontal"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:visibility="visible" />
+
+                    <LinearLayout
+                        android:id="@+id/lower_relative"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_margin="5dp"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:id="@+id/card_count_2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="23dp"
+                            android:text="0"
+                            android:textColor="@color/white"
+                            android:textSize="18sp"
+
+                            android:textStyle="bold" />
+
+                        <!--<ImageView-->
+                        <!--android:id="@+id/clicks_heart_bottom"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_marginLeft="2dp"-->
+                        <!--android:src="@drawable/c_clicks_heart"-->
+                        <!--android:visibility="visible"/>-->
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/card_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="20dp"
+                        android:textAllCaps="true"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="130dp"
+                        android:layout_height="2dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@color/dark_gray"></View>
+
+                    <ImageView
+                        android:id="@+id/card_status_img"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:src="@drawable/accepted_btn" />
+                </LinearLayout>
+            </LinearLayout>
         </RelativeLayout>
-        </RelativeLayout>
-        <RelativeLayout
+
+        <LinearLayout
             android:id="@+id/layout_clickin"
             android:layout_width="match_parent"
-            android:layout_height="36dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
             android:layout_below="@+id/feed_image_layout"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="1dp"
             android:background="@color/feed_clickin"
-            android:gravity="left"
+            android:orientation="vertical"
+            android:padding="5dp"
             android:visibility="visible">
 
-            <TextView
-                android:id="@+id/clickedIn"
+            <LinearLayout
+                android:id="@+id/chatLayout"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:paddingLeft="5dp"
-                android:text="0"
-                android:textStyle="bold"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/white"
-                android:textSize="20sp" />
+                android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/clickInWhiteImage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/clickedIn"
-                android:paddingLeft="5dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/heart_icon" />
+                <TextView
+                    android:id="@+id/clickedIn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:paddingLeft="5dp"
+                    android:text="+09"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+
+                <ImageView
+                    android:id="@+id/clickInWhiteImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="1dp"
+                    android:paddingLeft="2dp"
+                    android:src="@drawable/c_clicks_heart"
+                    android:visibility="visible" />
+
+                <!--<LinearLayout-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_toRightOf="@+id/clickInWhiteImage">-->
+                <TextView
+                    android:id="@+id/clickedInMessage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="1dp"
+                    android:ellipsize="none"
+                    android:singleLine="true"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:visibility="visible" />
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/clickedInMessage"
+                android:id="@+id/clickedInMessageLong"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/clickInWhiteImage"
-                android:padding="5dp"
-                android:text=""
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_marginLeft="5dp"
+                android:gravity="center_vertical"
+                android:singleLine="false"
                 android:textColor="@color/white"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
-                android:layout_centerVertical="true"/>
-        </RelativeLayout>
+                android:visibility="gone" />
+        </LinearLayout>
 
         <View
+            android:id="@+id/view_stars"
             android:layout_width="fill_parent"
             android:layout_height="1dp"
-          android:id="@+id/view_stars"
-
-            android:background="@color/dark_gray"
+            android:layout_below="@+id/layout_clickin"
             android:layout_marginTop="5dp"
-            android:layout_below="@+id/layout_clickin"></View>
+            android:background="@color/light_gray"></View>
 
         <LinearLayout
             android:id="@+id/layout_stars"
@@ -217,7 +331,7 @@ android:layout_centerHorizontal="true"
                 android:scaleType="centerCrop"
                 android:src="@drawable/star_icon" />
 
-            <TextView
+            <com.sourcefuse.clickinandroid.utils.ClickInTextView
                 android:id="@+id/feed_star_user"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -226,7 +340,8 @@ android:layout_centerHorizontal="true"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/dark_gray"
                 android:textSize="16sp"
-                android:textStyle="bold"/>
+
+                geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
         </LinearLayout>
 
         <LinearLayout
@@ -243,44 +358,49 @@ android:layout_centerHorizontal="true"
                 android:id="@+id/clickInCommentImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="top"
                 android:paddingTop="7dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/comment_icon"
-                android:layout_gravity="top"/>
+                android:src="@drawable/comment_icon" />
 
-        <LinearLayout
-            android:id="@+id/feed_comments_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="left"
-            android:orientation="vertical"
-            android:paddingLeft="5dp"
-            android:visibility="visible">
             <LinearLayout
-                android:id="@+id/feed_comments_layout1"
+                android:id="@+id/feed_comments_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="left"
-                android:orientation="horizontal"
-                android:paddingLeft="5dp">
-                <TextView
+                android:orientation="vertical"
+                android:paddingLeft="5dp"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:id="@+id/feed_comments_layout1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="View all 4 comments"
-                    android:textColor="@color/dark_gray"
-                    android:textSize="16sp"
-                    android:id="@+id/no_comments"
-                    android:textStyle="bold"/>
+                    android:gravity="left"
+                    android:orientation="horizontal"
+                    android:paddingLeft="5dp">
+
+                    <com.sourcefuse.clickinandroid.utils.ClickInTextView
+                        android:id="@+id/no_comments"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="7dp"
+                        android:text="View all 4 comments"
+                        android:textColor="@color/dark_gray"
+                        android:textSize="16sp"
+
+                        geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
 
                 </LinearLayout>
-            <LinearLayout
-                android:id="@+id/feed_comments_layout2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:orientation="horizontal"
-                android:paddingLeft="5dp">
-                <!--<TextView-->
+
+                <LinearLayout
+                    android:id="@+id/feed_comments_layout2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:orientation="horizontal"
+                    android:paddingLeft="5dp">
+                    <!--<TextView-->
                     <!--android:layout_width="wrap_content"-->
                     <!--android:layout_height="wrap_content"-->
 
@@ -288,23 +408,23 @@ android:layout_centerHorizontal="true"
                     <!--android:textSize="16sp"-->
                     <!--android:id="@+id/name2"-->
                     <!--android:textStyle="bold"/>-->
-                <TextView
+                    <com.sourcefuse.clickinandroid.utils.ClickInTextView
+                        android:id="@+id/comment2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/feed_comments_layout3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
-
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:id="@+id/comment2"/>
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/feed_comments_layout3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:orientation="horizontal"
-                android:paddingLeft="5dp">
-                <!--<TextView-->
+                    android:gravity="left"
+                    android:orientation="horizontal"
+                    android:paddingLeft="5dp">
+                    <!--<TextView-->
                     <!--android:layout_width="wrap_content"-->
                     <!--android:layout_height="wrap_content"-->
 
@@ -312,23 +432,23 @@ android:layout_centerHorizontal="true"
                     <!--android:textSize="16sp"-->
                     <!--android:id="@+id/name3"-->
                     <!--android:textStyle="bold"/>-->
-                <TextView
+                    <com.sourcefuse.clickinandroid.utils.ClickInTextView
+                        android:id="@+id/comment3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/feed_comments_layout4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
-
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:id="@+id/comment3"/>
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/feed_comments_layout4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="left"
-                android:orientation="horizontal"
-                android:paddingLeft="5dp">
-                <!--<TextView-->
+                    android:gravity="left"
+                    android:orientation="horizontal"
+                    android:paddingLeft="5dp">
+                    <!--<TextView-->
                     <!--android:layout_width="wrap_content"-->
                     <!--android:layout_height="wrap_content"-->
 
@@ -336,24 +456,22 @@ android:layout_centerHorizontal="true"
                     <!--android:textSize="16sp"-->
                     <!--android:id="@+id/name4"-->
                     <!--android:textStyle="bold"/>-->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:id="@+id/comment4"/>
+                    <com.sourcefuse.clickinandroid.utils.ClickInTextView
+                        android:id="@+id/comment4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        geekui:customFont="AvenirNextLTPro-MediumCn_0.otf" />
+                </LinearLayout>
             </LinearLayout>
-         </LinearLayout>
         </LinearLayout>
 
         <View
             android:layout_width="fill_parent"
             android:layout_height="1dp"
             android:layout_below="@+id/layout_comment"
-
-            android:background="@color/dark_gray"
+            android:background="@color/light_gray"
             android:paddingTop="5dp"></View>
 
         <RelativeLayout
@@ -361,8 +479,8 @@ android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@+id/layout_all_button"
-            android:padding="5dp"
             android:layout_alignParentRight="true"
+            android:padding="5dp"
             android:visibility="gone">
 
             <ImageView
@@ -370,20 +488,20 @@ android:layout_centerHorizontal="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="5dp"
-
                 android:scaleType="centerCrop"
                 android:src="@drawable/remove"
                 tools:ignore="RtlSymmetry" />
+
             <ImageView
                 android:id="@+id/feed_report_post"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="5dp"
+                android:layout_below="@+id/feed_remove_post"
 
+                android:paddingLeft="5dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/report"
-                tools:ignore="RtlSymmetry"
-                android:layout_below="@+id/feed_remove_post"/>
+                tools:ignore="RtlSymmetry" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -391,9 +509,9 @@ android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/layout_comment"
+            android:layout_marginBottom="10dp"
             android:gravity="left|center_horizontal|center_vertical"
-            android:padding="5dp"
-         android:layout_marginBottom="10dp" >
+            android:padding="5dp">
 
             <ImageView
                 android:id="@+id/feed_star_image_button"
@@ -419,21 +537,19 @@ android:layout_centerHorizontal="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:paddingTop="7dp"
+                android:clickable="true"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="10dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/report_icon"
-                android:clickable="true"/>
+                android:src="@drawable/report_icon" />
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Yahoo"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:visibility="gone" />
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_below="@+id/layout_all_button"
+            android:background="@color/transparent"></View>
     </RelativeLayout>
 
-</LinearLayout><!-- From: file:/home/monika/gitcodeClickin/cLICKINAPP/src/main/res/layout/feed_list_item.xml -->
+</LinearLayout><!-- From: file:/monika/latestworkingCLickin/cLICKINAPP/src/main/res/layout/feed_list_item.xml -->

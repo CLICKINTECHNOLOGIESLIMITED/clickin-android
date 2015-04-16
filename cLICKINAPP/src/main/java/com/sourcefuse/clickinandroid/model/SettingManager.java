@@ -1,9 +1,7 @@
 package com.sourcefuse.clickinandroid.model;
 
-import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.sourcefuse.clickinandroid.utils.APIs;
-import com.sourcefuse.clickinandroid.utils.Log;
 
 import org.apache.http.entity.StringEntity;
 import org.apache.http.message.BasicHeader;
@@ -16,15 +14,23 @@ import de.greenrobot.event.EventBus;
 /**
  * Created by mukesh on 25/7/14.
  */
-public class SettingManager implements SettingManagerI {
+public class SettingManager {
     private static final String TAG = SettingManager.class.getSimpleName();
-
-    private AuthManager authManager;
+    //akshit Code For App Sound
+    public static boolean appSounds = true;
+    public static boolean mNotification_Enable = true;
     StringEntity se = null;
-    private AsyncHttpClient client;
+
+    public static boolean isAppSounds() {
+        return appSounds;
+    }
+//Ends
+
+    public static void setAppSounds(boolean appSounds) {
+        SettingManager.appSounds = appSounds;
+    }
 
     public void changePassword(String phone_no, String user_token, String old_password, String new_password, String confirm_password) {
-        authManager = ModelManager.getInstance().getAuthorizationManager();
         JSONObject userInputDetails = new JSONObject();
         try {
             userInputDetails.put("phone_no", phone_no);
@@ -33,14 +39,13 @@ public class SettingManager implements SettingManagerI {
             userInputDetails.put("new_password", new_password);
             userInputDetails.put("confirm_password", confirm_password);
 
-            client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            Log.e(TAG, "changePassword-->" + userInputDetails);
+
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        client.post(null, APIs.SETTINGCHANGEPASSWORD, se, "application/json",
+        ClickinRestClient.post(null, APIs.SETTINGCHANGEPASSWORD, se, "application/json",
                 new JsonHttpResponseHandler() {
 
                     @Override
@@ -58,7 +63,7 @@ public class SettingManager implements SettingManagerI {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            Log.e(TAG, "response ChangePassword ->" + response);
+
                             state = response.getBoolean("success");
                             if (state) {
 
@@ -75,8 +80,7 @@ public class SettingManager implements SettingManagerI {
         );
     }
 
-    public void enableDisablePushNotifications(String phone_no, String user_token, String isEnable) {
-        authManager = ModelManager.getInstance().getAuthorizationManager();
+    public void enableDisablePushNotifications(String phone_no, String user_token, final String isEnable) {
         JSONObject userInputDetails = new JSONObject();
         try {
             userInputDetails.put("phone_no", phone_no);
@@ -84,14 +88,13 @@ public class SettingManager implements SettingManagerI {
             userInputDetails.put("is_enable_push_notification", isEnable);
 
 
-            client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            Log.e(TAG, "PushNotifications-->" + se);
+
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        client.post(null, APIs.SETTINGCHANGE, se, "application/json",
+        ClickinRestClient.post(null, APIs.SETTINGCHANGE, se, "application/json",
                 new JsonHttpResponseHandler() {
 
                     @Override
@@ -109,12 +112,13 @@ public class SettingManager implements SettingManagerI {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            Log.e(TAG, "response ChangePassword ->" + response);
+
                             state = response.getBoolean("success");
                             if (state) {
 
                                 EventBus.getDefault().post("PushNotifications True");
                             }
+                            SettingManager.mNotification_Enable = Boolean.parseBoolean(isEnable);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -126,8 +130,7 @@ public class SettingManager implements SettingManagerI {
         );
     }
 
-    public void deactivteAccount(String phone_no, String user_token, String reason_type, String other_reason, String email_opt_out ,String password) {
-        authManager = ModelManager.getInstance().getAuthorizationManager();
+    public void deactivteAccount(String phone_no, String user_token, String reason_type, String other_reason, String email_opt_out, String password) {
         JSONObject userInputDetails = new JSONObject();
         try {
             userInputDetails.put("phone_no", phone_no);
@@ -137,15 +140,14 @@ public class SettingManager implements SettingManagerI {
             userInputDetails.put("email_opt_out", email_opt_out);
             userInputDetails.put("password", password);
 
-            client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            Log.e(TAG, "changePassword-->" + se);
+
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        Log.e(TAG, "send json ->" + userInputDetails);
-        client.post(null, APIs.SETTINGCHANGEDEACTIVATE, se, "application/json",
+
+        ClickinRestClient.post(null, APIs.SETTINGCHANGEDEACTIVATE, se, "application/json",
                 new JsonHttpResponseHandler() {
 
                     @Override
@@ -163,7 +165,7 @@ public class SettingManager implements SettingManagerI {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            Log.e(TAG, "response DeactivteAccount ->" + response);
+
                             state = response.getBoolean("success");
                             if (state) {
 
@@ -181,7 +183,6 @@ public class SettingManager implements SettingManagerI {
     }
 
     public void reportaproblem(String phone_no, String user_token, String problemType, String spamOrAbuseType, String comment) {
-        authManager = ModelManager.getInstance().getAuthorizationManager();
         JSONObject userInputDetails = new JSONObject();
         try {
             userInputDetails.put("phone_no", phone_no);
@@ -190,14 +191,13 @@ public class SettingManager implements SettingManagerI {
             userInputDetails.put("spam_or_abuse_type", spamOrAbuseType);
             userInputDetails.put("comment", comment);
 
-            client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            Log.e(TAG, "reportaproblem-->" + userInputDetails);
+
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        client.post(null, APIs.SETTINGREPORTPROBLEM, se, "application/json",
+        ClickinRestClient.post(null, APIs.SETTINGREPORTPROBLEM, se, "application/json",
                 new JsonHttpResponseHandler() {
 
                     @Override
@@ -215,7 +215,7 @@ public class SettingManager implements SettingManagerI {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            Log.e(TAG, "response ReportaProblem ->" + response);
+
                             state = response.getBoolean("success");
                             if (state) {
 
@@ -233,19 +233,17 @@ public class SettingManager implements SettingManagerI {
     }
 
     public void forgotYourPassword(String emailId) {
-        authManager = ModelManager.getInstance().getAuthorizationManager();
         JSONObject userInputDetails = new JSONObject();
         try {
             userInputDetails.put("email", emailId);
 
-            client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            Log.e(TAG, "ForgotPassword-->" + se);
+
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        client.post(null, APIs.SETTINGFORGOTPASSWORD, se, "application/json",
+        ClickinRestClient.post(null, APIs.SETTINGFORGOTPASSWORD, se, "application/json",
                 new JsonHttpResponseHandler() {
 
                     @Override
@@ -258,6 +256,7 @@ public class SettingManager implements SettingManagerI {
                             EventBus.getDefault().post("ForgotPassword Network Error");
                         }
                     }
+
                     @Override
                     public void onSuccess(int statusCode,
                                           org.apache.http.Header[] headers,
@@ -265,10 +264,10 @@ public class SettingManager implements SettingManagerI {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            System.out.println("response ForgotPassword ->" + response);
+
                             state = response.getBoolean("success");
                             if (state) {
-                                authManager.setMessage(response.getString("message"));
+                                ModelManager.getInstance().getAuthorizationManager().setMessage(response.getString("message"));
                                 EventBus.getDefault().post("ForgotPassword True");
                             }
 
@@ -283,22 +282,20 @@ public class SettingManager implements SettingManagerI {
     }
 
 
-    public void changeLastSeenTime(String phone_no, String user_token) {
-        authManager = ModelManager.getInstance().getAuthorizationManager();
+    public void changeLastSeenTime(String phone_no, String user_token, String reset_device) {
         JSONObject userInputDetails = new JSONObject();
         try {
             userInputDetails.put("phone_no", phone_no);
             userInputDetails.put("user_token", user_token);
+            if (reset_device.equalsIgnoreCase("yes"))
+                userInputDetails.put("recet_device", reset_device);
 
-
-            client = new AsyncHttpClient();
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-            Log.e(TAG, "reportaproblem-->" + se);
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        client.post(null, APIs.SETTINGCHANGELASTSEENTIME, se, "application/json",
+        ClickinRestClient.post(null, APIs.SETTINGCHANGELASTSEENTIME, se, "application/json",
                 new JsonHttpResponseHandler() {
 
                     @Override
@@ -316,7 +313,7 @@ public class SettingManager implements SettingManagerI {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-                            Log.e(TAG, "response ChangeLastSeenTime ->" + response);
+
                             state = response.getBoolean("success");
                             if (state) {
 
