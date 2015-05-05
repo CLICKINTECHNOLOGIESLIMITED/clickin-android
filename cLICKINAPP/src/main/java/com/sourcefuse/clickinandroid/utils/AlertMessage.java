@@ -35,10 +35,11 @@ public class AlertMessage {
     public static final String SENDVERIFYMSGI = "WE SENT YOU THE CODE!";
     public static final String SENDVERIFYMSGII = "Just to make sure you didn't \nwrong number us";
 
-    public static final String WRONGVERIFYCODEI = "OOPS!\nSOMETHING WENT WRONG.\n";
-    public static final String WRONGVERIFYCODEII = "Please re-enter the code";
-    public static final String UDERAGEMSGI = "OOPS!";
-    public static final String UDERAGEMSGII = "OOPS!\n Too young to be clickin'\n Come back later...";
+    public static final String WRONGVERIFYCODEI     = "OOPS!\nSOMETHING WENT WRONG.\n";
+    public static final String WRONGCODE            = "WRONG CODE ENTERED";
+    public static final String WRONGVERIFYCODEII    = "Please re-enter the code";
+    public static final String UDERAGEMSGI          = "OOPS!";
+    public static final String UDERAGEMSGII         = "OOPS!\n Too young to be clickin'\n Come back later...";
 
     public static final String PASSWORDLENGHT = "Your password should be at least 8 characters long.";
     public static final String MATCHPASSWORD = "Password doesn't match. Please try again";

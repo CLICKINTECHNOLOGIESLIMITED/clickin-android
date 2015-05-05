@@ -226,8 +226,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
                 Locale.getDefault()).format(new Date());
         File mediaFile;
         if (type == MEDIA_TYPE_IMAGE) {
-            mediaFile = new File(mediaStorageDir.getPath() + File.separator
-                    + "IMG_" + timeStamp + ".jpg");
+            mediaFile = new File(mediaStorageDir.getPath() + File.separator + "IMG_" + timeStamp + ".jpg");
         } else {
             return null;
         }
@@ -256,7 +255,6 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
             os.close();
 
             /* to show image in gallery */
-
             ContentValues values = new ContentValues();
             values.put(MediaStore.Images.Media.DATA, mPath);
             values.put(MediaStore.Images.Media.DATE_TAKEN, mFile.lastModified());
@@ -265,8 +263,7 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
 
 
         } catch (Exception e) {
-//            e.printStackTrace();removed by akshit
-
+            e.printStackTrace();
         }
         return mPath;
     }
@@ -276,9 +273,10 @@ public class ChatRecordView extends ClickInBaseView implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_chat_layout);
-//code- to handle uncaught exception
-        if (Utils.mStartExceptionTrack)
-            Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
+
+        //code- to handle uncaught exception
+        //if (Utils.mStartExceptionTrack)
+        //    Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
         Intent i = new Intent(this, MyQbChatService.class);
         bindService(i, mConnection, Context.BIND_AUTO_CREATE);

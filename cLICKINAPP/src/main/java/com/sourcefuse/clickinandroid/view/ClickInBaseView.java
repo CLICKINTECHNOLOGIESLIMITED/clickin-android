@@ -467,13 +467,14 @@ public class ClickInBaseView extends Activity implements TextWatcher, SlidingMen
 
                     relationListIndex = (position - 1);
 
-/* prafulll code to set counter to zero */
+                    /* prafulll code to set counter to zero */
                     if (relationManager.acceptedList.get(position - 1).getUnreadMsg() != 0) {
                         relationManager.acceptedList.get(position - 1).setUnreadMsg(0);
                         if(clickInadapter!=null)
                         clickInadapter.notifyDataSetChanged();
                     }
-/* prafulll code to set counter to zero */
+
+                    /* prafulll code to set counter to zero */
                     //Track event for MixPanel,If Partner name is clicked from left menu.
                     Utils.trackMixpanel(ClickInBaseView.this, "", "", "LeftMenuPartnerButtonClicked", false);
                     switchView(rId, relationListIndex);

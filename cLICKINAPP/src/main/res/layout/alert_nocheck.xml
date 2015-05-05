@@ -2,46 +2,47 @@
     xmlns:geekui="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/dialog_blue_bg">
+    android:background="@color/white">
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="25dp">
+        android:layout_height="wrap_content">
 
         <com.sourcefuse.clickinandroid.utils.ClickInTextView
             android:id="@+id/alert_msgI"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:paddingTop="16dp"
             android:gravity="center_horizontal"
             android:text="@string/txt_wesentyoucode"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
+            android:textColor="#333333"
+            android:textSize="18sp"/>
 
         <com.sourcefuse.clickinandroid.utils.ClickInTextView
             android:id="@+id/alert_msgII"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
             android:layout_below="@+id/alert_msgI"
             android:layout_centerHorizontal="true"
             android:layout_centerInParent="true"
             android:gravity="center_horizontal"
             android:text="just to make sure you didnt \nwrong number us"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            geekui:customFont="AvenirNextLTPro-BoldCn_0.otf" />
+            android:textColor="#333333"
+            android:textSize="16sp" />
 
         <Button
             android:id="@+id/coolio"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/alert_msgII"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:background="@drawable/e_got_it_btn" />
+            android:text="OK"
+            android:textColor="#FFFFFF"
+            android:background="@color/appclr" />
     </RelativeLayout>
 
 </RelativeLayout>

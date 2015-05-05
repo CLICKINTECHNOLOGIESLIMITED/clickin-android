@@ -89,9 +89,10 @@ public class ProfileManager {
                     boolean success = false;
 
                     @Override
-                    public void onFailure(int statusCode, Throwable e,
-                                          JSONObject errorResponse) {
+                    public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
+
                         super.onFailure(statusCode, e, errorResponse);
+                        System.out.println("response--> " + errorResponse);
 
                         if (errorResponse != null) {
                             try {
@@ -109,26 +110,47 @@ public class ProfileManager {
                     }
 
                     @Override
-                    public void onSuccess(int statusCode,
-                                          org.apache.http.Header[] headers,
-                                          JSONObject response) {
+                    public void onSuccess(int statusCode, org.apache.http.Header[] headers, JSONObject response) {
                         super.onSuccess(statusCode, headers, response);
+
                         try {
-
                             success = response.getBoolean("success");
-                            if (success) {
+                            System.out.println("response--> " + response);
 
+                            AuthManager authManager = ModelManager.getInstance().getAuthorizationManager();
+                            if (success) {
                                 EventBus.getDefault().post("UpdateProfile True");
 
+                                if (response.has("phone_no")) {
+                                    authManager.setPhoneNo(response.getString("phone_no"));
+                                }
+                                if (response.has("message")) {
+                                    authManager.setMessage(response.getString("message"));
+                                }
+                                if (response.has("device_registered")) {
+                                    authManager.setDeviceRegistered(response.getBoolean("device_registered"));
+                                }
+                                if (response.has("QB_id")) {
+                                    authManager.setQBId(response.getString("QB_id"));
+                                }
+                                if (response.has("user_id")) {
+                                    authManager.setUserId(response.getString("user_id"));
+                                }
+                                if (response.has("user_name")) {
+                                    authManager.setUserName(response.getString("user_name"));
+                                }
+                                if (response.has("user_pic")) {
+                                    authManager.setUserPic(response.getString("user_pic"));
+                                }
+                                if (response.has("user_token")) {
+                                    authManager.setUsrToken(response.getString("user_token"));
+                                }
                             }
 
                         } catch (JSONException e) {
                             e.printStackTrace();
-
                         }
-
                     }
-
                 }
         );
 

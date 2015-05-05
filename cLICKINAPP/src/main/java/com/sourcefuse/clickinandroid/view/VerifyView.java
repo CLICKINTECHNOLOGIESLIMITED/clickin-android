@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,8 +31,13 @@ import de.greenrobot.event.EventBus;
 public class VerifyView extends Activity implements OnClickListener,
         TextWatcher {
     private static final String TAG = VerifyView.class.getSimpleName();
-    private Button send;
-    private EditText d_one, d_two, d_three, d_four;
+    private Button btn_verify;
+    private Button btn_resend;
+    private EditText verify_code;
+    private String digits, phone;
+    public static Activity act;
+    public static Context context;
+    private Dialog dialog;
     private AuthManager authManager;
 
 
@@ -43,85 +50,33 @@ public class VerifyView extends Activity implements OnClickListener,
         if (Utils.mStartExceptionTrack)
             Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
 
+        super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.view_verify);
         this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
         authManager = ModelManager.getInstance().getAuthorizationManager();
-        send = (Button) findViewById(R.id.btn_send);
+        act = this;
+        context = this;
+        btn_verify 		= (Button) findViewById(R.id.btn_verify);
+        btn_resend 	= (Button) findViewById(R.id.btn_resend);
 
-        d_one = (EditText) findViewById(R.id.edt_one);
-        d_two = (EditText) findViewById(R.id.edt_two);
-        d_three = (EditText) findViewById(R.id.edt_three);
-        d_four = (EditText) findViewById(R.id.edt_four);
+        verify_code = (EditText) findViewById(R.id.verify_code);
+        verify_code.setRawInputType(Configuration.KEYBOARD_12KEY);
+        verify_code.addTextChangedListener(this);
 
+        digits = verify_code.getText().toString();
 
-        d_one.addTextChangedListener(this);
-        d_two.addTextChangedListener(this);
-        d_three.addTextChangedListener(this);
-        d_four.addTextChangedListener(this);
-        send.setOnClickListener(this);
+        btn_verify.setOnClickListener(this);
+        btn_resend.setOnClickListener(this);
 
-        Utils.prefrences = getSharedPreferences(getString(R.string.PREFS_NAME), MODE_PRIVATE);
+        //Temporaily commented for quick signup testing
+        btn_verify.setEnabled(false);
 
-        Utils.fromSignalDialog1(this, AlertMessage.SENDVERIFYMSGI, AlertMessage.SENDVERIFYMSGII);
+        Utils.prefrences = getSharedPreferences(context.getString(R.string.PREFS_NAME), MODE_PRIVATE);
 
+        //fromSignalertDialog(AlertMessage.SENDVERIFYMSGI,AlertMessage.SENDVERIFYMSGII);
+        //Utils.fromSignalDialog1(this, AlertMessage.SENDVERIFYMSGI, AlertMessage.SENDVERIFYMSGII);
 
-        d_one.setOnClickListener(this);
-        d_two.setOnClickListener(this);
-        d_three.setOnClickListener(this);
-        d_four.setOnClickListener(this);
-
-
-        d_one.setOnKeyListener(new EditText.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                int action = event.getAction();
-                if (keyCode == KeyEvent.KEYCODE_DEL && action == KeyEvent.ACTION_DOWN) {
-                    d_one.requestFocus();
-                    return true;
-                }
-                return false;
-            }
-        });
-        d_two.setOnKeyListener(new EditText.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-
-                int action = event.getAction();
-                if (keyCode == KeyEvent.KEYCODE_DEL && action == KeyEvent.ACTION_DOWN) {
-
-                    d_one.requestFocus();
-                    d_one.setText("");
-                    return true;
-                }
-                return false;
-            }
-        });
-        d_three.setOnKeyListener(new EditText.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                int action = event.getAction();
-                if (keyCode == KeyEvent.KEYCODE_DEL && action == KeyEvent.ACTION_DOWN) {
-                    d_two.requestFocus();
-                    d_two.setText("");
-                    return true;
-                }
-                return false;
-            }
-        });
-        d_four.setOnKeyListener(new EditText.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                int action = event.getAction();
-                if (keyCode == KeyEvent.KEYCODE_DEL && action == KeyEvent.ACTION_DOWN) {
-
-                    d_three.requestFocus();
-                    d_three.setText("");
-
-                    return true;
-                }
-                return false;
-            }
-        });
 
     }
 
@@ -139,84 +94,43 @@ public class VerifyView extends Activity implements OnClickListener,
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-        if (d_one.getText().toString().length() > 0 && d_two.getText().toString().length() == 0 && d_three.getText().toString().length() == 0 && d_four.getText().toString().length() == 0) {
-            d_one.setBackgroundDrawable(getResources().getDrawable(R.drawable.e_v_number_field));
-            d_two.requestFocus();
-        } else {
-            //d_one.setBackgroundColor(getResources().getColor(R.color.empty_edt));
-            d_one.setBackgroundDrawable(getResources().getDrawable(R.drawable.e_v_number_field_empty));
-        }
-        if (d_one.getText().toString().length() > 0 && d_two.getText().toString().length() > 0 && d_three.getText().toString().length() == 0 && d_four.getText().toString().length() == 0) {
-            d_two.setBackgroundDrawable(getResources().getDrawable(R.drawable.e_v_number_field));
-            d_one.setBackgroundDrawable(getResources().getDrawable(R.drawable.e_v_number_field));
-            d_three.requestFocus();
-        } else {
-            d_two.setBackgroundDrawable(getResources().getDrawable(R.drawable.e_v_number_field_empty));
-            //d_one.requestFocus();
-        }
+        digits = verify_code.getText().toString();
 
-        if (d_one.getText().toString().length() > 0 && d_two.getText().toString().length() > 0 && d_three.getText().toString().length() > 0 && d_four.getText().toString().length() == 0) {
-            d_one.setBackgroundDrawable(getResources().getDrawable(R.drawable.e_v_number_field));
-            d_two.setBackgroundDrawable(getResources().getDrawable(R.drawable.e_v_number_field));
-            d_three.setBackgroundDrawable(getResources().getDrawable(R.drawable.e_v_number_field));
-            d_four.requestFocus();
-        } else {
-            d_three.setBackgroundDrawable(getResources().getDrawable(R.drawable.e_v_number_field_empty));
-            // d_two.requestFocus();
-        }
-        String digits = d_one.getText().toString() + d_two.getText().toString()
-                + d_three.getText().toString()
-                + d_four.getText().toString();
-        if (d_four.getText().toString().length() > 0 && digits.length() > 3) {
-            d_one.setBackgroundDrawable(getResources().getDrawable(R.drawable.e_v_number_field));
-            d_two.setBackgroundDrawable(getResources().getDrawable(R.drawable.e_v_number_field));
-            d_three.setBackgroundDrawable(getResources().getDrawable(R.drawable.e_v_number_field));
-            d_four.setBackgroundDrawable(getResources().getDrawable(R.drawable.e_v_number_field));
+        if (verify_code.getText().toString().length() > 3) {
+            // Will make the button active & add a different color to the background later
+            btn_verify.setEnabled(true);
+            btn_verify.setBackgroundResource(R.drawable.roundbutton);
 
-            Utils.launchBarDialog(this);
-            authManager.getVerifyCode(authManager.getPhoneNo(), Utils.deviceId, digits, Constants.DEVICETYPE);
-            //To track through mixPanel.
-            //Verify Verification Code.
-            Utils.trackMixpanel(VerifyView.this, "", "", "VerificationCodeEntered", false);//track Verification Code Entered through mixPanel
+            Utils.launchBarDialog(VerifyView.this);
+            authManager.getVerifyCode(authManager.getPhoneNo(),Utils.deviceId, digits, Constants.DEVICETYPE);
 
         } else {
-            d_four.setBackgroundDrawable(getResources().getDrawable(R.drawable.e_v_number_field_empty));
-            //d_three.requestFocus();
+            // Will make the button inactive & add a different color to the background later
+            btn_verify.setEnabled(false);
+            btn_verify.setBackgroundResource(R.drawable.roundbutton_inactive);
         }
-
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_send:
+            case R.id.btn_verify:
                 Utils.launchBarDialog(VerifyView.this);
-                Utils.fromSignalertDialogDammit(VerifyView.this);
-                authManager = ModelManager.getInstance().getAuthorizationManager();
-                authManager.reSendVerifyCode(authManager.getPhoneNo(), authManager.getUsrToken());
-                    //To track through mixPanel.
-                    //Click Resend Verification Code.
-                    Utils.trackMixpanel(VerifyView.this, "", "", "ResendVerificationCode", false);
-
+                authManager.getVerifyCode(authManager.getPhoneNo(),Utils.deviceId, digits, Constants.DEVICETYPE);
                 break;
-            case R.id.edt_one:
-            case R.id.edt_two:
-            case R.id.edt_three:
-            case R.id.edt_four:
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.showSoftInput(d_one, InputMethodManager.SHOW_IMPLICIT);
-                imm.showSoftInput(d_two, InputMethodManager.SHOW_IMPLICIT);
-                imm.showSoftInput(d_three, InputMethodManager.SHOW_IMPLICIT);
-                imm.showSoftInput(d_four, InputMethodManager.SHOW_IMPLICIT);
+            case R.id.btn_resend:
+                Utils.launchBarDialog(VerifyView.this);
+                authManager = ModelManager.getInstance().getAuthorizationManager();
+                authManager.reSendVerifyCode(authManager.getPhoneNo(), Utils.deviceId.toString());
                 break;
         }
     }
 
 
+
     @Override
     public void onStart() {
         super.onStart();
-
         EventBus.getDefault().register(this);
     }
 
@@ -228,6 +142,7 @@ public class VerifyView extends Activity implements OnClickListener,
         }
     }
 
+    /*
     public void onEventMainThread(String getMsg) {
         authManager = ModelManager.getInstance().getAuthorizationManager();
         if (getMsg.equalsIgnoreCase("Verify True")) {
@@ -236,8 +151,6 @@ public class VerifyView extends Activity implements OnClickListener,
             intent.putExtra("fromsignup", getIntent().getBooleanExtra("fromsignup", false));
             startActivity(intent);
             finish();
-
-
         } else if (getMsg.equalsIgnoreCase("Verify False")) {
             Utils.dismissBarDialog();
             //To track through mixPanel.
@@ -260,13 +173,42 @@ public class VerifyView extends Activity implements OnClickListener,
             Utils.fromSignalDialog(this, AlertMessage.connectionError);
             //Utils.showAlert(this, AlertMessage.connectionError);
         }
+    }*/
+
+    public void onEventMainThread(String getMsg){
+        Log.d(TAG, "onEventMainThread->" + getMsg);
+        authManager = ModelManager.getInstance().getAuthorizationManager();
+        if (getMsg.equalsIgnoreCase("Verify True")) {
+            Utils.dismissBarDialog();
+            switchView();
+        } else if (getMsg.equalsIgnoreCase("Verify False")) {
+            Utils.dismissBarDialog();
+            alertDialog(AlertMessage.WRONGCODE,AlertMessage.WRONGVERIFYCODEII);
+        } else if (getMsg.equalsIgnoreCase("Verify Network Error")) {
+            Utils.dismissBarDialog();
+            Utils.showAlert(act, AlertMessage.connectionError);
+        } else if (getMsg.equalsIgnoreCase("ReSendVerifyCode True")) {
+            Utils.dismissBarDialog();
+        }else if (getMsg.equalsIgnoreCase("ReSendVerifyCode False")) {
+            Utils.dismissBarDialog();
+            Utils.showAlert(VerifyView.this, authManager.getMessage());
+        } else if (getMsg.equalsIgnoreCase("ReSendVerifyCode Network Error")) {
+            Utils.dismissBarDialog();
+            Utils.showAlert(act, AlertMessage.connectionError);
+        }
+    }
+
+    public void switchView(){
+        Intent intent = new Intent(VerifyView.this, ProfileView.class);
+        intent.putExtra("fromsignup", getIntent().getBooleanExtra("fromsignup", false));
+        startActivity(intent);
+        finish();
     }
 
     public void alertDialog(String msgStrI, String msgStrII) {
-        final Dialog dialog = new Dialog(VerifyView.this);
+        dialog = new Dialog(VerifyView.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.getWindow().setBackgroundDrawableResource(
-                android.R.color.transparent);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         dialog.setContentView(R.layout.alert_nocheck);
         dialog.setCancelable(false);
 
@@ -277,26 +219,13 @@ public class VerifyView extends Activity implements OnClickListener,
 
         dialog.setCancelable(false);
         Button dismiss = (Button) dialog.findViewById(R.id.coolio);
-        dismiss.setBackgroundResource(R.drawable.try_again);
-        dismiss.setOnClickListener(new OnClickListener() {
+        dismiss.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
                 dialog.dismiss();
                 //switchView();
-                send.setBackgroundResource(R.drawable.damnit_resend_code);
-                send.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        authManager.reSendVerifyCode(authManager.getPhoneNo(), authManager.getUsrToken());
-                        Utils.fromSignalertDialogDammit(VerifyView.this);
-                    }
-                });
-
-
-                d_one.setText("");
-                d_two.setText("");
-                d_three.setText("");
-                d_four.setText("");
+                btn_verify.setBackgroundResource(R.drawable.roundbutton_inactive);
+                verify_code.setText("");
 
             }
         });

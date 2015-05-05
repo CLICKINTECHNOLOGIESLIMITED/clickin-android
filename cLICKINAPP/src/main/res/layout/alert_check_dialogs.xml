@@ -7,7 +7,7 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/dialog_blue_bg"
+        android:background="@color/appclr"
         android:padding="25dp">
 
         <com.sourcefuse.clickinandroid.utils.ClickInTextView

@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import de.greenrobot.event.EventBus;
 
 public class RelationManager {
+    private static final String TAG = RelationManager.class.getSimpleName();
+
     public ArrayList<ProfileRelationShipBean> usrRelationShipData = new ArrayList<ProfileRelationShipBean>();
     public ArrayList<ProfileRelationShipBean> profileRelationShipData = new ArrayList<ProfileRelationShipBean>();
     public ArrayList<GetrelationshipsBean> getrelationshipsData = new ArrayList<GetrelationshipsBean>();
@@ -56,7 +58,6 @@ public class RelationManager {
             userInputDetails.put("phone_no", phone);
             userInputDetails.put("user_token", usertoken);
 
-
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
 
@@ -70,7 +71,7 @@ public class RelationManager {
             @Override
             public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
                 super.onFailure(statusCode, e, errorResponse);
-
+                System.out.println(TAG + " errorResponse--> " + errorResponse);
                 if (errorResponse != null) {
                     getrelationshipsData.clear();
                     acceptedList.clear();
@@ -86,6 +87,7 @@ public class RelationManager {
             public void onSuccess(int statusCode, org.apache.http.Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 boolean state = false;
+                System.out.println(TAG + " success--> " + response);
                 try {
 
                     state = response.getBoolean("success");
@@ -119,12 +121,14 @@ public class RelationManager {
                         getrelationshipsData.addAll(requestedList);
                         getrelationshipsData.addAll(acceptedList);
                         //getrelationshipsData.addAll(initiatorList);
+                        System.out.println(TAG + "GetRelationShips True" );
                         EventBus.getDefault().postSticky("GetRelationShips True");
                     } else {
                         getrelationshipsData.clear();
                         acceptedList.clear();
                         initiatorList.clear();
                         requestedList.clear();
+                        System.out.println(TAG + "GetRelationShips False");
                         EventBus.getDefault().postSticky("GetRelationShips False");
                     }
                 } catch (JSONException e) {

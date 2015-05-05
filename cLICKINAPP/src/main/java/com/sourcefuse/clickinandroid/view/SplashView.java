@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.animation.Animation;
@@ -43,63 +44,103 @@ public class SplashView extends Activity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//code- to handle uncaught exception
-
+        //code- to handle uncaught exception
         if(Utils.mStartExceptionTrack)
             Thread.setDefaultUncaughtExceptionHandler(new UnCaughtExceptionHandler(this));
-
-        /*set picasso maneger value */
-        PicassoManager.setPicasso(SplashView.this);
-        PicassoManager.clearCache();
-        Utils.deviceId = Utils.getRegId(SplashView.this);
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.view_splash);
         authManager = ModelManager.getInstance().getAuthorizationManager();
+
+        //autologin not possible
+        Animation fadeIn = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_in);
+
+        signIn = (Button) findViewById(R.id.signin);
+        signUp = (Button) findViewById(R.id.signup);
+
+        signIn.setOnClickListener(this);
+        signUp.setOnClickListener(this);
+
+
+        /*set picasso maneger value */
+        PicassoManager.setPicasso(SplashView.this);
+        PicassoManager.clearCache();
+
+        Utils.deviceId = Utils.getRegId(SplashView.this);
+
         //check whether we can do auto login or not
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String myPhone = preferences.getString("myPhoneNo", null);
-        pwd = preferences.getString("pwd", null);
-        String deviceId = preferences.getString("DeviceId", null);
+        //Setting QuickBlox Id which
+        authManager.setQBId(preferences.getString("QBId", null));
+        authManager.setPhoneNo(preferences.getString("myPhoneNo", null));
+        authManager.setPartnerNo(preferences.getString("myPartnerNo", null));
 
-        if (!Utils.isEmptyString(myPhone) && !Utils.isEmptyString(pwd) && !Utils.isEmptyString(deviceId)) {
+        authManager.setUserId(preferences.getString("userId", null));
+        authManager.setUsrToken(preferences.getString("token", null));
+        authManager.setGender(preferences.getString("gender", null));
+        authManager.setFollower(preferences.getString("follower", null));
+        authManager.setFollowing(preferences.getString("following", null));
+        authManager.setIsFollowing(preferences.getString("is_following", null));
+        authManager.setUserName(preferences.getString("name", null));
+        authManager.setUserPic(preferences.getString("user_pic", null));
+        authManager.setdOB(preferences.getString("dob", null));
+        authManager.setUserCity(preferences.getString("city", null));
+        authManager.setUserCountry(preferences.getString("country", null));
+        authManager.setEmailId(preferences.getString("email", null));
+        //authManager.setEmailId(preferences.getString("email", "pal.himanshu1991@gmail.com"));
+        String imgUri=preferences.getString("userimageuri",null);
+        String partnerStatus = preferences.getString("partnerStatus", null);
+        pwd = preferences.getString("pwd", null);
+
+        if (isLogin()) {
             Utils.launchBarDialog(this);
 
-            Utils.deviceId = deviceId;
             authManager.setDeviceRegistereId(Utils.deviceId);
 
             //initialize GPS tracker
-            GPSTracker gpsTracker = new GPSTracker(this);
+            //GPSTracker gpsTracker = new GPSTracker(this);
+            //String latlan = gpsTracker.getLatitude() + ";" + gpsTracker.getLongitude();
+            //authManager.setLatLan(latlan);
 
-            String latlan = gpsTracker.getLatitude() + ";" + gpsTracker.getLongitude();
-
-            authManager.setLatLan(latlan);
-
-            authManager.signIn(myPhone, pwd, Utils.deviceId, Constants.DEVICETYPE);
-
-        } else {//autologin not possible
-
-
-            Animation fadeIn = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_in);
-
-            signIn = (Button) findViewById(R.id.signin);
-            signUp = (Button) findViewById(R.id.signup);
-
-
-            // new MyPreference(getApplicationContext()).clearAllPreference();
-
-
-            if (signIn.getVisibility() == View.INVISIBLE && signUp.getVisibility() == View.INVISIBLE) {
-
-                signIn.startAnimation(fadeIn);
-                signIn.setVisibility(View.VISIBLE);
-                signUp.startAnimation(fadeIn);
-                signUp.setVisibility(View.VISIBLE);
+            if(isWaiting()) {
+                // Log the user in
+                authManager.signIn(authManager.getPhoneNo(), pwd, Utils.deviceId, Constants.DEVICETYPE);
+            } else {
+                showWaitingScreen();
             }
-            //   }
-            signIn.setOnClickListener(this);
-            signUp.setOnClickListener(this);
-        }//
+
+        } else {
+
+
+        }
+    }
+
+    //check whether user is already logged in or not
+    public boolean isLogin() {
+        SharedPreferences preferences= PreferenceManager.getDefaultSharedPreferences(this);
+        String token=preferences.getString("token", null);
+        Log.e(TAG,"Token----> " + token);
+        if(token!=null)
+            return true;
+        else
+            return false;
+    }
+
+    //Check whether partner is active or not
+    public boolean isWaiting(){
+        SharedPreferences preferences= PreferenceManager.getDefaultSharedPreferences(this);
+        String status = preferences.getString("partnerStatus", null);
+        Log.e(TAG,"partnerStatus--->" + status);
+        if(status!=null)
+            return true;
+        else
+            return false;
+    }
+
+    public void showWaitingScreen(){
+        Intent waiting = new Intent(SplashView.this, WaitingView.class);
+        startActivity(waiting);
+        finish();
     }
 
     @Override
@@ -131,6 +172,7 @@ public class SplashView extends Activity implements View.OnClickListener {
     public void onEventMainThread(String getMsg) {
 
         if (getMsg.equalsIgnoreCase("SignIn True")) {
+            Log.e(TAG,"SignIn True");
             //save only those values in sharedprefrence that required to sing in
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
             SharedPreferences.Editor editor = preferences.edit();
@@ -142,31 +184,33 @@ public class SplashView extends Activity implements View.OnClickListener {
             //  editor.putString("DeviceType",Constants.DEVICETYPE);
             editor.commit();
 
-
             authManager.getProfileInfo("", authManager.getPhoneNo(), authManager.getUsrToken());
+
         } else if (getMsg.equalsIgnoreCase("SignIn False")) {
+            Log.e(TAG,"SignIn False");
             Utils.dismissBarDialog();
             Utils.fromSignalDialog(this, AlertMessage.wrong_signIn_details);
             //  Utils.showAlert(this,AlertMessage.wrong_signIn_details);
             //Utils.showAlert(SignInView.this, authManager.getMessage());
         } else if (getMsg.equalsIgnoreCase("SignIn Network Error")) {
+            Log.e(TAG,"SignIn Network Error");
             Utils.dismissBarDialog();
             Utils.fromSignalDialogSplsh(this, AlertMessage.connectionError);
-
-
         } else if (getMsg.equalsIgnoreCase("ProfileInfo True")) {
             //save values of user in shared prefrence for later use
-
+            Log.e(TAG,"ProfileInfo True");
             RelationManager relationManager = ModelManager.getInstance().getRelationManager();
             relationManager.getRelationShips(authManager.getPhoneNo(), authManager.getUsrToken());
             // new ImageDownloadTask().execute();
 
 
         } else if (getMsg.equalsIgnoreCase("ProfileInfo False")) {
+            Log.e(TAG,"ProfileInfo False");
             Utils.dismissBarDialog();
             Utils.fromSignalDialog(this, authManager.getMessage());
             // Utils.showAlert(SignInView.this, authManager.getMessage());
         } else if (getMsg.equalsIgnoreCase("ProfileInfo Network Error")) {
+            Log.e(TAG,"ProfileInfoNetwork Error");
             Utils.dismissBarDialog();
             Utils.fromSignalDialogSplsh(this, AlertMessage.connectionError);
 
@@ -230,9 +274,9 @@ public class SplashView extends Activity implements View.OnClickListener {
     }
 
     private void switchView() {
+        Log.e(TAG,"Switching To UserProfileView");
         Utils.dismissBarDialog();
         Intent intent = new Intent(this, UserProfileView.class);
-        //  intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();
     }

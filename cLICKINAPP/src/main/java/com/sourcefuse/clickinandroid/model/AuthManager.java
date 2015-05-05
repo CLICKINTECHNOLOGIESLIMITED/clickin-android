@@ -3,9 +3,11 @@ package com.sourcefuse.clickinandroid.model;
 import android.graphics.Bitmap;
 import android.net.Uri;
 
+import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.quickblox.module.chat.QBPrivateChat;
 import com.sourcefuse.clickinandroid.utils.APIs;
+import com.sourcefuse.clickinandroid.utils.Log;
 import com.sourcefuse.clickinandroid.utils.Utils;
 
 import org.apache.http.entity.StringEntity;
@@ -31,6 +33,7 @@ public class AuthManager {
     private Boolean isDeviceRegistered;
     private String message;
     private String phoneNo;
+    private String partnerNo;
     private String QBId;
     //    private String is_new_clickin_user = "";
     private String usrToken;
@@ -71,6 +74,7 @@ public class AuthManager {
     private String mLatLan;
     /* for notification counter */
     private int mNotificationCounter;
+    private AuthManager authManager;
 
 
     public String getLatLan() {
@@ -164,6 +168,23 @@ public class AuthManager {
     public void setPhoneNo(String phoneNo) {
         this.phoneNo = phoneNo;
     }
+
+
+    /**
+     * @return the partnerNo
+     */
+    public String getPartnerNo() {
+        return partnerNo;
+    }
+
+    /**
+     * @param partnerNo the partnerNo to set
+     */
+    public void setPartnerNo(String partnerNo) {
+        this.partnerNo = partnerNo;
+    }
+
+
 
     /**
      * @return the qBId
@@ -619,7 +640,7 @@ public class AuthManager {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
                         try {
-
+                            System.out.println("response--> " + response);
                             AuthManager authManager = ModelManager.getInstance().getAuthorizationManager();
                             state = response.getBoolean("success");
                             if (state) {
@@ -664,11 +685,13 @@ public class AuthManager {
     }
 
 
-    public void signUpAuth(String phone, String deviceToken) {
+    public void signUpAuth(String phone, String deviceToken, String partner) {
         JSONObject userInputDetails = new JSONObject();
         try {
             userInputDetails.put("phone_no", phone);
+            userInputDetails.put("partner_no", partner);
             userInputDetails.put("device_token", deviceToken);
+            System.out.println("SignUpAuth--> phone:" + phone + " partner: " + partner + " device:" + deviceToken);
 
             se = new StringEntity(userInputDetails.toString());
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
@@ -679,10 +702,11 @@ public class AuthManager {
             @Override
             public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
                 super.onFailure(statusCode, e, errorResponse);
-
+                Log.e("Auth", "errorResponse--> " + errorResponse);
                 if (errorResponse != null) {
                     try {
                         ModelManager.getInstance().getAuthorizationManager().setMessage(errorResponse.getString("message"));
+                        authManager.setMessage(errorResponse.getString("message"));
                     } catch (JSONException e1) {
                         e1.printStackTrace();
                     }
@@ -720,9 +744,9 @@ public class AuthManager {
             inputDetails.put("vcode", vCode);
             inputDetails.put("device_token", deviceToken);
             inputDetails.put("device_type", deviceType);
-
-
             se = new StringEntity(inputDetails.toString());
+            System.out.println(TAG + " inputDetails--> " + inputDetails.toString());
+
             se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
         } catch (Exception e1) {
             e1.printStackTrace();
@@ -733,7 +757,7 @@ public class AuthManager {
                     @Override
                     public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
                         super.onFailure(statusCode, e, errorResponse);
-
+                        System.out.println(TAG + " errorResponse--> " + errorResponse);
                         if (errorResponse != null) {
                             try {
                                 ModelManager.getInstance().getAuthorizationManager().setMessage(errorResponse.getString("message"));
@@ -748,11 +772,10 @@ public class AuthManager {
                     }
 
                     @Override
-                    public void onSuccess(int statusCode,
-                                          org.apache.http.Header[] headers,
-                                          JSONObject response) {
+                    public void onSuccess(int statusCode, org.apache.http.Header[] headers, JSONObject response) {
                         super.onSuccess(statusCode, headers, response);
                         boolean state = false;
+                        System.out.println(TAG + " response--> " + response);
                         try {
 
                             AuthManager authManager = ModelManager.getInstance().getAuthorizationManager();
@@ -914,46 +937,41 @@ public class AuthManager {
         } catch (Exception e1) {
             e1.printStackTrace();
         }
-        ClickinRestClient.post(null, APIs.NEWREQUEST, se, "application/json",
-                new JsonHttpResponseHandler() {
-                    @Override
-                    public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
-                        super.onFailure(statusCode, e, errorResponse);
+        ClickinRestClient.post(null, APIs.NEWREQUEST, se, "application/json", new JsonHttpResponseHandler() {
 
-                        if (errorResponse != null) {
-                            try {
-                                ModelManager.getInstance().getAuthorizationManager().setMessage(errorResponse.getString("message"));
-                            } catch (JSONException e1) {
-                                // TODO Auto-generated catch block
-                                e1.printStackTrace();
-                            }
-                            EventBus.getDefault().post("RequestSend False");
-                        } else {
-                            EventBus.getDefault().post("RequestSend Network Error");
-                        }
-
-                    }
-
-                    @Override
-                    public void onSuccess(int statusCode,
-                                          org.apache.http.Header[] headers,
-                                          JSONObject response) {
-                        super.onSuccess(statusCode, headers, response);
-                        boolean state = false;
+                @Override
+                public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
+                    super.onFailure(statusCode, e, errorResponse);
+                    System.out.println(TAG + " errorResponse--> " + errorResponse);
+                    if (errorResponse != null) {
                         try {
-
-                            state = response.getBoolean("success");
-                            if (state) {
-                                EventBus.getDefault().post("RequestSend True");
-                            }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                            ModelManager.getInstance().getAuthorizationManager().setMessage(errorResponse.getString("message"));
+                        } catch (JSONException e1) {
+                            // TODO Auto-generated catch block
+                            e1.printStackTrace();
                         }
-
+                        EventBus.getDefault().post("RequestSend False");
+                    } else {
+                        EventBus.getDefault().post("RequestSend Network Error");
                     }
 
                 }
+
+                @Override
+                public void onSuccess(int statusCode, org.apache.http.Header[] headers, JSONObject response) {
+                    super.onSuccess(statusCode, headers, response);
+                    System.out.println(TAG + " successResponse--> " + response);
+                    boolean state = false;
+                    try {
+                        state = response.getBoolean("success");
+                        if (state) {
+                            EventBus.getDefault().post("RequestSend True");
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
         );
 
     }
@@ -1161,5 +1179,55 @@ public class AuthManager {
 
     }
 
+    public void getPartnerStatus(String phone, String partnerNo) {
+        authManager = ModelManager.getInstance().getAuthorizationManager();
+
+        JSONObject inputDetails = new JSONObject();
+        try {
+            inputDetails.put("phone_no", phone);
+            inputDetails.put("partnerNo", partnerNo);
+            System.out.println("inputDetails--> " + inputDetails);
+
+            se = new StringEntity(inputDetails.toString());
+            se.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+        ClickinRestClient.post(null, APIs.PARTNERSTATUS, se, "application/json", new JsonHttpResponseHandler() {
+
+            @Override
+            public void onFailure(int statusCode, Throwable e, JSONObject errorResponse) {
+                super.onFailure(statusCode, e, errorResponse);
+                Log.e("Auth", "errorResponse--> " + errorResponse);
+                if (errorResponse != null) {
+                    try {
+                        authManager.setMessage(errorResponse.getString("message"));
+                    } catch (JSONException e1) {
+                        // TODO Auto-generated catch block
+                        e1.printStackTrace();
+                    }
+                    EventBus.getDefault().post("Partner False");
+                } else {
+                    EventBus.getDefault().post("Partner Network Error");
+                }
+            }
+
+            @Override
+            public void onSuccess(int statusCode, org.apache.http.Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                boolean state = false;
+                try {
+                    System.out.println("response--> " + response);
+                    state = response.getBoolean("success");
+                    if (state) {
+                        EventBus.getDefault().post("Partner True");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
 
 }

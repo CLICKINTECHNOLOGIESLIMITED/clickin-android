@@ -3,11 +3,10 @@ package com.sourcefuse.clickinandroid.utils;
 public class APIs {
 
 
-   public static final String baseurl ="https://api.clickinapp.com";//prod
+    //public static final String baseurl ="https://api.clickinapp.com"; //prod
     //public static final String baseurl = "http://54.84.227.0/"; //staging
     //public static final String baseurl = "http://staging.clickinapp.com"; //staging
-
-  //public static final String baseurl = "https://dev.clickinapp.com/"; //dev
+    public static final String baseurl = "https://dev.clickinapp.com/"; //dev
 
 
     //clickin@sourcefuse.com
@@ -78,4 +77,5 @@ public class APIs {
     public static final String RESETFLAGS = baseurl + "/relationships/resetnewuserandpartnerflag";
 
 
+    public static final String PARTNERSTATUS = baseurl+"/users/getpartnerstatus/";            // Checks if the partner is active or not
 }

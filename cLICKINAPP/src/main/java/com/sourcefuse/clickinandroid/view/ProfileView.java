@@ -7,6 +7,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -17,9 +18,11 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -252,7 +255,10 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
         day = c.get(Calendar.DAY_OF_MONTH);
         dpResult.init(year, month, day, null);
         setCurrentDateOnView();
+
         authManager = ModelManager.getInstance().getAuthorizationManager();
+
+
 
 
         // akshit code for closing keypad if touched anywhere outside
@@ -330,6 +336,32 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
         if (message.equalsIgnoreCase("UpdateProfile True")) {
             Utils.dismissBarDialog();
             bitmapImage = null;
+
+            // Saves Token & Number in Shared Preferences
+            SharedPreferences preferences= PreferenceManager.getDefaultSharedPreferences(this);
+            SharedPreferences.Editor editor=preferences.edit();
+
+            authManager.setEmailId(email.getText().toString());
+
+            editor.putString("myPhoneNo", authManager.getPhoneNo());
+            editor.putString("myPartnerNo", authManager.getPartnerNo());
+            editor.putString("QB_id", authManager.getQBId());
+            editor.putString("userId", authManager.getUserId());
+            editor.putString("token", authManager.getUsrToken());
+            editor.putString("email", authManager.getEmailId());
+
+            Log.e(TAG, "myPhoneNo----" + authManager.getPhoneNo());
+            Log.e(TAG, "myPartnerNo----" + authManager.getPartnerNo());
+            Log.e(TAG, "QB_id----" + authManager.getQBId());
+            Log.e(TAG, "userId----" + authManager.getUserId());
+            Log.e(TAG, "token----" + authManager.getUsrToken());
+            Log.e(TAG, "email----" + authManager.getEmailId());
+
+            //ToDo: Use email from AuthManager
+            //editor.putString("email", "pal.himanshu1991@gmail.com");
+            //Log.e(TAG, "CreateProfile----" + authManager.getUserId());
+            editor.commit();
+
             switchView();
 
             if (mFromFacebook && mFillNatively) {
@@ -339,6 +371,8 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
                 Utils.trackMixpanel(ProfileView.this, "", "", "FillProfileInfoThroughFacebook", true);
             else if (mFillNatively)
                 Utils.trackMixpanel(ProfileView.this, "", "", "FillProfileInfoNatively", true);
+
+            finish();
 
         } else if (message.equalsIgnoreCase("UpdateProfile False")) {
             Utils.dismissBarDialog();
@@ -354,7 +388,7 @@ public class ProfileView extends Activity implements OnClickListener, TextWatche
     }
 
     private void switchView() {
-        Intent intent = new Intent(ProfileView.this, PlayItSafeView.class);
+        Intent intent = new Intent(ProfileView.this, WaitingView.class);
         intent.putExtra("fromsignup", getIntent().getBooleanExtra("fromsignup", false));
         startActivity(intent);
         finish();

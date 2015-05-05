@@ -44,6 +44,9 @@ import java.util.ArrayList;
 
 
 public class UserProfileView extends ClickInBaseView implements View.OnClickListener {
+
+    private static final String TAG = UserProfileView.class.getSimpleName();
+
     public UserRelationAdapter adapter;
     public String phone;
     public MyQbChatService myQbChatService;
@@ -158,6 +161,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         following.setTypeface(typefaceBold);
         follower.setTypeface(typefaceBold);
 
+        //authManager.sendNewRequest(authManager.getPhoneNo(), authManager.getPartnerNo(), authManager.getUsrToken());
 
         //code to set adapter to populate list
         footerView = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.footer_pro_list, null, false);
@@ -311,6 +315,7 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
 
     public void setlist() {
 
+        //relationManager.getRelationShips(authManager.getPhoneNo(), authManager.getUsrToken());
 
         setFollowAndFollowingCount();
         ArrayList<Section> sections = new ArrayList<Section>();
@@ -322,6 +327,10 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
         Integer[] mHeaderPositions = {0, relationManager.requestedList.size()};
         int positionOfHeader = 0;
         int noOfHeader = 0;
+
+        System.out.println("setlist()--> adapter " + adapter);
+        System.out.println("setlist()--> acceptedListSize " + relationManager.acceptedList.size());
+
 
         if (relationManager.acceptedList.size() == 0 && relationManager.requestedList.size() == 0) {
             positionOfHeader = 2;
@@ -415,30 +424,38 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
 
     public void onEventMainThread(String message) {
         super.onEventMainThread(message);
+
+        System.out.println(TAG + " onEventMainThread--> " + message);
+
         authManager = ModelManager.getInstance().getAuthorizationManager();
         relationManager = ModelManager.getInstance().getRelationManager();
 
         if (message.equalsIgnoreCase("deleteRelationship True")) {
             relationManager.getRelationShips(authManager.getPhoneNo(), authManager.getUsrToken());
-
+            System.out.println(TAG + " onEventMainThread--> deleteRelationship True");
 
         } else if (message.equalsIgnoreCase("deleteRelationship False")) {
+            System.out.println(TAG + " onEventMainThread--> deleteRelationship False");
             Utils.dismissBarDialog();
             Utils.fromSignalDialog(this, authManager.getMessage());
+
         } else if (message.equalsIgnoreCase("deleteRelationship Error")) {
+            System.out.println(TAG + " onEventMainThread--> deleteRelationship Error");
             Utils.dismissBarDialog();
             Utils.fromSignalDialog(this, AlertMessage.connectionError);
 
-
         } else if (message.equalsIgnoreCase("GetRelationShips False")) {
+            System.out.println(TAG + " onEventMainThread--> GetRelationShips Error");
             Utils.dismissBarDialog();
             doRestInitialization();
 
         } else if (message.equalsIgnoreCase("GetRelationShips Network Error")) {
+            System.out.println(TAG + " onEventMainThread--> GetRelationShips Network Error");
             Utils.dismissBarDialog();
             Utils.fromSignalDialog(this, AlertMessage.connectionError);
 
         } else if (message.equalsIgnoreCase("updateStatus true")) {
+            System.out.println(TAG + " onEventMainThread--> updateStatus true");
             relationManager.getRelationShips(authManager.getPhoneNo(), authManager.getUsrToken());
 
         }else if(message.equalsIgnoreCase("updateStatus error")){
@@ -450,6 +467,9 @@ public class UserProfileView extends ClickInBaseView implements View.OnClickList
 
         } else if (message.equalsIgnoreCase("GetrelationShips True")) {
             Utils.dismissBarDialog();
+
+            System.out.println(TAG + " onEventMainThread--> GetRelationShips True");
+
 
             new Handler().postDelayed(new Runnable() {
 

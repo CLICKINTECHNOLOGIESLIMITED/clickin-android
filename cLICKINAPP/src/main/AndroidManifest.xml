@@ -15,6 +15,9 @@
         android:name="android.permission.READ_PHONE_STATE"
         android:required="false" />
 
+    <permission android:name="com.sourcefuse.clickinapp.permission.C2D_MESSAGE" android:protectionLevel="signature" />
+    <uses-permission android:name="com.sourcefuse.clickinapp.permission.C2D_MESSAGE" />
+
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -174,6 +177,10 @@
         <activity
             android:name="com.sourcefuse.clickinandroid.view.SettingView"
             android:launchMode="standard"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.sourcefuse.clickinandroid.view.WaitingView"
             android:screenOrientation="portrait" />
 
         <activity

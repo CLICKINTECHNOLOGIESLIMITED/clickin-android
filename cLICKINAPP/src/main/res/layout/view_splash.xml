@@ -1,15 +1,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/home_page_bg">
+    android:background="@drawable/splash_couple">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="40dp"
-        android:weightSum="2">
+        android:layout_marginBottom="40dp">
 
         <Button
             android:id="@+id/signin"
@@ -17,14 +16,30 @@
             android:layout_height="wrap_content"
             android:background="@drawable/signin"
             android:visibility="invisible" />
-
-        <Button
-            android:id="@+id/signup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/signup"
-            android:visibility="invisible" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/signup"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="Get Started"
+        android:textColor="#fff"
+        android:textSize="18sp"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center"
+        android:background="#ED817F"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Clickin"
+        android:textSize="60sp"
+        android:textColor="#fff"
+        android:id="@+id/textView4"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:textStyle="bold" />
 
 </RelativeLayout>
